@@ -69,3 +69,12 @@ qualification. Clarified that parent Python startup/imports are excluded, while
 Git/hash/reference/basis/checkpoint/RHS preparation is measured separately.
 Reviewer inspected actual candidate receipt: train8/8 and val1/4 raw qualification,
 worst val linear ratio1.728; no numerical overclaim or protocol blocker found.
+
+Final global/probe evidence review: compact and full receipts agree, full-receipt
+SHA256 checks, all four 20-sample wall sequences and medians match, and all 960
+repeated solves qualify across 12 development cases. Training warm iterations
+are zero; validation totals5 Jacobi/3SGS, with actual divergence1.17657e-7 for
+every path. Raw versus corrected acceptance, timing exclusions, old-test integrity
+exception, ungenerated reservation and geometry-prior limits are accurately
+reported. Two editorial corrections (spacing and floating-point scaling wording)
+were applied. No remaining material blocker; reviewer ran no new experiments.

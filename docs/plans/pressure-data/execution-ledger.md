@@ -95,3 +95,16 @@ All 309 no-default-feature Rheon tests pass (8 new), fmt and strict Clippy pass.
 Exported patch/base/tree/license/test manifest under patches/; probe driver
 requires the reviewed source tree, allowing a new git-am committer timestamp.
 No upstream publication and no root dependency change. Clean-build timing is next.
+
+2026-10-11 — Clean probe source0ec9ee6166b0679e425891f5da3c060cfd730d71 plus
+local patch61182a4c4b2ec49cbc19a952e6b1d0b86f590d21 completed the fixed20-pair
+per-preconditioner probe. All960 repeated corrected solves qualify. Per12-case
+batch: Jacobi zero920 iterations / warm5; SGS zero359 / warm3. Median full measured
+batch wall: Jacobi21.127/3.523ms; SGS14.422/3.349ms. Maximum warm relative residual
+8.399e-11, predicted divergence2.992e-10, actual f32 divergence1.909e-7. Inference,
+file transfer/cleanup, native child startup/read/hash/RHS build/allocation, solve,
+correction and qualification are inside wall time. Preparation0.052056s measured
+separately; parent startup/imports, training, generation and builds excluded.
+A8/A9 satisfied as bounded local development evidence; no acceleration/general CFD
+claim. Patch dry-run applies to34235d3. Original Rheon and reference checkouts
+remain clean, pins unchanged, reserved tests ungenerated, publication paused.

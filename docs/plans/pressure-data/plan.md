@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Active. Current phase: isolated local warm-start integration probe.
-Next slice: complete patched-Rheon regressions and the preregistered corrected-solve probe.
-Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance satisfied; conditional warm-start acceptance pending.
+Plan status: Local admitted scope complete; publication blocked. Current phase: accepted corrected-solve probe.
+Next milestone: review the isolated API patch and freeze an untouched-test/analytic-baseline protocol before broader integration.
+Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance satisfied; conditional warm-start acceptance satisfied.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -29,7 +29,7 @@ existing-PR merge or immediate integration dependency is in scope.
 | A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | satisfied: reports/tiny-cpu-smoke.json and reports/heldout-cpu-smoke.json |
 | A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | satisfied: reports/qualification-diagnosis.md and reports/development-diagnostic.json |
 | A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | satisfied: reports/global-candidate.json |
-| A9 | If initial-guess signal passes, isolated local Rheon API patch preserves zero-start contracts and permits matched-quality corrected solves | integration / representative Linux CPU / automated | conditional pending |
+| A9 | If initial-guess signal passes, isolated local Rheon API patch preserves zero-start contracts and permits matched-quality corrected solves | integration / representative Linux CPU / automated | satisfied: reports/corrected-solve-probe.json |
 
 ## Decisions, constraints and observations
 
@@ -48,8 +48,8 @@ Rheon reference checkout; existing /workspace/Rheon untouched.
 
 GitHub get-repository returned 404; authenticated create returned GraphQL
 Resource not accessible by integration (createRepository). This blocks A5 only.
-The present public API always zero-starts; initial guesses are a deferred API
-milestone, not a hidden imitation in this repo. Python NumPy exists, Torch does
+The pinned public API always zero-starts. An explicit isolated local API patch
+now supports the optional corrected-solve probe; upstream integration is deferred. Python NumPy exists, Torch does
 not; a tiny NumPy CNN avoids downloading a framework/model.
 
 ## Evidence and oracle boundaries
@@ -105,7 +105,7 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    loss, one final validation evaluation and initial-guess thresholds. Write set:
    scripts/global_candidate.py, scripts/test_global_candidate.py, src/diagnostics.rs,
    src/main.rs, tests/contracts.rs, README and docs. No reserved-test generation.
-6. Conditional warm start: Active after the ADR 0003 signal passed.
+6. Conditional warm start: Accepted after the ADR 0003 signal passed.
    Separate task-owned /workspace/rheon-warmstart checkout and local branch;
    patch/test/probe artifacts under patches/ and probes/ in this lab. No upstream
    publication, no existing Rheon checkout edits, no Cargo dependency change.

@@ -162,6 +162,12 @@ The probe reuses frozen weights and performs zero optimizer steps. It compares
 file transfer, child process startup, PCG, f32 correction and qualification.
 [ADR 0004](docs/decisions/0004-corrected-solve-probe.md) fixes timing scope and gates.
 The native probe expects a dataset already fully verified by its Python driver.
+The recorded run qualified all 960 corrected solves (12 cases × 20 repeats ×
+4 paths). Median 12-case wall times were 21.13 ms zero / 3.52 ms warm for Jacobi,
+and 14.42 ms zero / 3.35 ms warm for SGS, with all declared file/process overhead.
+Warm guesses needed 0–2 Jacobi or 0–1 SGS iterations per case. These are limited
+local development measurements, not simulator acceleration evidence. See the
+[full result and timing limits](docs/plans/pressure-data/reports/global-and-warmstart-results.md).
 
 ## Data format
 

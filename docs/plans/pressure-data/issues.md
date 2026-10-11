@@ -5,8 +5,9 @@
   (createRepository). Owner: repository account/integration administrator. Resolve
   by creating the exact requested public repository with authorized access; no
   different account/name or permission workaround. Local implementation continues.
-- API-1 — Deferred: Rheon resets pressure each solve, so warm starts require the
-  separately reviewed API described in ADR 0001. Owner: Rheon maintainers.
+- API-1 — Local patch/probe accepted; upstream integration deferred. Pinned
+  Rheon still zero-starts. patches/ contains the independently reviewed sealed-only
+  initial-pressure API and tests; corrected solves qualify. Owner: Rheon maintainers.
 - LIC-1 — Open owner decision: new project license unspecified. No license grant
   is invented. Dependencies' independent terms are documented in THIRD_PARTY.md.
 
@@ -19,8 +20,9 @@
 - MODEL-2 — Diagnosed: finite receptive field has a remote-input counterexample;
   zero RHS produces nonconstant pressure; pressure-only loss does not control
   residuals. See qualification-diagnosis.md. No implementation bug established.
-  Next proposal: one global-context candidate enforcing zero response, explicit
-  pressure/residual loss, bounded training/validation comparison before new test.
+  One global modal candidate now completes the bounded development comparison
+  and succeeds as an initial guess under patched PCG. Its fixed-operator spectral
+  prior is a limitation; no general model/simulator claim follows.
 - TEST-1 — Protocol updated: original v1 test has been exposed. New seeds
   9000–9015 reserved but not generated; materialize only after freezing choices.
   Existing data integrity checks may read old test references but development

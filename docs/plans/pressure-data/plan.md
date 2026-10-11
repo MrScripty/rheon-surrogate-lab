@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Active. Current phase: CPU model verification.
-Next slice: clean-commit bounded CPU model smoke.
-Acceptance status: blocked (publication); local acceptance partial.
+Plan status: Blocked. Current phase: publication.
+Next slice: publish the committed experiment to the exact authorized public repository once access exists.
+Acceptance status: blocked (publication); local generator/model acceptance satisfied.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -26,7 +26,7 @@ existing-PR merge or immediate integration dependency is in scope.
 | A3 | A clean committed CLI generates 18 cases and a new process verifies them | system / representative Linux CPU / automated | satisfied: reports/generator-smoke.json |
 | A4 | Independent numerical/source review; fmt, tests and Clippy pass | focused / representative Linux CPU / automated and manual review | satisfied: reports/review.md |
 | A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | blocked |
-| A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | pending, secondary milestone |
+| A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | satisfied: reports/tiny-cpu-smoke.json and reports/heldout-cpu-smoke.json |
 
 ## Decisions, constraints and observations
 
@@ -89,11 +89,15 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    A1-A4. Status: Accepted. Preservation: independent repo, exact upstream pin.
 2. CPU smoke: scripts/, requirements.txt, docs/ and README. Gate: train-only
    stats, gradient regression, tiny-overfit attempt and held-out numerical report.
-   Status: Verifying. Keep data/model checkpoints ignored.
+   Status: Accepted as a runnable smoke path, not model quality. Keep data/model checkpoints ignored.
 3. Publish: existing repo Git configuration and exact requested remote only.
    Gate: A5. Status: Blocked. No unrelated repository changes.
-4. Checked warm-start API and matched-quality comparison: Deferred, revisit after
-   data/model correctness. UI numerical/model/error slices and Tuldok manifest
+4. Controlled model improvement: Deferred. One-case loss reduction succeeded but
+   held-out physical qualification failed for all predictions. Broader receptive
+   fields and physics-aware validation are candidates; select using training and
+   validation only, preserve the test set. Checked warm-start API and matched-quality
+   comparison follow separately after useful initial-guess behavior is established.
+   UI numerical/model/error slices and Tuldok manifest
    adapter, then Pantograph/Pumas integration are subsequent deferred work.
 
 ## Blockers and re-plan triggers

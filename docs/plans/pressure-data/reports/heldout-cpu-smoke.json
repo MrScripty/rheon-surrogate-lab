@@ -1,0 +1,120 @@
+{
+  "status": "complete",
+  "model": "conv3d(4,16,3,pad=1)-tanh-conv1x1(16,1)-cell-zero-gauge",
+  "parameters": 1760,
+  "dtype": "float64",
+  "seed": 2026,
+  "model_commit": "e45a4ceefc3ecc89531a2dcf859935c8459f652a",
+  "dataset_manifest_sha256": "08080c9a3a420f42ed1d3844879274e25c7b6672248acb5cfca702957dbc97dc",
+  "weights_sha256": "7f514ff90acf5adc42b009fa42c715658b4d8087ae9e4ca0e547af7f62c64121",
+  "evaluator": {
+    "binary_sha256": "fb296140e54b6661443afabfd751686e4424ffce2e95d9a2c706f9dc5b517308",
+    "experiment_commit": "e45a4ceefc3ecc89531a2dcf859935c8459f652a",
+    "rheon_commit": "34235d33c886aa05b5bdf95d920b863d1fb2ad6f",
+    "schema": "rheon-pressure-dataset-v1",
+    "source_dirty": false
+  },
+  "normalization": {
+    "rhs_mean": 1.8173293557852266e-18,
+    "rhs_std": 1.5568999248194568,
+    "pressure_rms": 10.182308845433491,
+    "fit_case_ids": [
+      "white_noise-1000",
+      "white_noise-1001",
+      "white_noise-1002",
+      "white_noise-1003",
+      "polynomial_mix-2000",
+      "polynomial_mix-2001",
+      "polynomial_mix-2002",
+      "polynomial_mix-2003"
+    ]
+  },
+  "optimizer": "full-batch Adam lr=0.01 beta=(0.9,0.999) eps=1e-8",
+  "mode": "heldout_smoke",
+  "training_case_ids": [
+    "white_noise-1000",
+    "white_noise-1001",
+    "white_noise-1002",
+    "white_noise-1003",
+    "polynomial_mix-2000",
+    "polynomial_mix-2001",
+    "polynomial_mix-2002",
+    "polynomial_mix-2003"
+  ],
+  "steps": 200,
+  "history": [
+    {
+      "step": 0,
+      "normalized_mse": 1.6005992247136955
+    },
+    {
+      "step": 50,
+      "normalized_mse": 0.18413423055945372
+    },
+    {
+      "step": 100,
+      "normalized_mse": 0.1158154201526789
+    },
+    {
+      "step": 150,
+      "normalized_mse": 0.07985517894451917
+    },
+    {
+      "step": 200,
+      "normalized_mse": 0.058441407944808045
+    }
+  ],
+  "final_to_initial_training_mse": 0.03651220558054541,
+  "split_metrics": {
+    "train": {
+      "cases": 8,
+      "mean_pressure_rmse_pa": 2.4454094596163936,
+      "mean_relative_pressure_rmse": 0.530480726436892,
+      "max_full_residual_l2": 66.64950423054744,
+      "max_corrected_f32_divergence": 12.261906077464422,
+      "reference_qualified_cases": 0
+    },
+    "validation": {
+      "cases": 4,
+      "mean_pressure_rmse_pa": 4.5959798983367275,
+      "mean_relative_pressure_rmse": 4.384148207983408,
+      "max_full_residual_l2": 20.205899203524176,
+      "max_corrected_f32_divergence": 4.463646719853084,
+      "reference_qualified_cases": 0
+    },
+    "test": {
+      "cases": 4,
+      "mean_pressure_rmse_pa": 8.288795679600792,
+      "mean_relative_pressure_rmse": 7.664304193007792,
+      "max_full_residual_l2": 98.40623420386922,
+      "max_corrected_f32_divergence": 17.457689086596172,
+      "reference_qualified_cases": 0
+    }
+  },
+  "timing_seconds": {
+    "preprocessing": 0.004667891000053714,
+    "training": 0.167267025000001,
+    "batch_inference_with_gauge_and_scale": 0.000828771999977107,
+    "physical_evaluation_including_dataset_reverification_and_process": 0.03434973900004934
+  },
+  "timing_limits": "single CPU smoke; excludes initial dataset loading, checkpoint/prediction writes; not a matched-quality acceleration benchmark",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  },
+  "dataset_experiment_commit": "cc2820646601f3db51fade707bfac5a521653257",
+  "first_optimized_case_metrics": {
+    "corrected_f32_divergence_max": 10.67121962333719,
+    "full_residual_l2": 66.64950423054744,
+    "full_residual_max": 10.244370646201979,
+    "id": "white_noise-1000",
+    "predicted_divergence_max": 10.671219423127061,
+    "pressure_rmse_pa": 2.3974610039832553,
+    "reference_qualified": false,
+    "relative_pressure_rmse": 0.8288519429478785,
+    "split": "train"
+  },
+  "command": "python3 scripts/train_cpu.py data/smoke runs/heldout --steps 200",
+  "receipt_scope": "compact receipt; full per-case metrics and prediction/checkpoint binaries remain ignored; regenerate from recorded clean source"
+}

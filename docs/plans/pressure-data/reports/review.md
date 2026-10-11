@@ -30,3 +30,9 @@ including CLI build commit/dirty flag/schema/Rheon pin, recording its binary
 SHA-256 and rejecting incompatible/dirty or changed evaluators. This is traceable
 provenance, not cryptographic source authentication. No other material findings
 were reported. Timing remains explicitly a smoke measurement, not a benchmark.
+
+Final follow-up: reviewer confirmed evaluator-provenance repair and inspected
+both actual receipts: clean e45a4ceefc3ecc89531a2dcf859935c8459f652a and matching
+binary hashes. No remaining material numerical/model review blocker. Explicitly
+retain the negative held-out result: relative RMSE 7.664, max corrected divergence
+17.458 s^-1, zero qualified predictions. Loss reduction is not acceleration.

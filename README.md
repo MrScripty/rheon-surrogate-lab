@@ -27,8 +27,10 @@ cargo run --release --locked -- verify data/smoke
 
 `4` means four seeds per distribution family: 8 training, 4 validation, 4 test
 cases, plus 2 check-only cases = 18 total. Existing output directories are
-refused. Use a new path for another run. Generator errors return nonzero and
-leave an explicitly incomplete manifest; such data is rejected by the verifier.
+refused. Use a new path for another run. Generator errors return nonzero.
+Failures before final manifest publication
+leave an incomplete manifest; such data is rejected by the verifier. A complete
+manifest must still pass all re-verification checks before use.
 Generation requires a clean source commit and a matching freshly built binary
 so manifests identify the source used. Tests use temporary fixtures.
 
@@ -105,8 +107,22 @@ Bulk data and checkpoints belong in ignored `data/` and `runs/` directories.
 The generator checkpoint passes 16 Rust contract tests, formatting and Clippy.
 A clean-commit CLI run generated and reverified all 18 cases (144 arrays, 262,944
 bytes). Maximum corrected f32 divergence was 1.91e-7 s⁻¹; maximum predicted
-divergence was 6.21e-10 s⁻¹. The CPU model has four passing unit tests; real
-training receipts are pending its clean-commit smoke. See
+divergence was 6.21e-10 s⁻¹. The CPU model has four passing unit tests. Both CPU
+runs completed at source commit `e45a4ceefc3ecc89531a2dcf859935c8459f652a`:
+
+| Run | Fitted cases / steps | Final / initial training MSE | Test mean relative pressure RMSE | Test max corrected divergence | Qualified predictions |
+| --- | --- | --- | --- | --- | --- |
+| One-case fitting check | 1 / 400 | 0.0001001 | 1.430 | 4.861 s⁻¹ | 0 / 16 |
+| Held-out smoke | 8 / 200 | 0.03651 | 7.664 | 17.458 s⁻¹ | 0 / 16 |
+
+The model learns the one-case fitting task but fails reference qualification and
+held-out generalization. Even the fitted case does not meet the solver's strict
+physical gates. These are useful pipeline checks and a negative model result.
+No learning-rate or architecture search was performed on the test set. Training
+wall times were under one second in this environment; this is not a benchmark
+or a solver speed comparison. See [generator receipt](docs/plans/pressure-data/reports/generator-smoke.json),
+[one-case receipt](docs/plans/pressure-data/reports/tiny-cpu-smoke.json),
+[held-out receipt](docs/plans/pressure-data/reports/heldout-cpu-smoke.json),
 [the active plan](docs/plans/pressure-data/plan.md) and
 [numerical/source review](docs/plans/pressure-data/reports/review.md).
 
@@ -123,9 +139,11 @@ later milestones, not dependencies of this repository.
 
 Requested public destination: `https://github.com/MrScripty/rheon-surrogate-lab`.
 Creation is currently blocked: the authenticated integration returned
-`GraphQL: Resource not accessible by integration (createRepository)`. No alternate
-account or repository was used. Local source is committed; push requires that
-exact repository to exist and the integration to have write access.
+`GraphQL: Resource not accessible by integration (createRepository)`. A push to
+the exact remote returned `Repository not found`. No alternate account or
+repository was used. Local source is committed; push requires that exact public
+repository to exist and the integration to have write access. Once available,
+run `git push -u origin main`; then verify the remote commit and public visibility.
 
 No project license has been selected; this repository does not invent one.
 Dependencies retain their own licenses. See [dependency provenance](THIRD_PARTY.md).

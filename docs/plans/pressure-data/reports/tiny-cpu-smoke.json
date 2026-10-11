@@ -1,0 +1,129 @@
+{
+  "status": "complete",
+  "model": "conv3d(4,16,3,pad=1)-tanh-conv1x1(16,1)-cell-zero-gauge",
+  "parameters": 1760,
+  "dtype": "float64",
+  "seed": 2026,
+  "model_commit": "e45a4ceefc3ecc89531a2dcf859935c8459f652a",
+  "dataset_manifest_sha256": "08080c9a3a420f42ed1d3844879274e25c7b6672248acb5cfca702957dbc97dc",
+  "weights_sha256": "aca973999b6bad07461845a9ec57a8b73319eef9ab7c78308d35cbb5934db2ba",
+  "evaluator": {
+    "binary_sha256": "fb296140e54b6661443afabfd751686e4424ffce2e95d9a2c706f9dc5b517308",
+    "experiment_commit": "e45a4ceefc3ecc89531a2dcf859935c8459f652a",
+    "rheon_commit": "34235d33c886aa05b5bdf95d920b863d1fb2ad6f",
+    "schema": "rheon-pressure-dataset-v1",
+    "source_dirty": false
+  },
+  "normalization": {
+    "rhs_mean": 1.8173293557852266e-18,
+    "rhs_std": 1.5568999248194568,
+    "pressure_rms": 10.182308845433491,
+    "fit_case_ids": [
+      "white_noise-1000",
+      "white_noise-1001",
+      "white_noise-1002",
+      "white_noise-1003",
+      "polynomial_mix-2000",
+      "polynomial_mix-2001",
+      "polynomial_mix-2002",
+      "polynomial_mix-2003"
+    ]
+  },
+  "optimizer": "full-batch Adam lr=0.01 beta=(0.9,0.999) eps=1e-8",
+  "mode": "tiny_overfit",
+  "training_case_ids": [
+    "white_noise-1000"
+  ],
+  "steps": 400,
+  "history": [
+    {
+      "step": 0,
+      "normalized_mse": 0.8985035927247402
+    },
+    {
+      "step": 50,
+      "normalized_mse": 0.00908271099699551
+    },
+    {
+      "step": 100,
+      "normalized_mse": 0.002535346796779348
+    },
+    {
+      "step": 150,
+      "normalized_mse": 0.0011527318985068685
+    },
+    {
+      "step": 200,
+      "normalized_mse": 0.0006222127398206917
+    },
+    {
+      "step": 250,
+      "normalized_mse": 0.00036131181458614426
+    },
+    {
+      "step": 300,
+      "normalized_mse": 0.00021832378221918483
+    },
+    {
+      "step": 350,
+      "normalized_mse": 0.00013750736079503578
+    },
+    {
+      "step": 400,
+      "normalized_mse": 8.992767275525849e-05
+    }
+  ],
+  "final_to_initial_training_mse": 0.00010008604693783139,
+  "split_metrics": {
+    "train": {
+      "cases": 8,
+      "mean_pressure_rmse_pa": 6.787316403563656,
+      "mean_relative_pressure_rmse": 0.8261075021840081,
+      "max_full_residual_l2": 38.55469761738265,
+      "max_corrected_f32_divergence": 9.359065959850948,
+      "reference_qualified_cases": 0
+    },
+    "validation": {
+      "cases": 4,
+      "mean_pressure_rmse_pa": 2.101218681484869,
+      "mean_relative_pressure_rmse": 1.7993516556260274,
+      "max_full_residual_l2": 8.231149621489786,
+      "max_corrected_f32_divergence": 2.9040252988537154,
+      "reference_qualified_cases": 0
+    },
+    "test": {
+      "cases": 4,
+      "mean_pressure_rmse_pa": 1.5493162994005938,
+      "mean_relative_pressure_rmse": 1.429757746958821,
+      "max_full_residual_l2": 27.63770247384394,
+      "max_corrected_f32_divergence": 4.860584836453199,
+      "reference_qualified_cases": 0
+    }
+  },
+  "timing_seconds": {
+    "preprocessing": 0.004615762999947037,
+    "training": 0.06742085999997016,
+    "batch_inference_with_gauge_and_scale": 0.0013890490000676436,
+    "physical_evaluation_including_dataset_reverification_and_process": 0.03294155300000057
+  },
+  "timing_limits": "single CPU smoke; excludes initial dataset loading, checkpoint/prediction writes; not a matched-quality acceleration benchmark",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41"
+  },
+  "dataset_experiment_commit": "cc2820646601f3db51fade707bfac5a521653257",
+  "first_optimized_case_metrics": {
+    "corrected_f32_divergence_max": 0.5210819601343246,
+    "full_residual_l2": 2.7349521298906736,
+    "full_residual_max": 0.5002386908331731,
+    "id": "white_noise-1000",
+    "predicted_divergence_max": 0.5210819696178887,
+    "pressure_rmse_pa": 0.09655904080836772,
+    "reference_qualified": false,
+    "relative_pressure_rmse": 0.033382461049513715,
+    "split": "train"
+  },
+  "command": "python3 scripts/train_cpu.py data/smoke runs/tiny --tiny-overfit --steps 400",
+  "receipt_scope": "compact receipt; full per-case metrics and prediction/checkpoint binaries remain ignored; regenerate from recorded clean source"
+}

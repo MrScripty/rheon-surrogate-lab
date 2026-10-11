@@ -30,3 +30,15 @@ missing evaluator provenance. Added explicit evaluator build metadata and binary
 hash to model receipts, with compatible schema/pin and clean-build checks. All
 16 Rust and 4 Python tests, fmt and Clippy pass after that repair. CPU smoke run
 will use a fresh release build of the resulting clean commit.
+
+2026-10-11 — CPU path committed as e45a4ceefc3ecc89531a2dcf859935c8459f652a.
+Release rebuild identifies that clean commit and pinned schema/Rheon revision.
+400-step one-case fit: final/initial normalized MSE 0.00010008604693783139.
+200-step 8-case fit: ratio 0.03651220558054541. Held-out test mean relative pressure
+RMSE 7.664304193007792; max corrected f32 divergence 17.457689086596172 s^-1.
+Zero of 16 model predictions qualify in either run. This accepts the runnable
+training/evaluation path and explicitly rejects a model-accuracy claim.
+Compact receipts (no weights or bulk arrays) record source and evaluator hashes,
+normalization, optimizer, losses, splits and timing limits. Independent reviewer
+confirmed the evaluator-provenance repair and no remaining material code finding.
+Publication remains blocked; no remote success is claimed.

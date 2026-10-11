@@ -9,3 +9,9 @@
   separately reviewed API described in ADR 0001. Owner: Rheon maintainers.
 - LIC-1 — Open owner decision: new project license unspecified. No license grant
   is invented. Dependencies' independent terms are documented in THIRD_PARTY.md.
+
+- MODEL-1 — Measured limitation, deferred improvement: shallow local CNN fails
+  physical qualification for every predicted case; held-out test relative RMSE
+  7.664 and max corrected divergence 17.458 s^-1. Owner: experiment maintainer.
+  Revisit with broader context/physics-aware training using train/validation only;
+  do not claim a useful solver replacement or acceleration from these runs.

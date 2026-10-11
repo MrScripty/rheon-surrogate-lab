@@ -1,0 +1,18 @@
+[package]
+name = "rheon-surrogate-lab"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+authors = ["Puma"]
+description = "Small reproducible pressure-surrogate experiments using pinned Rheon"
+publish = false
+
+[dependencies]
+anyhow = "=1.0.100"
+rheon = { git = "https://github.com/MrScripty/Rheon.git", rev = "34235d33c886aa05b5bdf95d920b863d1fb2ad6f", default-features = false }
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = { version = "=1.0.145", features = ["float_roundtrip"] }
+sha2 = "=0.10.9"
+
+[lints.rust]
+unsafe_code = "forbid"

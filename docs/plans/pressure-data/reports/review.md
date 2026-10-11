@@ -1,0 +1,23 @@
+# Independent numerical/source review
+
+2026-10-11. Reviewer: independent read-only numerical_review agent.
+Reference: Rheon 34235d33c886aa05b5bdf95d920b863d1fb2ad6f.
+
+Confirmed from operator.rs:300-393,463-509 and pressure.rs:414-436:
+A weights are V/(rho*h²), b=-V*div(u*)/dt, pressure is Pa, b and residual are
+m³/s². Pressure cell zero is fixed; RHS must be compatible and not mean-shifted.
+Full residual includes gauge row. Predicted divergence dt/V*||r||inf is distinct
+from actual corrected f32 divergence. Upstream pressure_contract.rs:195-234 uses
+1e-9 predicted and 1e-5 actual divergence limits.
+
+Boundary constraints apply only to normal velocities; no-slip would overstate
+the contract. MAC offsets and X-fastest order from geometry.rs:207-229 are
+required in exports. CNN tensors must use [N,C,Z,Y,X]. solve_loaded resets pressure,
+so warm-start measurement is unavailable. No AGENTS.md or .agents found in pin.
+
+Reviewer recommended independent dyadic 3D manufacture, zero checks and isolated
+negative tests. Implemented in tests/contracts.rs. Production source review found two medium issues: the prediction evaluator
+omitted the predicted-divergence gate, and the 3D-variation test compared across
+row/plane boundaries. Both were fixed with isolated regressions (near-threshold
+prediction and extruded-field counterexamples). This report is evidence of source/API inspection, not an
+independent proof of general numerical accuracy.

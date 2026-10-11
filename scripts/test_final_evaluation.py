@@ -50,3 +50,39 @@ class FrozenProtocolContracts(unittest.TestCase):
         self.assertEqual(summary['failed_ids'], ['fixture'])
         self.assertIsNone(summary['mean_reference_relative_rmse'])
         self.assertEqual(summary['solver_errors'], {'fixture':'iteration limit'})
+
+class FreezeIntegrityContracts(unittest.TestCase):
+    def test_source_binary_and_checkpoint_mutations_are_rejected(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from contextlib import ExitStack
+        import final_evaluate as final
+        with tempfile.TemporaryDirectory() as directory, ExitStack() as stack:
+            root = Path(directory)
+            source, binary, weights = (root / name for name in ('source.py', 'probe', 'weights.npz'))
+            for path in (source, binary, weights):
+                path.write_bytes(b'original')
+            identity = {'fixture':'native'}
+            frozen = {'schema':'rheon-final-freeze-v1','status':'frozen_before_final_generation',
+                      'limits':final.LIMITS,'methods':list(final.METHODS),'method_orders':final.orders(),
+                      'seeds':list(range(9000,9016)),'runtime':{},
+                      'source_sha256':{'source.py':final.digest(source)},
+                      'binaries':{'probe':final.digest(binary)},'candidate_weights_sha256':final.digest(weights),
+                      'reviewed_patch_tree':'tree','native_identity':identity}
+            freeze = root/'freeze.json'
+            freeze.write_text(json.dumps(frozen))
+            for name,value in [('ROOT',root),('WEIGHTS',weights),('PROBE',binary)]:
+                stack.enter_context(patch.object(final,name,value))
+            stack.enter_context(patch.object(final,'require_clean'))
+            stack.enter_context(patch.object(final,'git',return_value='tree'))
+            stack.enter_context(patch.object(final,'runtime',return_value={}))
+            stack.enter_context(patch.object(final,'source_files',return_value=['source.py']))
+            stack.enter_context(patch.object(final.subprocess,'check_output',return_value=json.dumps(identity)))
+            self.assertEqual(final.validate_freeze(freeze), frozen)
+            for path in (source,binary,weights):
+                path.write_bytes(b'mutated')
+                with self.assertRaises(ValueError):
+                    final.validate_freeze(freeze)
+                path.write_bytes(b'original')

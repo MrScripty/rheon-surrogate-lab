@@ -1,0 +1,35 @@
+{
+  "status": "approved_before_freeze",
+  "author": "Puma",
+  "independent_reviewer": "numerical_review",
+  "api_patch_commit": "61182a4c4b2ec49cbc19a952e6b1d0b86f590d21",
+  "fresh_api_tests": {
+    "command": "cargo test --locked --no-default-features --test initial_pressure_contract --test pressure_contract --test operator_contract",
+    "passed": 23
+  },
+  "api_findings": "No additional correctness blocker; sealed-only scope and separate actual-f32 divergence gate retained.",
+  "development_smoke_source": "38b06f0ebd2dab4eb914a072efdba2073db2a447",
+  "development_receipt_sha256": "55700f45c64ee50cfd324008d149aa44e82274f0dfac78f1d4d3556e375e30e4",
+  "development_only": true,
+  "development_quality_projections": 72,
+  "development_timed_projections": 288,
+  "quality": {
+    "analytic": 12,
+    "zero_jacobi": 12,
+    "learned_jacobi": 12,
+    "zero_sgs": 12,
+    "learned_sgs": 12,
+    "raw_learned": 9
+  },
+  "source_review": "No material numerical/protocol blocker: analytic eigenvalues/gauge, matched gates, fixed case selection, failure recording, source/binary/checkpoint freeze, balanced order and full timing accounting reviewed.",
+  "independent_receipt_checks": [
+    "candidate checkpoint hash",
+    "journal hash",
+    "quality summaries",
+    "wall medians",
+    "amortized startup/call/teardown costs"
+  ],
+  "minor_finding": "Smoke receipt text said12 calls though smoke used2; calculations were correct. Source wording now says all timed calls. Historical receipt retained unchanged.",
+  "reserved_data_at_review": "not generated; freeze not yet created",
+  "post_smoke_changes": "Only metadata (RMSE measured-case count), receipt wording, freeze-integrity regression, documentation and review record; no numerical/model/timing algorithm change."
+}

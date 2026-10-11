@@ -78,3 +78,14 @@ every path. Raw versus corrected acceptance, timing exclusions, old-test integri
 exception, ungenerated reservation and geometry-prior limits are accurately
 reported. Two editorial corrections (spacing and floating-point scaling wording)
 were applied. No remaining material blocker; reviewer ran no new experiments.
+
+Final closure admission: fresh independent review of clean API patch61182a4 found
+no new correctness issue and independently passed23 initial-pressure/pressure/
+operator contracts. Final analytic/generator/evaluator/source review found no
+material blocker. Reviewer checked the actual development smoke:72 quality and
+288 timed projections, all train/validation; five primary paths12/12 qualified,
+raw learned9/12 retains known failures. Checkpoint/journal hashes, summaries,
+medians and amortized costs recompute. Corrected one receipt wording error: the
+2-row development smoke's calculation was correct but generic text said12 calls;
+source now says all timed calls. Reserved seeds remain unmaterialized at review.
+experiments/final/review.json records the pre-freeze approval and evidence.

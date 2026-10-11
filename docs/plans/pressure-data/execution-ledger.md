@@ -122,3 +122,12 @@ v1 contract; metadata tests materialize no reserved fields. Archived the exact
 Analytic modes agree with a hand chain and public Rheon A on geometry only.
 20 Rust and13 Python tests pass; implementation review/development smoke precede
 freeze. Reserved data is still absent; publication remains paused.
+
+Development smoke at38b06f0 completed72 quality and288 timed projections on12
+existing train/validation cases. Analytic and all fourPCG paths qualify12/12;
+raw learned9/12 retains the known three validation failures. Fresh process costs
+are larger for learned/spectral paths than zero-PCG because initialization is
+included; resident-model calls are lower in this tiny scope. This did not change
+the candidate or protocol. Independent review found no material blocker and
+verified receipt hashes/summary/timing accounting. Metadata/wording corrections
+and a source/binary/checkpoint tamper-rejection test precede the committed freeze.

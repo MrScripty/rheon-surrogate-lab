@@ -4,29 +4,29 @@ Author: Puma. Status: protocol fixed before reserved generation; implementation
 and independent development review must finish before the freeze is committed.
 
 The parent explicitly authorized the independent final comparison, including
-materializing reserved oscillatory_modes seeds9000–9015 only after review/freeze.
-This closes experiment1. No tuning, retraining, checkpoint selection, new solver
+materializing reserved oscillatory_modes seeds 9000–9015 only after review/freeze.
+This closes experiment 1. No tuning, retraining, checkpoint selection, new solver
 pin, upstream publication, GitHub creation retry or expansion to another domain.
 
 ## Candidate, data and physical gates
 
-Preserve the exact335 learned log-gains from the sole500-step cd6f61a run. Archive
-the unchanged2950-byte weights.npz under experiments/final/ as a justified tiny
+Preserve the exact 335 learned log-gains from the sole 500-step cd6f61a run. Archive
+the unchanged 2950-byte weights.npz under experiments/final/ as a justified tiny
 frozen checkpoint; all other model/data bulk stays ignored. Record file hash,
 original run receipt hash, source commit, numerical reference and patch tree.
 No coefficient is replaced by an analytic inverse in the learned candidate.
 
-Use a distinct rheon-pressure-final-v1 schema: exactly16 final_test cases from
+Use a distinct rheon-pressure-final-v1 schema: exactly 16 final_test cases from
 the reserved family/seeds, with the existing strict physics/arrays and a freeze
 SHA256. V1 development data semantics are preserved. Metadata-only reservation
 tests must not generate reserved fields/targets. Final CLI materialization binds
 to the frozen generator binary; the Python gate additionally checks a committed
 freeze, clean sources, all source/checkpoint/binary hashes and reviewed patch tree.
 
-All methods use the identical 8x7x6 sealed uniform grid, spacing[.25,.3,.4]m,
-rho1.25, dt.03125. Original RHS remains unchanged. Full residual includes the gauge
-row; p[0]=0. Linear gate max(1e-12,1e-10*||original b||2), predicted divergence1e-9,
-actual corrected f32 velocity divergence1e-5. The same public correct_velocity
+All methods use the identical 8x7x6 sealed uniform grid, spacing [.25,.3,.4]m,
+rho 1.25, dt .03125. Original RHS remains unchanged. Full residual includes the gauge
+row; p[0]=0. Linear gate max(1e-12,1e-10*||original b||2), predicted divergence 1e-9,
+actual corrected f32 velocity divergence 1e-5. The same public correct_velocity
 and divergence operators are called for every path. Record failures without
 raising tolerances, dropping cases, changing the checkpoint or selecting a retry.
 
@@ -63,13 +63,13 @@ are permitted after final-test access. Any pre-freeze correctness finding must
 be fixed, requalified and reviewed first.
 
 After generation/re-verification, perform one untimed quality pass per path,
-including reference pressure RMSE. Then run12 repetitions per path per regime,
-16 cases per batch. These are repeated timings of16 cases, not independent samples.
-There are96 quality projections plus2304 timed projections in total. Report
+including reference pressure RMSE. Then run 12 repetitions per path per regime,
+16 cases per batch. These are repeated timings of 16 cases, not independent samples.
+There are 96 quality projections plus 2304 timed projections in total. Report
 unqualified cases and solver errors; timings cannot rescue a failed quality gate.
 
-Method order is a fixed balanced Williams design: base indices[0,1,5,2,4,3], all
-six modular shifts, then each row reversed. Across12 rows each method occupies
+Method order is a fixed balanced Williams design: base indices [0,1,5,2,4,3], all
+six modular shifts, then each row reversed. Across 12 rows each method occupies
 each position twice and each ordered adjacent pair occurs twice. Alternate regime
 order by row. No random timing-dependent reruns or discarded samples. Development
 smoke exercises all methods and protocol paths only on existing train/validation.
@@ -87,7 +87,7 @@ Resident-model regime: one Python worker per method preloads only model/basis;
 every request still reads/hashes RHS and starts a fresh native child. One quality
 pass also warms numeric kernels. Report steady-call median/min/max, startup and
 teardown, and **amortized active wall cost including startup, the quality/warm-up
-pass, all12 calls and teardown divided by12**. Idle waits while other methods run
+pass, all 12 calls and teardown divided by 12**. Idle waits while other methods run
 are scheduling overhead, reported globally rather than charged to one method.
 This is a resident-model/file-pipeline measurement, not a persistent native solver.
 The analytic baseline pays its own setup; learned paths pay checkpoint loading.

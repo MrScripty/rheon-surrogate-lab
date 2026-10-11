@@ -172,6 +172,7 @@ def summarize(cases):
     return {"cases": len(cases), "qualified": sum(c["qualified"] for c in cases),
             "failed_ids": [c["id"] for c in cases if not c["qualified"]],
             "solver_errors": {c["id"]: c["solver_error"] for c in cases if "solver_error" in c},
+            "reference_error_cases_measured": len(errors),
             "mean_reference_relative_rmse": statistics.mean(errors) if errors else None,
             "iterations_total": sum(iterations) if iterations else None,
             "iterations_range": [min(iterations),max(iterations)] if iterations else None,
@@ -277,7 +278,7 @@ def compare(dataset, output, scope, rows, expected_identity):
             "measurements":measurements, "method_orders":rows, "total_harness_wall_seconds":total_wall,
             "native_identity":expected_identity, "journal_sha256":digest(output/"journal.jsonl"),
             "optimizer_steps":0, "runtime":runtime(), "limits":LIMITS,
-            "timing_scope":"ADR0005; fresh Python/model startup vs resident model; OS caches uncontrolled; native child fresh every call; amortized resident cost includes startup/quality-warmup/12 calls/teardown",
+            "timing_scope":"ADR0005; fresh Python/model startup vs resident model; OS caches uncontrolled; native child fresh every call; amortized resident cost includes startup/quality-warmup/all timed calls/teardown",
             "no_post_test_tuning":True}
 
 

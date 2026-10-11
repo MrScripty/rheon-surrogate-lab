@@ -1,7 +1,7 @@
 # Pressure data and first CPU experiment
 
-Plan status: Local admitted scope complete; publication blocked. Current phase: accepted corrected-solve probe.
-Next milestone: review the isolated API patch and freeze an untouched-test/analytic-baseline protocol before broader integration.
+Plan status: Active bounded final evaluation; publication blocked. Current phase: pre-freeze independent qualification.
+Next slice: qualify the final harness on development data, freeze all artifacts, materialize only the reserved seeds and close the experiment without tuning.
 Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance satisfied; conditional warm-start acceptance satisfied.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
@@ -30,6 +30,8 @@ existing-PR merge or immediate integration dependency is in scope.
 | A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | satisfied: reports/qualification-diagnosis.md and reports/development-diagnostic.json |
 | A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | satisfied: reports/global-candidate.json |
 | A9 | If initial-guess signal passes, isolated local Rheon API patch preserves zero-start contracts and permits matched-quality corrected solves | integration / representative Linux CPU / automated | satisfied: reports/corrected-solve-probe.json |
+
+| A10 | Freeze reviewed artifacts before reserved-seed materialization; report final same-family comparison and full timing scope without tuning | system / representative Linux CPU / automated and independent review | active, pre-freeze |
 
 ## Decisions, constraints and observations
 
@@ -112,6 +114,15 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    API and matched-quality gates are ADR 0001/0003; compare full overhead honestly.
 7. UI numerical/model/error slices and Tuldok/Pantograph/Pumas integration remain
    deferred and are not dependencies of the admitted slice.
+
+8. Final closure: Active, explicitly authorized by parent. ADR0005 owns the exact
+   checkpoint, final16-seed schema, analytic baseline, fixed comparisons and
+   cold/resident-model timing. Allowed writes: src/dataset.rs/src/main.rs,
+   scripts/final_*.py and tests, optional probe source, experiments/final/, README
+   and docs. Gate A10: independent API/source review and development checks before
+   committed freeze; then exactly reserved final generation and frozen comparison.
+   No model updates or code/tolerance changes after final access. Keep publication
+   paused. Final conclusion must include failures and analytic-baseline limits.
 
 ## Blockers and re-plan triggers
 

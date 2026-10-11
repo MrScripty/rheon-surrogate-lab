@@ -108,3 +108,17 @@ separately; parent startup/imports, training, generation and builds excluded.
 A8/A9 satisfied as bounded local development evidence; no acceleration/general CFD
 claim. Patch dry-run applies to34235d3. Original Rheon and reference checkouts
 remain clean, pins unchanged, reserved tests ungenerated, publication paused.
+
+2026-10-11 — Parent authorized a bounded independent final evaluation to close
+experiment1: fresh API review, analytic spectral baseline, frozen candidate/code/
+tolerances/protocol, then reserved seeds9000–9015. No retraining/test tuning or
+upstream/GitHub publication. Fresh review of exact patch61182a4 independently
+reran23 initial-pressure/pressure/operator tests, all passing; no new issue.
+ADR0005 fixes six paths, same physical gates,12 balanced Williams rows per each
+fresh-Python and resident-model regime; all overhead and cold/cache distinctions
+are explicit. Added final schema with fixed seed plan/freeze hash, preserved
+v1 contract; metadata tests materialize no reserved fields. Archived the exact
+2950-byte candidate checkpoint as the only tiny final-checkpoint exception.
+Analytic modes agree with a hand chain and public Rheon A on geometry only.
+20 Rust and13 Python tests pass; implementation review/development smoke precede
+freeze. Reserved data is still absent; publication remains paused.

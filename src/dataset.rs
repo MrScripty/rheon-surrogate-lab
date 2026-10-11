@@ -7,6 +7,23 @@ use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, fs, path::Path};
 
 pub const SCHEMA: &str = "rheon-pressure-dataset-v1";
+pub const FINAL_SCHEMA: &str = "rheon-pressure-final-v1";
+
+/// Metadata only: this does not materialize the reserved velocity/RHS/targets.
+pub fn final_case_plan() -> Vec<CaseSpec> {
+    (9000..9016)
+        .map(|seed| {
+            let id = format!("oscillatory_modes-{seed}");
+            CaseSpec {
+                id: id.clone(),
+                family: "oscillatory_modes".into(),
+                seed,
+                split: "final_test".into(),
+                trajectory: id,
+            }
+        })
+        .collect()
+}
 const MANIFEST_LIMIT: u64 = 2_000_000;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -39,6 +56,8 @@ pub struct Manifest {
     pub experiment_commit: String,
     pub rheon_commit: String,
     pub per_family: usize,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub freeze_sha256: Option<String>,
     pub contract: Value,
     pub cases: Vec<Case>,
 }
@@ -116,7 +135,34 @@ fn write_array(root: &Path, case: &str, name: &str, bytes: Vec<u8>) -> Result<Ar
 
 /// Refuses existing destinations; an interrupted run remains explicitly incomplete.
 pub fn generate(root: &Path, per_family: usize, experiment_commit: &str) -> Result<Manifest> {
-    let plan = ex::case_plan(per_family)?;
+    generate_plan(root, per_family, experiment_commit, None)
+}
+
+/// Call only after the evaluator/checkpoint/protocol freeze is committed.
+/// CLI access is through the freeze-checking Python gate, never an arbitrary seed.
+pub fn generate_final(
+    root: &Path,
+    experiment_commit: &str,
+    freeze_sha256: &str,
+) -> Result<Manifest> {
+    ensure!(
+        freeze_sha256.len() == 64 && freeze_sha256.bytes().all(|v| v.is_ascii_hexdigit()),
+        "freeze: invalid hash"
+    );
+    generate_plan(root, 16, experiment_commit, Some(freeze_sha256.to_owned()))
+}
+
+fn generate_plan(
+    root: &Path,
+    per_family: usize,
+    experiment_commit: &str,
+    freeze_sha256: Option<String>,
+) -> Result<Manifest> {
+    let plan = if freeze_sha256.is_some() {
+        final_case_plan()
+    } else {
+        ex::case_plan(per_family)?
+    };
     ensure!(
         valid_commit(experiment_commit),
         "provenance: need full experiment commit"
@@ -127,11 +173,16 @@ pub fn generate(root: &Path, per_family: usize, experiment_commit: &str) -> Resu
     }
     fs::create_dir(root)?;
     let mut manifest = Manifest {
-        schema: SCHEMA.into(),
+        schema: if freeze_sha256.is_some() {
+            FINAL_SCHEMA.into()
+        } else {
+            SCHEMA.into()
+        },
         status: "incomplete".into(),
         experiment_commit: experiment_commit.into(),
         rheon_commit: ex::RHEON_COMMIT.into(),
         per_family,
+        freeze_sha256,
         contract: contract(),
         cases: Vec::new(),
     };
@@ -257,7 +308,25 @@ pub fn read_manifest(root: &Path) -> Result<Manifest> {
 /// Fixed contract comparison prevents a manifest from weakening its own gates.
 pub fn verify(root: &Path) -> Result<Manifest> {
     let manifest = read_manifest(root)?;
-    ensure!(manifest.schema == SCHEMA, "schema: unsupported");
+    ensure!(
+        [SCHEMA, FINAL_SCHEMA].contains(&manifest.schema.as_str()),
+        "schema: unsupported"
+    );
+    if manifest.schema == FINAL_SCHEMA {
+        ensure!(
+            manifest.per_family == 16
+                && manifest
+                    .freeze_sha256
+                    .as_ref()
+                    .is_some_and(|s| s.len() == 64 && s.bytes().all(|v| v.is_ascii_hexdigit())),
+            "freeze: final dataset needs a fixed reservation and freeze hash"
+        );
+    } else {
+        ensure!(
+            manifest.freeze_sha256.is_none(),
+            "freeze: unexpected in development schema"
+        );
+    }
     ensure!(
         manifest.status == "complete",
         "completion: dataset is incomplete"
@@ -270,7 +339,11 @@ pub fn verify(root: &Path) -> Result<Manifest> {
         manifest.contract == contract(),
         "contract: unsupported or modified"
     );
-    let plan = ex::case_plan(manifest.per_family)?;
+    let plan = if manifest.schema == FINAL_SCHEMA {
+        final_case_plan()
+    } else {
+        ex::case_plan(manifest.per_family)?
+    };
     ensure!(
         manifest.cases.len() == plan.len(),
         "case_count: incomplete plan"
@@ -326,7 +399,7 @@ pub fn summary(manifest: &Manifest) -> Value {
     for case in &manifest.cases {
         *splits.entry(case.spec.split.clone()).or_default() += 1;
     }
-    json!({"status": "verified", "cases": manifest.cases.len(), "splits": splits,
+    json!({"status": "verified", "schema":manifest.schema, "freeze_sha256":manifest.freeze_sha256, "cases": manifest.cases.len(), "splits": splits,
         "experiment_commit": manifest.experiment_commit, "rheon_commit": manifest.rheon_commit,
         "max_full_residual_l2": manifest.cases.iter().map(|c| c.metrics.full_residual_l2).fold(0.0, f64::max),
         "max_corrected_f32_divergence": manifest.cases.iter().map(|c| c.metrics.corrected_f32_divergence_max).fold(0.0, f64::max),
@@ -349,7 +422,9 @@ pub fn evaluate_predictions_scoped(
     let op = rheon::PressureOperator::new(&g, ex::DENSITY)?;
     let mut cases = Vec::new();
     for case in &manifest.cases {
-        if case.spec.split == "check" || (!include_test && case.spec.split == "test") {
+        if case.spec.split == "check"
+            || (!include_test && !matches!(case.spec.split.as_str(), "train" | "validation"))
+        {
             continue;
         }
         let bytes = read_regular(

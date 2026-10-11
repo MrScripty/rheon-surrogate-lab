@@ -22,7 +22,7 @@ def digest(path):
 def load_cases(root, manifest, include_test=False):
     cases = []
     for entry in manifest["cases"]:
-        if entry["spec"]["split"] == "check" or (entry["spec"]["split"] == "test" and not include_test):
+        if entry["spec"]["split"] == "check" or (entry["spec"]["split"] in ("test", "final_test") and not include_test):
             continue
         fields = {}
         for name in ("rhs", "pressure"):

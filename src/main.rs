@@ -33,6 +33,28 @@ fn run() -> Result<()> {
             let count = args.get(3).map(|n| n.parse()).transpose()?.unwrap_or(4);
             dataset::summary(&dataset::generate(root, count, &provenance()?)?)
         }
+        "generate-final-frozen" if args.len() == 4 => {
+            // The Python gate validates the complete committed freeze and all hashes.
+            // This additional binary check binds materialization to that exact build.
+            let freeze_bytes = std::fs::read(&args[3])?;
+            let freeze: serde_json::Value = serde_json::from_slice(&freeze_bytes)?;
+            ensure!(
+                freeze["status"] == "frozen_before_final_generation"
+                    && freeze["code_commit"] == env!("LAB_COMMIT")
+                    && env!("LAB_DIRTY") == "false",
+                "freeze: generator build does not match frozen code"
+            );
+            ensure!(
+                freeze["binaries"]["target/release/rheon-surrogate-lab"]
+                    == dataset::hash(&std::fs::read(std::env::current_exe()?)?),
+                "freeze: generator binary changed"
+            );
+            dataset::summary(&dataset::generate_final(
+                root,
+                env!("LAB_COMMIT"),
+                &dataset::hash(&freeze_bytes),
+            )?)
+        }
         "verify" if args.len() == 3 => dataset::summary(&dataset::verify(root)?),
         "export-operator" if args.len() == 3 => {
             provenance()?;

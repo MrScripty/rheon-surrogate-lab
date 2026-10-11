@@ -493,3 +493,25 @@ fn exported_operator_matches_public_action_including_gauge_row() {
     }
     assert_ne!(actual[0], 0.0);
 }
+
+#[test]
+fn final_reservation_metadata_is_exact_and_development_cannot_masquerade_as_final() {
+    let plan = dataset::final_case_plan();
+    assert_eq!(plan.len(), 16);
+    for (i, case) in plan.iter().enumerate() {
+        assert_eq!(case.seed, 9000 + i as u64);
+        assert_eq!(case.family, "oscillatory_modes");
+        assert_eq!(case.split, "final_test");
+    }
+    // No reserved velocity/RHS/target is constructed by this test.
+    let data = fixture();
+    change_manifest(&data.0, |m| {
+        m.schema = dataset::FINAL_SCHEMA.into();
+    });
+    rejection(&data.0, "freeze:");
+    change_manifest(&data.0, |m| {
+        m.freeze_sha256 = Some("b".repeat(64));
+        m.per_family = 16;
+    });
+    rejection(&data.0, "case_count:");
+}

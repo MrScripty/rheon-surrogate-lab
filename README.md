@@ -113,6 +113,27 @@ blind spot and predicts 4.245 Pa RMS pressure for zero RHS. [The diagnosis](docs
 separates observed defects, scale imbalance and limits of those explanations.
 Current checks: **18 Rust tests and 6 Python tests**, formatting and Clippy pass.
 
+## One bounded global-context candidate
+
+The preregistered follow-on in [ADR 0003](docs/decisions/0003-global-candidate.md)
+learns 335 positive gains in fixed global 3D cosine modes. It enforces zero response,
+linearity and gauge by construction. This geometry-specific spectral prior is
+stronger than a generic neural architecture. It uses no analytic inverse gains.
+
+```sh
+cargo build --release --locked
+python scripts/global_candidate.py data/smoke runs/global-v1
+```
+
+The command runs exactly 500 full-batch Adam steps (lr 0.05), balancing each
+training case through relative pressure and full-residual squared losses. It
+performs one final validation evaluation and no test prediction. Checkpoints,
+predictions and the pinned operator export used for the loss stay ignored.
+A useful raw initial guess need not meet PCG tolerances: corrected solve quality
+and total inference/transfer/solve/correction overhead are the eventual criterion.
+Conditional local upstream patch work leaves this repository's dependency pin
+unchanged and is not an upstream publication.
+
 ## Data format
 
 `manifest.json` declares schema, completion, source commits, seeds/families/splits,

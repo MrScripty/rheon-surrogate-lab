@@ -25,7 +25,7 @@ fn provenance() -> Result<String> {
 
 fn run() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
-    let usage = "usage: rheon-surrogate-lab generate DIR [PER_FAMILY=4] | verify DIR | evaluate[-dev] DIR PREDICTIONS_DIR | baselines-dev DIR OUTPUT_DIR";
+    let usage = "usage: rheon-surrogate-lab generate DIR [PER_FAMILY=4] | verify DIR | evaluate[-dev] DIR PREDICTIONS_DIR | baselines-dev DIR OUTPUT_DIR | export-operator OUTPUT_DIR";
     let command = args.get(1).context(usage)?;
     let root = Path::new(args.get(2).context(usage)?);
     let mut result = match command.as_str() {
@@ -34,6 +34,10 @@ fn run() -> Result<()> {
             dataset::summary(&dataset::generate(root, count, &provenance()?)?)
         }
         "verify" if args.len() == 3 => dataset::summary(&dataset::verify(root)?),
+        "export-operator" if args.len() == 3 => {
+            provenance()?;
+            rheon_surrogate_lab::diagnostics::export_operator(root)?
+        }
         "evaluate" if args.len() == 4 => dataset::evaluate_predictions(root, Path::new(&args[3]))?,
         "evaluate-dev" if args.len() == 4 => {
             dataset::evaluate_predictions_scoped(root, Path::new(&args[3]), false)?

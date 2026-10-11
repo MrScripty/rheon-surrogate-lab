@@ -25,6 +25,41 @@ pub fn operator_diagonal() -> Result<Vec<f64>> {
     Ok(diagonal)
 }
 
+/// Export the exact public operator action for a small fixed-grid training loss.
+/// This contains no inverse, solver or spectral eigenvalues.
+pub fn export_operator(output: &Path) -> Result<Value> {
+    ensure!(!output.exists(), "destination: already exists");
+    let g = ex::grid()?;
+    let op = PressureOperator::new(&g, ex::DENSITY)?;
+    let n = g.cell_len();
+    let mut matrix = vec![0.0_f64; n * n];
+    let mut basis = vec![0.0; n];
+    let mut product = basis.clone();
+    for column in 0..n {
+        basis[column] = 1.0;
+        op.apply_full(&basis, &mut product)?;
+        for row in 0..n {
+            matrix[row * n + column] = product[row];
+        }
+        basis[column] = 0.0;
+    }
+    let bytes: Vec<u8> = matrix.iter().flat_map(|a| a.to_le_bytes()).collect();
+    fs::create_dir_all(output)?;
+    fs::write(output.join("operator.bin"), &bytes)?;
+    let metadata = json!({"status":"complete","dtype":"<f8","shape":[n,n],
+        "storage":"row-major; row and column cell indexing X-fastest",
+        "counts_xyz":ex::COUNTS,"path":"operator.bin","sha256":dataset::hash(&bytes),
+        "bytes":bytes.len(),"operator_calls":n,"rheon_commit":ex::RHEON_COMMIT,
+        "experiment_commit":env!("LAB_COMMIT"),
+        "definition":"columns from pinned PressureOperator::apply_full on cell basis vectors; no gauge elimination or inverse",
+        "purpose":"full residual training loss and analytic gradient only; not used as an inference-time solver"});
+    fs::write(
+        output.join("operator.json"),
+        serde_json::to_vec_pretty(&metadata)?,
+    )?;
+    Ok(metadata)
+}
+
 /// Pressure at a distant observation cell responds to a boundary-valid single face.
 /// A radius-one local CNN cannot see either changed RHS cell at that observation
 /// or at its gauge anchor; the model output there is therefore exactly unchanged.

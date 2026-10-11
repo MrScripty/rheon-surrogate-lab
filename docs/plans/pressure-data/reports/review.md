@@ -51,3 +51,9 @@ Confirmed PCG iteration ranges, fitted-case gate ratios, zero-response and local
 measurements. Report distinguishes structural limitations from causal attribution,
 iterations from runtime, and old-test integrity checks from new model evaluation.
 The reserved test remains ungenerated and proposed model change is future work.
+
+Global candidate preregistration/source review confirmed DCT-II ordering,
+constant-mode omission, gauge-aware relative-loss gradient, exactly 500 updates
+and final-only validation. No analytic inverse coefficients or validation-driven
+updates. Reviewer requested prediction hashes and runtime metadata in the receipt;
+added before running. Reviewer did not train or evaluate the candidate.

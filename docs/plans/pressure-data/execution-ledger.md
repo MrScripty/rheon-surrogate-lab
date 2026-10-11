@@ -68,3 +68,11 @@ zero-input output (4.245 Pa RMS), and polynomial contribution 93.7% of zero-pred
 training squared error. Existing checkpoint predictions replay exactly; no data
 ordering/normalization/gauge bug found. Report/compact receipt accepted. No new
 test prediction evaluation, no reserved-test generation, no upstream/API change.
+
+2026-10-11 — Parent authorized one global-context candidate and conditional local
+warm-start patch if initial-guess quality improves. ADR 0003 fixes architecture,
+335 positive modal gains, 500 Adam steps/lr0.05, equal-case pressure/residual loss,
+and one final validation comparison before any training run. No analytic inverse
+or eigenvalues supplied. Exported A comes from pinned public apply_full only.
+19 Rust and 8 Python tests pass, including full-operator export and loss-gradient,
+zero/linearity/gauge and per-case amplitude-invariant loss checks; fmt/Clippy pass.

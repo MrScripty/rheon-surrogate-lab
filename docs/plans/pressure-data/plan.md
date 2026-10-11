@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Blocked. Current phase: publication; bounded local diagnostics accepted.
-Next slice: publish the committed local experiment after the user creates the exact authorized public repository.
-Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied.
+Plan status: Active. Current phase: one global-context candidate.
+Next slice: train the preregistered global spectral candidate for 500 CPU steps and evaluate validation once.
+Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance pending.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -28,6 +28,8 @@ existing-PR merge or immediate integration dependency is in scope.
 | A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | blocked |
 | A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | satisfied: reports/tiny-cpu-smoke.json and reports/heldout-cpu-smoke.json |
 | A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | satisfied: reports/qualification-diagnosis.md and reports/development-diagnostic.json |
+| A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | pending |
+| A9 | If initial-guess signal passes, isolated local Rheon API patch preserves zero-start contracts and permits matched-quality corrected solves | integration / representative Linux CPU / automated | conditional pending |
 
 ## Decisions, constraints and observations
 
@@ -98,16 +100,18 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    and docs/. Gate A7: fixed baselines, no new optimizer steps, train/validation
    comparisons, independent review and an untouched future test reservation.
    Parent explicitly authorized local continuation while publication is blocked.
-5. Controlled model improvement: Deferred; proposed one global-context, zero-response
-   candidate bounded to 500 CPU steps and one validation comparison, with explicit
-   pressure/full-residual loss and fixed baseline gates (see diagnostic report).
-   No extra model was trained in this slice. One-case loss reduction succeeded but
-   held-out physical qualification failed for all predictions. Broader receptive
-   fields and physics-aware validation are candidates; select using training and
-   validation only, preserve the test set. Checked warm-start API and matched-quality
-   comparison follow separately after useful initial-guess behavior is established.
-   UI numerical/model/error slices and Tuldok manifest
-   adapter, then Pantograph/Pumas integration are subsequent deferred work.
+5. Global candidate: Active. [ADR 0003](../../decisions/0003-global-candidate.md)
+   owns fixed architecture, 500-step budget, per-case relative pressure/residual
+   loss, one final validation evaluation and initial-guess thresholds. Write set:
+   scripts/global_candidate.py, scripts/test_global_candidate.py, src/diagnostics.rs,
+   src/main.rs, tests/contracts.rs, README and docs. No reserved-test generation.
+6. Conditional warm start: Planned only after the signal in ADR 0003 passes.
+   Separate task-owned /workspace/rheon-warmstart checkout and local branch;
+   patch/test/probe artifacts under patches/ and probes/ in this lab. No upstream
+   publication, no existing Rheon checkout edits, no Cargo dependency change.
+   API and matched-quality gates are ADR 0001/0003; compare full overhead honestly.
+7. UI numerical/model/error slices and Tuldok/Pantograph/Pumas integration remain
+   deferred and are not dependencies of the admitted slice.
 
 ## Blockers and re-plan triggers
 
@@ -123,6 +127,6 @@ The fresh local main branch is the retained experiment source pending push;
 no temporary worktree or shared-history rewrite is used.
 
 The development protocol and future test reservation are owned by
-[ADR 0002](../../decisions/0002-development-evaluation.md). Existing checkpoints
-are inspected without updates. Optional upstream initial-guess patch preparation
-is not needed to answer this diagnostic question and remains deferred.
+[ADR 0002](../../decisions/0002-development-evaluation.md). Existing local-CNN checkpoints remain unchanged. The current authorization adds
+one new global candidate and a conditional isolated warm-start patch; publication
+remains paused. The experiment solver dependency stays pinned throughout.

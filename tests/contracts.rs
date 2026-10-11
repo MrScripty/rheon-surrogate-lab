@@ -463,3 +463,33 @@ fn nonlocal_witness_changes_remote_pressure_despite_identical_local_inputs() {
             <= ex::ACTUAL_DIVERGENCE_LIMIT
     );
 }
+
+#[test]
+fn exported_operator_matches_public_action_including_gauge_row() {
+    let output = Temp::new();
+    let metadata = rheon_surrogate_lab::diagnostics::export_operator(&output.0).unwrap();
+    let bytes = fs::read(output.0.join("operator.bin")).unwrap();
+    assert_eq!(dataset::hash(&bytes), metadata["sha256"]);
+    let a: Vec<f64> = bytes
+        .chunks_exact(8)
+        .map(|b| f64::from_le_bytes(b.try_into().unwrap()))
+        .collect();
+    let g = ex::grid().unwrap();
+    let n = g.cell_len();
+    assert_eq!(a.len(), n * n);
+    let p: Vec<f64> = (0..n).map(|i| ((i * 17) % 31) as f64 / 31.0).collect();
+    let mut actual = vec![0.0; n];
+    PressureOperator::new(&g, ex::DENSITY)
+        .unwrap()
+        .apply_full(&p, &mut actual)
+        .unwrap();
+    for row in 0..n {
+        let exported = a[row * n..(row + 1) * n]
+            .iter()
+            .zip(&p)
+            .map(|(a, p)| a * p)
+            .sum::<f64>();
+        assert!((exported - actual[row]).abs() < 1e-14);
+    }
+    assert_ne!(actual[0], 0.0);
+}

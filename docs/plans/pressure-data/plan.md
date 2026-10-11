@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Experiment one closed; publication blocked and retries paused.
+Plan status: Experiment one closed; public source publication completed.
 Current phase: final evidence retained; no further optimization or integration slice opened.
-Acceptance status: all local generator/model/diagnostic/global-candidate/warm-start/final-evaluation gates satisfied as bounded experimental evidence; public publication remains blocked.
+Acceptance status: all generator/model/diagnostic/global-candidate/warm-start/final-evaluation gates satisfied as bounded experimental evidence; the requested public repository and pushed history are verified.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -25,7 +25,7 @@ existing-PR merge or immediate integration dependency is in scope.
 | A2 | Persisted data roundtrips; deterministic bytes; sampled corruptions rejected at named boundaries | contract / representative Linux CPU / automated | satisfied: 16 tests |
 | A3 | A clean committed CLI generates 18 cases and a new process verifies them | system / representative Linux CPU / automated | satisfied: reports/generator-smoke.json |
 | A4 | Independent numerical/source review; fmt, tests and Clippy pass | focused / representative Linux CPU / automated and manual review | satisfied: reports/review.md |
-| A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | blocked |
+| A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | satisfied: reports/publication.json |
 | A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | satisfied: reports/tiny-cpu-smoke.json and reports/heldout-cpu-smoke.json |
 | A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | satisfied: reports/qualification-diagnosis.md and reports/development-diagnostic.json |
 | A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | satisfied: reports/global-candidate.json |
@@ -95,7 +95,8 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    stats, gradient regression, tiny-overfit attempt and held-out numerical report.
    Status: Accepted as a runnable smoke path, not model quality. Keep data/model checkpoints ignored.
 3. Publish: existing repo Git configuration and exact requested remote only.
-   Gate: A5. Status: Blocked. No unrelated repository changes.
+   Gate: A5. Status: Accepted after owner created the exact repository. Its license
+   initialization is preserved. No unrelated repository changes.
 4. Bounded diagnostics: Accepted. Allowed write set: src/diagnostics.rs,
    src/dataset.rs, src/main.rs, src/lib.rs, tests/contracts.rs, scripts/, README
    and docs/. Gate A7: fixed baselines, no new optimizer steps, train/validation
@@ -129,18 +130,19 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
 
 ## Blockers and re-plan triggers
 
-Publication is paused until the user creates the exact empty public repo and
-write access exists. Parent instructed no creation retries, alternate destination
-or upstream publication. Preserve original source and recovery bundle. Project license selection belongs to the owner;
-no guessed license is added. Re-plan if fixed-grid targets fail actual divergence,
+The earlier creation block was resolved when the owner created the exact public
+repository with an Apache-2.0 license initialization. Its initial commit and
+license are preserved; publication used the existing authenticated integration
+without creation retries, alternate destinations or force. Source/recovery bundles
+are preserved. Upstream Rheon publication remains excluded. Re-plan if fixed-grid targets fail actual divergence,
 public API contract changes, dependencies require large provisioning, or data
 leakage/ownership findings invalidate the admission. Ordinary test fixes remain
 within the slice. Independent reviewer has no write set and returns findings.
 
-The fresh local main branch is the retained experiment source pending push;
+The local main branch and requested public main retain the experiment source;
 no temporary worktree or shared-history rewrite is used.
 
 The development protocol and future test reservation are owned by
 [ADR 0002](../../decisions/0002-development-evaluation.md). Existing local-CNN checkpoints remain unchanged. The admitted global candidate, isolated warm-start patch and frozen final
-comparison are complete; publication remains paused and no new optimization
+comparison and public source publication are complete; no new optimization
 slice is opened. The experiment solver dependency stays pinned throughout.

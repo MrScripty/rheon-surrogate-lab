@@ -160,3 +160,25 @@ Experiment1 is closed; final seeds exposed. Publication stays paused after the
 known403, root dependency unchanged, isolated API unpublished, original Rheon
 checkout untouched. A new recoverable source bundle and separate local evidence
 archive preserve closure without adding bulk data or binaries to git.
+
+2026-10-11 — Owner confirmed creation of the exact requested repository and
+requested publication. Authenticated GitHub inspection verified public
+MrScripty/rheon-surrogate-lab (id1414801167), main, push access, and one existing
+initialization8cb010dd060317bc160694e1e1a8d3bf11cac253 containing only LICENSE.
+The owner-selected Apache-2.0 file is preserved byte-for-byte. Normal merge
+02748ac4075d60d19afeb9f9f862981f33ee3d5a retains both that commit and experiment
+closuref80a7e871852cebfce9d22459e9a75ac511a7176. Normal push succeeded; ls-remote
+and GitHub metadata confirmed the public target and exact published SHA.
+No creation retry, force push, alternate destination, upstream Rheon operation,
+model update or final experiment rerun occurred.
+
+Publication history contains source/tests/docs/receipts and the tiny2950-byte
+candidate checkpoint, with no data/runs/target or large binary archives. Largest
+history blob97533bytes is the final comparison receipt. All34 frozen source hashes
+and both frozen binaries remain unchanged. GitHub reports0 configured workflows,
+0 runs,0 check runs and0 status entries; empty combined status says pending but
+there is no job to await. Local numerical validation remains the recorded20 Rust,
+14 Python and309 isolated Rheon tests. README/provenance/plan/issues now record
+successful publication and the owner's license choice. Historical closure
+receipts and recovery artifacts remain unchanged. reports/publication.json
+records the verified first publication; experiment1 stays closed.

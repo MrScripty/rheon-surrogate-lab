@@ -35,7 +35,8 @@ analytic baseline. These are one fixed box/operator and new seeds of an observed
 family. The [closing report](docs/plans/pressure-data/reports/first-experiment-closure.md)
 contains all results, timing scope, negative findings, evidence hashes and limits.
 [Frozen experiment instructions](experiments/final/README.md) preserve the exact
-checkpoint without retraining. Publication remains paused after the GitHub 403.
+checkpoint without retraining. Source and receipts are now public in
+[MrScripty/rheon-surrogate-lab](https://github.com/MrScripty/rheon-surrogate-lab).
 
 ## Run the reference experiment
 
@@ -252,14 +253,17 @@ later milestones, not dependencies of this repository.
 
 ## Publication and licensing
 
-Requested public destination: `https://github.com/MrScripty/rheon-surrogate-lab`.
-Creation is currently blocked: the authenticated integration returned
-`GraphQL: Resource not accessible by integration (createRepository)`. A push to
-the exact remote returned `Repository not found`. No alternate account or
-repository was used. Creation/push retries remain paused. Local source is committed;
-push requires that exact public repository to exist and the integration to have
-write access. Once the owner makes it available,
-run `git push -u origin main`; then verify the remote commit and public visibility.
+Public source: [MrScripty/rheon-surrogate-lab](https://github.com/MrScripty/rheon-surrogate-lab).
+The owner created this exact repository after the earlier integration creation
+denial. Its initial license commit is preserved alongside the complete experiment
+history, including closure commit `f80a7e871852cebfce9d22459e9a75ac511a7176`.
+Publication used a normal push with no history overwrite or alternate destination.
+The original closure receipts retain their historical publication-blocked state;
+[the publication receipt](docs/plans/pressure-data/reports/publication.json)
+records the later successful release of the source. No GitHub Actions workflows
+were configured at initial publication; the recorded validation was run locally.
 
-No project license has been selected; this repository does not invent one.
-Dependencies retain their own licenses. See [dependency provenance](THIRD_PARTY.md).
+The owner supplied the [Apache-2.0 project license](LICENSE) when creating the
+repository. Dependencies retain their own licenses. See
+[dependency provenance](THIRD_PARTY.md). The optional Rheon API patch remains a
+separate proposal; this publication changes no upstream Rheon code or dependency.

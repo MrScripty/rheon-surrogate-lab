@@ -1,7 +1,8 @@
 # Dependency provenance
 
-Author: Puma. New project license: not selected by the owner. No license field or
-license grant is invented. This source repository does not redistribute compiled binaries or a vendored
+Author: Puma. Project license: Apache-2.0, supplied by the owner in the public
+repository's initial commit `8cb010dd060317bc160694e1e1a8d3bf11cac253` and retained
+unchanged as [LICENSE](LICENSE). This source repository does not redistribute compiled binaries or a vendored
 solver. The isolated review patch contains limited upstream source context;
 its upstream Apache-2.0 license is retained in patches/RHEON-LICENSE. A future binary distribution must carry
 its applicable third-party license/notice materials; reassess at that boundary.
@@ -23,4 +24,6 @@ were consulted from MrScripty/Coding-Standards commit
 vendored standards package. The root dependency and original Rheon checkout remain
 unmodified. patches/ contains a separately identified local experimental change;
 its upstream source context remains subject to Rheon's Apache-2.0 terms. No project
-license grant is inferred from that patch or dependency.
+license grant is inferred from that patch or dependency; the root LICENSE is the
+owner's separate project choice. Frozen Cargo metadata remains unchanged from
+the evaluated source; no package-registry publication is part of this release.

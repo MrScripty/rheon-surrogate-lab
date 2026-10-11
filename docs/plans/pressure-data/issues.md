@@ -1,15 +1,15 @@
 # Issues and dispositions
 
-- PUB-1 — Blocked: authenticated GitHub integration cannot create the requested
-  public repository. Exact error: GraphQL: Resource not accessible by integration
-  (createRepository). Owner: repository account/integration administrator. Resolve
-  by creating the exact requested public repository with authorized access; no
-  different account/name or permission workaround. Local implementation continues.
+- PUB-1 — Resolved: the owner created public MrScripty/rheon-surrogate-lab.
+  Verified repository identity/visibility and normal-pushed the complete history,
+  preserving owner initialization8cb010d and experiment closuref80a7e8. Initial
+  published head02748ac matches the remote. No repository creation retry,
+  alternate destination or force push. See reports/publication.json.
 - API-1 — Local patch/probe accepted; upstream integration deferred. Pinned
   Rheon still zero-starts. patches/ contains the independently reviewed sealed-only
   initial-pressure API and tests; corrected solves qualify. Owner: Rheon maintainers.
-- LIC-1 — Open owner decision: new project license unspecified. No license grant
-  is invented. Dependencies' independent terms are documented in THIRD_PARTY.md.
+- LIC-1 — Resolved: owner initialization8cb010d supplied Apache-2.0 LICENSE,
+  preserved unchanged. Dependencies' independent terms remain in THIRD_PARTY.md.
 
 - MODEL-1 — Measured limitation, deferred improvement: shallow local CNN fails
   physical qualification for every predicted case; held-out test relative RMSE

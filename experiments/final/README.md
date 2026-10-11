@@ -1,5 +1,11 @@
 # Frozen first experiment
 
+**Closed on 2026-10-11.** [Full result](../../docs/plans/pressure-data/reports/first-experiment-closure.md)
+and [outcome record](outcome.json) retain the frozen final evaluation. All reserved
+seeds are now exposed. No post-test tuning, rebuilding or evaluation rerun formed
+part of closure. The commands below record the original procedure; running
+`freeze` against the existing freeze intentionally fails rather than replacing it.
+
 Author: Puma. Candidate checkpoint is the exact335-parameter,500-step global-v1
 model from cd6f61adceca5fca9fb479790b2931fa81782362. The2950-byte weights.npz is a
 small intentional exception to ignored checkpoints so recovery needs no training.
@@ -41,3 +47,24 @@ The reservation file under docs/ is an immutable declaration at freeze time;
 final materialization/completion is recorded separately with dataset/freeze hashes.
 Only same-family new-seed generalization is tested. No upstream publication,
 root dependency change, GitHub retry or further optimization is part of closure.
+
+## Local recovery
+
+The closure bundle `/workspace/rheon-surrogate-lab-closed-experiment.bundle`
+contains full local source history, the exact tiny checkpoint, reviewable API
+patch and final receipts. All earlier bundles are retained. The separate
+`/workspace/rheon-surrogate-lab-final-evidence.tar.gz` preserves the original
+final arrays, journal and both frozen binaries outside git; SHA-256 sidecars
+accompany these artifacts. Extract only into a new recovery directory.
+
+```sh
+git bundle verify /workspace/rheon-surrogate-lab-closed-experiment.bundle
+git clone /workspace/rheon-surrogate-lab-closed-experiment.bundle /tmp/rheon-lab-recovery
+tar -tzf /workspace/rheon-surrogate-lab-final-evidence.tar.gz
+```
+
+The source bundle is usable without the evidence archive. Ordinary generator
+commands are in the root README. Optional probe builds require the separate
+patch checkout described in patches/README.md. Exact binary hashes are specific
+to this recorded build; a future build needs a distinct replication freeze and
+must not overwrite or pretend to be this original untouched-test execution.

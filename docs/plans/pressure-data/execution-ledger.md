@@ -131,3 +131,32 @@ included; resident-model calls are lower in this tiny scope. This did not change
 the candidate or protocol. Independent review found no material blocker and
 verified receipt hashes/summary/timing accounting. Metadata/wording corrections
 and a source/binary/checkpoint tamper-rejection test precede the committed freeze.
+
+2026-10-11 — Final admission complete:20 Rust/14 Python tests, fmt and strict
+Clippy passed; independent API/source/development review approved. Clean source
+44c470178a7411cea9b812fe485020af59094ff6 built the exact frozen binaries.
+Freeze-only commit af6d2a10cd94b2a69b44bc70b470ea611ecc069c preceded any reserved
+field generation; independent reviewer verified source/checkpoint/binary hashes
+and the absent final output directory. Then `python3 scripts/final_evaluate.py
+generate` and `python3 scripts/final_evaluate.py run` each completed once.
+
+Generated and verified16 final-test cases/128 arrays/233728 raw bytes, seeds
+9000–9015; manifest620cb224547e93c67e2b54a8aa28250eabcd0f26430d63d5d16baae99a2d3192.
+Final comparison:96 quality+2304 timed projections. Analytic and both zero/warm
+PCG paths qualify16/16; raw learned15/16 fails seed9005's linear gate by3.70%.
+Each warm preconditioner needs1 total iteration; zero Jacobi1210 andSGS472.
+Maximum actual f32 divergence1.6142924619e-7 s^-1. No solver errors, no tuning,
+no source/checkpoint/tolerance changes or further optimization after test access.
+
+Fresh Python/model medians per16-casebatch: analytic81.702ms, zeroJ59.700ms,
+warmJ83.866ms, zeroSGS51.117ms, warmSGS81.277ms, raw82.834ms. Resident medians:
+5.197,27.975,5.477,19.723,5.458,5.191ms respectively; full startup/quality/call/
+teardown amortization is separately reported. Cold OS caches are not claimed.
+No learned advantage over the analytic baseline or simulator acceleration is
+established. Independent read-only final audit recomputed hashes, numerical
+fingerprints, acceptance, balanced order, statistics and accounting: no material
+blocker. Final receipts/report/outcome preserve both positive and negative results.
+Experiment1 is closed; final seeds exposed. Publication stays paused after the
+known403, root dependency unchanged, isolated API unpublished, original Rheon
+checkout untouched. A new recoverable source bundle and separate local evidence
+archive preserve closure without adding bulk data or binaries to git.

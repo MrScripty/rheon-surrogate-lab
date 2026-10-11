@@ -23,7 +23,14 @@
   One global modal candidate now completes the bounded development comparison
   and succeeds as an initial guess under patched PCG. Its fixed-operator spectral
   prior is a limitation; no general model/simulator claim follows.
-- TEST-1 — Protocol updated: original v1 test has been exposed. New seeds
-  9000–9015 reserved but not generated; materialize only after freezing choices.
+- TEST-1 — Closed: original v1 test and final seeds9000–9015 are now exposed.
+  Final seeds were materialized once after committed freeze af6d2a1, with no
+  subsequent tuning. The reservation JSON remains its freeze-time declaration;
+  experiments/final/outcome.json records consumption and closure.
   Existing data integrity checks may read old test references but development
   emits no fresh model test metrics.
+- FINAL-1 — Measured negative findings retained: raw learned fails the linear
+  gate on seed9005 by3.70%; both corrected paths qualify all16. Fresh learned
+  paths are slower than zero-PCG; no established advantage over the analytic
+  baseline. No tolerance adjustment or follow-on optimization is authorized by
+  experiment closure. See reports/first-experiment-closure.md.

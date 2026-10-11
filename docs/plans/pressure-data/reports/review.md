@@ -89,3 +89,25 @@ medians and amortized costs recompute. Corrected one receipt wording error: the
 2-row development smoke's calculation was correct but generic text said12 calls;
 source now says all timed calls. Reserved seeds remain unmaterialized at review.
 experiments/final/review.json records the pre-freeze approval and evidence.
+
+Final freeze and receipt audit: independent reviewer verified freeze-only commit
+af6d2a10cd94b2a69b44bc70b470ea611ecc069c immediately follows reviewed source
+44c470178a7411cea9b812fe485020af59094ff6; all34 source and2 binary hashes match,
+checkpoint matches the original500-step candidate, and final destination was
+absent before generation. After the single frozen run, read-only receipt audit
+found no material blocker. Confirmed16 exact final IDs,144 journal batches,
+12-row balanced order and alternating regimes, every timed numerical fingerprint,
+all summaries/stage means/medians/ranges and resident amortized accounting.
+Five primary paths qualify16/16; raw learned15/16 fails seed9005's linear gate
+by3.70% while both divergence gates pass. All25 repeated failures are retained:
+95/96 quality and2280/2304 timed projections qualify. Learned fresh-process costs
+exceed zero-PCG; resident calls improve this pipeline measurement but establish
+no advantage over the analytic baseline. Final audit ran no generation,
+training, evaluation or builds and made no source edits. Final seeds are now
+exposed; immutable reservation/review/freeze files retain their historical state.
+
+Closing prose audit: reviewer checked first-experiment-closure.md and README
+against the saved evidence. Counts, qualification, iterations, residuals,
+timing ranges and amortization match. Retained comparison and generation JSON
+are byte-identical to originals. No material discrepancy or numerical overclaim;
+closure evidence complete. No new experiment or edit was performed by reviewer.

@@ -12,6 +12,31 @@ It never reconstructs preprojection input from already-projected simulation
 states. The generator uses the dependency directly, with no vendored solver.
 An optional isolated API patch for the later warm-start experiment is kept separate.
 
+**Experiment one is closed.** Independent review and a committed freeze preceded
+the final 16 new-seed cases. Both learned warm-start paths qualified all 16;
+raw learned pressure qualified 15. An analytic spectral baseline qualified all
+16 without training and with much smaller residual. There was no post-test tuning.
+
+| Path | Qualified | Fresh Python/model median | Resident-model median | Resident total amortized |
+| --- | ---: | ---: | ---: | ---: |
+| Analytic spectral | 16/16 | 81.70 ms | 5.20 ms | 12.92 ms |
+| Zero + Jacobi | 16/16 | 59.70 ms | 27.98 ms | 33.21 ms |
+| Learned + Jacobi | 16/16 | 83.87 ms | 5.48 ms | 12.66 ms |
+| Zero + SGS | 16/16 | 51.12 ms | 19.72 ms | 24.80 ms |
+| Learned + SGS | 16/16 | 81.28 ms | 5.46 ms | 13.21 ms |
+| Raw learned (diagnostic) | 15/16 | 82.83 ms | 5.19 ms | 12.34 ms |
+
+Times are per **16-case batch**, with 12 balanced repetitions per regime.
+Fresh timing includes Python/import/model initialization; resident amortization
+includes startup, quality/warm-up, all calls and teardown. Native processes are
+fresh for every batch; OS caches are uncontrolled. Learned warm starts were slower
+than zero-PCG in fresh processes and showed no established advantage over the
+analytic baseline. These are one fixed box/operator and new seeds of an observed
+family. The [closing report](docs/plans/pressure-data/reports/first-experiment-closure.md)
+contains all results, timing scope, negative findings, evidence hashes and limits.
+[Frozen experiment instructions](experiments/final/README.md) preserve the exact
+checkpoint without retraining. Publication remains paused after the GitHub 403.
+
 ## Run the reference experiment
 
 Prerequisites: Git, Rust 1.92.0 with Cargo (the toolchain file selects it), and
@@ -102,9 +127,10 @@ pressure, one diagonal inverse step, and pinned Rheon Jacobi/SGS solves, with
 all residual/divergence gates. It also checks checkpoint replay, zero-input and
 linearity behavior, centered pressure error, and a deterministic nonlocality
 witness. It reads no test predictions. Full dataset integrity verification is
-still required. [ADR 0002](docs/decisions/0002-development-evaluation.md) reserves
-16 new test seeds that have not been generated; old test results below remain
-historical. The reservation does not claim a new independent physics family.
+still required. [ADR 0002](docs/decisions/0002-development-evaluation.md) reserved
+16 new test seeds, subsequently generated only after the committed final freeze.
+That final set is now exposed; old test results below remain historical.
+The reservation did not claim a new independent physics family.
 
 The first diagnostic run used **0 new optimizer steps** and took 0.339 s total.
 Both reference methods qualified all 12 development cases. On validation, mean
@@ -112,7 +138,8 @@ relative residual was 1.000 for zero pressure, 0.758 for one diagonal inverse
 step, and 8.623 for the existing eight-case CNN. The CNN has a measured nonlocal
 blind spot and predicts 4.245 Pa RMS pressure for zero RHS. [The diagnosis](docs/plans/pressure-data/reports/qualification-diagnosis.md)
 separates observed defects, scale imbalance and limits of those explanations.
-Current lab checks: **19 Rust tests and 9 Python tests**, formatting and Clippy pass.
+Final pre-freeze lab checks: **20 Rust tests and 14 Python tests**, formatting and
+Clippy pass.
 
 ## One bounded global-context candidate
 
@@ -141,7 +168,8 @@ passes the preregistered initial-guess signal. See the [recorded receipt](docs/p
 
 The global basis is tailored to this uniform sealed box and effectively learns
 its modal inverse response. This is a fixed-operator result, not evidence for
-unseen geometries or a general neural simulator. Reserved test seeds stay unused.
+unseen geometries or a general neural simulator. This development run left the
+reserved seeds unused; their later frozen comparison is reported above.
 
 ## Isolated local warm-start experiment
 
@@ -185,8 +213,11 @@ families need a deliberate schema/generator version. Hashes detect corruption;
 they do not authenticate who produced a manifest. Byte determinism is tested on
 the same platform/toolchain, not promised across different libm implementations.
 Bulk data and checkpoints belong in ignored `data/` and `runs/` directories.
+The final schema `rheon-pressure-final-v1` binds its exact 16-seed plan to the
+committed freeze hash. One tiny 2,950-byte final checkpoint is intentionally
+tracked for recovery; full generation/comparison receipts are also retained.
 
-## Status and limits
+## Historical CNN result and limits
 
 The generator checkpoint passes 16 Rust contract tests, formatting and Clippy.
 A clean-commit CLI run generated and reverified all 18 cases (144 arrays, 262,944
@@ -207,7 +238,7 @@ wall times were under one second in this environment; this is not a benchmark
 or a solver speed comparison. See [generator receipt](docs/plans/pressure-data/reports/generator-smoke.json),
 [one-case receipt](docs/plans/pressure-data/reports/tiny-cpu-smoke.json),
 [held-out receipt](docs/plans/pressure-data/reports/heldout-cpu-smoke.json),
-[the active plan](docs/plans/pressure-data/plan.md) and
+[the completed local plan](docs/plans/pressure-data/plan.md) and
 [numerical/source review](docs/plans/pressure-data/reports/review.md).
 
 No acceleration, general CFD accuracy or learned-simulation claim is made. The grid, geometry, boundary conditions, density and time step are fixed.
@@ -225,8 +256,9 @@ Requested public destination: `https://github.com/MrScripty/rheon-surrogate-lab`
 Creation is currently blocked: the authenticated integration returned
 `GraphQL: Resource not accessible by integration (createRepository)`. A push to
 the exact remote returned `Repository not found`. No alternate account or
-repository was used. Local source is committed; push requires that exact public
-repository to exist and the integration to have write access. Once available,
+repository was used. Creation/push retries remain paused. Local source is committed;
+push requires that exact public repository to exist and the integration to have
+write access. Once the owner makes it available,
 run `git push -u origin main`; then verify the remote commit and public visibility.
 
 No project license has been selected; this repository does not invent one.

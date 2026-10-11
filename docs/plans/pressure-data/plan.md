@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Active bounded final evaluation; publication blocked. Current phase: pre-freeze independent qualification.
-Next slice: qualify the final harness on development data, freeze all artifacts, materialize only the reserved seeds and close the experiment without tuning.
-Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance satisfied; conditional warm-start acceptance satisfied.
+Plan status: Experiment one closed; publication blocked and retries paused.
+Current phase: final evidence retained; no further optimization or integration slice opened.
+Acceptance status: all local generator/model/diagnostic/global-candidate/warm-start/final-evaluation gates satisfied as bounded experimental evidence; public publication remains blocked.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -30,8 +30,7 @@ existing-PR merge or immediate integration dependency is in scope.
 | A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | satisfied: reports/qualification-diagnosis.md and reports/development-diagnostic.json |
 | A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | satisfied: reports/global-candidate.json |
 | A9 | If initial-guess signal passes, isolated local Rheon API patch preserves zero-start contracts and permits matched-quality corrected solves | integration / representative Linux CPU / automated | satisfied: reports/corrected-solve-probe.json |
-
-| A10 | Freeze reviewed artifacts before reserved-seed materialization; report final same-family comparison and full timing scope without tuning | system / representative Linux CPU / automated and independent review | active, pre-freeze |
+| A10 | Freeze reviewed artifacts before reserved-seed materialization; report final same-family comparison and full timing scope without tuning | system / representative Linux CPU / automated and independent review | satisfied: reports/first-experiment-closure.md, final-comparison.json and final-generation.json |
 
 ## Decisions, constraints and observations
 
@@ -115,7 +114,7 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
 7. UI numerical/model/error slices and Tuldok/Pantograph/Pumas integration remain
    deferred and are not dependencies of the admitted slice.
 
-8. Final closure: Active, explicitly authorized by parent. ADR0005 owns the exact
+8. Final closure: Accepted and closed, explicitly authorized by parent. ADR0005 owns the exact
    checkpoint, final16-seed schema, analytic baseline, fixed comparisons and
    cold/resident-model timing. Allowed writes: src/dataset.rs/src/main.rs,
    scripts/final_*.py and tests, optional probe source, experiments/final/, README
@@ -123,6 +122,10 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    committed freeze; then exactly reserved final generation and frozen comparison.
    No model updates or code/tolerance changes after final access. Keep publication
    paused. Final conclusion must include failures and analytic-baseline limits.
+   Outcome: all five primary paths qualify16/16; raw learned15/16. Final evaluation
+   performs zero optimizer steps. Fresh learned paths cost more than zero-PCG;
+   no learned advantage over the analytic baseline is established. Reserved seeds
+   are now exposed, and no additional optimization work is opened.
 
 ## Blockers and re-plan triggers
 
@@ -138,6 +141,6 @@ The fresh local main branch is the retained experiment source pending push;
 no temporary worktree or shared-history rewrite is used.
 
 The development protocol and future test reservation are owned by
-[ADR 0002](../../decisions/0002-development-evaluation.md). Existing local-CNN checkpoints remain unchanged. The current authorization adds
-one new global candidate and a conditional isolated warm-start patch; publication
-remains paused. The experiment solver dependency stays pinned throughout.
+[ADR 0002](../../decisions/0002-development-evaluation.md). Existing local-CNN checkpoints remain unchanged. The admitted global candidate, isolated warm-start patch and frozen final
+comparison are complete; publication remains paused and no new optimization
+slice is opened. The experiment solver dependency stays pinned throughout.

@@ -2,6 +2,11 @@
 
 Status: accepted. Author: Puma. Date: 2026-10-11.
 
+Historical reservation fulfilled: ADR0005 froze the later final comparison;
+seeds9000–9015 were generated after freeze commit af6d2a1 and are now exposed.
+The statements below describe the original development admission. The immutable
+reservation JSON is retained; experiments/final/outcome.json records closure.
+
 The first two smoke runs exposed the v1 test results. Treat those as historical
 observations, not an untouched final evaluation for future choices. Development
 now consumes and evaluates training/validation predictions only by default.

@@ -1,4 +1,6 @@
 import unittest
+import tempfile
+from pathlib import Path
 import numpy as np
 import train_cpu as model
 
@@ -49,6 +51,35 @@ class ModelContracts(unittest.TestCase):
         target = np.arange(8, dtype=float).reshape(1, 8) / 8
         history = model.train(model.initialize(hidden=4), patches, target, 100)
         self.assertLess(history[-1]["normalized_mse"], history[0]["normalized_mse"] * 0.01)
+
+    def test_default_consumer_skips_test_before_reading_arrays(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            values = np.arange(8, dtype="<f8")
+            values.tofile(root / "field.bin")
+            array = {"path": "field.bin", "sha256": model.digest(root / "field.bin"),
+                     "dtype": "<f8", "shape_xyz": [2, 2, 2]}
+            manifest = {"cases": [
+                {"spec": {"id": "train", "split": "train"}, "arrays": {"rhs": array, "pressure": array}},
+                {"spec": {"id": "test", "split": "test"}, "arrays": {
+                    "rhs": {**array, "path": "not-readable-test.bin"}, "pressure": array}},
+            ]}
+            self.assertEqual([c["id"] for c in model.load_cases(root, manifest)], ["train"])
+            with self.assertRaises(FileNotFoundError):
+                model.load_cases(root, manifest, include_test=True)
+
+    def test_radius_one_model_cannot_see_remote_rhs_change(self):
+        zero = np.zeros((6, 7, 8))
+        remote = zero.copy()
+        remote[4, 5, 6], remote[4, 5, 7] = -1, 1
+        norm = {"rhs_mean": 0, "rhs_std": 1, "pressure_rms": 1}
+        cases = [{"rhs": rhs, "pressure": zero} for rhs in (zero, remote)]
+        patches, _ = model.encode(cases, norm)
+        index = 3 + 8 * (3 + 7 * 2)
+        np.testing.assert_array_equal(patches[0, index], patches[1, index])
+        np.testing.assert_array_equal(patches[0, 0], patches[1, 0])
+        predictions = model.forward(model.initialize(), patches)[0]
+        self.assertEqual(predictions[0, index], predictions[1, index])
 
 
 if __name__ == "__main__":

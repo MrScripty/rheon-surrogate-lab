@@ -19,10 +19,10 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def load_cases(root, manifest):
+def load_cases(root, manifest, include_test=False):
     cases = []
     for entry in manifest["cases"]:
-        if entry["spec"]["split"] == "check":
+        if entry["spec"]["split"] == "check" or (entry["spec"]["split"] == "test" and not include_test):
             continue
         fields = {}
         for name in ("rhs", "pressure"):
@@ -151,6 +151,7 @@ def main():
     parser.add_argument("output", type=Path)
     parser.add_argument("--steps", type=int, default=200)
     parser.add_argument("--tiny-overfit", action="store_true", help="fit the first training case only; report all cases separately")
+    parser.add_argument("--include-test", action="store_true", help="explicit final evaluation only; development defaults to train/validation")
     parser.add_argument("--lab-bin", type=Path, default=Path("target/release/rheon-surrogate-lab"))
     args = parser.parse_args()
     if not 1 <= args.steps <= 1000:
@@ -163,7 +164,7 @@ def main():
     verification = run_physics(binary, "verify", args.dataset)
     manifest_path = args.dataset / "manifest.json"
     manifest_sha = digest(manifest_path)
-    cases = load_cases(args.dataset, json.loads(manifest_path.read_text()))
+    cases = load_cases(args.dataset, json.loads(manifest_path.read_text()), include_test=args.include_test)
     start = time.perf_counter()
     normalization = fit_normalization(cases)
     patches, targets = encode(cases, normalization)
@@ -188,7 +189,7 @@ def main():
         p.astype("<f8").tofile(prediction_dir / f'{case["id"]}.bin')
     np.savez(args.output / "weights.npz", **params)
     start = time.perf_counter()
-    physics = run_physics(binary, "evaluate", args.dataset, prediction_dir)
+    physics = run_physics(binary, "evaluate" if args.include_test else "evaluate-dev", args.dataset, prediction_dir)
     physics_seconds = time.perf_counter() - start
     if digest(manifest_path) != manifest_sha:
         raise ValueError("dataset manifest changed during run")
@@ -197,6 +198,8 @@ def main():
     summary = {}
     for split in ("train", "validation", "test"):
         subset = [case for case in physics["cases"] if case["split"] == split]
+        if not subset:
+            continue
         summary[split] = {
             "cases": len(subset),
             "mean_pressure_rmse_pa": float(np.mean([c["pressure_rmse_pa"] for c in subset])),
@@ -214,6 +217,7 @@ def main():
         "prediction_sha256": {c["id"]: digest(prediction_dir / f'{c["id"]}.bin') for c in cases},
         "normalization": normalization, "optimizer": "full-batch Adam lr=0.01 beta=(0.9,0.999) eps=1e-8",
         "mode": "tiny_overfit" if args.tiny_overfit else "heldout_smoke",
+        "evaluation_scope": "all_noncheck" if args.include_test else "train_validation_only",
         "training_case_ids": [cases[i]["id"] for i in train_indices], "steps": args.steps,
         "history": history, "final_to_initial_training_mse": history[-1]["normalized_mse"] / history[0]["normalized_mse"],
         "split_metrics": summary, "physics": physics,

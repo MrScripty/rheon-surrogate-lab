@@ -75,7 +75,8 @@ not a claim that a local receptive field captures the global pressure solve.
 Normalization records all training IDs and is fitted only on training data.
 The tiny mode updates weights using just the first training case; remaining
 training cases are unoptimized in that run. Validation/test fields never enter
-optimizer updates or fitted statistics. No checkpoint selection or hyperparameter
+optimizer updates or fitted statistics. Development runs now omit test predictions
+by default; `--include-test` is an explicit final-evaluation option. No checkpoint selection or hyperparameter
 search uses test results. Runs save ignored weights, prediction arrays and a JSON
 receipt with source/dataset/weight hashes, losses, normalization, raw physics
 metrics and limited timing. `evaluate` also works on a directory of per-case
@@ -84,6 +85,25 @@ little-endian f64 pressure predictions:
 ```sh
 target/release/rheon-surrogate-lab evaluate data/smoke runs/heldout/predictions
 ```
+
+## Diagnose qualification without training
+
+Existing checkpoints can be compared with five fixed nonlearned baselines using
+only training and validation cases:
+
+```sh
+cargo build --release --locked
+python scripts/diagnose_cpu.py data/smoke runs/diagnostic runs/tiny runs/heldout
+```
+
+This performs zero optimizer steps. It reports zero pressure, training-mean
+pressure, one diagonal inverse step, and pinned Rheon Jacobi/SGS solves, with
+all residual/divergence gates. It also checks checkpoint replay, zero-input and
+linearity behavior, centered pressure error, and a deterministic nonlocality
+witness. It reads no test predictions. Full dataset integrity verification is
+still required. [ADR 0002](docs/decisions/0002-development-evaluation.md) reserves
+16 new test seeds that have not been generated; old test results below remain
+historical. The reservation does not claim a new independent physics family.
 
 ## Data format
 

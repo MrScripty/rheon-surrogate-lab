@@ -397,3 +397,69 @@ fn variation_oracle_does_not_wrap_rows_or_planes() {
     assert!(!varies_on_axis(&z, shape, 1));
     assert!(varies_on_axis(&z, shape, 2));
 }
+
+#[test]
+fn development_baselines_exclude_test_predictions_and_reference_solves_qualify() {
+    let data = fixture();
+    let output = Temp::new();
+    let report = rheon_surrogate_lab::diagnostics::baselines(&data.0, &output.0).unwrap();
+    assert_eq!(report["scope"], "train_validation_only");
+    assert_eq!(report["methods"].as_array().unwrap().len(), 5);
+    for method in report["methods"].as_array().unwrap() {
+        let rows = method["evaluation"]["cases"].as_array().unwrap();
+        assert_eq!(rows.len(), 3);
+        assert!(
+            rows.iter()
+                .all(|c| c["split"] != "test" && c["split"] != "check")
+        );
+        assert_eq!(
+            fs::read_dir(output.0.join(method["method"].as_str().unwrap()))
+                .unwrap()
+                .count(),
+            3
+        );
+        if ["jacobi_pcg", "sgs_pcg"].contains(&method["method"].as_str().unwrap()) {
+            assert!(rows.iter().all(|c| c["reference_qualified"] == true));
+        }
+    }
+    assert_eq!(report["train_mean_fit_ids"].as_array().unwrap().len(), 2);
+}
+
+#[test]
+fn nonlocal_witness_changes_remote_pressure_despite_identical_local_inputs() {
+    let witness = rheon_surrogate_lab::diagnostics::nonlocal_witness().unwrap();
+    assert!(
+        witness["reference_pressure_at_observation_pa"]
+            .as_f64()
+            .unwrap()
+            .abs()
+            > 1e-5
+    );
+    let b: Vec<f64> = witness["rhs"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_f64().unwrap())
+        .collect();
+    assert_eq!(b.iter().filter(|b| **b != 0.0).count(), 2);
+    assert_eq!(b.iter().sum::<f64>(), 0.0);
+    for center in [[0_i32, 0, 0], [3, 3, 2]] {
+        for z in (center[2] - 1)..=(center[2] + 1) {
+            for y in (center[1] - 1)..=(center[1] + 1) {
+                for x in (center[0] - 1)..=(center[0] + 1) {
+                    if x >= 0 && y >= 0 && z >= 0 {
+                        let index =
+                            x as usize + ex::COUNTS[0] * (y as usize + ex::COUNTS[1] * z as usize);
+                        assert_eq!(b[index], 0.0);
+                    }
+                }
+            }
+        }
+    }
+    assert!(
+        witness["metrics"]["corrected_f32_divergence_max"]
+            .as_f64()
+            .unwrap()
+            <= ex::ACTUAL_DIVERGENCE_LIMIT
+    );
+}

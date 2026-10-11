@@ -239,7 +239,7 @@ fn read_f32(root: &Path, case: &Case, name: &str) -> Result<Vec<f32>> {
         .map(|b| f32::from_le_bytes(b.try_into().unwrap()))
         .collect())
 }
-fn read_f64(root: &Path, case: &Case, name: &str) -> Result<Vec<f64>> {
+pub(crate) fn read_f64(root: &Path, case: &Case, name: &str) -> Result<Vec<f64>> {
     Ok(read_array(root, case, name)?
         .chunks_exact(8)
         .map(|b| f64::from_le_bytes(b.try_into().unwrap()))
@@ -335,12 +335,21 @@ pub fn summary(manifest: &Manifest) -> Value {
 
 /// Measure raw model predictions with Rheon, without granting reference qualification.
 pub fn evaluate_predictions(root: &Path, predictions: &Path) -> Result<Value> {
+    evaluate_predictions_scoped(root, predictions, true)
+}
+
+/// Development evaluation never opens test prediction files or reports test metrics.
+pub fn evaluate_predictions_scoped(
+    root: &Path,
+    predictions: &Path,
+    include_test: bool,
+) -> Result<Value> {
     let manifest = verify(root)?;
     let g = ex::grid()?;
     let op = rheon::PressureOperator::new(&g, ex::DENSITY)?;
     let mut cases = Vec::new();
     for case in &manifest.cases {
-        if case.spec.split == "check" {
+        if case.spec.split == "check" || (!include_test && case.spec.split == "test") {
             continue;
         }
         let bytes = read_regular(
@@ -382,6 +391,14 @@ pub fn evaluate_predictions(root: &Path, predictions: &Path) -> Result<Value> {
             .sum::<f64>()
             / p.len() as f64)
             .sqrt();
+        let error: Vec<f64> = p.iter().zip(&target).map(|(p, t)| p - t).collect();
+        let mean_error = error.iter().sum::<f64>() / error.len() as f64;
+        let centered_rmse = (error.iter().map(|e| (e - mean_error).powi(2)).sum::<f64>()
+            / error.len() as f64)
+            .sqrt();
+        let linear_limit = ex::settings()
+            .absolute_residual
+            .max(ex::settings().relative_residual * case.metrics.rhs_l2);
         ensure!(
             [
                 residual_l2,
@@ -396,7 +413,12 @@ pub fn evaluate_predictions(root: &Path, predictions: &Path) -> Result<Value> {
             "prediction: nonfinite metrics"
         );
         cases.push(json!({"id": case.spec.id, "split": case.spec.split, "pressure_rmse_pa": rmse,
+            "pressure_error_mean_pa": mean_error, "pressure_centered_rmse_pa": centered_rmse,
             "relative_pressure_rmse": if target_rms > 0.0 {Some(rmse/target_rms)} else {None},
+            "relative_residual_l2": if case.metrics.rhs_l2 > 0.0 {Some(residual_l2/case.metrics.rhs_l2)} else {None},
+            "linear_gate_ratio": residual_l2/linear_limit,
+            "predicted_divergence_gate_ratio": predicted/ex::settings().divergence_limit,
+            "actual_divergence_gate_ratio": divergence/ex::ACTUAL_DIVERGENCE_LIMIT,
             "full_residual_l2": residual_l2, "full_residual_max": residual_max,
             "predicted_divergence_max": predicted, "corrected_f32_divergence_max": divergence,
             "reference_qualified": residual_l2 <= ex::settings().absolute_residual.max(ex::settings().relative_residual*case.metrics.rhs_l2)
@@ -404,6 +426,7 @@ pub fn evaluate_predictions(root: &Path, predictions: &Path) -> Result<Value> {
     }
     Ok(
         json!({"status": "raw_predictions_measured", "warm_start": "unavailable in pinned Rheon",
+        "scope": if include_test {"all_noncheck"} else {"train_validation_only"},
         "measurement": "no acceleration or matched-tolerance timing claim", "cases": cases}),
     )
 }

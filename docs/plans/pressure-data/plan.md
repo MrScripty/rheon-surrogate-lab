@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Blocked. Current phase: publication.
-Next slice: publish the committed experiment to the exact authorized public repository once access exists.
-Acceptance status: blocked (publication); local generator/model acceptance satisfied.
+Plan status: Active. Current phase: bounded development diagnostics.
+Next slice: commit and run the predeclared training/validation baseline and unchanged-checkpoint diagnostic comparison.
+Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance pending.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -27,6 +27,7 @@ existing-PR merge or immediate integration dependency is in scope.
 | A4 | Independent numerical/source review; fmt, tests and Clippy pass | focused / representative Linux CPU / automated and manual review | satisfied: reports/review.md |
 | A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | blocked |
 | A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | satisfied: reports/tiny-cpu-smoke.json and reports/heldout-cpu-smoke.json |
+| A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | pending |
 
 ## Decisions, constraints and observations
 
@@ -92,7 +93,12 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    Status: Accepted as a runnable smoke path, not model quality. Keep data/model checkpoints ignored.
 3. Publish: existing repo Git configuration and exact requested remote only.
    Gate: A5. Status: Blocked. No unrelated repository changes.
-4. Controlled model improvement: Deferred. One-case loss reduction succeeded but
+4. Bounded diagnostics: Active. Allowed write set: src/diagnostics.rs,
+   src/dataset.rs, src/main.rs, src/lib.rs, tests/contracts.rs, scripts/, README
+   and docs/. Gate A7: fixed baselines, no new optimizer steps, train/validation
+   comparisons, independent review and an untouched future test reservation.
+   Parent explicitly authorized local continuation while publication is blocked.
+5. Controlled model improvement: Deferred. One-case loss reduction succeeded but
    held-out physical qualification failed for all predictions. Broader receptive
    fields and physics-aware validation are candidates; select using training and
    validation only, preserve the test set. Checked warm-start API and matched-quality
@@ -102,8 +108,9 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
 
 ## Blockers and re-plan triggers
 
-Publication requires createRepository authorization or user creation of the exact
-public repo plus write access. Project license selection belongs to the owner;
+Publication is paused until the user creates the exact empty public repo and
+write access exists. Parent instructed no creation retries, alternate destination
+or upstream publication. Preserve original source and recovery bundle. Project license selection belongs to the owner;
 no guessed license is added. Re-plan if fixed-grid targets fail actual divergence,
 public API contract changes, dependencies require large provisioning, or data
 leakage/ownership findings invalidate the admission. Ordinary test fixes remain
@@ -111,3 +118,8 @@ within the slice. Independent reviewer has no write set and returns findings.
 
 The fresh local main branch is the retained experiment source pending push;
 no temporary worktree or shared-history rewrite is used.
+
+The development protocol and future test reservation are owned by
+[ADR 0002](../../decisions/0002-development-evaluation.md). Existing checkpoints
+are inspected without updates. Optional upstream initial-guess patch preparation
+is not needed to answer this diagnostic question and remains deferred.

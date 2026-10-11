@@ -36,3 +36,11 @@ both actual receipts: clean e45a4ceefc3ecc89531a2dcf859935c8459f652a and matchin
 binary hashes. No remaining material numerical/model review blocker. Explicitly
 retain the negative held-out result: relative RMSE 7.664, max corrected divergence
 17.458 s^-1, zero qualified predictions. Loss reduction is not acceleration.
+
+Development diagnostic review: baseline definitions, training-only mean, centered
+pressure errors, checkpoint replay and remote-RHS witness were independently
+reviewed; no optimization occurs in diagnose_cpu.py. Reviewer flagged that full
+dataset verification still reads old test targets before filtering. Disposition:
+retain and explicitly document the integrity-verification exception (ADR 0002,
+README); claim no fresh model test predictions/metrics, not unread old targets.
+Reserved new seeds have not been materialized. No other material finding reported.

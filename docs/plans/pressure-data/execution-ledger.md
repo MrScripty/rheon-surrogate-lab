@@ -42,3 +42,18 @@ Compact receipts (no weights or bulk arrays) record source and evaluator hashes,
 normalization, optimizer, losses, splits and timing limits. Independent reviewer
 confirmed the evaluator-provenance repair and no remaining material code finding.
 Publication remains blocked; no remote success is claimed.
+
+2026-10-11 — Parent authorized further local numerical/model diagnostics while
+publication remains paused pending user creation of the exact public repo.
+Preserved initial bundle and source. Admitted fixed development-only baselines,
+unchanged-checkpoint inspection, zero new optimizer steps and one structural
+nonlocality witness (ADR 0002). No create/push retry or upstream mutation.
+New model runs default to train/validation evaluation; reserved unseen seeds
+9000–9015 for future frozen-model evaluation without generating their targets.
+
+Diagnostic implementation passes 18 Rust tests and 6 Python tests, formatting,
+Clippy and Python compilation. Tests cover development-only output (no test
+prediction files), all reference baseline acceptance, local-invariance witness,
+and consumer filtering before optional test-array reads. Independent review
+accepted numerical definitions and documented the full-integrity-check exception.
+Clean-commit comparison pending; fixed comparison does not train new models.

@@ -90,7 +90,7 @@ Means of stages and medians of totals are distinct statistics and need not add u
 This is a warm-cache 336-cell CPU/file-pipeline measurement in one environment,
 reporting AMD EPYC 9V74 and a four-CPU cgroup quota; Python scripts default both
 OpenBLAS and OMP to one thread (neither variable was externally set).
-with preloaded model/basis/RHS in the Python parent. Preparation 0.052056 s separately
+The model, basis and RHS are preloaded in the Python parent. Preparation 0.052056 s separately
 includes Git/hash checks, dataset reference re-verification, checkpoint/RHS/basis
 loading and frozen prediction replay. Python parent startup/imports/argument parsing
 are excluded. Training, reference-data generation and build costs are also excluded

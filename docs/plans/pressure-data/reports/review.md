@@ -57,3 +57,15 @@ constant-mode omission, gauge-aware relative-loss gradient, exactly 500 updates
 and final-only validation. No analytic inverse coefficients or validation-driven
 updates. Reviewer requested prediction hashes and runtime metadata in the receipt;
 added before running. Reviewer did not train or evaluate the candidate.
+
+Isolated warm-start review: finite/shape/cell-zero validation, sealed-only scope,
+full initial b-Ap, original-b tolerance, all four Krylov scratch resets and old
+zero-start path were independently confirmed. Reviewer requested exact typed
+cancellation/iteration failures instead of a generic error assertion; fixed.
+Probe source review confirmed real patched-API calls, development-only case
+selection, identical physical gates and frozen prediction hash checks. Paired
+wall time encloses inference, file transfer/cleanup, native process and physical
+qualification. Clarified that parent Python startup/imports are excluded, while
+Git/hash/reference/basis/checkpoint/RHS preparation is measured separately.
+Reviewer inspected actual candidate receipt: train8/8 and val1/4 raw qualification,
+worst val linear ratio1.728; no numerical overclaim or protocol blocker found.

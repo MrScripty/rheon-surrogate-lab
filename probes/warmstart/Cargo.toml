@@ -1,0 +1,16 @@
+[package]
+name = "rheon-warmstart-probe"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+authors = ["Puma"]
+publish = false
+
+[dependencies]
+anyhow = "=1.0.100"
+rheon = { path = "../../../rheon-warmstart", default-features = false }
+serde_json = { version = "=1.0.145", features = ["float_roundtrip"] }
+sha2 = "=0.10.9"
+
+[lints.rust]
+unsafe_code = "forbid"

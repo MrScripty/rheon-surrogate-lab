@@ -9,7 +9,8 @@ learning and measurement lab, not a complete learned fluid simulator.
 The first milestone is a real Rust data generator and verifier. It pins Rheon to
 `34235d33c886aa05b5bdf95d920b863d1fb2ad6f` and uses its public pressure APIs.
 It never reconstructs preprojection input from already-projected simulation
-states. It does not copy or fork Rheon's solver.
+states. The generator uses the dependency directly, with no vendored solver.
+An optional isolated API patch for the later warm-start experiment is kept separate.
 
 ## Run the reference experiment
 
@@ -111,7 +112,7 @@ relative residual was 1.000 for zero pressure, 0.758 for one diagonal inverse
 step, and 8.623 for the existing eight-case CNN. The CNN has a measured nonlocal
 blind spot and predicts 4.245 Pa RMS pressure for zero RHS. [The diagnosis](docs/plans/pressure-data/reports/qualification-diagnosis.md)
 separates observed defects, scale imbalance and limits of those explanations.
-Current checks: **18 Rust tests and 6 Python tests**, formatting and Clippy pass.
+Current lab checks: **19 Rust tests and 9 Python tests**, formatting and Clippy pass.
 
 ## One bounded global-context candidate
 
@@ -131,8 +132,36 @@ performs one final validation evaluation and no test prediction. Checkpoints,
 predictions and the pinned operator export used for the loss stay ignored.
 A useful raw initial guess need not meet PCG tolerances: corrected solve quality
 and total inference/transfer/solve/correction overhead are the eventual criterion.
-Conditional local upstream patch work leaves this repository's dependency pin
-unchanged and is not an upstream publication.
+The one recorded run at `cd6f61adceca5fca9fb479790b2931fa81782362` took 0.226 s
+for training. Validation mean relative pressure error was 6.91e-11, mean relative
+full residual 1.34e-10, and maximum corrected f32 divergence 1.18e-7 s⁻¹. Raw
+predictions qualified 8/8 training and 1/4 validation cases: three validation
+linear residuals narrowly exceeded the strict gate (worst ratio 1.728). This
+passes the preregistered initial-guess signal. See the [recorded receipt](docs/plans/pressure-data/reports/global-candidate.json).
+
+The global basis is tailored to this uniform sealed box and effectively learns
+its modal inverse response. This is a fixed-operator result, not evidence for
+unseen geometries or a general neural simulator. Reserved test seeds stay unused.
+
+## Isolated local warm-start experiment
+
+The lab dependency remains pinned. A separate Cargo probe links a sibling Rheon
+checkout with a reviewable initial-pressure patch; no upstream publication occurs.
+[Patch instructions](patches/README.md) prepare that checkout without modifying an
+existing Rheon main branch. Then, from this repository root:
+
+```sh
+export CARGO_TARGET_DIR="$PWD/target"
+cargo build --release --locked
+cargo build --release --locked --manifest-path probes/warmstart/Cargo.toml
+python scripts/probe_warmstart.py data/smoke runs/global-v1 runs/warmstart-v1
+```
+
+The probe reuses frozen weights and performs zero optimizer steps. It compares
+20 paired 12-case development batches for each preconditioner, including inference,
+file transfer, child process startup, PCG, f32 correction and qualification.
+[ADR 0004](docs/decisions/0004-corrected-solve-probe.md) fixes timing scope and gates.
+The native probe expects a dataset already fully verified by its Python driver.
 
 ## Data format
 
@@ -175,13 +204,13 @@ or a solver speed comparison. See [generator receipt](docs/plans/pressure-data/r
 [the active plan](docs/plans/pressure-data/plan.md) and
 [numerical/source review](docs/plans/pressure-data/reports/review.md).
 
-No acceleration, general CFD accuracy, warm start or learned-simulation claim is
-made. The grid, geometry, boundary conditions, density and time step are fixed.
+No acceleration, general CFD accuracy or learned-simulation claim is made. The grid, geometry, boundary conditions, density and time step are fixed.
 The family split is a small distribution-shift check, not a broad generalization
-benchmark. An initial-guess API is absent in pinned Rheon; `solve_loaded` zeros
-pressure. [ADR 0001](docs/decisions/0001-pinned-reference.md) records the exact
-future integration need, including matched-residual and actual-divergence timing
-for Jacobi and SGS baselines. UI slices and Tuldok/Pantograph/Pumas adapters are
+benchmark. An initial-guess API remains absent in the pinned dependency. The
+isolated local patch adds one sealed-domain entry point; it is not an upstream
+release. [ADR 0001](docs/decisions/0001-pinned-reference.md) records integration
+requirements, including matched-residual and actual-divergence timing for both
+Jacobi and SGS. UI slices and Tuldok/Pantograph/Pumas adapters are
 later milestones, not dependencies of this repository.
 
 ## Publication and licensing

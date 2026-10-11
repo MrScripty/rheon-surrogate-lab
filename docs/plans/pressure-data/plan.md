@@ -1,8 +1,8 @@
 # Pressure data and first CPU experiment
 
-Plan status: Active. Current phase: one global-context candidate.
-Next slice: train the preregistered global spectral candidate for 500 CPU steps and evaluate validation once.
-Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance pending.
+Plan status: Active. Current phase: isolated local warm-start integration probe.
+Next slice: complete patched-Rheon regressions and the preregistered corrected-solve probe.
+Acceptance status: blocked (publication); previous local generator/model acceptance satisfied; diagnostic acceptance satisfied; global-candidate acceptance satisfied; conditional warm-start acceptance pending.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md) ·
@@ -28,7 +28,7 @@ existing-PR merge or immediate integration dependency is in scope.
 | A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | blocked |
 | A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | satisfied: reports/tiny-cpu-smoke.json and reports/heldout-cpu-smoke.json |
 | A7 | Development-only baselines and unchanged-checkpoint diagnostics identify qualification failures, preserve test isolation and report bounded compute | system / representative Linux CPU / automated | satisfied: reports/qualification-diagnosis.md and reports/development-diagnostic.json |
-| A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | pending |
+| A8 | One preregistered global candidate preserves zero response, balances training scales, and records one validation result under the fixed compute cap | system / representative Linux CPU / automated | satisfied: reports/global-candidate.json |
 | A9 | If initial-guess signal passes, isolated local Rheon API patch preserves zero-start contracts and permits matched-quality corrected solves | integration / representative Linux CPU / automated | conditional pending |
 
 ## Decisions, constraints and observations
@@ -100,12 +100,12 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
    and docs/. Gate A7: fixed baselines, no new optimizer steps, train/validation
    comparisons, independent review and an untouched future test reservation.
    Parent explicitly authorized local continuation while publication is blocked.
-5. Global candidate: Active. [ADR 0003](../../decisions/0003-global-candidate.md)
+5. Global candidate: Accepted. [ADR 0003](../../decisions/0003-global-candidate.md)
    owns fixed architecture, 500-step budget, per-case relative pressure/residual
    loss, one final validation evaluation and initial-guess thresholds. Write set:
    scripts/global_candidate.py, scripts/test_global_candidate.py, src/diagnostics.rs,
    src/main.rs, tests/contracts.rs, README and docs. No reserved-test generation.
-6. Conditional warm start: Planned only after the signal in ADR 0003 passes.
+6. Conditional warm start: Active after the ADR 0003 signal passed.
    Separate task-owned /workspace/rheon-warmstart checkout and local branch;
    patch/test/probe artifacts under patches/ and probes/ in this lab. No upstream
    publication, no existing Rheon checkout edits, no Cargo dependency change.

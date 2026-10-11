@@ -76,3 +76,22 @@ and one final validation comparison before any training run. No analytic inverse
 or eigenvalues supplied. Exported A comes from pinned public apply_full only.
 19 Rust and 8 Python tests pass, including full-operator export and loss-gradient,
 zero/linearity/gauge and per-case amplitude-invariant loss checks; fmt/Clippy pass.
+
+2026-10-11 — Single preregistered run at cd6f61adceca5fca9fb479790b2931fa81782362
+completed exactly 500 Adam steps in 0.225573 s, 8 training cases and one final
+4-case validation evaluation; no new test predictions. Raw train 8/8, validation
+1/4 qualified; validation mean relative residual 1.3426866694e-10, worst linear
+gate ratio 1.7280411872, maximum actual divergence 1.1765708526e-7. Initial-guess
+signal passed. No analytic inverse gains supplied, no sweep/restart/tuning.
+Admitted isolated sealed-domain initial-pressure API patch and ADR 0004's fixed
+20-pair per-method probe. Lab source remains pinned; reserved tests ungenerated.
+Independent API review found no material defect and requested exact failure-type
+assertions, now fixed. Probe review confirmed physics and timing scope and caught
+a preparation-timing documentation ambiguity, now corrected. Full regressions
+and actual timed probe are pending. 19 lab Rust / 9 Python tests and Clippy pass.
+
+The isolated patch is committed locally as 61182a4c4b2ec49cbc19a952e6b1d0b86f590d21.
+All 309 no-default-feature Rheon tests pass (8 new), fmt and strict Clippy pass.
+Exported patch/base/tree/license/test manifest under patches/; probe driver
+requires the reviewed source tree, allowing a new git-am committer timestamp.
+No upstream publication and no root dependency change. Clean-build timing is next.

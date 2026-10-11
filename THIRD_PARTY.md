@@ -1,8 +1,9 @@
 # Dependency provenance
 
 Author: Puma. New project license: not selected by the owner. No license field or
-license grant is invented. This source repository does not redistribute compiled
-binaries or vendored dependency source. A future binary distribution must carry
+license grant is invented. This source repository does not redistribute compiled binaries or a vendored
+solver. The isolated review patch contains limited upstream source context;
+its upstream Apache-2.0 license is retained in patches/RHEON-LICENSE. A future binary distribution must carry
 its applicable third-party license/notice materials; reassess at that boundary.
 
 | Dependency | Pinned source | Purpose | Upstream terms |
@@ -19,4 +20,7 @@ and license files are fetched by Cargo from those upstream packages. Dependency
 licenses do not choose a license for this project's original source. Standards
 were consulted from MrScripty/Coding-Standards commit
 188beda1fa477d21d576c233dd8c7f4c4c267d23; this repo's prose is original, not a
-vendored standards package. Rheon remains unmodified.
+vendored standards package. The root dependency and original Rheon checkout remain
+unmodified. patches/ contains a separately identified local experimental change;
+its upstream source context remains subject to Rheon's Apache-2.0 terms. No project
+license grant is inferred from that patch or dependency.

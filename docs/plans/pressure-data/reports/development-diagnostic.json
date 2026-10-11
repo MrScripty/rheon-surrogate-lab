@@ -1,0 +1,329 @@
+{
+  "status": "complete",
+  "source_commit": "cf0deca791add57277f98f5fe9692b8188ebc4bb",
+  "scope": "train_validation_only",
+  "evaluator": {
+    "binary_sha256": "91fd2c21ecba4d4f08a702c428adaef0afdad6220d1b70ec2003f0248c7f2e95",
+    "experiment_commit": "cf0deca791add57277f98f5fe9692b8188ebc4bb",
+    "rheon_commit": "34235d33c886aa05b5bdf95d920b863d1fb2ad6f",
+    "schema": "rheon-pressure-dataset-v1",
+    "source_dirty": false
+  },
+  "dataset_manifest_sha256": "08080c9a3a420f42ed1d3844879274e25c7b6672248acb5cfca702957dbc97dc",
+  "test_policy": "old test metrics are historical/exposed; no test predictions evaluated here; new final test reservation documented before future changes",
+  "normalization": {
+    "rhs_mean": 1.8173293557852266e-18,
+    "rhs_std": 1.5568999248194568,
+    "pressure_rms": 10.182308845433491,
+    "fit_case_ids": [
+      "white_noise-1000",
+      "white_noise-1001",
+      "white_noise-1002",
+      "white_noise-1003",
+      "polynomial_mix-2000",
+      "polynomial_mix-2001",
+      "polynomial_mix-2002",
+      "polynomial_mix-2003"
+    ]
+  },
+  "family_statistics": {
+    "localized_blob": {
+      "split": "validation",
+      "cases": 4,
+      "rhs_rms": 0.14205918127691378,
+      "pressure_rms_pa": 1.641690768664637,
+      "rhs_rms_in_training_std_units": 0.09124490213678148,
+      "fraction_of_zero_prediction_train_squared_error": null
+    },
+    "polynomial_mix": {
+      "split": "train",
+      "cases": 4,
+      "rhs_rms": 0.5955737751286518,
+      "pressure_rms_pa": 13.939930639533358,
+      "rhs_rms_in_training_std_units": 0.3825382515820447,
+      "fraction_of_zero_prediction_train_squared_error": 0.937127534859329
+    },
+    "white_noise": {
+      "split": "train",
+      "cases": 4,
+      "rhs_rms": 2.1197090909331564,
+      "pressure_rms_pa": 3.6107008478390052,
+      "rhs_rms_in_training_std_units": 1.3614934763253745,
+      "fraction_of_zero_prediction_train_squared_error": 0.06287246514067106
+    }
+  },
+  "baselines": {
+    "zero": {
+      "train": {
+        "cases": 8,
+        "mean_relative_pressure_rmse": 1.0,
+        "mean_centered_pressure_rmse_pa": 5.902775987649356,
+        "mean_relative_residual_l2": 1.0,
+        "max_corrected_f32_divergence": 6.760613878568014,
+        "max_linear_gate_ratio": 10000000000.0,
+        "max_predicted_divergence_gate_ratio": 6760613878.568013,
+        "qualified": 0
+      },
+      "validation": {
+        "cases": 4,
+        "mean_relative_pressure_rmse": 1.0,
+        "mean_centered_pressure_rmse_pa": 1.0548088574510566,
+        "mean_relative_residual_l2": 1.0,
+        "max_corrected_f32_divergence": 1.040575807603697,
+        "max_linear_gate_ratio": 10000000000.0,
+        "max_predicted_divergence_gate_ratio": 1040575807.603697,
+        "qualified": 0
+      }
+    },
+    "train_mean": {
+      "train": {
+        "cases": 8,
+        "mean_relative_pressure_rmse": 1.2627891112681282,
+        "mean_centered_pressure_rmse_pa": 5.893802554032362,
+        "mean_relative_residual_l2": 1.1567795874682378,
+        "max_corrected_f32_divergence": 6.363087455431621,
+        "max_linear_gate_ratio": 19591407907.414833,
+        "max_predicted_divergence_gate_ratio": 6363087507.740791,
+        "qualified": 0
+      },
+      "validation": {
+        "cases": 4,
+        "mean_relative_pressure_rmse": 4.879492816746994,
+        "mean_centered_pressure_rmse_pa": 4.223855129578533,
+        "mean_relative_residual_l2": 5.64293931784421,
+        "max_corrected_f32_divergence": 2.0736453452457986,
+        "max_linear_gate_ratio": 96808742442.88472,
+        "max_predicted_divergence_gate_ratio": 2073645342.7189567,
+        "qualified": 0
+      }
+    },
+    "diagonal_once": {
+      "train": {
+        "cases": 8,
+        "mean_relative_pressure_rmse": 0.9265360594500535,
+        "mean_centered_pressure_rmse_pa": 5.350203314877837,
+        "mean_relative_residual_l2": 0.6856643729720336,
+        "max_corrected_f32_divergence": 4.293726439277331,
+        "max_linear_gate_ratio": 9276140381.561798,
+        "max_predicted_divergence_gate_ratio": 4293726425.8526473,
+        "qualified": 0
+      },
+      "validation": {
+        "cases": 4,
+        "mean_relative_pressure_rmse": 0.9640346380051443,
+        "mean_centered_pressure_rmse_pa": 1.0018189564030007,
+        "mean_relative_residual_l2": 0.7581104033832886,
+        "max_corrected_f32_divergence": 0.7246515639126301,
+        "max_linear_gate_ratio": 7655052764.305461,
+        "max_predicted_divergence_gate_ratio": 724651589.570605,
+        "qualified": 0
+      }
+    },
+    "jacobi_pcg": {
+      "train": {
+        "cases": 8,
+        "mean_relative_pressure_rmse": 0.0,
+        "mean_centered_pressure_rmse_pa": 0.0,
+        "mean_relative_residual_l2": 6.995439410512516e-11,
+        "max_corrected_f32_divergence": 1.909211277961731e-07,
+        "max_linear_gate_ratio": 0.8852632746170292,
+        "max_predicted_divergence_gate_ratio": 0.6203842994878528,
+        "qualified": 8
+      },
+      "validation": {
+        "cases": 4,
+        "mean_relative_pressure_rmse": 0.0,
+        "mean_centered_pressure_rmse_pa": 0.0,
+        "mean_relative_residual_l2": 6.794705336520221e-11,
+        "max_corrected_f32_divergence": 1.1765708525512952e-07,
+        "max_linear_gate_ratio": 0.8155766632053997,
+        "max_predicted_divergence_gate_ratio": 0.03955100136288081,
+        "qualified": 4
+      },
+      "iterations": {
+        "min": 76,
+        "max": 77,
+        "total": 920
+      }
+    },
+    "sgs_pcg": {
+      "train": {
+        "cases": 8,
+        "mean_relative_pressure_rmse": 6.23394077717599e-11,
+        "mean_centered_pressure_rmse_pa": 1.9323509801950978e-10,
+        "mean_relative_residual_l2": 3.547117263677374e-11,
+        "max_corrected_f32_divergence": 1.909211277961731e-07,
+        "max_linear_gate_ratio": 0.8967411499123287,
+        "max_predicted_divergence_gate_ratio": 0.6578867080738368,
+        "qualified": 8
+      },
+      "validation": {
+        "cases": 4,
+        "mean_relative_pressure_rmse": 1.9970009373315388e-11,
+        "mean_centered_pressure_rmse_pa": 2.3534260848503e-11,
+        "mean_relative_residual_l2": 4.954104119895818e-11,
+        "max_corrected_f32_divergence": 1.1765708525512952e-07,
+        "max_linear_gate_ratio": 0.5831409544721609,
+        "max_predicted_divergence_gate_ratio": 0.03240347804892944,
+        "qualified": 4
+      },
+      "iterations": {
+        "min": 29,
+        "max": 30,
+        "total": 359
+      }
+    }
+  },
+  "train_mean_fit_ids": [
+    "white_noise-1000",
+    "white_noise-1001",
+    "white_noise-1002",
+    "white_noise-1003",
+    "polynomial_mix-2000",
+    "polynomial_mix-2001",
+    "polynomial_mix-2002",
+    "polynomial_mix-2003"
+  ],
+  "model_diagnostics": [
+    {
+      "source_run": "tiny",
+      "model_commit": "e45a4ceefc3ecc89531a2dcf859935c8459f652a",
+      "weights_sha256": "aca973999b6bad07461845a9ec57a8b73319eef9ab7c78308d35cbb5934db2ba",
+      "weight_updates_in_this_diagnostic": 0,
+      "development_metrics": {
+        "train": {
+          "cases": 8,
+          "mean_relative_pressure_rmse": 0.8261075021840081,
+          "mean_centered_pressure_rmse_pa": 4.755042838678523,
+          "mean_relative_residual_l2": 0.9309959040385918,
+          "max_corrected_f32_divergence": 9.359065959850948,
+          "max_linear_gate_ratio": 13633969287.186378,
+          "max_predicted_divergence_gate_ratio": 9359066127.895908,
+          "qualified": 0
+        },
+        "validation": {
+          "cases": 4,
+          "mean_relative_pressure_rmse": 1.7993516556260274,
+          "mean_centered_pressure_rmse_pa": 1.7148097630416226,
+          "mean_relative_residual_l2": 3.8122051374732395,
+          "max_corrected_f32_divergence": 2.9040252988537154,
+          "max_linear_gate_ratio": 65112147461.04656,
+          "max_predicted_divergence_gate_ratio": 2904025341.3595557,
+          "qualified": 0
+        }
+      },
+      "max_prediction_replay_error": 0.0,
+      "zero_rhs_predicted_pressure_rms_pa": 1.5030304277495066,
+      "zero_rhs_predicted_pressure_max_pa": 5.43830871815271,
+      "first_train_sign_symmetry_defect_rms_pa": 2.5168832060385196,
+      "first_train_double_amplitude_defect_rms_pa": 2.3463292391798154,
+      "nonlocal_witness": {
+        "reference_delta_pressure_pa": -0.006619943396372605,
+        "model_delta_pressure_pa": 0.0,
+        "observation_xyz": [
+          3,
+          3,
+          2
+        ],
+        "source_u_face_xyz": [
+          7,
+          5,
+          4
+        ]
+      },
+      "optimized_case_count": 1,
+      "first_optimized_case": {
+        "actual_divergence_gate_ratio": 52108.196013432454,
+        "corrected_f32_divergence_max": 0.5210819601343246,
+        "full_residual_l2": 2.7349521298906736,
+        "full_residual_max": 0.5002386908331731,
+        "id": "white_noise-1000",
+        "linear_gate_ratio": 677875384.9466261,
+        "predicted_divergence_gate_ratio": 521081969.6178886,
+        "predicted_divergence_max": 0.5210819696178887,
+        "pressure_centered_rmse_pa": 0.09655893396087895,
+        "pressure_error_mean_pa": -0.00014364599069907415,
+        "pressure_rmse_pa": 0.09655904080836772,
+        "reference_qualified": false,
+        "relative_pressure_rmse": 0.033382461049513715,
+        "relative_residual_l2": 0.0677875384946626,
+        "split": "train"
+      }
+    },
+    {
+      "source_run": "heldout",
+      "model_commit": "e45a4ceefc3ecc89531a2dcf859935c8459f652a",
+      "weights_sha256": "7f514ff90acf5adc42b009fa42c715658b4d8087ae9e4ca0e547af7f62c64121",
+      "weight_updates_in_this_diagnostic": 0,
+      "development_metrics": {
+        "train": {
+          "cases": 8,
+          "mean_relative_pressure_rmse": 0.530480726436892,
+          "mean_centered_pressure_rmse_pa": 2.368523817492923,
+          "mean_relative_residual_l2": 1.8121556114073796,
+          "max_corrected_f32_divergence": 12.261906077464422,
+          "max_linear_gate_ratio": 26832871425.241505,
+          "max_predicted_divergence_gate_ratio": 12261906108.700394,
+          "qualified": 0
+        },
+        "validation": {
+          "cases": 4,
+          "mean_relative_pressure_rmse": 4.384148207983408,
+          "mean_centered_pressure_rmse_pa": 2.6625817167472996,
+          "mean_relative_residual_l2": 8.622621348594608,
+          "max_corrected_f32_divergence": 4.463646719853084,
+          "max_linear_gate_ratio": 139490189690.3934,
+          "max_predicted_divergence_gate_ratio": 4463646775.744817,
+          "qualified": 0
+        }
+      },
+      "max_prediction_replay_error": 0.0,
+      "zero_rhs_predicted_pressure_rms_pa": 4.245037224615521,
+      "zero_rhs_predicted_pressure_max_pa": 9.959202479183624,
+      "first_train_sign_symmetry_defect_rms_pa": 4.8859627578646325,
+      "first_train_double_amplitude_defect_rms_pa": 7.340792038549966,
+      "nonlocal_witness": {
+        "reference_delta_pressure_pa": -0.006619943396372605,
+        "model_delta_pressure_pa": 0.0,
+        "observation_xyz": [
+          3,
+          3,
+          2
+        ],
+        "source_u_face_xyz": [
+          7,
+          5,
+          4
+        ]
+      },
+      "optimized_case_count": 8,
+      "first_optimized_case": {
+        "actual_divergence_gate_ratio": 1067121.962333719,
+        "corrected_f32_divergence_max": 10.67121962333719,
+        "full_residual_l2": 66.64950423054744,
+        "full_residual_max": 10.244370646201979,
+        "id": "white_noise-1000",
+        "linear_gate_ratio": 16519506079.468433,
+        "predicted_divergence_gate_ratio": 10671219423.12706,
+        "predicted_divergence_max": 10.671219423127061,
+        "pressure_centered_rmse_pa": 2.3974216475704186,
+        "pressure_error_mean_pa": -0.013737153312614983,
+        "pressure_rmse_pa": 2.3974610039832553,
+        "reference_qualified": false,
+        "relative_pressure_rmse": 0.8288519429478785,
+        "relative_residual_l2": 1.6519506079468433,
+        "split": "train"
+      }
+    }
+  ],
+  "compute": {
+    "new_optimizer_steps": 0,
+    "new_model_candidates": 0,
+    "diagonal_operator_calls": 336,
+    "baseline_workflow_seconds": 0.21430669,
+    "total_wall_seconds": 0.3390298750000511,
+    "limits": "single CPU run; includes repeated validation, allocation, process, and I/O; no matched-quality speed claim",
+    "timing_scope_note": "Timer starts after Python imports, source-commit and initial binary-hash checks; stops before final receipt serialization/writing. Includes verification, baseline subprocess, data/checkpoint reads and model diagnostics."
+  },
+  "receipt_scope": "Compact diagnostic receipt; full per-case baseline/model reports and prediction files remain ignored. No new training or test prediction evaluation."
+}

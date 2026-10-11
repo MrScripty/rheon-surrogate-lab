@@ -57,3 +57,14 @@ prediction files), all reference baseline acceptance, local-invariance witness,
 and consumer filtering before optional test-array reads. Independent review
 accepted numerical definitions and documented the full-integrity-check exception.
 Clean-commit comparison pending; fixed comparison does not train new models.
+
+2026-10-11 — Committed diagnostic source cf0deca791add57277f98f5fe9692b8188ebc4bb.
+One clean-build comparison took 0.339 s total / 0.214 s baseline workflow, zero
+new optimizer steps or candidate models. Both PCGs qualified 12/12 development
+cases; all approximations/CNNs qualified 0/12. Validation mean relative residual:
+zero 1.000, diagonal 0.7581, existing eight-case CNN 8.6226. Measured structural
+locality failure (-0.00661994 Pa reference response vs zero CNN response), nonzero
+zero-input output (4.245 Pa RMS), and polynomial contribution 93.7% of zero-predictor
+training squared error. Existing checkpoint predictions replay exactly; no data
+ordering/normalization/gauge bug found. Report/compact receipt accepted. No new
+test prediction evaluation, no reserved-test generation, no upstream/API change.

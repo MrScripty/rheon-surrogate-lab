@@ -44,3 +44,10 @@ dataset verification still reads old test targets before filtering. Disposition:
 retain and explicitly document the integrity-verification exception (ADR 0002,
 README); claim no fresh model test predictions/metrics, not unread old targets.
 Reserved new seeds have not been materialized. No other material finding reported.
+
+Final diagnostic evidence review found no material numerical overclaim or
+transcription error in qualification-diagnosis.md versus its compact receipt.
+Confirmed PCG iteration ranges, fitted-case gate ratios, zero-response and locality
+measurements. Report distinguishes structural limitations from causal attribution,
+iterations from runtime, and old-test integrity checks from new model evaluation.
+The reserved test remains ungenerated and proposed model change is future work.

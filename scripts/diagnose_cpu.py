@@ -135,7 +135,7 @@ def main():
             "diagonal_operator_calls": baselines["diagonal_operator_calls"],
             "baseline_workflow_seconds": baselines["elapsed_seconds_including_io_verification_and_repeated_reference_solves"],
             "total_wall_seconds": time.perf_counter() - start,
-            "limits": "single CPU run; includes repeated validation, allocation, process, and I/O; no matched-quality speed claim",
+            "limits": "single CPU timed diagnostic section; includes repeated verification, allocation, subprocesses and data I/O; excludes Python startup/imports, initial Git/binary-hash checks and final receipt writing; no matched-quality speed claim",
         },
     }
     (args.output / "receipt.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")

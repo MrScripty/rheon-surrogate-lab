@@ -15,3 +15,13 @@
   7.664 and max corrected divergence 17.458 s^-1. Owner: experiment maintainer.
   Revisit with broader context/physics-aware training using train/validation only;
   do not claim a useful solver replacement or acceleration from these runs.
+
+- MODEL-2 — Diagnosed: finite receptive field has a remote-input counterexample;
+  zero RHS produces nonconstant pressure; pressure-only loss does not control
+  residuals. See qualification-diagnosis.md. No implementation bug established.
+  Next proposal: one global-context candidate enforcing zero response, explicit
+  pressure/residual loss, bounded training/validation comparison before new test.
+- TEST-1 — Protocol updated: original v1 test has been exposed. New seeds
+  9000–9015 reserved but not generated; materialize only after freezing choices.
+  Existing data integrity checks may read old test references but development
+  emits no fresh model test metrics.

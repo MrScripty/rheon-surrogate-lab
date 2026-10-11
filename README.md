@@ -105,6 +105,14 @@ still required. [ADR 0002](docs/decisions/0002-development-evaluation.md) reserv
 16 new test seeds that have not been generated; old test results below remain
 historical. The reservation does not claim a new independent physics family.
 
+The first diagnostic run used **0 new optimizer steps** and took 0.339 s total.
+Both reference methods qualified all 12 development cases. On validation, mean
+relative residual was 1.000 for zero pressure, 0.758 for one diagonal inverse
+step, and 8.623 for the existing eight-case CNN. The CNN has a measured nonlocal
+blind spot and predicts 4.245 Pa RMS pressure for zero RHS. [The diagnosis](docs/plans/pressure-data/reports/qualification-diagnosis.md)
+separates observed defects, scale imbalance and limits of those explanations.
+Current checks: **18 Rust tests and 6 Python tests**, formatting and Clippy pass.
+
 ## Data format
 
 `manifest.json` declares schema, completion, source commits, seeds/families/splits,

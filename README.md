@@ -48,6 +48,41 @@ input and pinned solver. The true linear tolerance is
 `max(1e-12, 1e-10 * ||b||₂)`, predicted divergence limit is `1e-9 s⁻¹`, and actual
 rounded-velocity divergence limit is separately `1e-5 s⁻¹`.
 
+## Optional CPU CNN smoke
+
+Python 3.12 and NumPy 2.3.5 are needed only for this path. Install the pinned
+small dependency in a virtual environment if it is not already available:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m unittest discover -s scripts -p 'test_*.py' -v
+python scripts/train_cpu.py data/smoke runs/tiny --tiny-overfit --steps 400
+python scripts/train_cpu.py data/smoke runs/heldout --steps 200
+```
+
+Build the Rust release binary first using the commands above. Scripts refuse
+uncommitted source or an existing output directory. They verify the dataset
+through Rust before reading it. The 1,760-parameter model uses a 3×3×3 convolution
+with 16 tanh channels and a 1×1×1 pressure output, with RHS plus x/y/z coordinate
+channels. It subtracts the predicted gauge-cell value. Full-batch Adam trains
+supervised pressure MSE on CPU in float64. This is a transparent small baseline,
+not a claim that a local receptive field captures the global pressure solve.
+
+Normalization records all training IDs and is fitted only on training data.
+The tiny mode updates weights using just the first training case; remaining
+training cases are unoptimized in that run. Validation/test fields never enter
+optimizer updates or fitted statistics. No checkpoint selection or hyperparameter
+search uses test results. Runs save ignored weights, prediction arrays and a JSON
+receipt with source/dataset/weight hashes, losses, normalization, raw physics
+metrics and limited timing. `evaluate` also works on a directory of per-case
+little-endian f64 pressure predictions:
+
+```sh
+target/release/rheon-surrogate-lab evaluate data/smoke runs/heldout/predictions
+```
+
 ## Data format
 
 `manifest.json` declares schema, completion, source commits, seeds/families/splits,
@@ -67,8 +102,11 @@ Bulk data and checkpoints belong in ignored `data/` and `runs/` directories.
 
 ## Status and limits
 
-The initial generator checkpoint passes 16 Rust contract tests, formatting and
-Clippy. The clean-commit CLI smoke receipt and CPU model work follow next; see
+The generator checkpoint passes 16 Rust contract tests, formatting and Clippy.
+A clean-commit CLI run generated and reverified all 18 cases (144 arrays, 262,944
+bytes). Maximum corrected f32 divergence was 1.91e-7 s⁻¹; maximum predicted
+divergence was 6.21e-10 s⁻¹. The CPU model has four passing unit tests; real
+training receipts are pending its clean-commit smoke. See
 [the active plan](docs/plans/pressure-data/plan.md) and
 [numerical/source review](docs/plans/pressure-data/reports/review.md).
 

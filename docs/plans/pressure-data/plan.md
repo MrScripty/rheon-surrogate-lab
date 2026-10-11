@@ -1,7 +1,7 @@
 # Pressure data and first CPU experiment
 
-Plan status: Active. Current phase: generator verification.
-Next slice: clean-commit generator→verify smoke, then bounded CPU model smoke.
+Plan status: Active. Current phase: CPU model verification.
+Next slice: clean-commit bounded CPU model smoke.
 Acceptance status: blocked (publication); local acceptance partial.
 Author/owner: Puma; implementation and integration owned by the task agent.
 
@@ -23,8 +23,8 @@ existing-PR merge or immediate integration dependency is in scope.
 | --- | --- | --- | --- |
 | A1 | Exact pinned public Rheon APIs generate and physically qualify 3D targets | integration / representative Linux CPU / automated | satisfied: 16 tests |
 | A2 | Persisted data roundtrips; deterministic bytes; sampled corruptions rejected at named boundaries | contract / representative Linux CPU / automated | satisfied: 16 tests |
-| A3 | A clean committed CLI generates 18 cases and a new process verifies them | system / representative Linux CPU / automated | pending |
-| A4 | Independent numerical/source review; fmt, tests and Clippy pass | focused / representative Linux CPU / automated and manual review | partial |
+| A3 | A clean committed CLI generates 18 cases and a new process verifies them | system / representative Linux CPU / automated | satisfied: reports/generator-smoke.json |
+| A4 | Independent numerical/source review; fmt, tests and Clippy pass | focused / representative Linux CPU / automated and manual review | satisfied: reports/review.md |
 | A5 | Requested public GitHub URL and pushed commit verified | release-artifact / required-real GitHub / automated | blocked |
 | A6 | Bounded CPU supervised CNN path consumes train-only normalization and reports held-out raw prediction physics | system / representative CPU / automated | pending, secondary milestone |
 
@@ -86,10 +86,10 @@ receipt or boundary failure. Cross-platform bitwise equality is unqualified.
 
 1. Generator/verifier: src/, tests/, Cargo.toml/lock, build.rs, rust-toolchain.toml,
    .gitignore, README.md, THIRD_PARTY.md, docs/, optional .github/workflows/. Gate:
-   A1-A4. Status: Verifying. Preservation: independent repo, exact upstream pin.
+   A1-A4. Status: Accepted. Preservation: independent repo, exact upstream pin.
 2. CPU smoke: scripts/, requirements.txt, docs/ and README. Gate: train-only
    stats, gradient regression, tiny-overfit attempt and held-out numerical report.
-   Status: Planned. Keep data/model checkpoints ignored.
+   Status: Verifying. Keep data/model checkpoints ignored.
 3. Publish: existing repo Git configuration and exact requested remote only.
    Gate: A5. Status: Blocked. No unrelated repository changes.
 4. Checked warm-start API and matched-quality comparison: Deferred, revisit after

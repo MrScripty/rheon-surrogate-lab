@@ -12,6 +12,7 @@ its applicable third-party license/notice materials; reassess at that boundary.
 | serde | crates.io 1.0.228 | Typed manifest serialization | MIT OR Apache-2.0, crate license files |
 | serde_json | crates.io 1.0.145 | JSON manifest, float roundtrip | MIT OR Apache-2.0, crate license files |
 | sha2 | crates.io 0.10.9 | SHA-256 corruption checks | MIT OR Apache-2.0, crate license files |
+| NumPy (optional) | PyPI 2.3.5 | CPU CNN tensor arithmetic; no downloaded weights | BSD-3-Clause core; installed LICENSE.txt also describes bundled components |
 
 Cargo.lock identifies the complete resolved graph and registry checksums. Source
 and license files are fetched by Cargo from those upstream packages. Dependency

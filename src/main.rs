@@ -28,7 +28,7 @@ fn run() -> Result<()> {
     let usage = "usage: rheon-surrogate-lab generate DIR [PER_FAMILY=4] | verify DIR | evaluate DIR PREDICTIONS_DIR";
     let command = args.get(1).context(usage)?;
     let root = Path::new(args.get(2).context(usage)?);
-    let result = match command.as_str() {
+    let mut result = match command.as_str() {
         "generate" if (3..=4).contains(&args.len()) => {
             let count = args.get(3).map(|n| n.parse()).transpose()?.unwrap_or(4);
             dataset::summary(&dataset::generate(root, count, &provenance()?)?)
@@ -37,6 +37,12 @@ fn run() -> Result<()> {
         "evaluate" if args.len() == 4 => dataset::evaluate_predictions(root, Path::new(&args[3]))?,
         _ => anyhow::bail!(usage),
     };
+    result["tool"] = serde_json::json!({
+        "experiment_commit": env!("LAB_COMMIT"),
+        "source_dirty": env!("LAB_DIRTY") != "false",
+        "schema": dataset::SCHEMA,
+        "rheon_commit": rheon_surrogate_lab::experiment::RHEON_COMMIT
+    });
     println!("{}", serde_json::to_string_pretty(&result)?);
     Ok(())
 }

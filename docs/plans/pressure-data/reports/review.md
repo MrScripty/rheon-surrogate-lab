@@ -21,3 +21,12 @@ omitted the predicted-divergence gate, and the 3D-variation test compared across
 row/plane boundaries. Both were fixed with isolated regressions (near-threshold
 prediction and extruded-field counterexamples). This report is evidence of source/API inspection, not an
 independent proof of general numerical accuracy.
+
+CPU model review independently reran all 16 Rust and 4 Python tests. Train-only
+normalization, optimizer inputs, X-fastest patches, gauge differentiation and
+Adam updates were confirmed. Reviewer found a missing evaluator identity in the
+model receipt: a separately selected binary could contain stale checks. Fixed by
+including CLI build commit/dirty flag/schema/Rheon pin, recording its binary
+SHA-256 and rejecting incompatible/dirty or changed evaluators. This is traceable
+provenance, not cryptographic source authentication. No other material findings
+were reported. Timing remains explicitly a smoke measurement, not a benchmark.

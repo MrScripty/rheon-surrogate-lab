@@ -1,0 +1,24 @@
+{
+  "cases": 18,
+  "experiment_commit": "cc2820646601f3db51fade707bfac5a521653257",
+  "max_corrected_f32_divergence": 1.909211277961731e-07,
+  "max_full_residual_l2": 3.5800559952038845e-09,
+  "max_iterations": 77,
+  "rheon_commit": "34235d33c886aa05b5bdf95d920b863d1fb2ad6f",
+  "splits": {
+    "check": 2,
+    "test": 4,
+    "train": 8,
+    "validation": 4
+  },
+  "status": "verified",
+  "manifest_sha256": "08080c9a3a420f42ed1d3844879274e25c7b6672248acb5cfca702957dbc97dc",
+  "array_count": 144,
+  "array_bytes": 262944,
+  "max_predicted_divergence": 6.203842994878528e-10,
+  "toolchain": "rustc 1.92.0; Linux x86_64",
+  "commands": [
+    "cargo run --release --locked -- generate data/smoke 4",
+    "target/release/rheon-surrogate-lab verify data/smoke"
+  ]
+}

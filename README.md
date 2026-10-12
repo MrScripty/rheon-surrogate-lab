@@ -9,6 +9,17 @@ The first pressure-only experiment below remains frozen and historical.
 
 ## Timed 3D simulation
 
+**CPU-only control:** the unchanged trained model also runs entirely on CPU.
+Giving every method eight native CPU threads and the model eight PyTorch CPU
+threads produced median 120-frame times of **15.21 s Jacobi, 9.39 s SGS and
+1.86 s learned**: **8.20× / 5.06× speedups** without GPU execution. Three balanced
+repetitions across four seeds qualified all 4,320 timed frames; independent
+full-field replay found worst velocity relative L2 error **9.00e-8** against both
+CPU references. CUDA was hidden and all model tensors were checked to reside on
+CPU. [CPU experiment receipts](experiments/trajectory-cpu-v1/README.md) preserve
+this hardware-matched control. The original GPU-model comparisons below remain
+separately labelled.
+
 Experiment two learns 32,767 global pressure responses from real Rheon frames.
 During inference it replaces the iterative pressure solve completely; Rheon
 performs advection, forcing, gradient correction, tracer transport and gates.
@@ -66,6 +77,19 @@ Open `http://127.0.0.1:8098/viewer/?run=my-fluid`. The view replays two independ
 accepted trajectories, with orbit/pan/zoom, play/pause, frame scrubbing, simulated
 time, actual frame calculation times and divergence. It uses recorded 3D fields.
 Compact opacity exports are for display; accuracy uses full saved numeric fields.
+
+For the default CPU-only view, first generate its comparison and replay:
+
+```sh
+python3 scripts/pumas_trajectory.py cpu-compare runs/my-fluid runs/my-fluid/cpu-only-8threads --threads 8
+# Use the Pumas interpreter path printed by the launcher:
+PATH_TO_PUMAS_PYTHON scripts/trajectory_cpu_viewer.py runs/my-fluid runs/my-fluid/cpu-only-8threads
+```
+
+The Comparison selector switches between CPU inference and the earlier GPU
+recording. `?compute=gpu` selects the GPU recording directly. An analytic
+spectral inverse also exists for this fixed box; superiority over that algorithm
+has not been established.
 
 The [model, freeze, receipts and screenshot](experiments/trajectory-v2/README.md)
 preserve this run. The [book chapter](docs/book-physics-chapter.md) explains units,

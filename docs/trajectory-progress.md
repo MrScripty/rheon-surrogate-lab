@@ -73,3 +73,23 @@ suggested 500M starting size. More parameters do not expand its fixed-operator
 contract. Any claim about variable geometry, free surfaces, viscosity or general
 3D physics would need a different model/data experiment. The actual instruction
 suggested 500M; it did not make that count a hard requirement.
+
+## CPU-only control after the hardware-comparison question
+
+The user questioned comparing GPU model inference against CPU Rheon. The
+unchanged checkpoint was subsequently run entirely on CPU, with CUDA hidden
+before imports, all model tensors asserted on CPU, and identical eight-thread
+limits for native kernels and PyTorch inference. Three balanced repetitions over
+four 120-frame trajectories measured 15.21 s Jacobi, 9.39 s SGS and 1.86 s learned:
+8.20× / 5.06× speedups on CPU alone. All 4,320 timed frames met observed strict
+relative residual ≤1e-8 and stored divergence ≤1e-5 s⁻¹. Full-field independent
+replay against both references found maximum velocity relative L2 error 9.00e-8.
+Python peak RSS including accuracy replay was 972,546,048 bytes.
+
+`experiments/trajectory-cpu-v1` preserves the new CPU freeze, results, verification
+and labelled viewer screenshot. The default viewport now replays CPU-only fields;
+the Comparison selector explicitly labels and switches to the earlier GPU
+recording. These exposed seeds compare backends, without retraining or choosing
+model parameters from test results. The book's chapter and companion are updated
+on its separate branch. Superiority over an analytic spectral solver remains
+unestablished.

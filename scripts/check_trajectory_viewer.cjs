@@ -6,6 +6,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_PACKAGE || 'playwright');
   const browser = await chromium.launch({executablePath: process.env.CHROMIUM_PATH,
     headless: true, args: ['--no-sandbox']});
   const page = await browser.newPage({viewport:{width:1440,height:1100}});
+  const output = process.env.VIEWER_OUTPUT_DIR || 'runs/trajectory-v2';
+  fs.mkdirSync(output,{recursive:true});
   const errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto('http://127.0.0.1:8098/viewer/');
@@ -26,13 +28,19 @@ const { chromium } = require(process.env.PLAYWRIGHT_PACKAGE || 'playwright');
   const after=await canvas.evaluate(c=>c.toDataURL());
   if(before===after)throw new Error('orbit did not change rendered 3D view');
   await page.locator('#timeline').fill('119');
-  await page.screenshot({path:'runs/trajectory-v2/viewer-preview.png',fullPage:true});
+  await page.screenshot({path:path.join(output,'viewer-preview.png'),fullPage:true});
+  const computeLabel=await page.locator('#modelLabel').textContent();
+  if(!computeLabel.includes('CPU inference'))throw new Error('default view does not label CPU inference');
+  await page.locator('#backend').selectOption('gpu');
+  await page.waitForFunction(()=>document.querySelector('#modelLabel').textContent.includes('GPU inference'));
+  await page.locator('#backend').selectOption('cpu');
+  await page.waitForFunction(()=>document.querySelector('#modelLabel').textContent.includes('CPU inference'));
   const desktopOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
   await page.setViewportSize({width:390,height:844});
   const mobileOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
   if(errors.length||desktopOverflow||mobileOverflow)throw new Error(JSON.stringify({errors,desktopOverflow,mobileOverflow}));
-  fs.writeFileSync('runs/trajectory-v2/viewer-check.json',JSON.stringify({ready,scrubbed,played,
-    orbit_changed:true,desktopOverflow,mobileOverflow,errors},null,2)+'\n');
-  console.log('3D viewer: load, scrub, playback, orbit, desktop/mobile layout passed');
+  fs.writeFileSync(path.join(output,'viewer-check.json'),JSON.stringify({ready,scrubbed,played,computeLabel,
+    backend_switch_verified:true,orbit_changed:true,desktopOverflow,mobileOverflow,errors},null,2)+'\n');
+  console.log('3D viewer: CPU/GPU selection, load, scrub, playback, orbit, desktop/mobile layout passed');
   await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

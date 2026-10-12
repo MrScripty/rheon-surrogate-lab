@@ -1,0 +1,31 @@
+{
+  "schema": "rheon-cpu-only-comparison-v1",
+  "device": "cpu",
+  "cuda_visible_devices": "",
+  "all_model_tensors_on_cpu": true,
+  "n": 32,
+  "native_threads_all_methods": 8,
+  "torch_threads": 8,
+  "torch_interop_threads": 1,
+  "seeds": [
+    900,
+    901,
+    902,
+    903
+  ],
+  "frames": 120,
+  "repetitions": 3,
+  "torch": "2.14.0+cu132",
+  "python_executable": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+  "checkpoint_sha256": "25533a2fbaa5ab0f5fb574dc6307a2b8d6a686deb7db867d0d03338d4d70d5a9",
+  "binary_sha256": "502d8a2ff0776357aa56e84e3d97ff4eb2e460ffe1f886cda02575965b6dd619",
+  "source_sha256": {
+    "trajectory_cpu.py": "f8479f2667fd91fe83bf6c2d66fd1fb9cd9b60d960615b25f528ccac700ba039",
+    "trajectory_experiment.py": "e1fd053f693730d39ded6a7ee50fd6e562bef37b2171bb7ed26acb770605e2f6",
+    "trajectory_model.py": "83e93e75bbe05a8dfc8e8dc416b333d6d2e2614613ba45b4f77f99bb94f9a0b4"
+  },
+  "model_setup_s": 0.0028582070081029087,
+  "warmup_s": 0.019984819984529167,
+  "timing_scope": "resident CPU model; native startup, all simulation stages, CPU inference, pipes, qualification, report parsing and native teardown; excludes imports/model setup/warmup/capture/rendering",
+  "test_status": "previously exposed seeds; backend/hardware comparison, no retraining"
+}

@@ -158,6 +158,21 @@ On the measured machine, validation selected four native CPU threads for Jacobi 
 
 An independent full-field replay at those selected thread counts compared all four test seeds against both CPU implementations. Its worst relative velocity L2 error across both references was `9.00e-8`. All 4,320 timed parallel frames passed the stored-divergence gate and the strict observed `1e-8` relative-residual tolerance. This extends the accuracy evidence to the execution settings used in the parallel speed comparison.
 
+The comparisons above run model inference on the RTX GPU while Rheon runs on the CPU. Their speedups combine an algorithm change with hardware acceleration. To separate those effects, the unchanged checkpoint was also evaluated entirely on CPU, with every method using eight native CPU threads and the model using eight PyTorch CPU threads. CUDA devices were hidden before importing PyTorch, and every model parameter and buffer was checked to reside on CPU.
+
+Across three balanced repetitions and the same four 120-frame trajectories, median complete times were **15.21 seconds for Jacobi, 9.39 seconds for SGS and 1.86 seconds for CPU model inference plus Rheon**. The learned path was **8.20× / 5.06× faster** in this CPU-only comparison. All 4,320 timed frames met the observed strict relative-residual and stored-divergence gates. Separate full-field replay against both references found worst relative velocity L2 error `9.00e-8`. The timing includes CPU inference and process transfer; imports, model setup, warmup and rendering remain separate. These are previously exposed seeds used to compare execution backends; no weights were refitted.
+
+The CPU control supports acceleration over Rheon's iterative pressure solvers on the same hardware. The sealed box also admits an analytic spectral inverse. A comparison against that method would be needed to claim a benefit from learning over the best applicable nonlearned algorithm.
+
+Run the CPU-only comparison through the selected Pumas interpreter:
+
+```sh
+python3 scripts/pumas_trajectory.py cpu-compare runs/my-fluid runs/my-fluid/cpu-only-8threads --threads 8
+PATH_TO_PUMAS_PYTHON scripts/trajectory_cpu_viewer.py runs/my-fluid runs/my-fluid/cpu-only-8threads
+```
+
+The comparison destination must be new. Its freeze and verified result record the CPU device, matching thread limits, hashes, per-frame gates, accuracy and timings. The viewer defaults to the CPU-only comparison; its Comparison selector also exposes the earlier GPU recording with an explicit device label.
+
 The viewport replays recorded accepted states; it does not perform fluid calculations in JavaScript. Orange and teal show the same passive concentration quantity from the CPU and learned rollouts. Orbit either camera to view the data from another angle; scrub or play the timeline to move through accepted frames. Calculation time, pressure-stage time and corrected divergence accompany each selected frame.
 
 The compact display export keeps voxel positions whose concentration exceeds 0.025 and rounds display opacity to five decimal places. It preserves the original full numeric artifacts, which are used for accuracy. Thresholded display pixels must never become training labels or numerical validation data.

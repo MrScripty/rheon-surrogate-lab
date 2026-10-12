@@ -41,8 +41,13 @@ def main():
     print(f"Pumas runtime: {python}; torch={observed['torch']}; CUDA={observed['cuda']}", flush=True)
     if not args.args:
         return
-    script = Path(__file__).with_name("trajectory_experiment.py")
-    raise SystemExit(subprocess.call([str(python), str(script), *args.args],
+    if args.args[0] == "cpu-compare":
+        script = Path(__file__).with_name("trajectory_cpu.py")
+        command_args = args.args[1:]
+    else:
+        script = Path(__file__).with_name("trajectory_experiment.py")
+        command_args = args.args
+    raise SystemExit(subprocess.call([str(python), str(script), *command_args],
         env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}))
 
 

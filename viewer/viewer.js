@@ -3,7 +3,9 @@
 const query = new URLSearchParams(location.search);
 const run = query.get("run") || "trajectory-v2";
 if (!/^[A-Za-z0-9_-]+$/.test(run)) throw new Error("Invalid experiment name");
-const base = `../runs/${run}/evaluation/`;
+const mode = query.get("compute") || "cpu";
+if (!["cpu", "gpu"].includes(mode)) throw new Error("Invalid compute mode");
+const base = `../runs/${run}/${mode === "cpu" ? "cpu-only-8threads" : "evaluation"}/`;
 const views = ["reference", "learned"];
 const canvases = views.map(v => document.getElementById(v));
 const slider = document.getElementById("timeline");
@@ -50,6 +52,8 @@ function draw(index) {
 function render(){canvases.forEach((_,i)=>draw(i));if(data){slider.value=frame;document.getElementById("frame").textContent=`Frame ${frame+1} / ${data.reference.length} · ${data.reference[frame].report.time.toFixed(3)} s`;}}
 function playToggle(){playing=!playing;document.getElementById("play").textContent=playing?"❚❚ Pause":"▶ Play";document.getElementById("play").setAttribute("aria-label",playing?"Pause simulation":"Play simulation");}
 document.getElementById("play").onclick=playToggle;
+document.getElementById("backend").value=mode;
+document.getElementById("backend").onchange=e=>{const url=new URL(location.href);url.searchParams.set("compute",e.target.value);location.href=url.href;};
 document.getElementById("reset").onclick=()=>{frame=0;render();};
 slider.oninput=()=>{frame=Number(slider.value);render();};
 for(const canvas of canvases){
@@ -71,14 +75,17 @@ async function load(){
     if(!response.ok)throw new Error(`Fields unavailable (${response.status})`);data=await response.json();
     slider.max=data.reference.length-1;frame=data.reference.length-1;
     document.getElementById("domain").textContent=`${data.n} × ${data.n} × ${data.n} cells · seed ${data.seed}`;
+    document.getElementById("comparisonLabel").textContent=mode==="cpu"?"CPU vs CPU · 8 threads":"CPU vs GPU pressure";
+    document.getElementById("referenceLabel").textContent=`Jacobi PCG · ${mode==="cpu"?8:1} native threads`;
+    document.getElementById("modelLabel").textContent=`PyTorch 2.14 · ${mode==="cpu"?"CPU":"GPU"} inference · zero PCG`;
     document.getElementById("accuracy").textContent=data.accuracy.max_relative_velocity_l2.toExponential(2);
     document.getElementById("duration").textContent=`${(data.reference.length*data.dt).toFixed(2)} seconds`;
     document.getElementById("status").textContent="Full 3D fields loaded. Timeline replays accepted simulation frames.";
     render();
     const receipt=await fetch(base+"result.json");
     if(receipt.ok){const result=await receipt.json();document.getElementById("speedup").textContent=`${result.speedup_vs_jacobi.toFixed(2)}× vs Jacobi · ${result.speedup_vs_sgs.toFixed(2)}× vs SGS`;document.getElementById("receipt").href=base+"result.json";}
-    const parallel=await fetch(`../runs/${run}/parallel/result.json`);
-    if(parallel.ok){const result=await parallel.json();document.getElementById("timing").textContent=`Parallel CPU comparison: ${result.speedup_vs_jacobi.toFixed(2)}× / ${result.speedup_vs_sgs.toFixed(2)}× speedup`;}
+    if(mode==="cpu"){document.getElementById("timing").textContent="All methods: 8 CPU threads · model inference on CPU";}
+    else{const parallel=await fetch(`../runs/${run}/parallel/result.json`);if(parallel.ok){const result=await parallel.json();document.getElementById("timing").textContent=`Parallel GPU-model comparison: ${result.speedup_vs_jacobi.toFixed(2)}× / ${result.speedup_vs_sgs.toFixed(2)}× speedup`;}}
   }catch(error){document.getElementById("status").textContent=`${error.message}. Run the trajectory evaluation and serve the lab repository root over HTTP.`;}
 }
 render();load();

@@ -5,7 +5,7 @@
 <title>Rheon · Learned pressure comparison</title>
 <link rel="stylesheet" href="style.css">
 <body>
-<header><div><small>RHEON SURROGATE LAB / EXPERIMENT TWO</small><h1>3D flow, measured.</h1></div><span class="badge">Independent CPU &amp; AI rollouts</span></header>
+<header><div><small>RHEON SURROGATE LAB / EXPERIMENT TWO</small><h1>3D flow, measured.</h1></div><span class="badge" id="comparisonLabel">CPU vs CPU · 8 threads</span></header>
 <main>
 <section class="summary" aria-label="Experiment results">
 <div><small>DOMAIN</small><strong id="domain">Loading…</strong><span>Sealed box · prescribed 3D forcing</span></div>
@@ -13,16 +13,16 @@
 <div><small>MAXIMUM VELOCITY ERROR</small><strong id="accuracy">—</strong><span>Relative L2 against Rheon CPU · full MAC grid</span></div>
 </section>
 <section class="viewports" aria-label="Synchronized 3D comparison">
-<article><div class="label"><h2><i class="cpu"></i>Rheon CPU</h2><span>Jacobi PCG</span></div><canvas id="reference" tabindex="0" aria-label="Rheon CPU 3D tracer viewport. Drag to orbit; wheel to zoom."></canvas><div class="metrics" id="referenceMetrics"></div></article>
-<article><div class="label"><h2><i class="ai"></i>Learned pressure</h2><span>PyTorch 2.14 · zero PCG iterations</span></div><canvas id="learned" tabindex="0" aria-label="AI 3D tracer viewport. Drag to orbit; wheel to zoom."></canvas><div class="metrics" id="learnedMetrics"></div></article>
+<article><div class="label"><h2><i class="cpu"></i>Rheon CPU</h2><span id="referenceLabel">Jacobi PCG · 8 threads</span></div><canvas id="reference" tabindex="0" aria-label="Rheon CPU 3D tracer viewport. Drag to orbit; wheel to zoom."></canvas><div class="metrics" id="referenceMetrics"></div></article>
+<article><div class="label"><h2><i class="ai"></i>Learned pressure</h2><span id="modelLabel">PyTorch 2.14 · CPU inference</span></div><canvas id="learned" tabindex="0" aria-label="AI 3D tracer viewport. Drag to orbit; wheel to zoom."></canvas><div class="metrics" id="learnedMetrics"></div></article>
 </section>
 <section class="timeline" aria-label="Simulation timeline">
-<div class="transport"><button id="play" aria-label="Play simulation">▶ Play</button><button id="reset" aria-label="Reset timeline">↤ Start</button><label>Replay rate <select id="rate"><option value="15">15 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label><output id="frame">Frame —</output></div>
+<div class="transport"><button id="play" aria-label="Play simulation">▶ Play</button><button id="reset" aria-label="Reset timeline">↤ Start</button><label>Comparison <select id="backend"><option value="cpu">CPU-only · 8 threads</option><option value="gpu">GPU pressure</option></select></label><label>Replay rate <select id="rate"><option value="15">15 fps</option><option value="30" selected>30 fps</option><option value="60">60 fps</option></select></label><output id="frame">Frame —</output></div>
 <input id="timeline" type="range" min="0" max="119" value="0" aria-label="Simulation frame">
 <div class="ticks"><span>0 seconds</span><span>Simulated time · synchronized frames</span><span id="duration">2 seconds</span></div>
 </section>
 <p class="help">Drag either viewport to orbit both cameras. Shift + drag to pan. Scroll to zoom. Voxels show the simulated passive tracer in 3D; the box contains fluid throughout.</p>
-<details><summary>What was measured</summary><p>This view replays two independently simulated trajectories from the same initial conditions and forcing. Every AI step uses its own previous velocity and tracer, with a trained pressure prediction replacing the iterative pressure solve. Rheon supplies the other stages. Recorded frame calculation times exclude rendering and capture serialization. The benchmark above includes native startup, all stages, model inference, transfers, acceptance gates and teardown with a resident model. It excludes Python/model initialization and rendering.</p><p>This fixed-box experiment has no free liquid surface, variable density, obstacles or viscosity. Accuracy is measured against the numerical reference; visual agreement alone is insufficient.</p><a id="receipt" href="../runs/trajectory-v2/evaluation/result.json">Inspect full benchmark receipt</a></details>
+<details><summary>What was measured</summary><p>This view replays two independently simulated trajectories from the same initial conditions and forcing. Every AI step uses its own previous velocity and tracer, with a trained pressure prediction replacing the iterative pressure solve. Rheon supplies the other stages. CPU-only mode gives every method eight native CPU threads and the model eight PyTorch CPU threads. GPU mode shows the earlier GPU-model recording, with one native CPU thread. Recorded frame calculation times exclude rendering and capture serialization. The benchmark above includes native startup, all stages, model inference, transfers, acceptance gates and teardown with a resident model. It excludes Python/model initialization and rendering.</p><p>This fixed-box experiment has no free liquid surface, variable density, obstacles or viscosity. Accuracy is measured against the numerical reference; visual agreement alone is insufficient.</p><a id="receipt" href="../runs/trajectory-v2/cpu-only-8threads/result.json">Inspect full benchmark receipt</a></details>
 <p id="status" role="status">Loading full 3D simulation fields…</p>
 </main>
 <script src="viewer.js"></script>

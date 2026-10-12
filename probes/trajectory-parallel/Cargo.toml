@@ -1,0 +1,18 @@
+[package]
+name = "rheon-trajectory-parallel"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+publish = false
+
+[[bin]]
+name = "rheon-trajectory-parallel"
+path = "../trajectory/src/main.rs"
+
+[dependencies]
+anyhow = "=1.0.100"
+rheon = { path = "../../../Rheon", default-features = false, features = ["parallel"] }
+serde_json = { version = "=1.0.151", features = ["float_roundtrip"] }
+
+[lints.rust]
+unsafe_code = "forbid"

@@ -2,6 +2,80 @@
 
 Author: Puma.
 
+The project now includes a **trained pressure model inside a time-evolving 3D
+Rheon simulation**, with GPU training through Pumas Library's managed PyTorch
+2.14.0, complete-rollout timing, numeric accuracy and a synchronized 3D timeline.
+The first pressure-only experiment below remains frozen and historical.
+
+## Timed 3D simulation
+
+Experiment two learns 32,767 global pressure responses from real Rheon frames.
+During inference it replaces the iterative pressure solve completely; Rheon
+performs advection, forcing, gradient correction, tracer transport and gates.
+The 32³ uniform sealed unit box uses prescribed three-component forcing and a
+passive tracer. It has no free liquid surface, viscosity or obstacles.
+
+Across four independent 120-frame test trajectories, maximum full-grid velocity
+relative L2 error is **8.89e-8** and tracer relative L2 error is **5.89e-8**. All
+7,200 benchmark frames passed physics gates, and every AI frame met the native
+reference's stricter observed relative residual tolerance. No teacher states
+enter the AI rollout. Untrained coefficients fail the divergence gate.
+
+| Path | Median complete 120-frame wall time | Speedup |
+| --- | ---: | ---: |
+| Rheon Jacobi CPU | 22.01 s | reference |
+| Rheon SGS CPU | 19.08 s | reference |
+| Learned pressure + Rheon | 5.18 s | 4.25× vs Jacobi; 3.69× vs SGS |
+
+These first timings use single-thread native kernels, a resident CUDA model and
+five balanced repetitions across four seeds. Each includes native startup,
+every simulation stage, model/CPU/GPU transfer, qualification, reply parsing and
+native teardown. Imports/model initialization, capture and rendering are separate.
+The parallel CPU execution comparison is retained as a separate experiment.
+This is time to calculate two simulated seconds, not a real-time claim.
+
+With Rheon's parallel kernels enabled, validation selected 4 threads for Jacobi
+and 8 for SGS and the AI path's remaining native stages. A separate three-repeat,
+four-seed comparison measured **16.35 s Jacobi, 9.67 s SGS and 1.76 s learned**:
+**9.30× and 5.50× faster**. These results are retained with their own execution
+freeze and receipts alongside the first experiment.
+Independent full-field replay at those thread counts found maximum velocity
+relative L2 error **9.00e-8** across both CPU references and four test seeds.
+
+CUDA training peaked at 264 MB reserved; Python training peaked at 1.50 GB RSS.
+Inference/evaluation peaked at 37.7 MB CUDA reserved and 2.00 GB Python RSS,
+comfortably within the 20/8 GB budgets. CUDA driver/context allocations are
+outside PyTorch allocator statistics. Float64 weights already occupy only 266 KB;
+no four-bit quantization is needed. A 500M parameter model is unnecessary for
+this fixed-operator contract. The analytic spectral alternative remains a valid
+nonlearned solution; this model does not claim to beat it.
+
+Keep this checkout alongside Rheon at the recorded commit. Select v2.14.0 in
+Pumas Library, then run from the lab root using a new output directory:
+
+```sh
+export CARGO_TARGET_DIR="$PWD/target"
+cargo build --release --locked --manifest-path probes/trajectory/Cargo.toml
+python3 scripts/pumas_trajectory.py train runs/my-fluid --device cuda
+python3 scripts/pumas_trajectory.py evaluate runs/my-fluid
+python3 scripts/package_trajectory_viewer.py runs/my-fluid/evaluation
+python3 -m http.server 8098 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8098/viewer/?run=my-fluid`. The view replays two independent
+accepted trajectories, with orbit/pan/zoom, play/pause, frame scrubbing, simulated
+time, actual frame calculation times and divergence. It uses recorded 3D fields.
+Compact opacity exports are for display; accuracy uses full saved numeric fields.
+
+The [model, freeze, receipts and screenshot](experiments/trajectory-v2/README.md)
+preserve this run. The [book chapter](docs/book-physics-chapter.md) explains units,
+MAC shapes, global context, supervised fitting, leakage, independent rollouts,
+timing/memory scopes, Pumas execution, quantization limits and reproduction.
+It is also prepared for the requested training book's current manuscript and web
+edition, with its own executable companion.
+
+## Historical pressure-only experiment
+
 A small reproducible experiment: can a neural network predict the pressure used
 by a numerical projection step? Rheon supplies the reference solve. This is a
 learning and measurement lab, not a complete learned fluid simulator.
@@ -242,7 +316,7 @@ or a solver speed comparison. See [generator receipt](docs/plans/pressure-data/r
 [the completed local plan](docs/plans/pressure-data/plan.md) and
 [numerical/source review](docs/plans/pressure-data/reports/review.md).
 
-No acceleration, general CFD accuracy or learned-simulation claim is made. The grid, geometry, boundary conditions, density and time step are fixed.
+The pressure-only experiment made no acceleration, general CFD accuracy or learned-simulation claim. Its grid, geometry, boundary conditions, density and time step are fixed.
 The family split is a small distribution-shift check, not a broad generalization
 benchmark. An initial-guess API remains absent in the pinned dependency. The
 isolated local patch adds one sealed-domain entry point; it is not an upstream

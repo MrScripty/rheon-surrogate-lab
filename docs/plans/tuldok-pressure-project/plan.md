@@ -14,12 +14,15 @@ accuracy and complete-rollout CPU timing. Approximately eight times is a
 historical measurement, never an acceptance threshold or promise.
 
 Write set: `tuldok/`, `probes/tuldok-pressure/`,
-`scripts/test_tuldok_pressure.py`, `docs/plans/tuldok-pressure-project/`,
+`scripts/test_tuldok_pressure.py`, `scripts/test_tuldok_cnn.py`,
+`scripts/check_tuldok_viewer.cjs`, `docs/plans/tuldok-pressure-project/`,
 `README.md`, `THIRD_PARTY.md`, `viewer/viewer.js`, `.gitignore`. Generated native/checkpoint/data/runtime/project
 and full evaluation artifacts stay under ignored `target/`, `.venv/`, `runs/`.
 Existing Rust sources, model/experiment scripts, freezes and checkpoints
 remain unchanged. Viewer runtime label reads optional replay metadata, preserving
-the historical default. No Tuldok edits, release tags or solver/aircraft/submarine
+the historical default. A separate captured-data CNN diagnostic preserves original Adam and radius-one
+limitations; it does not replace the modal-model parity target.
+No Tuldok edits, release tags or solver/aircraft/submarine
 changes. Passenger-jet and forward-plus-ascent submarine domains await solver
 validation and a separately admitted physics/data contract.
 
@@ -100,3 +103,15 @@ Cloud initially lacked Cargo and Torch; isolated provisioning succeeded. No
 managed Tuldok catalog/runtime is assumed. Replan for missing generic contract,
 changed solver pin, breached memory/time budget or parity failure; preserve prior
 reproduction while diagnosing. No tuning on exposed test seeds.
+
+## Paired CLI bridge
+
+Parent supplied Tuldok draftPR58 source pin
+cdbe5136e05f2b49c43b9884f3ed03dcc8c7025c. Read its project-cli contract.
+New lab-only CNN package/train/restore recipes supply actual captured dataset and
+persisted splits, source/normalization/checkpoint/prediction identity checks,
+real original Adam steps and fresh-process restored predictions. They are
+pressure-quality diagnostics, not parity claims. Both recipes reuse generic
+formats and Run-artifact inputs; no generic CLI/schema/executor edits.
+Gate: fresh captured-data training/restore and original native quality evaluation,
+negative shape/split/normalization/source fixtures, actual generic reader acceptance.

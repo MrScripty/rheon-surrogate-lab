@@ -122,3 +122,53 @@ Run `TULDOK_CONTRACT_ROOT=/read-only/Tuldok .venv/bin/python -m unittest discove
 for focused real generic-reader compatibility and lab regressions, with the
 original serial native probe built at its pinned sibling revision for old tests.
 A zero runtime hash in a schema-only fixture never represents runtime admission.
+
+## Captured-data neural diagnostic and paired CLI
+
+The paired Tuldok project CLI is draftPR58 at
+`cdbe5136e05f2b49c43b9884f3ed03dcc8c7025c`; its generic operations need no new
+schema. A separate lab project uses the original1760-parameter NumPy CNN and
+actual Adam updates. Its radius-one receptive field previously failed pressure
+qualification. This diagnostic does not replace the modal-model parity target.
+
+From clean committed source, build the original root generator, generate its
+original18-case development dataset (four seeds per family), then package it:
+
+```sh
+cargo build --release --locked
+cargo run --release --locked -- generate data/tuldok-cnn 4
+.venv/bin/python tuldok/cnn_project.py package --dataset data/tuldok-cnn --destination runs/cnn-data
+python3 tuldok/cnn_project.py assemble --package runs/cnn-data --runtime-snapshot-sha256 ACTUAL_CAPTURED_CPU_SNAPSHOT_SHA256 --destination runs/cnn-project
+```
+
+Packaging first uses the unchanged native verifier at pressure-source34235d33,
+then preserves float64 RHS/pressure for8train/4validation/4test cases in a small
+NPZ. `splits.json` stores all16original seed/family/trajectory IDs, shapes, source
+manifest/generator identities and dataset hash. Two check-only cases remain native
+checks and never become model data. The training reader skips test NPZ members;
+normalization and optimizer updates use train IDs only. No splits are regenerated
+at restore. Previously exposed test families are not advertised as fresh holdouts.
+
+Open `runs/cnn-project/project.json`. Recipe `train` declares inputs `dataset`
+and `splits` from corresponding exact project references, with `steps`1..1000,
+default200. Outputs: `weights.npz`(`checkpoint`), `splits.json`(`training_splits`),
+`normalization.json`(`preprocessing`), `predictions.npz`(`predictions`),
+`receipt.json`(`training_result`) and `summary.json`(`result_summary`). Progress
+reports real loading/optimization boundaries; history contains real original Adam
+losses, not inferred epoch progress. No native producer runs inside this recipe.
+
+Recipe `restore` binds `dataset` from the project and `splits`, `checkpoint`,
+`normalization`, `predictions`, `receipt` from that completed training Run's exact
+named artifacts through generic `run_artifact` inputs. In a fresh process it
+checks hashes, original source, wrapper, dataset, split custody, train-fitted
+normalization and checkpoint schema/shape/dtype/finiteness. It must exactly
+reproduce retained train/validation predictions; it performs zero optimizer steps
+and separately reports explicit previously exposed test metrics. An altered
+normalization/split/source/checkpoint fails instead of retraining. A native raw
+prediction physics check is separate and may fail even when restore succeeds.
+
+For the paired CLI, use its actual returned project/reference/graph/material/actor
+IDs and reviewed one-use grant; it preserves inspection, saved graphs, progress,
+cancellation and verified downloads in the existing workspace UI. Its contract
+is `docs/contracts/project-cli.md` at the pin above. No receipt here substitutes
+for managed runtime capture, owner approval or completed Run custody.

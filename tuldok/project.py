@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -219,8 +220,8 @@ def local_run(project, command, output, python, policy):
                          str(project / references[value]["path"]) if kind == "input" else
                          str(Path(policy).resolve()) if kind == "native_policy" else str(output))
     started = time.perf_counter()
-    subprocess.run([str(python), str(project / recipe["entrypoint"]), *arguments],
-                   check=True, timeout=recipe["resources"]["wall_seconds"])
+    execute_local([str(python), str(project / recipe["entrypoint"]), *arguments],
+                  recipe["resources"]["wall_seconds"])
     elapsed = time.perf_counter() - started
     validate_outputs(output, recipe)
     write(process_receipt, {
@@ -229,6 +230,31 @@ def local_run(project, command, output, python, policy):
           "execution": "direct local process, not a managed Tuldok Run",
           "recipe_sha256": sha(project / recipe_ref["path"]),
           "artifacts": {p.name: sha(p) for p in sorted(output.iterdir())}})
+
+
+def execute_local(command, wall_seconds):
+    """Bound a trusted worker and its same-group native children.
+
+    This is direct-local cleanup, not the managed Runs subreaper or a guarantee
+    for arbitrary descendants that deliberately leave the process group.
+    """
+    process = subprocess.Popen(command, start_new_session=True)
+    try:
+        code = process.wait(timeout=wall_seconds)
+    except subprocess.TimeoutExpired as error:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        except OSError as cleanup_error:
+            error.add_note("Local process-group termination failed: " + type(cleanup_error).__name__)
+        try:
+            process.wait(timeout=10)
+        except (OSError, subprocess.TimeoutExpired) as cleanup_error:
+            error.add_note("Local worker reap failed: " + type(cleanup_error).__name__)
+        raise
+    if code:
+        raise subprocess.CalledProcessError(code, command)
 
 
 def validate_outputs(output, recipe):

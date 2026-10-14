@@ -29,6 +29,26 @@ def sealed(raw):
         raise
 
 
+def _close_failed_launch(process, diagnostic):
+    """Release resources without replacing the active launch failure.
+
+    Failed cleanup does not prove cessation. Managed Runs retains descendant
+    custody; the direct local launcher owns its separate process-group timeout.
+    """
+    operations = []
+    if process is not None:
+        operations.extend((process.kill, lambda: process.wait(timeout=10),
+                           process.stdin.close, process.stdout.close))
+    operations.append(diagnostic.close)
+    for operation in operations:
+        try:
+            operation()
+        except BaseException:
+            # The caller re-raises the original failure after every independent
+            # release has been attempted, including after another interruption.
+            pass
+
+
 class ReadyStream:
     def __init__(self, prefix, stream):
         self.prefix, self.stream = io.BytesIO(prefix), stream
@@ -157,12 +177,7 @@ class NativeLaunches:
             process.stdout = ReadyStream(bytes(prefix), process.stdout)
             return process
         except BaseException:
-            if process is not None:
-                process.kill()
-                process.wait(timeout=10)
-                process.stdin.close()
-                process.stdout.close()
-            diagnostic.close()
+            _close_failed_launch(process, diagnostic)
             raise
         finally:
             os.close(native_fd)

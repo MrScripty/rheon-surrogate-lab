@@ -7,14 +7,53 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tuldok"))
 import project
 import worker
+import native
 
 
 class ConfigContracts(unittest.TestCase):
+    def test_failed_native_cleanup_attempts_every_resource_and_preserves_error(self):
+        attempted = []
+        def fail(name):
+            def operation(*_args, **_kwargs):
+                attempted.append(name)
+                raise RuntimeError("cleanup failure " + name)
+            return operation
+        process = SimpleNamespace(kill=fail("kill"), wait=fail("wait"),
+                                  stdin=SimpleNamespace(close=fail("stdin")),
+                                  stdout=SimpleNamespace(close=fail("stdout")))
+        diagnostic = SimpleNamespace(close=fail("diagnostic"))
+        with self.assertRaisesRegex(ValueError, "original launch validation"):
+            try:
+                raise ValueError("original launch validation")
+            except BaseException:
+                native._close_failed_launch(process, diagnostic)
+                raise
+        self.assertEqual(attempted, ["kill", "wait", "stdin", "stdout", "diagnostic"])
+
+    def test_local_timeout_terminates_controlled_same_group_child(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            pidfile = Path(temporary) / "child.pid"
+            script = ("import subprocess,sys,time; from pathlib import Path; "
+                      "child=subprocess.Popen([sys.executable,'-c','import time; time.sleep(30)']); "
+                      "Path(sys.argv[1]).write_text(str(child.pid)); time.sleep(30)")
+            with self.assertRaises(subprocess.TimeoutExpired):
+                project.execute_local([sys.executable, "-c", script, str(pidfile)], 2)
+            self.assertTrue(pidfile.exists(), "worker must spawn the child before timeout")
+            state = Path('/proc') / pidfile.read_text() / 'stat'
+            if state.exists():
+                # A zombie cannot execute; its reaping belongs to the adoptive
+                # host. This test does not claim arbitrary-descendant custody.
+                self.assertIn(state.read_text().split()[2], ('Z', 'X'))
+            with self.assertRaises(subprocess.CalledProcessError) as failure:
+                project.execute_local([sys.executable, "-c", "raise SystemExit(7)"], 10)
+            self.assertEqual(failure.exception.returncode, 7)
+
     def test_receipt_publication_refuses_a_racing_file_or_dangling_link(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

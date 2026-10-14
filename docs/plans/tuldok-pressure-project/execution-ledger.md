@@ -53,3 +53,11 @@ Regeneration commands are in tuldok/REGENERATION.md. Independent CodeRabbit
 review was explicitly requested on labPR1 and acknowledged in progress; no
 review completion is inferred yet. Parent directed no cross-repository comment
 retry and owns internal integration coordination. No larger model or tag.
+
+Independent CodeRabbit review finished on21cd8b0 with two valid minor findings:
+failed native-launch cleanup could mask the validation error/skip resources, and
+direct-local timeout could leave a same-group native child. Both are repaired
+without numerical or generic executor changes. Focused fake-failure cleanup and
+actual child-group timeout/nonzero-exit regressions pass; local34tests=33pass/
+1optional skip. Actual native READY/frame/STOP still passes. Managed Runs keeps
+its separate subreaper/custody authority. Requalification CI pending new push.

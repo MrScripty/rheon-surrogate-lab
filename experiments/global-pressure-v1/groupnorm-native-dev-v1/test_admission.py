@@ -3,6 +3,7 @@ import copy
 import importlib.util
 import io
 import json
+import math
 from pathlib import Path
 import tempfile
 import time
@@ -19,9 +20,79 @@ spec.loader.exec_module(a)
 
 
 def receipt_fixture():
-    # Metadata-only seed; every mutation is disposable and never an admitted
-    # candidate. No weights, source fields or scientific binary are executed.
-    return a.strict_json((a.LAB/"runs/global-pressure-groupnorm-v1/restore-stage/artifacts/receipt.json").read_bytes())
+    # Disposable synthetic metadata, not a qualified artifact or custody proof.
+    # Fake tensor/container hashes cannot pass actual admit()'s frozen pins.
+    sha="0"*64
+    weights={name:{"shape":list(shape),"dtype":"<f4","bytes":math.prod(shape)*4,"sha256":sha}
+             for name,shape in a.descriptors().items()}
+    checkpoints={f"checkpoint-{update:03d}.npz":{"update":update,"bytes":1500186,"sha256":sha,
+                                                  "inventory":copy.deepcopy(weights)}
+                 for update in range(0,201,20)}
+    outputs={name:{"bytes":1500186,"role":"checkpoint","sha256":sha} for name in checkpoints}
+    outputs.update({name:{"bytes":8,"role":role,"sha256":sha} for name,role in
+                    (("diagnostics.json","training_diagnostics"),("normalization.json","preprocessing"),
+                     ("predictions.npz","predictions"),("splits.json","training_splits"),
+                     ("summary.json","result_summary"),("weights.npz","checkpoint"))})
+    return {
+        "schema":"rheon-global-pressure-groupnorm-training-receipt-v1","status":"complete","mode":"restore",
+        "optimizer_updates":0,"trained_optimizer_updates":200,"parameter_count":372377,
+        "architecture":{"activation":"silu","block_normalization":{"name":"GroupNorm","groups":4,
+                         "epsilon":1e-5,"affine":False,"position":"each block convolution before SiLU"},
+                         "bottleneck_width":48,"convolutions_per_block":2,"input_channels":10,
+                         "counts_supported":[16,32],"decoder_widths":[32,24,16,8],"encoder_widths":[8,16,24,32],
+                         "dtype":"float32","pressure_dtype":"float64","kernel":[3,3,3],
+                         "gauge":"subtract_first_correction_cell","global_path":"add_spatial_mean_broadcast",
+                         "head":"linear_1x1x1","padding":"replicate","pool":"average_2x2x2",
+                         "schema":"rheon-global-pressure-groupnorm-model-v1","upsampling":"nearest_to_skip_shape"},
+        "closure":{"source_commit":a.SOURCE_COMMIT,"source_witness_sha256":a.SOURCE_WITNESS_SHA,
+                   "config_sha256":sha,"input_evidence_sha256":sha,"normalization_sha256":sha,
+                   "runtime_snapshot_sha256":sha,"splits_sha256":sha,"witness_sha256":sha,
+                   "input_sha256":dict(zip(("train0","train1","validation","splits","origin"),a.PACKET_SHAS.values()))},
+        "weights_inventory":weights,"weights_sha256":sha,"checkpoints":checkpoints,"outputs":outputs,
+        "predictions_inventory":{"pressure":{"shape":[32,16,16,16],"dtype":"<f8","bytes":1048576,"sha256":sha},
+                                 "row_indices":{"shape":[32],"dtype":"<i8","bytes":256,"sha256":sha}},
+        "predictions_sha256":sha,"diagnostics_sha256":sha,"initialization_mapping_sha256":sha,
+        "sample_order_sha256":sha,"elapsed_s":1.,"witness_cases":a.population(),"per_case_inference_s":[0.]*32,
+        "training_history":[{"update":u,"train_loss":1.,"gradient_norm_before_clip":1.} for u in range(20,201,20)],
+        "validation":[{"update":u,"loss":1.} for u in (0,200)],
+        "runtime_observations":{"deterministic_algorithms":True,"device":"cpu","numpy_version":"2.3.5",
+                                "python_version":"3.12.14","torch_version":"2.8.0+cpu","torch_threads":1,
+                                "torch_interop_threads":1,"peak_rss_bytes":1024},
+        "originating_training_run":{"attempt_id":a.TRAIN_RUN,"run_id":a.TRAIN_RUN,"catalog_id":"synthetic-catalog",
+                                    "custody_identity":{"attempt_id":a.TRAIN_RUN},"custody_receipt_base64":"e30=",
+                                    "custody_receipt_sha256":sha,"material_sha256":sha,"request_sha256":sha},
+    }
+
+
+def originating_fixture():
+    receipt=receipt_fixture();origin=receipt["originating_training_run"]
+    names={f"trained_checkpoint_{u:03d}":f"checkpoint-{u:03d}.npz" for u in range(0,201,20)}
+    names.update({"trained_weights":"weights.npz","trained_predictions":"predictions.npz",
+                  "trained_normalization":"normalization.json","trained_splits":"splits.json",
+                  "trained_diagnostics":"diagnostics.json","trained_receipt":"receipt.json"})
+    artifacts=copy.deepcopy(receipt["outputs"])
+    artifacts["receipt.json"]={"bytes":8,"role":"training_result","sha256":"0"*64}
+    report={"artifact_inventory":artifacts,"typed_restore_inputs":{
+        slot:{"artifact_name":name,"expected_sha256":artifacts[name]["sha256"],
+              "kind":"run_artifact","run_id":a.TRAIN_RUN} for slot,name in names.items()}}
+    inputs={name:{} for name in ("origin","splits","train0","train1","validation")}
+    for slot,name in names.items():
+        inputs[slot]={"kind":"run_artifact","source":{
+            **copy.deepcopy(origin),"schema_version":1,"artifact_name":name,
+            "artifact_bytes":artifacts[name]["bytes"],"artifact_role":artifacts[name]["role"],
+            "measured_sha256":artifacts[name]["sha256"]}}
+    return inputs,report,origin
+
+
+def runtime_fixture():
+    # Schema values sampled from the producer's accepted hash-bound manifest
+    # (6367d0fa...), which declares ABI family3.12; this is not that manifest.
+    return {"schema_version":1,"profile":"captured_cpu_python_v1","python_version":"3.12",
+            "packages":{"numpy":"2.3.5","torch":"2.8.0+cpu"},
+            "launch":{"dynload":"python/lib-dynload","home":"python","library_dirs":["system/lib"],
+                      "loader":"system/loader","packages":"packages","python":"python/bin/python3.12","stdlib":"python/lib"},
+            "files":[{"bytes":8,"kind":"data","mode":256,"path":"packages/file","sha256":"0"*64}],
+            "total_bytes":8}
 
 
 def archive_fixture(values=None):
@@ -259,13 +330,10 @@ class AdmissionTests(unittest.TestCase):
         self.assertEqual(a.residual_metrics(residual),(5.,4.))
 
     def test_all17_typed_historical_artifact_bindings(self):
-        root=a.LAB/"runs/global-pressure-groupnorm-v1"
-        inputs=a.strict_json((root/"restore-stage/fresh-preflight.json").read_bytes())["material"]["inputs"]
-        report=a.strict_json((a.LAB/"docs/plans/global-pressure-groupnorm-v1/reports/training.json").read_bytes())
-        origin=receipt_fixture()["originating_training_run"]
+        inputs,report,origin=originating_fixture()
         a.validate_originating_inputs(inputs,report,origin)
         for field,value in (("artifact_bytes",True),("schema_version",True),("run_id","wrong"),
-                            ("measured_sha256","0"*64)):
+                            ("measured_sha256","1"*64)):
             bad=copy.deepcopy(inputs);bad["trained_weights"]["source"][field]=value
             with self.subTest(field=field),self.assertRaises(a.AdmissionError):a.validate_originating_inputs(bad,report,origin)
         bad=copy.deepcopy(inputs);bad.pop("trained_checkpoint_000")
@@ -293,6 +361,28 @@ class AdmissionTests(unittest.TestCase):
             with self.assertRaises(a.AdmissionError):a.prepared_modes(root,expected,time.monotonic()+10)
             (root/"extra").unlink();(root/"link").symlink_to(p)
             with self.assertRaises(a.AdmissionError):a.prepared_modes(root,expected,time.monotonic()+10)
+
+    def test_retained_runtime_manifest_family_is_distinct_from_observed_micro_version(self):
+        runtime=runtime_fixture()
+        self.assertEqual(runtime["python_version"],"3.12")
+        self.assertEqual(receipt_fixture()["runtime_observations"]["python_version"],"3.12.14")
+        a.validate_runtime_snapshot(runtime)
+        # A receipt-style micro-version is not this manifest's representation.
+        bad=copy.deepcopy(runtime);bad["python_version"]="3.12.14"
+        with self.assertRaises(a.AdmissionError):a.validate_runtime_snapshot(bad)
+
+    def test_runtime_manifest_schema_alias_extra_and_payload_metadata_rejected(self):
+        runtime=runtime_fixture()
+        a.validate_runtime_snapshot(runtime)
+        for key,value in (("schema_version",True),("schema_version",1.),("extra",1),
+                          ("python_version","3.13"),("total_bytes",True)):
+            bad=copy.deepcopy(runtime);bad[key]=value
+            with self.subTest(key=key,value=value),self.assertRaises(a.AdmissionError):a.validate_runtime_snapshot(bad)
+        for key,value in (("bytes",True),("mode",256.),("path","../escape")):
+            bad=copy.deepcopy(runtime);bad["files"][0][key]=value
+            with self.subTest(file_key=key),self.assertRaises(a.AdmissionError):a.validate_runtime_snapshot(bad)
+        bad=copy.deepcopy(runtime);bad["files"].append(copy.deepcopy(bad["files"][0]));bad["total_bytes"]=16
+        with self.assertRaises(a.AdmissionError):a.validate_runtime_snapshot(bad)
 
 
 if __name__=="__main__":unittest.main()

@@ -401,6 +401,45 @@ def validate_originating_inputs(declarations, training_report, originating):
             require(canonical(source[field])==canonical(originating[field]),"inherited source custody: "+field)
 
 
+def validate_runtime_snapshot(runtime):
+    """Decode historical snapshot metadata; micro-version belongs to observations.
+
+    The accepted snapshot schema records Python major.minor, as the scientific
+    trainer checks it. Admission separately requires local Python3.12.14. This
+    validates the already hash-bound manifest and does not reread runtime payloads.
+    """
+    keys(runtime,{"schema_version","profile","python_version","packages","launch","files","total_bytes"},
+         "runtime snapshot metadata")
+    integer(runtime["schema_version"],"runtime snapshot schema",1)
+    require(runtime["profile"]=="captured_cpu_python_v1" and runtime["python_version"]=="3.12",
+            "runtime snapshot major.minor metadata")
+    packages=runtime["packages"]
+    require(type(packages) is dict and all(type(k) is str and type(v) is str and k and v
+                                         for k,v in packages.items())
+            and packages.get("numpy")=="2.3.5" and packages.get("torch")=="2.8.0+cpu",
+            "runtime snapshot packages")
+    launch=runtime["launch"]
+    keys(launch,{"dynload","home","library_dirs","loader","packages","python","stdlib"},"runtime launch")
+    require(type(launch["library_dirs"]) is list and all(type(v) is str and v for v in launch["library_dirs"]),
+            "runtime library directories")
+    for value in [*(launch[n] for n in set(launch)-{"library_dirs"}),*launch["library_dirs"]]:
+        require(type(value) is str and value and not Path(value).is_absolute()
+                and ".." not in Path(value).parts,"relative runtime launch metadata")
+    require(type(runtime["files"]) is list and 0<len(runtime["files"])<=25000,"runtime file manifest bound")
+    seen=set();total=0
+    for entry in runtime["files"]:
+        keys(entry,{"bytes","kind","mode","path","sha256"},"runtime file metadata")
+        integer(entry["bytes"],"runtime file bytes")
+        integer(entry["mode"],"runtime file mode")
+        require(entry["mode"] in (256,320) and entry["kind"] in ("data","elf"),"runtime file kind/mode")
+        relative=entry["path"]
+        require(type(relative) is str and relative and not Path(relative).is_absolute()
+                and ".." not in Path(relative).parts and relative not in seen,"runtime unique relative file")
+        hash_string(entry["sha256"])
+        seen.add(relative);total+=entry["bytes"]
+    integer(runtime["total_bytes"],"runtime manifest total",total)
+
+
 def prepared_modes(prepared, expected, deadline):
     actual={}
     for path in prepared.rglob("*"):
@@ -524,9 +563,7 @@ def admit(paths, deadline):
             source["native_qualification"]["operator_binary_sha256"]==NATIVE_SHA,"scientific/runtime/native closure")
     inputs.read(source_root/"config.json",MIB,source["config_sha256"])
     runtime=strict_json(inputs.read(source_root/"runtime-manifest.json",8*MIB,source["runtime_snapshot_sha256"]))
-    require(type(runtime["schema_version"]) is int and runtime["schema_version"]==1
-            and runtime["profile"]=="captured_cpu_python_v1" and runtime["python_version"]=="3.12.14"
-            and runtime["packages"]["numpy"]=="2.3.5" and runtime["packages"]["torch"]=="2.8.0+cpu", "runtime snapshot metadata")
+    validate_runtime_snapshot(runtime)
     binary=paths["binary"]
     inputs.read(binary,2*MIB,NATIVE_SHA)
     build=strict_json(inputs.read(binary.parent/"build-receipt.json",MIB,BUILD_SHA))

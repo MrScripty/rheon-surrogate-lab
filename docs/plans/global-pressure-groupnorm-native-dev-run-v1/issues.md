@@ -9,3 +9,7 @@
 7. One executor read was rejected before process creation by transport disconnect. Subsequent actual fs/test commands succeeded; no uncertain scientific run or repeated attempt.
 
 Scientific and performance results remain unobserved until independent exact source review and the authorized one-pass action. No new model decision or access grant is needed by retained local inputs.
+
+8. Actual offline verification on1919285 rejected runtime snapshot metadata before any native call/output creation. Historical manifest declares Python3.12 by its producer contract; observed receipt/current interpreter is3.12.14. Decoder conflated those fields. Correct minor-version schema admission while retaining exact hash/current interpreter requirement; focused fixture and actual byte-only verification pending.
+
+9. Portability review found three contract fixtures reading ignored private receipts/runtime/preflight. Replaced them with explicit disposable valid synthetic metadata; no skips or scientific identity claims. Actual archived bytes are qualified separately by real offline admission. Minimal public-source27fixture run and integrated60fixture run pass.

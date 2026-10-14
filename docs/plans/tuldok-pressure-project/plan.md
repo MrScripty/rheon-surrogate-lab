@@ -36,7 +36,6 @@ validation and a separately admitted physics/data contract.
 | A4 | Clean CPU training path retains whole-trajectory splits, actual fitting and restored-checkpoint equality; no test-driven fitting | system / cloud CPU / automated | satisfied; reports/verification.md |
 | A5 | Existing viewer consumes newly generated CPU replay; generic result/progress formats and lab UI path documented | user-workflow / local browser / automated | satisfied; reports/verification.md |
 | A6 | Focused failures and existing affected tests pass; feature branch committed/pushed and draft PR opened | focused + release artifact / GitHub / automated | satisfied; reports/verification.md |
-
 | A7 | Managed CLI/catalog/runtime/material/grant/Run/download/reopen workflow | user-workflow / required-real Tuldok / automated | pending paired owner |
 
 A Tuldok managed Run/UI end-to-end acceptance depends on its separate execution

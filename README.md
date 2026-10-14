@@ -1,5 +1,9 @@
 # Rheon Surrogate Lab
 
+Current variable-domain capture uses [cubic physical cells](experiments/cubic-pressure-v1/README.md):
+16 cells per metre, with per-axis counts derived from domain size. Historical
+experiments below retain their original grids and results.
+
 Author: Puma.
 
 Live work is visible through the repo's [Tuldok project](tuldok-project.json) and

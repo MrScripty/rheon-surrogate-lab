@@ -8,7 +8,7 @@ observation, not a fabricated completed Run or scientific qualification.
 
 The current host serves the repo through the user's existing Tuldok catalog on
 127.0.0.1:8091 with `--project-root lab=/absolute/lab`. Use `/workspaces`, choose
-**Rheon Surrogate Lab · live project**, and inspect its Data/Pipeline/Runs views.
+**Rheon Surrogate Lab · cubic cells**, and inspect its Data/Pipeline/Runs views.
 A registered project also supports `/workspaces?project=PROJECT_ID#data`.
 Existing catalog data, credentials, sessions and local source edits are preserved.
 The local integration branches are `feat/live-project-activity` in Tuldok and
@@ -32,7 +32,10 @@ remains in the capture/evaluation directories. Missing/malformed data and a
 producer with no new running frames are visible, rather than replacing it with
 an unrelated app simulation. Close the observer window when finished.
 
-## Real capture and evaluation
+## Historical fixed-count capture and evaluation
+
+For current variable-domain generation, use the [cubic-cell setup](../cubic-pressure-v1/README.md).
+The commands below preserve the earlier fixed-count capture/evaluation profile.
 
 Launch with the local qualified scientific interpreter and explicit matching
 configuration/binary. Never reuse an existing output directory:

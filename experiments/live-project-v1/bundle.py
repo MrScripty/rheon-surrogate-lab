@@ -20,8 +20,8 @@ FIELDS = [('pressure','<f8','cell','Pa','accepted pressure'),
           ('corrected_w','<f4','face_z','m/s','accepted projected velocity')]
 
 
-def export(root, trajectory_id, tuldok, output):
-    verified=capture.verify(root)
+def export(root, trajectory_id, tuldok, output, verify_capture=capture.verify, namespace='rheon-local-pressure-development'):
+    verified=verify_capture(root)
     if verified['status']!='verified_development':raise ValueError('Complete independently verified development capture required')
     manifest_raw=contract.read(root/'manifest.json',4*contract.MIB)
     native=contract.decode(manifest_raw)
@@ -36,7 +36,7 @@ def export(root, trajectory_id, tuldok, output):
               'orientation':[[1,0,0],[0,1,0],[0,0,1]],'units':'m'},'time_units':'s',
               'fields':[{'id':name,'label':name.replace('_',' '),'dtype':dtype,'centering':center,'units':units,'stage':stage}
                         for name,dtype,center,units,stage in FIELDS],
-              'frames':[],'family':{'namespace':'rheon-local-pressure-development','id':trajectory_id},'sources':[],
+              'frames':[],'family':{'namespace':namespace,'id':trajectory_id},'sources':[],
               'provenance':{'producer':'Verified native capture; external live integration inspection','source_id':contract.sha(manifest_raw)}}
     for frame in trajectory['frames']:
         row={'time':str(frame['time_s']),'arrays':[]}
@@ -66,7 +66,15 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--capture',type=Path,required=True);parser.add_argument('--trajectory',required=True)
     parser.add_argument('--tuldok-source',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
-    args=parser.parse_args();print(json.dumps(export(args.capture,args.trajectory,args.tuldok_source,args.output)))
+    parser.add_argument('--capture-profile',choices=('local','cubic'),default='local')
+    args=parser.parse_args()
+    verifier=capture.verify;namespace='rheon-local-pressure-development'
+    if args.capture_profile=='cubic':
+        profile=PROFILE.parent/'cubic-pressure-v1'
+        sys.path.insert(0,str(profile))
+        verifier=contract.load_module('cubic_bundle_capture',profile/'cubic_capture.py').verify
+        namespace='rheon-cubic-pressure-development'
+    print(json.dumps(export(args.capture,args.trajectory,args.tuldok_source,args.output,verifier,namespace)))
 
 
 if __name__=='__main__':main()

@@ -1,6 +1,7 @@
 # Live repo project in Tuldok and Rheon
 
-Status: active. Acceptance: pending.
+Status: complete. Acceptance: accepted for live repo, capture and native diagnostic
+observation. No new managed training Run was exercised in this observation slice.
 Owner request: keep this repo visible as a Tuldok project while work proceeds,
 and display real generation/evaluation in Rheon's egui desktop beside Tuldok.
 The root agent owns implementation and verification; no delegated agents.
@@ -59,3 +60,7 @@ not retroactive evidence that those operators warp space. New numerical profiles
 must qualify changed counts independently, including the neural network's shape
 constraints. The viewer must display actual counts/extents and support rectangular
 count arrays; the observation layer must not resample science to pretend compliance.
+
+The separately qualified cubic-cell configuration is now accepted in
+../cubic-pressure-v1/completion.md. The current registered repo project points to
+that profile; earlier registered project snapshots and datasets remain retained.

@@ -46,3 +46,11 @@ training. That numerical change is separate from this UI/observation commit.
 
 Source commits: Tuldok 9eeb653, Rheon a15e160. Their source branches/worktrees are
 retained locally; the lab commit binds this observation adapter separately.
+
+Subsequent numerical setup is independently qualified in
+[the cubic-cell completion](../cubic-pressure-v1/completion.md). The current
+project is 6ed9bfccb7ec4d85ac5849b6c2dc0673; the previous project remains registered.
+The user's original desktop simulation and recordings remain intact. A separate
+read-only experiment window displays the verified rectangular-count cubic-cell
+fields. Training observation was implemented but no additional managed training
+Run was exercised for this UI acceptance.

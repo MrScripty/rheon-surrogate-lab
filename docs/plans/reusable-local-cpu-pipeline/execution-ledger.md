@@ -1,0 +1,34 @@
+# Execution ledger
+
+2026-10-14: User approved implementation of the fresh local CPU pipeline, reusable
+configuration, fixture-first qualification, preserved historical evidence and a
+new local branch. Created `feat/reusable-local-cpu-pipeline` from `f772a2d`.
+Located exact local Tuldok/Rheon Git objects and made isolated ignored copies.
+Local Python is 3.12.3, distinct from historical 3.12.14; its actual runtime must
+be captured and qualified. No model change, GPU action or final data access.
+
+2026-10-14: At the owner's follow-up, fetched all three main branches. Lab PR8 is
+merged at03c05e8 and the feature branch fast-forwarded. Rheon working tree has an
+unrelated in-progress merge; Tuldok has an unrelated app.py edit. Preserved both
+and selected clean task sources: Rheon43ed26b6 and Tuldokf7543fb7 (latest main).
+The reviewed pressure patch applies to latest Rheon; new dependency inventories
+and native builds replace no historical contracts.
+
+2026-10-14: Qualified the one-frame train capture before each complete local
+capture. Latest authoritative material is ignored under
+`runs/local-pressure-v1-latest-{fixture,development,packet}-2` and native build3.
+Whole16-parent/384-frame development data and fresh native residual packing pass.
+Earlier portability/provisioning attempts remain separate ignored evidence.
+Packing's first Linux-adapter attempt rejected --residual before child launch;
+the separate residual-capable adapter preserves the existing launcher body and
+adds explicit10s/object admission. A copied synthetic fixture initially failed
+because the kernel cannot parse a shebang containing repository path spaces;
+resolving the interpreter fixed the new fixture without changing historical tests.
+
+2026-10-14: Source checks pass33 unchanged GN arithmetic tests plus44 new/retained
+portability/lifecycle tests, zero skips. Both latest native builds pass Rust
+formatting,3capture/5diagnostic tests and Clippy with warnings denied. Local
+runtime inspection qualifies22,501files/825,750,560bytes after materializing
+installed Ubuntu Python bytes and excluding compiler-only.o/.a inputs. No
+optimizer has been constructed by qualification; managed train/restore remain
+pending. The first commit freezes this portability implementation for preflight.

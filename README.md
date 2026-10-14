@@ -2,6 +2,12 @@
 
 Author: Puma.
 
+Fresh local GroupNorm CPU experiments use the separate
+[reusable CPU pipeline](experiments/local-pressure-v1/README.md), with configurable
+development reservations, fixture-first qualification and managed train/restore.
+Its [acceptance plan](docs/plans/reusable-local-cpu-pipeline/plan.md) records current
+verification status. Historical pressure experiments and results remain frozen.
+
 The project now includes a **trained pressure model inside a time-evolving 3D
 Rheon simulation**, with GPU training through Pumas Library's managed PyTorch
 2.14.0, complete-rollout timing, numeric accuracy and a synchronized 3D timeline.

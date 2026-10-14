@@ -1,0 +1,48 @@
+name: Reusable local CPU contracts
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/local-pressure-v1/**'
+      - 'probes/local-pressure*/**'
+      - '.github/workflows/local-pressure.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/local-pressure-v1/**'
+      - 'probes/local-pressure*/**'
+      - '.github/workflows/local-pressure.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: lab
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Tuldok
+          ref: f7543fb78f6f1cb52e45dd315efa17a4b2fe6fa6
+          path: generic-contracts
+          persist-credentials: false
+      - name: Isolated CPU dependencies
+        working-directory: lab
+        run: |
+          python3.12 -m venv .venv
+          .venv/bin/python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r tuldok/requirements-cpu.lock -r experiments/local-pressure-v1/requirements-local.lock
+      - name: Numerical and reusable configuration contracts
+        working-directory: lab
+        env:
+          TULDOK_CUSTODY_SOURCE: ${{ github.workspace }}/generic-contracts/recipe_process.py
+        run: .venv/bin/python experiments/local-pressure-v1/qualify.py

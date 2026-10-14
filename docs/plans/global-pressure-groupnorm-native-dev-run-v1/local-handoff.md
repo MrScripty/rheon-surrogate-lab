@@ -6,9 +6,9 @@ and physics evaluation. Existing weights and simulation arrays are optional
 reproduction material. Keep them outside Git. This document prepares transfer;
 it does not run anything on the user's machine or admit another scientific Run.
 
-Draft [PR8](https://github.com/MrScripty/rheon-surrogate-lab/pull/8) now publishes
-[source branch](https://github.com/MrScripty/rheon-surrogate-lab/tree/feat/groupnorm-native-development-evaluation)
-and this handoff. The inventory below records the earlier preparation snapshot.
+[PR8](https://github.com/MrScripty/rheon-surrogate-lab/pull/8) is merged into
+main at `03c05e8`; it publishes the source and this handoff.
+The inventory below records the earlier preparation snapshot.
 The later [complete native result](reports/measured-results.md) found rawGN0/32
 and fallback32/32, with no demonstrated solver acceleration.
 
@@ -122,6 +122,13 @@ new independent holdout.
 
 ## Missing clean-start bootstrap and exact managed paths
 
+This section describes the historical interfaces below. Fresh-host portability
+work now lives in the separate [reusable local CPU pipeline](../../../experiments/local-pressure-v1/README.md)
+and [its implementation plan](../reusable-local-cpu-pipeline/plan.md). That new
+namespace owns configurable reservations and measured new identities while the
+historical readers, trainers and evidence remain unchanged. Consult its current
+acceptance report before treating it as a qualified end-to-end procedure.
+
 Cloning is insufficient for an accepted fresh training pipeline today. The
 historical packer first rejects a fresh capture: `training/data.py read_origin()`
 pins its old manifest SHA and source commit before any residual generation. The
@@ -205,7 +212,7 @@ speedup has been tested. The prior `local-gpu.md` is a conditional plan, not
 working GPU implementation. Retain all transfer, CPU loss, inference, native PCG,
 verification and fallback cost. Qualify on train-only fixtures before full work.
 
-The current native attempt stopped after its first snapshot because Python3.12
+The initial native attempt stopped after its first snapshot because Python3.12
 compensated `sum` disagreed with native serial squared accumulation:
 0.006704438615123662 versus0.006704438615123659. Corrected source135ae25 uses
 the existing serial norm helper and keeps exact equality and physics gates.
@@ -213,9 +220,13 @@ the existing serial norm helper and keeps exact equality and physics gates.
 passed. The failed run/journal remains intact. Raw GN and warm32 failed physics
 on that case; fresh previous-pressure fallback qualified in145iterations, the
 same iteration count as full previous-pressure-only and zero-start. All644
-iterations across methods are charged. A separately frozen corrective full32
-pass remains UNSTARTED at this handoff. No complete GN native acceptance or
-acceleration is claimed; transfer preparation does not run/replay it locally.
+iterations across methods are charged. The separately frozen corrective full32
+pass subsequently completed: raw GN and all warm32 attempts failed; fresh
+previous-pressure fallback qualified32/32. GN added1,024 iterations to the
+5,226-iteration previous-pressure baseline, about19.6% more work. The failed
+prefix and corrective action total23,763 diagnostic iterations. These are
+iteration counts, not an end-to-end timing ratio; no acceleration is established.
+The [complete results](reports/measured-results.md) own those observations.
 
 Preserve original small-CNN0/16 native failures, original global correction0/32
 failure/384-row collapse, GN candidate/history and the failed adapter prefix.

@@ -39,3 +39,11 @@ assembly, grant, Run or optimizer construction occurred. Retained failed
 workspace/log and catalog audit; Tuldok removed only its disposable capture
 staging. Bootstrap now sets0077and has a regression for intermediate directory
 permissions. Fresh workspace preparation is required; numerical policy is unchanged.
+
+2026-10-14: Source665d369 created and fully verified runtimece8a0a16, assembled
+project/sourcec706c573 and passed actual dry preflight with zero Runs. The first
+CLI execution attempt stopped at project open: local-pressure versus the pinned
+driver's qualification root. No grant, Run or optimizer was created; temporary
+agent/owner sessions were revoked and PostgreSQL stopped. Correct root-key
+composition is a host/CLI fix, not scientific change. Preserve workspace2 and
+perform fresh workspace3 preparation before another explicit execution.

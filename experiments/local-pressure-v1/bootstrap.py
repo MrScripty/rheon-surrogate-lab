@@ -11,6 +11,10 @@ import sys
 
 from contract import HERE, LAB, MIB, canonical, decode, experiment, fresh, load_module, read, require, sha, write
 
+# The pinned generic CLI driver opens this exact root key on both initial open
+# and catalog reopen. Project snapshot identity includes that key.
+PROJECT_ROOT = "qualification"
+
 
 def host(path):
     value = decode(read(path, 65536))
@@ -147,11 +151,11 @@ def prepare(config_path, host_path, output, existing_material=None):
         db.close()
     assembled = project.assemble(Path(selected["packet"]), Path(runtime["root"]) / "manifest.json", tuldok, output / "project")
     from app import Dataset
-    dataset = Dataset(catalog, project_roots={"local-pressure": output / "project"})
+    dataset = Dataset(catalog, project_roots={PROJECT_ROOT: output / "project"})
     session = dataset.access.exchange(dataset.access._local_owner_token(require_existing=True))
     try:
         with dataset.access.bind(session["token"]):
-            opened = dataset.projects.open({"root": "local-pressure", "manifest_path": "project.json"})
+            opened = dataset.projects.open({"root": PROJECT_ROOT, "manifest_path": "project.json"})
             manifest = decode(read(output / "project/project.json", MIB))
             recipe = next(r for r in manifest["recipes"] if r["id"] == "train")
             graph = dataset.pipelines.create_external({"name": config["id"] + " dry preflight", "project_id": opened["id"], "recipe_id": "train", "expected_sha256": recipe["sha256"], "inputs": {slot: {"reference_id": slot, "expected_sha256": assembled_input["sha256"]} for slot, assembled_input in decode(read(output / "project/source-witness.json", 2 * MIB))["inputs"].items()}, "parameters": {}})

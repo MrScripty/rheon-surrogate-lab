@@ -19,3 +19,8 @@
   under the host's inherited0002umask. Bootstrap now establishes private0077
   permissions before catalog/source/runtime creation. Snapshot verification is
   unchanged. First preparation remains failed with zero Runs and no optimizer.
+- Resolved: first managed CLI open rejected the prepared project's root key.
+  Preparation used local-pressure; the pinned CLI driver uses qualification.
+  Snapshot identity includes the key. One bootstrap-owned constant now selects
+  the driver's root for preparation too. The rejected attempt created no Run,
+  approval or optimizer; preserve its failure and reprepare a fresh workspace.

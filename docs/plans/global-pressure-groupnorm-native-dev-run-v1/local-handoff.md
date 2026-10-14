@@ -6,6 +6,12 @@ and physics evaluation. Existing weights and simulation arrays are optional
 reproduction material. Keep them outside Git. This document prepares transfer;
 it does not run anything on the user's machine or admit another scientific Run.
 
+Draft [PR8](https://github.com/MrScripty/rheon-surrogate-lab/pull/8) now publishes
+[source branch](https://github.com/MrScripty/rheon-surrogate-lab/tree/feat/groupnorm-native-development-evaluation)
+and this handoff. The inventory below records the earlier preparation snapshot.
+The later [complete native result](reports/measured-results.md) found rawGN0/32
+and fallback32/32, with no demonstrated solver acceleration.
+
 ## Source and transfer inventory
 
 | Repository | Exact accepted pin and purpose |

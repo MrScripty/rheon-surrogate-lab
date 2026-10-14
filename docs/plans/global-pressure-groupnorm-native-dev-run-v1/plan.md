@@ -2,11 +2,11 @@
 
 **Plan status:** `Verifying`
 
-**Current phase:** First native action failed stop after one case due to a receiver arithmetic defect; corrective source conformance and both renewed reviews are clear. Execution is paused while the requested local handoff is prepared.
+**Current phase:** First native action failed stop after one case due to a receiver arithmetic defect; corrective full32 completed; all raw/warm GN cases failed and fresh fallback qualified32/32. Both independent result audits are clear; final draft publication and exact-head CI are in progress.
 
-**Next slice:** Finish the requested clean-start local handoff, then perform at most one corrective full32 pass under the owned transition when ongoing execution resumes.
+**Next slice:** Independently review complete retained outcomes/costs, publish them in draftPR8 and verify final-head CI. No further scientific pass.
 
-**Acceptance status:** Initial conformance/reviews passed; real first-case response and failed source guard are preserved. Corrected conformance is clear; complete C6/C7 outcomes remain pending.
+**Acceptance status:** Initial conformance/reviews passed; real first-case response and failed source guard are preserved. Corrected conformance and full32 execution are complete; independent outcome reviews are clear. Final C7 head-check evidence remains pending.
 
 **Ledger:** [execution-ledger.md](execution-ledger.md). **Findings:** [issues.md](issues.md).
 
@@ -21,12 +21,12 @@ Exactly24train/eightvalidation teacher snapshots from16whole parents atframes0/2
 | Claim | Required evidence and boundary | Status |
 | --- | --- | --- |
 | C1 All retained inputs/native/source/reservations and old tracked bytes unchanged | Real local read-only identity inventory; [input preservation](reports/input-preservation.md) and [input freeze](execution-freeze.json) | satisfied |
-| C2 Distinct closed typed GN/artifact admission and whole-parent case/raw/native residual correspondence | Focused fixture tests plus actual offline CLI verify; no model/native call | verifying |
-| C3 Exactzero/base-retention, fresh nonzero-base reset, all original quality/work semantics and honest unknown iteration handling | Literal unchanged-native composition, source-bound native regressions and focused independent fixtures/review | verifying |
-| C4 Bounded process streams/watchdog/RSS/owned descendant drainage and failure publication | Real Linux synthetic process/system tests and durable publication failure regressions | verifying |
+| C2 Distinct closed typed GN/artifact admission and whole-parent case/raw/native residual correspondence | Focused fixture tests plus actual offline CLI verify; no model/native call | satisfied |
+| C3 Exactzero/base-retention, fresh nonzero-base reset, all original quality/work semantics and honest unknown iteration handling | Literal unchanged-native composition, source-bound native regressions and focused independent fixtures/review | satisfied |
+| C4 Bounded process streams/watchdog/RSS/owned descendant drainage and failure publication | Real Linux synthetic process/system tests and durable publication failure regressions | satisfied |
 | C5 Independent exact source/input/resource review before scientific launch | [Renewed numerical review](reports/numerical-rhs-review.md) and [renewed standards review](reports/standards-rhs-review.md), exact corrected source135ae25 and freezeebcbdcd6; initial reviews remain historical | satisfied |
-| C6 One complete fixed32 observation or honest fail-stop partial evidence, all original methods/gates and full available costs | Authorized real native6 local action; raw journals, aggregate and terminal measurement | pending |
-| C7 Reviewable publication and exact-head CI | New source/tests/results committed/pushed, draftPR, clean scope and terminal GitHub CI | pending |
+| C6 One complete fixed32 observation or honest fail-stop partial evidence, all original methods/gates and full available costs | [Complete corrective observations](reports/measured-results.md), exact journal/terminal/cost ledgers; [numerical results review](reports/results-numerical-review.md) and [standards results review](reports/results-standards-review.md) | satisfied |
+| C7 Reviewable publication and exact-head CI | DraftPR8/source10c2212 published with three successful CI workflows; final results/head CI | verifying |
 
 ## Binding decisions and owners
 
@@ -59,9 +59,9 @@ The actual first action preserved fail-stop after one native case; no automatic 
 
 M1 adapter/conformance: new `experiments/global-pressure-v1/groupnorm-native-dev-v1/**`, this new plan directory, and `.github/workflows/groupnorm-native-development.yml` only. Gate C1–C5 plus bounded real offline admission; `Accepted`;61fixtures, [fresh corrected offline verification](reports/offline-rhs-verification.json) and both renewed independent exact-source reviews pass.
 
-M2 one authorized local pass: one predeclared fresh `/tmp` output and ignored task-local evidence below `runs/global-pressure-groupnorm-native-dev-run-v1/**`; public measured reports only in this new plan directory. Gate C6 unchanged original quality/failure/work/cost semantics; `Verifying`; first action failed after one preserved case; corrected exact source freeze and renewed independent reviews passed. Fresh corrective full32 remains unperformed, paused for the local handoff.
+M2 one authorized local pass: one predeclared fresh `/tmp` output and ignored task-local evidence below `runs/global-pressure-groupnorm-native-dev-run-v1/**`; public measured reports only in this new plan directory. Gate C6 unchanged original quality/failure/work/cost semantics; `Accepted`; first action failed after one preserved case; corrected exact source freeze and renewed independent reviews passed. Explicit owner approval then publication/draftPR8 and exacthead CI preceded a single corrective full32 PASS. RawGN0/32/allwarm32fail/fallback32qualifies; all33observations and23763diagnosticiterations retained. Both independent outcome audits are clear; negative candidate conclusion is accepted evidence, with no accelerated-solver claim.
 
-M3 draft publication: commit/push only declared new source/tests/docs/workflow plus preserved originalPR7 history; gate C7 and no secrets/bulkarrays; `Planned`. Main target is verified PR6 merge main; branch `feat/groupnorm-native-development-evaluation` remains a review proposal until separately approved integration. No history rewriting, cleanup, tags or outreach.
+M3 draft publication: commit/push only declared new source/tests/docs/workflow plus preserved originalPR7 history; gate C7 and no secrets/bulkarrays; `Verifying`; draftPR8 is open; final results publication and exact-head CI remain. Main target is verified PR6 merge main; branch `feat/groupnorm-native-development-evaluation` remains a review proposal until separately approved integration. No history rewriting, cleanup, tags or outreach.
 
 ## Blockers and replan triggers
 

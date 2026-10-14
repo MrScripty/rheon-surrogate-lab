@@ -2,11 +2,11 @@
 
 **Plan status:** `Planned`
 
-**Current phase:** Reviewed design freeze; implementation and native candidate execution have not started.
+**Current phase:** Independently reviewed planning packet published as draft PR7; implementation and native candidate execution have not started.
 
 **Next slice:** Separately authorize and implement the isolated local GN artifact adapter, then review its source, conformance and resource closure before any 32-case execution decision.
 
-**Acceptance status:** Planning claims P1–P6 have evidence; independent review P7 is pending. Executable/native claims are unperformed.
+**Acceptance status:** Planning claims P1–P7 are satisfied. Both independent reviews clear planning only; executable/native claims are unperformed.
 
 **Execution ledger:** [execution-ledger.md](execution-ledger.md)
 
@@ -30,9 +30,9 @@ The [protocol](protocol.md) owns the fixed population, physics/fallback semantic
 | P4 | Exact original-b/full-gauge-row quality, f32 correction/divergence/wall/flux/Courant gates and failed-reset behavior retained | design / source + original acceptance / manual review | satisfied: [protocol](protocol.md) |
 | P5 | Inference, initial checking, setup/IPC, wasted warm work, reset, failure and enclosing cost have honest scopes; absent timers remain unavailable | design / real receipt/native timer source / manual review | satisfied: [protocol](protocol.md) |
 | P6 | New GN schema adapter, zero-residual conformance, bounded process lifecycle, local credential-free route and separately authorized managed route explicitly identified | contract / existing code and retained files / manual review | satisfied: [handoff](execution-and-handoff.md) |
-| P7 | Independent numerical/standards review clears this complete bounded plan and dispositions findings | independent review / frozen new documents / read-only | pending: design/numerical review |
+| P7 | Independent numerical/standards review clears this complete bounded plan and dispositions findings | independent review / frozen new documents / read-only | satisfied: [standards review](reports/design-review.md) and [numerical review](reports/numerical-review.md) |
 
-Publication is a separate artifact obligation: preserve old tracked files/modes, commit/push only this new directory, and open a draft PR. It does not qualify the candidate or authorize execution.
+Publication is a separate artifact obligation: preserve old tracked files/modes, commit/push only this new directory, and open a draft PR. It does not qualify the candidate or authorize execution. [Draft PR7](https://github.com/MrScripty/rheon-surrogate-lab/pull/7) was created at initial commit `f946335847693c95a729651977f94db8784788c4`; [publication verification](reports/verification.md) records its exact scope. Both independent reviews bind the exact initial document hashes preserved in that commit. Later changes to this plan and the ledger only close review/publication status; protocol, handoff and independent reports retain their reviewed bytes.
 
 ## Binding decisions
 
@@ -89,7 +89,7 @@ Main owns admission/integration and future artifact-process composition. Scienti
 
 **Allowed write set:** `docs/plans/global-pressure-groupnorm-native-dev-v1/**` only. Ignored task-local metadata may live below `runs/global-pressure-groupnorm-native-dev-v1/**`; no executable experiment or prior evidence file is changed.
 
-**Gate:** P1–P7, relative-link/JSON/staged-scope checks, all273 prior tracked blobs/modes unchanged, then verified commit/push/draft PR. **Status:** `Verifying`.
+**Gate:** P1–P7, relative-link/JSON/staged-scope checks, all273 prior tracked blobs/modes unchanged, then verified commit/push/draft PR. **Status:** `Accepted` for planning and draft publication only; [verification](reports/verification.md).
 
 ### M1: Strict local adapter and conformance
 

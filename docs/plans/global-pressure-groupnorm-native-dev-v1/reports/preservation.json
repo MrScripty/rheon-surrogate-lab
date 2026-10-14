@@ -1,0 +1,1536 @@
+{
+  "accepted_pr6_head": "9c873a0061ba398822d56977798b24377d33baf0",
+  "audit_actions": {
+    "credentials_sessions_graph_preflight_grants_runs": 0,
+    "final_or_gpu_access": 0,
+    "forward_or_replay": 0,
+    "model_or_checkpoint_load_into_state": 0,
+    "native_binary_executions_or_solves": 0,
+    "new_data_generation": 0,
+    "project_or_model_imports": 0,
+    "training_or_selection": 0
+  },
+  "branch": "feat/global-pressure-groupnorm-native-dev-v1",
+  "candidate_artifacts": {
+    "checkpoint-200.npz": {
+      "bytes": 1500186,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/checkpoint-200.npz",
+      "sha256": "4adf55ca940c2013b6352edc4a6716492e0a697484331c65cdf80495312db147"
+    },
+    "diagnostics.json": {
+      "bytes": 1402428,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/diagnostics.json",
+      "sha256": "a94a30492f675b40fdd3c2a5ec92419dbc798f01f42c6219a3719ff7bee858b0"
+    },
+    "normalization.json": {
+      "bytes": 2112,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/normalization.json",
+      "sha256": "8a68445ce25b46645b50939b13f67b974d60f1c44d8e69ce0a078f24dc81458f"
+    },
+    "predictions.npz": {
+      "bytes": 1049356,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/predictions.npz",
+      "sha256": "bb0290ca1855f841d3fe99260790d9cfdd39e8b7982e054ea01791b3a848ee86"
+    },
+    "receipt.json": {
+      "bytes": 82195,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/receipt.json",
+      "sha256": "f83242bf89a3db7da305781c5a880c7b08d4e7a0090e8469276b67ee88cc0a0a"
+    },
+    "splits.json": {
+      "bytes": 70478,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/splits.json",
+      "sha256": "fbb9edddfa08877e0834fcdf6e0d10e8f4769c5883fc6597b829325c2784650a"
+    },
+    "weights.npz": {
+      "bytes": 1500186,
+      "path": "runs/global-pressure-groupnorm-v1/restore-stage/artifacts/weights.npz",
+      "sha256": "4adf55ca940c2013b6352edc4a6716492e0a697484331c65cdf80495312db147"
+    }
+  },
+  "candidate_source_files": {
+    "config.json": {
+      "bytes": 878,
+      "path": "experiments/global-pressure-v1/groupnorm-v1/config.json",
+      "sha256": "e5f6ac584ffe9eb067bbb5c6cb192ac8d399bb78848beafeb1d2aa5588998683"
+    },
+    "model-qualification.json": {
+      "bytes": 2694,
+      "path": "experiments/global-pressure-v1/groupnorm-v1/model-qualification.json",
+      "sha256": "1cee2ca5d2e81acfff8949272d8da09a50032118655e7059cc5d7d4d5a45753e"
+    },
+    "model.py": {
+      "bytes": 5918,
+      "path": "experiments/global-pressure-v1/groupnorm-v1/model.py",
+      "sha256": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c"
+    },
+    "original_data.py": {
+      "bytes": 36248,
+      "path": "experiments/global-pressure-v1/training/data.py",
+      "sha256": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd"
+    },
+    "original_model.py": {
+      "bytes": 13616,
+      "path": "experiments/global-pressure-v1/training/model.py",
+      "sha256": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb"
+    },
+    "original_train.py": {
+      "bytes": 35664,
+      "path": "experiments/global-pressure-v1/training/train.py",
+      "sha256": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d"
+    },
+    "train.py": {
+      "bytes": 47014,
+      "path": "experiments/global-pressure-v1/groupnorm-v1/train.py",
+      "sha256": "f46ef3a589a0e4e38913d683c9c0b1d68c3b4c98a7f04f03d03c8939ac160dbb"
+    }
+  },
+  "case_population": [
+    {
+      "case_id": "smoke-train-100000:frame-000",
+      "frame": 0,
+      "row_index": 0,
+      "split": "train",
+      "trajectory_id": "smoke-train-100000"
+    },
+    {
+      "case_id": "smoke-train-100000:frame-023",
+      "frame": 23,
+      "row_index": 23,
+      "split": "train",
+      "trajectory_id": "smoke-train-100000"
+    },
+    {
+      "case_id": "smoke-train-100001:frame-000",
+      "frame": 0,
+      "row_index": 24,
+      "split": "train",
+      "trajectory_id": "smoke-train-100001"
+    },
+    {
+      "case_id": "smoke-train-100001:frame-023",
+      "frame": 23,
+      "row_index": 47,
+      "split": "train",
+      "trajectory_id": "smoke-train-100001"
+    },
+    {
+      "case_id": "smoke-train-100002:frame-000",
+      "frame": 0,
+      "row_index": 48,
+      "split": "train",
+      "trajectory_id": "smoke-train-100002"
+    },
+    {
+      "case_id": "smoke-train-100002:frame-023",
+      "frame": 23,
+      "row_index": 71,
+      "split": "train",
+      "trajectory_id": "smoke-train-100002"
+    },
+    {
+      "case_id": "smoke-train-100003:frame-000",
+      "frame": 0,
+      "row_index": 72,
+      "split": "train",
+      "trajectory_id": "smoke-train-100003"
+    },
+    {
+      "case_id": "smoke-train-100003:frame-023",
+      "frame": 23,
+      "row_index": 95,
+      "split": "train",
+      "trajectory_id": "smoke-train-100003"
+    },
+    {
+      "case_id": "smoke-train-100004:frame-000",
+      "frame": 0,
+      "row_index": 96,
+      "split": "train",
+      "trajectory_id": "smoke-train-100004"
+    },
+    {
+      "case_id": "smoke-train-100004:frame-023",
+      "frame": 23,
+      "row_index": 119,
+      "split": "train",
+      "trajectory_id": "smoke-train-100004"
+    },
+    {
+      "case_id": "smoke-train-100005:frame-000",
+      "frame": 0,
+      "row_index": 120,
+      "split": "train",
+      "trajectory_id": "smoke-train-100005"
+    },
+    {
+      "case_id": "smoke-train-100005:frame-023",
+      "frame": 23,
+      "row_index": 143,
+      "split": "train",
+      "trajectory_id": "smoke-train-100005"
+    },
+    {
+      "case_id": "smoke-train-100006:frame-000",
+      "frame": 0,
+      "row_index": 144,
+      "split": "train",
+      "trajectory_id": "smoke-train-100006"
+    },
+    {
+      "case_id": "smoke-train-100006:frame-023",
+      "frame": 23,
+      "row_index": 167,
+      "split": "train",
+      "trajectory_id": "smoke-train-100006"
+    },
+    {
+      "case_id": "smoke-train-100007:frame-000",
+      "frame": 0,
+      "row_index": 168,
+      "split": "train",
+      "trajectory_id": "smoke-train-100007"
+    },
+    {
+      "case_id": "smoke-train-100007:frame-023",
+      "frame": 23,
+      "row_index": 191,
+      "split": "train",
+      "trajectory_id": "smoke-train-100007"
+    },
+    {
+      "case_id": "smoke-train-100008:frame-000",
+      "frame": 0,
+      "row_index": 192,
+      "split": "train",
+      "trajectory_id": "smoke-train-100008"
+    },
+    {
+      "case_id": "smoke-train-100008:frame-023",
+      "frame": 23,
+      "row_index": 215,
+      "split": "train",
+      "trajectory_id": "smoke-train-100008"
+    },
+    {
+      "case_id": "smoke-train-100009:frame-000",
+      "frame": 0,
+      "row_index": 216,
+      "split": "train",
+      "trajectory_id": "smoke-train-100009"
+    },
+    {
+      "case_id": "smoke-train-100009:frame-023",
+      "frame": 23,
+      "row_index": 239,
+      "split": "train",
+      "trajectory_id": "smoke-train-100009"
+    },
+    {
+      "case_id": "smoke-train-100010:frame-000",
+      "frame": 0,
+      "row_index": 240,
+      "split": "train",
+      "trajectory_id": "smoke-train-100010"
+    },
+    {
+      "case_id": "smoke-train-100010:frame-023",
+      "frame": 23,
+      "row_index": 263,
+      "split": "train",
+      "trajectory_id": "smoke-train-100010"
+    },
+    {
+      "case_id": "smoke-train-100011:frame-000",
+      "frame": 0,
+      "row_index": 264,
+      "split": "train",
+      "trajectory_id": "smoke-train-100011"
+    },
+    {
+      "case_id": "smoke-train-100011:frame-023",
+      "frame": 23,
+      "row_index": 287,
+      "split": "train",
+      "trajectory_id": "smoke-train-100011"
+    },
+    {
+      "case_id": "smoke-validation-100100:frame-000",
+      "frame": 0,
+      "row_index": 288,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100100"
+    },
+    {
+      "case_id": "smoke-validation-100100:frame-023",
+      "frame": 23,
+      "row_index": 311,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100100"
+    },
+    {
+      "case_id": "smoke-validation-100101:frame-000",
+      "frame": 0,
+      "row_index": 312,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100101"
+    },
+    {
+      "case_id": "smoke-validation-100101:frame-023",
+      "frame": 23,
+      "row_index": 335,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100101"
+    },
+    {
+      "case_id": "smoke-validation-100102:frame-000",
+      "frame": 0,
+      "row_index": 336,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100102"
+    },
+    {
+      "case_id": "smoke-validation-100102:frame-023",
+      "frame": 23,
+      "row_index": 359,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100102"
+    },
+    {
+      "case_id": "smoke-validation-100103:frame-000",
+      "frame": 0,
+      "row_index": 360,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100103"
+    },
+    {
+      "case_id": "smoke-validation-100103:frame-023",
+      "frame": 23,
+      "row_index": 383,
+      "split": "validation",
+      "trajectory_id": "smoke-validation-100103"
+    }
+  ],
+  "development_scope": {
+    "cases": 32,
+    "final_arrays_required": false,
+    "frames_per_case_parent": [
+      0,
+      23
+    ],
+    "selected_raw_array_references": 192,
+    "train_cases": 24,
+    "train_parents": 12,
+    "unique_selected_raw_arrays": 192,
+    "validation_cases": 8,
+    "validation_parents": 4,
+    "whole_origin_frames": 384
+  },
+  "instruction_discovery": {
+    "root_or_workspace_or_lab_AGENTS": false,
+    "standards_reference": "188beda1fa477d21d576c233dd8c7f4c4c267d23",
+    "tracked_AGENTS": false
+  },
+  "limits": [
+    "File/metadata audit only; no current candidate physical qualification or independently repeated fresh inference.",
+    "No live credentials, sessions, database or API state queried; retained restore evidence is hash-bound historical proof.",
+    "Scoped native execution still requires separately admitted new adapter/protocol; this plan/report does not authorize it."
+  ],
+  "local_availability": {
+    "candidate_artifacts": true,
+    "credentials_needed_for_read_only_local_inputs": false,
+    "other_machine_recovery": "Bulk model/data artifacts are ignored private local archives; another machine needs a separately authorized exact hash-bound archive transfer and native build/dependency qualification.",
+    "packet2": true,
+    "prepared_native_source": true,
+    "public_checkout_alone_suffices": false,
+    "qualified_native6_binary": true,
+    "selected_raw_teacher_arrays": true
+  },
+  "native": {
+    "baseline_aliases": "temporal_full_budget and full reset both supply request.previous_pressure; learned warm proposal<=32, reset<=3000; zero_jacobi remains separate; temporal_jacobi is explicitly bounded diagnostic",
+    "binary": {
+      "bytes": 952728,
+      "path": "/tmp/global-pressure-training-native-build6/rheon-global-pressure-training",
+      "sha256": "3a06964ed4121cde5394e114304abd3f50a569ed3345682d5dccd20c740ba3df"
+    },
+    "binary_executed_in_audit": false,
+    "binding": {
+      "bytes": 2971,
+      "path": "/tmp/global-pressure-training-native-build6/binding.json",
+      "sha256": "12a121bc16a56cf2f75243ff490d16f587a4a4a7ad382918fa1f7b1f642a7620"
+    },
+    "build_receipt": {
+      "bytes": 3968,
+      "path": "/tmp/global-pressure-training-native-build6/build-receipt.json",
+      "sha256": "70b0e33f5ec13c289e5afd0c38df783655936e06c2dfd32f0509e94d2aef8307"
+    },
+    "lab_source_closure": {
+      "experiments/global-pressure-v1/dependency/manifest.json": "60f82e7c8631dc35471c9f06e91c43ce317152f1f62d9ba5061ca7758ff8b732",
+      "experiments/global-pressure-v1/dependency/sealed-initial-pressure-b851b38d2d03280220bc4648cd4d721b2e796786fb18d8188dc335336fe2a998.patch": "b851b38d2d03280220bc4648cd4d721b2e796786fb18d8188dc335336fe2a998",
+      "experiments/global-pressure-v1/dependency/source-files.json": "5a5de4635d3970c9b99e620d9fff2d9a23c55307a9e335f7473e7f95a0c7a4ab",
+      "experiments/global-pressure-v1/prepare_dependency.py": "046d99e8d962aea2c6a99aafd41bf6c410dc6461a18655658d21f2b9f2ea80df",
+      "experiments/global-pressure-v1/training/evaluate_native.py": "76fefe5da899f27ba0999a57b4d62e64fa41eea241dd131a8600c408573cd6a0",
+      "probes/global-pressure-v1-training/Cargo.lock": "de26b500818d93ac6b290abb425d96a4ac454cc0f3b1799edb3c233378e74535",
+      "probes/global-pressure-v1-training/Cargo.toml": "6bf012e54d18b3f2a6959c52d1911fd46b61d5a00943fccd331c4de51b1fe393",
+      "probes/global-pressure-v1-training/build.rs": "256afed79e5601c6a4714b38d8c5162bba330b107f87998aa42b240a25d62e1f",
+      "probes/global-pressure-v1-training/src/main.rs": "87e1b6fd9630ca16bf2aa5e56e292e4758d897a3ac06afbbe2989a10cf1c7b99"
+    },
+    "metadata": {
+      "bytes": 110856,
+      "path": "/tmp/global-pressure-training-native-build6/cargo-metadata.json",
+      "sha256": "72706d74e01858f81e6b78177a5c6d1011a6718f16ef73f209fba30a4ab29571"
+    },
+    "prepared_source_files_verified": 746,
+    "prepared_source_receipt": {
+      "base_commit": "2209012bc5f902693d0f695ec1c2d854126af317",
+      "base_tree": "e30b7135eabad4827ee6e21c75715af0f5408d78",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "patch_sha256": "b851b38d2d03280220bc4648cd4d721b2e796786fb18d8188dc335336fe2a998",
+      "prepared_tree_sha256": "5a5de4635d3970c9b99e620d9fff2d9a23c55307a9e335f7473e7f95a0c7a4ab",
+      "schema_version": 1,
+      "source_files_sha256": "5a5de4635d3970c9b99e620d9fff2d9a23c55307a9e335f7473e7f95a0c7a4ab",
+      "source_manifest_sha256": "60f82e7c8631dc35471c9f06e91c43ce317152f1f62d9ba5061ca7758ff8b732"
+    }
+  },
+  "native_residual_origin_sha256": "26c33fac5df17b66fadba036368f2008ec172a860231ff75822cd2ef9dba11b8",
+  "packet2": {
+    "origin.json": {
+      "bytes": 1150372,
+      "path": "runs/global-pressure-v1-training/development-packet2/origin.json",
+      "sha256": "dee7811a95b85a4c9fd2a228163ab39288d85bdeee804d09804c24eb7c92663d"
+    },
+    "splits.json": {
+      "bytes": 70478,
+      "path": "runs/global-pressure-v1-training/development-packet2/splits.json",
+      "sha256": "fbb9edddfa08877e0834fcdf6e0d10e8f4769c5883fc6597b829325c2784650a"
+    },
+    "train-0.npz": {
+      "bytes": 18890920,
+      "path": "runs/global-pressure-v1-training/development-packet2/train-0.npz",
+      "sha256": "6b3d0c4a57df0198b4fe13f7e887b8fa238fbf3fd34877f9dc598c157d2b55dc"
+    },
+    "train-1.npz": {
+      "bytes": 18890920,
+      "path": "runs/global-pressure-v1-training/development-packet2/train-1.npz",
+      "sha256": "d6d7980a51c17b79a6567c870aca9001108779798cee490101429e00814a9f02"
+    },
+    "validation.npz": {
+      "bytes": 12594856,
+      "path": "runs/global-pressure-v1-training/development-packet2/validation.npz",
+      "sha256": "17a9faa84723208d1bd9d6a3a8b1f5921806e93b85d8983d2041404fb295855d"
+    }
+  },
+  "prediction_headers": {
+    "decoded_row_indices": [
+      0,
+      23,
+      24,
+      47,
+      48,
+      71,
+      72,
+      95,
+      96,
+      119,
+      120,
+      143,
+      144,
+      167,
+      168,
+      191,
+      192,
+      215,
+      216,
+      239,
+      240,
+      263,
+      264,
+      287,
+      288,
+      311,
+      312,
+      335,
+      336,
+      359,
+      360,
+      383
+    ],
+    "pressure": {
+      "bytes": 1048576,
+      "dtype": "<f8",
+      "sha256": "cc70f931c156c96f53fff8c606ffe039a7e3f294320731e09ac0ae44d9f99cc7",
+      "shape": [
+        32,
+        16,
+        16,
+        16
+      ]
+    },
+    "row_indices": {
+      "bytes": 256,
+      "dtype": "<i8",
+      "sha256": "17acc08ccda81f2e47be3a0229106f0b522dc3f941a72015f8a677c314fc2eb7",
+      "shape": [
+        32
+      ]
+    }
+  },
+  "preserved_negative_evidence": {
+    "cnn_native_qualified": "0/16",
+    "diagnosed_zero_correction_rows": {
+      "train": 288,
+      "validation": 96
+    },
+    "original_global_cases": 32,
+    "original_global_raw_qualified": 0,
+    "original_global_reset_cases": 32
+  },
+  "prior_tracked_preservation": {
+    "all_git_blob_bytes_and_modes_unchanged": true,
+    "checked_before_and_after": true,
+    "count": 273
+  },
+  "proof_files": {
+    "old_cnn": {
+      "bytes": 5559,
+      "path": "docs/plans/tuldok-pressure-project/reports/results.json",
+      "sha256": "cdd5940b801837e70123246f14938ef38caede27ddc1b417d77d7263c6ff1c97"
+    },
+    "old_diagnosis": {
+      "bytes": 3519977,
+      "path": "docs/plans/global-pressure-diagnosis-v1/reports/diagnosis.json",
+      "sha256": "a9242b746fcba07df273bbfbf9d91b9dd7035a9be9e2bd1d1819d9b80f7a8683"
+    },
+    "old_physics": {
+      "bytes": 283579,
+      "path": "docs/plans/global-pressure-training-v1/reports/physics.json",
+      "sha256": "b2179675e236e7a9c61dd354d7cdba2d75904b9023106b41ccbfb5592949c5ad"
+    },
+    "restore-material.json": {
+      "bytes": 294772,
+      "path": "docs/plans/global-pressure-groupnorm-v1/reports/restore-material.json",
+      "sha256": "68e8bee103201f1fdfb974b4a56637c762394ea8c3a781238b196bfd8184e489"
+    },
+    "restore-review.json": {
+      "bytes": 12291,
+      "path": "docs/plans/global-pressure-groupnorm-v1/reports/restore-review.json",
+      "sha256": "b20cc852a2bf49ccdb21addef9589c62048dcefde8a4ec43b988795fbc202687"
+    },
+    "restore.json": {
+      "bytes": 25268,
+      "path": "docs/plans/global-pressure-groupnorm-v1/reports/restore.json",
+      "sha256": "6ba471e68802de80612f75c1065011f4ca5436948cbc31b3b7039d38e67a4e5e"
+    },
+    "training.json": {
+      "bytes": 18906,
+      "path": "docs/plans/global-pressure-groupnorm-v1/reports/training.json",
+      "sha256": "90f2e29b4e0b83dcc3f0ac94fa6583b032c61badb9f1391651f89e1b2af3efbb"
+    }
+  },
+  "proposed_file_proof_contracts": [
+    "New lab GN adapter must accept exact GroupNorm receipt/model identity and final200 artifact hashes; unchanged old adapter deliberately rejects GN receipt schema.",
+    "Bind exact training/restore receipt and successful cold restore proof, frozen source/config/normalization/splits/native residual origin and pressure/row-index body hashes before native evaluation.",
+    "Reject corrupt source/artifact/lineage identity before scientific execution; numerical proposal rejection/failure retains exact cause and bounded p_base fallback.",
+    "Validate all32 canonical cases and raw RHS/reference/p_base/preMAC hashes, geometry/rho/dt/units; no selected successful-only subset or reserved final input.",
+    "Recheck native binary/build/actualsource/patch metadata and all prepared content before/after evaluation; no guessed binary or ambient sibling source.",
+    "Keep original-RHS/full-operator/cell-zero/actualf32-divergence/wall/flux/Courant gates; true temporal full-budget and zero baseline remain distinct from bounded diagnostic.",
+    "Report raw/rejected/warm/reset/terminal outcomes and complete local process/inference/verification/fallback costs; teacher-state qualification cannot establish autonomous/generalization/accelerator gains."
+  ],
+  "publication_state": {
+    "credential_renewal": false,
+    "new_branch": "stacked on accepted PR6head, not a merge commit",
+    "pr6": "draft and unmerged, as reported by main",
+    "ready_transition": "auto-review denied; standing ready-PR merge authority did not authorize draft promotion"
+  },
+  "raw_teacher_inputs": {
+    "smoke-train-100000/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-000-pre_u.bin",
+      "sha256": "62f13dbfcb5f32b5b1730008281d2582836c7ef8299fcf07a6b0d2cd9ec173a9"
+    },
+    "smoke-train-100000/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-000-pre_v.bin",
+      "sha256": "7fa970d92fd33fdb66e5fc6d346acfe61373aa03b63c55af0e1e7523b32ad202"
+    },
+    "smoke-train-100000/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-000-pre_w.bin",
+      "sha256": "b79ded379bffbc7dc934816aa7e9c025cb0a07655cdb11b48034700afc52bb6a"
+    },
+    "smoke-train-100000/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-000-pressure.bin",
+      "sha256": "b56158fb569453d60d4c2549ade91de5ab0cdd4f29011109acc96e5ea053485a"
+    },
+    "smoke-train-100000/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-000-rhs.bin",
+      "sha256": "28810dd05c88b4bbf270e36369459bb1d9f16440bb462a93c0400652501ce1e8"
+    },
+    "smoke-train-100000/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-022-pressure.bin",
+      "sha256": "51deca5d3f57def28e8d0f651efaac96a29256bd60f51e481431698344cd1159"
+    },
+    "smoke-train-100000/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-023-pre_u.bin",
+      "sha256": "09dcb37acb7264bdddd38844f8ee497763b0ee33bc4591a2e76499067f84e0aa"
+    },
+    "smoke-train-100000/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-023-pre_v.bin",
+      "sha256": "5ac4fc23db4c649eb0b24a3c22cb720f521181415a6157d5483934b17c04e00d"
+    },
+    "smoke-train-100000/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-023-pre_w.bin",
+      "sha256": "9ed832e7bceb5103edef787a353c52b082f16dc558034464a81c3f9a356024f3"
+    },
+    "smoke-train-100000/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-023-pressure.bin",
+      "sha256": "5e5e46ba0c3959f23792ca7c2afb7c829be49cc481bbc3635a48aa117965443c"
+    },
+    "smoke-train-100000/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/frame-023-rhs.bin",
+      "sha256": "ebdb11be7b12b270ad98cee91b5f3f21f9371db53915fbb5f64f86bfab30377f"
+    },
+    "smoke-train-100000/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100000/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100001/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-000-pre_u.bin",
+      "sha256": "bfe372d5cfe1eba42bef9ac5b422762c56fb8fdfd2344c36038f4d722c733cfc"
+    },
+    "smoke-train-100001/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-000-pre_v.bin",
+      "sha256": "fea4f76ba58e4fefd7e16852845ecb609f8767c43d480d0f466c51f011961cce"
+    },
+    "smoke-train-100001/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-000-pre_w.bin",
+      "sha256": "5260976fb6871142e09ffbeef9fe2215ccdadeb3c3c6858ad8f54d709349f465"
+    },
+    "smoke-train-100001/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-000-pressure.bin",
+      "sha256": "07415e4602187b449b2acd2e888b1f6db92d1fc1c80c623453dae42c4f3c3d09"
+    },
+    "smoke-train-100001/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-000-rhs.bin",
+      "sha256": "46acc609de38a0d0baef76ced17ace63fabaf78c89dbacecedf32047e644db44"
+    },
+    "smoke-train-100001/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-022-pressure.bin",
+      "sha256": "9f5b15d37b8eee252bd101686836ec98fbe027a472cfc563af15e07db7eaf9ac"
+    },
+    "smoke-train-100001/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-023-pre_u.bin",
+      "sha256": "817cb96a2066dafe4174cae7da1489cd85cf85cfd8adf23ed8d784f33e2db87d"
+    },
+    "smoke-train-100001/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-023-pre_v.bin",
+      "sha256": "926f2fed026c1fec841010a9db54e0b97f467bbaf1a02487eb9de9ab1e10e619"
+    },
+    "smoke-train-100001/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-023-pre_w.bin",
+      "sha256": "125db11091effb30a45eb708216ef02296667a829363eaf75d1fcdd5b6cc9a3e"
+    },
+    "smoke-train-100001/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-023-pressure.bin",
+      "sha256": "c1b7773acbdc398f78efb5140c77c13b7e7f6702b46214238a6ad4c0ea15ef9b"
+    },
+    "smoke-train-100001/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/frame-023-rhs.bin",
+      "sha256": "c16a1caecb4c50dcb85fa13a684edf818ae5f70667268311fdaa0e33d4d1daea"
+    },
+    "smoke-train-100001/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100001/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100002/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-000-pre_u.bin",
+      "sha256": "ac5635ef3ed4a77f45c7a7e91a60d88516fa9468a28b12d11f486c53dbbb3499"
+    },
+    "smoke-train-100002/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-000-pre_v.bin",
+      "sha256": "17850f18ada6d8bd16ae37eee9f294fa0b5bb95582975154682e3bbbad759345"
+    },
+    "smoke-train-100002/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-000-pre_w.bin",
+      "sha256": "279bddf263075a2a1f034bfd6f8bada54fdb6a2c61c253662a02bef177f60758"
+    },
+    "smoke-train-100002/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-000-pressure.bin",
+      "sha256": "2ab2cfcfe41a25fcf226de04a09fb2ecf481f97bab5cb57f58c10f3d462b0a28"
+    },
+    "smoke-train-100002/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-000-rhs.bin",
+      "sha256": "88fc0e2ed4278a3a055d5e8b30118198d48d929a3aadd0b67e647a7f246614eb"
+    },
+    "smoke-train-100002/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-022-pressure.bin",
+      "sha256": "d33c04166171bc181ebd718259f6a7d78f2606b31deaca10bf68d3beec6d51c9"
+    },
+    "smoke-train-100002/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-023-pre_u.bin",
+      "sha256": "ac136e6658076ab74b4eeb2577fc283fcbea16f9249c04589be6816fd3a0ef5a"
+    },
+    "smoke-train-100002/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-023-pre_v.bin",
+      "sha256": "686a6698d5d26d9ef25eb843a1432c295b23440cd0067498856c28d919ffe919"
+    },
+    "smoke-train-100002/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-023-pre_w.bin",
+      "sha256": "f6ebf5a37b94d5143b708e0a43984ac678399812d60cc7a2af68016c1bd7285a"
+    },
+    "smoke-train-100002/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-023-pressure.bin",
+      "sha256": "b9fbb032a96fa806aaf0416f25a9b4c4697e991a1d0efeb95561d728ff36ac2b"
+    },
+    "smoke-train-100002/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/frame-023-rhs.bin",
+      "sha256": "ca800fcb3db31fa74ee54417cc1c2cde66e37283a30489eb90e1efb6467ad551"
+    },
+    "smoke-train-100002/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100002/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100003/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-000-pre_u.bin",
+      "sha256": "3564c00cfaa183678ecc3fd67332c9aabbbdfb9c6f10aa8115fc7f9b0443c202"
+    },
+    "smoke-train-100003/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-000-pre_v.bin",
+      "sha256": "212a3096cb4477592f1a2e4d664ed6a9bb9ac7d586728b22ab68feee3715d3ed"
+    },
+    "smoke-train-100003/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-000-pre_w.bin",
+      "sha256": "986a570539a4ea12921b4a132d6f8bc3a41646a5329122d16e197d3af7d0ec2c"
+    },
+    "smoke-train-100003/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-000-pressure.bin",
+      "sha256": "c84d2e4fd2478d50244d150b354e88c7667b9261d6de4c04e48454b91c0092ef"
+    },
+    "smoke-train-100003/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-000-rhs.bin",
+      "sha256": "eb256cb2aab1a1968c3e39e0c441c275ee723fff4200f65bb5dd4d439bcdfb17"
+    },
+    "smoke-train-100003/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-022-pressure.bin",
+      "sha256": "3dbfc952ffc0a5d16f1c9ed60f84f98b545fbaef334ad19bbf9e20c6fedb76f1"
+    },
+    "smoke-train-100003/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-023-pre_u.bin",
+      "sha256": "7490c03e848f6e3c0a8bf337dd89b857554ba71daa9deaa39a29bade4c5ee944"
+    },
+    "smoke-train-100003/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-023-pre_v.bin",
+      "sha256": "c795147c40983bd03724dde152125c993d335ccc764bcabc7fee0f3ccd415e70"
+    },
+    "smoke-train-100003/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-023-pre_w.bin",
+      "sha256": "bfafdce6a57295da2bf4787c6fd219a22b66968352e645d23a6e43716a1df82b"
+    },
+    "smoke-train-100003/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-023-pressure.bin",
+      "sha256": "6e389bd529b7c2a9816156a5184c0a0c73d7f723b92b13a8a02c25ad668056b1"
+    },
+    "smoke-train-100003/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/frame-023-rhs.bin",
+      "sha256": "71c29ee1d318a32e7a1b0a7ad906a917575e0f1afc13b0f97b3ec7f5c2b94162"
+    },
+    "smoke-train-100003/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100003/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100004/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-000-pre_u.bin",
+      "sha256": "8b09bc02bd6d0eb780584db660f38bf6a9c7bc5b0e3be9fc1c9f8949d1db8f71"
+    },
+    "smoke-train-100004/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-000-pre_v.bin",
+      "sha256": "37bc9850476754a4808540baac8841d2dc4179e1984102d5dfbb151c50b15937"
+    },
+    "smoke-train-100004/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-000-pre_w.bin",
+      "sha256": "e352253d39023e6732ed49125c5cdc70ea9bc317e4d785f3d6ed4c136125cc96"
+    },
+    "smoke-train-100004/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-000-pressure.bin",
+      "sha256": "a624d56a328f88f775283a043e2187fe4644e2bbab08f5f2089ee5524792f4df"
+    },
+    "smoke-train-100004/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-000-rhs.bin",
+      "sha256": "1e71e9ffeeb83c659c1c6abc7687585c92715e8cfecf7b83d286cfe9cc3b781b"
+    },
+    "smoke-train-100004/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-022-pressure.bin",
+      "sha256": "7b705ca9d8c005e1b894454cb93934fb3c404aef39b1fa3b8cf82dd4712e52ba"
+    },
+    "smoke-train-100004/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-023-pre_u.bin",
+      "sha256": "c8e99f41a727b6d21a8dc97c4da4ebff4514d085ece18835f7abef475736b66a"
+    },
+    "smoke-train-100004/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-023-pre_v.bin",
+      "sha256": "81b45c449774d13a79d7a02d9e87e0b154d6e35d776d4ecbf6a799c83bfc57e3"
+    },
+    "smoke-train-100004/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-023-pre_w.bin",
+      "sha256": "c3dacfaafecf0cf11c17b0d6a2646b1cc31f8d5cdf9a2ea0a1068af7c7f94afc"
+    },
+    "smoke-train-100004/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-023-pressure.bin",
+      "sha256": "8836c104057e9b3350186599399b2f3f0e65cc32d56670e337ed2ce620c265ae"
+    },
+    "smoke-train-100004/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/frame-023-rhs.bin",
+      "sha256": "f438a175c18b08b9e8e0719af1af5618921355f9e066fb53506074b0d5888d0a"
+    },
+    "smoke-train-100004/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100004/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100005/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-000-pre_u.bin",
+      "sha256": "5a6a6b1f2b18d5bfebfed953910409369996041f164ff3e5288ecc55b52264af"
+    },
+    "smoke-train-100005/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-000-pre_v.bin",
+      "sha256": "0d4ca9005991d7285d4c720b3e9d238c359151cd9b3f5c148821a7d55ad82032"
+    },
+    "smoke-train-100005/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-000-pre_w.bin",
+      "sha256": "6322e15edb0f9dfda883cb5225cecc73da1eb2f9637021c1fe7e25f62b6be1a5"
+    },
+    "smoke-train-100005/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-000-pressure.bin",
+      "sha256": "565311db24445e576db81d302d1f8d1c4680682d964526c93a6f732ca71cc15a"
+    },
+    "smoke-train-100005/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-000-rhs.bin",
+      "sha256": "fd7eea51bc12556b8e4c00a70d82170524a9a4d1513832d8cf7ffe4472c84594"
+    },
+    "smoke-train-100005/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-022-pressure.bin",
+      "sha256": "b5e389ebee0a7a2af78995df9136a49b524374937387ddb522d9955d8f935424"
+    },
+    "smoke-train-100005/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-023-pre_u.bin",
+      "sha256": "721839c18e8f4ae6d2d048447de603e2a13a647ad929e988fc7e1a6cfb3ffebe"
+    },
+    "smoke-train-100005/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-023-pre_v.bin",
+      "sha256": "ed0b251bb463181ba13f3c0976b8ea8ccfb0fc3031973a19705420d0c7fe23eb"
+    },
+    "smoke-train-100005/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-023-pre_w.bin",
+      "sha256": "6ab99add04217e0edb3412f53dc73f14eecd6c1f81a7eb7bb342658542ae5276"
+    },
+    "smoke-train-100005/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-023-pressure.bin",
+      "sha256": "0658415b3a89c10e43982bc6d8dc5ba9872e999e81bbf8895078b756cfc76ad9"
+    },
+    "smoke-train-100005/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/frame-023-rhs.bin",
+      "sha256": "704fbe3f93f3daba68f48c4bf815ecb751ab969b764b11338582bb7919195ff3"
+    },
+    "smoke-train-100005/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100005/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100006/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-000-pre_u.bin",
+      "sha256": "d1f208541865356b1e63c3a3f0d280639d52afb7780d47cc58f0f213305cbac2"
+    },
+    "smoke-train-100006/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-000-pre_v.bin",
+      "sha256": "3b784e9014849713bd5603dfcd66d5357a6f7ced15150c0dfe4922128a6df078"
+    },
+    "smoke-train-100006/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-000-pre_w.bin",
+      "sha256": "ab1cd97ab60ca2a89c499a655385a470adef86c7e0ff42d6c8256d1eeffee49e"
+    },
+    "smoke-train-100006/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-000-pressure.bin",
+      "sha256": "6f7f1b3bdf77746dac7d5103a916f0a0480419f11f566c5220e7829d0b5621ab"
+    },
+    "smoke-train-100006/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-000-rhs.bin",
+      "sha256": "7c7bff692ee06a819c56080da1b8107b5c055776690ebebc7dbf78052daf8d12"
+    },
+    "smoke-train-100006/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-022-pressure.bin",
+      "sha256": "f9dfb88ca2d71fd98cf190b1226ee79f6a0a334094f6e33c8acab40ece9ad26c"
+    },
+    "smoke-train-100006/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-023-pre_u.bin",
+      "sha256": "b21866e29bf102c5744f48b28a108c9526d5dc829b12704ef886bd8420abc0a4"
+    },
+    "smoke-train-100006/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-023-pre_v.bin",
+      "sha256": "9fcf896279d263893d4869d6ed9a5a2b831d56d93b6c2213e7af6d92beabe522"
+    },
+    "smoke-train-100006/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-023-pre_w.bin",
+      "sha256": "0e3ff28e3fc61c89dff629e7d1cfb9401aa148c4295effccff5ab9f2be5746ac"
+    },
+    "smoke-train-100006/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-023-pressure.bin",
+      "sha256": "348a8161e4df6bc2513d710e9a411f69112d65002c9eb291fbaba133c808451e"
+    },
+    "smoke-train-100006/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/frame-023-rhs.bin",
+      "sha256": "171ad6b7c013054bc317d257b333a9bd57141be0aeb2dbd58b8f3127d54ff8f3"
+    },
+    "smoke-train-100006/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100006/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100007/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-000-pre_u.bin",
+      "sha256": "aa1d6a14851b196f5982ae3d55b486b47e4656e74dd4f09cd835b3f3309e56f1"
+    },
+    "smoke-train-100007/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-000-pre_v.bin",
+      "sha256": "c8577c7f47af45562288649fd34978e3845c607b74f7dccfa9000590dc74e260"
+    },
+    "smoke-train-100007/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-000-pre_w.bin",
+      "sha256": "47dfd3e73ce4fe992ad229887cb20ffb9d00c5d44c049827d2f5241726e22f50"
+    },
+    "smoke-train-100007/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-000-pressure.bin",
+      "sha256": "ec4259c0d98e3c097a05f764f8f3a302af352257bfb55d7a6d95dfaa1740c6b0"
+    },
+    "smoke-train-100007/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-000-rhs.bin",
+      "sha256": "d6e85e16edcb2a67a3ffe3daa6f4eac05cc1b10d50ad7dee92330058c20fc3f4"
+    },
+    "smoke-train-100007/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-022-pressure.bin",
+      "sha256": "a0e12619010a2e067c258cfc617d2eb387c2c7f90565be1f436c50d9e1b63aa7"
+    },
+    "smoke-train-100007/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-023-pre_u.bin",
+      "sha256": "8b7660941719f50c22cae5efcd8946e2efff6bbd2a17bf21911d2b46899fd041"
+    },
+    "smoke-train-100007/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-023-pre_v.bin",
+      "sha256": "1b14b72a0237791a2811a4eb32ff424c382c67a6629d426b935ae93f91080e86"
+    },
+    "smoke-train-100007/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-023-pre_w.bin",
+      "sha256": "af16a57809fd3a35e423499e48dd6a7564096814928fce3dd6267d32ec0e70d7"
+    },
+    "smoke-train-100007/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-023-pressure.bin",
+      "sha256": "bf6ad782d807cebde023fbd18770d4286c34c9390bfa81be80c995df5830499e"
+    },
+    "smoke-train-100007/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/frame-023-rhs.bin",
+      "sha256": "4c2a776cd9f36bc76658d8b98d23262caf69e0670366aa6878908f9db1b4ebd2"
+    },
+    "smoke-train-100007/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100007/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100008/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-000-pre_u.bin",
+      "sha256": "9daa8d00558f37d8c7f860eada7109bc820dcc33952903e4845b375ab0dfa39e"
+    },
+    "smoke-train-100008/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-000-pre_v.bin",
+      "sha256": "42f2ea8a5cd4a5d58b712fa03fbcf6b68835b6977ea2444d689855b78e6a925b"
+    },
+    "smoke-train-100008/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-000-pre_w.bin",
+      "sha256": "4c86cbf490a04a4706abeb6474def446f4be475b48b50819cc65126525f3366a"
+    },
+    "smoke-train-100008/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-000-pressure.bin",
+      "sha256": "af7c73a4aa01c0ed73215a48f21e05ac018670adf9b6296b67f56215c58c1d37"
+    },
+    "smoke-train-100008/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-000-rhs.bin",
+      "sha256": "115deece462bcb8295ea7f77a6b39ce07a25df09e1591f4871cead3d12159f61"
+    },
+    "smoke-train-100008/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-022-pressure.bin",
+      "sha256": "68add3b02de406f4a43a5a12627cfe30b900e9ebcd367b6a99d4131147b3bf65"
+    },
+    "smoke-train-100008/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-023-pre_u.bin",
+      "sha256": "d879c26270d82ca49d15499c023f35f2561dded57ec4018fa831e2a420f0ef7c"
+    },
+    "smoke-train-100008/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-023-pre_v.bin",
+      "sha256": "b220181eb69116624876b54766a44173851e50e6758f0192def9e97180a8498b"
+    },
+    "smoke-train-100008/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-023-pre_w.bin",
+      "sha256": "6d7935e4877f277b121776e3b9f7ce568454cf9d57bccea2f87c05f2428e65eb"
+    },
+    "smoke-train-100008/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-023-pressure.bin",
+      "sha256": "0f67ced7d913cf648b02ea8520502e964f7a8eccea10e8a11284316dd6ee8569"
+    },
+    "smoke-train-100008/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/frame-023-rhs.bin",
+      "sha256": "91bd9ede6e986a874157a92e74c953455e129e7938e7c7c79565510d2242428a"
+    },
+    "smoke-train-100008/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100008/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100009/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-000-pre_u.bin",
+      "sha256": "a6cec63808af3748b49abeefa28d9b6d28550823076bd259f5d107ab14b00b07"
+    },
+    "smoke-train-100009/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-000-pre_v.bin",
+      "sha256": "2abc56e1840a949669061f9ee4fcba5919bb6d6756ed2885e52dfe4f46721fb9"
+    },
+    "smoke-train-100009/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-000-pre_w.bin",
+      "sha256": "dc465d762fca00886be60b2342f1df6ba4eb61aa338a56ef3c01b48ca56196ed"
+    },
+    "smoke-train-100009/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-000-pressure.bin",
+      "sha256": "de5b05003c2ee4a55af7d0f784d7487d506c91972cfe963358e8d265ae808af8"
+    },
+    "smoke-train-100009/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-000-rhs.bin",
+      "sha256": "9a786d6082acf528d15cc8a4fb712b34c2c432a00e85d3f65799ab4d00d3c218"
+    },
+    "smoke-train-100009/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-022-pressure.bin",
+      "sha256": "7091117f281a57c9460d18e62b8f8703f94dca1332f9d897e82603a4aa95297e"
+    },
+    "smoke-train-100009/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-023-pre_u.bin",
+      "sha256": "bc3b7b964df2b1a068ca9f7c56c2fcfa29c716e674d50c92115efa446be5397e"
+    },
+    "smoke-train-100009/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-023-pre_v.bin",
+      "sha256": "6772b26d68005b42d9bb56fcafd42b63a7b72903c57489f4072f857670f9a334"
+    },
+    "smoke-train-100009/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-023-pre_w.bin",
+      "sha256": "7c916f12611618410ef94d04819665c32d009729a13293394c99e574296581f4"
+    },
+    "smoke-train-100009/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-023-pressure.bin",
+      "sha256": "3dcee0293bfffcec4efc8a3f46faf380beb2f9a633097698745234028eb93f86"
+    },
+    "smoke-train-100009/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/frame-023-rhs.bin",
+      "sha256": "c0afc416672834872c62b5d0c56213d1f2007c07b42d1ae62a52f1bd4b83f275"
+    },
+    "smoke-train-100009/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100009/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100010/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-000-pre_u.bin",
+      "sha256": "e707514b75c6b7aaa90018b8666d3ae01bdce26f0b74fef31d3566406540ffa2"
+    },
+    "smoke-train-100010/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-000-pre_v.bin",
+      "sha256": "f4aa9407d3eecf0c1137d5efb2746d1878d7d1941ea6f25270a064ac71c288c0"
+    },
+    "smoke-train-100010/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-000-pre_w.bin",
+      "sha256": "62dfbb00717a5e01bf266b8045e0469e89c0b144e0b1a962d79173b7b8bb726d"
+    },
+    "smoke-train-100010/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-000-pressure.bin",
+      "sha256": "580eb4f919961eaccb7e75f6a80cca2d1600a6d6f76691d91e0587a50c7888f2"
+    },
+    "smoke-train-100010/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-000-rhs.bin",
+      "sha256": "cc505800e315b6d86d9d45671a2b1e45af848565e190a4716bbb2185f541321d"
+    },
+    "smoke-train-100010/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-022-pressure.bin",
+      "sha256": "c5ebb0537acd4cd86b514add496f912d2c92d59d37d006f7d441d3dc6b87ecd8"
+    },
+    "smoke-train-100010/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-023-pre_u.bin",
+      "sha256": "dabcaef9bc74fb9695e20f8985462f8dbfca349ba4fd22dbc5937410bff93946"
+    },
+    "smoke-train-100010/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-023-pre_v.bin",
+      "sha256": "7cb8070c0642eb487159f47b60185a226b2698c85765945b1a2e76501f53557d"
+    },
+    "smoke-train-100010/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-023-pre_w.bin",
+      "sha256": "51b05329b7d3cd5203cdc9960439cbec723f049d1cadd24840b0141400d2524f"
+    },
+    "smoke-train-100010/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-023-pressure.bin",
+      "sha256": "360449925e2bb77be7534504c11483cbf37304c743f5abc9d4ad3944c33ac650"
+    },
+    "smoke-train-100010/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/frame-023-rhs.bin",
+      "sha256": "eafb4a03853393d601d0fe46b444b60e6f38781f662828c09d014b91d93ce9a1"
+    },
+    "smoke-train-100010/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100010/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-train-100011/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-000-pre_u.bin",
+      "sha256": "3be3ab25206c4bd9b2b2c50441e40450e707e9edb23d8bbd404a98a849fe42d8"
+    },
+    "smoke-train-100011/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-000-pre_v.bin",
+      "sha256": "89369b8202367bfe3d24386ee4d79976fbf20d0b4373aa00731a26395d9d78f0"
+    },
+    "smoke-train-100011/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-000-pre_w.bin",
+      "sha256": "0642a190c210424883bf1f8fda7765f996338280f1c9fb8976751b941c80f03f"
+    },
+    "smoke-train-100011/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-000-pressure.bin",
+      "sha256": "36ebd9a1ee6a3d0a40a7907d36c9ec5a7c0429031246f63b76a0a197a0b13632"
+    },
+    "smoke-train-100011/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-000-rhs.bin",
+      "sha256": "2ef883304b98b40bb3225d9ab46245b2f1a696a222830c8cc2480caf3c3bad00"
+    },
+    "smoke-train-100011/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-022-pressure.bin",
+      "sha256": "df02a8e158c7d57484e3227b5ad9caa0533ac87bc53ba7a2cbee2b78f58f09f6"
+    },
+    "smoke-train-100011/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-023-pre_u.bin",
+      "sha256": "6553c56eca5ef4c5b0a52ab1b8bd4f70d5e8fdd583d5b338acac3bb642ecfe09"
+    },
+    "smoke-train-100011/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-023-pre_v.bin",
+      "sha256": "5dd9b5769dfaa590281651f1de17bc32cdbbb82885e68a144a0b4bbde7f3d655"
+    },
+    "smoke-train-100011/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-023-pre_w.bin",
+      "sha256": "172c590d54d92f3fcb0df4a2c86e6ae703ac751051d8728bbb24d4618341fdf2"
+    },
+    "smoke-train-100011/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-023-pressure.bin",
+      "sha256": "e4a94287b4975b65bdea4d4004d6e2b1e505e811e092ae8899e76a1fbe3b534c"
+    },
+    "smoke-train-100011/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/frame-023-rhs.bin",
+      "sha256": "e953546c1d43b021b64cd9c8bc92c340daabfb3c22a136c6a6916429d3e92ca8"
+    },
+    "smoke-train-100011/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-train-100011/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-validation-100100/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-000-pre_u.bin",
+      "sha256": "4f24acec0f03d7f9e4d596e946df6f3a4cbad488c5fd86814e356b6eaa63f194"
+    },
+    "smoke-validation-100100/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-000-pre_v.bin",
+      "sha256": "351d12094aba51e91852e2a3bb96927782c30ce27def990070a733abcc0d578a"
+    },
+    "smoke-validation-100100/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-000-pre_w.bin",
+      "sha256": "91ac368adea639b329f16b8bb34b96c028f11c65c525c532f86a893b00f91443"
+    },
+    "smoke-validation-100100/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-000-pressure.bin",
+      "sha256": "b09dd763984a360d274188fe0fffd1eb4aecbf6b9d2399f2b934fe190bdb7e96"
+    },
+    "smoke-validation-100100/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-000-rhs.bin",
+      "sha256": "c5071845f04325ddd97fe56607374c4f7033b191971a55567dde5a42e64e6807"
+    },
+    "smoke-validation-100100/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-022-pressure.bin",
+      "sha256": "1addb388c0283a07c28948906b594b511ff976c14ab83559ff65290d159336d3"
+    },
+    "smoke-validation-100100/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-023-pre_u.bin",
+      "sha256": "35acf46fd3c7b251d94824c20fd8d871b3690a7c90697eb786507c9f91561fb7"
+    },
+    "smoke-validation-100100/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-023-pre_v.bin",
+      "sha256": "72266ea58c3c8e25ae545c25a0142e7d28b43dd4b141a16e938549a858ab2b76"
+    },
+    "smoke-validation-100100/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-023-pre_w.bin",
+      "sha256": "f710e5b5777c172445dc65cfcdfaa2c6347752fbe2c25c6805ad09e2a2849091"
+    },
+    "smoke-validation-100100/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-023-pressure.bin",
+      "sha256": "bbb989d52ca576ec7cc4a3c46a3f5b59d06c81ec7fe4ffa6ef63b98ade5a905f"
+    },
+    "smoke-validation-100100/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/frame-023-rhs.bin",
+      "sha256": "80678194e57ed20a4af50ed9ccd417d2a1ccf7eb3ae42f23346ba5f0f03a31dc"
+    },
+    "smoke-validation-100100/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100100/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-validation-100101/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-000-pre_u.bin",
+      "sha256": "19936b50617b6447302331adf8111c1bbb77e49d907fb82fd6067e97bb9a92ab"
+    },
+    "smoke-validation-100101/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-000-pre_v.bin",
+      "sha256": "9f52cc932a9b38606ff3883c4c4ff89820a2aa56d6d469f5569ff30f4886c00c"
+    },
+    "smoke-validation-100101/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-000-pre_w.bin",
+      "sha256": "bd4ec81e63352e9418d01dd9be5fbca460695ae737238062d8f1aab9d68a9d4a"
+    },
+    "smoke-validation-100101/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-000-pressure.bin",
+      "sha256": "bd270637bdde76d2b657242247db70ec5d471dfe4b4885d37313cf0b8fc61622"
+    },
+    "smoke-validation-100101/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-000-rhs.bin",
+      "sha256": "1313349b349256f889e5f9b426146995d3418b7c471af8630c1cb28ce8106f46"
+    },
+    "smoke-validation-100101/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-022-pressure.bin",
+      "sha256": "765430e4964aabba7667b2f7d9caf62ce3308087a64b6f5b8a9c47a1c0e476b7"
+    },
+    "smoke-validation-100101/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-023-pre_u.bin",
+      "sha256": "6705a97c6fd4d5e36a611bfeb8d34aa491e9f02793fc556c159fcb3892c684b3"
+    },
+    "smoke-validation-100101/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-023-pre_v.bin",
+      "sha256": "2d7da44684112fb0fbfaeb3312633133477e0e72b9eb3348a3dcae50c4e545d8"
+    },
+    "smoke-validation-100101/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-023-pre_w.bin",
+      "sha256": "f5cb5d92b853fdcfa5136c0aeff90a8efde93686a396641a88a6e900b0e25c42"
+    },
+    "smoke-validation-100101/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-023-pressure.bin",
+      "sha256": "53980de63033bcfdc2a35d477afdbddb49523ae205659929c40e4e3278f60046"
+    },
+    "smoke-validation-100101/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/frame-023-rhs.bin",
+      "sha256": "0f76478ce59b9efec0cfdb457c9c429cb42a36e2966f034cb25661b3ab629706"
+    },
+    "smoke-validation-100101/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100101/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-validation-100102/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-000-pre_u.bin",
+      "sha256": "908c24f631bfcf8727b677a408803b88388c18a0ab6dab5ee51ce6c0533529aa"
+    },
+    "smoke-validation-100102/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-000-pre_v.bin",
+      "sha256": "3fa3e781f3d8faad47a8ae6d6bdd19795ac92edf670647f86cb7b4d89341a613"
+    },
+    "smoke-validation-100102/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-000-pre_w.bin",
+      "sha256": "5fc8ac74412734559589573f6dbf723c34e5d9fb96c6afe97fcca2b6942c32d3"
+    },
+    "smoke-validation-100102/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-000-pressure.bin",
+      "sha256": "f61239b6f48184ba391a5d867063c85e00a9698db3c66abe7d93a66220096b3f"
+    },
+    "smoke-validation-100102/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-000-rhs.bin",
+      "sha256": "8843767dbeecf722cf9d40d803236c5462a20512bd2cf88fb2b3bfa6ef4c7308"
+    },
+    "smoke-validation-100102/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-022-pressure.bin",
+      "sha256": "a308cdb1e7e45d8240073871f88b0ba0f50468779af9b7190b3b2b70a4b611b3"
+    },
+    "smoke-validation-100102/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-023-pre_u.bin",
+      "sha256": "797cb8e2b9e0a672a42e1f4fe2a3d692f085bd01765a853f505acd6f1069d3be"
+    },
+    "smoke-validation-100102/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-023-pre_v.bin",
+      "sha256": "5579cc0804cd95201b2b0a5f12884be81876f9229728f7fd026e1fcb17fca51f"
+    },
+    "smoke-validation-100102/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-023-pre_w.bin",
+      "sha256": "ce0fa5128a573c0b43a2a211af6119c07323337c4bcbd9eb10458ac1ddff8ed9"
+    },
+    "smoke-validation-100102/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-023-pressure.bin",
+      "sha256": "5ce3a6dc2ab8cfca6201f8580185b4bb4a8fbdf683065a6eb583b26d8a70f62a"
+    },
+    "smoke-validation-100102/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/frame-023-rhs.bin",
+      "sha256": "9889af524ff191c8a8f63c087617f56c656cd03c84ca6fd9e2d31a15a520f9fd"
+    },
+    "smoke-validation-100102/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100102/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    },
+    "smoke-validation-100103/frame-000-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-000-pre_u.bin",
+      "sha256": "4841cd5f01cec50d40ab0c7e24e816cc0295002c08265049ca3ba7358db174e8"
+    },
+    "smoke-validation-100103/frame-000-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-000-pre_v.bin",
+      "sha256": "a010898383fbc7c4b63dd2cb137c54f1e9dda288f7ea9fe9182c7a35c777467e"
+    },
+    "smoke-validation-100103/frame-000-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-000-pre_w.bin",
+      "sha256": "f04d9bf5dc72dc9e5c6bad18f380450fa1054e85f667107b8ff7ec3b0edfb02f"
+    },
+    "smoke-validation-100103/frame-000-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-000-pressure.bin",
+      "sha256": "16055d17020eae283b4aa9f71ac6211986b934b609d924e09a818b1ff953675f"
+    },
+    "smoke-validation-100103/frame-000-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-000-rhs.bin",
+      "sha256": "ab78904c104d4654c488bf538a55323b0fc3ba238b5a60f899320b9b0e10dcf0"
+    },
+    "smoke-validation-100103/frame-022-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-022-pressure.bin",
+      "sha256": "b5a1603e33e46f538ff95ecd6e951c9a28afa04f5ffa3c45e5d89b0be139c206"
+    },
+    "smoke-validation-100103/frame-023-pre_u.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-023-pre_u.bin",
+      "sha256": "6398e7acefa53920dc390e330e94119d2059909f1ae95e9695afd683882bbc78"
+    },
+    "smoke-validation-100103/frame-023-pre_v.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-023-pre_v.bin",
+      "sha256": "cecc8a55c397d941dcb57682cb2873539ff1e10f388993777cb65395dda6698e"
+    },
+    "smoke-validation-100103/frame-023-pre_w.bin": {
+      "bytes": 17408,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-023-pre_w.bin",
+      "sha256": "b4ed78a0e858eb56363662bbdb4aebab37611860ecff24c4724518751a982951"
+    },
+    "smoke-validation-100103/frame-023-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-023-pressure.bin",
+      "sha256": "d12a17ff6aefc8c25def59a6df4e669a21f871ef10fd99a404aef65f82e24248"
+    },
+    "smoke-validation-100103/frame-023-rhs.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/frame-023-rhs.bin",
+      "sha256": "7a43cd321e2f643320dc24259029f782b7fb0aaca18e868c4b7b499ae35be10b"
+    },
+    "smoke-validation-100103/initial-pressure.bin": {
+      "bytes": 32768,
+      "path": "runs/global-pressure-v1-capture/committed-development-complete/smoke-validation-100103/initial-pressure.bin",
+      "sha256": "c35020473aed1b4642cd726cad727b63fff2824ad68cedd7ffb73c7cbd890479"
+    }
+  },
+  "reservation": {
+    "bytes": 33633,
+    "path": "docs/plans/global-pressure-correction-v1/reservation.json",
+    "sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5"
+  },
+  "restore_proof": {
+    "candidate_update": 200,
+    "config_sha256": "e5f6ac584ffe9eb067bbb5c6cb192ac8d399bb78848beafeb1d2aa5588998683",
+    "final200_only": true,
+    "fresh_parity_proof": "retained successful execution and pinned validate_prediction_parity before receipt completion/publication; archive equality is not a new replay",
+    "material_sha256": "4265f5157c7cfaf1759ae2f501956cefc9912b430a93f1a90d9706792674360e",
+    "model_identity": "rheon-global-pressure-groupnorm-model-v1",
+    "new_optimizer_updates": 0,
+    "new_replay_in_audit": false,
+    "originating_training_material_sha256": "4e8b58899d7c03f074b2b5632911c539f183bb2cf57024e3809c1a07055f0668",
+    "originating_training_run": "d73bc2976c4f442f8aefc8f7242bd252",
+    "reported_completed_drained": true,
+    "run_id": "265c9574c06048d8bc91daa1cf8eab02",
+    "runtime_snapshot_sha256": "6367d0fa7eb989d53cc49d6ed47f937a4f63e68655de9acaf84c7f7d94838c77",
+    "sample_order_sha256": "1851c05067aa385ea56461eb86a676799cb562e12f5a618a732f64e527d989d9",
+    "source_config_and_all5_packet_inputs_hash_bound": true,
+    "source_witness_sha256": "549ad91612e7e2607e902bec3ccbf66366f6df1910c5b1755383d691b1f025f6",
+    "trained_optimizer_updates": 200,
+    "weights_equal_checkpoint200": true
+  },
+  "schema": "rheon-groupnorm-native-dev-preservation-v1",
+  "scientific_source": "fd3a6009e5805978a29ed1df7389ad226a40a914",
+  "status": "planning_inputs_available_metadata_verified_no_physics_evaluation",
+  "weight_tensor_headers_count": 38
+}

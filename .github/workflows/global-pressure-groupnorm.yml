@@ -1,0 +1,69 @@
+name: GroupNorm pretraining contracts
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/global-pressure-v1/groupnorm-v1/**'
+      - 'docs/plans/global-pressure-groupnorm-v1/**'
+      - '.github/workflows/global-pressure-groupnorm.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/global-pressure-v1/groupnorm-v1/**'
+      - '.github/workflows/global-pressure-groupnorm.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pretraining-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: lab
+    env:
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: lab
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Tuldok
+          ref: f7543fb78f6f1cb52e45dd315efa17a4b2fe6fa6
+          path: generic-contracts
+          persist-credentials: false
+      - name: Existing exact CPU dependencies
+        run: |
+          python3.12 -m venv .venv
+          .venv/bin/python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r tuldok/requirements-cpu.lock
+      - name: No-optimizer numerical and output contracts
+        env:
+          TULDOK_CUSTODY_SOURCE: ${{ github.workspace }}/generic-contracts/recipe_process.py
+        run: |
+          .venv/bin/python - <<'PYCI'
+          import unittest
+          suite = unittest.defaultTestLoader.discover('experiments/global-pressure-v1/groupnorm-v1', pattern='test_*.py')
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          print(f'GN pretraining contracts: tests={result.testsRun}, skipped={len(result.skipped)}', flush=True)
+          raise SystemExit(0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1)
+          PYCI
+      - name: Existing generic recipe parser accepts complete history inventory
+        run: |
+          .venv/bin/python - <<'PYCI'
+          import pathlib, sys
+          sys.path.insert(0, str(pathlib.Path('experiments/global-pressure-v1/groupnorm-v1').resolve()))
+          import project
+          sys.path.insert(0, str(pathlib.Path('../generic-contracts').resolve()))
+          from recipe_contract import decode_definition
+          sources = {name:b'fixture' for name in ('model.py','train.py','original_model.py','original_train.py','original_data.py','config.json','runtime-manifest.json','source-witness.json','model-qualification.json','output-budget.json')}
+          for mode in ('train','restore'):
+              decode_definition(project.canonical(project.definition(mode, sources, 'a'*64)))
+          print('Generic declarations accepted; no catalog, grant, Run or training')
+          PYCI

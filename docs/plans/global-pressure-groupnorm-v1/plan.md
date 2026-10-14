@@ -2,11 +2,11 @@
 
 **Plan status:** `Accepted`
 
-**Current phase:** Pretraining gates accepted; one admitted CPU training completed and observed
+**Current phase:** One admitted CPU training and exact zero-update cold restore completed/drained
 
-**Next slice:** Separate restore-material review and authorization; no restore or further training is authorized by this packet.
+**Next slice:** Separately review a model-specific lab adapter and native cost/gate contract; no native candidate, further Run or training is authorized.
 
-**Acceptance status:** `complete` for A1–A7 pretraining admission; solver qualification remains pending
+**Acceptance status:** `complete` for A1–A7 pretraining admission and R1–R6 cold restore; solver qualification remains pending
 
 **Execution ledger:** [execution-ledger.md](execution-ledger.md)
 
@@ -30,6 +30,19 @@ Diagnosis PR5 was accepted at `ec48499cce5bf1c3e63e9fb4baac76e9c9241528` and mer
 | A6 | Independent numerical and standards reviewers clear the frozen material | independent review | exact source/material / read-only | satisfied | [numerical](reports/numerical-review.md), [standards](reports/standards-review.md) |
 | A7 | Parent admits the exact source/material protocol before any grant or scientific execution | owner admission | frozen packet / review | satisfied | exact parent admission; [training](reports/training.md) |
 
+## Cold restore acceptance
+
+The parent independently reviewed the offline packet and approved the exact one-session sequence with action-time user confirmation. Authoritative preflight matched material `4265f5157c7cfaf1759ae2f501956cefc9912b430a93f1a90d9706792674360e` completely before grant. Run `265c9574c06048d8bc91daa1cf8eab02` completed/drained. See [actual restore](reports/restore.md); these gates close reproducibility only.
+
+| ID | Observable criterion | Status | Evidence |
+| --- | --- | --- | --- |
+| R1 | Actual source/recipe/runtime and full material match independently reviewed candidate before one exact-material grant | satisfied | [restore JSON](reports/restore.json) |
+| R2 | One fresh CPU process loads only final200; no optimizer, selection, resume or new update | satisfied | frozen source and actual restore receipt |
+| R3 | All 18 outputs collected; all 16 inherited artifacts match bytes; 32 recomputed predictions pass exact keys/dtype/shape/body parity | satisfied | [actual restore](reports/restore.md) |
+| R4 | New receipt/summary identify restore/zero new/200 trained updates and original Run/custody honestly | satisfied | [restore JSON](reports/restore.json) |
+| R5 | Resource bounds, completed/drained custody and session revocation after cleanup; zero usable credentials verified independently | satisfied | [restore JSON](reports/restore.json) |
+| R6 | Independent read-only outcome audit agrees with source, published artifacts, custody and lifecycle | satisfied | [restore review](reports/restore-review.md) |
+
 ## Binding experiment decisions
 
 New identity: `rheon-global-pressure-groupnorm-model-v1`. Add `GroupNorm(4, C, eps=1e-5, affine=False)` after each Conv3d in the four encoder blocks, bottleneck and four decoder blocks, before its SiLU. The head is unchanged. No learned normalization parameters or running dataset statistics are introduced. Explicit mapping must prove byte-identical original seeded convolution/head values, despite changed sequential indices. Reuse byte-pinned original helper sources as captured dependencies; fail closed on dependency drift.
@@ -38,7 +51,7 @@ The same ten channels, f32 eager network, f64 gauge/full finite-volume operator,
 
 The admitted smoke used exactly 200 Adam updates, batch 2, initialization seed 20261014, order seed 20261015, lr .001, betas (.9,.999), epsilon 1e-8, weight decay 0 and clipping 1. There is no sweep, restart, early stopping, checkpoint selection or additional baseline training. Validation is observational at 0/200. Retain numeric weights at initialization and every 20 updates, sampled row identities, and before/after layer ranges, zero fractions, correction variation and pressure/residual component gradients. Checkpoints are observations; only update 200 is the candidate. No optimizer state resume is supported.
 
-The admitted run used one CPU thread, existing 600 s child wall, observed process high-water stop budget 4 GiB, 256 MiB input / 320 MiB capture and 32 MiB output aggregate. The RAM policy is an observed process limit, not OS containment. Restore must use typed final artifacts from one completed/drained Run, accept only the new identity, perform zero updates and reproduce final predictions exactly in a fresh process. The pretraining slice executed no optimizer steps and created no grant or Run; its historical reports remain unchanged. The separately admitted training Run performed exactly 200 updates and published all 18 artifacts. Restore remains unperformed.
+The admitted run used one CPU thread, existing 600 s child wall, observed process high-water stop budget 4 GiB, 256 MiB input / 320 MiB capture and 32 MiB output aggregate. The RAM policy is an observed process limit, not OS containment. Restore must use typed final artifacts from one completed/drained Run, accept only the new identity, perform zero updates and reproduce final predictions exactly in a fresh process. The pretraining slice executed no optimizer steps and created no grant or Run; its historical reports remain unchanged. The separately admitted training Run performed exactly 200 updates and published all 18 artifacts. One separately admitted fresh zero-update restore completed and drained; all inherited bytes and fresh prediction parity passed. No additional restore is authorized.
 
 ## Evidence boundaries and future interpretation
 
@@ -69,7 +82,7 @@ Pinned original helper dependencies expose the already accepted reader/loss/seri
 - [x] Commit source, assemble immutable generic project, inspect actual runtime and CLI preflight.
 - [x] Obtain independent numerical and standards review; freeze protocol for parent admission.
 
-**Acceptance gate:** A1–A7 above. **Status:** `Accepted`. This closes pretraining admission, not solver qualification. A separate admitted training stage is recorded in [training](reports/training.md); restore/native gates remain pending.
+**Acceptance gate:** A1–A7 above. **Status:** `Accepted`. This closes pretraining admission, not solver qualification. Separate admitted stages are recorded in [training](reports/training.md) and [restore](reports/restore.md); native solver gates remain pending.
 
 ## Concurrent work and repository isolation
 
@@ -77,7 +90,7 @@ Main owns project assembler, plan, runtime/preflight and Git publication. develo
 
 ## Replan triggers and blockers
 
-Stop admission if exact initialization/derivatives fail, runtime closure changes, checkpoint diagnostics exceed caps, restore accepts old identity, data/reservations drift, or independent review identifies a material flaw. No grant/training retry repairs a failed pretraining gate. Current technical blockers: none. A1–A7 pass. Exactly one separately admitted training Run completed/drained; no retry, additional update, restore, native evaluation, final suite or GPU run is authorized. Future material/access/execution gates remain separate.
+Stop admission if exact initialization/derivatives fail, runtime closure changes, checkpoint diagnostics exceed caps, restore accepts old identity, data/reservations drift, or independent review identifies a material flaw. No grant/training retry repairs a failed pretraining gate. Current technical blockers: none. A1–A7 pass. Exactly one separately admitted training and one zero-update restore completed/drained; no retry, additional update/Run, native candidate evaluation, final suite or GPU run is authorized. Future material/access/execution gates remain separate.
 
 ## Primary sources
 

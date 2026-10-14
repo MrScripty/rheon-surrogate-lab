@@ -1,6 +1,6 @@
 # Issues
 
-Pretraining source/material and parent-admission gates pass. Exactly one admitted CPU training completed and drained, with all outputs under cap and owner access revoked. There is no training execution blocker. Conditioning observations are available; cold restore, physical usefulness and acceleration remain unqualified. A separate restore-material review and owner access/execution authorization are pending.
+Pretraining source/material and parent-admission gates pass. Exactly one admitted CPU training completed and drained, with all outputs under cap and owner access revoked. There is no training execution blocker. Conditioning observations and one exact zero-update cold restore are available. Physical usefulness and acceleration remain unqualified. No additional Run/evaluation or access is authorized.
 
 Independent review found wrong project-root calculation, dangling captured-source fallback, permissive qualification metric inventory, missing pre-update observed-RAM guards and weakened prediction header/key parity. Owners corrected each, added focused checks and received final numerical/standards source/material clearance.
 
@@ -11,3 +11,5 @@ The existing API credential expired on a read-only inspection (401). A new inspe
 The standards reviewer imported captured source with ordinary local Python, which generated two pycache files. The reviewer removed only those newly generated caches, then reverified exact20-file inventory/hash/size/modes. Subject sources and artifacts did not change. Actual captured bootstrap uses bytecode-disabled execution.
 
 2026-10-14: The single admitted training Run completed without restart or extra updates. Read-only audit verifies all 18 artifacts and 17 typed restore bindings. No new restore material, grant or execution is admitted. The consumed execution grant is a one-shot audit record; Tuldok rejects revocation after consumption and prohibits reuse. Required owner-session revocation and zero live owner sessions were verified separately.
+
+2026-10-14: Parent action-time approved one reviewed cold restore. Full authoritative preflight equaled predicted material before grant; one restore completed/drained, all18 outputs/16 inherited byte identities passed, new receipt/summary honestly record zero updates. Session revocation after cleanup and zero usable credentials across all actors are independently READ ONLY verified. No uncertain submission or technical blocker remains. Native/final/GPU gates are still unperformed.

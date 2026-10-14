@@ -1,0 +1,128 @@
+{
+  "schema": "rheon-groupnorm-native-development-standards-review-v1",
+  "disposition": "clear_for_single_authorized_local_fixed32_pass",
+  "remaining_blocking_findings": [],
+  "reviewer": "native_capture_standards_review; independent GPT-6.1 Sol High",
+  "review_date_utc": "2026-10-14",
+  "implementation_commit": "8a884a4499d0b96518aca437747525cd8e92fe9c",
+  "scientific_source_commit": "fd3a6009e5805978a29ed1df7389ad226a40a914",
+  "standards_commit": "188beda1fa477d21d576c233dd8c7f4c4c267d23",
+  "source_freeze_sha256": "ee9b6f61478ffadda98e1a3f63e6f25e6bd5caed29a8f538dbfefde5d6139fb7",
+  "input_freeze_sha256": "92d20132c0ae3d28aebee7fb729e98b29d3aaced5e7628c06b99e7b187a91fa9",
+  "frozen_source_sha256": {
+    ".github/workflows/groupnorm-native-development.yml": "925d2d8de48e604857dc1ac0218ab2180223946654bf2a7cf1f1a8d3c60b32de",
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/execution-freeze.json": "92d20132c0ae3d28aebee7fb729e98b29d3aaced5e7628c06b99e7b187a91fa9",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/README.md": "cb50b41d45477e5a284680a53ba3e67ef02810fb41072cd37718dcb9cd6d2a4b",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/admission.py": "b93647dd43f4b5cfccf40f1b589874e7eb7a2378a478dd7493db15c5b4273911",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/evaluate.py": "2c21c46c80a266d10b07bf18f7d8cc6f2b124b7555d2b7b66320d53e45a87dcc",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/process.py": "bd9ef7bd1a774225275f256aa67044dd549f1e28dbe0eb47a506032b12488bd9",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/test_admission.py": "0606d87068aab04e7dd32ffba2f4c4f518335cf1dc05a56f416ad4e307ecb248",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/test_evaluate.py": "0f0075343ff135464d8d02a06bb2b33d0acea3469dc704ec208813c9f8a8b1d7",
+    "experiments/global-pressure-v1/groupnorm-native-dev-v1/test_process.py": "bc55a13873d2a3186b41b775c7d456ad42a15871833f91b7b9277448bb5b2800"
+  },
+  "reviewed_evidence": {
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/plan.md": {
+      "bytes": 9709,
+      "sha256": "d95bffc0ac8ab51b634b1c99fa8fbd55755815d2f496a56b62d13b7bccbca78c"
+    },
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/execution-freeze.json": {
+      "bytes": 609719,
+      "sha256": "92d20132c0ae3d28aebee7fb729e98b29d3aaced5e7628c06b99e7b187a91fa9"
+    },
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/source-freeze.json": {
+      "bytes": 2342,
+      "sha256": "ee9b6f61478ffadda98e1a3f63e6f25e6bd5caed29a8f538dbfefde5d6139fb7"
+    },
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/offline-verification.json": {
+      "bytes": 996,
+      "sha256": "d2790b814b1e2e78254d9a6676edd890df329dd4c72b557eed163acf088bb556"
+    },
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/offline-input-proof.json": {
+      "bytes": 4726,
+      "sha256": "212b9f32bdad9e80fd648ce7886248d953c38a60cd02ffae2f5022c7cf58f977"
+    },
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/input-preservation.md": {
+      "bytes": 8640,
+      "sha256": "ab5859fb4670e1143ce4d5b6f296fc91347269249ca60e928ed7ef60d288ac7b"
+    },
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/input-preservation.json": {
+      "bytes": 11642,
+      "sha256": "dbdc1801d4f9ca6fd6be3dc2009d1f0a54e7b31b1bfef29b5399203daa0c32c0"
+    }
+  },
+  "markdown_report": {
+    "path": "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/standards-review.md",
+    "bytes": 9469,
+    "sha256": "4b987d012077d2d786927504f20800a24f9a9c4e9ecfa0277b5eb7e2c2cb214d"
+  },
+  "closed_findings": [
+    "Authoritative cached corruption rejects before fallback",
+    "All-case zero/nonzero native base residual L2/max correspondence",
+    "Pending/incomplete publication and revocation on post-fsync or outer failure",
+    "Output precheck precedes admission",
+    "Bounded source/freeze reads under watchdog; exact-byte imports",
+    "Actual local runtime separated from historical ABI metadata",
+    "Portable synthetic fixtures replace ignored private-data dependencies"
+  ],
+  "independent_checks": {
+    "nine_frozen_files_match_working_and_implementation_git_blobs": true,
+    "prior_pr7_tracked_files_and_modes_unchanged": 286,
+    "relative_links_exist": true,
+    "actual_offline_directory_only_proof": true,
+    "actual_offline_proof_matches_public_sha256": true,
+    "predeclared_scientific_output_absent": true,
+    "bulk_input_runtime_audit_repeated": false
+  },
+  "attributed_execution_evidence": {
+    "offline_cases": 32,
+    "native_calls": 0,
+    "model_or_training_actions": 0,
+    "offline_elapsed_s_through_publication": 1.2146358710015193,
+    "offline_input_proof_bytes": 4726,
+    "offline_input_bytes_read": 111687900,
+    "tests": 60,
+    "skips": 0,
+    "tests_elapsed_s": 1.747,
+    "portable_admission_tests": 27,
+    "reviewer_reran_any_test_or_admission": false
+  },
+  "limits": {
+    "verify_s": 60,
+    "evaluate_s": 600,
+    "input_bytes": 268435456,
+    "output_bytes": 33554432,
+    "observed_rss_bytes": 4294967296
+  },
+  "native_limits": {
+    "identity_s": 10,
+    "case_s": 60,
+    "request_bytes": 1048576,
+    "stdout_bytes": 524288,
+    "stderr_bytes": 65536,
+    "native_threads": 1,
+    "concurrent_owned_children": 1,
+    "all_policies_capped_iterations_per_case": 12064,
+    "all32_capped_iterations": 386048
+  },
+  "predeclared_scientific_output": "/tmp/groupnorm-native-dev-evaluation-8a884a4",
+  "authorized_scope": "One serial32 cached final200 development teacher pass with original methods/gates; no scientific retry/model replay/state advance/new access",
+  "limitations": [
+    "No GN native physics/performance or gain observation yet",
+    "Reviewer did not execute tests/admission/native/model/science",
+    "Input byte counter covers charged file snapshots, not total runtime/bootstrap or in-memory archive/body-copy I/O",
+    "Observed process high-water and Linux exclusive child ownership, not OS/aggregate/adversarial containment",
+    "Historical minimal-runtime file qualification; effective loaded-library mappings not observed",
+    "Native initial raw timers, candidate-only complete wall, solved pressure/MAC fields remain unavailable",
+    "No final/rollout/conservation/GPU/acceleration clearance"
+  ],
+  "next_gates": [
+    "Separate numerical reviewer clearance of same exact material",
+    "Main one already authorized scientific pass; retain terminal partial failure and no retry",
+    "Actual outcome/resource/cost review",
+    "Commit/push draft publication and exact-head CI; no integration implied"
+  ],
+  "write_scope": [
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/standards-review.md",
+    "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/standards-review.json"
+  ]
+}

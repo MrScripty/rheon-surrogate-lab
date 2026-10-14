@@ -1,0 +1,50 @@
+name: GroupNorm cached native adapter contracts
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/global-pressure-v1/groupnorm-native-dev-v1/**'
+      - 'docs/plans/global-pressure-groupnorm-native-dev-run-v1/**'
+      - '.github/workflows/groupnorm-native-development.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/global-pressure-v1/groupnorm-native-dev-v1/**'
+      - '.github/workflows/groupnorm-native-development.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  adapter-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: lab
+    env:
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      RAYON_NUM_THREADS: '1'
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: lab
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Existing NumPy version for artifact-only fixtures
+        run: |
+          python3.12 -m venv .venv
+          .venv/bin/python -m pip install numpy==2.3.5
+      - name: Admission, lifecycle and durable publication contracts
+        run: |
+          .venv/bin/python - <<'PYCI'
+          import unittest
+          suite = unittest.defaultTestLoader.discover('experiments/global-pressure-v1/groupnorm-native-dev-v1', pattern='test_*.py')
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          print(f'Adapter fixtures: tests={result.testsRun}, skipped={len(result.skipped)}; no scientific native/model invocation', flush=True)
+          raise SystemExit(0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1)
+          PYCI

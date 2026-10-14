@@ -30,3 +30,10 @@ CLEAR. Nonblockingarchive availability wording clarified in README/reporttext:
 a newdiagnostic run regenerates measurements with a new hash/time, never the exact
 original archived bytes. Current exactoriginalarchive remains present/verified;
 full/compactscientificreport bytes preserved. Mainpublishesnewcode/docs only.
+
+
+Initialpublishede1f1f907/draftPR5 source/evidence/proposalclaims cleared. Numerical
+review found README reproduction path outsidefrozenallowedoutputnamespace; main
+correctedcommand/prose toexperiments/.../diagnosis/new-local-observation.json and
+recordsP2closed. Diagnosticcode/full/compactobservations unchanged; no remeasure.
+Finalpublishedhead CI and parentacceptance remain the review handoff.

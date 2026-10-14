@@ -31,3 +31,11 @@ The numerical reviewer noted archive regeneration yields a NEW observation/hash,
 not exact recovery of original27a820 bytes. Publication prose now makes this
 explicit while preserving both existing report bytes. Missing intermediate states
 remain a historical-causality limit; no extra measurement/training was launched.
+
+
+Published source/evidence/PRclaimscope were independently checked at e1f1f907.
+Numerical review found a README fresh output path rejected before admission; the
+command now uses the allowed new diagnostic code directory. This documentation
+repair changes no measured source or report. Exact-head repository CI is supporting
+historical contract coverage; the four new diagnosis arithmetic checks were run
+locally and independently, not claimed as a new captured scientific Run.

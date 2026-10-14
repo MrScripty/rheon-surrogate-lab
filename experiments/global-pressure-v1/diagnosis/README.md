@@ -5,7 +5,7 @@ Run from the lab root with the qualified local CPU environment:
 ```sh
 /workspace/task-torch/bin/python -m unittest discover -s experiments/global-pressure-v1/diagnosis -p 'test_*.py'
 /workspace/task-torch/bin/python experiments/global-pressure-v1/diagnosis/diagnose.py \
-  --output docs/plans/global-pressure-diagnosis-v1/reports/new-local-observation.json
+  --output experiments/global-pressure-v1/diagnosis/new-local-observation.json
 ```
 
 The default inputs are original packet2 and the accepted training-stage artifacts.
@@ -17,7 +17,8 @@ against the training receipt and bitwise agreement with all32 retained witnesses
 
 The immutable default output is
 `docs/plans/global-pressure-diagnosis-v1/reports/diagnosis.json`. For independent
-reproduction, pass `--output` with a new path in this diagnosis directory. Existing
+reproduction, pass `--output` with a fresh file below
+`experiments/global-pressure-v1/diagnosis/`, as in the example above. Existing
 reports cannot be overwritten. The work has a180s wall deadline, one CPU thread
 and a4GiB observed peak-RSS guard. RSS observation is not adversarial containment.
 

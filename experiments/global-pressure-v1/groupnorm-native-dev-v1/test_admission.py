@@ -262,6 +262,24 @@ class AdmissionTests(unittest.TestCase):
         request=request_fixture();result=result_fixture(request);result["state_advanced"]=0
         with self.assertRaises(a.AdmissionError):a.validate_result(request,result,case_fixture())
 
+    def test_original_rhs_norm_uses_native_serial_order_not_compensated_sum(self):
+        # Closed RHS: small +/- pairs cancel exactly in mathematical sum.
+        # Their squares disappear in serial addition after 1, but Python3.12's
+        # compensated sum retains them. No native program or real case is used.
+        request=request_fixture()
+        rhs=[1.]+[v for _ in range(2047) for v in (1e-8,-1e-8)]+[-1.]
+        self.assertEqual(len(rhs),4096)
+        self.assertEqual(math.fsum(rhs),0.)
+        request["original_rhs"]=rhs
+        serial_norm=math.sqrt(2.)
+        compensated_norm=math.sqrt(sum(value*value for value in rhs))
+        self.assertNotEqual(compensated_norm,serial_norm)
+        self.assertEqual(a.residual_metrics(rhs)[0],serial_norm)
+        q=quality_fixture();q["rhs_l2"]=serial_norm;q["relative_residual"]=0.
+        a.validate_quality(q,request)
+        q["rhs_l2"]=compensated_norm
+        with self.assertRaises(a.AdmissionError):a.validate_quality(q,request)
+
     def test_fresh_nonzero_base_reset_not_zero_or_failed_guess(self):
         request=request_fixture();raw=quality_fixture();raw["qualified"]=False
         raw["residual_l2"]=1.;raw["residual_max"]=1.

@@ -2,11 +2,11 @@
 
 **Plan status:** `Verifying`
 
-**Current phase:** Both independent exact-source reviews clear; preparing the already authorized one fixed32 native pass.
+**Current phase:** First native action failed stop after one case due to a receiver arithmetic defect; corrective source conformance and renewed review are in progress.
 
-**Next slice:** Execute the single fixed32 local pass, retain and independently inspect all measured outcomes.
+**Next slice:** Freeze and independently review the exact RHS-norm correction, then perform at most one corrective full32 pass under the owned transition.
 
-**Acceptance status:** C1–C5 satisfied by input, focused, actual offline and both independent source reviews. C6/C7 measured execution/publication remain pending.
+**Acceptance status:** Initial conformance/reviews passed; real first-case response and failed source guard are preserved. Corrected conformance review and complete C6/C7 outcomes remain pending.
 
 **Ledger:** [execution-ledger.md](execution-ledger.md). **Findings:** [issues.md](issues.md).
 
@@ -50,6 +50,10 @@ The new source freeze binds the committed implementation, its bytes, [execution-
 6. Identity failure precedes native work; numerical rejection keeps declared fallback; process/publication failure produces incomplete evidence. Their causes remain distinct.
 7. Deleting the admission owner leaves no qualified GN receipt consumer; deleting the process owner loses stream/drain bounds; deleting speculative registries/executors changes nothing, so none is added.
 8. Necessary machinery is one fixed scientific adapter in three ownership modules, fixture tests and bounded durable reports. It adds no training system, solver abstraction, service or model registry.
+
+## Corrective transition
+
+The actual first action preserved fail-stop after one native case; no automatic retry occurred. The RHS-norm receiver correction now revalidates that saved response offline without physics changes. [Owned corrective admission](reports/corrective-pass-admission.md) selects at most one renewed independently reviewed full32 action to complete the already authorized objective, with the extra first observation and all costs disclosed separately. No further scientific retry is admitted after that correction. The initial exact-source reviews remain historical evidence and do not qualify changed source.
 
 ## Milestones and write set
 

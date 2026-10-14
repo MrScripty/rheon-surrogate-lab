@@ -676,7 +676,9 @@ def validate_quality(q, request):
     for name in QUALITY_KEYS-{"qualified","failures","wall_normal_flux_exact_zero"}:
         require(q[name] is None or type(q[name]) in (int,float) and math.isfinite(q[name]),"native quality number/null")
     require(q["qualified"] is (not q["failures"]),"quality status/failures consistency")
-    expected_rhs=math.sqrt(sum(float(v)*float(v) for v in request["original_rhs"]))
+    # Python3.12 builtin sum compensates floats; native uses serial f64 addition.
+    # Keep the native accumulation order rather than loosening the exact check.
+    expected_rhs=residual_metrics(request["original_rhs"])[0]
     require(q["rhs_l2"]==expected_rhs,"reported original-b norm")
     if q["residual_max"] is not None:
         require(q["predicted_divergence_max_s_inv"]==request["dt_s"]*q["residual_max"]/math.prod(request["spacing_m"]),"predicted divergence units/original grid")

@@ -98,6 +98,10 @@ timing/memory scopes, Pumas execution, quantization limits and reproduction.
 It is also prepared for the requested training book's current manuscript and web
 edition, with its own executable companion.
 
+## Tuldok pressure project
+
+The [lab-owned project](tuldok/README.md) packages fixed CPU training and restored-checkpoint comparison in Tuldok's generic project/recipe formats. It preserves the experiments above, pins the trajectory dependency for clean builds, retains full numeric replay fields, and emits separate resident-rollout and fresh-worker receipts. Managed Tuldok execution and new cloud measurements have their own acceptance evidence; the historical eightfold result is not a promised replication.
+
 ## Historical pressure-only experiment
 
 A small reproducible experiment: can a neural network predict the pressure used

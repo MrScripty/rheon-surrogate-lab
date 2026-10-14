@@ -1,0 +1,16 @@
+{
+  "schema": "rheon-tuldok-pressure-config-v1",
+  "n": 32,
+  "device": "cpu",
+  "threads": 8,
+  "training_seeds": [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111],
+  "training_frames": 8,
+  "validation_seeds": [500, 501],
+  "validation_frames": 60,
+  "test_seeds": [900, 901, 902, 903],
+  "test_frames": 120,
+  "repetitions": 3,
+  "test_status": "previously exposed seeds; reproduction, not a fresh holdout",
+  "physics": "uniform sealed unit box; prescribed forcing; passive tracer; fixed operator",
+  "timing_scope": "resident CPU model; native startup, all simulation stages, inference, pipes, qualification, report parsing and native teardown; excludes imports/model setup/warmup/capture/rendering"
+}

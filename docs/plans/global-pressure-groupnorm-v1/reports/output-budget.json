@@ -1,0 +1,353 @@
+{
+  "aggregate": {
+    "aggregate_passed": true,
+    "conservative_projection_bytes": 21811154,
+    "declared_individual_caps_sum_bytes": 43057152,
+    "headroom_bytes": 11743278,
+    "limit_bytes": 33554432,
+    "measured_initialized_bytes": 20516395,
+    "per_artifact_passed": true
+  },
+  "architecture": {
+    "activation": "silu",
+    "block_normalization": {
+      "affine": false,
+      "epsilon": 1e-05,
+      "groups": 4,
+      "name": "GroupNorm",
+      "position": "each block convolution before SiLU"
+    },
+    "bottleneck_width": 48,
+    "convolutions_per_block": 2,
+    "counts_supported": [
+      16,
+      32
+    ],
+    "decoder_widths": [
+      32,
+      24,
+      16,
+      8
+    ],
+    "dtype": "float32",
+    "encoder_widths": [
+      8,
+      16,
+      24,
+      32
+    ],
+    "gauge": "subtract_first_correction_cell",
+    "global_path": "add_spatial_mean_broadcast",
+    "head": "linear_1x1x1",
+    "input_channels": 10,
+    "kernel": [
+      3,
+      3,
+      3
+    ],
+    "padding": "replicate",
+    "pool": "average_2x2x2",
+    "pressure_dtype": "float64",
+    "schema": "rheon-global-pressure-groupnorm-model-v1",
+    "upsampling": "nearest_to_skip_shape"
+  },
+  "artifact_count": 18,
+  "artifacts": {
+    "checkpoint-000.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-020.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-040.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-060.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-080.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-100.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-120.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-140.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-160.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-180.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "checkpoint-200.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    },
+    "diagnostics.json": {
+      "conservative_projection_bytes": 2097152,
+      "limit_bytes": 2097152,
+      "measured_initialized_bytes": 1386003,
+      "measured_initialized_sha256": "9dbff38c727cd4f67b7ad06ec1b773d15d20181fa347d02713f55094889d19b1",
+      "projection_basis": "entire declared JSON cap reserved",
+      "role": "training_diagnostics"
+    },
+    "normalization.json": {
+      "conservative_projection_bytes": 2112,
+      "limit_bytes": 262144,
+      "measured_initialized_bytes": 2112,
+      "measured_initialized_sha256": "8a68445ce25b46645b50939b13f67b974d60f1c44d8e69ce0a078f24dc81458f",
+      "projection_basis": "exact retained preprocessing bytes",
+      "role": "preprocessing"
+    },
+    "predictions.npz": {
+      "conservative_projection_bytes": 1049356,
+      "limit_bytes": 8388608,
+      "measured_initialized_bytes": 1049356,
+      "measured_initialized_sha256": "324bb67784b219697130f875ebb7ba1525d6ddec890451d16041f68024e7006a",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "predictions"
+    },
+    "receipt.json": {
+      "conservative_projection_bytes": 524288,
+      "limit_bytes": 524288,
+      "measured_initialized_bytes": 6078,
+      "measured_initialized_sha256": "092d3fd8a499ffdc9255ac92c98713bb2fbecc40ff669f4fda1e5ce44409529f",
+      "projection_basis": "entire declared JSON cap reserved",
+      "role": "training_result"
+    },
+    "splits.json": {
+      "conservative_projection_bytes": 70478,
+      "limit_bytes": 262144,
+      "measured_initialized_bytes": 70478,
+      "measured_initialized_sha256": "fbb9edddfa08877e0834fcdf6e0d10e8f4769c5883fc6597b829325c2784650a",
+      "projection_basis": "exact retained preprocessing bytes",
+      "role": "training_splits"
+    },
+    "summary.json": {
+      "conservative_projection_bytes": 65536,
+      "limit_bytes": 65536,
+      "measured_initialized_bytes": 136,
+      "measured_initialized_sha256": "2c606c8f640afae165071e613031d4479855f5564d79edfbb1ecd77b4611bb36",
+      "projection_basis": "entire declared JSON cap reserved",
+      "role": "result_summary"
+    },
+    "weights.npz": {
+      "conservative_projection_bytes": 1500186,
+      "limit_bytes": 8388608,
+      "measured_initialized_bytes": 1500186,
+      "measured_initialized_sha256": "1b4b77cf299d798b6b787bbd12486bc8d4301d7534972c66e9dddce41e93f737",
+      "projection_basis": "fixed-shape uncompressed numeric serialization, value-independent size",
+      "role": "checkpoint"
+    }
+  },
+  "budget_source_sha256": "249259cfdc1e0ee4318ddb0debef88e2e4a37df438921ae07f7fd3d733c27358",
+  "candidate_update_if_later_admitted": 200,
+  "checkpoint_labels_are_projection_slots": true,
+  "checkpoint_updates": [
+    0,
+    20,
+    40,
+    60,
+    80,
+    100,
+    120,
+    140,
+    160,
+    180,
+    200
+  ],
+  "elapsed_s": 8.396256059000734,
+  "executable_sources": {
+    "model.py": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c",
+    "original_data.py": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd",
+    "original_model.py": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb",
+    "original_train.py": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d",
+    "train.py": "f46ef3a589a0e4e38913d683c9c0b1d68c3b4c98a7f04f03d03c8939ac160dbb"
+  },
+  "format": "rheon-global-pressure-groupnorm-output-budget-v1",
+  "initial_state_sha256": "a8f8671557e4ba1cef4a3d58b7373ef775722d0ecbd959da5a0c6766851aa6bd",
+  "initialization_mapping_sha256": "e7679faf793ba9ccb7f31bc181f4eb67bb7b944842b788fc1fd6773f36661857",
+  "initialized_diagnostic_inventory": {
+    "actual_train_batch_observations": 1,
+    "complete_layout_bytes": 1386003,
+    "conservative_numeric_text_bytes": 1688764,
+    "limit_bytes": 2097152,
+    "optimizer_updates": 0,
+    "population_rows": 384,
+    "synthetic_before_after_log_slots": 20,
+    "validation_gradient_cases": 8
+  },
+  "limitations": [
+    "Checkpoint labels 020..200 contain initialized-state serialization samples, not trained states.",
+    "Only final200 may become a candidate after separately authorized completed training.",
+    "Future trainer must enforce every file cap and actual aggregate; unused declared room is not hidden output permission.",
+    "JSON/history sizes use the full caps, not invented trained values or projected optimizer success."
+  ],
+  "observed_peak_rss_bytes": 421933056,
+  "optimizer_constructed": false,
+  "optimizer_updates": 0,
+  "parameter_count": 372377,
+  "preservation": {
+    "before_after_equal": true,
+    "files": {
+      "/workspace/rheon-surrogate-lab/docs/plans/global-pressure-correction-v1/reservation.json": {
+        "bytes": 33633,
+        "sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5"
+      },
+      "/workspace/rheon-surrogate-lab/docs/plans/global-pressure-diagnosis-v1/reports/diagnosis.json": {
+        "bytes": 3519977,
+        "sha256": "a9242b746fcba07df273bbfbf9d91b9dd7035a9be9e2bd1d1819d9b80f7a8683"
+      },
+      "/workspace/rheon-surrogate-lab/docs/plans/global-pressure-diagnosis-v1/reports/lifecycle-repair.json": {
+        "bytes": 1491,
+        "sha256": "2ea1bb1b2b08b0f8326ddfca88f6877dd3947131a7c84ede275c479f053c0539"
+      },
+      "/workspace/rheon-surrogate-lab/docs/plans/global-pressure-diagnosis-v1/reports/merge.json": {
+        "bytes": 478,
+        "sha256": "b7b892976afa026277eec4188bfc28ae5465334749a45e993017cbf49782830e"
+      },
+      "/workspace/rheon-surrogate-lab/docs/plans/global-pressure-diagnosis-v1/reports/review.json": {
+        "bytes": 1245,
+        "sha256": "7ffc51324f8208b87934a53ac275124de759fa448499d28a8b1a570d16cc7bba"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/config.json": {
+        "bytes": 822,
+        "sha256": "da9a3b1c586f0b43a255b2a271dc1eb8efcd0aca627023af93f2f82fb6718555"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/data.py": {
+        "bytes": 36248,
+        "sha256": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/evaluate_native.py": {
+        "bytes": 22375,
+        "sha256": "76fefe5da899f27ba0999a57b4d62e64fa41eea241dd131a8600c408573cd6a0"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/model.py": {
+        "bytes": 13616,
+        "sha256": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/project.py": {
+        "bytes": 11525,
+        "sha256": "64eed17833dc5c42c53ec2a9e5ba9f8f7ef4a43d4b2335f460fe451bb3e03e93"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/test_data.py": {
+        "bytes": 20224,
+        "sha256": "069e465ee54351b59ffa288537e63da4495c58970d4c2b3fd58af8e71224ce57"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/test_evaluate_native.py": {
+        "bytes": 4837,
+        "sha256": "2a36eb3c891d8822d13a09046ea4b57b7fdcd69c3c0f33dd665da4d1dde10bb9"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/test_model.py": {
+        "bytes": 20698,
+        "sha256": "bf9351c5bfb86f4803c160d262740abaa09e252bce10eb5d70f6be2a07c41b7e"
+      },
+      "/workspace/rheon-surrogate-lab/experiments/global-pressure-v1/training/train.py": {
+        "bytes": 35664,
+        "sha256": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d"
+      },
+      "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-training/development-packet2/dataset-receipt.json": {
+        "bytes": 213580,
+        "sha256": "d002f585bb67af0c51a0cde2cafa6cf7764d7153d691babb97ebcad1715db4d5"
+      },
+      "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-training/development-packet2/origin.json": {
+        "bytes": 1150372,
+        "sha256": "dee7811a95b85a4c9fd2a228163ab39288d85bdeee804d09804c24eb7c92663d"
+      },
+      "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-training/development-packet2/splits.json": {
+        "bytes": 70478,
+        "sha256": "fbb9edddfa08877e0834fcdf6e0d10e8f4769c5883fc6597b829325c2784650a"
+      },
+      "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-training/development-packet2/train-0.npz": {
+        "bytes": 18890920,
+        "sha256": "6b3d0c4a57df0198b4fe13f7e887b8fa238fbf3fd34877f9dc598c157d2b55dc"
+      },
+      "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-training/development-packet2/train-1.npz": {
+        "bytes": 18890920,
+        "sha256": "d6d7980a51c17b79a6567c870aca9001108779798cee490101429e00814a9f02"
+      },
+      "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-training/development-packet2/validation.npz": {
+        "bytes": 12594856,
+        "sha256": "17a9faa84723208d1bd9d6a3a8b1f5921806e93b85d8983d2041404fb295855d"
+      }
+    },
+    "native_residual_origin_sha256": "26c33fac5df17b66fadba036368f2008ec172a860231ff75822cd2ef9dba11b8",
+    "normalization_sha256": "8a68445ce25b46645b50939b13f67b974d60f1c44d8e69ce0a078f24dc81458f",
+    "reservation_sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5",
+    "splits_sha256": "fbb9edddfa08877e0834fcdf6e0d10e8f4769c5883fc6597b829325c2784650a",
+    "train_rows": 288,
+    "validation_rows": 96
+  },
+  "raw_weight_bytes": 1489508,
+  "runtime": {
+    "device": "cpu",
+    "interop_threads": 1,
+    "numpy": "2.3.5",
+    "threads": 1,
+    "torch": "2.8.0+cpu"
+  },
+  "sampled_row_ids": [
+    "smoke-train-100009:frame-006",
+    "smoke-train-100004:frame-014"
+  ],
+  "scope": "initialized serialization/forward/autograd qualification only; no trained outputs",
+  "status": "passed_pretraining_conservative_projection"
+}

@@ -1,0 +1,13 @@
+# Pretraining handoff
+
+This packet proposes one fixed non-affine GroupNorm ablation. The original failure diagnosed a constant head caused by zeroed decoder SiLU features; it did not establish optimizer causality. GN is a representation-conditioning hypothesis. Training and native solver results for this new identity are unknown.
+
+The implementation handoff is the new lab namespace and generic project assembler. Input slots remain `train0`, `train1`, `validation`, `splits`, `origin`; capture includes exactly new model/trainer plus three byte-pinned original helpers, fixed config, model qualification, full budget, runtime manifest and source witness. Generic Tuldok remains pinned at f7543fb78f6f1cb52e45dd315efa17a4b2fe6fa6 and is unchanged.
+
+Run qualification and budget first without optimizer construction. Commit qualified source before immutable assembly. Register the new project through `project_cli.py open`; inspect its train/restore recipes by exact reference/hash; save the train Graph with `prepare`; inspect exact source/input/runtime/output closure using `preflight`. These commands do not execute the model. Record project/manifest, recipe, graph/revision and material digest in the preflight report. Independently review that material and send this freeze to the parent. Current credentials should expose only inspect/edit scopes; no execution or approval is needed.
+
+Do not create an owner grant or submit a Run in this slice. A later explicit parent admission must bind the exact material. Only then may one 200-update CPU training occur, followed by a separately reviewed typed-artifact restore. The restore cannot be preflighted against real trained artifacts before that originating Run exists; current evidence covers its generic declaration and strict contract fixtures, not a new cold trained restore.
+
+After later training, retain all11 states and diagnostics, exact sampled IDs, training/runtime/restore cost, complete failures and unchanged32 native teacher cases. Reset from full p_base after any failed warm budget and include that cost. Compare original failed correction and fair native temporal/zero/analytic starts; do not import modal cloud speedups. Improvement in feature transmission alone is not physics or acceleration acceptance.
+
+Reserved final trajectories/geometries/regimes stay sealed. Autonomous rollout/residual/divergence/conservation/stability and local-GPU/full training require separate reviewed transitions. See the original [acceptance criteria](../global-pressure-correction-v1/acceptance.md) and [local GPU plan](../global-pressure-correction-v1/local-gpu.md). No final release tag or outreach is part of this work.

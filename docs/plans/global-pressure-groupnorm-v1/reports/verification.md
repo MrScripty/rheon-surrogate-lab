@@ -1,0 +1,20 @@
+# Pretraining verification
+
+Environment: task CPU Python 3.12.14, Torch 2.8.0+cpu and NumPy 2.3.5 using the exact existing CPU lock; one Torch/inter-op thread. Source reference Tuldok f7543fb78f6f1cb52e45dd315efa17a4b2fe6fa6 is clean and unchanged. Coding standards reference 188beda1fa477d21d576c233dd8c7f4c4c267d23 applies Core, Planning/Implementation/Verification/Commit/Documentation, generated contracts, persistence, IPC and scientific performance/contract concerns. No new Rust/native mechanism, release or frontend implementation is introduced.
+
+Observed before source freeze:
+
+- New project-root and full-history declaration tests: 2 passed, zero skips. Main confirmed actual generic recipe decoding accepts train21 / restore55 argument tokens, within captured CPU limit56, five development inputs /22 restore inputs and18 outputs.
+- Budget+project suites together: 11 passed, zero skips in1.067s. The budget suite includes numeric value-independent serialized size and fail-closed omitted/excess artifact/aggregate cases; optimizer construction is forbidden in its real model serialization check.
+- Actual existing captured-runtime bootstrap passed neutral GN arithmetic/backward, no affine parameters/buffers, exact train/eval and fixed-size batch-neighbor invariance. Manual f64 grouped calculation max error4.440892098500626e-15. All post-probe native mappings came from the existing snapshot. This direct trusted neutral process is not a managed Run, custody/hostile isolation test, new trained restore or solver result. See [runtime.json](runtime.json).
+- First local descriptor was noncanonical; the existing bootstrap rejected before executing the target. Correct canonical descriptor and a final warning-free source observation passed; original refusal/log is retained in ignored evidence.
+- Existing scoped API credential expired (401 on read-only project inspection). Actual GN preflight will use a fresh owner-local inspect/edit-only credential; no grant or execution scope is required.
+- Independent preliminary review identified wrong assembler root, dangling captured-source precedence and permissive metric inventory. The root has a regression check; source-owner fixes and final independent review are pending.
+
+These are preliminary observations. The final source-bound model qualification, conservative budget, immutable project capture, actual CLI preflight and independent reports own acceptance. Current source work has performed no GN optimizer updates, grant, Run submission, final-suite generation or GPU work.
+
+Final source checks supersede the preliminary counts:19model +11budget +3project =33tests, zero skips. Main observed0.626s; independent source reviews also passed. New memory/prediction-parity regressions and ambient-module isolation are included. No GN optimizer construction or scientific training occurred.
+
+The full new model also executed neutral arithmetic through the actual existing captured-runtime bootstrap, including exact initialization mapping, 16³/32³, GN/model/gauge finite differences and pooled/distant sensitivity. See [captured-model-arithmetic.json](captured-model-arithmetic.json). It reports observedRSS366,751,744bytes, encoder directional FDerror5.17618e-5 and nonzero pooled/distant derivatives. Initial residual-only amplitude nonhomogeneity1.24814109 is retained; nonzero sensitivity does not establish proportionality or solver benefit.
+
+The final conservative [output budget](output-budget.json) is21,811,154bytes with11,743,278bytes headroom. Its full initialized384row/8validation-gradient diagnostic layout is1,386,003bytes; conservative finite-number text envelope1,688,764bytes fits2MiB. Projected log slots are explicitly synthetic initialization observations, never trained values. All variable JSON caps are reserved in aggregate; numeric sizes are value-independent uncompressed serialization. [Preservation](preservation.md) directly checks all233priortracked artifacts and frozen data contracts.

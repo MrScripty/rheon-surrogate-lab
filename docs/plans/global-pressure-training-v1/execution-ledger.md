@@ -74,3 +74,12 @@ passed32/32. Allreference/zero/fairtemporal baselines pass. Learned32attempts ad
 1024iterations beyond5226temporal fallback iterations, plus.347912624s inference.
 No acceleration or autonomous/finaltest claim. Scientific executable source hashes
 remain committeda934 unchanged; subsequent writes are evidence/docs only.
+
+
+Evidence committedb287960 and pushed; actual public draft PR4 created. Initial
+exacthead CI cpu1m35s, model-contracts1m25s and native-capture53s allsuccess. The
+historical CPU workflow's tinyCNN test is distinct from the one prospectiveglobal
+scientificRun. Finaldocumentreview corrected validationmetric label to composite
+normalizedpressure-and-residual loss; no executable/weights changed. Newhandoff
+requires diagnosing the observed witnesscollapse before proposing furthertraining.
+Parent exacthead integrationreview remainspending; no slice2merge/tag/outreach.

@@ -19,7 +19,7 @@ Actual Run wall interval was 23.454708 seconds; recipe work reported 11.507212
 seconds and peak process RSS 522,350,592 bytes. The enclosing Run interval includes
 runtime/setup/custody work absent from the recipe timer; neither is a solver benchmark.
 
-Validation was observed only at updates 0 and 200, with residual-loss ratios
+Validation was observed only at updates 0 and 200, with composite normalized pressure-and-residual losses
 0.5236181201626715 and 0.5214263489529538. After a transient lower sampled training
 loss, late gradient norms were about 1e-8. All 32 final pressure witnesses are
 bitwise identical to previous accepted reference pressure: learned correction is

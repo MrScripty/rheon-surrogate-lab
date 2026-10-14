@@ -1,8 +1,8 @@
 # Bounded global pressure model and generic Tuldok smoke
 
-**Plan status:** `Active`
+**Plan status:** `Implemented`
 
-**Current phase:** Completed scientific smoke and independent evidence review
+**Current phase:** Parent integration review of draft PR4
 
 **Next slice:** Parent review of draft PR; diagnose collapsed correction before proposing more training
 
@@ -31,7 +31,7 @@ upstream Tuldok/Rheon edits or solver-gain claim without measured qualification.
 | T4 | One200-update Adam Run using train-only scales/sample order, bounded resources; actual drained successful artifact custody and200-update final weights | system | required-real captured CPU fresh child | automated | satisfied | reports/training.md |
 | T5 | Fresh restore uses exact trained Run artifact bytes, zero optimizer steps and bitwise predictions; validation perturbation cannot change normalization/training | system | required-real same captured CPU runtime | automated | satisfied | reports/restore.md |
 | T6 | Development-only teacher-state native correction/fallback diagnostics preserve every case and report quality/cost/poor outcomes honestly; no final rollout qualification | system | required-real pinned isolated native CPU | automated | satisfied | reports/physics.md |
-| T7 | Independent numerical/standards source/artifact/evidence review, affected checks and exact pushed draft PR | release-artifact | representative independent GPT6.1SolHigh and real GitHub | either | pending | reports/review.md |
+| T7 | Independent numerical/standards source/artifact/evidence review, affected checks and exact pushed draft PR | release-artifact | representative independent GPT6.1SolHigh and real GitHub | either | satisfied | [Review](reports/review.md), [CI](reports/verification.json), [draft PR4](https://github.com/MrScripty/rheon-surrogate-lab/pull/4) |
 
 ## Binding Decisions
 
@@ -115,7 +115,7 @@ speedup. Global model training may complete even if physics diagnostics are poor
 | Model | Worker: newtraining/model.py/train.py/test_model.py only | T2/T4/T5 | Complete; negative learned result retained |
 | Generic execution | Main: newtraining project/CLI/config/README and tasklocal runtime/catalog | T3–T5 | Complete |
 | Native diagnostic | Worker: newisolated probe/evaluator only | T6 | Complete; all32 require fallback |
-| Review/publication | Independent reviewers read-only; main docs/newCI/Git | T7 | Planned |
+| Review/publication | Independent reviewers read-only; main docs/newCI/Git | T7 | Complete; parent integration review pending |
 
 ## Blockers
 
@@ -123,8 +123,8 @@ No implementation, data, runtime, admission or restore blocker remains. One fixe
 200-update Run and one zero-update restore completed/drained with exact trained
 artifact parity and actual catalog reopening. Model usefulness failed: all32
 predictions equal previous pressure; every short solve needs full fallback.
-Independent final evidence review is clear. Exact pushed draft PR/CI and parent
-integration review remain the publication gate.
+Independent final evidence review is clear. Draft PR4 is pushed and all three implementation CI jobs pass. Parent
+integration review remains the acceptance gate.
 Final trajectories, geometry/regime suites and full/GPU training remain sealed;
 this smoke does not authorize those next steps.
 
@@ -146,4 +146,10 @@ rewrite/tag/outreach/upstream edits. Retain branch until parent disposition.
 ## Final Acceptance
 
 - Acceptance status: `pending`
-- Final status: `Active`
+- Final status: `Implemented`
+
+
+All bounded implementation gates T1–T7 are satisfied; plan acceptance remains
+pending the parent’s exact-head integration review. This status does not qualify
+a useful learned solver. See [next handoff](handoff.md) and the PR checks for the
+final pushed documentation head. The sealed final/GPU scope remains unstarted.

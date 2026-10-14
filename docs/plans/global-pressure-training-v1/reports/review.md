@@ -39,3 +39,14 @@ restart; old process was absent and new process present. Output totals were
 2,637,617 train bytes and 2,639,255 restore bytes, within declared bounds.
 No implementation or evidence blocker remains. GitHub publication checks are
 linked from the draft PR; parent integration review remains the next gate.
+
+
+Final documentation and actual PR4 description review is clear. Numerical reviewer
+corrected validation wording to composite normalized pressure-and-residual loss;
+no implementation or trained bytes changed. Native timing enclosure includes all
+comparison methods and is not a learned-method-only timer. Public draft PR4 has
+passing cpu, native-capture and model-contracts jobs on the initial evidence head
+b2879604550827a1ff7a6c3be7d585cdcf11ef36. Final docs/handoff publication keeps all
+scientific source bytes frozen; exact final-head checks are visible in
+[PR4](https://github.com/MrScripty/rheon-surrogate-lab/pull/4). Parent integration
+acceptance is pending and no slice2 merge is authorized.

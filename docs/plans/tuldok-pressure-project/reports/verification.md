@@ -69,3 +69,14 @@ Repairc34e248 preserves original launch errors while attempting all cleanup,
 and bounds trusted same-group children for direct local timeouts. Local34tests
 =33pass/1optional skip; Actions38533860305 passed after those repairs. Both
 review threads are resolved. Managed Runs keeps its separate custody authority.
+
+## Actual paired managed acceptance
+
+[Paired evidence](paired-managed.json) links the published Tuldok report at exact
+qualification commit1a7c04d8. It was read through authenticated GitHub access.
+Train Run6bf8bf9fcec141be95426576e941f886 performed200Adamupdates; fresh restore
+Run097d69d2c6d144b9881e6baed52f8198 reproduced predictions withzero updates.
+Checkpoint7f514ff9...2c64121 matches the lab diagnostic. Verified downloads,
+service/catalog reopen and existing UI checks passed. Native0/16failure remains
+negative. This closes the paired CNN workflow boundary; it does not turn it into
+modal pressure parity or extend either model to future aircraft/submarine domains.

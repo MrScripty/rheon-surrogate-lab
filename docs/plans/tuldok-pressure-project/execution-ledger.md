@@ -68,3 +68,11 @@ review threads resolved. Evidence is in reports/review-ci.json. Modal parity
 remains the earlier unchanged-model receipt; CNN remains200Adam steps and0/16
 physics qualification. The denied cross-repository comment is not retried, and
 parent owns internal coordination. No final release tag or model expansion.
+
+Environment disconnect notice was checked against actual tools: read-only shell
+succeeded, clean tree and pushed880de11were verified on GitHub. Execution was not
+inferred from message admission. Paired managed report atTuldok1a7c04d8was fetched
+through authenticated integration and recorded in reports/paired-managed.json.
+Actual200-update train/zero-update exact restore/downloads/reopen/UI pass; native
+0/16 remains negative. Parent coordinates internally; denied comment remains
+unposted, with no retry, larger architecture or final release tag.

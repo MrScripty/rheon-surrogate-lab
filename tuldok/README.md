@@ -175,3 +175,9 @@ IDs and reviewed one-use grant; it preserves inspection, saved graphs, progress,
 cancellation and verified downloads in the existing workspace UI. Its contract
 is `docs/contracts/project-cli.md` at the pin above. No receipt here substitutes
 for managed runtime capture, owner approval or completed Run custody.
+
+The paired executor has now [qualified the actual managed CNN workflow](https://github.com/MrScripty/Tuldok/blob/1a7c04d8a6c8941979c867fcd7359fb3bb805662/docs/plans/generic-neural-execution/reports/managed-cnn.md):
+200Adamupdates, expected checkpoint, exact fresh restore, verified downloads/
+reopening and UI. That successful workflow preserves the CNN's native0/16
+pressure qualification failure. It does not qualify the modal benchmark through
+managed Runs or establish either future solver/domain target.

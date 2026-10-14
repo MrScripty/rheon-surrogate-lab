@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "native_base": "2209012bc5f902693d0f695ec1c2d854126af317",
+  "patch_sha256": "b851b38d2d03280220bc4648cd4d721b2e796786fb18d8188dc335336fe2a998",
+  "prepared_tree_sha256": "5a5de4635d3970c9b99e620d9fff2d9a23c55307a9e335f7473e7f95a0c7a4ab",
+  "source_manifest_sha256": "60f82e7c8631dc35471c9f06e91c43ce317152f1f62d9ba5061ca7758ff8b732",
+  "prepared_source": "/workspace/rheon-surrogate-lab/runs/global-pressure-v1-dependency/rheon",
+  "toolchain": "Rust/Cargo1.92.0",
+  "features": "--no-default-features",
+  "preconditioners": [
+    "jacobi-pcg-v1",
+    "sgs-pcg-v1"
+  ],
+  "checks": [
+    {
+      "command": "cargo +1.92.0 test --manifest-path runs/global-pressure-v1-dependency/rheon/Cargo.toml --no-default-features --locked --test initial_pressure_contract",
+      "status": "passed",
+      "passed": 8,
+      "failed": 0,
+      "compile_elapsed_s": 3.54,
+      "test_elapsed_s": 0.01
+    },
+    {
+      "command": "cargo +1.92.0 test --manifest-path runs/global-pressure-v1-dependency/rheon/Cargo.toml --no-default-features --locked --test pressure_contract --test operator_contract",
+      "status": "passed",
+      "passed": 15,
+      "failed": 0,
+      "compile_elapsed_s": 0.4,
+      "test_elapsed_s": 0.01
+    },
+    {
+      "command": "cargo +1.92.0 clippy --manifest-path runs/global-pressure-v1-dependency/rheon/Cargo.toml --no-default-features --all-targets --locked -- -D warnings",
+      "status": "passed",
+      "elapsed_s": 4.52
+    },
+    {
+      "command": "rustfmt +1.92.0 --edition 2024 --check runs/global-pressure-v1-dependency/rheon/src/pressure.rs runs/global-pressure-v1-dependency/rheon/tests/initial_pressure_contract.rs",
+      "status": "passed"
+    },
+    {
+      "command": "python experiments/global-pressure-v1/test_dependency.py -v",
+      "status": "passed",
+      "passed": 11,
+      "failed": 0,
+      "elapsed_s": 0.27
+    },
+    {
+      "command": "python -m py_compile experiments/global-pressure-v1/prepare_dependency.py experiments/global-pressure-v1/test_dependency.py",
+      "status": "passed"
+    },
+    {
+      "command": "prepare_dependency.py --verify runs/global-pressure-v1-dependency/rheon",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "optional_broad_suite": {
+    "command": "cargo +1.92.0 test --manifest-path /tmp/global-pressure-native-patch/Cargo.toml --no-default-features --locked",
+    "status": "incomplete_budget_stop",
+    "elapsed_s_at_stop": 570,
+    "exit_code": 143,
+    "reason": "Parent requested stopping unrelated long material-scene tests after exceeding quick supporting-gate budget; no reported assertion failure",
+    "last_active_test_target": "material_contract",
+    "last_active_test_elapsed_s": 367,
+    "owned_cargo_and_test_child_terminated_and_absent": true
+  },
+  "limits": [
+    "No parallel-feature runtime qualification claimed; capture uses serial CPU native dependency.",
+    "Optional entire upstream suite was stopped; neither overall passed nor numerical failure is claimed."
+  ],
+  "helper_identity": {
+    "prepare_dependency.py": "046d99e8d962aea2c6a99aafd41bf6c410dc6461a18655658d21f2b9f2ea80df",
+    "test_dependency.py": "a36c111a0e8e6a706c4f2fc65bf00effde8dd75ffa8b083d56df7e239d4043ca"
+  },
+  "receipt_type_regression": "Exact integer schema and canonical typed receipt identity; valid-closure mocks reject boolean, float, missing, unknown and wrong-type fields. Identity JSON rejects duplicate keys and nonfinite numbers including overflowed floats."
+}

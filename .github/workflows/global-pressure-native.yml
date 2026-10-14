@@ -1,0 +1,82 @@
+name: Global pressure native and development capture
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/global-pressure-v1/**'
+      - 'probes/global-pressure-v1/**'
+      - 'docs/plans/global-pressure-native-capture-v1/**'
+      - '.github/workflows/global-pressure-native.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/global-pressure-v1/**'
+      - 'probes/global-pressure-v1/**'
+      - '.github/workflows/global-pressure-native.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  native-capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: lab
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/lab/runs/global-pressure-v1-ci-target
+      RAYON_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: lab
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Rheon
+          ref: 2209012bc5f902693d0f695ec1c2d854126af317
+          path: native-reference
+          persist-credentials: false
+      - name: Explicit pinned native toolchain
+        run: rustup toolchain install 1.92.0 --profile minimal --component rustfmt,clippy
+      - name: Prepare and verify immutable native dependency
+        run: |
+          python3 experiments/global-pressure-v1/prepare_dependency.py --source ../native-reference --destination "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon"
+          python3 experiments/global-pressure-v1/prepare_dependency.py --verify "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon"
+      - name: Native API and existing affected contracts
+        run: |
+          cargo +1.92.0 test --manifest-path runs/global-pressure-v1-dependency/rheon/Cargo.toml --no-default-features --locked --test initial_pressure_contract --test pressure_contract --test operator_contract
+          cargo +1.92.0 clippy --manifest-path runs/global-pressure-v1-dependency/rheon/Cargo.toml --no-default-features --all-targets --locked -- -D warnings
+          rustfmt +1.92.0 --edition 2024 --check runs/global-pressure-v1-dependency/rheon/src/pressure.rs runs/global-pressure-v1-dependency/rheon/tests/initial_pressure_contract.rs
+      - name: Independent literal and corruption oracles
+        run: python3 -m unittest discover -s experiments/global-pressure-v1 -p 'test_*.py' -v
+      - name: Qualified native capture build
+        run: |
+          cargo +1.92.0 fmt --manifest-path probes/global-pressure-v1/Cargo.toml --all --check
+          python3 experiments/global-pressure-v1/capture.py build --cargo "$(command -v cargo)" --prepared-source "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon" --output "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-build/ci"
+      - name: Qualified probe tests and Clippy
+        run: |
+          python3 - <<'PYCI'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path.cwd()
+          build = root / 'runs/global-pressure-v1-build/ci'
+          binding_path = build / 'binding.json'
+          binding = json.loads(binding_path.read_bytes())
+          env = os.environ.copy()
+          env['RHEON_BUILD_BINDING'] = str(binding_path)
+          env['RHEON_BUILD_BINDING_SHA256'] = hashlib.sha256(binding_path.read_bytes()).hexdigest()
+          env['RUSTUP_TOOLCHAIN'] = '1.92.0'
+          env['RAYON_NUM_THREADS'] = '1'
+          env['CARGO_TARGET_DIR'] = str(root / 'runs/global-pressure-v1-target')
+          command = binding['cargo_command']
+          for kind, tail in [('test', []), ('clippy', ['--all-targets', '--', '-D', 'warnings'])]:
+              subprocess.run([command[0], kind, *command[2:], *tail], env=env, check=True)
+          PYCI
+      - name: Qualified native request and metadata negatives
+        run: RHEON_TEST_BINARY="$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-build/ci/rheon-global-pressure-capture" python3 -m unittest discover -s experiments/global-pressure-v1 -p 'test_*.py' -v
+      - name: Actual anisotropic TRAIN fixture and fresh verifier
+        run: |
+          python3 experiments/global-pressure-v1/capture.py generate --preset smoke --split train --trajectory smoke-train-100002 --fixture-frames 2 --binary "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-build/ci/rheon-global-pressure-capture" --prepared-source "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon" --output "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-capture/ci-train-fixture"
+          python3 experiments/global-pressure-v1/verify_capture.py "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-capture/ci-train-fixture"

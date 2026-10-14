@@ -3,6 +3,7 @@
 import argparse
 import io
 import platform
+import re
 from pathlib import Path
 import sys
 import time
@@ -83,6 +84,18 @@ def custody(evidence, raw_trained, declared, path, expected_validator):
     return shared
 
 
+def project_input(slot, raw, declaration, entry):
+    require(declaration == {"sha256": sha(raw), "bytes": len(raw)}, "input_identity", slot)
+    require(type(entry) is dict and set(entry) == {"project_id", "manifest_sha256", "reference_id", "path", "measured_sha256"}
+            and all(type(value) is str and value for value in entry.values()), "input_evidence_schema", slot)
+    require(re.fullmatch(r"[a-f0-9]{64}", entry["manifest_sha256"]) and entry["measured_sha256"] == sha(raw)
+            and entry["reference_id"] == slot, "input_evidence_identity", slot)
+    relative = Path(entry["path"])
+    require(not relative.is_absolute() and relative.parts and relative.as_posix() == entry["path"]
+            and all(part not in (".", "..") for part in relative.parts), "input_evidence_path", slot)
+    return entry["project_id"], entry["manifest_sha256"]
+
+
 def run(args):
     started = time.perf_counter()
     config_raw = read(args.config, MIB)
@@ -102,8 +115,7 @@ def run(args):
     project = None
     for slot, raw in raw_inputs.items():
         entry = evidence[slot]
-        require(source["inputs"][slot] == {"sha256": sha(raw), "bytes": len(raw)} and entry["captured_sha256"] == sha(raw) and entry["captured_bytes"] == len(raw), "input_identity", slot)
-        owner = (entry["project_id"], entry["manifest_sha256"])
+        owner = project_input(slot, raw, source["inputs"][slot], entry)
         require(project is None or owner == project, "mixed_project", "one source project")
         project = owner
     dataset = data.load(blobs={DATA[slot]: raw for slot, raw in raw_inputs.items()}, expected_residual=source["native_residual_origin_sha256"])

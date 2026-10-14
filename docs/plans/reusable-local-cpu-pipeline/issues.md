@@ -24,3 +24,9 @@
   Snapshot identity includes the key. One bootstrap-owned constant now selects
   the driver's root for preparation too. The rejected attempt created no Run,
   approval or optimizer; preserve its failure and reprepare a fresh workspace.
+- Resolved: actual managed child input admission used wrong evidence field names.
+  Tuldok supplies the closed project-data schema with measured_sha256, not
+  captured_sha256/captured_bytes. Scientific source-witness bytes/hash binding
+  remains separate. Added producer-schema admission and corruption regression.
+  Runaf85e241 failed/drained before data/model/optimizer initialization with no
+  artifacts; retain its source, logs, metadata and nonzero execution costs.

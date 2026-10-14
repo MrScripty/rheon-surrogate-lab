@@ -184,6 +184,18 @@ class PacketTests(unittest.TestCase):
 
 
 class TrainingContracts(unittest.TestCase):
+    def test_actual_generic_project_evidence_schema(self):
+        raw = b"numeric fixture"
+        declaration = {"sha256": sha(raw), "bytes": len(raw)}
+        # The pinned producer's project-data evidence has measured_sha256;
+        # its bytes are bound separately by the scientific source witness.
+        entry = {"project_id": "p" * 32, "manifest_sha256": "a" * 64, "reference_id": "train0", "path": "inputs/train-0.npz", "measured_sha256": sha(raw)}
+        self.assertEqual(train.project_input("train0", raw, declaration, entry), ("p" * 32, "a" * 64))
+        entry["measured_sha256"] = "0" * 64
+        with self.assertRaises(ContractError) as error:
+            train.project_input("train0", raw, declaration, entry)
+        self.assertEqual(error.exception.code, "input_evidence_identity")
+
     def test_sampling_uses_only_supplied_train_parent_rows(self):
         rows = [{"trajectory_id": "a"}] * 24 + [{"trajectory_id": "b"}] * 24
         sampled = train.order(rows, config())

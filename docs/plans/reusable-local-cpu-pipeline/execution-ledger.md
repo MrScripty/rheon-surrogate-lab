@@ -54,3 +54,13 @@ and exact interleaved parent/frame sampling; added comparison against the retain
 sampler. The early batch-four profiles remain preflight-only, not model results.
 Configuration changes create measured new capture/packet identities without
 changing model/native arithmetic. Fresh final-profile material and project follow.
+
+2026-10-14: Final default source566a07a and fresh material passed fixture, complete
+capture/packing and workspace4 preflight. Managed Runaf85e2415b734f299b5799179c226527
+launched the actual captured CPU runtime and then failed at input-evidence
+admission (KeyError captured_sha256). Tuldok's producer uses measured_sha256.
+The child failed/drained, published no artifacts, and performed no model
+initialization or optimizer construction. First real captured runtime proof is
+retained with the failed attempt. New admission follows the existing closed
+producer schema and keeps independent source-witness hash/byte checks; a fresh
+project/Run is required. No numerical model or gate change.

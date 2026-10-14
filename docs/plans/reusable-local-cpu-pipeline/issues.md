@@ -15,3 +15,7 @@
   new local adapter adds that bounded mode and retains its lifecycle fixtures.
 - External Rheon merge conflicts and Tuldok app.py edits are outside the write
   set. Fetched main and used clean task checkouts; no resolution or stash applied.
+- Resolved: real runtime creation rejected intermediate snapshot directories
+  under the host's inherited0002umask. Bootstrap now establishes private0077
+  permissions before catalog/source/runtime creation. Snapshot verification is
+  unchanged. First preparation remains failed with zero Runs and no optimizer.

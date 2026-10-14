@@ -32,6 +32,9 @@ def database_environment(host_config):
 
 
 def scientific_environment():
+    # Tuldok's immutable snapshot verifier requires privately owned directories,
+    # including intermediate parents created by mkdir(parents=True).
+    os.umask(0o077)
     os.environ.update({name: "1" for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS", "RAYON_NUM_THREADS")})
     os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
     os.environ["CUDA_VISIBLE_DEVICES"] = ""

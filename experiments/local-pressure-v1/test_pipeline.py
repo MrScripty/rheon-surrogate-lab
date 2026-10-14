@@ -19,6 +19,7 @@ import model_profile
 import project
 import train
 import process
+import bootstrap
 
 
 def config():
@@ -75,6 +76,18 @@ def numeric_packet():
 
 
 class ConfigurationTests(unittest.TestCase):
+    def test_bootstrap_creates_private_intermediate_directories(self):
+        original = os.umask(0o002)
+        try:
+            bootstrap.scientific_environment()
+            with tempfile.TemporaryDirectory() as root:
+                target = Path(root) / "packages" / "torch" / "nested"
+                target.mkdir(parents=True, mode=0o700)
+                for directory in (target, target.parent, target.parent.parent):
+                    self.assertEqual(directory.stat().st_mode & 0o077, 0)
+        finally:
+            os.umask(original)
+
     def test_two_lineages_need_only_configuration_changes(self):
         first = experiment(config())
         second = copy.deepcopy(first)

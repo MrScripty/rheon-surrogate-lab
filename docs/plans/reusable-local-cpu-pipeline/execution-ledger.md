@@ -32,3 +32,10 @@ runtime inspection qualifies22,501files/825,750,560bytes after materializing
 installed Ubuntu Python bytes and excluding compiler-only.o/.a inputs. No
 optimizer has been constructed by qualification; managed train/restore remain
 pending. The first commit freezes this portability implementation for preflight.
+
+2026-10-14: Source91b2921 preparation stopped at real staged-runtime verification:
+the host's0002umask left intermediate directories group-writable. No project
+assembly, grant, Run or optimizer construction occurred. Retained failed
+workspace/log and catalog audit; Tuldok removed only its disposable capture
+staging. Bootstrap now sets0077and has a regression for intermediate directory
+permissions. Fresh workspace preparation is required; numerical policy is unchanged.

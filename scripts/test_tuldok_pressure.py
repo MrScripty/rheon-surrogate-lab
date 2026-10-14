@@ -15,6 +15,20 @@ import worker
 
 
 class ConfigContracts(unittest.TestCase):
+    def test_only_empty_cargo_cache_marker_is_exempt_from_source_clean_check(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            subprocess.run(["git", "init", "-q", str(root)], check=True)
+            self.assertTrue(project.cargo_source_clean(root))
+            marker = root / ".cargo-ok"
+            marker.write_bytes(b"")
+            self.assertTrue(project.cargo_source_clean(root))
+            marker.write_bytes(b"changed")
+            self.assertFalse(project.cargo_source_clean(root))
+            marker.write_bytes(b"")
+            (root / "unexpected.rs").write_text("changed source")
+            self.assertFalse(project.cargo_source_clean(root))
+
     def test_original_source_pins_and_fixed_split_contract(self):
         config = worker.read_config(ROOT / "tuldok/configs/pressure-v1.json")
         self.assertEqual(len(config["training_seeds"]) * config["training_frames"], 96)

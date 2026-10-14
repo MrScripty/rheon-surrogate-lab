@@ -29,6 +29,17 @@ def git(*arguments, root=ROOT):
     return subprocess.check_output(["git", "-C", str(root), *arguments], text=True).strip()
 
 
+def cargo_source_clean(root):
+    status = git("status", "--porcelain", root=root)
+    if not status:
+        return True
+    # Cargo creates this empty cache-completion marker after fetching a Git
+    # checkout. It is not source; every other untracked/modified path is refused.
+    marker = Path(root) / ".cargo-ok"
+    return (status == "?? .cargo-ok" and not marker.is_symlink()
+            and marker.is_file() and marker.read_bytes() == b"")
+
+
 def build(cargo, receipt):
     destination = Path(receipt)
     if destination.exists():
@@ -47,7 +58,7 @@ def build(cargo, receipt):
     rheon = next(package for package in metadata["packages"] if package["name"] == "rheon")
     rheon_root = Path(rheon["manifest_path"]).parent
     rheon_commit = git("rev-parse", "HEAD", root=rheon_root)
-    if (rheon_commit != RHEON_REVISION or git("status", "--porcelain", root=rheon_root)
+    if (rheon_commit != RHEON_REVISION or not cargo_source_clean(rheon_root)
             or rheon["source"] != "git+https://github.com/MrScripty/Rheon.git?rev=" + RHEON_REVISION + "#" + RHEON_REVISION
             or before != sha(lock) or git("status", "--porcelain")):
         raise ValueError("Build source/lock identity changed or was not pinned and clean")
@@ -56,6 +67,7 @@ def build(cargo, receipt):
     write(destination, {"schema": "rheon-tuldok-build-v1", "status": "built",
           "lab_revision": git("rev-parse", "HEAD"), "lab_status": "clean",
           "rheon_revision": rheon_commit, "rheon_status": "clean", "rheon_source": rheon["source"],
+          "cargo_cache_marker": "empty .cargo-ok allowed; all other untracked or modified source refused",
           "rustc": subprocess.check_output([rustc, "--version"], text=True).strip(),
           "cargo": subprocess.check_output([str(cargo), "--version"], text=True).strip(),
           "command": command[1:], "lock_sha256": before,

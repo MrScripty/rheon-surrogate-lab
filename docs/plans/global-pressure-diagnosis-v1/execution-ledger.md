@@ -37,3 +37,20 @@ review found README reproduction path outsidefrozenallowedoutputnamespace; main
 correctedcommand/prose toexperiments/.../diagnosis/new-local-observation.json and
 recordsP2closed. Diagnosticcode/full/compactobservations unchanged; no remeasure.
 Finalpublishedhead CI and parentacceptance remain the review handoff.
+
+
+Parent explicitly authorized narrowrepair of the identifiedlegacy /proc probe
+race, including regression/scopedtests/exactheadCI, andPR5update. Extendedwrite
+scopeonlyscripts/test_tuldok_pressure.py plusnewdiagnosisrepairdocs. No changes
+productioncleanup/solver/training sources, artifacts orGNcandidate implementation.
+Replaceexists-then-read with one read ofcontrolledchildstat, accepting onlymissing
+entry/process (ENOENT/ESRCH); nonterminal states/otherIO/malformedcontent stillfail.
+Three deterministicregressions coverthemissingwindow,terminal/live states and
+unexpectederrors, retainingtheactual controlled-childtimeouttest. No blindrerun.
+
+
+Repair scoped main13tests2.031s/0skips and independent13tests2.031s/0skips pass.
+Review sourceSHAf6cc35d9...clear; ENOENT/ESRCH acceptance backedbyPython/Linux
+primarysources, unknownreaderrors and live states remain failures. Commit/push
+this repair before exactheadCI; no oldfailedhead blindretry, no scientificconfigs
+orweights/results/GNcandidate edits. Parentintegration stillpending.

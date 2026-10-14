@@ -2,9 +2,9 @@
 
 **Plan status:** `Implemented`
 
-**Current phase:** Independent reviewed diagnosis; draft publication and parent acceptance
+**Current phase:** Reviewed lifecycle repair and exact-head CI publication
 
-**Next slice:** Parent review of diagnosis and the unlaunched GroupNorm proposal
+**Next slice:** Parent review of diagnosis and lifecycle repair after exact-head CI
 
 **Acceptance status:** `pending`
 
@@ -32,8 +32,11 @@ independent numerical/standards review and explicit uncertainty.
 
 ## Binding Decisions
 
-Tracked writes only new `experiments/global-pressure-v1/diagnosis/**` and
-`docs/plans/global-pressure-diagnosis-v1/**`. Original training/model/tests/config,
+Tracked writes to new `experiments/global-pressure-v1/diagnosis/**` and
+`docs/plans/global-pressure-diagnosis-v1/**`. Parent subsequently authorized the
+identified lifecycle fixture repair in `scripts/test_tuldok_pressure.py` only,
+with regressions and CI; this is an explicit extension of the prior write set.
+Production cleanup/executor and all scientific training/model/tests/config,
 all receipts/negative results, split reservations, native code, Tuldok and prior
 plans remain unchanged. Main owns plan/research/publication; diagnosis worker owns
 new diagnostic script and generated report in this new directory only. Reviewers

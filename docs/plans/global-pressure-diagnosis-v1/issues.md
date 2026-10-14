@@ -11,3 +11,5 @@
 | D-I6 | Full observations are17.9MB with repetitive stages | Exact original retained in ignored archive; compact3.52MB retains every decisive row/derivative and all other stage aggregates, independently checked |
 
 | D-I7 / P2 | Published README fresh output example used a docs path rejected by the frozen diagnostic admission policy | Closed by changing only README command/prose to the allowed experiments/global-pressure-v1/diagnosis path; no measurement/source/report changes or rerun |
+
+| D-I8 | Legacy CPU check c1828 failed when the controlled-child /proc entry disappeared between exists and read | Parent-authorized narrow fixture repair: direct read accepts only ENOENT/ESRCH, preserves live/error failure; 13 scoped tests/independent review pass, repaired-head CI required; original failed log retained |

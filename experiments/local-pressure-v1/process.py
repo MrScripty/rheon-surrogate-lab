@@ -26,7 +26,7 @@ REQUEST_LIMIT = 1024 * 1024
 STDOUT_LIMIT = 512 * 1024
 STDERR_LIMIT = 64 * 1024
 RSS_LIMIT = 4 * 1024**3
-MODE_LIMITS = {"--identity": 10.0, "--residual": 10.0, "--evaluate": 60.0}
+MODE_LIMITS = {"--identity": 10.0, "--oracle": 10.0, "--residual": 10.0, "--evaluate": 60.0}
 _CALL_LOCK = threading.Lock()
 # On an unkillable-process failure retain stable handles and exclusive ownership.
 # The caller must stop; a later call cannot silently inherit unresolved work.
@@ -282,7 +282,7 @@ def native_call(binary, mode, request, deadline, timeout):
         if _children(os.getpid()):
             raise NativeProcessError("ownership_busy", "existing caller children cannot be reaped", m)
         if type(mode) is not str or mode not in MODE_LIMITS or type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= MODE_LIMITS[mode]:
-            raise NativeProcessError("invalid_timeout", "only bounded identity/residual/evaluate modes", m)
+            raise NativeProcessError("invalid_timeout", "only bounded identity/oracle/residual/evaluate modes", m)
         if type(deadline) not in (int, float) or not math.isfinite(deadline):
             raise NativeProcessError("invalid_deadline", "absolute finite monotonic deadline required", m)
         hard_end = min(float(deadline), started + float(timeout))
@@ -296,8 +296,8 @@ def native_call(binary, mode, request, deadline, timeout):
         info = path.lstat()
         if not stat.S_ISREG(info.st_mode) or path.is_symlink() or path.resolve() != path or not os.access(path, os.X_OK):
             raise NativeProcessError("unsafe_binary", "canonical regular executable required", m)
-        if mode == "--identity" and request is not None or mode in ("--evaluate", "--residual") and type(request) is not dict:
-            raise NativeProcessError("invalid_request", "identity has no request; evaluate has JSON object", m)
+        if mode in ("--identity", "--oracle") and request is not None or mode in ("--evaluate", "--residual") and type(request) is not dict:
+            raise NativeProcessError("invalid_request", "identity/oracle have no request; evaluate/residual have JSON object", m)
         encoded = b"" if request is None else json.dumps(request, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
         if len(encoded) > REQUEST_LIMIT:
             raise NativeProcessError("request_limit", "native request exceeds1MiB", m)

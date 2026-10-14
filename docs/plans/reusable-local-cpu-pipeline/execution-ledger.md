@@ -64,3 +64,15 @@ initialization or optimizer construction. First real captured runtime proof is
 retained with the failed attempt. New admission follows the existing closed
 producer schema and keeps independent source-witness hash/byte checks; a fresh
 project/Run is required. No numerical model or gate change.
+
+2026-10-14: Source216daa5 workspace5 completed real managed training200 updates
+(Runde66b697512e426691d8172c911639a2) and independent zero-update restore
+(Runaa32b8295a23471ea33ac7b4a97d792d), both drained, all18 outputs each, exact
+numeric state/history/prediction parity and catalog/CLI reopen downloads. Complete
+native32 passes original gates through fallback only: raw0/32, warm32 fails,
+fallback32/32; GN6449versus previous-pressure5425iterations,1024wasted warm.
+No acceleration. The default fresh prepare path additionally invokes --oracle;
+final command-path review found this mode missing from the new launcher admission.
+Added10s/no-request oracle mode plus real process/drain regression. This changes
+only the portable process interface, not native/model arithmetic. Qualify the
+default source-to-preflight route before terminal acceptance.

@@ -243,6 +243,15 @@ class TrainingContracts(unittest.TestCase):
 
 
 class ResidualProcessTests(unittest.TestCase):
+    def test_bootstrap_oracle_mode_has_no_request_and_drains(self):
+        with tempfile.TemporaryDirectory() as root:
+            binary = Path(root) / "oracle-fixture"
+            binary.write_text("#!/usr/bin/python3.12\nimport json,sys\nprint(json.dumps({'mode':sys.argv[1]}))\n")
+            binary.chmod(0o755)
+            result, observed = process.native_call(binary, "--oracle", None, time.monotonic() + 13, 10)
+            self.assertEqual(result, {"mode": "--oracle"})
+            self.assertTrue(observed["drained"] and observed["echild"] and observed["group_empty"])
+
     def test_residual_child_is_bounded_and_completely_drained(self):
         with tempfile.TemporaryDirectory() as root:
             binary = Path(root) / "residual-fixture"

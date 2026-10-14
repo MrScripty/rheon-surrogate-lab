@@ -52,3 +52,14 @@ training/restore and schema fixtures do not certify those boundaries. Runtime
 inventory was actually validated with explicit optional exclusions, but no
 managed snapshot registration is claimed. Cross-cloud-thread message tools are
 unavailable; precise inputs and recipes are published in draftPR1.
+
+## Review and CI continuation
+
+[Review/CI metadata](review-ci.json) records successful Actions38531223801
+on source21cd8b0, the fresh clone regeneration and the unchanged CNN negative
+physics result. Local32Python tests=31pass/1optional skip; the Actions run/job
+step API confirms success, but its log archive returned403. No log-derived
+counts or completed independent review are invented. CodeRabbit manual review
+is acknowledged in progress. [Fresh regeneration](../../../../tuldok/REGENERATION.md)
+lets the separate executor generate its own immutable inputs and measure its
+new source-dependent split/recipe hashes.

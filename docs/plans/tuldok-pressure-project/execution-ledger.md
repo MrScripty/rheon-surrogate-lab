@@ -41,3 +41,15 @@ repackaging pass. Python32run=31pass/1optional skip. Added fresh regeneration
 commands and CPU supporting CI with verified checkout action pin, fixed Rheon/
 Tuldok source pins, native gates and separate real Adam/fresh restore. CI remains
 pending an actual run; numerical source/checkpoint/architecture is unchanged.
+
+Actual GitHub Actions38531223801 at21cd8b0889050dacc8e9697e4104e1017f8f4727
+completed successfully, including named native, Python and actual Adam/fresh
+restore steps. Run/job/step API metadata is retained in reports/review-ci.json;
+log archive download returned403, so no log-derived test counts are asserted.
+A separate clean clone rebuilt/generate/verified/packaged/assembled and trained/
+restored: tensor NPZ38cd3176...ebbd9cf reproduced; split hash changed with source
+provenance; restored predictions exact; nativeCNN0/16negative reproduced.
+Regeneration commands are in tuldok/REGENERATION.md. Independent CodeRabbit
+review was explicitly requested on labPR1 and acknowledged in progress; no
+review completion is inferred yet. Parent directed no cross-repository comment
+retry and owns internal integration coordination. No larger model or tag.

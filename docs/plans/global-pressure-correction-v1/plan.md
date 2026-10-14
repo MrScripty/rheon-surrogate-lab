@@ -1,12 +1,12 @@
 # Global pressure correction: next Tuldok experiment
 
-**Plan status:** `Verifying`
+**Plan status:** `Accepted`
 
-**Current phase:** Design document completion and independent review
+**Current phase:** Reviewed design delivered in draft lab PR2
 
-**Next slice:** Close design review and publish the draft lab PR
+**Next slice:** none
 
-**Acceptance status:** `partial`
+**Acceptance status:** `satisfied`
 
 **Execution ledger:** [execution-ledger.md](execution-ledger.md)
 
@@ -53,7 +53,7 @@ Exact design criteria are owned by [acceptance.md](acceptance.md).
 | D3 | Split/restore/physics/rollout/cost protocol | contract | not-applicable | manual | satisfied | [Data/model](data-and-model.md), [criteria](acceptance.md) |
 | D4 | Existing generic paths and separate full GPU scope | contract | required-real merged source | manual | satisfied | [Handoff](execution-and-handoff.md), [GPU](local-gpu.md) |
 | D5 | Independent numerical/standards design review | focused | representative independent reviewer | manual | satisfied | [Independent review](reports/design-review.md) |
-| D6 | Scoped committed/pushed draft PR, no training | release-artifact | required-real Git/GitHub | automated | pending | reports/verification.md |
+| D6 | Scoped committed/pushed draft PR, no training | release-artifact | required-real Git/GitHub | automated | satisfied | [Publication verification](reports/verification.md) |
 
 ## Evidence and model decision
 
@@ -126,7 +126,7 @@ Applicable: separately owned numerical and generic execution contracts are compo
 
 | Slice | Outcome | Prospective implementation write set | Exit gate | Lifecycle |
 | --- | --- | --- | --- | --- |
-| 0 (this PR) | Independently reviewed design and handoff | New design directory only | D1–D6; no experimental claims | Verifying |
+| 0 (this PR) | Independently reviewed design and handoff | New design directory only | D1–D6; no experimental claims | Accepted |
 | 1 | Admitted native warm start, deterministic generator and data verifier | New lab `experiments/global-pressure-v1/`, `probes/global-pressure-v1/`, dedicated tests and dependency manifests; exact scope fixed in implementation PR | E1–E2, adversarial fixtures, no training | Deferred; separately admitted implementation |
 | 2 | One CPU 200-update smoke via generic recipes and fresh restore | Same new experiment, new test files, ignored `runs/global-pressure-v1/` | E3–E6; native quality and failures retained | Deferred; separately admitted implementation |
 | 3 | Freeze checkpoint/protocol, generate new test suites and evaluate | New experiment freeze/evidence only; no numerical changes after access | E7–E9, independent pre-freeze review | Deferred; separately admitted implementation |
@@ -139,8 +139,9 @@ outside the qualified captured CPU runtime; do not route it through that profile
 
 ## Blockers
 
-No design publication blocker currently known. Independent reviewD5 passed; GitHub
-publicationD6 remains pending. Numerical implementation must resolve the native
+None for the design deliverable: D1–D6 are satisfied. Independent review passed
+and [draft PR2](https://github.com/MrScripty/rheon-surrogate-lab/pull/2) is open.
+Numerical implementation must resolve the native
 warm-start API before training. Managed catalog/runtime/grant and local GPU hardware
 are future environment requirements, not claimed present.
 
@@ -163,6 +164,6 @@ and no branch deletion/history rewrite is part of this task.
 
 ## Final Acceptance
 
-- Acceptance status: `partial`
-- Final status: `Verifying`
+- Acceptance status: `satisfied`
+- Final status: `Accepted`
 - Deferred follow-ups: separately authorized numerical implementation and local GPU full training

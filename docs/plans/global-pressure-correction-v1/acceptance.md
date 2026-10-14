@@ -11,7 +11,7 @@ can close an honestly completed experiment without satisfying a usefulness claim
 | D3 | Dataset/grouping, leakage, trained-weight restore, native quality, rollout and total-cost criteria specified | design / proposed CPU/full contracts / review | satisfied: data-and-model.md and this file |
 | D4 | Generic Tuldok contracts, CLI/UI workflow and separate GPU path respect actual limits | contract / merged Tuldok source / review | satisfied: execution-and-handoff.md, local-gpu.md |
 | D5 | Independent numerical/standards design review completed; material findings dispositioned | design / independent GPT-6.1 Sol High reviewer / read-only review | satisfied: [independent review](reports/design-review.md) |
-| D6 | Only new design directory changed; commit/push and draft PR verified, no training/tags/outreach | artifact / local Git + GitHub / automated + diff review | pending: reports/verification.md |
+| D6 | Only new design directory changed; commit/push and draft PR verified, no training/tags/outreach | artifact / local Git + GitHub / automated + diff review | satisfied: [publication verification](reports/verification.md) |
 
 ## Common accepted-step physics
 

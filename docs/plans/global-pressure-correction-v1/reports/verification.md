@@ -26,11 +26,27 @@ Focused document checks completed:
   Storage and complete quality/resident/cold workload are prospective cap admission,
   not execution measurements. Full is705600method-frames; smoke56448.
 - Local Markdown targets resolve; new files are confined to the design directory.
-  Final staged whitespace/scope and public draft publication checks remain pending.
+  Final staged whitespace/scope and public draft publication checks passed.
 
 Independent review required three repairs (storage, full cold workload, full GPU
 acceptance mapping); [final recheck](design-review.md) closed all three. All experimental E gates remain
 pending. This design does not claim accelerated solver qualification or benchmark
 gains. Existing workflows/tests are not rerun as numerical proof for docs-only work.
 
-Commit/push/draft PR publication: pending.
+Publication verified2026-10-14:
+
+- Source/design commit:`74a7a5e061647fb4f626a976dce577b4cdbfefbb`, pushed to
+  `origin/design/global-pressure-correction-v1` with no force/history rewrite.
+- [Draft PR2](https://github.com/MrScripty/rheon-surrogate-lab/pull/2) is open,
+  draft=true, base main20dd90f6, inspected initial head74a7a5e and12changed files.
+- Initial staged diff review:12new UTF-8 design/metadata files,113216bytes, no existing
+  tracked changes, binary/data/model payloads or observed credential patterns.
+  `git diff --cached --check` passed; index bytes equalled reviewed working bytes.
+- Adopted plan structure/local links/reservation/scope checks passed. Main checked
+  all10 independent reviewer subject hashes before evidence/lifecycle updates.
+
+Subsequent changes record actual publication and design acceptance only; no model,
+data, protocol, tolerance, budget or numerical source changes. D1–D6 close the design
+task. E1–E9 and full-specific gates remain prospective. This does not merge/admit
+implementation or full training. Repository CI is a separate supporting check;
+no CI success or numerical rerun is inferred from draft publication.

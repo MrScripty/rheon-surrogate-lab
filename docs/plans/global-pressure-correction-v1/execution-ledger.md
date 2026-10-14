@@ -62,3 +62,13 @@ Independent recheck closed all three findings and found no remaining material D5
 blocker. Main agent verified all10 returned subject hashes before updating only
 status/evidence projections; numerical protocols remained unchanged. Read-only
 review scope and identities are preserved in reports/design-review.md.
+
+2026-10-14 — Staged12 new design files only; exact index bytes matched the reviewed
+working tree, local links and structural plan check passed, whitespace passed and
+no observed credential/binary/numeric-array payloads. Committed74a7a5e061647fb4f626a976dce577b4cdbfefbb,
+pushed design/global-pressure-correction-v1 and created verified public draftPR2
+https://github.com/MrScripty/rheon-surrogate-lab/pull/2, base20dd90f6. Recorded design
+D1–D6 satisfaction and terminal design status. These publication/evidence projections
+do not approve numerical implementation; all E gates remain pending. No new-model
+training, array generation, tags, merge, external messages or outreach. Parent owns
+future design acceptance/integration and separately admitted implementation.

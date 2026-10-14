@@ -1,12 +1,12 @@
 # Fixed GroupNorm global pressure experiment
 
-**Plan status:** `Verifying`
+**Plan status:** `Accepted`
 
-**Current phase:** Independently cleared protocol awaiting parent admission
+**Current phase:** Pretraining gates accepted; one admitted CPU training completed and observed
 
-**Next slice:** Parent admission of the exact source/material protocol; no grant or training is authorized by this packet.
+**Next slice:** Separate restore-material review and authorization; no restore or further training is authorized by this packet.
 
-**Acceptance status:** `partial`
+**Acceptance status:** `complete` for A1–A7 pretraining admission; solver qualification remains pending
 
 **Execution ledger:** [execution-ledger.md](execution-ledger.md)
 
@@ -16,7 +16,7 @@
 
 Make one concrete, reviewable CPU experiment that tests whether within-sample feature normalization prevents the measured activation shutdown in the original global pressure model. This pretraining slice establishes executable contracts and qualification, not a remedy, solver qualification or benchmark gain.
 
-Diagnosis PR5 was accepted at `ec48499cce5bf1c3e63e9fb4baac76e9c9241528` and merged normally as `16a0656830d66f50318516bb174aa0f74f28e3ed`. The original training sources, failed weights, 384-frame diagnosis and all negative native results remain immutable. The [diagnosis proposal](../global-pressure-diagnosis-v1/next-experiment.md) supplies the hypothesis; current parent authorization permits implementation and pretraining review only.
+Diagnosis PR5 was accepted at `ec48499cce5bf1c3e63e9fb4baac76e9c9241528` and merged normally as `16a0656830d66f50318516bb174aa0f74f28e3ed`. The original training sources, failed weights, 384-frame diagnosis and all negative native results remain immutable. The [diagnosis proposal](../global-pressure-diagnosis-v1/next-experiment.md) supplies the hypothesis; the initial authorization permitted implementation and pretraining review. The parent subsequently admitted exactly one fixed 200-update CPU Run at the frozen source/material, with a 600 s one-shot grant and owner-session revocation after drain. That Run completed; [training observations](reports/training.md) record its limits.
 
 ## Objective acceptance
 
@@ -28,7 +28,7 @@ Diagnosis PR5 was accepted at `ec48499cce5bf1c3e63e9fb4baac76e9c9241528` and mer
 | A4 | Eleven numeric checkpoints and every other declared output fit measured caps and 32 MiB aggregate; exact final-only restore contracts | contract | pinned CPU / automated | satisfied | [output budget](reports/output-budget.json) |
 | A5 | Existing captured CPU runtime supports GN; generic CLI can open/prepare/preflight exact source/input/output closure without grant or execution | actual integration | owner-local snapshot/catalog / automated | satisfied | [preflight](reports/preflight.json), [no execution](reports/no-execution.json) |
 | A6 | Independent numerical and standards reviewers clear the frozen material | independent review | exact source/material / read-only | satisfied | [numerical](reports/numerical-review.md), [standards](reports/standards-review.md) |
-| A7 | Parent admits the exact source/material protocol before any grant or scientific execution | owner admission | frozen packet / review | pending | parent decision |
+| A7 | Parent admits the exact source/material protocol before any grant or scientific execution | owner admission | frozen packet / review | satisfied | exact parent admission; [training](reports/training.md) |
 
 ## Binding experiment decisions
 
@@ -36,15 +36,15 @@ New identity: `rheon-global-pressure-groupnorm-model-v1`. Add `GroupNorm(4, C, e
 
 The same ten channels, f32 eager network, f64 gauge/full finite-volume operator, composite loss, train-only physical scales and native residual lineage apply. Group normalization can remove useful physical amplitude: report forcing-amplitude and distant/global sensitivity rather than assuming benefit.
 
-The future smoke is exactly 200 Adam updates, batch 2, initialization seed 20261014, order seed 20261015, lr .001, betas (.9,.999), epsilon 1e-8, weight decay 0 and clipping 1. There is no sweep, restart, early stopping, checkpoint selection or additional baseline training. Validation is observational at 0/200. Retain numeric weights at initialization and every 20 updates, sampled row identities, and before/after layer ranges, zero fractions, correction variation and pressure/residual component gradients. Checkpoints are observations; only update 200 is the candidate. No optimizer state resume is supported.
+The admitted smoke used exactly 200 Adam updates, batch 2, initialization seed 20261014, order seed 20261015, lr .001, betas (.9,.999), epsilon 1e-8, weight decay 0 and clipping 1. There is no sweep, restart, early stopping, checkpoint selection or additional baseline training. Validation is observational at 0/200. Retain numeric weights at initialization and every 20 updates, sampled row identities, and before/after layer ranges, zero fractions, correction variation and pressure/residual component gradients. Checkpoints are observations; only update 200 is the candidate. No optimizer state resume is supported.
 
-The future run uses one CPU thread, existing 600 s child wall, observed process high-water stop budget 4 GiB, 256 MiB input / 320 MiB capture and 32 MiB output aggregate. The RAM policy is an observed process limit, not OS containment. Restore must use typed final artifacts from one completed/drained Run, accept only the new identity, perform zero updates and reproduce final predictions exactly in a fresh process. This slice executes no optimizer steps and creates no grant or Run.
+The admitted run used one CPU thread, existing 600 s child wall, observed process high-water stop budget 4 GiB, 256 MiB input / 320 MiB capture and 32 MiB output aggregate. The RAM policy is an observed process limit, not OS containment. Restore must use typed final artifacts from one completed/drained Run, accept only the new identity, perform zero updates and reproduce final predictions exactly in a fresh process. The pretraining slice executed no optimizer steps and created no grant or Run; its historical reports remain unchanged. The separately admitted training Run performed exactly 200 updates and published all 18 artifacts. Restore remains unperformed.
 
 ## Evidence boundaries and future interpretation
 
 Reuse the exact 384 development frames (288 training / 96 validation, whole trajectories). Native anchor `26c33fac5df17b66fadba036368f2008ec172a860231ff75822cd2ef9dba11b8`, split SHA `fbb9edddfa08877e0834fcdf6e0d10e8f4769c5883fc6597b829325c2784650a` and reservation SHA `1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5` remain binding. No reserved final arrays are generated, read or tuned against.
 
-If admitted later, report conditioning separately from physical usefulness. Keep all 32 development teacher cases, unchanged original-b residual/divergence/wall/flux/Courant gates, failed warm work (<=32 iterations) and one fresh full p_base reset (<=3000). Compare full-budget temporal, zero and analytic starts fairly. Report inference, verification, fallback, runtime/setup, training/checkpoints/restore and enclosing cost. Nonzero corrections and lower losses do not qualify acceleration. All failures remain visible.
+The completed training report separates conditioning from physical usefulness. For a separately reviewed native evaluation, keep all 32 development teacher cases, unchanged original-b residual/divergence/wall/flux/Courant gates, failed warm work (<=32 iterations) and one fresh full p_base reset (<=3000). Compare full-budget temporal, zero and analytic starts fairly. Report inference, verification, fallback, runtime/setup, training/checkpoints/restore and enclosing cost. Nonzero corrections and lower losses do not qualify acceleration. All failures remain visible.
 
 Autonomous held-out rollouts must later assess divergence, residual, conservation and stability before any solver claim. The separate local-GPU/full-training plan remains behind a new review gate; neither GPU training nor final evaluation is authorized here.
 
@@ -56,7 +56,7 @@ Autonomous held-out rollouts must later assess divergence, residual, conservatio
 
 The lab owns scientific model/configuration and numerical artifact semantics. Tuldok owns generic recipe capture, runtime identity, preflight, grants, scheduler, custody and artifacts. Rheon owns the qualified native operator. New model/receipt/source identities prevent accidental compatibility with original failed weights. Captured pinned helper modules reuse the existing reader, stencil and serialization instead of duplicating them; the new trainer owns the changed checkpoint and observation policy. Generic recipe output declarations expose every file. No model-specific upstream executor, compatibility shim or hidden output is introduced.
 
-The independent concerns are the fixed representation intervention, scientific state/history, immutable data lineage, and generic execution custody. They are evaluated in the lab on CPU because the previous decoder shut down; only later owner admission interleaves them in a Run. Model identity, checkpoint time and final-candidate policy belong to the new trainer; runtime/material identity and grant lifetime remain Tuldok-owned. The assembler must know exact source names, input slots and declared outputs, while model callers use the accepted tensor/normalization interface. Changing the scientific architecture touches this experiment's model, qualification and identity; changing output policy touches trainer, budget and generic declaration; neither change requires editing Tuldok or Rheon.
+The independent concerns are the fixed representation intervention, scientific state/history, immutable data lineage, and generic execution custody. They are evaluated in the lab on CPU because the previous decoder shut down; the later exact owner admission interleaved them in the single completed Run. Model identity, checkpoint time and final-candidate policy belong to the new trainer; runtime/material identity and grant lifetime remain Tuldok-owned. The assembler must know exact source names, input slots and declared outputs, while model callers use the accepted tensor/normalization interface. Changing the scientific architecture touches this experiment's model, qualification and identity; changing output policy touches trainer, budget and generic declaration; neither change requires editing Tuldok or Rheon.
 
 Pinned original helper dependencies expose the already accepted reader/loss/serialization representations explicitly; no hidden ambient import ordering is permitted. Model numerics and generic capture can fail and be checked independently, but a replacement scientific source invalidates qualification and material hashes. Deleting the wrapper would spread pinned-source and identity checks across callers; deleting the assembler would spread recipe closure knowledge; deleting the budget owner would hide retained history cost. These small owners contain required complexity. No general registry, alternate executor or compatibility hierarchy is retained.
 
@@ -69,7 +69,7 @@ Pinned original helper dependencies expose the already accepted reader/loss/seri
 - [x] Commit source, assemble immutable generic project, inspect actual runtime and CLI preflight.
 - [x] Obtain independent numerical and standards review; freeze protocol for parent admission.
 
-**Acceptance gate:** A1–A7 above. **Status:** `Verifying`.
+**Acceptance gate:** A1–A7 above. **Status:** `Accepted`. This closes pretraining admission, not solver qualification. A separate admitted training stage is recorded in [training](reports/training.md); restore/native gates remain pending.
 
 ## Concurrent work and repository isolation
 
@@ -77,7 +77,7 @@ Main owns project assembler, plan, runtime/preflight and Git publication. develo
 
 ## Replan triggers and blockers
 
-Stop admission if exact initialization/derivatives fail, runtime closure changes, checkpoint diagnostics exceed caps, restore accepts old identity, data/reservations drift, or independent review identifies a material flaw. No grant/training retry repairs a failed pretraining gate. Current technical blockers: none. A1–A6 pass; A7 parent admission remains pending. This pretraining packet does not authorize execution.
+Stop admission if exact initialization/derivatives fail, runtime closure changes, checkpoint diagnostics exceed caps, restore accepts old identity, data/reservations drift, or independent review identifies a material flaw. No grant/training retry repairs a failed pretraining gate. Current technical blockers: none. A1–A7 pass. Exactly one separately admitted training Run completed/drained; no retry, additional update, restore, native evaluation, final suite or GPU run is authorized. Future material/access/execution gates remain separate.
 
 ## Primary sources
 

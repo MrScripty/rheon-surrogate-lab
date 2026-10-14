@@ -91,3 +91,20 @@ uses a new normal Tuldok catalog, not a parallel catalog implementation. This wa
 an isolation choice, not an owner requirement. Project references and final Run
 artifacts do not stream into a Data collection; document this boundary without
 modifying the running application or importing data without a scoped request.
+
+2026-10-14: Source d7978fd default fresh bootstrap2 completed from selected
+committed Rheon through one-frame fixture, native oracle, complete 384-frame
+capture/packing,81 zero-skip Python checks, actual runtime capture, project and
+dry preflight with zero Runs. Configuration-only reuse changes experiment ID,
+trajectory IDs and development seeds; all other scientific/model settings match
+the default. Managed training Run 0f923b6401914fae9d9885b6fa06b9b9 completed/drained
+with 200 updates; independent restore 07373561747041c5ad0fdc2c700c6dec completed/drained
+with 0 updates. All 18 artifacts per Run survive service/catalog reopen downloads;
+all 16 numeric outputs are independently byte equal. Native 32 diagnostic completes:
+raw 0/32, all warm 32 fail, fallback 32/32; learned 6474 iterations versus temporal 5450,
+including 1024 wasted warm (~18.8% extra). Zero baseline 5590; no unknown iteration
+attempt. No acceleration, GPU, rollout or final-suite claim. PostgreSQL stopped.
+Terminal completion/acceptance records bind both successful lineages and retain
+failed attempt boundaries. Branch and all ignored local evidence are intentionally
+retained for review, with no push/merge/cleanup. Documentation-only terminal commit
+changes no accepted executable bytes.

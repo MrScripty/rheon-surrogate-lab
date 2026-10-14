@@ -1,8 +1,8 @@
 # Reusable local CPU pressure experiment
 
-**Status:** Active. **Acceptance:** pending.
-**Current phase:** verify fresh packing and managed CPU bootstrap.
-**Next slice:** freeze tested source and observe dry preflight against the actual captured runtime.
+**Status:** Complete. **Acceptance:** local CPU pipeline accepted.
+**Current phase:** terminal evidence recorded; local branch retained for review.
+**Next slice:** any model, GPU or existing-catalog integration work needs its own scope.
 
 ## Objective and authority
 
@@ -48,13 +48,19 @@ history rewrite or cleanup of other workspaces is included.
 
 | Claim | Evidence / environment / mode | Status |
 | --- | --- | --- |
-| Configuration can select two fresh lineages without source edits; invalid splits/paths fail | focused contract tests / representative Linux / automated | pending |
-| One-frame train fixture passes independent native physics before full capture | real producer and independent verifier / local CPU / automated | pending |
-| Complete new development packet binds capture/native residual; preprocessing uses train only | real capture/reader plus leakage tests / local CPU / automated | pending |
-| Dry preflight creates no training Run; real runtime/source/project identities are bound | generic Tuldok / local PostgreSQL and captured CPU / automated | pending |
-| Train and independent restore complete/drain; history, state and predictions agree exactly | generic Tuldok Runs / captured CPU / automated | pending |
-| Native evaluation retains original gates, baseline and all warm/fallback work | real native operator / local CPU / automated | pending |
-| Historical executable/results bytes remain unchanged and work is committed | baseline diff and staged review / repository / automated | pending |
+| Configuration can select two fresh lineages without source edits; invalid splits/paths fail | focused tests plus two configured real pipelines / Linux / automated | passed |
+| One-frame train fixture passes independent native physics before full capture | real producer and independent verifier / local CPU / automated | passed |
+| Complete new development packet binds capture/native residual; preprocessing uses train only | two 384-frame captures/packets plus leakage tests / local CPU / automated | passed |
+| Dry preflight creates no training Run; real runtime/source/project identities are bound | generic Tuldok / local PostgreSQL and captured CPU / automated | passed |
+| Train and independent restore complete/drain; history, state and predictions agree exactly | four completed generic Tuldok Runs / captured CPU / automated | passed |
+| Native evaluation retains original gates, baseline and all warm/fallback work | two 32-case native evaluations / local CPU / automated | passed; no acceleration |
+| Historical executable/results bytes remain unchanged and work is committed | baseline 03c05e8 diff, source commits and staged review / repository / automated | passed |
+
+[Measured completion](completion.md) and [compact evidence](acceptance.json) own
+the terminal observations. Executable source is frozen at `d7978fd`; the final
+documentation commit changes no executable bytes. Both catalogs, failed attempts,
+runtime snapshots, bulk arrays and all artifact downloads remain ignored local
+evidence under `runs/`. They are deliberately retained, not transfer inputs.
 
 ## Sequence and design review
 
@@ -91,7 +97,14 @@ model/physics/final-suite change is needed. Do not relax numerical tolerances to
 complete the pipeline. Runtime inspection initially rejected Ubuntu's external
 sitecustomize symlink and compiler-only python.o. The bootstrap materializes
 installed Python bytes and excludes link-time objects/archives before the
-unchanged runtime inspector. Inspection now qualifies22,501 files/825,750,560bytes;
-actual captured execution remains pending.
+unchanged runtime inspector. Inspection qualifies 22,501 files / 825,750,560 bytes;
+actual captured train/restore execution and service/catalog reopen now pass for
+both lineages. The one-command bootstrap was separately qualified without
+`--material`, including the bounded native oracle call.
+
+The fresh catalog is a qualification choice, not a Tuldok limitation. This
+bootstrap does not target the owner's running `data-postgres` UI catalog. It
+publishes Project references and Run artifacts; it does not stream captures into
+a Data collection. The runbook explains how to inspect its catalog separately.
 
 [Ledger](execution-ledger.md) · [Issues](issues.md).

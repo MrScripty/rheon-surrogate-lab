@@ -1,0 +1,797 @@
+{
+  "accepted_executable_commit": "d7978fd66d7d461877a9f474601f3e08cd93a41c",
+  "branch": "feat/reusable-local-cpu-pipeline",
+  "cost_scope": "All failed warm iterations and fallbacks are charged in each native evaluation. Preparation, failed managed attempt, training, restore and evaluation remain separate retained observations; overlapping clocks do not establish end-to-end acceleration.",
+  "date": "2026-10-14",
+  "environment": "Linux x86-64 Ubuntu; actual captured Python 3.12.3, NumPy 2.3.5, Torch 2.8.0+cpu; PostgreSQL 16; Rust/Cargo 1.92.0",
+  "gpu_support": false,
+  "historical_bytes_unchanged": {
+    "base": "03c05e8",
+    "paths": [
+      "experiments/global-pressure-v1",
+      "probes/global-pressure-v1",
+      "probes/global-pressure-v1-training",
+      "docs/plans/global-pressure-correction-v1/reservation.json",
+      "docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports"
+    ]
+  },
+  "integration_base": "03c05e8",
+  "model_changes": false,
+  "records": [
+    {
+      "capture": {
+        "frames": 384,
+        "manifest_sha256": "15c11bd8bd360fadc0bdb3c1bc6ab92df5270dc7351ddab080be0f3ba6776316",
+        "path": "runs/local-pressure-v1-final-development",
+        "verification_sha256": "4653cf1670782ffed50a354782d78b0d49bf2c534c1dbdbc695a672dce5c4e5b"
+      },
+      "case_journal_sha256": "b13dd0ef491c5ae203bdce563077314e1664c8f5ffe251bad8027f7cb55a1f15",
+      "completed_sha256": "3d831c73faf0789169305b1205102b197fd79b4ec98557132710c1986c082fe4",
+      "evaluation": {
+        "capture_manifest_sha256": "15c11bd8bd360fadc0bdb3c1bc6ab92df5270dc7351ddab080be0f3ba6776316",
+        "cases": 32,
+        "cost_scope": "native methods include failed warm work and fallback; enclosing evaluation includes verification and process lifetime; earlier managed train/restore and inference clocks are separate overlapping scopes, not an end-to-end speedup",
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations_known": 6449,
+            "fallbacks": 32,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 1024
+          },
+          "temporal_full_budget": {
+            "completed_iterations_known": 5425,
+            "fallbacks": 0,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations_known": 6449,
+            "fallbacks": 32,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 1024
+          },
+          "zero_jacobi": {
+            "completed_iterations_known": 5583,
+            "fallbacks": 0,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 0
+          }
+        },
+        "native_build_receipt_sha256": "1991e43cee93afe37bf0ba91202192e531ca0d966ba7b6aeeefe61a9bb2abf38",
+        "native_elapsed_sum_s": 1.452746335,
+        "raw_qualified": 0,
+        "restore_inference_sum_s": 0.25269565600319766,
+        "restore_receipt_sha256": "07968b511a29ac74bf2a866ca4bbe9bf76a982da31c86d4a45561b81ca75dbec",
+        "schema": "rheon-local-pressure-native-evaluation-v1",
+        "scope": "teacher-state development snapshots; separate historical/new lineages; no autonomous rollout, final generalization, GPU or acceleration claim",
+        "status": "complete_diagnostic",
+        "training_receipt_sha256": "0b2b6b6a8c42a47a446b2ee025fc666211556c65b69f03a5217aade1dbb0a8ee",
+        "workflow_elapsed_s": 15.335981919997721
+      },
+      "evaluation_sha256": "2e8a8c90333517e1c2c81f63ff29a79275ddd6ebff23fb297862a64de73c8926",
+      "experiment": {
+        "geometries_extents_m": {
+          "g0": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "g1": [
+            1.5,
+            1.0,
+            0.75
+          ],
+          "g2": [
+            0.75,
+            1.5,
+            1.0
+          ],
+          "g3": [
+            1.0,
+            0.75,
+            1.5
+          ]
+        },
+        "id": "fresh-groupnorm-cpu-v1",
+        "resources": {
+          "max_output_bytes": 33554432,
+          "wall_seconds": 600
+        },
+        "schema": "rheon-local-pressure-experiment-v1",
+        "training": {
+          "batch_size": 2,
+          "checkpoint_interval": 20,
+          "learning_rate": 0.001,
+          "model": "groupnorm-v1",
+          "seed": 20261014,
+          "updates": 200
+        },
+        "trajectories": [
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 210000,
+            "split": "train",
+            "trajectory_id": "local-train-210000"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 210001,
+            "split": "train",
+            "trajectory_id": "local-train-210001"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 210002,
+            "split": "train",
+            "trajectory_id": "local-train-210002"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 210003,
+            "split": "train",
+            "trajectory_id": "local-train-210003"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 210004,
+            "split": "train",
+            "trajectory_id": "local-train-210004"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 210005,
+            "split": "train",
+            "trajectory_id": "local-train-210005"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 210006,
+            "split": "train",
+            "trajectory_id": "local-train-210006"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 210007,
+            "split": "train",
+            "trajectory_id": "local-train-210007"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 210008,
+            "split": "train",
+            "trajectory_id": "local-train-210008"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 210009,
+            "split": "train",
+            "trajectory_id": "local-train-210009"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 210010,
+            "split": "train",
+            "trajectory_id": "local-train-210010"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 210011,
+            "split": "train",
+            "trajectory_id": "local-train-210011"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 210100,
+            "split": "validation",
+            "trajectory_id": "local-validation-210100"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 210101,
+            "split": "validation",
+            "trajectory_id": "local-validation-210101"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 210102,
+            "split": "validation",
+            "trajectory_id": "local-validation-210102"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 210103,
+            "split": "validation",
+            "trajectory_id": "local-validation-210103"
+          }
+        ]
+      },
+      "experiment_sha256": "534601df73cc0679a42b2ec402160aa6baabf1b81a0ffb73b003e100720b8ced",
+      "fixture": {
+        "manifest_sha256": "40adc375d65e93784febea10256dceade6eeb819386149a37ac7b845f75cf3f2",
+        "path": "runs/local-pressure-v1-final-fixture",
+        "verification_sha256": "2cc12515977a0edb70d3d4940061e3c703d3d57faf33ecdfd1d2d2ed33223c76"
+      },
+      "managed_cli_receipt_sha256": "d67be3dceebda42c692c8997ae82904b4d1a40b4971d99ec627b46f1911856f5",
+      "packet_receipt_sha256": "bc589022512eb91275a71d66692f2128c673af9adee22c06b74d1bb6bf17f53d",
+      "preflight_sha256": "eba15b898441c058a7d731eeefa48fd14985ca10159164bfce766ab57c2ad7aa",
+      "prepare_mode": "selected previously qualified material",
+      "prepared_sha256": "eab892403ab11e1e63590c50be457de8b639c6b0714922f456822ff3b101b7a5",
+      "qualification": {
+        "candidate_update": 200,
+        "conservative_output_projection_bytes": 23646324,
+        "initialized_weight_bytes": 1500186,
+        "model_arithmetic": "unchanged groupnorm-v1; pretraining numerical suite required by bootstrap",
+        "normalization_sha256": "cad3492c111ae948bfd955131ec98d100ca5ed859811edc79874538b605d8f7d",
+        "optimizer_constructed": false,
+        "optimizer_updates": 0,
+        "schema": "rheon-local-pressure-qualification-v1",
+        "status": "passed",
+        "train_parent_ids": [
+          "local-train-210000",
+          "local-train-210001",
+          "local-train-210002",
+          "local-train-210003",
+          "local-train-210004",
+          "local-train-210005",
+          "local-train-210006",
+          "local-train-210007",
+          "local-train-210008",
+          "local-train-210009",
+          "local-train-210010",
+          "local-train-210011"
+        ],
+        "zero_residual_exact": true
+      },
+      "reopened_downloads_verified_per_stage": 18,
+      "restore_byte_equal_artifacts": [
+        "checkpoint-000.npz",
+        "checkpoint-020.npz",
+        "checkpoint-040.npz",
+        "checkpoint-060.npz",
+        "checkpoint-080.npz",
+        "checkpoint-100.npz",
+        "checkpoint-120.npz",
+        "checkpoint-140.npz",
+        "checkpoint-160.npz",
+        "checkpoint-180.npz",
+        "checkpoint-200.npz",
+        "history.json",
+        "normalization.json",
+        "predictions.npz",
+        "splits.json",
+        "weights.npz"
+      ],
+      "restore_typed_origin_artifacts": 17,
+      "runtime": {
+        "file_count": 22501,
+        "manifest_sha256": "ce8a0a16972e050b2985b9853f61edd85f70748cf6681ca768c9e3794d5964d7",
+        "packages": {
+          "filelock": "4.1.1",
+          "fsspec": "2026.9.0",
+          "jinja2": "3.1.6",
+          "markupsafe": "3.0.4",
+          "mpmath": "1.3.0",
+          "networkx": "3.7",
+          "numpy": "2.3.5",
+          "setuptools": "84.0.0",
+          "sympy": "1.14.0",
+          "torch": "2.8.0+cpu",
+          "typing-extensions": "4.16.0"
+        },
+        "profile": "captured_cpu_python_v1",
+        "python_version": "3.12",
+        "total_bytes": 825750560
+      },
+      "source_commit": "216daa54ab464d0e312be98609da8db856d7524c",
+      "source_witness_sha256": "112fa23301c094051506d6fc400eb2b50142e7ea78b6dbd172832f5260dbc175",
+      "stages": [
+        {
+          "artifact_count": 18,
+          "child_elapsed_s": 7.608093987000757,
+          "created_at": "2026-10-14T21:33:29.295953+00:00",
+          "custody_phase": "drained",
+          "finished_at": "2026-10-14T21:33:45.167533+00:00",
+          "optimizer_updates": 200,
+          "receipt_sha256": "0b2b6b6a8c42a47a446b2ee025fc666211556c65b69f03a5217aade1dbb0a8ee",
+          "run_id": "de66b697512e426691d8172c911639a2",
+          "started_at": "2026-10-14T21:33:29.459878+00:00",
+          "state": "completed"
+        },
+        {
+          "artifact_count": 18,
+          "child_elapsed_s": 0.7634798619983485,
+          "created_at": "2026-10-14T21:34:06.721751+00:00",
+          "custody_phase": "drained",
+          "finished_at": "2026-10-14T21:34:16.309524+00:00",
+          "optimizer_updates": 0,
+          "receipt_sha256": "07968b511a29ac74bf2a866ca4bbe9bf76a982da31c86d4a45561b81ca75dbec",
+          "run_id": "aa32b8295a23471ea33ac7b4a97d792d",
+          "started_at": "2026-10-14T21:34:06.942432+00:00",
+          "state": "completed"
+        }
+      ],
+      "workspace": "runs/local-pressure-v1-workspace-5"
+    },
+    {
+      "capture": {
+        "frames": 384,
+        "manifest_sha256": "0fa6da4be6a700b9e5ff314302d299f40deeb5be114a5cdd073c9035c0b68281",
+        "path": "runs/local-pressure-v1-fresh-bootstrap-2/capture",
+        "verification_sha256": "52607f39e19293da21f3d87f7c6d2c21e434acc709a25e21a929e45b9d2062d5"
+      },
+      "case_journal_sha256": "81530a63d1aead2218e6ee9c60ca5a03c9d127b782e6804ea1c4086ab5dce51d",
+      "completed_sha256": "64a32ac4ca7df44f0734a05d8d9543257acb283466c38ddc48a6c3b9ebb1193b",
+      "evaluation": {
+        "capture_manifest_sha256": "0fa6da4be6a700b9e5ff314302d299f40deeb5be114a5cdd073c9035c0b68281",
+        "cases": 32,
+        "cost_scope": "native methods include failed warm work and fallback; enclosing evaluation includes verification and process lifetime; earlier managed train/restore and inference clocks are separate overlapping scopes, not an end-to-end speedup",
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations_known": 6474,
+            "fallbacks": 32,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 1024
+          },
+          "temporal_full_budget": {
+            "completed_iterations_known": 5450,
+            "fallbacks": 0,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations_known": 6474,
+            "fallbacks": 32,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 1024
+          },
+          "zero_jacobi": {
+            "completed_iterations_known": 5590,
+            "fallbacks": 0,
+            "qualified": 32,
+            "unknown_completed_iteration_attempts": 0,
+            "unknown_wasted_warm_attempts": 0,
+            "wasted_warm_iterations_known": 0
+          }
+        },
+        "native_build_receipt_sha256": "837e9abeb22d58b2ac2e35ded6c7622c56c7002ebde58f98ed2d8f98e68f82ed",
+        "native_elapsed_sum_s": 1.365095369,
+        "raw_qualified": 0,
+        "restore_inference_sum_s": 0.2551697750168387,
+        "restore_receipt_sha256": "2bc0e24fcb83d8d8db6babee5371a5d22d111ff353189398eaf5366cf0222021",
+        "schema": "rheon-local-pressure-native-evaluation-v1",
+        "scope": "teacher-state development snapshots; separate historical/new lineages; no autonomous rollout, final generalization, GPU or acceleration claim",
+        "status": "complete_diagnostic",
+        "training_receipt_sha256": "4ca6c279be34e6293c8daf966c26c38c29b046dc19140422fad66f3ffdb0857f",
+        "workflow_elapsed_s": 14.786353226008941
+      },
+      "evaluation_sha256": "38b107f136f61e0ea2088fa0b848b60b767f3da740c22b8ede85c348e0430abc",
+      "experiment": {
+        "geometries_extents_m": {
+          "g0": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "g1": [
+            1.5,
+            1.0,
+            0.75
+          ],
+          "g2": [
+            0.75,
+            1.5,
+            1.0
+          ],
+          "g3": [
+            1.0,
+            0.75,
+            1.5
+          ]
+        },
+        "id": "fresh-groupnorm-cpu-reuse-v1",
+        "resources": {
+          "max_output_bytes": 33554432,
+          "wall_seconds": 600
+        },
+        "schema": "rheon-local-pressure-experiment-v1",
+        "training": {
+          "batch_size": 2,
+          "checkpoint_interval": 20,
+          "learning_rate": 0.001,
+          "model": "groupnorm-v1",
+          "seed": 20261014,
+          "updates": 200
+        },
+        "trajectories": [
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 310000,
+            "split": "train",
+            "trajectory_id": "reuse-train-310000"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 310001,
+            "split": "train",
+            "trajectory_id": "reuse-train-310001"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 310002,
+            "split": "train",
+            "trajectory_id": "reuse-train-310002"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 310003,
+            "split": "train",
+            "trajectory_id": "reuse-train-310003"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 310004,
+            "split": "train",
+            "trajectory_id": "reuse-train-310004"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 310005,
+            "split": "train",
+            "trajectory_id": "reuse-train-310005"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 310006,
+            "split": "train",
+            "trajectory_id": "reuse-train-310006"
+          },
+          {
+            "amplitude_m_s2": 1.0,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "moving",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 310007,
+            "split": "train",
+            "trajectory_id": "reuse-train-310007"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 310008,
+            "split": "train",
+            "trajectory_id": "reuse-train-310008"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 310009,
+            "split": "train",
+            "trajectory_id": "reuse-train-310009"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 310010,
+            "split": "train",
+            "trajectory_id": "reuse-train-310010"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 310011,
+            "split": "train",
+            "trajectory_id": "reuse-train-310011"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g0",
+            "seed": 310100,
+            "split": "validation",
+            "trajectory_id": "reuse-validation-310100"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g1",
+            "seed": 310101,
+            "split": "validation",
+            "trajectory_id": "reuse-validation-310101"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g2",
+            "seed": 310102,
+            "split": "validation",
+            "trajectory_id": "reuse-validation-310102"
+          },
+          {
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "forcing_regime": "steady",
+            "frames": 24,
+            "geometry": "g3",
+            "seed": 310103,
+            "split": "validation",
+            "trajectory_id": "reuse-validation-310103"
+          }
+        ]
+      },
+      "experiment_sha256": "eabe8c5909b747e29a3b544f9666c865f67a4a2e337140144e84b00ac5abfadd",
+      "fixture": {
+        "manifest_sha256": "3751efdd17c19f8e6b981b755d58fb6fd8d0024bb50cc20044bd9596b918de5b",
+        "path": "runs/local-pressure-v1-fresh-bootstrap-2/fixture",
+        "verification_sha256": "f30725ec5d2c6e34a88c2f3ed5f7c9778d8213338c9badcde48b9e1c87205ac4"
+      },
+      "managed_cli_receipt_sha256": "c401e2ce76eda8672126d2dd9a1635e9e5784f14faed6eef661ab2d2658b9df5",
+      "packet_receipt_sha256": "9e7e77f6af3e432adff73f8fc102d97155732ca0bab231b6123d1a84bc08a226",
+      "preflight_sha256": "e432b725844665895e0a1f6c3e430b515cd062e5161360f234124168abae02ab",
+      "prepare_mode": "default prepare without material reuse",
+      "prepared_sha256": "249ad6ad5286ed84928018fb3d285bef125c4c286f3fe9f8342d335b82e43cb2",
+      "qualification": {
+        "candidate_update": 200,
+        "conservative_output_projection_bytes": 23646347,
+        "initialized_weight_bytes": 1500186,
+        "model_arithmetic": "unchanged groupnorm-v1; pretraining numerical suite required by bootstrap",
+        "normalization_sha256": "21ab548bea68abc5d5d6a6c459a88664aa67c13a8e521e91c07b6eb3d68fd74e",
+        "optimizer_constructed": false,
+        "optimizer_updates": 0,
+        "schema": "rheon-local-pressure-qualification-v1",
+        "status": "passed",
+        "train_parent_ids": [
+          "reuse-train-310000",
+          "reuse-train-310001",
+          "reuse-train-310002",
+          "reuse-train-310003",
+          "reuse-train-310004",
+          "reuse-train-310005",
+          "reuse-train-310006",
+          "reuse-train-310007",
+          "reuse-train-310008",
+          "reuse-train-310009",
+          "reuse-train-310010",
+          "reuse-train-310011"
+        ],
+        "zero_residual_exact": true
+      },
+      "reopened_downloads_verified_per_stage": 18,
+      "restore_byte_equal_artifacts": [
+        "checkpoint-000.npz",
+        "checkpoint-020.npz",
+        "checkpoint-040.npz",
+        "checkpoint-060.npz",
+        "checkpoint-080.npz",
+        "checkpoint-100.npz",
+        "checkpoint-120.npz",
+        "checkpoint-140.npz",
+        "checkpoint-160.npz",
+        "checkpoint-180.npz",
+        "checkpoint-200.npz",
+        "history.json",
+        "normalization.json",
+        "predictions.npz",
+        "splits.json",
+        "weights.npz"
+      ],
+      "restore_typed_origin_artifacts": 17,
+      "runtime": {
+        "file_count": 22501,
+        "manifest_sha256": "ce8a0a16972e050b2985b9853f61edd85f70748cf6681ca768c9e3794d5964d7",
+        "packages": {
+          "filelock": "4.1.1",
+          "fsspec": "2026.9.0",
+          "jinja2": "3.1.6",
+          "markupsafe": "3.0.4",
+          "mpmath": "1.3.0",
+          "networkx": "3.7",
+          "numpy": "2.3.5",
+          "setuptools": "84.0.0",
+          "sympy": "1.14.0",
+          "torch": "2.8.0+cpu",
+          "typing-extensions": "4.16.0"
+        },
+        "profile": "captured_cpu_python_v1",
+        "python_version": "3.12",
+        "total_bytes": 825750560
+      },
+      "source_commit": "d7978fd66d7d461877a9f474601f3e08cd93a41c",
+      "source_witness_sha256": "bdcef2d54902f3b507f17a806b9bce1ad819afdf3c3d17e964a7a285ab6b2db8",
+      "stages": [
+        {
+          "artifact_count": 18,
+          "child_elapsed_s": 7.398188701001345,
+          "created_at": "2026-10-14T21:47:30.271761+00:00",
+          "custody_phase": "drained",
+          "finished_at": "2026-10-14T21:47:46.031198+00:00",
+          "optimizer_updates": 200,
+          "receipt_sha256": "4ca6c279be34e6293c8daf966c26c38c29b046dc19140422fad66f3ffdb0857f",
+          "run_id": "0f923b6401914fae9d9885b6fa06b9b9",
+          "started_at": "2026-10-14T21:47:30.436966+00:00",
+          "state": "completed"
+        },
+        {
+          "artifact_count": 18,
+          "child_elapsed_s": 0.7384966679965146,
+          "created_at": "2026-10-14T21:48:06.669778+00:00",
+          "custody_phase": "drained",
+          "finished_at": "2026-10-14T21:48:15.601168+00:00",
+          "optimizer_updates": 0,
+          "receipt_sha256": "2bc0e24fcb83d8d8db6babee5371a5d22d111ff353189398eaf5366cf0222021",
+          "run_id": "07373561747041c5ad0fdc2c700c6dec",
+          "started_at": "2026-10-14T21:48:06.869559+00:00",
+          "state": "completed"
+        }
+      ],
+      "workspace": "runs/local-pressure-v1-fresh-bootstrap-2"
+    }
+  ],
+  "retained_failures": {
+    "before_run": [
+      "runs/local-pressure-v1-workspace-2"
+    ],
+    "managed_run": {
+      "artifacts": 0,
+      "created_at": "2026-10-14T21:24:56.159980+00:00",
+      "custody_phase": "drained",
+      "finished_at": "2026-10-14T21:25:04.086550+00:00",
+      "optimizer_updates": 0,
+      "reason": "project input-evidence field mismatch before data/model/optimizer initialization",
+      "run_id": "af85e2415b734f299b5799179c226527",
+      "started_at": "2026-10-14T21:24:56.328948+00:00",
+      "state": "failed",
+      "workspace": "runs/local-pressure-v1-workspace-4"
+    },
+    "preflight_only": [
+      "runs/local-pressure-v1-workspace-3"
+    ],
+    "preparation": [
+      "runs/local-pressure-v1-workspace",
+      "runs/local-pressure-v1-fresh-bootstrap"
+    ]
+  },
+  "reuse_changes_only": [
+    "experiment.id",
+    "trajectory.trajectory_id",
+    "trajectory.seed"
+  ],
+  "schema": "rheon-local-pressure-cpu-acceptance-v1",
+  "solver_acceleration_claim": false,
+  "source_qualification": {
+    "native_capture_tests": 3,
+    "native_clippy_warnings": 0,
+    "native_diagnostic_tests": 5,
+    "portability_and_lifecycle_tests": 48,
+    "rustfmt_check": "passed",
+    "skips": 0,
+    "unchanged_groupnorm_tests": 33
+  },
+  "standards_revision": "188beda",
+  "status": "accepted_local_cpu_pipeline",
+  "ui_catalog_boundary": "Normal isolated Tuldok catalogs; Project references and completed Run artifacts, no streaming Data collection import or change to the running data-postgres UI."
+}

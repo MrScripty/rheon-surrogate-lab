@@ -12,6 +12,13 @@ The inventory below records the earlier preparation snapshot.
 The later [complete native result](reports/measured-results.md) found rawGN0/32
 and fallback32/32, with no demonstrated solver acceleration.
 
+The subsequently authorized [reusable local CPU pipeline](../../../experiments/local-pressure-v1/README.md)
+now completes fresh capture, managed training, independent restore and native
+evaluation on two configurable development lineages. Its
+[acceptance record](../reusable-local-cpu-pipeline/completion.md) retains separate
+measured identities and the same negative solver result. The historical inventory
+and result records below remain unchanged.
+
 ## Source and transfer inventory
 
 | Repository | Exact accepted pin and purpose |

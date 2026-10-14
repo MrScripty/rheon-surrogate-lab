@@ -6,6 +6,11 @@ loss, independent physics oracle and native diagnostic arithmetic without
 changing their source. Historical Runs, hashes and negative results retain their
 original meaning. GPU support and final suites are outside this CPU profile.
 
+The [local CPU acceptance record](../../docs/plans/reusable-local-cpu-pipeline/completion.md)
+records two completed configurable lineages, including the default fresh prepare
+command. Successful execution qualifies the pipeline; native learned predictions
+still require fallback in every observed case and establish no acceleration.
+
 `configs/development.json` selects fresh whole-parent seeds, development geometry,
 forcing, Adam schedule and checkpoint observations. It contains no host paths,
 runtime hash, packet hash or originating Run ID. The packet, source witness and
@@ -15,7 +20,7 @@ historical or final seeds. The supported capture is a serial 16³ sealed domain,
 24 frames per complete parent, two or more train parents and one or more
 validation parents, at most 16 parents. The final configured update is the only
 candidate. Other checkpoints are observations and omit optimizer resume state.
-The default retains the historical200-update/batch-two/seed/Adam settings and
+The default retains the historical 200-update/batch-two/seed/Adam settings and
 interleaved train-parent/frame sampler. Data identities and host setup vary;
 the GN architecture, loss and default optimization policy are unchanged.
 
@@ -108,6 +113,33 @@ For separately qualified generation material, `prepare --material FILE` accepts
 an explicit object with `fixture`, `capture`, `packet`, `capture_binary` and
 `native_binary` paths. Each is reverified against the selected experiment and
 native revision; this skips generation, not qualification or managed preflight.
+
+## Where results appear in Tuldok
+
+Bootstrap creates a **normal Tuldok catalog** at `WORKSPACE/catalog`, using the
+configured private PostgreSQL service. This fresh catalog isolates qualification
+from an existing application's data and Runs; it is a bootstrap choice, not a
+Tuldok requirement. The prepare command currently requires this fresh-catalog
+workflow and checks that dry preflight created zero Runs. It does not attach to
+the catalog served by an already open Tuldok UI.
+
+Generation and verification finish before training starts. Captures remain under
+`WORKSPACE/capture`; the numeric packet is frozen into Project data references.
+Checkpoints, history, weights and predictions are published as **Run artifacts**
+when managed execution completes. They are not streaming imports into a Data
+collection. Changing the UI's catalog alone does not turn those references into
+collection items.
+
+To inspect this catalog in a UI, use the qualified Tuldok checkout and its
+application dependencies, start the configured PostgreSQL service with its
+`scripts/local_postgres.py` helper, and load that helper's `env` configuration.
+Serve `app.py --data WORKSPACE/catalog --project-root qualification=WORKSPACE/project`
+on a free loopback port. For paths containing spaces, quote each path and the
+whole `qualification=...` argument. Keep the existing instance's catalog,
+database configuration and port intact. The local owner's credential belongs to
+this new catalog; do not reuse or copy another catalog's token. Stop the private
+service only after closing this UI and any managed execution. Integration into
+an existing catalog or collection is a separate operation.
 
 ## Verification
 

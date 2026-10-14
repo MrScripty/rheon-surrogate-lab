@@ -1,10 +1,10 @@
 # Issues
 
-- The historical handoff's closing native status predates the completed corrective
-  pass. Refresh current status while retaining the original inventory snapshot.
-- System Python lacks scientific dependencies and PostgreSQL is not running.
-  Provision isolated CPU dependencies and a private task-owned local cluster;
-  preserve existing catalogs and credentials.
+- Resolved: refreshed the historical handoff's stale closing native status while
+  retaining its original inventory snapshot and measured results.
+- Resolved: provisioned isolated scientific/application CPU dependencies and a
+  private task-owned PostgreSQL 16 cluster; existing catalogs and credentials stay
+  intact. Actual Python 3.12.3 differs from historical 3.12.14 and is measured anew.
 - Resolved: network and Unix-socket sandbox restrictions required authorized
   provisioning outside the sandbox. The failed first PostgreSQL initialization
   was preserved/stopped; a fresh private second cluster initialized successfully.
@@ -30,3 +30,14 @@
   remains separate. Added producer-schema admission and corruption regression.
   Runaf85e241 failed/drained before data/model/optimizer initialization with no
   artifacts; retain its source, logs, metadata and nonzero execution costs.
+- Resolved: default preparation's oracle call lacked a supported mode, then
+  inherited a 60 s timeout above the oracle's 10 s admission. Added the bounded
+  no-request mode, explicit caller timeout and actual wrapper/drain regression.
+  Fresh bootstrap 2 now passes preparation and managed train/restore/evaluation.
+- Observed limitation: both fresh GN lineages qualify native cases through
+  fallback only (raw 0/32 each). The implementation establishes CPU portability,
+  not acceleration, rollout or final generalization.
+- Observed workflow boundary: the owner's open UI serves a different normal
+  Tuldok catalog. These Project references/Run artifacts do not appear there or
+  stream into its Data collection. Existing-catalog integration is separate scope;
+  the runbook documents inspection of the isolated qualification catalog.

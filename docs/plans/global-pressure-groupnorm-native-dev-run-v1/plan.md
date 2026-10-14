@@ -1,12 +1,12 @@
 # Execute the frozen GroupNorm development diagnostic
 
-**Plan status:** `Active`
+**Plan status:** `Verifying`
 
-**Current phase:** Adapter implementation and focused conformance verification.
+**Current phase:** Both independent exact-source reviews clear; preparing the already authorized one fixed32 native pass.
 
-**Next slice:** Freeze verified implementation/input material and obtain independent numerical and standards clearance before the single native pass.
+**Next slice:** Execute the single fixed32 local pass, retain and independently inspect all measured outcomes.
 
-**Acceptance status:** Input preservation established; executable reviews and measured32-case result pending.
+**Acceptance status:** C1–C5 satisfied by input, focused, actual offline and both independent source reviews. C6/C7 measured execution/publication remain pending.
 
 **Ledger:** [execution-ledger.md](execution-ledger.md). **Findings:** [issues.md](issues.md).
 
@@ -24,7 +24,7 @@ Exactly24train/eightvalidation teacher snapshots from16whole parents atframes0/2
 | C2 Distinct closed typed GN/artifact admission and whole-parent case/raw/native residual correspondence | Focused fixture tests plus actual offline CLI verify; no model/native call | verifying |
 | C3 Exactzero/base-retention, fresh nonzero-base reset, all original quality/work semantics and honest unknown iteration handling | Literal unchanged-native composition, source-bound native regressions and focused independent fixtures/review | verifying |
 | C4 Bounded process streams/watchdog/RSS/owned descendant drainage and failure publication | Real Linux synthetic process/system tests and durable publication failure regressions | verifying |
-| C5 Independent exact source/input/resource review before scientific launch | Separate numerical and standards reports bound to committed source and execution freeze | pending |
+| C5 Independent exact source/input/resource review before scientific launch | [Numerical review](reports/numerical-review.md) and [standards review](reports/standards-review.md), exact committed source and execution freeze | satisfied |
 | C6 One complete fixed32 observation or honest fail-stop partial evidence, all original methods/gates and full available costs | Authorized real native6 local action; raw journals, aggregate and terminal measurement | pending |
 | C7 Reviewable publication and exact-head CI | New source/tests/results committed/pushed, draftPR, clean scope and terminal GitHub CI | pending |
 
@@ -53,9 +53,9 @@ The new source freeze binds the committed implementation, its bytes, [execution-
 
 ## Milestones and write set
 
-M1 adapter/conformance: new `experiments/global-pressure-v1/groupnorm-native-dev-v1/**`, this new plan directory, and `.github/workflows/groupnorm-native-development.yml` only. Gate C1–C5 plus bounded real offline admission; `Active`.
+M1 adapter/conformance: new `experiments/global-pressure-v1/groupnorm-native-dev-v1/**`, this new plan directory, and `.github/workflows/groupnorm-native-development.yml` only. Gate C1–C5 plus bounded real offline admission; `Accepted`;60fixtures, [actual offline verification](reports/offline-verification.json) and both independent exact-source reviews pass.
 
-M2 one authorized local pass: one predeclared fresh `/tmp` output and ignored task-local evidence below `runs/global-pressure-groupnorm-native-dev-run-v1/**`; public measured reports only in this new plan directory. Gate C6 unchanged original quality/failure/work/cost semantics; `Planned`, waiting exact source freeze and independent review.
+M2 one authorized local pass: one predeclared fresh `/tmp` output and ignored task-local evidence below `runs/global-pressure-groupnorm-native-dev-run-v1/**`; public measured reports only in this new plan directory. Gate C6 unchanged original quality/failure/work/cost semantics; `Verifying`; exact source freeze and independent review gates passed, one action still unperformed.
 
 M3 draft publication: commit/push only declared new source/tests/docs/workflow plus preserved originalPR7 history; gate C7 and no secrets/bulkarrays; `Planned`. Main target is verified PR6 merge main; branch `feat/groupnorm-native-development-evaluation` remains a review proposal until separately approved integration. No history rewriting, cleanup, tags or outreach.
 

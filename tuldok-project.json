@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "032f4d5b8ab249dc94c4d5f1f8a331c4",
+  "name": "Rheon Surrogate Lab \u00b7 live project",
+  "activity_path": "runs/live-project/activity.json",
+  "data": [
+    {
+      "id": "cpu-results",
+      "label": "Qualified CPU results",
+      "path": "docs/plans/reusable-local-cpu-pipeline/acceptance.json"
+    },
+    {
+      "id": "current-capture",
+      "label": "Current capture manifest",
+      "path": "runs/live-project/capture-manifest.json"
+    }
+  ],
+  "recipes": [],
+  "evidence": [
+    {
+      "id": "readme",
+      "label": "Project README",
+      "path": "README.md"
+    },
+    {
+      "id": "live-plan",
+      "label": "Live integration plan",
+      "path": "docs/plans/live-rheon-tuldok-project/plan.md"
+    },
+    {
+      "id": "cpu-results",
+      "label": "Model results",
+      "path": "docs/plans/reusable-local-cpu-pipeline/completion.md"
+    },
+    {
+      "id": "config",
+      "label": "Experiment configuration",
+      "path": "experiments/local-pressure-v1/configs/development.json"
+    },
+    {
+      "id": "model",
+      "label": "GroupNorm model source",
+      "path": "experiments/global-pressure-v1/groupnorm-v1/model.py"
+    },
+    {
+      "id": "train",
+      "label": "Training source",
+      "path": "experiments/local-pressure-v1/train.py"
+    },
+    {
+      "id": "tuldok-activity-source",
+      "label": "Tuldok live activity source",
+      "path": "runs/live-integration/Tuldok/project_activity.py"
+    },
+    {
+      "id": "rheon-live-source",
+      "label": "Rheon desktop observer source",
+      "path": "runs/live-integration/Rheon/src/bin/desktop/live_project.rs"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "tuldok",
+      "label": "Tuldok with live project observation"
+    },
+    {
+      "id": "rheon",
+      "label": "Rheon egui with external experiment observation"
+    }
+  ]
+}

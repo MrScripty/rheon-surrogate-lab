@@ -2,6 +2,9 @@
 
 Author: Puma.
 
+Live work is visible through the repo's [Tuldok project](tuldok-project.json) and
+[Rheon egui observation workflow](experiments/live-project-v1/README.md).
+
 Fresh local GroupNorm CPU experiments use the separate
 [reusable CPU pipeline](experiments/local-pressure-v1/README.md), with configurable
 development reservations, fixture-first qualification and managed train/restore.

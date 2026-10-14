@@ -20,6 +20,7 @@ import project
 import train
 import process
 import bootstrap
+import native
 
 
 def config():
@@ -248,7 +249,7 @@ class ResidualProcessTests(unittest.TestCase):
             binary = Path(root) / "oracle-fixture"
             binary.write_text("#!/usr/bin/python3.12\nimport json,sys\nprint(json.dumps({'mode':sys.argv[1]}))\n")
             binary.chmod(0o755)
-            result, observed = process.native_call(binary, "--oracle", None, time.monotonic() + 13, 10)
+            result, observed = native.call(binary, "--oracle", timeout=10)
             self.assertEqual(result, {"mode": "--oracle"})
             self.assertTrue(observed["drained"] and observed["echild"] and observed["group_empty"])
 

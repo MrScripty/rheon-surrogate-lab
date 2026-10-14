@@ -87,7 +87,7 @@ def material(config, host_config, output):
     fixture = capture.verify(output / "fixture")
     require(fixture["status"] == "verified_fixture" and fixture["frames"] == 1, "fixture_required", "one-frame physics first")
     operator = native.build("evaluation", None, prepared, Path(host_config["cargo"]), output / "native-build")
-    oracle, _measurement = native.call(operator, "--oracle")
+    oracle, _measurement = native.call(operator, "--oracle", timeout=10)
     write(output / "native-oracle.json", oracle)
     capture.generate(config, binary, output / "capture")
     data.pack(output / "capture", operator, output / "packet")

@@ -76,3 +76,18 @@ final command-path review found this mode missing from the new launcher admissio
 Added10s/no-request oracle mode plus real process/drain regression. This changes
 only the portable process interface, not native/model arithmetic. Qualify the
 default source-to-preflight route before terminal acceptance.
+
+2026-10-14: Default bootstrap's second-lineage attempt qualified its one-frame
+fixture and both native builds, then rejected --oracle before launch because the
+caller inherited the generic60s timeout instead of its admitted10s bound. The
+failed workspace remains intact and created no catalog/Run/optimizer. Pass the
+explicit10s oracle bound and exercise the actual native.call wrapper in its
+process/drain test; unchanged GN33 plus portability48 tests pass. Reprepare a
+fresh destination with the same second-lineage configuration.
+
+2026-10-14: Owner asked why results do not appear in the open Tuldok UI. That
+instance serves data-postgres on127.0.0.1:8091. Fresh qualification deliberately
+uses a new normal Tuldok catalog, not a parallel catalog implementation. This was
+an isolation choice, not an owner requirement. Project references and final Run
+artifacts do not stream into a Data collection; document this boundary without
+modifying the running application or importing data without a scoped request.

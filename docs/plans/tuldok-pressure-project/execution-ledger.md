@@ -61,3 +61,10 @@ without numerical or generic executor changes. Focused fake-failure cleanup and
 actual child-group timeout/nonzero-exit regressions pass; local34tests=33pass/
 1optional skip. Actual native READY/frame/STOP still passes. Managed Runs keeps
 its separate subreaper/custody authority. Requalification CI pending new push.
+
+Actions38533860305 succeeded atc34e248 after both lifecycle repairs. Independent
+review completed with two findings; both were repaired, regression-tested and
+review threads resolved. Evidence is in reports/review-ci.json. Modal parity
+remains the earlier unchanged-model receipt; CNN remains200Adam steps and0/16
+physics qualification. The denied cross-repository comment is not retried, and
+parent owns internal coordination. No final release tag or model expansion.

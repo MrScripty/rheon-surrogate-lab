@@ -63,3 +63,9 @@ counts or completed independent review are invented. CodeRabbit manual review
 is acknowledged in progress. [Fresh regeneration](../../../../tuldok/REGENERATION.md)
 lets the separate executor generate its own immutable inputs and measure its
 new source-dependent split/recipe hashes.
+
+Independent review subsequently completed with two valid lifecycle findings.
+Repairc34e248 preserves original launch errors while attempting all cleanup,
+and bounds trusted same-group children for direct local timeouts. Local34tests
+=33pass/1optional skip; Actions38533860305 passed after those repairs. Both
+review threads are resolved. Managed Runs keeps its separate custody authority.

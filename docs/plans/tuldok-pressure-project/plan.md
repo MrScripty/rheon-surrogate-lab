@@ -1,7 +1,7 @@
 # Tuldok pressure project
 
-Plan status: Verifying. Current phase: clean regeneration and CPU CI passed; independent review in progress.
-Next slice: repair independent-review launch cleanup and direct-local timeout, then requalify CPU CI.
+Plan status: Verifying. Current phase: independent review repairs and CPU CI passed; parent integration pending.
+Next slice: parent-managed Tuldok CLI acceptance and compatible-checkpoint coordination.
 Acceptance status: partial; lab-owned claims satisfied. [Verification](reports/verification.md). [Ledger](execution-ledger.md), [issues](issues.md),
 [baseline and contract](reports/baseline.md).
 

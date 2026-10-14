@@ -129,11 +129,114 @@
     "provider": "CodeRabbit",
     "requested_on": "lab PR1",
     "source_revision": "21cd8b0889050dacc8e9697e4104e1017f8f4727",
-    "state": "in_progress",
+    "state": "completed_two_findings_repaired",
     "scope": "manual review; draft no longer inferred from prior skipped status",
     "excluded_by_bot": [
       "probes/tuldok-pressure/Cargo.lock",
       "tuldok/requirements-cpu.lock"
-    ]
+    ],
+    "repair_revision": "c34e248cc70eb7afd9082835657fc1d3748a95a5",
+    "findings": [
+      "direct local timeout must terminate same-group native child",
+      "failed native launch must attempt every cleanup and preserve original exception"
+    ],
+    "resolution": "both threads resolved after targeted regressions and successful CPU CI"
+  },
+  "lifecycle_ci": {
+    "conclusion": "success",
+    "createdAt": "2026-10-14T08:15:44Z",
+    "headSha": "c34e248cc70eb7afd9082835657fc1d3748a95a5",
+    "jobs": [
+      {
+        "completedAt": "2026-10-14T08:17:22Z",
+        "conclusion": "success",
+        "databaseId": 115751887891,
+        "name": "cpu",
+        "startedAt": "2026-10-14T08:15:47Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Explicit CPU dependencies",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Native contracts and supporting gates",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Python contracts against pinned generic readers",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Real captured-data Adam and fresh restore diagnostic",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 14,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/MrScripty/rheon-surrogate-lab/actions/runs/38533860305/job/115751887891"
+      }
+    ],
+    "updatedAt": "2026-10-14T08:17:23Z"
+  },
+  "lifecycle_ci_url": "https://github.com/MrScripty/rheon-surrogate-lab/actions/runs/38533860305",
+  "local_lifecycle_python": {
+    "run": 34,
+    "passed": 33,
+    "skipped": 1
   }
 }

@@ -27,3 +27,15 @@ its upstream source context remains subject to Rheon's Apache-2.0 terms. No proj
 license grant is inferred from that patch or dependency; the root LICENSE is the
 owner's separate project choice. Frozen Cargo metadata remains unchanged from
 the evaluated source; no package-registry publication is part of this release.
+
+The optional Tuldok pressure project uses Rheon trajectory revision
+`2209012bc5f902693d0f695ec1c2d854126af317` (Apache-2.0), with parallel kernels,
+through a separate pinned Git Cargo manifest. No solver source is copied.
+CPU PyTorch2.8.0+cpu is optional, with upstream BSD-style license and bundled
+component notices retained by its installed distribution. Its pinned runtime
+closure is in tuldok/requirements-cpu.lock; installation is explicit and private,
+not distributed in this Git change. NumPy2.3.5 retains its original license role.
+Tuldok's generic APIs/readers are used from an explicitly selected source checkout;
+no Tuldok code is copied or relicensed into this repository. Assembly copies the
+lab license/notice files into the local project; any future native/runtime binary
+distribution still requires its complete dependency notices at that boundary.

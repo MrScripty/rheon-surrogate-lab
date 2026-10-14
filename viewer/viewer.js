@@ -77,7 +77,7 @@ async function load(){
     document.getElementById("domain").textContent=`${data.n} × ${data.n} × ${data.n} cells · seed ${data.seed}`;
     document.getElementById("comparisonLabel").textContent=mode==="cpu"?"CPU vs CPU · 8 threads":"CPU vs GPU pressure";
     document.getElementById("referenceLabel").textContent=`Jacobi PCG · ${mode==="cpu"?8:1} native threads`;
-    document.getElementById("modelLabel").textContent=`PyTorch 2.14 · ${mode==="cpu"?"CPU":"GPU"} inference · zero PCG`;
+    document.getElementById("modelLabel").textContent=`PyTorch ${data.torch || "2.14"} · ${mode==="cpu"?"CPU":"GPU"} inference · zero PCG`;
     document.getElementById("accuracy").textContent=data.accuracy.max_relative_velocity_l2.toExponential(2);
     document.getElementById("duration").textContent=`${(data.reference.length*data.dt).toFixed(2)} seconds`;
     document.getElementById("status").textContent="Full 3D fields loaded. Timeline replays accepted simulation frames.";

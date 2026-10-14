@@ -1,0 +1,131 @@
+{
+  "status": "lab_claims_and_paired_managed_cnn_workflow_satisfied_parent_integration_pending",
+  "pressure_source_revision": "ffa2ca2617d1e120d48b0615ce201e4a683b4a4e",
+  "cnn_source_revision": "d2b344fcbf2267e5851f6f1bb2371cb8ca48e58b",
+  "environment": {
+    "cpu_model": "AMD EPYC 9V74 reported by lscpu",
+    "visible_cpus": 5,
+    "cpu_quota": "400000/100000us (four CPU equivalents)",
+    "cpuset": "0-4",
+    "torch": "2.8.0+cpu",
+    "numpy": "2.3.5",
+    "python": "3.12.14",
+    "native_threads": 8,
+    "torch_threads": 8,
+    "interop_threads": 1
+  },
+  "comparison": {
+    "median_120_frame_wall_ms": {
+      "jacobi": 30474.635375500042,
+      "sgs": 24233.928750000017,
+      "learned": 4420.450650500129
+    },
+    "speedup_vs_jacobi": 6.8940109923073445,
+    "speedup_vs_sgs": 5.482230357499454,
+    "qualified_timed_frames": 4320,
+    "max_relative_residual": 9.987588478738668e-09,
+    "max_divergence": 1.430511474609375e-06,
+    "python_peak_rss_bytes": 841752576
+  },
+  "variation_ms": {
+    "jacobi": {
+      "min": 28977.706985000168,
+      "max": 35802.88527199969,
+      "samples": 12
+    },
+    "sgs": {
+      "min": 23117.046439000205,
+      "max": 25665.83964100005,
+      "samples": 12
+    },
+    "learned": {
+      "min": 4130.555897000249,
+      "max": 4902.989317999982,
+      "samples": 12
+    }
+  },
+  "timing_scope": "resident CPU model; native startup, all simulation stages, CPU inference, pipes, qualification, report parsing and native teardown; excludes imports/model setup/warmup/capture/rendering",
+  "historical_comparison": "6.894x vs historical8.20x Jacobi; different CPU allocation/runtime; no tuning or guaranteed speedup",
+  "worker_wall_after_imports_s": 1066.132236192,
+  "initial_wrapper_outcome": "Numerical worker returned0; outer local output validator refused17.3MB viewer at16MiB. Corrected32MiB declarations were verified against retained outputs without recomputing. No retroactive managed Run completion claim.",
+  "clean_training": {
+    "restored_fit_equal": true,
+    "training": {
+      "method": "supervised_modal_least_squares",
+      "optimizer_steps": 0,
+      "fitted_parameters": 32767,
+      "minimum_training_modal_energy": 2.6435572961144745e-08,
+      "training_mean_relative_pressure_l2": 1.6027872504127476e-08,
+      "training_wall_s": 0.4060363730000063
+    },
+    "training_npz_sha256": "3ca87734e4ebe41320328b130908dc88b85967dcc745f80f8c207cf29b539184",
+    "historical_training_npz_equal": true,
+    "checkpoint_sha256": "e08e85d991d2734383d14501d6dcfdaccb45dfd53370d883c26b44e84255f5f8",
+    "fresh_process_wall_s": 64.9202028489999,
+    "validation_max_velocity_relative_l2": 7.668914751823363e-08,
+    "ablation": "untrained_unit_gains_rejected_by_physics_gate"
+  },
+  "cnn": {
+    "optimizer_steps": 200,
+    "training_loss_ratio": 0.03651220558054541,
+    "restored_predictions_equal": true,
+    "split_metrics": {
+      "train": {
+        "cases": 8,
+        "mean_relative_pressure_l2": 0.530480726436892,
+        "max_relative_pressure_l2": 1.1640031103221677
+      },
+      "validation": {
+        "cases": 4,
+        "mean_relative_pressure_l2": 4.384148207983407,
+        "max_relative_pressure_l2": 9.024503706657443
+      },
+      "test": {
+        "cases": 4,
+        "mean_relative_pressure_l2": 7.664304193007793,
+        "max_relative_pressure_l2": 16.209113562136526
+      }
+    },
+    "native_qualified": "0/16",
+    "checkpoint_sha256": "7f514ff90acf5adc42b009fa42c715658b4d8087ae9e4ca0e547af7f62c64121"
+  },
+  "tests": {
+    "rust_contracts_passed": 20,
+    "python_tests_run": 30,
+    "python_passed": 29,
+    "python_skipped": 1,
+    "skip_reason": "optional pinned-operator export fixture not materialized",
+    "root_and_new_probe_fmt": "passed",
+    "root_and_new_probe_clippy": "passed -D warnings",
+    "javascript_syntax": "passed",
+    "browser": "passed actual CPU replay; no Tuldok catalog/Run claim"
+  },
+  "artifact_references": {
+    "pressure_results": "runs/pressure-compare/result.json",
+    "pressure_artifact_hashes": "runs/pressure-compare/recipe-receipt.json",
+    "full_fields": "runs/pressure-compare/{jacobi,sgs,learned}-{900..903}.npz",
+    "clean_training": "runs/pressure-train/",
+    "cnn_training": "runs/cnn-train/",
+    "cnn_restore": "runs/cnn-restored/",
+    "cnn_physics": "runs/cnn-physics.json",
+    "projects": [
+      "runs/tuldok-project/project.json",
+      "runs/cnn-project/project.json"
+    ]
+  },
+  "blocker": {
+    "action": "parent compatible-checkpoint review and integration",
+    "status": "pending parent; no failed or denied lab execution",
+    "reason": "Parent coordinates compatible checkpoint and remaining paired review/CI; no final release tags in this lane",
+    "completed": "lab parity/accuracy/timing, independent review repairs, CPU CI, clean regeneration and paired actual CNN managed train/restore/download/reopen/UI"
+  },
+  "coordination": "Parent owns compatible checkpoint, merge and later solver-validated jet/submarine domains; no final release tag created",
+  "communication_blocker": {
+    "action": "Post prepared handoff comment",
+    "target": "MrScripty/Tuldok draft PR58",
+    "status": "denied; no comment posted; parent instructed no retry and coordinates internally",
+    "reason": "Separate public destination was not explicitly authorized for detailed project/dataset/workspace/performance disclosure",
+    "completed": "In-conversation intermediate handoff and authorized lab project/PR artifacts remain available"
+  },
+  "paired_managed_evidence": "paired-managed.json"
+}

@@ -2,9 +2,9 @@
 
 **Plan status:** `Verifying`
 
-**Current phase:** Frozen-source generic integration and admission review
+**Current phase:** Independently cleared protocol awaiting parent admission
 
-**Next slice:** Freeze and independently review the exact generic project; parent admission is required before any grant or training.
+**Next slice:** Parent admission of the exact source/material protocol; no grant or training is authorized by this packet.
 
 **Acceptance status:** `partial`
 
@@ -26,8 +26,8 @@ Diagnosis PR5 was accepted at `ec48499cce5bf1c3e63e9fb4baac76e9c9241528` and mer
 | A2 | Finite 16³/32³ and edge probes, batch independence, train/eval identity, gauge/bypass, meaningful derivatives and global controls | numerical | pinned CPU / automated | satisfied | [captured model arithmetic](reports/captured-model-arithmetic.json) |
 | A3 | Original train-only normalization, 288/96 whole-history split, immutable lineage and final reservations | data contract | retained packet / automated | satisfied | [preservation](reports/preservation.md) |
 | A4 | Eleven numeric checkpoints and every other declared output fit measured caps and 32 MiB aggregate; exact final-only restore contracts | contract | pinned CPU / automated | satisfied | [output budget](reports/output-budget.json) |
-| A5 | Existing captured CPU runtime supports GN; generic CLI can open/prepare/preflight exact source/input/output closure without grant or execution | actual integration | owner-local snapshot/catalog / automated | pending | runtime and preflight |
-| A6 | Independent numerical and standards reviewers clear the frozen material | independent review | exact source/material / read-only | pending | reviewer reports |
+| A5 | Existing captured CPU runtime supports GN; generic CLI can open/prepare/preflight exact source/input/output closure without grant or execution | actual integration | owner-local snapshot/catalog / automated | satisfied | [preflight](reports/preflight.json), [no execution](reports/no-execution.json) |
+| A6 | Independent numerical and standards reviewers clear the frozen material | independent review | exact source/material / read-only | satisfied | [numerical](reports/numerical-review.md), [standards](reports/standards-review.md) |
 | A7 | Parent admits the exact source/material protocol before any grant or scientific execution | owner admission | frozen packet / review | pending | parent decision |
 
 ## Binding experiment decisions
@@ -66,8 +66,8 @@ Pinned original helper dependencies expose the already accepted reader/loss/seri
 
 - [x] Implement candidate, exact mapping and future train/restore contracts.
 - [x] Qualify numeric controls, preservation and complete output budget without updates.
-- [ ] Commit source, assemble immutable generic project, inspect actual runtime and CLI preflight.
-- [ ] Obtain independent numerical and standards review; freeze protocol for parent admission.
+- [x] Commit source, assemble immutable generic project, inspect actual runtime and CLI preflight.
+- [x] Obtain independent numerical and standards review; freeze protocol for parent admission.
 
 **Acceptance gate:** A1–A7 above. **Status:** `Verifying`.
 
@@ -77,7 +77,7 @@ Main owns project assembler, plan, runtime/preflight and Git publication. develo
 
 ## Replan triggers and blockers
 
-Stop admission if exact initialization/derivatives fail, runtime closure changes, checkpoint diagnostics exceed caps, restore accepts old identity, data/reservations drift, or independent review identifies a material flaw. No grant/training retry repairs a failed pretraining gate. Current blockers: none observed; integration/review remain pending.
+Stop admission if exact initialization/derivatives fail, runtime closure changes, checkpoint diagnostics exceed caps, restore accepts old identity, data/reservations drift, or independent review identifies a material flaw. No grant/training retry repairs a failed pretraining gate. Current technical blockers: none. A1–A6 pass; A7 parent admission remains pending. This pretraining packet does not authorize execution.
 
 ## Primary sources
 

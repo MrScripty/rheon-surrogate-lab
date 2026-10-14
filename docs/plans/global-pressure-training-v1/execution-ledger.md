@@ -83,3 +83,12 @@ scientificRun. Finaldocumentreview corrected validationmetric label to composite
 normalizedpressure-and-residual loss; no executable/weights changed. Newhandoff
 requires diagnosing the observed witnesscollapse before proposing furthertraining.
 Parent exacthead integrationreview remainspending; no slice2merge/tag/outreach.
+
+
+Parent independent review found a blocking qualification-wiring gap after9ac0998:
+model-contracts job115836985954 reported45tests with4custody skips despitegreen
+status. Correcting that coverage claim explicitly; originalactualtrain/restore and
+negativephysics evidence unchanged. Onlyrequiredteststep wiring nowsets pinned
+Tuldokrecipe_process.py and rejectsanyskips/zerodiscovery. ExactYAMLgate local45,
+zero skips/exit0; deliberateabsentowner45,4skips/exit1. NewscientificRuns0; no final
+materialization or merge. Independent scopedreview and exactrepairedCI next.

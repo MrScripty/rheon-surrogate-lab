@@ -12,3 +12,5 @@
 
 | T-I7 | Actual fixed global model collapsed to zero correction on all32 witnesses | Model/science | Retained negative outcome: no retune, extra updates, checkpoint choice or final/GPU exposure; next training needs separate reviewed design |
 | T-I8 | All32 short native warm solves fail; successful fallback could be misrepresented as learned benefit | Main/native | Report raw0/32, fullfallback32/32, failed work/inference and fair temporal full-budget baseline; no accelerated solver claim |
+
+| T-I9 / blocking | Parent found four required RestoreCustodyContract skips in green exact-head CI because owner source env was unset | Main | Qualification-only repair explicitly points to pinned generic-contracts/recipe_process.py and fails any skips; local45zero/exit0 and missing-owner45four/exit1 verified; repaired exact-head CI required before acceptance |

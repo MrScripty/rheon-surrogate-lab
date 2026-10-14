@@ -53,7 +53,18 @@ jobs:
           .venv/bin/python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r tuldok/requirements-cpu.lock
           rustup toolchain install 1.92.0 --profile minimal --component rustfmt,clippy
       - name: Flat data, stencil, gradient, model and restore contract fixtures
-        run: .venv/bin/python -m unittest discover -s experiments/global-pressure-v1/training -p 'test_*.py' -v
+        env:
+          TULDOK_CUSTODY_SOURCE: ${{ github.workspace }}/generic-contracts/recipe_process.py
+        run: |
+          .venv/bin/python - <<'PYCI'
+          import unittest
+          suite = unittest.defaultTestLoader.discover('experiments/global-pressure-v1/training', pattern='test_*.py')
+          result = unittest.TextTestRunner(verbosity=2).run(suite)
+          print(f'Required contract gate: tests={result.testsRun}, skipped={len(result.skipped)}', flush=True)
+          if result.skipped:
+              print('Required contracts may not be skipped.', flush=True)
+          raise SystemExit(0 if result.wasSuccessful() and result.testsRun > 0 and not result.skipped else 1)
+          PYCI
       - name: Isolated native diagnostic build and supporting checks
         run: |
           python3 experiments/global-pressure-v1/prepare_dependency.py --source ../native-reference --destination "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon"

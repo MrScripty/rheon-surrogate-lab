@@ -50,3 +50,10 @@ b2879604550827a1ff7a6c3be7d585cdcf11ef36. Final docs/handoff publication keeps a
 scientific source bytes frozen; exact final-head checks are visible in
 [PR4](https://github.com/MrScripty/rheon-surrogate-lab/pull/4). Parent integration
 acceptance is pending and no slice2 merge is authorized.
+
+
+Parent review subsequently found a blocking CI wiring gap: original job115836985954
+skipped four required custody contracts. Earlier green statuses are not complete
+coverage proof. [Qualification repair](ci-wiring-repair.md) explicitly binds the
+pinned owner source and rejects every skip. Scientific code, trained bytes and
+negative evidence remain immutable; no further training is part of this repair.

@@ -11,6 +11,12 @@ and its reports for actual source, runtime, input, Run and artifact identities.
 Historical modal gains and the failed small CNN remain separate evidence.
 A successful train/restore workflow alone does not qualify an accelerated solver.
 
+The actual fixed smoke completed 200 updates and exact fresh restore, but produced
+zero learned correction on all 32 development witnesses. All short native warm
+attempts failed and required full previous-pressure fallback. The observed model
+has no demonstrated solver benefit; see the [negative diagnostic](../../../docs/plans/global-pressure-training-v1/reports/physics.md).
+Do not run full/GPU training or expose final reservations from this outcome.
+
 The isolated CPU environment uses the existing lab requirements lock. Data packing
 requires the pinned native operator outside the captured recipe; training and
 restore consume only numeric arrays/JSON, Torch, NumPy and the captured Tuldok

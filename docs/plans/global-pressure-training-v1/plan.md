@@ -2,9 +2,9 @@
 
 **Plan status:** `Active`
 
-**Current phase:** Slice2 qualification before training
+**Current phase:** Completed scientific smoke and independent evidence review
 
-**Next slice:** Qualify flat inputs, model gradients and actual generic runtime
+**Next slice:** Parent review of draft PR; diagnose collapsed correction before proposing more training
 
 **Acceptance status:** `pending`
 
@@ -27,10 +27,10 @@ upstream Tuldok/Rheon edits or solver-gain claim without measured qualification.
 | --- | --- | --- | --- | --- | --- | --- |
 | T1 | Measured flat shard/input bounds and source/capture lineage; cross-shard duplicate/relabel/crop/test exposure rejected | integration | required-real verified384-frame CPU development capture | automated | satisfied | [Data](reports/data.md), [receipt](reports/data.json) |
 | T2 | Fixed10channel architecture below1M parameters/8MiB; full stencil/gauge/loss gradients and distant dependence independently qualified before training | focused | required-real eager Torch CPU and hand/native oracles | automated | satisfied | [Model](reports/model.md), [qualification](reports/model-qualification.json) |
-| T3 | Actual immutable CPU runtime captured in a task-local catalog; generic project/recipe/preflight binds exact sources/data/runtime and one-use grant | integration | required-real Tuldok generic catalog/service/CLI | automated | pending | reports/runtime.md |
-| T4 | One200-update Adam Run using train-only scales/sample order, bounded resources; actual drained successful artifact custody and200-update final weights | system | required-real captured CPU fresh child | automated | pending | reports/training.md |
-| T5 | Fresh restore uses exact trained Run artifact bytes, zero optimizer steps and bitwise predictions; validation perturbation cannot change normalization/training | system | required-real same captured CPU runtime | automated | pending | reports/restore.md |
-| T6 | Development-only teacher-state native correction/fallback diagnostics preserve every case and report quality/cost/poor outcomes honestly; no final rollout qualification | system | required-real pinned isolated native CPU | automated | pending | reports/physics.md |
+| T3 | Actual immutable CPU runtime captured in a task-local catalog; generic project/recipe/preflight binds exact sources/data/runtime and one-use grant | integration | required-real Tuldok generic catalog/service/CLI | automated | satisfied | reports/runtime.md |
+| T4 | One200-update Adam Run using train-only scales/sample order, bounded resources; actual drained successful artifact custody and200-update final weights | system | required-real captured CPU fresh child | automated | satisfied | reports/training.md |
+| T5 | Fresh restore uses exact trained Run artifact bytes, zero optimizer steps and bitwise predictions; validation perturbation cannot change normalization/training | system | required-real same captured CPU runtime | automated | satisfied | reports/restore.md |
+| T6 | Development-only teacher-state native correction/fallback diagnostics preserve every case and report quality/cost/poor outcomes honestly; no final rollout qualification | system | required-real pinned isolated native CPU | automated | satisfied | reports/physics.md |
 | T7 | Independent numerical/standards source/artifact/evidence review, affected checks and exact pushed draft PR | release-artifact | representative independent GPT6.1SolHigh and real GitHub | either | pending | reports/review.md |
 
 ## Binding Decisions
@@ -111,18 +111,22 @@ speedup. Global model training may complete even if physics diagnostics are poor
 
 | Unit | Write owner/set | Gate | State |
 | --- | --- | --- | --- |
-| Data | Worker: newtraining/data.py/test_data.py only | T1 | Planned |
-| Model | Worker: newtraining/model.py/train.py/test_model.py only | T2/T4/T5 | Planned |
-| Generic execution | Main: newtraining project/CLI/config/README and tasklocal runtime/catalog | T3–T5 | Planned |
-| Native diagnostic | Worker: newisolated probe/evaluator only | T6 | Planned |
+| Data | Worker: newtraining/data.py/test_data.py only | T1 | Complete |
+| Model | Worker: newtraining/model.py/train.py/test_model.py only | T2/T4/T5 | Complete; negative learned result retained |
+| Generic execution | Main: newtraining project/CLI/config/README and tasklocal runtime/catalog | T3–T5 | Complete |
+| Native diagnostic | Worker: newisolated probe/evaluator only | T6 | Complete; all32 require fallback |
 | Review/publication | Independent reviewers read-only; main docs/newCI/Git | T7 | Planned |
 
 ## Blockers
 
-No source, numerical or packed-input blocker remains. Real captured CPU runtime
-compute/cancel/drain/reopen checks pass. Commit and assemble the actual project,
-then independently review its exact preflight before the one-use scientific grant.
-No scientific training or trained-model outcome is claimed yet.
+No implementation, data, runtime, admission or restore blocker remains. One fixed
+200-update Run and one zero-update restore completed/drained with exact trained
+artifact parity and actual catalog reopening. Model usefulness failed: all32
+predictions equal previous pressure; every short solve needs full fallback.
+Independent final evidence review is clear. Exact pushed draft PR/CI and parent
+integration review remain the publication gate.
+Final trajectories, geometry/regime suites and full/GPU training remain sealed;
+this smoke does not authorize those next steps.
 
 ## Re-Plan Triggers
 

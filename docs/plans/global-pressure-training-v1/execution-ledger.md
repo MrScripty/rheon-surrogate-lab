@@ -46,3 +46,31 @@ RAMdispositionaccepted source-ownedobservedhigh-waterchecks ratherthanclaimed
 generichard/aggregatecontainment. Scientific200Runstillunsubmitted. Mainwrites
 existinggenericprojectassembler/newCI/docs; commit qualifiedcode beforeactual
 projectsourcewitness/preflight/review/grant. No final/full/GPU orupstreamedits.
+
+
+Committed qualified implementation a9345a49 before actual project assembly.
+Project0b4606a84eec4c698f9649a97fe59e20 contains actual fixed sources/runtime/input
+bytes. Numerical and standards reviewers separately cleared training material
+7f5ba44378ec004e86fea97dc4bae7a8e1bc5c6cc41c2e32f3640dd3f7ad7837 before
+the existing owner granted it. CLI initially refused a relative private-config
+path before network admission; corrected to absolute path with same body/key.
+One Run f555a2b618d64b14b8df460ea3e65296 completed/drained, 200 updates, 23.454708s
+Run wall / 11.507212s recipe work, RSS522350592B. All six artifacts downloaded and
+verified. Loss.5236181202 to.5214263490; all32predictions equal previouspressure
+exactly. No retune/restart/checkpoint selection. Negative result retained.
+
+Both reviewers separately cleared actual restore material0089b142eade30b5cbc91e96727ce147110242ed901f5c92d52c71f6a2f3e46a with five typed
+same-Run artifacts. Owner grant then existing CLI admitted d88e2cce18c94d07b00ef48ad7e1ec6a;
+completed/drained, zero optimizer/200 originating updates, 12.291214s Run wall,
+.941972s recipe work. Weights/predictions/normalization/splits byte identical.
+Graceful server close23506 and actual new Dataset/service24586 reopened same
+catalog; same agent downloaded all12original artifacts, inventories/bytes equal.
+No new Run. Current-catalog UI rendering/download observation is separate.
+
+Native diagnostic initial wrong workspace output path refused before cases (fresh
+native outputs must be direct /tmp children); corrected output produced all32
+cases in2.710659s. Raw0/32; all32warm32steps failed; one full p_base reset each
+passed32/32. Allreference/zero/fairtemporal baselines pass. Learned32attempts add
+1024iterations beyond5226temporal fallback iterations, plus.347912624s inference.
+No acceleration or autonomous/finaltest claim. Scientific executable source hashes
+remain committeda934 unchanged; subsequent writes are evidence/docs only.

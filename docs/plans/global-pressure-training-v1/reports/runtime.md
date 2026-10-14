@@ -25,4 +25,22 @@ isolation.600s child wall belongs to existing custody.4GiB RAM is a process
 high-water acceptance/stop budget checked by the reviewed trainer before updates,
 every20updates and before publication; it is not a generic OS aggregate limit.
 Source code uses one Torch/inter-op thread and no multiprocessing/helper calls.
-Actual scientific project/preflight/grant and train/restore evidence follows.
+Actual scientific project `0b4606a84eec4c698f9649a97fe59e20` was assembled
+from clean committed a9345a4 sources. Training capture was 55,623,792 bytes,
+including 51,597,546 input bytes; restore capture was 58,270,164 bytes.
+Both independent reviewers cleared each exact preflight before its separate owner
+grant. The same captured snapshot executed the actual 200-update training and
+zero-update fresh restore. [Training](training.md), [restore](restore.md), and
+[scientific catalog reopen](catalog-reopen.json) report exact identities. The
+outer owner host interpreter was Python 3.13; the actual recipe target was the
+captured Python 3.12.14, proven by its runtime observations. These are distinct.
+
+The actual current-catalog Runs UI was observed after service reopen in Chromium
+at 1280×900 and 390×844. It rendered the completed training progress, hash-verified
+summary, custody and artifact inventory; checkpoint download matched actual trained
+weight SHA256 at both widths, with no page errors or document horizontal overflow.
+An initial bearer-header-only browser download canceled while page rendering
+worked; using the same existing scoped agent credential as an HttpOnly cookie
+made ordinary navigation/download work. This test qualifies neither interactive
+login nor UI training submission. See [observations](ui.json); screenshots remain
+in ignored task-local evidence storage.

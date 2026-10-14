@@ -1,0 +1,21 @@
+[package]
+name = "rheon-global-pressure-training"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+publish = false
+build = "build.rs"
+
+[dependencies]
+anyhow = "=1.0.100"
+rheon = { git = "https://github.com/MrScripty/Rheon.git", rev = "2209012bc5f902693d0f695ec1c2d854126af317", default-features = false }
+serde_json = { version = "=1.0.145", features = ["float_roundtrip"] }
+serde = { version = "=1.0.228", features = ["derive"] }
+sha2 = "=0.10.9"
+
+[build-dependencies]
+serde_json = { version = "=1.0.145", features = ["float_roundtrip"] }
+sha2 = "=0.10.9"
+
+[lints.rust]
+unsafe_code = "forbid"

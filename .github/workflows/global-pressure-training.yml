@@ -1,0 +1,89 @@
+name: Global pressure model and flat input contracts
+
+on:
+  pull_request:
+    paths:
+      - 'experiments/global-pressure-v1/training/**'
+      - 'probes/global-pressure-v1-training/**'
+      - 'docs/plans/global-pressure-training-v1/**'
+      - '.github/workflows/global-pressure-training.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'experiments/global-pressure-v1/training/**'
+      - 'probes/global-pressure-v1-training/**'
+      - '.github/workflows/global-pressure-training.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  model-contracts:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: lab
+    env:
+      RAYON_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: lab
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Rheon
+          ref: 2209012bc5f902693d0f695ec1c2d854126af317
+          path: native-reference
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Tuldok
+          ref: f7543fb78f6f1cb52e45dd315efa17a4b2fe6fa6
+          path: generic-contracts
+          persist-credentials: false
+      - name: Explicit existing CPU dependencies and Rust toolchain
+        run: |
+          python3.12 -m venv .venv
+          .venv/bin/python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r tuldok/requirements-cpu.lock
+          rustup toolchain install 1.92.0 --profile minimal --component rustfmt,clippy
+      - name: Flat data, stencil, gradient, model and restore contract fixtures
+        run: .venv/bin/python -m unittest discover -s experiments/global-pressure-v1/training -p 'test_*.py' -v
+      - name: Isolated native diagnostic build and supporting checks
+        run: |
+          python3 experiments/global-pressure-v1/prepare_dependency.py --source ../native-reference --destination "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon"
+          cargo +1.92.0 fmt --manifest-path probes/global-pressure-v1-training/Cargo.toml --all --check
+          python3 experiments/global-pressure-v1/training/evaluate_native.py build --cargo "$(command -v cargo)" --prepared-source "$GITHUB_WORKSPACE/lab/runs/global-pressure-v1-dependency/rheon" --output /tmp/global-pressure-training-ci
+          python3 - <<'PYCI'
+          import hashlib, json, os, pathlib, subprocess
+          root = pathlib.Path.cwd()
+          binding_path = pathlib.Path('/tmp/global-pressure-training-ci/binding.json')
+          binding = json.loads(binding_path.read_bytes())
+          env = os.environ.copy()
+          env['RHEON_BUILD_BINDING'] = str(binding_path)
+          env['RHEON_BUILD_BINDING_SHA256'] = hashlib.sha256(binding_path.read_bytes()).hexdigest()
+          env['RUSTUP_TOOLCHAIN'] = '1.92.0'
+          env['CARGO_TARGET_DIR'] = str(root / 'runs/global-pressure-v1-training-target')
+          command = binding['cargo_command']
+          for kind, tail in [('test', []), ('clippy', ['--all-targets', '--', '-D', 'warnings'])]:
+              subprocess.run([command[0], kind, *command[2:], *tail], env=env, check=True)
+          PYCI
+      - name: Existing generic recipe reader admits the two source-token definitions
+        run: |
+          .venv/bin/python - <<'PYCI'
+          import pathlib, sys
+          root = pathlib.Path.cwd()
+          sys.path.insert(0, str(root/'experiments/global-pressure-v1/training'))
+          import project
+          sys.path.insert(0, str(root.parent/'generic-contracts'))
+          from recipe_contract import decode_definition
+          sources = {name: b'fixture' for name in ('data.py', 'model.py', 'train.py', 'config.json', 'source-witness.json', 'runtime-manifest.json', 'model-qualification.json')}
+          for mode in ('train', 'restore'):
+              decode_definition(project.canonical(project.definition(mode, sources, 'a'*64)))
+          print('Generic declaration fixtures pass; no catalog grant or model training')
+          PYCI

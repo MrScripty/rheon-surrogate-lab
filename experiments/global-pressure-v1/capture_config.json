@@ -1,0 +1,43 @@
+{
+  "schema": "rheon-global-pressure-capture-config-v1",
+  "counts_xyz": [
+    16,
+    16,
+    16
+  ],
+  "density_kg_m3": 1.25,
+  "stage_order": [
+    "capture_previous_accepted_state",
+    "advect_velocity_from_previous_velocity",
+    "advect_tracer_from_previous_tracer_and_previous_velocity",
+    "add_body_acceleration_to_advected_velocity",
+    "build_original_rhs",
+    "zero_start_jacobi_pcg",
+    "stage_f32_velocity_correction",
+    "gate_then_commit"
+  ],
+  "forcing_version": "normalized-gaussian-splitmix64-v1",
+  "forcing_width_min_extent": 0.1,
+  "gaussian_exponent": "-r_squared/(2*width_squared)",
+  "broadband_amplitude_ratio": 0.025,
+  "mixer": "index + seed*7919 + frame*104729 + axis*997; xor30*bf58476d1ce4e5b9; xor27*94d049bb133111eb; xor31; 2*(bits>>40)/16777216-1; u64 wrapping",
+  "tracer_version": "centered-gaussian-passive-v1",
+  "tracer_amplitude": 0.25,
+  "tracer_width_min_extent": 0.08,
+  "pressure_gauge": "cell_zero",
+  "reference": {
+    "method": "jacobi-pcg-v1",
+    "relative_residual": 1e-08,
+    "absolute_residual": 1e-12,
+    "predicted_divergence_max_s_inv": 1e-07,
+    "actual_divergence_max_s_inv": 1e-05,
+    "max_iterations": 3000,
+    "sgs_crosscheck_frames": [
+      0
+    ]
+  },
+  "courant_limit": 0.5,
+  "native_threads": 1,
+  "max_payload_bytes": 134217728,
+  "generation_wall_limit_s": 600
+}

@@ -26,12 +26,17 @@ def package(dataset, destination):
     if destination.exists():
         raise ValueError("Dataset package destination already exists")
     binary = ROOT / "target/release/rheon-surrogate-lab"
+    manifest_path = dataset / "manifest.json"
+    manifest_raw = manifest_path.read_bytes()
+    manifest_hash = hashlib.sha256(manifest_raw).hexdigest()
     report = json.loads(subprocess.check_output([str(binary), "verify", str(dataset)], text=True))
+    if sha(manifest_path) != manifest_hash:
+        raise ValueError("Dataset manifest changed during native verification")
     if (report.get("status") != "verified" or report.get("cases") != 18
             or report.get("tool", {}).get("source_dirty") is not False
             or report["tool"].get("rheon_commit") != "34235d33c886aa05b5bdf95d920b863d1fb2ad6f"):
         raise ValueError("Original native verification did not qualify this dataset")
-    manifest = json.loads((dataset / "manifest.json").read_text())
+    manifest = json.loads(manifest_raw)
     if manifest["schema"] != "rheon-pressure-dataset-v1" or manifest["per_family"] != 4:
         raise ValueError("Use the original four-seed-per-family development dataset")
     arrays, cases = {}, []
@@ -47,14 +52,16 @@ def package(dataset, destination):
                 values.append(np.fromfile(source, dtype="<f8").reshape(6, 7, 8))
             arrays[split + "_" + field] = np.stack(values)
         cases.extend(case["spec"] for case in selected)
+    if sha(manifest_path) != manifest_hash:
+        raise ValueError("Dataset manifest changed during captured array loading")
     destination.mkdir(parents=True, exist_ok=False)
     np.savez(destination / "dataset.npz", **arrays)
     write(destination / "splits.json", {"schema": "rheon-cnn-splits-v1", "shape_xyz": [8, 7, 6],
           "dtype": "<f8", "rheon_revision": manifest["rheon_commit"],
-          "generator_revision": manifest["experiment_commit"], "manifest_sha256": sha(dataset / "manifest.json"),
+          "generator_revision": manifest["experiment_commit"], "manifest_sha256": manifest_hash,
           "dataset_sha256": sha(destination / "dataset.npz"), "cases": cases,
           "policy": "whole seeds and scenario families; standalone fields; checks excluded"})
-    write(destination / "dataset-receipt.json", {"status": "verified", "source_manifest_sha256": sha(dataset / "manifest.json"),
+    write(destination / "dataset-receipt.json", {"status": "verified", "source_manifest_sha256": manifest_hash,
           "captured_dataset_sha256": sha(destination / "dataset.npz"), "splits_sha256": sha(destination / "splits.json"),
           "native_binary_sha256": sha(binary), "verification": report,
           "scope": "Lossless RHS/pressure pairs from original native verification; check cases excluded from model data"})

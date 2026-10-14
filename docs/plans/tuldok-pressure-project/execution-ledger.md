@@ -31,3 +31,13 @@ fmt/Clippy/JS supporting gates pass. Repaired viewer cap after exact observed
 refusal; corrected retained-output review is distinct from managed publication.
 Managed Tuldok acceptance remains pending its paired owner, with input/source
 contracts in draftPR1. No Tuldok code or final release tags changed.
+
+Review/CI continuation: parent instructed no retry of the denied cross-repository
+comment and will coordinate internally. CodeRabbit's successful status was a
+skipped draft review, not completed independent review. No Actions workflow
+previously existed. Source review repaired verified-manifest reread drift and
+receipt publication overwrites; isolated regressions and actual existing-data
+repackaging pass. Python32run=31pass/1optional skip. Added fresh regeneration
+commands and CPU supporting CI with verified checkout action pin, fixed Rheon/
+Tuldok source pins, native gates and separate real Adam/fresh restore. CI remains
+pending an actual run; numerical source/checkpoint/architecture is unchanged.

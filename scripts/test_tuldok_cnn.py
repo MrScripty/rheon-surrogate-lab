@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -42,6 +43,41 @@ def fixture(root):
 
 
 class CapturedCNNContracts(unittest.TestCase):
+    def test_packaging_refuses_manifest_drift_at_native_verification_boundary(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manifest = root / "manifest.json"
+            arrays, splits = fixture(root)
+            cases = []
+            offsets = {name: 0 for name in ("train", "validation", "test")}
+            for row in splits["cases"]:
+                index = offsets[row["split"]]
+                offsets[row["split"]] += 1
+                fields = {}
+                for field in ("rhs", "pressure"):
+                    path = root / (row["id"] + "-" + field + ".bin")
+                    arrays[row["split"] + "_" + field][index].tofile(path)
+                    fields[field] = {"path": path.name, "sha256": cnn.sha(path),
+                                     "dtype": "<f8", "shape_xyz": [8, 7, 6]}
+                cases.append({"spec": row, "arrays": fields})
+            manifest.write_text(json.dumps({"schema": "rheon-pressure-dataset-v1", "per_family": 4,
+                                           "experiment_commit": "2" * 40,
+                                           "rheon_commit": splits["rheon_revision"], "cases": cases}))
+            reply = json.dumps({"status": "verified", "cases": 18,
+                                "tool": {"source_dirty": False, "rheon_commit": splits["rheon_revision"]}})
+            # The controlled native reply proves packaging custody only. A
+            # separate actual native regeneration qualifies real data/physics.
+            with patch.object(cnn_project.subprocess, "check_output", return_value=reply):
+                cnn_project.package(root, root / "valid-package")
+            self.assertTrue((root / "valid-package/dataset.npz").is_file())
+            def verify(_command, **_kwargs):
+                manifest.write_text('{"schema":"changed"}')
+                return reply
+            with patch.object(cnn_project.subprocess, "check_output", side_effect=verify):
+                with self.assertRaisesRegex(ValueError, "manifest changed during native verification"):
+                    cnn_project.package(root, root / "package")
+            self.assertFalse((root / "package").exists())
+
     def test_training_reader_does_not_open_test_arrays(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

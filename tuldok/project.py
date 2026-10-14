@@ -22,7 +22,8 @@ def sha(path):
 
 
 def write(path, value):
-    Path(path).write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
+    with Path(path).open("x", encoding="utf-8") as stream:
+        stream.write(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
 def git(*arguments, root=ROOT):
@@ -42,7 +43,7 @@ def cargo_source_clean(root):
 
 def build(cargo, receipt):
     destination = Path(receipt)
-    if destination.exists():
+    if os.path.lexists(destination):
         raise ValueError("Build receipt destination already exists")
     if git("status", "--porcelain"):
         raise ValueError("Commit source work before recording a reproducible build")
@@ -180,7 +181,7 @@ def assemble(destination, build_receipt, runtime_snapshot):
 def native_policy(tuldok_root, destination):
     """Use the generic executor's actual ELF/loader reader, without execution."""
     path = Path(destination)
-    if path.exists():
+    if os.path.lexists(path):
         raise ValueError("Native policy destination exists")
     sys.path.insert(0, str(Path(tuldok_root).resolve()))
     import recipe_contract

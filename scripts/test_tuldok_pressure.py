@@ -15,6 +15,22 @@ import worker
 
 
 class ConfigContracts(unittest.TestCase):
+    def test_receipt_publication_refuses_a_racing_file_or_dangling_link(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path = root / "receipt.json"
+            project.write(path, {"status": "original"})
+            original = path.read_bytes()
+            with self.assertRaises(FileExistsError):
+                project.write(path, {"status": "replacement"})
+            self.assertEqual(path.read_bytes(), original)
+            path.unlink()
+            path.symlink_to(root / "missing-target")
+            with self.assertRaises(FileExistsError):
+                project.write(path, {"status": "replacement"})
+            self.assertTrue(path.is_symlink())
+            self.assertFalse((root / "missing-target").exists())
+
     def test_existing_or_dangling_process_receipt_is_preserved_before_launch(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

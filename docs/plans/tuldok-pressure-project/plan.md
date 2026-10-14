@@ -1,7 +1,7 @@
 # Tuldok pressure project
 
-Plan status: Verifying. Current phase: lab numerical/browser evidence complete; paired managed acceptance pending.
-Next slice: paired-owner managed CLI/Run acceptance and parent compatible-checkpoint review.
+Plan status: Verifying. Current phase: source review, clean regeneration and CPU CI qualification.
+Next slice: bind CNN packaging to verified manifest, document fresh regeneration and qualify CPU CI.
 Acceptance status: partial; lab-owned claims satisfied. [Verification](reports/verification.md). [Ledger](execution-ledger.md), [issues](issues.md),
 [baseline and contract](reports/baseline.md).
 
@@ -16,7 +16,8 @@ historical measurement, never an acceptance threshold or promise.
 Write set: `tuldok/`, `probes/tuldok-pressure/`,
 `scripts/test_tuldok_pressure.py`, `scripts/test_tuldok_cnn.py`,
 `scripts/check_tuldok_viewer.cjs`, `docs/plans/tuldok-pressure-project/`,
-`README.md`, `THIRD_PARTY.md`, `viewer/viewer.js`, `.gitignore`. Generated native/checkpoint/data/runtime/project
+`README.md`, `THIRD_PARTY.md`, `viewer/viewer.js`, `.gitignore`,
+`.github/workflows/lab-cpu.yml`. Generated native/checkpoint/data/runtime/project
 and full evaluation artifacts stay under ignored `target/`, `.venv/`, `runs/`.
 Existing Rust sources, model/experiment scripts, freezes and checkpoints
 remain unchanged. Viewer runtime label reads optional replay metadata, preserving
@@ -116,3 +117,12 @@ pressure-quality diagnostics, not parity claims. Both recipes reuse generic
 formats and Run-artifact inputs; no generic CLI/schema/executor edits.
 Gate: fresh captured-data training/restore and original native quality evaluation,
 negative shape/split/normalization/source fixtures, actual generic reader acceptance.
+
+## Review and CI continuation
+
+Parent authorizes independent review/CI and clean regeneration; do not retry the
+denied cross-repository comment. This slice owns the observed manifest reread
+gap in CNN packaging, a focused drift regression, fresh-checkout instructions
+and CPU supporting CI. Numerical algorithms and architecture remain fixed.
+CI requires actual Actions success, not CodeRabbit status: its prior successful
+status represented a skipped draft review. No larger model or release tag.

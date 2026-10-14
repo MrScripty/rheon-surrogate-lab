@@ -1,0 +1,79 @@
+name: Lab CPU contracts and CNN restore
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  cpu:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: lab
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/lab/target
+      TULDOK_CONTRACT_ROOT: ${{ github.workspace }}/tuldok-contract
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      CUDA_VISIBLE_DEVICES: ''
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          path: lab
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Rheon
+          ref: 2209012bc5f902693d0f695ec1c2d854126af317
+          path: Rheon
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: MrScripty/Tuldok
+          ref: cdbe5136e05f2b49c43b9884f3ed03dcc8c7025c
+          path: tuldok-contract
+          persist-credentials: false
+      - name: Explicit CPU dependencies
+        run: |
+          python3.12 -m venv .venv
+          .venv/bin/python -m pip install --extra-index-url https://download.pytorch.org/whl/cpu -r tuldok/requirements-cpu.lock
+          rustup toolchain install 1.92.0 --profile minimal --component rustfmt,clippy
+      - name: Native contracts and supporting gates
+        run: |
+          cargo test --locked
+          cargo fmt --all --check
+          cargo clippy --locked --all-targets -- -D warnings
+          cargo build --release --locked
+          cargo build --release --locked --manifest-path probes/trajectory/Cargo.toml
+          cargo build --release --locked --manifest-path probes/tuldok-pressure/Cargo.toml
+          cargo clippy --locked --manifest-path probes/tuldok-pressure/Cargo.toml --all-targets -- -D warnings
+          node --check viewer/viewer.js
+          node --check scripts/check_tuldok_viewer.cjs
+      - name: Python contracts against pinned generic readers
+        run: .venv/bin/python -m unittest discover -s scripts -p 'test_*.py' -v
+      - name: Real captured-data Adam and fresh restore diagnostic
+        env:
+          PYTHONPATH: ${{ github.workspace }}/lab/scripts
+        run: |
+          target/release/rheon-surrogate-lab generate data/ci-cnn 4
+          .venv/bin/python tuldok/cnn_project.py package --dataset data/ci-cnn --destination runs/ci-cnn-data
+          mkdir runs/ci-cnn-train runs/ci-cnn-restore
+          .venv/bin/python tuldok/cnn.py train --dataset runs/ci-cnn-data/dataset.npz --splits runs/ci-cnn-data/splits.json --output runs/ci-cnn-train --steps 200
+          .venv/bin/python tuldok/cnn.py restore --dataset runs/ci-cnn-data/dataset.npz --splits runs/ci-cnn-train/splits.json --checkpoint runs/ci-cnn-train/weights.npz --receipt runs/ci-cnn-train/receipt.json --normalization runs/ci-cnn-train/normalization.json --predictions runs/ci-cnn-train/predictions.npz --output runs/ci-cnn-restore
+          .venv/bin/python - <<'PY'
+          import json
+          from pathlib import Path
+          train = json.loads(Path('runs/ci-cnn-train/receipt.json').read_text())
+          restored = json.loads(Path('runs/ci-cnn-restore/receipt.json').read_text())
+          assert train['optimizer_steps'] == 200 and restored['optimizer_steps'] == 0
+          assert restored['restored_predictions_equal'] is True
+          assert train['history'][-1]['normalized_mse'] < train['history'][0]['normalized_mse']
+          print('Actual Adam and fresh prediction restore passed; no solver quality or speedup claim.')
+          PY

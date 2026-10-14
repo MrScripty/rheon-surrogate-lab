@@ -6,6 +6,9 @@ algorithms, experiment configuration, split policy, measurements and replay.
 Tuldok owns generic source/runtime/input/output custody and Run lifecycle.
 No project opening or assembly starts training or installs dependencies.
 
+The paired executor can use the [fresh-checkout regeneration guide](REGENERATION.md);
+generated paths from another execution environment are not shared inputs.
+
 ## Clean build and project assembly
 
 Prerequisites: clean committed lab source, Git/Cargo/Rust1.92.0, CPython3.12,

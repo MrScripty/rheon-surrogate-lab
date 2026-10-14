@@ -89,7 +89,7 @@ def outputs(command):
                     ("input-freeze.json", "source_freeze", 2*1024**2),
                     ("timing.json", "comparison_timing", 8*1024**2),
                     ("result.json", "comparison_result", 8*1024**2),
-                    ("viewport-display.json", "viewer", 16*1024**2)]
+                    ("viewport-display.json", "viewer", 32*1024**2)]
         entries += [(f"{method}-{seed}.npz", "full_fields", 128*1024**2)
                     for method in ("jacobi", "sgs", "learned") for seed in range(900, 904)]
     return [{"path": name, "role": role, "max_bytes": maximum, "required": True}
@@ -194,6 +194,9 @@ def native_policy(tuldok_root, destination):
 def local_run(project, command, output, python, policy):
     """Direct recipe observation; explicitly does not claim managed Run custody."""
     project, output = Path(project).resolve(), Path(output).resolve()
+    process_receipt = output.parent / (output.name + "-process.json")
+    if os.path.lexists(process_receipt):
+        raise ValueError("Process receipt destination already exists")
     output.mkdir(parents=True, exist_ok=False)
     manifest = json.loads((project / "project.json").read_text())
     recipe_ref = next(item for item in manifest["recipes"] if item["id"] == command)
@@ -218,6 +221,17 @@ def local_run(project, command, output, python, policy):
     subprocess.run([str(python), str(project / recipe["entrypoint"]), *arguments],
                    check=True, timeout=recipe["resources"]["wall_seconds"])
     elapsed = time.perf_counter() - started
+    validate_outputs(output, recipe)
+    write(process_receipt, {
+          "schema": "rheon-local-process-v1", "status": "completed", "wall_s": elapsed,
+          "scope": "fresh Python launch through worker teardown, including imports, setup, warmup, accuracy capture/compression; excludes assembly/native build",
+          "execution": "direct local process, not a managed Tuldok Run",
+          "recipe_sha256": sha(project / recipe_ref["path"]),
+          "artifacts": {p.name: sha(p) for p in sorted(output.iterdir())}})
+
+
+def validate_outputs(output, recipe):
+    output = Path(output)
     expected = {item["path"] for item in recipe["outputs"]}
     if {p.name for p in output.iterdir()} != expected:
         raise ValueError("Worker outputs differ from the declared recipe")
@@ -226,12 +240,6 @@ def local_run(project, command, output, python, policy):
             raise ValueError("Worker output exceeds its declared cap")
     if sum(path.stat().st_size for path in output.iterdir()) > recipe["resources"]["max_output_bytes"]:
         raise ValueError("Aggregate outputs exceed recipe bound")
-    write(output.parent / (output.name + "-process.json"), {
-          "schema": "rheon-local-process-v1", "status": "completed", "wall_s": elapsed,
-          "scope": "fresh Python launch through worker teardown, including imports, setup, warmup, accuracy capture/compression; excludes assembly/native build",
-          "execution": "direct local process, not a managed Tuldok Run",
-          "recipe_sha256": sha(project / recipe_ref["path"]),
-          "artifacts": {p.name: sha(p) for p in sorted(output.iterdir())}})
 
 
 def main():

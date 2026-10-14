@@ -20,3 +20,14 @@ normalization, fresh restore and checkpoint/prediction identity. Ten focused
 lab/generic-reader tests pass. This does not claim modal fitting is neural
 optimization or repair the original CNN's global-pressure quality limit.
 Added dedicated actual-CPU-viewer browser procedure; execution pending fields.
+
+2026-10-14 lab evidence closure: see reports/verification.md and results.json.
+Full original-model CPU comparison qualified4320timed frames;6.894x/5.482x; cold
+velocity9.0048e-8/tracer5.9089e-8;480restored pressures exact. Clean CPU training
+regenerated historical NPZ bytes and restored/refitted state exactly. Separate
+CNN200Adam/fresh restore passes with expected native0/16negative quality. Actual
+existing CPU viewer passes. Final Python30tests=29pass/1optional skip;20Rust pass;
+fmt/Clippy/JS supporting gates pass. Repaired viewer cap after exact observed
+refusal; corrected retained-output review is distinct from managed publication.
+Managed Tuldok acceptance remains pending its paired owner, with input/source
+contracts in draftPR1. No Tuldok code or final release tags changed.

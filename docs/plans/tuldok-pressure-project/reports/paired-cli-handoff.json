@@ -1,0 +1,55 @@
+{
+  "lab_repository": "MrScripty/rheon-surrogate-lab",
+  "lab_source_revision": "d2b344fcbf2267e5851f6f1bb2371cb8ca48e58b",
+  "paired_tuldok_revision": "cdbe5136e05f2b49c43b9884f3ed03dcc8c7025c",
+  "project": "runs/cnn-project/project.json",
+  "source_root": "/workspace/rheon-surrogate-lab",
+  "dataset": {
+    "path": "runs/cnn-data/dataset.npz",
+    "bytes": 87584,
+    "sha256": "38cd317657d222145b6007792ee68eb2bdf70ba92ed2735f34cb9daa6ebbd9cf"
+  },
+  "splits": {
+    "path": "runs/cnn-data/splits.json",
+    "sha256": "de228c361c43bde6bf9c1fdacb30d15e4d2864fc9242cfa9e9f5ef3f8fd82c7a",
+    "policy": "whole original seeds/families; checks excluded; train8,validation4,test4"
+  },
+  "recipes": {
+    "train": {
+      "path": "runs/cnn-project/recipes/cnn-train-v1.json",
+      "sha256": "a95aae0e28121395e4193f4b9a100023fc1e6c5b09888273059cd252da628f77"
+    },
+    "restore": {
+      "path": "runs/cnn-project/recipes/cnn-restore-v1.json",
+      "sha256": "e5693063eb286d29c582b7f163f9ad3480f55c5ed0f233e3006a72dcb5cf783d"
+    }
+  },
+  "train_inputs": [
+    "dataset",
+    "splits"
+  ],
+  "train_parameters": {
+    "steps": 200
+  },
+  "restore_inputs": {
+    "dataset": "project dataset ref",
+    "splits": "completed training splits.json",
+    "checkpoint": "completed training weights.npz",
+    "receipt": "completed training receipt.json",
+    "normalization": "completed training normalization.json",
+    "predictions": "completed training predictions.npz"
+  },
+  "checkpoint_sha256": "7f514ff90acf5adc42b009fa42c715658b4d8087ae9e4ca0e547af7f62c64121",
+  "actual_optimizer_steps": 200,
+  "loss_ratio": 0.03651220558054541,
+  "fresh_restore_predictions_equal": true,
+  "native_quality": {
+    "qualified": 0,
+    "cases": 16,
+    "max_actual_f32_divergence": 17.457689086596172
+  },
+  "runtime_inventory_sha256": "e95ffe41bc468a47e6c2ab7416186d4ac5139b13d9cc52f01a13d9c173c2828d",
+  "runtime_status": "actual generic inventory validated; no managed catalog snapshot registration or Run approval; reassemble with actual managed snapshot",
+  "claim": "actual captured-data diagnostic neural train/fresh restore and native negative quality; not modal parity or solver speedup",
+  "required_pending": "paired managed catalog/runtime/credential/material/grant/Run/download/reopen workflow"
+}

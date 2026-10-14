@@ -15,6 +15,36 @@ import worker
 
 
 class ConfigContracts(unittest.TestCase):
+    def test_existing_or_dangling_process_receipt_is_preserved_before_launch(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            receipt = root / "new-run-process.json"
+            receipt.write_text("retained work")
+            with self.assertRaisesRegex(ValueError, "receipt destination already exists"):
+                project.local_run(root / "unused-project", "train", root / "new-run", sys.executable, root / "unused-policy")
+            self.assertEqual(receipt.read_text(), "retained work")
+            self.assertFalse((root / "new-run").exists())
+            receipt.unlink()
+            receipt.symlink_to(root / "missing-retained-target")
+            with self.assertRaisesRegex(ValueError, "receipt destination already exists"):
+                project.local_run(root / "unused-project", "train", root / "new-run", sys.executable, root / "unused-policy")
+            self.assertTrue(receipt.is_symlink())
+            self.assertFalse((root / "missing-retained-target").exists())
+
+    def test_declared_output_cap_and_inventory_fail_before_local_completion(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "payload.json").write_bytes(b"123")
+            recipe = {"outputs": [{"path": "payload.json", "max_bytes": 2}],
+                      "resources": {"max_output_bytes": 100}}
+            with self.assertRaisesRegex(ValueError, "declared cap"):
+                project.validate_outputs(root, recipe)
+            recipe["outputs"][0]["max_bytes"] = 4
+            project.validate_outputs(root, recipe)
+            (root / "undeclared.json").write_text("extra")
+            with self.assertRaisesRegex(ValueError, "declared recipe"):
+                project.validate_outputs(root, recipe)
+
     def test_only_empty_cargo_cache_marker_is_exempt_from_source_clean_check(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

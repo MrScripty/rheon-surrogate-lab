@@ -1,8 +1,8 @@
 # Tuldok pressure project
 
-Plan status: Verifying. Current phase: project contract implemented; CPU system receipts pending.
-Next slice: clean-source build receipt, actual project assembly and CPU parity evaluation.
-Acceptance status: pending. [Ledger](execution-ledger.md), [issues](issues.md),
+Plan status: Verifying. Current phase: lab numerical/browser evidence complete; paired managed acceptance pending.
+Next slice: paired-owner managed CLI/Run acceptance and parent compatible-checkpoint review.
+Acceptance status: partial; lab-owned claims satisfied. [Verification](reports/verification.md). [Ledger](execution-ledger.md), [issues](issues.md),
 [baseline and contract](reports/baseline.md).
 
 ## Objective and scope
@@ -30,12 +30,14 @@ validation and a separately admitted physics/data contract.
 
 | ID | Observable claim | Kind/environment/mode | Status |
 | --- | --- | --- | --- |
-| A1 | Original checkpoint/source identities retained; new native uses exact tested Rheon revision | contract / real Git+Cargo / automated | pending |
-| A2 | Project/recipe JSON accepted by current generic Tuldok readers; source/data/artifact hashes, closed config and no overwrite | contract / representative Linux / automated | pending |
-| A3 | CPU restored-model full trajectories pass existing physics gates and full-field parity against both references; three balanced timing repetitions with honest runtime/scope | system / cloud CPU / automated | pending |
-| A4 | Clean CPU training path retains whole-trajectory splits, actual fitting and restored-checkpoint equality; no test-driven fitting | system / cloud CPU / automated | pending |
-| A5 | Existing viewer consumes newly generated CPU replay; generic result/progress formats and lab UI path documented | user-workflow / local browser / automated | pending |
-| A6 | Focused failures and existing affected tests pass; feature branch committed/pushed and draft PR opened | focused + release artifact / GitHub / automated | pending |
+| A1 | Original checkpoint/source identities retained; new native uses exact tested Rheon revision | contract / real Git+Cargo / automated | satisfied; reports/verification.md |
+| A2 | Project/recipe JSON accepted by current generic Tuldok readers; source/data/artifact hashes, closed config and no overwrite | contract / representative Linux / automated | satisfied; reports/verification.md |
+| A3 | CPU restored-model full trajectories pass existing physics gates and full-field parity against both references; three balanced timing repetitions with honest runtime/scope | system / cloud CPU / automated | satisfied; reports/verification.md |
+| A4 | Clean CPU training path retains whole-trajectory splits, actual fitting and restored-checkpoint equality; no test-driven fitting | system / cloud CPU / automated | satisfied; reports/verification.md |
+| A5 | Existing viewer consumes newly generated CPU replay; generic result/progress formats and lab UI path documented | user-workflow / local browser / automated | satisfied; reports/verification.md |
+| A6 | Focused failures and existing affected tests pass; feature branch committed/pushed and draft PR opened | focused + release artifact / GitHub / automated | satisfied; reports/verification.md |
+
+| A7 | Managed CLI/catalog/runtime/material/grant/Run/download/reopen workflow | user-workflow / required-real Tuldok / automated | pending paired owner |
 
 A Tuldok managed Run/UI end-to-end acceptance depends on its separate execution
 owner and configured catalog/runtime/approval; direct recipe execution does not

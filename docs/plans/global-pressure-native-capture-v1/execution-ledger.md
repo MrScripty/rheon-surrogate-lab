@@ -61,3 +61,25 @@ unchanged. All nonpatch files pass staged whitespace check; immutablepatch
 blank context lines are a documented artifact-format exception, appliednative
 Rust passes rustfmt. Initial implementation commit precedes final qualified
 clean-source build and full development generation. No final physics claim yet.
+
+Committed56b2507b763fe603b0206cd23592d488a58b30d0, then built a fresh qualified
+source-bound binary466c6c01... in1.0455s with existingdependencycache. Actual
+TRAIN100002 two-frame fixture passed, then full16developmenttrajectories/384frames
+completed7.8044s with freshindependentverification19.0218s. No reference gate failed
+and no case was dropped. Independent numerical reviewer repeatedall384verification
+18.6827s, EVIDENCE CLEAR. Main repeated56tests/no skip3.920s and exactbinding
+Rust3test/Clippy/fmt pass. Sampled two-frame repeat23payloads bitwiseequal.
+Raw73,187,328bytes/allfiles75,695,918bytes; fullrunhashes andscalar/tracer/fingerprint
+evidence retained inreports/capture.json, rawdata/build artifacts ignored locally.
+Pushedbranch and createdGitHub draftPR3; actualhead56b2507/open/draft/basemain
+verified. No implementationmerge, tags, upstreamwrites, training or finalgeneration.
+Final documentation records permittedsharedinitial AND frame-zero tracerfields;
+wholehistoriesunique, no false exacttracerconservation or fullrollout claim.
+
+Final standards source/evidence/documentation review CLEAR. Corrected shared-field
+wording before finalpublication; issues closed with actualtests/reviewlinks.
+Actualsourcehead56b2507 remote nativeCI38548035723 succeeded41s; existinglab
+CPUCI38548035762 succeeded72s and automatically reran its unchangedhistorical
+200Adam/freshrestore diagnostic. No prospectiveglobalpressuretraining ran;
+priorCNN0/16negative remains unchanged. CodeRabbitdraftskip is not a reviewer.
+PR3 staysdraft forparentreview; finaldocumentationheadchecks followpush.

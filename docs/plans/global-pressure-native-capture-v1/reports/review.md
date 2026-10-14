@@ -46,3 +46,29 @@ all other new files pass, and affected applied native Rust files pass rustfmt.
 Source review establishes no trained model, rollout result, acceleration or
 managed Tuldok execution. Real development capture and final evidence review
 are recorded separately in capture.md and this report after execution.
+
+Final numerical EVIDENCE CLEAR: a fresh complete verification passed18.6827465s
+for384frames/16trajectories and exact source/binary/manifest receipts. Every
+wholehistory is unique/nontrivial and satisfies unchanged physics. Shared raw
+fields include initial states and frame-zero tracer, whose native advection uses
+zero previous velocity; standards reviewer corrected a too-narrow initial-only
+intermediate summary before publication. SGS evidence is native diagnostic only;
+independent persisted correction witnesses qualify Jacobi. The final main
+qualified-binary Python suite passed56tests3.920s/no skip; actual same-binding
+Rust3tests, release all-target Clippy(-Dwarnings), and fmt passed.
+
+Final standards EVIDENCE CLEAR: checked all12production source files against
+Git56b2507/current closure, all native/build/binary/manifest/report hashes,
+16×24development coverage, all reported cost/physics/tracer metrics and permitted
+shared initial/first-frame tracer fields. Independently ran the authoritative
+qualified-binary native request boundary test:1test passed0.007s, closing the
+earlier skipped-native test limitation. All tracked writes remain in the declared
+new namespaces; original design/reservations/negative receipts are unchanged.
+Historical source-test55pass/1skip is retained as history, not final limitation.
+
+At exact source56b2507, GitHub native workflow38548035723 and existing lab
+workflow38548035762 both passed. CodeRabbit status means draft-review skip and
+is not counted as an independent review. The unchanged historical lab workflow
+automatically reran its200Adam-update CNN/fresh-restore diagnostic; no prospective
+global-pressure model was trained. Final documentation-only head CI is checked
+at publication and does not change this12-file production source binding.

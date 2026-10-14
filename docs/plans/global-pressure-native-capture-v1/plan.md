@@ -1,12 +1,12 @@
 # Native warm start and deterministic development capture
 
-**Plan status:** `Active`
+**Plan status:** `Accepted`
 
-**Current phase:** Slice1 native API qualification and development reference capture
+**Current phase:** Accepted slice1 native API and development reference capture
 
-**Next slice:** Finish complete development capture, evidence review and draft publication
+**Next slice:** Parent review; separately authorize model and Tuldok recipe smoke slice
 
-**Acceptance status:** `pending`
+**Acceptance status:** `satisfied`
 
 **Execution ledger:** [execution-ledger.md](execution-ledger.md)
 
@@ -26,11 +26,11 @@ final-test generation, tolerance relaxation or upstream Rheon/Tuldok write.
 | ID | Criterion | Kind | Environment | Mode | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- |
 | N1 | Lab-owned immutable patch at exact native base admits sealed guesses and preserves old zero-start, full original-b residual, cancellation/reuse for both PCGs | integration | required-real pinned native CPU | automated | satisfied | [Native checks](reports/native.md), [receipt](reports/native.json) |
-| N2 | Native and independent hand-stencil/gradient/boundary oracles agree for anisotropic rectangles | focused | representative Linux CPU | automated | pending | reports/capture.md |
-| N3 | Only smoke train/validation trajectories generated deterministically; complete manifest/arrays roundtrip through fresh independent verifier, corruption fails at intended boundary | system | required-real fresh CPU processes | automated | pending | reports/capture.md |
-| N4 | Actual reference gates, elapsed generation/verification and RAM/payload feasibility reported; failure stops preset without dropping a case | system | required-real CPU | automated | pending | reports/capture.md |
-| N5 | Independent numerical and standards source/evidence reviews closed, affected tests/format/lints pass | integration | representative independent GPT6.1 Sol High reviewers | either | pending | reports/review.md |
-| N6 | Exact scoped branch pushed, draft implementation PR verified; no training/final arrays/upstream edits | release-artifact | required-real GitHub | automated | pending | reports/verification.md |
+| N2 | Native and independent hand-stencil/gradient/boundary oracles agree for anisotropic rectangles | focused | representative Linux CPU | automated | satisfied | [Capture](reports/capture.md), [receipt](reports/capture.json) |
+| N3 | Only smoke train/validation trajectories generated deterministically; complete manifest/arrays roundtrip through fresh independent verifier, corruption fails at intended boundary | system | required-real fresh CPU processes | automated | satisfied | [Capture](reports/capture.md), [receipt](reports/capture.json) |
+| N4 | Actual reference gates, elapsed generation/verification and RAM/payload feasibility reported; failure stops preset without dropping a case | system | required-real CPU | automated | satisfied | [Capture](reports/capture.md), [receipt](reports/capture.json) |
+| N5 | Independent numerical and standards source/evidence reviews closed, affected tests/format/lints pass | integration | representative independent GPT6.1 Sol High reviewers | either | satisfied | [Review](reports/review.md) |
+| N6 | Exact scoped branch pushed, draft implementation PR verified; no training/final arrays/upstream edits | release-artifact | required-real GitHub | automated | satisfied | [Publication](reports/verification.md) |
 
 ## Binding Decisions
 
@@ -91,9 +91,9 @@ checks target the new source; old source/tests are supporting CI, not retuned.
 
 | Unit | Write owner/set | Gate | State |
 | --- | --- | --- | --- |
-| Native | Worker: new experiment dependency files/tests only; prepared source under ignored runs | N1 | Active |
-| Capture/verifier | Worker: new probe source/manifest/lock and new experiment contract/config/verifier tests; no dependency-file overlap | N2–N4 | Active |
-| Review/integration | Main: plan/reports/new CI; reviewers read-only | N5/N6 | Planned |
+| Native | Worker: new experiment dependency files/tests only; prepared source under ignored runs | N1 | Complete |
+| Capture/verifier | Worker: new probe source/manifest/lock and new experiment contract/config/verifier tests; no dependency-file overlap | N2–N4 | Complete |
+| Review/integration | Main: plan/reports/new CI; reviewers read-only | N5/N6 | Complete |
 
 Main serializes shared authority, builds/final runs and Git publication. Workers
 must send API/capture contract early; no commits or upstream writes by workers.
@@ -101,9 +101,10 @@ Material protocol findings are collected before replan; no test exposure.
 
 ## Blockers
 
-Native API/dependency preparation and isolated Rust1.92.0 are qualified. Complete
-reference capture and final independent review remain pending while typed manifest,
-leakage and exact f32 witness findings are repaired. No training depends on completion in this slice.
+No numerical or implementation blocker remains. Independent source and complete
+evidence reviews are clear; affected local checks and source-head remote CI pass.
+PR3 remains draft for parent review; that review and separate authorization govern
+further model/Tuldok work. Final publication checks the documentation-only head.
 
 ## Re-Plan Triggers
 
@@ -123,5 +124,6 @@ No task-created worktree or history rewrite. Existing design branch remains inta
 
 ## Final Acceptance
 
-- Acceptance status: `pending`
-- Final status: `Active`
+- Acceptance status: `satisfied`
+- Final status: `Accepted`
+- Deferred follow-ups: parent implementation review/merge and separately authorized model/Tuldok smoke slice

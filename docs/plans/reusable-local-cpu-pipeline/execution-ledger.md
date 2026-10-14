@@ -47,3 +47,10 @@ driver's qualification root. No grant, Run or optimizer was created; temporary
 agent/owner sessions were revoked and PostgreSQL stopped. Correct root-key
 composition is a host/CLI fix, not scientific change. Preserve workspace2 and
 perform fresh workspace3 preparation before another explicit execution.
+
+2026-10-14: Workspace3 preflight passed but was not executed. Before any training,
+aligned the reusable default with the historical batch-two optimization profile
+and exact interleaved parent/frame sampling; added comparison against the retained
+sampler. The early batch-four profiles remain preflight-only, not model results.
+Configuration changes create measured new capture/packet identities without
+changing model/native arithmetic. Fresh final-profile material and project follow.

@@ -15,6 +15,9 @@ historical or final seeds. The supported capture is a serial 16³ sealed domain,
 24 frames per complete parent, two or more train parents and one or more
 validation parents, at most 16 parents. The final configured update is the only
 candidate. Other checkpoints are observations and omit optimizer resume state.
+The default retains the historical200-update/batch-two/seed/Adam settings and
+interleaved train-parent/frame sampler. Data identities and host setup vary;
+the GN architecture, loss and default optimization policy are unchanged.
 
 ## Host setup
 

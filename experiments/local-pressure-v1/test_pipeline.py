@@ -187,9 +187,14 @@ class TrainingContracts(unittest.TestCase):
     def test_sampling_uses_only_supplied_train_parent_rows(self):
         rows = [{"trajectory_id": "a"}] * 24 + [{"trajectory_id": "b"}] * 24
         sampled = train.order(rows, config())
-        self.assertEqual(sampled.shape, (200, 4))
+        self.assertEqual(sampled.shape, (200, 2))
         self.assertTrue(np.all((sampled >= 0) & (sampled < len(rows))))
         self.assertTrue(np.array_equal(sampled, train.order(rows, config())))
+
+    def test_default_sampling_matches_retained_cpu_profile(self):
+        rows = [{"trajectory_id": f"parent-{parent}"} for parent in range(12) for _ in range(24)]
+        _model, retained = model_profile.load()
+        self.assertTrue(np.array_equal(train.order(rows, config()), retained.sample_order(rows)))
 
     def test_configured_checkpoint_population_controls_restore(self):
         first = config(); second = copy.deepcopy(first)

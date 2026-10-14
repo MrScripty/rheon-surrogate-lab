@@ -34,7 +34,14 @@ def order(rows, config):
         groups.setdefault(row["trajectory_id"], []).append(index)
     parents = list(groups.values())
     rng = np.random.Generator(np.random.PCG64(config["training"]["seed"] + 1))
-    return np.asarray([[parents[p][int(rng.integers(len(parents[p])))] for p in rng.integers(len(parents), size=config["training"]["batch_size"])] for _ in range(config["training"]["updates"])], dtype="<i8")
+    result = []
+    for _ in range(config["training"]["updates"]):
+        batch = []
+        for _ in range(config["training"]["batch_size"]):
+            parent = parents[int(rng.integers(len(parents)))]
+            batch.append(parent[int(rng.integers(len(parent)))])
+        result.append(batch)
+    return np.asarray(result, dtype="<i8")
 
 
 def cases(dataset):

@@ -1,0 +1,37 @@
+{
+  "change": "Direct one-read stopped-child assertion; accept only ENOENT/ESRCH; keep terminal state and unexpected-error failures",
+  "exact_head_ci": "Required after push; see PR5 checks and final report",
+  "groupnorm_implemented_or_trained": false,
+  "independent_review": {
+    "fixture_sha256": "f6cc35d9b63e60d1863d7e22168df457a2dbb52ef44983732001771edfc9c3a9",
+    "model": "GPT-6.1 Sol High",
+    "no_scientific_or_diagnosis_rerun": true,
+    "seconds": 2.031,
+    "skips": 0,
+    "status": "Scoped source/regression CLEAR",
+    "tests": 13
+  },
+  "prior_failure": {
+    "head": "c1828de8cce780114d13d37fcbac42b1c7508198",
+    "job_id": 115859083081,
+    "run_id": 38566110569,
+    "test": "ConfigContracts.test_local_timeout_terminates_controlled_same_group_child",
+    "trace": "FileNotFoundError /proc/5417/stat between exists and read_text",
+    "url": "https://github.com/MrScripty/rheon-surrogate-lab/actions/runs/38566110569/job/115859083081"
+  },
+  "production_executor_unchanged": true,
+  "regressions": [
+    "disappearance at read with exists forbidden",
+    "zombie/dead accepted and live child rejected",
+    "PermissionError/otherOSError/malformed snapshot propagate"
+  ],
+  "schema": "rheon-controlled-child-lifecycle-repair-v1",
+  "scientific_sources_weights_receipts_negative_results_unchanged": true,
+  "scoped_validation": {
+    "seconds": 2.031,
+    "skips": 0,
+    "status": "passed",
+    "suite": "test_tuldok_pressure.ConfigContracts",
+    "tests": 13
+  }
+}

@@ -8,6 +8,7 @@ import sys
 import tempfile
 import unittest
 from types import SimpleNamespace
+from unittest.mock import Mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tuldok"))
@@ -17,6 +18,50 @@ import native
 
 
 class ConfigContracts(unittest.TestCase):
+    def _assert_controlled_child_stopped(self, state):
+        try:
+            snapshot = state.read_text()
+        except (FileNotFoundError, ProcessLookupError):
+            # The adoptive host may reap the child before open or during read.
+            return
+        # A zombie cannot execute; this still rejects a live same-group child.
+        # Other read failures and malformed snapshots remain test failures.
+        self.assertIn(snapshot.split()[2], ('Z', 'X'))
+
+    def test_child_stat_disappearance_is_accepted_without_exists_check(self):
+        for error in (FileNotFoundError(), ProcessLookupError()):
+            with self.subTest(error=type(error).__name__):
+                state = Mock(spec=Path)
+                state.read_text.side_effect = error
+                state.exists.side_effect = AssertionError("racy existence check")
+                self._assert_controlled_child_stopped(state)
+                state.read_text.assert_called_once_with()
+                state.exists.assert_not_called()
+
+    def test_child_stat_live_state_is_rejected_and_terminal_states_are_accepted(self):
+        for status in ('Z', 'X'):
+            with self.subTest(status=status):
+                state = Mock(spec=Path)
+                state.read_text.return_value = f'123 (python) {status}'
+                self._assert_controlled_child_stopped(state)
+        state = Mock(spec=Path)
+        state.read_text.return_value = '123 (python) S'
+        with self.assertRaises(AssertionError):
+            self._assert_controlled_child_stopped(state)
+
+    def test_child_stat_unexpected_errors_and_malformed_content_are_not_hidden(self):
+        for error in (PermissionError("denied"), OSError("unexpected I/O error")):
+            with self.subTest(error=type(error).__name__):
+                state = Mock(spec=Path)
+                state.read_text.side_effect = error
+                with self.assertRaises(type(error)) as failure:
+                    self._assert_controlled_child_stopped(state)
+                self.assertIs(failure.exception, error)
+        state = Mock(spec=Path)
+        state.read_text.return_value = ''
+        with self.assertRaises(IndexError):
+            self._assert_controlled_child_stopped(state)
+
     def test_failed_native_cleanup_attempts_every_resource_and_preserves_error(self):
         attempted = []
         def fail(name):
@@ -46,10 +91,8 @@ class ConfigContracts(unittest.TestCase):
                 project.execute_local([sys.executable, "-c", script, str(pidfile)], 2)
             self.assertTrue(pidfile.exists(), "worker must spawn the child before timeout")
             state = Path('/proc') / pidfile.read_text() / 'stat'
-            if state.exists():
-                # A zombie cannot execute; its reaping belongs to the adoptive
-                # host. This test does not claim arbitrary-descendant custody.
-                self.assertIn(state.read_text().split()[2], ('Z', 'X'))
+            # This probe does not claim arbitrary-descendant custody.
+            self._assert_controlled_child_stopped(state)
             with self.assertRaises(subprocess.CalledProcessError) as failure:
                 project.execute_local([sys.executable, "-c", "raise SystemExit(7)"], 10)
             self.assertEqual(failure.exception.returncode, 7)

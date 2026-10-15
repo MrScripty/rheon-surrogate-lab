@@ -36,7 +36,7 @@ def main():
     assert train['closure']['source_witness_sha256']==hashlib.sha256((project/'source-witness.json').read_bytes()).hexdigest()
     evaluations={name:load(root/name/'evaluation.json') for name in ('fitted-evaluation','validation-evaluation') if (root/name/'evaluation.json').exists()}
     audits={name:load(root/name/'summary.json') for name in ('fitted-audit','validation-audit') if (root/name/'summary.json').exists()}
-    record={'schema':'rheon-residual-experiment-record-v1','trial':args.trial,
+    record={'schema':'rheon-residual-experiment-record-v2','trial':args.trial,
         'method':{'configuration':config,'source_commit':source['source_commit'],'architecture':source['architecture'],
             'source_witness_sha256':train['closure']['source_witness_sha256'],'source_hashes':source['sources'],
             'inputs':source['inputs'],'normalization_sha256':source['normalization_sha256'],
@@ -48,7 +48,9 @@ def main():
         'runtime':train['runtime'],'weights_sha256':train['outputs']['weights.npz']['sha256'],
         'checkpoints':{name:{key:spec[key] for key in ('update','sha256','bytes')} for name,spec in history['checkpoints'].items()},
         'training_trace':history['trace'],'validation_loss':history['validation'],
-        'optimizer_updates_per_s':history['optimizer_updates_per_s'],'native_evaluations':evaluations,'cpu_audits':audits,
+        'optimizer_updates_per_s':history['optimizer_updates_per_s'],
+        'training_started_unix':history['training_started_unix'],'training_finished_unix':history['training_finished_unix'],
+        'runtime_snapshot':load(project/'runtime-manifest.json'),'native_evaluations':evaluations,'cpu_audits':audits,
         'trajectories':{path.parent.name:load(path) for path in sorted(root.glob('*trajectory*/receipt.json'))},
         'retained_artifacts':str(root.relative_to(LAB)),'new_reserved_test_used':False}
     REPORTS.mkdir(exist_ok=True,parents=True);path=REPORTS/(args.trial+'.json')

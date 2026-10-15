@@ -58,3 +58,26 @@ Keep analytic diagnostics separate from native physical qualification. Reopen
 completed Runs and verify artifact hashes/whole downloads through workflow.py.
 The root observer is `.venv/bin/python experiments/water-conditioning-v1/observe.py
 --root runs/water-residual-learning-v1 --seconds 3600`; it never owns training.
+
+
+Independent trajectory build and execution:
+
+```sh
+python3 experiments/water-residual-learning-v1/build_rollout.py \
+  --prepared runs/local-pressure-v1-fresh-bootstrap-2/prepared-rheon \
+  --rheon-source runs/water-learning-sequence-v1/Rheon \
+  --cargo /home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/cargo \
+  --output runs/water-residual-learning-v1/native-rollout-build
+"$TORCH_PYTHON" experiments/water-residual-learning-v1/rollout.py \
+  --binary runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout \
+  --scene runs/water-residual-learning-v1/trajectory-configs/cube.json \
+  --project "runs/water-residual-learning-v1/$TRIAL/project" --artifacts "$RESTORE" \
+  --output "runs/water-residual-learning-v1/$TRIAL/cube-trajectory"
+```
+
+Scene JSON is retained in each trajectory receipt. The original 15-step native
+warm-up remains; first AI inference is step16. The native/native control uses
+--reference-control, retains the same physical gates and performs 49 projected
+steps in a 64-step run. The controller's real failed-exit/deadline cleanup tests
+are `python3 -m unittest discover -s experiments/water-residual-learning-v1 -p
+test_rollout.py`. Engine/scene tests are run by build_rollout.py with build/Clippy.

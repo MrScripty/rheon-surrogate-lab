@@ -13,6 +13,8 @@ from policy import MAX_CELLS, require
 
 CHANNELS=['dimensionless_laplacian_rhs']
 SCHEMA='rheon-physical-residual-normalization-v1'
+LOSS_WEIGHTS={'relative_correction_mse':.25,'relative_correction_gradient_mse':.25,
+    'relative_equation_mse':.4,'relative_equation_max_squared':.1}
 
 
 def fit_normalization(parents,previous):
@@ -131,4 +133,5 @@ def pressure_loss(prediction,sample,normalization,owner,objective='canonical'):
     denominator=sample['rhs'].flatten(1).square().sum(1).clamp_min((1e-6*math.sqrt(cells)*scale['rhs'])**2)
     equation=residual.flatten(1).square().sum(1)/denominator
     maximum=residual.flatten(1).abs().amax(1).square()/(denominator/cells)
-    return .25*correction_error+.25*gradient_error/gradient_norm.clamp_min(floor)+.4*equation+.1*maximum
+    w=LOSS_WEIGHTS
+    return w['relative_correction_mse']*correction_error+w['relative_correction_gradient_mse']*gradient_error/gradient_norm.clamp_min(floor)+w['relative_equation_mse']*equation+w['relative_equation_max_squared']*maximum

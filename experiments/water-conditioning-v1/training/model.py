@@ -30,6 +30,7 @@ def select(config):
         ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
         ARCHITECTURE.update(schema='rheon-physical-residual-pressure-v1',input_channels=1,
             channels=['dimensionless_laplacian_rhs'],conditioning=SELECTED,
+            coordinates='implicit grid indices; no coordinate feature maps',
             block_normalization={'name':'Identity'},correction=copy.deepcopy(CORRECTION),
             preprocessing='q=(rho/h)*residual; q / train-only q RMS',
             reconstruction='float32 raw times train pressure RMS, cell-zero gauge, add supplied base',
@@ -37,8 +38,7 @@ def select(config):
             restrictions='uniform-density cubic sealed Neumann operator; no independently specified geometry masks')
         if OBJECTIVE!='canonical':
             ARCHITECTURE.update(training_objective=OBJECTIVE,
-                loss_weights={'relative_correction_mse':.25,'relative_correction_gradient_mse':.25,
-                    'relative_equation_mse':.4,'relative_equation_max_squared':.1})
+                loss_weights=copy.deepcopy(physical_residual.LOSS_WEIGHTS))
         return
     require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'),
             'conditioning_configuration','explicit versioned model transformation')

@@ -49,3 +49,11 @@ UTC intervals, update rates, fitted/held-out errors, consistency/repetition
 checks and actual post-warm-up trajectory outcomes. This derived comparison can
 be regenerated; per-trial records are immutable. Older v1 reports remain valid;
 v2 records add explicit training timestamps and runtime snapshot identity.
+
+
+`modes.py` takes the same project/artifacts/packet/output arguments as the audit.
+It probes 24 manufactured compatible Neumann modes on the three development
+grids, matching pressure RMS to the fitted correction. It measures whether one
+proposal reduces equation error and whether repeated proposals amplify it.
+This isolates unconstrained spatial modes; it is not a simulation, training run,
+cold-start model acceptance or physical qualification.

@@ -97,3 +97,15 @@ different objectives are not directly comparable. Recurrent proposals use four
 network applications and extra operator work; eight audited wrapper proposals
 therefore mean32 network applications versus8 for single-step models. The
 matched5,000-update control is finishing. Keep accuracy and compute cost separate.
+
+Recurrent CPU diagnostic median improves to0.01433483391 (worst0.2218051), but
+eight wrapper applications diverge to median930.444. Independent trajectories
+hard-stop after5/4/6 AI steps (cube/elongated/compact), all after15 native steps,
+with0 qualifying AI proposals. A bounded CPU manufactured-mode diagnostic probes
+24 known compatible Neumann pressure fields across the three grids, at the fitted
+correction RMS2.1793Pa.21/24 first proposals reduce equation error; worst increases
+it7.25x and eight wrappers reach1.65e10. These are operator diagnostics, not
+simulations or cold-start qualification. They identify unstable spatial modes
+that single-frame supervised fitting leaves unconstrained. Preserve the negative
+rollout evidence alongside improved saved-state error; no deployment or cohort
+expansion follows. Full native validation remains pending.

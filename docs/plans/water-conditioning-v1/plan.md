@@ -69,3 +69,36 @@ returns exit 2 with relative residual 0.0017782435122407469. Rounded-reference
 float32 correction gives 9.733520186283732e-8, captured-residual relative mismatch
 1.1685694665632907e-15, and loss directional derivative absolute mismatch
 9.284525772859649e-20. This case is representable within the existing target.
+
+
+Accepted diagnosis slice: independent rectangular-grid stencil test passes; native
+one-frame reference and rounded-correction controls both pass the float32 physical
+profile with all physical gates preserved. The new 23-worker CPU audit completed
+128 development validation states and all 1,024 actual training states. All
+training-audit worker cores 1–23 were used; all workers stayed CPU-only and
+single-threaded. Training audit overlapped CUDA optimizer progress. Every ideal
+float32 reference correction passed the equation gate (1,152 states); full native
+physical qualification is measured separately for the one-frame controls.
+
+Current evidence justifies the next model slice while schedule Runs continue:
+constant density enters the historical network as 1,000 and timestep as 1/60,
+while other fields use train-derived scales. Compare fixed physical feature
+units (1,000 kg/m3 and 1/60 s) against the historical preprocessing with the same
+network, initialization, optimizer and loss. A separately declared amplitude
+variant divides residual by per-sample RMS and restores that amplitude after the
+network. This guarantees positive scaling up to arithmetic error; negative
+scaling remains a measured learning property. On the one training frame the
+amplitude factor is effectively one, so do not waste a duplicate full fit there.
+A two-update managed amplitude smoke qualifies its CUDA/CPU reconstruction; the
+full one-frame scalar-units run isolates the scalar-feature change. New versioned
+configuration, source witness and architecture profile distinguish these models
+from historical seven-channel checkpoints; do not deploy them through the old
+comparison adapter without a matching deployment-contract update.
+
+The training namespace copies the prior measured owner as a versioned scientific
+snapshot. New policy extends configuration, model.py owns the conditioning,
+project/train/test_inference select it explicitly, and trace adds post-update
+physical residual, rate and clipping. Unmodified data/scenes preserve historical
+view interpretation; original source hashes are not replaced. Exactly one next
+slice: qualify the conditioned model and source capture, then execute its managed
+smoke and scalar-units comparison after the already queued schedule controls.

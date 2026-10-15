@@ -21,6 +21,8 @@ def measured_model(artifacts):
     policy.require(receipt['mode'] == 'restore' and receipt['optimizer_updates'] == 0
                    and receipt['execution']['cuda_initialized'] is False,
                    'checkpoint', 'completed CPU restore artifacts required')
+    policy.require(receipt['architecture']==model.ARCHITECTURE,'model_profile',
+                   'historical diagnostic requires the historical preprocessing contract')
     for name in ('weights.npz', 'normalization.json', 'history.json'):
         policy.require(policy.sha(policy.read(artifacts / name)) == receipt['outputs'][name]['sha256'],
                        'artifact_hash', name)

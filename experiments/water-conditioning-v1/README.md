@@ -48,3 +48,22 @@ the catalog, grants, Run lifecycle and checkpoint custody. Reserved inference
 is not part of this development experiment. Evaluate fitted and validation
 proposals through the existing native `pipeline.py evaluate` command. Retain
 all completed and failed evidence; never treat fallback as model success.
+
+
+`training/` is the separately versioned model-change slice. Its CUDA/CPU pipeline
+has the same commands and custody path as the historical pipeline, with explicit
+`conditioning` configurations. `scalar-units.json` changes only density/timestep
+feature units relative to the original one-frame fit. `amplitude-smoke.json`
+qualifies two CUDA updates and fresh CPU restore with per-frame residual RMS
+normalization and output amplitude reconstruction. Amplitude restoration enforces
+positive scaling; it does not enforce oddness or superposition. Network parameter
+count and float32 arithmetic stay unchanged. Neither variant is compatible with
+the old deployment preprocessing contract merely because weight shapes match.
+The new trainer records sampled post-update physical residual, learning rate,
+clipping and optimization timestamps. Training loss retains its pre-update
+meaning. Run its focused checks separately to avoid flat-module name collisions:
+
+```bash
+"$TORCH_PYTHON" -m unittest discover \
+  -s experiments/water-conditioning-v1/training -p 'test_conditioning.py'
+```

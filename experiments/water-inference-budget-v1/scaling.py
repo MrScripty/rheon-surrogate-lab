@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import resource
 import statistics
 import sys
 import time
@@ -103,6 +104,9 @@ def main():
                 'started_at_utc':datetime.fromtimestamp(started,timezone.utc).isoformat(),'elapsed_s':time.time()-started,
                 'runtime':{'python':sys.executable,'cuda_initialized':False,
                     'checkpoint_runtime':json.loads((args.artifacts/'receipt.json').read_text())['runtime']},'records':records,
+                'memory':{'python_process_peak_rss_bytes':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,
+                    'reaped_native_child_peak_rss_bytes':resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss*1024,
+                    'scope':'process-lifetime high-water marks across all episodes so far; not per-policy allocation or simultaneous total'},
                 'scope':'actual short trajectories; whole Engine.advance timing including prepare/projection/IPC; neural callback separately recorded; no isolated native pressure timing',
                 'tolerances':{'native_relative_residual':1e-8,'ai_relative_residual':1e-6,'predicted_divergence':1e-7},
                 'warmup':'15 native history steps plus one excluded AI timing step per run',

@@ -37,8 +37,8 @@ minus one for independent numerical jobs. Each worker owns a fixed core and one
 Torch/native thread. Use `--workers 1` on an otherwise idle CPU for isolated,
 alternating repeated timings. Native/learned retain 1e-8/1e-6 equation profiles.
 
-`mode_probe.py` tests 120 independently seeded, signed low/broad-frequency mode
-mixtures over the same five grids. It records first-evaluation error, bounded
+`mode_probe.py` tests 60 independently seeded low/broad-frequency mixtures at two signed
+amplitudes (120 cases) over the same five grids. It records first-evaluation error, bounded
 32-evaluation stopping and sampled equation acceptance. Independent eigenvalues
 check the existing FV operator. These are development operator probes, not full
 fluid simulations or a proof of contraction for every residual.

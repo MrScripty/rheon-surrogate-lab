@@ -24,7 +24,9 @@ def main():
     args=p.parse_args();config=policy.experiment(json.loads(args.config.read_text()));model.configure('cpu');model.select(config)
     _,parents=data.read_view(args.packet);parent=next(p for p in parents if p['entry']['split']=='train');sample=data.sample(parent,0)
     rng=torch.random.get_rng_state().clone()
-    samples,order,evidence=analytical.bank(sample,config['analytical_feedback'],config['training']['updates'])
+    train=[p for p in parents if p['entry']['split']=='train']
+    amplitude=analytical.training_correction_rms(data.sample(p,slot) for p in train for slot in range(len(p['frames']))) if config['schema']=='rheon-water-residual-experiment-v5' else None
+    samples,order,evidence=analytical.bank(sample,config['analytical_feedback'],config['training']['updates'],amplitude_pa=amplitude)
     records=[]
     with torch.no_grad():
         for index,value in enumerate(samples):
@@ -46,6 +48,7 @@ def main():
         'legacy_config_sha256':digest(args.legacy_config),'legacy_bank_tensor_order_evidence_parity':True,
         'torch_rng_preserved':True,'optimizer_updates':0,'cuda_initialized':torch.cuda.is_initialized(),
         'bank':evidence,'samples_checked':len(records),'worst_relative_operator_error':max(r['relative_operator_error'] for r in records),
+        'source_train_simulations':len(train),'source_train_states':sum(len(p['frames']) for p in train),
         'checks':records,'scope':'cosine eigenvalue labels versus implemented FV operator; does not qualify a fluid trajectory'}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with args.output.open('x') as stream:json.dump(result,stream,indent=2,allow_nan=False);stream.write('\n')

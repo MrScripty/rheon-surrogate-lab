@@ -110,3 +110,17 @@ single-factor learning claim. Added independent weighted-RMS, authority and
 physics-mismatch tests. Admission of a cohort Run remains conditional on the
 current trials' actual iterative fit/development/grid evidence; no Run starts
 merely because these configurations exist.
+
+One-pass multi-grid development completes 128/128 physical passes, averaging
+13.46875 evaluations (worst23), versus current reference12.6015625 (worst26).
+This is a mean-work regression on small saved states despite a better tail;
+retain it rather than presenting every new training run as an improvement.
+Larger grids and two-evaluation weights still need their full comparison.
+Two-evaluation optimizer completed5,000 updates at23.5147 updates/s; fitted
+post-update ratio .00309170 is diagnostic, not final CPU physical acceptance.
+
+Prepared cohort bank independently qualifies all640 entries, worst relative
+operator mismatch6.44257e-14, global real-train correction RMS2.853573464078259Pa.
+Legacy bank remains bit-identical and model RNG unchanged. No cohort Run has
+been admitted yet. Corrected the mode-probe description to60 distinct mixtures
+at two signed amplitudes (120 cases); generated inputs are unchanged.

@@ -75,11 +75,11 @@ def main():
                 'mean_network_evaluations':statistics.mean(r['network_evaluations'] for r in rows),
                 'worst_first_relative_residual':max(r['first_relative_residual'] for r in rows),
                 'worst_final_relative_residual':max(r['final_relative_residual'] for r in rows)})
-    result={'schema':'rheon-multigrid-mixed-mode-report-v1','seed':args.seed,'cases':records,'aggregate':groups,
+    result={'schema':'rheon-multigrid-mixed-mode-report-v1','seed':args.seed,'mixtures':60,'signed_cases':len(records),'cases':records,'aggregate':groups,
         'weights_sha256':hashlib.sha256((args.artifacts/'weights.npz').read_bytes()).hexdigest(),
         'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'cuda_initialized':any(r['cuda_initialized'] for r in records),
         'used_cpus':sorted({c for r in records for c in r['affinity']}),
-        'scope':'120 analytical development mixtures, separate seed; not CFD simulations, no global convergence or native physical qualification claim'}
+        'scope':'60 analytical development mixtures at two signed amplitudes (120 cases), separate seed; not CFD simulations, no global convergence or native physical qualification claim'}
     (args.output/'report.json').write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
     print(json.dumps({k:v for k,v in result.items() if k!='cases'}),flush=True)
 

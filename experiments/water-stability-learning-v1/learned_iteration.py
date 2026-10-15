@@ -46,8 +46,23 @@ def equation_quality(model,pressure,sample,rhs,policy):
         and predicted<=policy['predicted_divergence']}
 
 
-def correct(model,network,normalization,sample,budget,stopping=None,trace=None):
-    validate_budget(budget,model.CORRECTION['steps'])
+def proposal_width(model,single_evaluation):
+    if type(single_evaluation) is not bool:raise ValueError('explicit boolean single-evaluation policy required')
+    if single_evaluation and model.ARCHITECTURE.get('schema')!='rheon-physical-residual-pressure-v1':
+        raise ValueError('single-evaluation policy requires captured physical-residual architecture')
+    return 1 if single_evaluation else model.CORRECTION['steps']
+
+
+def predict_proposal(model,network,sample,normalization,single_evaluation):
+    if not single_evaluation:return model.predict_pressure(network,sample,normalization)
+    # Reuse the captured recurrence owner without mutating its model configuration.
+    import physical_residual
+    return physical_residual.predict_pressure(network,sample,normalization,model.owner,
+        {**model.CORRECTION,'steps':1})
+
+
+def correct(model,network,normalization,sample,budget,stopping=None,trace=None,single_evaluation=False):
+    validate_budget(budget,proposal_width(model,single_evaluation))
     initial=sample['base'];pressure=initial
     if stopping is not None:
         stopping_policy(stopping)
@@ -59,7 +74,7 @@ def correct(model,network,normalization,sample,budget,stopping=None,trace=None):
             return pressure
     for index in range(budget):
         residual=sample['native_input_residual'] if index==0 else sample['native_input_residual']-model.full_operator(pressure-initial,sample['cell_size_m'],sample['rho'])
-        pressure=model.predict_pressure(network,{**sample,'base':pressure,'native_input_residual':residual},normalization)
+        pressure=predict_proposal(model,network,{**sample,'base':pressure,'native_input_residual':residual},normalization,single_evaluation)
         if stopping is not None:
             quality=equation_quality(model,pressure,sample,rhs,stopping)
             if trace is not None:trace.append({'proposals':index+1,**quality})
@@ -70,10 +85,10 @@ def correct(model,network,normalization,sample,budget,stopping=None,trace=None):
 
 def predict(task):
     import audit
-    parent,slot,case,budget,stopping=task
+    parent,slot,case,budget,stopping,single=task
     sample=audit.DATA.sample(parent,slot,labels=False)
     with audit.TORCH.no_grad():
-        trace=[];pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,budget,stopping,trace)
+        trace=[];pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,budget,stopping,trace,single)
     return case,pressure[0,0].numpy().copy(),os.getpid(),sorted(os.sched_getaffinity(0)),audit.TORCH.cuda.is_initialized(),trace
 
 
@@ -83,6 +98,7 @@ def main():
     parser.add_argument('--population',choices=('train','validation'),required=True)
     parser.add_argument('--proposals',type=int,choices=range(1,33),required=True)
     parser.add_argument('--adaptive-profile',type=Path)
+    parser.add_argument('--single-evaluation',action='store_true')
     args=parser.parse_args()
     stopping=stopping_policy(json.loads(args.adaptive_profile.read_text())) if args.adaptive_profile else None
     sys.path.insert(0,str(LAB/'experiments/water-residual-learning-v1'))
@@ -90,14 +106,15 @@ def main():
     sys.path.insert(0,str(args.project.absolute()))
     import data
     config=json.loads((args.project/'config.json').read_text())
-    validate_budget(args.proposals,config['correction']['steps'])
+    width=1 if args.single_evaluation else config['correction']['steps']
+    validate_budget(args.proposals,width)
     import numpy as np
     reservation,parents=data.read_view(args.packet.absolute())
     cases=[{'parent':i,'frame':slot,'native_frame':frame['index'],'trajectory_id':parent['entry']['trajectory_id'],
         'split':args.population,'counts_xyz':parent['counts_xyz'],'cell_size_m':parent['cell_size_m']}
         for i,parent in enumerate(parents) if parent['entry']['split']==args.population for slot,frame in enumerate(parent['frames'])]
     if not cases:raise ValueError('nonempty selected population required')
-    tasks=[(parents[c['parent']],c['frame'],c,args.proposals,stopping) for c in cases]
+    tasks=[(parents[c['parent']],c['frame'],c,args.proposals,stopping,args.single_evaluation) for c in cases]
     cpus=sorted(os.sched_getaffinity(0));cpus=cpus[1:] or cpus
     args.output.mkdir(parents=True,exist_ok=False)
     with ProcessPoolExecutor(max_workers=min(len(cpus),len(tasks)),mp_context=multiprocessing.get_context('spawn'),
@@ -116,8 +133,8 @@ def main():
         'packet_experiment_sha256':hashlib.sha256(data.canonical(reservation)).hexdigest(),
         'cases':cases,'prediction_inventory':data.inventory(arrays),'predictions_sha256':digest(args.output/'predictions.npz'),
         'runtime':{'device':'cpu','cuda_initialized':any(r[4] for r in records)},
-        'inference_policy':{'name':'fixed-repeated-learned-correction','proposals':args.proposals,
-            'nn_passes_per_pressure_solve':args.proposals*config['correction']['steps'],
+        'inference_policy':{'name':'fixed-repeated-learned-correction','proposals':args.proposals,'proposal_network_evaluations':width,
+            'nn_passes_per_pressure_solve':args.proposals*width,
             'native_pressure_refinement':False,'cpu_physical_arithmetic':'unchanged float64 operator/base accumulation'},
         'used_cpus':sorted({cpu for r in records for cpu in r[3]}),
         'source_sha256':{str(Path(__file__).relative_to(LAB)):digest(Path(__file__)),
@@ -126,7 +143,7 @@ def main():
         receipt['inference_policy'].update(name='adaptive-learned-correction',stopping=stopping,
             scope='equation/predicted-divergence stopping only; actual native physical checks remain required')
         receipt['case_iterations']=[{'case':r[0],'trace':r[5],'proposals':r[5][-1]['proposals'],
-            'network_passes':r[5][-1]['proposals']*config['correction']['steps']} for r in records]
+            'network_passes':r[5][-1]['proposals']*width} for r in records]
     (args.output/'receipt.json').write_text(json.dumps(receipt,indent=2,allow_nan=False)+'\n')
     print(json.dumps({'cases':len(cases),'policy':receipt['inference_policy'],'cuda_initialized':receipt['runtime']['cuda_initialized']}),flush=True)
 

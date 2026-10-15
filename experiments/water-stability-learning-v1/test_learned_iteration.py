@@ -82,4 +82,28 @@ class Iteration(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'at most 32'):correct(model,None,None,sample,budget)
 
 
+class ActualRecurrence(unittest.TestCase):
+    def test_four_uninterrupted_evaluations_preserve_pressure_and_count(self):
+        import sys
+        from pathlib import Path
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'water-conditioning-v1/training'))
+        import model
+        import test_residual
+        fixture=test_residual.Residual();fixture.setUp()
+        config=fixture.config;config['correction']['steps']=4;model.select(config)
+        network=model.PressureCorrectionNet().eval();calls=[]
+        hook=network.register_forward_hook(lambda *_:calls.append(1))
+        try:
+            with torch.no_grad():
+                original=correct(model,network,fixture.norm,fixture.sample,1)
+                self.assertEqual(len(calls),4);calls.clear()
+                split=correct(model,network,fixture.norm,fixture.sample,4,single_evaluation=True)
+                self.assertEqual(len(calls),4)
+            self.assertTrue(torch.equal(original,split))
+            self.assertEqual(model.CORRECTION['steps'],4)
+            with self.assertRaisesRegex(ValueError,'at most 32'):
+                correct(model,network,fixture.norm,fixture.sample,33,single_evaluation=True)
+        finally:hook.remove()
+
+
 if __name__=='__main__':unittest.main()

@@ -15,7 +15,7 @@ import time
 import audit
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'experiments/water-stability-learning-v1'))
-from learned_iteration import correct,stopping_policy,validate_budget
+from learned_iteration import correct,stopping_policy,validate_budget,proposal_width
 
 LIMIT=8*1024*1024
 
@@ -38,7 +38,7 @@ def messages(child,deadline):
     raise TimeoutError('native trajectory deadline')
 
 
-def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None):
+def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None,single_evaluation=False):
     if type(proposals) is not int or not 1<=proposals<=32 or control and proposals!=1:
         raise ValueError('at most 32 learned proposals; native control requires one')
     if stopping is not None:
@@ -46,7 +46,8 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
         if control:raise ValueError('native control does not use learned stopping')
     if not control:
         audit.initialize(project,artifacts,sorted(os.sched_getaffinity(0)))
-        validate_budget(proposals,audit.MODEL.CORRECTION['steps'])
+        width=proposal_width(audit.MODEL,single_evaluation)
+        validate_budget(proposals,width)
     output.mkdir(parents=True,exist_ok=False)
     (output/'scene.json').write_text(json.dumps(scene,indent=2)+'\n')
     environment={**os.environ,'OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1','RAYON_NUM_THREADS':'1','CUDA_VISIBLE_DEVICES':'','TULDOK_TORCH_DEVICE':'cpu'}
@@ -62,11 +63,11 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                     sample={key:torch.tensor(value[source],dtype=torch.float64).reshape(shape) for key,source in [('base','base_pressure'),('native_input_residual','native_input_residual')]}
                     sample.update(cell_size_m=torch.tensor([value['cell_size_m']],dtype=torch.float64),rho=torch.tensor([value['density_kg_m3']],dtype=torch.float64),dt=torch.tensor([value['dt_s']],dtype=torch.float64))
                     trace=[];inference_start=time.perf_counter()
-                    with torch.no_grad():pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,proposals,stopping,trace).flatten().tolist()
+                    with torch.no_grad():pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,proposals,stopping,trace,single_evaluation).flatten().tolist()
                     elapsed=time.perf_counter()-inference_start
                     with (output/'callbacks.jsonl').open('a') as stream:
                         stream.write(json.dumps({'step':value['id'],'model_correction_seconds':elapsed,
-                            'proposals':trace[-1]['proposals'],'network_passes':trace[-1]['proposals']*audit.MODEL.CORRECTION['steps'],
+                            'proposals':trace[-1]['proposals'],'network_passes':trace[-1]['proposals']*width,
                             'trace':trace},allow_nan=False)+'\n')
                     child.stdin.write(json.dumps({'id':value['id'],'pressure':pressure},allow_nan=False).encode()+b'\n');child.stdin.flush()
                 elif value['kind']=='frame':
@@ -95,7 +96,7 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                 'deployment_changed':False,'cuda_initialized':False if control else audit.TORCH.cuda.is_initialized(),
                 'learned_proposals_per_pressure_solve':None if control else proposals,
                 'native_pressure_refinement':False,
-                'adaptive_stopping':stopping,
+                'adaptive_stopping':stopping,'proposal_network_evaluations':None if control else width,
                 'qualified_native_frames':sum(bool((f.get('reference_quality') or {}).get('qualified')) for f in frames),
                 'worst_ai_relative_residual':max([f['ai_quality']['relative_residual'] or 0 for f in frames if f.get('ai_quality')] or [0]),
                 'worst_ai_actual_divergence':max([f['ai_quality']['actual_divergence'] for f in frames if f.get('ai_quality')] or [0])}
@@ -109,10 +110,11 @@ def main():
     parser.add_argument('--project',type=Path);parser.add_argument('--artifacts',type=Path);parser.add_argument('--reference-control',action='store_true')
     parser.add_argument('--proposals',type=int,choices=range(1,33),default=1)
     parser.add_argument('--adaptive-profile',type=Path)
+    parser.add_argument('--single-evaluation',action='store_true')
     args=parser.parse_args()
     if not args.reference_control and not (args.project and args.artifacts):parser.error('CPU restore project and artifacts required')
     stopping=stopping_policy(json.loads(args.adaptive_profile.read_text())) if args.adaptive_profile else None
-    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals,stopping=stopping)
+    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals,stopping=stopping,single_evaluation=args.single_evaluation)
     print(json.dumps(result),flush=True)
 
 

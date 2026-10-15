@@ -38,7 +38,10 @@ def messages(child,deadline):
     raise TimeoutError('native trajectory deadline')
 
 
-def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None,single_evaluation=False):
+def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None,single_evaluation=False,threads=1):
+    affinity=sorted(os.sched_getaffinity(0))
+    if type(threads) is not int or threads not in (1,4,8) or threads>len(affinity):
+        raise ValueError('one, four or eight CPU threads within explicit affinity required')
     if type(proposals) is not int or not 1<=proposals<=32 or control and proposals!=1:
         raise ValueError('at most 32 learned proposals; native control requires one')
     if stopping is not None:
@@ -46,11 +49,13 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
         if control:raise ValueError('native control does not use learned stopping')
     if not control:
         audit.initialize(project,artifacts,sorted(os.sched_getaffinity(0)))
+        os.sched_setaffinity(0,set(affinity))
+        audit.TORCH.set_num_threads(threads)
         width=proposal_width(audit.MODEL,single_evaluation)
         validate_budget(proposals,width)
     output.mkdir(parents=True,exist_ok=False)
     (output/'scene.json').write_text(json.dumps(scene,indent=2)+'\n')
-    environment={**os.environ,'OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1','RAYON_NUM_THREADS':'1','CUDA_VISIBLE_DEVICES':'','TULDOK_TORCH_DEVICE':'cpu'}
+    environment={**os.environ,'OMP_NUM_THREADS':str(threads),'MKL_NUM_THREADS':str(threads),'RAYON_NUM_THREADS':str(threads),'CUDA_VISIBLE_DEVICES':'','TULDOK_TORCH_DEVICE':'cpu'}
     command=[str(binary),*(['--reference-control'] if control else [])]
     started=time.perf_counter();complete=None;frames=[];error=None;terminated=False
     with (output/'native-stderr.log').open('wb') as stderr:
@@ -93,7 +98,7 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                 'native_process':{'pid':child.pid,'returncode':child.returncode,'reaped':child.poll() is not None,'terminated':terminated},
                 'source_project':str(project) if project else None,'cpu_restore':str(artifacts) if artifacts else None,
                 'kind':'native-algorithm-control' if control else 'raw-learned-independent-trajectory-after-native-warmup',
-                'deployment_changed':False,'cuda_initialized':False if control else audit.TORCH.cuda.is_initialized(),
+                'deployment_changed':False,'cpu_threads':threads,'cpu_affinity':sorted(os.sched_getaffinity(0)),'cuda_initialized':False if control else audit.TORCH.cuda.is_initialized(),
                 'learned_proposals_per_pressure_solve':None if control else proposals,
                 'native_pressure_refinement':False,
                 'adaptive_stopping':stopping,'proposal_network_evaluations':None if control else width,
@@ -111,10 +116,11 @@ def main():
     parser.add_argument('--proposals',type=int,choices=range(1,33),default=1)
     parser.add_argument('--adaptive-profile',type=Path)
     parser.add_argument('--single-evaluation',action='store_true')
+    parser.add_argument('--threads',type=int,choices=(1,4,8),default=1)
     args=parser.parse_args()
     if not args.reference_control and not (args.project and args.artifacts):parser.error('CPU restore project and artifacts required')
     stopping=stopping_policy(json.loads(args.adaptive_profile.read_text())) if args.adaptive_profile else None
-    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals,stopping=stopping,single_evaluation=args.single_evaluation)
+    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals,stopping=stopping,single_evaluation=args.single_evaluation,threads=args.threads)
     print(json.dumps(result),flush=True)
 
 

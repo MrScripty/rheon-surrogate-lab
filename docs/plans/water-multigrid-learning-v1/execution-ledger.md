@@ -60,3 +60,32 @@ multi-grid project a5e968a9ceb740c3b775ed14103bc519 in the same catalog. This is
 project snapshot, not a separate dataset catalog. Local CPU profile startup also
 caught a stdlib module-name collision; renamed profile.py to cpu_profile.py and
 retained its failed startup log. Neither issue is a model numerical result.
+
+Smoke completed/drained training Run 6327bdba13f3465ab82474241f23d52f and fresh
+CPU restore d488ff6ca3a84764ad9b33f9909d62fc. Ten CUDA updates, two analytical
+exposures per grid, 488,651,776 resident tensor bytes, peak CUDA allocation
+531,972,096 bytes; all weight/prediction bits restore exactly and artifacts
+reopen/redownload identically. Full 5,000-update one-pass multi-grid sequence
+was then submitted through the same workflow (source capture fb0eff6).
+
+CPU profiles cover 16/24/32/40-cubed with 1/4/8 Torch threads, identical mode
+mixtures and stopping. All sampled results satisfy the equation gate. Profiled
+convolution and tensor-fill cost dominate; four threads help this mechanism,
+but eight regress relative to four at 32-cubed. These microprofiles do not
+prove whole-CFD latency or fastest production settings. Added optional 1/4/8
+threads to the existing rollout owner and disjoint core groups to the study
+controller for a matched native/AI follow-up. Defaults remain one thread.
+Two process ownership tests still pass. Scientific source and deployment stay
+separate; this extension is execution policy, not a model change.
+
+Long-window native controls and current checkpoint complete 512 steps on all
+three small-grid scenes, with 1,491/1,491 learned steps qualified after warm-up.
+Forcing is explicitly quarter strength to keep the native controls physically
+valid at the longer fixed timestep; this does not extend the original full-force
+claim. Readiness of the broader cohort remains conditional on new fit results.
+
+The optional four-thread trajectory fixture qualifies native and learned tracks
+with one AI step after 15 native steps, explicit CPUs1–4 and observed four-thread
+budgets. All children reaped. Retained separate-seed 120-mixture CPU baseline
+uses up to all23 independent worker cores while CUDA fitting proceeds; low modes
+and arbitrary-frequency mixtures are distinguished rather than averaged away.

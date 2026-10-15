@@ -59,7 +59,7 @@ Milestones and acceptance claims:
    uninterrupted evaluations and counts actual work. State: Accepted.
 2. C2 required-real CUDA+Tuldok: smoke then full fit complete/drain, CPU restore
    preserves weights, managed artifacts reopen/redownload. Failed attempts are
-   retained and do not masquerade as completed fits. State: Planned.
+   retained and do not masquerade as completed fits. State: Active.
 3. C3 required-real CPU: matched stopping checkpoint comparison, development
    native gates and larger-grid trajectories retain accuracy/work counts. Native
    controls must qualify before interpreting candidate failures. State: Planned.
@@ -68,8 +68,8 @@ Milestones and acceptance claims:
 5. C5 artifact/system: evidence, methods, limits, custody and next decisions are
    retained and linked in the user's existing Tuldok project. State: Planned.
 
-Current acceptance: pending. Current phase: implementation and qualification.
-Exactly one next slice: qualify multi-grid bank and per-evaluation inference.
+Current acceptance: pending. Current phase: managed multi-grid training and independent CPU diagnosis.
+Exactly one next slice: complete the managed multi-grid fit and fresh CPU restore, then compare its development accuracy and work counts.
 Blockers: none. Replan on nonfinite training, Run lifecycle failure, invalid
 native controls, exceeded budgets, or a regression that blocks broader training.
 No untouched final population is consumed for development decisions.

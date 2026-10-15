@@ -36,3 +36,16 @@ than embedding historical hashes in executable logic. Use up to available cores
 minus one for independent numerical jobs. Each worker owns a fixed core and one
 Torch/native thread. Use `--workers 1` on an otherwise idle CPU for isolated,
 alternating repeated timings. Native/learned retain 1e-8/1e-6 equation profiles.
+
+`mode_probe.py` tests 120 independently seeded, signed low/broad-frequency mode
+mixtures over the same five grids. It records first-evaluation error, bounded
+32-evaluation stopping and sampled equation acceptance. Independent eigenvalues
+check the existing FV operator. These are development operator probes, not full
+fluid simulations or a proof of contraction for every residual.
+
+`study.py --threads 4 --workers 1 --timing-study` gives native and AI tracks the
+same four-core partition and explicit thread budgets. Three repetitions must be
+configured and unrelated task CPU/GPU work must finish first. Without
+`--timing-study`, even a serial run is qualification evidence only. The optional
+thread count is execution policy; it changes neither weights nor default
+single-threaded inference. A fresh one-AI-step fixture qualifies this path.

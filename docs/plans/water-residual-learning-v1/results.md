@@ -48,7 +48,34 @@ Neumann cosine eigenfunction and checks low-mode truncation.
 
 ## Managed experiments
 
-The two-update physical-residual smoke has completed CUDA optimization; its fresh
-CPU restore is currently being verified. Full nonlinear/linear trial source
-captures are assembled but have not yet been executed. See execution ledger and
-per-trial reports for terminal statuses as they become available.
+The two-update CUDA/CPU smoke passed and both Runs completed/drained, reopened
+and redownloaded with whole-artifact parity. Full nonlinear training completed
+10,000 updates at 91.44 updates/s in the optimizer interval; fresh CPU restore
+preserved exact predictions. Fitted native residual is 0.0005193531068, with
+0/1 physical qualification. Validation CPU diagnostic median is 0.04441808198,
+maximum 0.2910017402; native validation confirms the same errors and 0/128
+physical qualifications. All native child groups drain. Learned warm-start PCG
+uses 15,963 iterations including fallback versus 11,867 for native temporal PCG;
+this candidate does not accelerate the pressure solve. This improves
+on the matched one-frame baseline but remains above the earlier large-cohort
+median 0.0385793. Eight raw proposals reach median 0.01134085; all 128 rounded ideal
+float32 corrections pass the equation-only control. All 23 worker cores were used.
+
+The independent cube trajectory had 15 native warm-up steps and 26 actual model
+predictions before the unchanged physical hard stop at step 41; 0/26 learned
+proposals qualify, 41/41 native references qualify. Worst actual divergence reaches
+92.39115. The raw failure and drained child are retained; this is accumulated
+model error, not missing previous-pressure context. The native/native control
+qualifies all 49 post-warm-up steps of a 64-step run. Two rectangular force scenarios
+also have separate native controls and will evaluate learned checkpoints.
+
+The matched linear 10,000-update train completed; fresh CPU restore/development
+inference are pending. Recurrent, physical-feedback and matched 5,000-update
+single-correction trials remain managed/queued. A varied 16-simulation 32-state
+cohort has been prepared without starting training; expansion remains gated on
+credible known-case fitting. See execution ledger and per-trial reports for
+terminal statuses as they become available.
+
+
+Completed nonlinear trial: [full method/result record](reports/residual-nonlinear.json),
+including all three independent development trajectories and their hard stops.

@@ -1,6 +1,8 @@
 # Rheon Surrogate Lab
 
 Current model work uses [variable-shape pressure training](experiments/variable-pressure-v1/README.md).
+Explore its `[batch, channel, Z, Y, X]` inputs in the interactive
+[pressure tensor page](viewer/tensor.html), with [recorded-data instructions](viewer/TENSOR-README.md).
 Variable-domain capture uses [cubic physical cells](experiments/cubic-pressure-v1/README.md):
 16 cells per metre, with per-axis counts derived from domain size. Historical
 experiments below retain their original grids and results.

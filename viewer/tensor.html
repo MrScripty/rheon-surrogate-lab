@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inside the pressure tensor · Rheon</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,sans-serif;background:#10161f;color:#e8edf5;--muted:#acbbce;--line:#344254;--accent:#9be2c1}
+*{box-sizing:border-box}body{margin:0}main{max-width:1440px;margin:auto;padding:32px}h1{font-size:clamp(28px,4vw,46px);letter-spacing:-1.5px;margin:8px 0}h2{font-size:19px;margin:0 0 16px}p{margin:8px 0 16px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:2px;text-transform:uppercase}.muted,small{color:var(--muted)}code,output,.number{font-family:ui-monospace,monospace}button,select,input{font:inherit}button,select,input[type=number]{background:#1b2838;color:inherit;border:1px solid #53677f;border-radius:7px;padding:7px 10px}button{cursor:pointer}button:hover{background:#2b4054}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #ffd38a;outline-offset:3px}input[type=range]{accent-color:var(--accent);width:100%}input[type=file]{max-width:100%;font-size:13px}a{color:var(--accent)}.toolbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:20px 0}.toolbar label{display:flex;gap:10px;align-items:center}.shape{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;margin:24px 0}.axis{padding:12px 18px;background:#1a2634;border:1px solid var(--line);border-radius:10px;min-width:105px}.axis strong{font-size:28px;display:block}.axis span{font-size:12px;color:var(--muted)}.axis.spatial{border-bottom:3px solid var(--accent)}.layout{display:grid;grid-template-columns:230px minmax(0,1fr) 300px;gap:18px}.panel{background:#16202c;border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}.channels{border:0;padding:0;margin:0}.channels legend{font-weight:650;margin-bottom:12px}.channel{display:flex;gap:10px;padding:9px 8px;align-items:center;border-radius:7px;cursor:pointer}.channel:has(input:checked){background:#294237;outline:1px solid var(--accent)}.channel small{display:block;font-size:11px}.channel input{accent-color:var(--accent)}.channel b{font-size:13px;font-weight:500}.stage{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stage canvas{display:block;width:100%;height:310px;border-radius:9px;background:#111b26}.caption{font-size:12px;color:var(--muted);min-height:38px;margin:9px 0}.slice{cursor:crosshair;touch-action:manipulation}.legend{height:10px;border-radius:3px;background:linear-gradient(90deg,#3986d4,#28394b,#f5ac62);margin:12px 0 4px}.legend-labels{display:flex;justify-content:space-between;font:11px ui-monospace,monospace}.indices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.indices label{display:block;font-size:13px}.indices input[type=number]{width:100%;margin-top:5px}.formula{padding:14px;background:#101923;border-radius:9px;overflow-wrap:anywhere;font-size:13px}.values{width:100%;border-collapse:collapse;font-size:12px;margin:14px 0}.values th,.values td{padding:7px 3px;border-bottom:1px solid var(--line);text-align:left}.values td:last-child{text-align:right;font-family:ui-monospace,monospace}.values tr.selected{background:#294237}.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}.flow div{padding:10px 14px;background:#1a2634;border-radius:8px}.note{font-size:13px;border-left:3px solid var(--accent);padding-left:14px;margin:18px 0}.error{color:#ffb8b0}.bottom{margin-top:20px}.status{font-size:13px;min-height:20px}details{margin-top:14px;font-size:13px}summary{cursor:pointer}.count{font-size:12px;color:var(--muted)}
+@media(max-width:1150px){.layout{grid-template-columns:200px minmax(0,1fr)}.inspector{grid-column:1/-1}.values{max-width:600px}.stage canvas{height:290px}}
+@media(max-width:700px){main{padding:18px}.layout{grid-template-columns:1fr}.channels{display:grid;grid-template-columns:1fr 1fr}.channels legend{grid-column:1/-1}.stage{grid-template-columns:1fr}.stage canvas{height:280px}.axis{min-width:75px;padding:9px 12px}.axis strong{font-size:22px}.toolbar label{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<main>
+<div class="eyebrow">Rheon surrogate lab / model input explorer</div>
+<h1>Five dimensions. One voxel at a time.</h1>
+<p class="muted">Choose a sample, choose a channel, then look inside its 3D grid. Batch and channel are selectors; X, Y and Z are physical space.</p>
+<div class="toolbar">
+<label>Sample <select id="batch" aria-label="Batch sample"></select></label>
+<label>Illustrative grid <select id="preset"><option value="" disabled>Recorded data selected</option><option value="16,16,16" selected>16 × 16 × 16 · 1 m cube</option><option value="24,16,12">24 × 16 × 12 · rectangular domain</option><option value="9,7,5">9 × 7 × 5 · odd dimensions</option><option value="17,13,9">17 × 13 × 9 · odd dimensions</option></select></label>
+<label>Load actual tensor <input id="file" type="file" accept=".json,application/json"></label>
+</div>
+<p id="source" class="note"></p>
+<div class="shape" id="shape" aria-label="Input tensor shape"></div>
+<div class="layout">
+<section class="panel"><fieldset class="channels" id="channels"><legend>1 / Choose a channel</legend></fieldset><p class="count">Ten fields over the same grid.<br>Channels do not add physical dimensions.</p></section>
+<section class="panel">
+<h2>2 / Explore the spatial dimensions</h2>
+<div class="stage">
+<div><canvas id="volume" role="img" aria-label="3D domain with selected Z slice and selected voxel"></canvas><p class="caption">A physical box of cubic voxels. The highlighted plane is the selected Z slice.</p></div>
+<div><canvas id="slice" class="slice" role="img" aria-label="XY slice; select a voxel by clicking, or use the X and Y controls below"></canvas><p class="caption">XY slice: X increases right, Y increases up. Click a cell, or select its indices below.</p></div>
+</div>
+<div class="legend" aria-hidden="true"></div><div class="legend-labels"><span id="minimum"></span><span>Channel values · entire selected sample</span><span id="maximum"></span></div>
+<div class="indices">
+<label>X index <input id="x" type="number" min="0" value="0" step="1"></label>
+<label>Y index <input id="y" type="number" min="0" value="0" step="1"></label>
+<label>Z index <input id="z" type="number" min="0" value="0" step="1"></label>
+</div>
+<label for="plane">Move through Z slices</label><input id="plane" type="range" min="0" value="0" step="1">
+<p id="geometry" class="count"></p>
+</section>
+<section class="panel inspector">
+<h2>3 / Read a single value</h2>
+<div id="address" class="formula"></div>
+<p id="description" class="muted" style="font-size:13px"></p>
+<p class="count">Values shown to six significant digits. Exact stored float32 value: <output id="exact"></output></p>
+<table class="values"><caption>All ten inputs at this voxel</caption><thead><tr><th scope="col">Channel</th><th scope="col">Model value</th></tr></thead><tbody id="values"></tbody></table>
+<p id="physical" class="count"></p>
+</section>
+</div>
+<section class="panel bottom">
+<h2>What comes out?</h2>
+<div class="flow"><div><code id="inputShape"></code><br><small>Ten input fields</small></div><span aria-hidden="true">→</span><div>Pressure network</div><span aria-hidden="true">→</span><div><code id="outputShape"></code><br><small>One correction per voxel</small></div></div>
+<p class="muted">The correction is rescaled to pascals, given a zero-cell gauge, and added to the previous pressure. This page inspects inputs; it does not run the pressure network.</p>
+<details><summary>Array order, physical sizes and actual data</summary><p>The order is <code>[batch, channel, z, y, x]</code>. X is fastest in the flattened array. A batch entry is a separate sample, not another spatial direction. This dense tensor contains samples with matching shapes; training handles differently shaped samples separately and accumulates their gradients.</p><p>Voxels have one shared edge length h: domain lengths are <code>[Nx × h, Ny × h, Nz × h]</code>. At 16 cells per metre, h = 0.0625 m. Increasing one axis adds voxels, preserving cubic cells.</p><p>Residual, previous pressure, spacing, density and time step use the saved training normalization. Position channels are physical cell centres in metres with unit scale 1 m. The table displays the actual float32 numbers passed to the network. Pressure residual means <code>b − A × previous_pressure</code>; reference solved pressure is a training target, not an input channel.</p><p>Load a JSON export from <code>scripts/export_pressure_tensor.py</code> to inspect recorded inputs. Without an export this page uses deterministic illustrative values, clearly labelled above. Shape support alone does not establish pressure accuracy.</p></details>
+</section>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+</main>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const channels = [
+ ['native_residual','Pressure residual','b − A × previous pressure; normalized unresolved pressure equation.'],
+ ['previous_pressure','Previous pressure','The previously accepted pressure, divided by the training pressure scale.'],
+ ['x','X position','Physical X cell centre in metres.'],['y','Y position','Physical Y cell centre in metres.'],['z','Z position','Physical Z cell centre in metres.'],
+ ['hx','Voxel size X','Cubic cell edge length, divided by the shared spacing scale.'],['hy','Voxel size Y','Equal to X and Z spacing; cells are cubic.'],['hz','Voxel size Z','Equal to X and Y spacing; cells are cubic.'],
+ ['rho','Density','Fluid density divided by its saved normalization scale.'],['dt','Time step','Simulation time step divided by its saved normalization scale.']
+];
+let state = {b:0,c:0,x:0,y:0,z:0}, tensor, extent = [0,0], sliceBounds, loadGeneration = 0;
+const short = value => value === 0 ? '0' : (Math.abs(value) < .001 || Math.abs(value) >= 10000 ? value.toExponential(4) : Number(value.toPrecision(6)).toString());
+const shapeText = shape => '[' + shape.join(', ') + ']';
+function index(b,c,z,y,x){ const [,nc,nz,ny,nx] = tensor.shape; return ((((b*nc+c)*nz+z)*ny+y)*nx+x); }
+function value(c,z=state.z,y=state.y,x=state.x){ return tensor.values[index(state.b,c,z,y,x)]; }
+function demo(counts){
+ const [nx,ny,nz] = counts, h = .0625, values = new Float32Array(2*10*nx*ny*nz);
+ let i=0;
+ for(let b=0;b<2;b++)for(let c=0;c<10;c++)for(let z=0;z<nz;z++)for(let y=0;y<ny;y++)for(let x=0;x<nx;x++){
+  const a=(x+.5)/nx,d=(y+.5)/ny,e=(z+.5)/nz;
+  values[i++] = c===0 ? Math.sin(a*6.28+b*.7)*Math.cos(d*4)*Math.sin(e*3) : c===1 ? .6*Math.cos(a*3+b*.5)*Math.sin(d*3)*e : c===2 ? (x+.5)*h : c===3 ? (y+.5)*h : c===4 ? (z+.5)*h : c<8 ? h : c===8 ? 1.25 : 1/60;
+ }
+ return {schema:'rheon-pressure-tensor-view-v1',shape:[2,10,nz,ny,nx],values,spacing_m:[h,h,h],channels:channels.map(c=>c[0]),samples:[{label:'Illustrative sample A'},{label:'Illustrative sample B'}],source:'Illustrative values, not simulation or training results. Positions and cubic geometry are physical; residual and pressure patterns are schematic.'};
+}
+function validate(data){
+ const s=data.shape,h=data.spacing_m;
+ if(data.schema!=='rheon-pressure-tensor-view-v1' || !Array.isArray(s) || s.length!==5 || !s.every(Number.isSafeInteger) || s[0]<1 || s[0]>4 || s[1]!==10 || s.slice(2).some(n=>n<1) || s[2]*s[3]*s[4]>65536)throw Error('Expected [batch 1–4, 10, Z, Y, X], with positive axes and at most 65,536 cells per sample.');
+ if(!Array.isArray(h)||h.length!==3||!h.every(v=>Number.isFinite(v)&&v>0&&v===h[0]))throw Error('Voxel edge lengths must be finite, positive and equal.');
+ if(!Array.isArray(data.values)||data.values.length!==s.reduce((a,b)=>a*b,1)||!data.values.every(v=>typeof v==='number'&&Number.isFinite(v)&&Number.isFinite(Math.fround(v))))throw Error('Tensor payload must contain exactly the declared finite float32 values.');
+ if(!Array.isArray(data.channels)||data.channels.length!==10||!data.channels.every((name,i)=>name===channels[i][0])||!Array.isArray(data.samples)||data.samples.length!==s[0]||!data.samples.every(v=>v&&typeof v.label==='string')||typeof data.source!=='string')throw Error('Channel order and sample/source labels must match the export contract.');
+ return {...data, values:Float32Array.from(data.values)};
+}
+function install(data){
+ tensor=data; state={b:0,c:0,x:Math.floor(data.shape[4]/2),y:Math.floor(data.shape[3]/2),z:Math.floor(data.shape[2]/2)};
+ $('batch').replaceChildren(...data.samples.map((sample,b)=>new Option(sample.label,String(b))));
+ $('source').textContent=data.source;
+ $('shape').replaceChildren(...data.shape.map((n,i)=>{const box=document.createElement('div');box.className='axis'+(i>1?' spatial':'');const number=document.createElement('strong');number.textContent=n;const label=document.createElement('span');label.textContent=['BATCH','CHANNELS','Z · DEPTH','Y · HEIGHT','X · WIDTH'][i];box.append(number,label);return box;}));
+ for(const axis of ['x','y','z'])$(axis).max=data.shape[{x:4,y:3,z:2}[axis]]-1;
+ $('plane').max=data.shape[2]-1;
+ document.querySelector('input[name=channel][value="0"]').checked=true;
+ const [nb,,nz,ny,nx]=data.shape,h=data.spacing_m[0];
+ $('geometry').textContent=`Cubic voxel: ${short(h)} m × ${short(h)} m × ${short(h)} m. Domain XYZ: ${short(nx*h)} × ${short(ny*h)} × ${short(nz*h)} m. ${nx*ny*nz} voxels/sample; ${data.values.length.toLocaleString()} input numbers.`;
+ $('inputShape').textContent=shapeText(data.shape);$('outputShape').textContent=shapeText([nb,1,nz,ny,nx]);
+ updateRange();render();
+}
+function updateRange(){
+ const n=tensor.shape.slice(2).reduce((a,b)=>a*b,1), start=(state.b*10+state.c)*n;
+ let lo=Infinity,hi=-Infinity;for(let i=start;i<start+n;i++){lo=Math.min(lo,tensor.values[i]);hi=Math.max(hi,tensor.values[i]);}extent=[lo,hi];
+ $('minimum').textContent=short(lo);$('maximum').textContent=short(hi);
+ document.querySelector('.legend').style.background=lo===hi?'#70b9af':'';
+}
+function color(v){
+ const [lo,hi]=extent;if(lo===hi)return '#70b9af';
+ const mid=lo<0&&hi>0?0:(lo+hi)/2;
+ const a=v<=mid?[57,134,212]:[40,57,75],b=v<=mid?[40,57,75]:[245,172,98];
+ const t=v<=mid?(v-lo)/(mid-lo||1):(v-mid)/(hi-mid||1);
+ return `rgb(${a.map((v,i)=>Math.round(v+(b[i]-v)*t)).join(',')})`;
+}
+function context(id){const canvas=$(id),r=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1;canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);return [ctx,r.width,r.height];}
+function polygon(ctx,points,fill,stroke){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();}}
+function drawSlice(){
+ const [ctx,w,h]=context('slice'),[, ,nz,ny,nx]=tensor.shape,step=Math.min((w-56)/nx,(h-50)/ny),left=(w-nx*step)/2,top=(h-ny*step)/2;
+ sliceBounds={left,top,step,nx,ny};
+ for(let y=0;y<ny;y++)for(let x=0;x<nx;x++){ctx.fillStyle=color(value(state.c,state.z,y,x));ctx.fillRect(left+x*step,top+(ny-y-1)*step,step,step);if(step>5){ctx.strokeStyle='#10192355';ctx.strokeRect(left+x*step,top+(ny-y-1)*step,step,step);}}
+ ctx.strokeStyle='#fff';ctx.lineWidth=2.5;ctx.strokeRect(left+state.x*step+1,top+(ny-state.y-1)*step+1,Math.max(1,step-2),Math.max(1,step-2));
+ ctx.fillStyle='#c1cedf';ctx.font='12px system-ui';ctx.fillText(`X → 0 … ${nx-1}`,left,top+ny*step+20);ctx.fillText(`Y ↑`,4,Math.max(16,top));
+ $('slice').setAttribute('aria-label',`Channel ${channels[state.c][1]}, Z slice ${state.z} of ${nz}. Selected X ${state.x}, Y ${state.y}: ${short(value(state.c))}. Use index controls to select any cell.`);
+}
+function drawVolume(){
+ const [ctx,w,h]=context('volume'),[,,nz,ny,nx]=tensor.shape;
+ const raw=(x,y,z)=>[.86*(x-y),.38*(x+y)-z],corners=[];
+ for(const x of [0,nx])for(const y of [0,ny])for(const z of [0,nz])corners.push(raw(x,y,z));
+ const minX=Math.min(...corners.map(p=>p[0])),maxX=Math.max(...corners.map(p=>p[0])),minY=Math.min(...corners.map(p=>p[1])),maxY=Math.max(...corners.map(p=>p[1]));
+ const scale=Math.min((w-62)/(maxX-minX),(h-60)/(maxY-minY)),ox=(w-(maxX+minX)*scale)/2,oy=(h-(maxY+minY)*scale)/2;
+ const p=(x,y,z)=>{const a=raw(x,y,z);return [ox+a[0]*scale,oy+a[1]*scale];};
+ ctx.strokeStyle='#71849b';ctx.lineWidth=1;
+ for(const x of [0,nx])for(const y of [0,ny]){ctx.beginPath();ctx.moveTo(...p(x,y,0));ctx.lineTo(...p(x,y,nz));ctx.stroke();}
+ for(const z of [0,nz])polygon(ctx,[p(0,0,z),p(nx,0,z),p(nx,ny,z),p(0,ny,z)],null,'#71849b');
+ const z=state.z+.5;
+ for(let y=0;y<ny;y++)for(let x=0;x<nx;x++)polygon(ctx,[p(x,y,z),p(x+1,y,z),p(x+1,y+1,z),p(x,y+1,z)],color(value(state.c,state.z,y,x)),nx<50&&ny<50?'#10192355':null);
+ const x=state.x,y=state.y;
+ polygon(ctx,[p(x,y,state.z),p(x+1,y,state.z),p(x+1,y+1,state.z),p(x,y+1,state.z)],null,'#fff');
+ polygon(ctx,[p(x,y,state.z+1),p(x+1,y,state.z+1),p(x+1,y+1,state.z+1),p(x,y+1,state.z+1)],null,'#fff');
+ for(const a of [x,x+1])for(const b of [y,y+1]){ctx.beginPath();ctx.moveTo(...p(a,b,state.z));ctx.lineTo(...p(a,b,state.z+1));ctx.strokeStyle='#fff';ctx.stroke();}
+ ctx.fillStyle='#c1cedf';ctx.font='12px system-ui';for(const [label,point] of [['X',p(nx,0,0)],['Y',p(0,ny,0)],['Z',p(0,0,nz)]])ctx.fillText(label,point[0]+5,point[1]-4);
+}
+function render(){
+ for(const axis of ['x','y','z'])$(axis).value=state[axis];$('plane').value=state.z;
+ $('address').textContent=`input[${state.b}, ${state.c}, ${state.z}, ${state.y}, ${state.x}] = ${short(value(state.c))}`;
+ $('exact').textContent=String(value(state.c));
+ $('description').textContent=channels[state.c][2];
+ $('values').replaceChildren(...channels.map((channel,c)=>{const row=document.createElement('tr');if(c===state.c)row.className='selected';const name=document.createElement('th');name.scope='row';name.textContent=`${c} · ${channel[1]}`;const cell=document.createElement('td');cell.textContent=short(value(c));row.append(name,cell);return row;}));
+ const h=tensor.spacing_m[0];$('physical').textContent=`Cell centre XYZ: (${short((state.x+.5)*h)}, ${short((state.y+.5)*h)}, ${short((state.z+.5)*h)}) m. Flat array offset: ${index(state.b,state.c,state.z,state.y,state.x)}. Float32: 4 bytes/value.`;
+ drawSlice();drawVolume();
+}
+channels.forEach((channel,c)=>{const label=document.createElement('label');label.className='channel';const radio=document.createElement('input');radio.type='radio';radio.name='channel';radio.value=c;const text=document.createElement('span'),title=document.createElement('b'),hint=document.createElement('small');title.textContent=`${c} · ${channel[1]}`;hint.textContent=channel[0];text.append(title,hint);label.append(radio,text);$('channels').append(label);radio.addEventListener('change',()=>{state.c=c;updateRange();render();});});
+$('batch').addEventListener('change',()=>{state.b=Number($('batch').value);updateRange();render();});
+$('preset').addEventListener('change',()=>{loadGeneration++;install(demo($('preset').value.split(',').map(Number)));$('status').className='status';$('status').textContent='Illustrative grid selected.';});
+for(const axis of ['x','y','z'])$(axis).addEventListener('input',()=>{const n=$(axis).valueAsNumber;if(Number.isInteger(n)){state[axis]=Math.max(0,Math.min(Number($(axis).max),n));render();}});
+$('plane').addEventListener('input',()=>{state.z=Number($('plane').value);render();});
+$('slice').addEventListener('click',event=>{const r=$('slice').getBoundingClientRect(),g=sliceBounds,x=Math.floor((event.clientX-r.left-g.left)/g.step),y=g.ny-1-Math.floor((event.clientY-r.top-g.top)/g.step);if(x>=0&&x<g.nx&&y>=0&&y<g.ny){state.x=x;state.y=y;render();}});
+async function loadText(text,generation){const data=validate(JSON.parse(text));if(generation===loadGeneration){install(data);$('preset').value='';$('status').className='status';$('status').textContent='Recorded tensor loaded. Values are float32 network inputs.';}}
+function loadError(error,generation){if(generation===loadGeneration){$('status').className='status error';$('status').textContent='Tensor could not be loaded: '+error.message;}}
+$('file').addEventListener('change',async()=>{const file=$('file').files[0];if(!file)return;const generation=++loadGeneration;try{if(file.size>64*1024*1024)throw Error('File exceeds the 64 MiB viewer limit.');await loadText(await file.text(),generation);}catch(error){loadError(error,generation);}});
+window.addEventListener('resize',()=>{if(tensor)render();});
+install(demo([16,16,16]));
+const dataPath=new URLSearchParams(location.search).get('data');
+if(dataPath){const generation=++loadGeneration;(async()=>{try{const url=new URL(dataPath,location.href);if(url.origin!==location.origin||!['http:','https:'].includes(url.protocol))throw Error('URL data must be served from this page’s origin.');const response=await fetch(url);if(!response.ok)throw Error('HTTP '+response.status);const reader=response.body.getReader(),decoder=new TextDecoder();let text='',bytes=0;try{for(;;){const chunk=await reader.read();if(chunk.done)break;bytes+=chunk.value.length;if(bytes>64*1024*1024)throw Error('Response exceeds the 64 MiB viewer limit.');text+=decoder.decode(chunk.value,{stream:true});}text+=decoder.decode();}finally{await reader.cancel();}await loadText(text,generation);}catch(error){loadError(error,generation);}})();}
+</script>
+</body>
+</html>

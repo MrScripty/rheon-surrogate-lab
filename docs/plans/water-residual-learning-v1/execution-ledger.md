@@ -18,3 +18,14 @@ ID already referred to the prior snapshot. Assign a new snapshot ID, retaining
 the old project and the same catalog/root. No Run was submitted by that failed
 registration. The initial observer used system Python without NumPy; restart
 with the existing laboratory virtual environment. No source/model change.
+
+Source 725b100 captured physical-residual smoke and full nonlinear/linear trials.
+CUDA smoke Run 455586b9f3c24a06ba0b50df1d932c12 completed two actual updates;
+float32 params/gradients/Adam moments on RTX 5090 Laptop GPU, deterministic,
+AMP/TF32 off. Fresh CPU restore remains pending. Distinct project snapshot
+54e60e2d5f8a4267a002d8d11e5e2666 registered in the original catalog.
+
+CPU diagnostics commit fc2b160: independent spectral regression passes; old
+no-GroupNorm validation audit completed on 128 states, 23 one-thread workers
+(22 observed cores), 7.59s, no CUDA. Summary retained in reports. Full analytic
+control is not AI success; eight raw learned proposals do not converge well.

@@ -1,6 +1,6 @@
 # Water pressure learning sequence
 
-Status: Implementing. Canonical operation: execute the user's approved sequence
+Status: Completed experiments; model accuracy remains unqualified. Canonical operation: execute the user's approved sequence
 and retain measured results. Serial owner: root. Lab branch
 experiment/water-learning-sequence-v1 from a842606. No push or merge. Historical
 experiments, accepted Rheon comparison branch and dirty original checkouts remain
@@ -96,3 +96,50 @@ The schedule retains the historical 1e-4 transition at update 1,000, then adds
 1e-5 at 6,000. Thus long-256 preserves the original first 2,000-update optimization
 prefix. Compare its saved update-2,000 tensor inventory to the frozen baseline;
 any mismatch must be reported before claiming an update-only continuation.
+
+User viewer correction (while training proceeds): current observer cycles between
+sparse saved states from distinct domains, hiding each complete simulation. The
+user also requests native translucent voxels and a force widget with geometry,
+location, magnitude and swirl/fluctuation parameters. Add a separate observation
+slice: probes/water-preview-v1 and preview support here, plus isolated Rheon branch
+feat/live-training-force-preview in runs/water-learning-sequence-v1/Rheon from
+66e5038. Do not alter frozen captures, training views or in-flight managed sources.
+Replay 64 native steps for representative training scenes, emit all states without
+changing numerics, and require byte-exact parity with original retained fields.
+Use one pinned simulation timeline with playback, not mixed-domain publications.
+Share Rheon's native voxel geometry/color/mesh path, preserving ordinary viewport
+behavior; add bounded opacity and force overlays and exact parameter labels.
+The old serving viewer's dirty source remains untouched. Native numerical tracer
+is not static: original train-0000 changes in all 4,096 cells between retained
+states, maximum difference 0.04560749; this is evidence about arrays, not proof the
+current renderer shows transport clearly. The new view defaults to water velocity
+voxels, with passive tracer and pressure as separate inspection fields.
+
+
+Completion evidence: all four 10,000-update CUDA trials and fresh CPU checks
+completed. The matched 1,024-parent candidate reduced median validation residual
+15.5% and worsened the worst residual 9.9%; it qualified 0/128 fresh reserved
+proposals. The one-case fit also failed its pressure gate. See results.md and
+acceptance.json; no threshold, model architecture or loss was changed. All
+historical results remain. Original first-2,000-update tensor inventory parity is
+exact. All 13 scientific managed stages and the two smoke stages completed/drained.
+
+Observation accepted separately: native transport's analytical one-cell test
+passes on all axes; the first one-second scene moves only 0.227 voxel. During
+optimizer updates the observer shows saved inputs rather than advancing fluid.
+The corrected viewer pins one physical-time trajectory; longer native-only
+continuations show 2.056 and 4.244 voxel travel and preserve every original saved
+field exactly. See observation.md and its measured reports. Semi-Lagrangian
+tracer diffusion remains explicitly identified. New Rheon commit fe9d586 on
+feat/live-training-force-preview is retained/protected for the active viewer and
+Tuldok source references, owned by this task for Jeremy; retire its clean
+worktree after accepted integration and consumer migration. No push/merge or
+cleanup of other worktrees occurred.
+
+All 768 new training parents and two full preview sequences are in the original
+Tuldok catalog; auxiliary validation/reserved fields were excluded from that
+publication. Project snapshot 179bf8ae04184187b1e5d1895a4faf23 carries the current
+source, activity and result references while earlier snapshots remain intact.
+Local experiment artifacts occupy under 1 GiB; the filesystem retains over
+1 GiB free. The next scientific question is the one-case fitting/conditioning
+gap, before treating more data as sufficient for a qualified pressure solve.

@@ -1,6 +1,19 @@
 # Rheon Surrogate Lab
 
-Current model work uses [varied sealed domains full of water](experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The unchanged seven-channel network completed 2,000 CUDA updates on 256 training simulations, with 64 validation and 64 reserved test simulations. Median reserved equation residual was 4.37%, but **0/128 model proposals passed** the pressure gates. Fresh CPU restore and all managed artifacts qualified. See [measured results and previous-run comparison](docs/plans/sealed-water-pressure-v1/results.md).
+The latest [controlled water learning sequence](docs/plans/water-learning-sequence-v1/results.md)
+completed four 10,000-update CUDA trials with fresh CPU checks. Increasing training
+simulations from 256 to 1,024 reduced median validation equation error by 15.5%
+and worsened the worst error by 9.9%. The selected candidate still qualified
+**0/128 fresh reserved pressure proposals**. The one-case fit also failed its
+pressure gate. Architecture, loss, float32 target and physical gates stayed fixed.
+
+[Continuous native water playback](docs/plans/water-learning-sequence-v1/observation.md)
+now pins one scene, uses Rheon's translucent voxels and shows its actual force
+and velocity. Training progress and recorded simulation time are separate:
+optimizer updates reuse saved states. Both preview timelines and all 768 added
+training simulations are in the existing Tuldok data collection.
+
+The preceding baseline uses [varied sealed domains full of water](experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The unchanged seven-channel network completed 2,000 CUDA updates on 256 training simulations, with 64 validation and 64 reserved test simulations. Median reserved equation residual was 4.37%, but **0/128 model proposals passed** the pressure gates. Fresh CPU restore and all managed artifacts qualified. See [measured results and previous-run comparison](docs/plans/sealed-water-pressure-v1/results.md).
 
 The [fresh native / AI comparison](experiments/live-water-comparison-v1/README.md)
 now uses 15 native warm-up steps before the first prediction and offers signed

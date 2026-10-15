@@ -1,6 +1,8 @@
 # Water pressure conditioning experiments
 
-Active operation: implement and execute Jeremy's approved diagnosis sequence.
+Status: Accepted bounded diagnostic/execution tranche; model accuracy unqualified.
+
+Completed operation: implement and execute Jeremy's approved diagnosis sequence.
 Owner: root, serial source integration. Branch experiment/water-conditioning-v1
 from 4402db4915ecd1f5267d217317c011595ee7ab3e. Preserve historical source, results,
 captures and unrelated dirty Rheon checkouts. Retain this private branch for
@@ -147,8 +149,8 @@ performance benchmark result alone.
 
 GPU execution acceptance measured: baseline and resident batch-1 controls have
 identical checkpoint inventories at updates 0, 2 and 500. Measured training
-interval rates are 31.1926 and 42.0984 updates/s; profile scalar extractions fall
-from 2,520 to 1,030 per ten updates, copies from 100 to 30. Batch-4 gives
+interval rates are 31.1926 and 42.0984 updates/s; profile CPU/CUDA scalar extractions fall
+from 2,520 to 1,030 per ten updates, tensor copy/conversion calls from 100 to 30. Batch-4 gives
 41.3233 updates/s, 165.293 samples/s, on repeated fixture data. These intervals
 include optimizer/cache setup and the bounded profiler window; they are not
 steady-state kernel-only or full Tuldok workflow times. CPU restores and
@@ -194,3 +196,24 @@ execution slice: qualify the prepared-fields managed CUDA/CPU run, then retain
 all results and next-model recommendations. Device utilization observations are
 aggregate samples including open apps and setup; do not substitute them for
 measured training throughput or full-workflow timings.
+
+
+Metric clarification: legacy profile artifacts call aten::_to_copy counts
+host_device_copies; that count includes device dtype conversions. Scalar extraction
+counts include CPU and CUDA scalars. Retain the original artifacts, interpret them
+with those exact scopes, and use cudaStreamSynchronize for direct wait counts
+(1,960 baseline versus 400 resident per ten updates). Future profile schema v2
+names copy/conversion and synchronization counts explicitly. No optimization or
+accuracy claim depends on counting all scalar events as GPU readbacks.
+
+
+Completion: 25 normal managed stages are completed/drained, 52,002 CUDA updates
+and fresh CPU restores/inference retained. Every new accuracy candidate still
+fails its fitted/validation native gates. The prepared execution path preserves
+all baseline parameter bits at 0/2/500 and reaches 52.181 versus 31.193 updates/s.
+See results.md and reports/summary.json for full measurements and limits. CPU
+next-model work is prepared in next-steps.md. No additional dataset expansion or
+unqualified deployment follows from these results. Branch remains retained under
+the declared review/continuation contract; no worktree was created by this tranche.
+The next scientific slice is the physically conditioned residual/linear correction
+experiment in next-steps.md, with unchanged gates and a fresh deployment contract.

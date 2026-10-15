@@ -106,8 +106,8 @@ one Run at a time, so concurrent GPU training is a distinct future scheduler tas
 Version-3 `no-groupnorm.json` is a separate architecture ablation: scalar-unit
 conditioning and the original one-frame schedule, with parameter-free GroupNorm
 layers replaced by Identity and every seeded parameter retained. It uses the
-qualified resident-input execution. Its distinct architecture profile prevents
-accidental interpretation through the historical deployment adapter. This tests
+qualified resident-input execution. Its distinct architecture profile identifies a new deployment contract; the
+historical adapter requires an explicit update before interpreting these models. This tests
 normalization as a cause of the fitting gap; it does not assume it is the cause.
 
 

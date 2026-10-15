@@ -230,7 +230,7 @@ def run(args):
         training_started_unix = time.time()
         cache = {(i,slot):data.sample(parent,slot,device=device) for i,parent in enumerate(parents) if parent['entry']['split']=='train' for slot in range(len(parent['frames']))} if strategy['resident_inputs'] else None
         prepared={key:PreparedSample(sample,normalization) for key,sample in cache.items()} if strategy.get('prepared_fields') else None
-        profile_report = {'enabled':False,'execution':strategy}
+        profile_report = {'schema':'rheon-cuda-training-profile-v2','enabled':False,'execution':strategy}
         def capture_profile(profiler):
             events = profiler.key_averages()
             require(any(getattr(e,'self_device_time_total',0)>0 for e in events),
@@ -242,7 +242,9 @@ def run(args):
                 top_cpu=[row(e) for e in sorted(events,key=lambda e:e.self_cpu_time_total,reverse=True)[:20]],
                 top_device=[row(e) for e in sorted(events,key=lambda e:getattr(e,'self_device_time_total',0),reverse=True)[:20]],
                 scalar_extractions=sum(e.count for e in events if e.key=='aten::_local_scalar_dense'),
-                host_device_copies=sum(e.count for e in events if e.key=='aten::_to_copy'))
+                scalar_extraction_scope='CPU and CUDA tensor scalar extraction calls',
+                tensor_copy_or_conversion_calls=sum(e.count for e in events if e.key=='aten::_to_copy'),
+                cuda_stream_synchronizations=sum(e.count for e in events if e.key=='cudaStreamSynchronize'))
         profiler = torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,torch.profiler.ProfilerActivity.CUDA],
             schedule=torch.profiler.schedule(wait=10,warmup=1,active=strategy['profile_updates'],repeat=1),
             on_trace_ready=capture_profile) if strategy['profile_updates'] else nullcontext()

@@ -1,11 +1,14 @@
 # Rheon Surrogate Lab
 
-The active [pressure conditioning experiments](docs/plans/water-conditioning-v1/plan.md)
-check the single-frame learning gap before further dataset expansion. CUDA
-training overlaps independent CPU amplitude and iterative-correction diagnostics;
-historical runs and physical acceptance limits remain preserved.
+The latest [pressure conditioning experiments](docs/plans/water-conditioning-v1/results.md)
+completed 25 managed CUDA/CPU stages. In the 500-update controls, preparing
+immutable training tensors makes training about 67% faster with identical
+retained checkpoints. Removing GroupNorm
+reduces the fitted-frame residual to 0.000398, but it still fails the 1e-6 target.
+The [next model experiments](docs/plans/water-conditioning-v1/next-steps.md) address
+representation and linear/coarse correction before more dataset expansion.
 
-The latest [controlled water learning sequence](docs/plans/water-learning-sequence-v1/results.md)
+The preceding [controlled water learning sequence](docs/plans/water-learning-sequence-v1/results.md)
 completed four 10,000-update CUDA trials with fresh CPU checks. Increasing training
 simulations from 256 to 1,024 reduced median validation equation error by 15.5%
 and worsened the worst error by 9.9%. The selected candidate still qualified

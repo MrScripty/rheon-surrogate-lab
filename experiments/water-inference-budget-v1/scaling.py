@@ -98,10 +98,11 @@ def main():
                         'mean_network_passes':statistics.mean(t for r in runs for t in r['network_passes']),
                         'timing_samples':len(ai)}
             report={'schema':'rheon-pressure-scaling-report-v1','source_sha256':digest(Path(__file__)),'config_sha256':digest(args.config),
-                'binary_sha256':digest(args.binary),'weights_sha256':digest(args.artifacts/'weights.npz'),
+                'binary_sha256':digest(args.binary),'weights_sha256':digest(args.artifacts/'weights.npz'),'configuration':config,
                 'source_witness_sha256':digest(args.project/'source-witness.json'),'cpu':args.cpu,'torch_threads':1,
                 'started_at_utc':datetime.fromtimestamp(started,timezone.utc).isoformat(),'elapsed_s':time.time()-started,
-                'runtime':{'python':sys.executable,'cuda_initialized':False},'records':records,
+                'runtime':{'python':sys.executable,'cuda_initialized':False,
+                    'checkpoint_runtime':json.loads((args.artifacts/'receipt.json').read_text())['runtime']},'records':records,
                 'scope':'actual short trajectories; whole Engine.advance timing including prepare/projection/IPC; neural callback separately recorded; no isolated native pressure timing',
                 'tolerances':{'native_relative_residual':1e-8,'ai_relative_residual':1e-6,'predicted_divergence':1e-7},
                 'warmup':'15 native history steps plus one excluded AI timing step per run',

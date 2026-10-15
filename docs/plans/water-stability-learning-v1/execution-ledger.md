@@ -118,3 +118,15 @@ one-pass training, adaptive inference, broader data and deployment are prepared
 follow-ups, not completed results. Source 54365af retains the qualified repeated
 CPU policy. Final derived summary indexes four immutable trial records and all
 11 normal Tuldok stages, excluding retained baseline updates from new totals.
+
+Final records committed in 4eef8dd. Tuldok initially rejected 73 evidence
+references (64 maximum); 0d6eebc retains a 64-reference final index, removing
+only older source shortcuts. Historical snapshots and files remain intact.
+Final project 6f8e1667cd0e46759c15cb48c70221f5 registered successfully in the
+existing catalog; receipt retained. The exact task-owned observer was stopped
+and reaped, then final live activity published completed 11/11. No managed jobs
+remain running. Review of the full branch range and whitespace checks passed;
+no model weights, simulation datasets, Rheon/Tuldok source or old result records
+were committed/changed. This tranche is accepted as experimental evidence, with
+32-evaluation development qualification only. Follow-up one-pass training has
+not started.

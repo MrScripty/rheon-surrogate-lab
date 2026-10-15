@@ -1,6 +1,6 @@
 # Stability-aware pressure learning
 
-Status: Verifying (experiment evidence; no one-pass or deployment qualification).
+Status: Accepted (experiment evidence; no one-pass or deployment qualification).
 Admission: start, authorized by the user's “proceed” following
 the retained residual-learning next sequence. Previous tranche remains accepted
 as experiment evidence, with no qualified learned solver.
@@ -67,14 +67,15 @@ Acceptance claims (all automated): focused analytical/configuration checks
 CPU restore (required-real GPU/Tuldok); native teacher-state and three independent
 trajectory comparisons after 15 native warm-up steps (required-real native CPU);
 durable method/results/checkpoint custody and project evidence (system).
-Current acceptance: partial; final project comparison links are pending.
+Current acceptance: satisfied for the scoped experiment and iterative development policy.
 C1 focused/deterministic/automated: satisfied (18 model checks, two residual-feedback
 checks, two process checks, two real-source rejection checks, report CLI check).
 C2 system/required-real GPU and Tuldok/automated: satisfied (11 completed/drained
 stages, 15,002 CUDA updates, fresh CPU parity and whole redownloads).
 C3 system/required-real native CPU/automated: satisfied for the scoped comparison
 and separately qualified iterative policy; see results.md and per-trial reports.
-C4 system/required-real Tuldok/automated: verifying final comparison/evidence index.
+C4 system/required-real Tuldok/automated: satisfied; final project index registered
+and receipt retained in reports/project-registration.json.
 Scientific completion does not imply model
 qualification. Numerical gates stay 1e-6 equation residual plus existing physical
 limits. A sampled mode pass is not a convergence guarantee. Final candidate is
@@ -86,9 +87,9 @@ Resource limits: one managed GPU trainer, 600 seconds and 32 MiB output per Run;
 available distinct cores, one Torch thread each, following measured throughput.
 Analytical generation/cache is bounded and captured with configuration/source.
 
-Current phase: publish and verify the final comparison/evidence index.
-Exactly one next slice: register final project links, retain its receipt, resolve
-all task-owned controllers, and seal the completed experiment record.
+Current phase: complete; final comparison/evidence index registered.
+Exactly one next slice: none within this completed tranche. Prepared follow-ups
+remain untrained. All experiment controllers and the task-owned observer exited.
  Standards MCP snapshot
 snapshot:v1:1a9db05b-79b2-439d-b423-d316efeeb5a0.
 

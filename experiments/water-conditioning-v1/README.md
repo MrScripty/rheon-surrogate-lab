@@ -109,3 +109,11 @@ layers replaced by Identity and every seeded parameter retained. It uses the
 qualified resident-input execution. Its distinct architecture profile prevents
 accidental interpretation through the historical deployment adapter. This tests
 normalization as a cause of the fitting gap; it does not assume it is the cause.
+
+
+`gpu-prepared.json` opts into version-4 preparation of immutable input features,
+operator coefficients and loss denominators. Canonical validation runs once per
+captured sample; learned values and optimizer state remain checked each update.
+CPU regression requires identical predictions/loss/gradients, and managed CUDA
+qualification requires exact checkpoint inventory parity through 500 updates.
+The ordinary deployment path and its zero-residual bypass are unchanged.

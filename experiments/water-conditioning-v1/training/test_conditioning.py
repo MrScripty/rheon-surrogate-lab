@@ -3,6 +3,7 @@ import unittest
 import torch
 import model
 import train
+from prepared import PreparedSample
 
 
 class Conditioning(unittest.TestCase):
@@ -88,6 +89,25 @@ class Conditioning(unittest.TestCase):
             difference=torch.linalg.vector_norm(parameter.grad-expected)
             limit=1e-4*torch.linalg.vector_norm(expected)+1e-6
             self.assertLessEqual(float(difference),float(limit))
+
+    def test_prepared_fields_preserve_prediction_loss_and_parameter_gradients(self):
+        self.select('amplitude-and-units')
+        sample={key:value.clone() for key,value in self.sample.items()}
+        sample['reference']=sample['base']+.1*sample['native_input_residual']
+        sample['reference']-=sample['reference'][:,:,0:1,0:1,0:1].clone()
+        sample['rhs']=model.full_operator(sample['reference'],sample['cell_size_m'],sample['rho'])
+        sample['native_input_residual']=sample['rhs']-model.full_operator(sample['base'],sample['cell_size_m'],sample['rho'])
+        prepared=PreparedSample(sample,self.norm)
+        canonical=model.predict_pressure(self.net,sample,self.norm)
+        self.assertTrue(torch.equal(canonical,prepared.prediction(self.net)))
+        self.assertTrue(torch.equal(prepared.operator(canonical),model.full_operator(canonical,sample['cell_size_m'],sample['rho'])))
+        loss=model.pressure_loss(canonical,sample,self.norm).mean()
+        loss.backward();gradients=[p.grad.clone() for p in self.net.parameters()]
+        self.net.zero_grad(set_to_none=True)
+        actual=prepared.loss(self.net).mean()
+        self.assertTrue(torch.equal(actual,loss));actual.backward()
+        for (name,parameter),expected in zip(self.net.named_parameters(),gradients):
+            self.assertTrue(torch.equal(parameter.grad,expected),name)
 
 
 if __name__=='__main__':unittest.main()

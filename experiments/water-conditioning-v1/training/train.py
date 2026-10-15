@@ -14,6 +14,7 @@ import torch
 from policy import HERE, MIB, canonical, decode, execution, experiment, load_module, read, require, sha, write
 import data
 import model
+from prepared import PreparedSample
 
 DATA = data.DATA
 
@@ -52,7 +53,7 @@ def finite_tensors(tensors):
     return bool(torch.isfinite(torch.cat([value.detach().reshape(-1) for value in tensors])).all())
 
 
-def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None):
+def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None):
     network.train(); optimizer.zero_grad(set_to_none=True)
     strategy=strategy or {'finite_checks':'per-tensor','batch_mode':'serial'}
     samples=[cache[(int(parent),int(frame))] if cache is not None else
@@ -62,9 +63,13 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
         require(len({tuple(s['base'].shape[2:]) for s in samples})==1,'batch_shape','stack only identical grid dimensions')
         samples=[{key:torch.cat([sample[key] for sample in samples],dim=0) for key in samples[0]}]
     losses = []
-    for sample in samples:
+    for position,sample in enumerate(samples):
         require(all(value.device == next(network.parameters()).device for value in sample.values()), 'batch_device', 'all conditioning and fields colocated')
-        loss = model.pressure_loss(model.predict_pressure(network, sample, normalization), sample, normalization).mean()
+        if prepared is not None:
+            parent,slot=indices[position]
+            loss=prepared[(int(parent),int(slot))].loss(network).mean()
+        else:
+            loss = model.pressure_loss(model.predict_pressure(network, sample, normalization), sample, normalization).mean()
         require(bool(torch.isfinite(loss)), 'training_nonfinite', 'per-frame loss')
         if loss.requires_grad:
             (loss/len(samples)).backward()
@@ -224,6 +229,7 @@ def run(args):
         checkpoint(0); initial_loss = evaluate(network, parents, normalization)
         training_started_unix = time.time()
         cache = {(i,slot):data.sample(parent,slot,device=device) for i,parent in enumerate(parents) if parent['entry']['split']=='train' for slot in range(len(parent['frames']))} if strategy['resident_inputs'] else None
+        prepared={key:PreparedSample(sample,normalization) for key,sample in cache.items()} if strategy.get('prepared_fields') else None
         profile_report = {'enabled':False,'execution':strategy}
         def capture_profile(profiler):
             events = profiler.key_averages()
@@ -248,7 +254,7 @@ def run(args):
                 for change in config['training']['schedule']:
                     if change['update'] == update:
                         for group in optimizer.param_groups: group['lr'] = change['learning_rate']
-                loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy)
+                loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared)
                 verify_cuda_update(network, optimizer, combined=strategy['finite_checks']=='combined')
                 if update % 100 == 0:
                     with torch.no_grad():

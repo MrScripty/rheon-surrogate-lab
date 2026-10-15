@@ -176,3 +176,21 @@ CPU/GPU throughput controls. Increase the task-owned retention bound from 500 to
 currently remains free, preserving the unchanged 1 GiB reserve. This is a local
 experiment retention bound, not an increase to any Tuldok recipe/runtime cap.
 Do not delete scientific artifacts or overwrite old captures to fit the bound.
+
+
+Further measured execution slice: the resident path still performs 103 scalar
+reads per update, including validation of immutable conditioning/physics fields.
+Version-4 execution can prepare those fields and loss denominators once using the
+canonical contracts. It retains network input, raw correction, reconstructed
+pressure, loss, parameter, gradient and Adam-state finite checks during updates.
+The cached operator keeps the canonical arithmetic order and coefficients; CPU
+regression proves identical prediction, loss and all parameter gradients. Require
+identical CUDA inventories at 0/2/500 before acceptance. This is an execution
+change; model/loss semantics, float32 parameters and physical gates are unchanged.
+The opt-in currently supports resident, fully active, serial training samples;
+ordinary deployment and exact-zero handling retain the checked public path.
+No-GroupNorm continues from its earlier immutable capture. Exactly one next
+execution slice: qualify the prepared-fields managed CUDA/CPU run, then retain
+all results and next-model recommendations. Device utilization observations are
+aggregate samples including open apps and setup; do not substitute them for
+measured training throughput or full-workflow timings.

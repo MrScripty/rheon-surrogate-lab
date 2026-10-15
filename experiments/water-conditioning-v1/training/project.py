@@ -83,7 +83,7 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     require(state_bytes <= 2*MIB and projection <= config['resources']['max_output_bytes'], 'output_projection', 'bounded declared complete states')
     qualification = {'status':'passed','optimizer_constructed':False,'optimizer_updates':0,'normalization_sha256':sha(canonical(normalization)),
         'grid_shapes_xyz':checked,'zero_residual_exact':True,'physical_cells':'cubic','train_parents':len(train_ids),'validation_parents':len(val_ids),'reserved_test_parents':len(test_ids),'output_projection_bytes':projection}
-    sources = {name: read(HERE/name, 2*MIB) for name in ('policy.py','support.py','scenes.py','model.py','data.py','train.py','test_inference.py')}
+    sources = {name: read(HERE/name, 2*MIB) for name in ('policy.py','support.py','scenes.py','model.py','data.py','train.py','prepared.py','test_inference.py')}
     for name,path in [('portable_model.py','experiments/cuda-pressure-v1/model.py'),('portable_policy.py','experiments/cuda-pressure-v1/policy.py'),
         ('frozen_gn.py','experiments/global-pressure-v1/groupnorm-v1/model.py'),('historical-reservation.json','docs/plans/global-pressure-correction-v1/reservation.json')]: sources[name] = read(LAB/path, MIB)
     for name in ('model','train','data'): sources['original_'+name+'.py'] = read(LAB/'experiments/global-pressure-v1/training'/(name+'.py'), MIB)

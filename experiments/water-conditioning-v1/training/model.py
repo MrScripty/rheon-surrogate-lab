@@ -20,7 +20,7 @@ NORMALIZATION='groupnorm'
 
 def select(config):
     global SELECTED,NORMALIZATION
-    require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3'),
+    require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'),
             'conditioning_configuration','explicit versioned model transformation')
     SELECTED=config['conditioning']
     NORMALIZATION=config.get('normalization','groupnorm')

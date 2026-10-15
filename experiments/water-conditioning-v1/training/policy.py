@@ -20,9 +20,9 @@ def experiment(value):
         return base_experiment(value)
     version=value.get('schema')
     expected={'schema','id','training','resources','conditioning'}
-    if version in ('rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3'):expected.add('execution')
-    if version=='rheon-water-conditioning-experiment-v3':expected.add('normalization')
-    require(set(value)==expected and version in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3'),
+    if version in ('rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'):expected.add('execution')
+    if version in ('rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'):expected.add('normalization')
+    require(set(value)==expected and version in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'),
             'conditioning_configuration','closed versioned experiment')
     require(value['conditioning'] in ('scalar-units','amplitude-and-units'),
             'conditioning_configuration','declared feature/output transformation')
@@ -37,10 +37,16 @@ def experiment(value):
 
 def execution(config):
     selected=config.get('execution',{'resident_inputs':False,'finite_checks':'per-tensor','batch_mode':'serial','profile_updates':0})
-    require(type(selected) is dict and set(selected)=={'resident_inputs','finite_checks','batch_mode','profile_updates'}
+    expected={'resident_inputs','finite_checks','batch_mode','profile_updates'}
+    if config['schema']=='rheon-water-conditioning-experiment-v4':expected.add('prepared_fields')
+    require(type(selected) is dict and set(selected)==expected
             and type(selected['resident_inputs']) is bool and selected['finite_checks'] in ('per-tensor','combined')
             and selected['batch_mode'] in ('serial','stacked') and type(selected['profile_updates']) is int
             and 0<=selected['profile_updates']<=20,'execution_configuration','closed measured execution strategy')
+    if 'prepared_fields' in selected:
+        require(type(selected['prepared_fields']) is bool and (not selected['prepared_fields'] or
+                selected['resident_inputs'] and selected['batch_mode']=='serial'),
+                'prepared_inputs','prepared fields require resident serial execution')
     require(not selected['profile_updates'] or config['training']['updates']>=12+selected['profile_updates'],
             'profile_budget','warm-up followed by complete capture window')
     return selected

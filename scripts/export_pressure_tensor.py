@@ -9,10 +9,6 @@ from pathlib import Path
 import sys
 
 LAB = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(LAB / 'experiments/variable-pressure-v1'))
-import data
-import model
-import torch
 
 
 def main():
@@ -23,7 +19,13 @@ def main():
     parser.add_argument('--parent', type=int, default=1)
     parser.add_argument('--frames', type=int, nargs='+', default=[0, 23])
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--model-profile', choices=('variable-pressure-v2', 'variable-pressure-v1'), default='variable-pressure-v2',
+                        help='Current seven-channel model, or the preserved ten-channel model')
     args = parser.parse_args()
+    sys.path.insert(0, str(LAB / 'experiments' / args.model_profile))
+    import data
+    import model
+    import torch
     if not 1 <= len(args.frames) <= 4 or any(not 0 <= f < 24 for f in args.frames):
         parser.error('Select one to four frame indices in 0..23.')
     raw = args.packet.read_bytes()
@@ -40,13 +42,16 @@ def main():
     samples = []
     for frame in args.frames:
         sample = data.sample(parent, frame, labels=False)
+        geometry = sample['cell_size_m'] if args.model_profile == 'variable-pressure-v2' else sample['spacing']
         tensors.append(model.build_inputs(sample['native_input_residual'], sample['base'],
-                                         sample['spacing'], sample['rho'], sample['dt'], normalization))
+                                         geometry, sample['rho'], sample['dt'], normalization))
         samples.append({'label': f"{parent['entry']['trajectory_id']} · frame {frame}",
                         'frame': frame, 'input_sha256': parent['frames'][frame]['sha256']})
     tensor = torch.cat(tensors, dim=0).contiguous()
     export = {'schema': 'rheon-pressure-tensor-view-v1', 'shape': list(tensor.shape),
-              'channels': model.CHANNELS, 'spacing_m': parent['spacing_m'], 'samples': samples,
+              'channels': model.CHANNELS,
+              'spacing_m': [parent['cell_size_m']]*3 if args.model_profile == 'variable-pressure-v2' else parent['spacing_m'],
+              'samples': samples, 'model_profile': args.model_profile,
               'values': tensor.reshape(-1).tolist(),
               'source': f"Recorded model inputs · {parent['entry']['trajectory_id']} · "
                         f"{parent['entry']['split']} parent · frames {', '.join(map(str, args.frames))}. "

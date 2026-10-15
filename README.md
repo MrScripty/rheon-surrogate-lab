@@ -1,6 +1,7 @@
 # Rheon Surrogate Lab
 
-Current model work uses [variable-shape pressure training](experiments/variable-pressure-v1/README.md).
+Current model work uses [seven-channel variable-shape pressure training](experiments/variable-pressure-v2/README.md).
+Voxel size is one scalar in physical metadata, with no voxel-size network channels.
 Explore its `[batch, channel, Z, Y, X]` inputs in the interactive
 [pressure tensor page](viewer/tensor.html), with [recorded-data instructions](viewer/TENSOR-README.md).
 Variable-domain capture uses [cubic physical cells](experiments/cubic-pressure-v1/README.md):

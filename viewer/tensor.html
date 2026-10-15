@@ -24,7 +24,7 @@
 <p id="source" class="note"></p>
 <div class="shape" id="shape" aria-label="Input tensor shape"></div>
 <div class="layout">
-<section class="panel"><fieldset class="channels" id="channels"><legend>1 / Choose a channel</legend></fieldset><p class="count">Ten fields over the same grid.<br>Channels do not add physical dimensions.</p></section>
+<section class="panel"><fieldset class="channels" id="channels"><legend>1 / Choose a channel</legend></fieldset><p class="count"><span id="channelCount"></span> fields over the same grid.<br>Channels do not add physical dimensions.</p></section>
 <section class="panel">
 <h2>2 / Explore the spatial dimensions</h2>
 <div class="stage">
@@ -45,54 +45,59 @@
 <div id="address" class="formula"></div>
 <p id="description" class="muted" style="font-size:13px"></p>
 <p class="count">Values shown to six significant digits. Exact stored float32 value: <output id="exact"></output></p>
-<table class="values"><caption>All ten inputs at this voxel</caption><thead><tr><th scope="col">Channel</th><th scope="col">Model value</th></tr></thead><tbody id="values"></tbody></table>
+<table class="values"><caption id="tableCaption">Inputs at this voxel</caption><thead><tr><th scope="col">Channel</th><th scope="col">Model value</th></tr></thead><tbody id="values"></tbody></table>
 <p id="physical" class="count"></p>
 </section>
 </div>
 <section class="panel bottom">
 <h2>What comes out?</h2>
-<div class="flow"><div><code id="inputShape"></code><br><small>Ten input fields</small></div><span aria-hidden="true">→</span><div>Pressure network</div><span aria-hidden="true">→</span><div><code id="outputShape"></code><br><small>One correction per voxel</small></div></div>
+<div class="flow"><div><code id="inputShape"></code><br><small id="inputFields"></small></div><span aria-hidden="true">→</span><div>Pressure network</div><span aria-hidden="true">→</span><div><code id="outputShape"></code><br><small>One correction per voxel</small></div></div>
 <p class="muted">The correction is rescaled to pascals, given a zero-cell gauge, and added to the previous pressure. This page inspects inputs; it does not run the pressure network.</p>
-<details><summary>Array order, physical sizes and actual data</summary><p>The order is <code>[batch, channel, z, y, x]</code>. X is fastest in the flattened array. A batch entry is a separate sample, not another spatial direction. This dense tensor contains samples with matching shapes; training handles differently shaped samples separately and accumulates their gradients.</p><p>Voxels have one shared edge length h: domain lengths are <code>[Nx × h, Ny × h, Nz × h]</code>. At 16 cells per metre, h = 0.0625 m. Increasing one axis adds voxels, preserving cubic cells.</p><p>Residual, previous pressure, spacing, density and time step use the saved training normalization. Position channels are physical cell centres in metres with unit scale 1 m. The table displays the actual float32 numbers passed to the network. Pressure residual means <code>b − A × previous_pressure</code>; reference solved pressure is a training target, not an input channel.</p><p>Load a JSON export from <code>scripts/export_pressure_tensor.py</code> to inspect recorded inputs. Without an export this page uses deterministic illustrative values, clearly labelled above. Shape support alone does not establish pressure accuracy.</p></details>
+<details><summary>Array order, physical sizes and actual data</summary><p>The order is <code>[batch, channel, z, y, x]</code>. X is fastest in the flattened array. A batch entry is a separate sample, not another spatial direction. This dense tensor contains samples with matching shapes; training handles differently shaped samples separately and accumulates their gradients.</p><p>Voxels have one shared edge length h: domain lengths are <code>[Nx × h, Ny × h, Nz × h]</code>. At 16 cells per metre, h = 0.0625 m. Increasing one axis adds voxels, preserving cubic cells. The current network receives seven channels, with no voxel-size channel. One scalar h stays in physical metadata for coordinates and the pressure equation. Historical ten-channel exports retain their original spacing channels.</p><p>Residual, previous pressure, density and time step use the saved training normalization. Position channels are physical cell centres in metres with unit scale 1 m. Pressure residual means <code>b − A × previous_pressure</code>; reference solved pressure is a training target, not an input channel.</p><p>Load a JSON export from <code>scripts/export_pressure_tensor.py</code> to inspect recorded inputs. Without an export this page uses deterministic illustrative values, clearly labelled above. Shape support alone does not establish pressure accuracy.</p></details>
 </section>
 <p id="status" class="status" role="status" aria-live="polite"></p>
 </main>
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
-const channels = [
+const channelCatalog = [
  ['native_residual','Pressure residual','b − A × previous pressure; normalized unresolved pressure equation.'],
  ['previous_pressure','Previous pressure','The previously accepted pressure, divided by the training pressure scale.'],
  ['x','X position','Physical X cell centre in metres.'],['y','Y position','Physical Y cell centre in metres.'],['z','Z position','Physical Z cell centre in metres.'],
  ['hx','Voxel size X','Cubic cell edge length, divided by the shared spacing scale.'],['hy','Voxel size Y','Equal to X and Z spacing; cells are cubic.'],['hz','Voxel size Z','Equal to X and Y spacing; cells are cubic.'],
  ['rho','Density','Fluid density divided by its saved normalization scale.'],['dt','Time step','Simulation time step divided by its saved normalization scale.']
 ];
+const sevenChannels = channelCatalog.filter(channel=>!['hx','hy','hz'].includes(channel[0]));
+let channels = sevenChannels;
 let state = {b:0,c:0,x:0,y:0,z:0}, tensor, extent = [0,0], sliceBounds, loadGeneration = 0;
 const short = value => value === 0 ? '0' : (Math.abs(value) < .001 || Math.abs(value) >= 10000 ? value.toExponential(4) : Number(value.toPrecision(6)).toString());
 const shapeText = shape => '[' + shape.join(', ') + ']';
 function index(b,c,z,y,x){ const [,nc,nz,ny,nx] = tensor.shape; return ((((b*nc+c)*nz+z)*ny+y)*nx+x); }
 function value(c,z=state.z,y=state.y,x=state.x){ return tensor.values[index(state.b,c,z,y,x)]; }
 function demo(counts){
- const [nx,ny,nz] = counts, h = .0625, values = new Float32Array(2*10*nx*ny*nz);
+ const [nx,ny,nz] = counts, h = .0625, values = new Float32Array(2*7*nx*ny*nz);
  let i=0;
- for(let b=0;b<2;b++)for(let c=0;c<10;c++)for(let z=0;z<nz;z++)for(let y=0;y<ny;y++)for(let x=0;x<nx;x++){
+ for(let b=0;b<2;b++)for(let c=0;c<7;c++)for(let z=0;z<nz;z++)for(let y=0;y<ny;y++)for(let x=0;x<nx;x++){
   const a=(x+.5)/nx,d=(y+.5)/ny,e=(z+.5)/nz;
-  values[i++] = c===0 ? Math.sin(a*6.28+b*.7)*Math.cos(d*4)*Math.sin(e*3) : c===1 ? .6*Math.cos(a*3+b*.5)*Math.sin(d*3)*e : c===2 ? (x+.5)*h : c===3 ? (y+.5)*h : c===4 ? (z+.5)*h : c<8 ? h : c===8 ? 1.25 : 1/60;
+  values[i++] = c===0 ? Math.sin(a*6.28+b*.7)*Math.cos(d*4)*Math.sin(e*3) : c===1 ? .6*Math.cos(a*3+b*.5)*Math.sin(d*3)*e : c===2 ? (x+.5)*h : c===3 ? (y+.5)*h : c===4 ? (z+.5)*h : c===5 ? 1.25 : 1/60;
  }
- return {schema:'rheon-pressure-tensor-view-v1',shape:[2,10,nz,ny,nx],values,spacing_m:[h,h,h],channels:channels.map(c=>c[0]),samples:[{label:'Illustrative sample A'},{label:'Illustrative sample B'}],source:'Illustrative values, not simulation or training results. Positions and cubic geometry are physical; residual and pressure patterns are schematic.'};
+ return {schema:'rheon-pressure-tensor-view-v1',shape:[2,7,nz,ny,nx],values,spacing_m:[h,h,h],channels:sevenChannels.map(c=>c[0]),samples:[{label:'Illustrative sample A'},{label:'Illustrative sample B'}],source:'Illustrative seven-channel inputs, not simulation or training results. No voxel-size channels. Positions and cubic geometry are physical; residual and pressure patterns are schematic.'};
 }
 function validate(data){
  const s=data.shape,h=data.spacing_m;
- if(data.schema!=='rheon-pressure-tensor-view-v1' || !Array.isArray(s) || s.length!==5 || !s.every(Number.isSafeInteger) || s[0]<1 || s[0]>4 || s[1]!==10 || s.slice(2).some(n=>n<1) || s[2]*s[3]*s[4]>65536)throw Error('Expected [batch 1–4, 10, Z, Y, X], with positive axes and at most 65,536 cells per sample.');
+ if(data.schema!=='rheon-pressure-tensor-view-v1' || !Array.isArray(s) || s.length!==5 || !s.every(Number.isSafeInteger) || s[0]<1 || s[0]>4 || ![7,10].includes(s[1]) || s.slice(2).some(n=>n<1) || s[2]*s[3]*s[4]>65536)throw Error('Expected [batch 1–4, 7 (current) or 10 (historical), Z, Y, X], with positive axes and at most 65,536 cells per sample.');
  if(!Array.isArray(h)||h.length!==3||!h.every(v=>Number.isFinite(v)&&v>0&&v===h[0]))throw Error('Voxel edge lengths must be finite, positive and equal.');
  if(!Array.isArray(data.values)||data.values.length!==s.reduce((a,b)=>a*b,1)||!data.values.every(v=>typeof v==='number'&&Number.isFinite(v)&&Number.isFinite(Math.fround(v))))throw Error('Tensor payload must contain exactly the declared finite float32 values.');
- if(!Array.isArray(data.channels)||data.channels.length!==10||!data.channels.every((name,i)=>name===channels[i][0])||!Array.isArray(data.samples)||data.samples.length!==s[0]||!data.samples.every(v=>v&&typeof v.label==='string')||typeof data.source!=='string')throw Error('Channel order and sample/source labels must match the export contract.');
+ const expected=s[1]===7?sevenChannels:channelCatalog;
+ if(!Array.isArray(data.channels)||data.channels.length!==s[1]||!data.channels.every((name,i)=>name===expected[i][0])||!Array.isArray(data.samples)||data.samples.length!==s[0]||!data.samples.every(v=>v&&typeof v.label==='string')||typeof data.source!=='string')throw Error('Channel order and sample/source labels must match the export contract.');
  return {...data, values:Float32Array.from(data.values)};
 }
 function install(data){
  tensor=data; state={b:0,c:0,x:Math.floor(data.shape[4]/2),y:Math.floor(data.shape[3]/2),z:Math.floor(data.shape[2]/2)};
+ channels=data.shape[1]===7?sevenChannels:channelCatalog;buildChannels();
+ $('channelCount').textContent=channels.length;$('tableCaption').textContent=`All ${channels.length} inputs at this voxel`;$('inputFields').textContent=`${channels.length} input fields`;
  $('batch').replaceChildren(...data.samples.map((sample,b)=>new Option(sample.label,String(b))));
- $('source').textContent=data.source;
+ $('source').textContent=(data.shape[1]===10?'Historical ten-channel model · ':'')+data.source;
  $('shape').replaceChildren(...data.shape.map((n,i)=>{const box=document.createElement('div');box.className='axis'+(i>1?' spatial':'');const number=document.createElement('strong');number.textContent=n;const label=document.createElement('span');label.textContent=['BATCH','CHANNELS','Z · DEPTH','Y · HEIGHT','X · WIDTH'][i];box.append(number,label);return box;}));
  for(const axis of ['x','y','z'])$(axis).max=data.shape[{x:4,y:3,z:2}[axis]]-1;
  $('plane').max=data.shape[2]-1;
@@ -103,7 +108,7 @@ function install(data){
  updateRange();render();
 }
 function updateRange(){
- const n=tensor.shape.slice(2).reduce((a,b)=>a*b,1), start=(state.b*10+state.c)*n;
+ const n=tensor.shape.slice(2).reduce((a,b)=>a*b,1), start=(state.b*tensor.shape[1]+state.c)*n;
  let lo=Infinity,hi=-Infinity;for(let i=start;i<start+n;i++){lo=Math.min(lo,tensor.values[i]);hi=Math.max(hi,tensor.values[i]);}extent=[lo,hi];
  $('minimum').textContent=short(lo);$('maximum').textContent=short(hi);
  document.querySelector('.legend').style.background=lo===hi?'#70b9af':'';
@@ -152,7 +157,7 @@ function render(){
  const h=tensor.spacing_m[0];$('physical').textContent=`Cell centre XYZ: (${short((state.x+.5)*h)}, ${short((state.y+.5)*h)}, ${short((state.z+.5)*h)}) m. Flat array offset: ${index(state.b,state.c,state.z,state.y,state.x)}. Float32: 4 bytes/value.`;
  drawSlice();drawVolume();
 }
-channels.forEach((channel,c)=>{const label=document.createElement('label');label.className='channel';const radio=document.createElement('input');radio.type='radio';radio.name='channel';radio.value=c;const text=document.createElement('span'),title=document.createElement('b'),hint=document.createElement('small');title.textContent=`${c} · ${channel[1]}`;hint.textContent=channel[0];text.append(title,hint);label.append(radio,text);$('channels').append(label);radio.addEventListener('change',()=>{state.c=c;updateRange();render();});});
+function buildChannels(){const legend=document.createElement('legend');legend.textContent='1 / Choose a channel';$('channels').replaceChildren(legend);channels.forEach((channel,c)=>{const label=document.createElement('label');label.className='channel';const radio=document.createElement('input');radio.type='radio';radio.name='channel';radio.value=c;const text=document.createElement('span'),title=document.createElement('b'),hint=document.createElement('small');title.textContent=`${c} · ${channel[1]}`;hint.textContent=channel[0];text.append(title,hint);label.append(radio,text);$('channels').append(label);radio.addEventListener('change',()=>{state.c=c;updateRange();render();});});}
 $('batch').addEventListener('change',()=>{state.b=Number($('batch').value);updateRange();render();});
 $('preset').addEventListener('change',()=>{loadGeneration++;install(demo($('preset').value.split(',').map(Number)));$('status').className='status';$('status').textContent='Illustrative grid selected.';});
 for(const axis of ['x','y','z'])$(axis).addEventListener('input',()=>{const n=$(axis).valueAsNumber;if(Number.isInteger(n)){state[axis]=Math.max(0,Math.min(Number($(axis).max),n));render();}});

@@ -89,3 +89,13 @@ with one AI step after 15 native steps, explicit CPUs1–4 and observed four-thr
 budgets. All children reaped. Retained separate-seed 120-mixture CPU baseline
 uses up to all23 independent worker cores while CUDA fitting proceeds; low modes
 and arbitrary-frequency mixtures are distinguished rather than averaged away.
+
+Full one-evaluation fit completed 5,000 CUDA updates at 44.3782 updates/s.
+The retained post-update fitted equation ratio is .0082280, still above 1e-6.
+This satisfies the recorded condition for the prepared two-evaluation training
+trial: compare whether recurrence during training improves error reduction.
+Admit its unchanged 5,000-update config, same seeds, real/analytical sample
+exposure and learning rates; it uses twice the neural evaluations/voxel work.
+The first trial's full CPU restore/validation qualification remains pending;
+no learned acceptance is inferred from this training diagnostic. Its optimizer
+has ended before the second job is submitted through Tuldok's serial owner.

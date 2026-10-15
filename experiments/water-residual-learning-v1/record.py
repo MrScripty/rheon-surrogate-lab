@@ -57,6 +57,9 @@ def main():
         'retained_artifacts':str(root.relative_to(LAB)),'new_reserved_test_used':False}
     if history.get('analytical_feedback') is not None:record['analytical_training_feedback']=history['analytical_feedback']
     if (root/'mode-probe/report.json').exists():record['mode_probes']=load(root/'mode-probe/report.json')
+    if (root/'mixed-mode-probe/report.json').exists():record['mixed_mode_probes']=load(root/'mixed-mode-probe/report.json')
+    if record['trajectories']:
+        record['method']['scope']='recorded-state fitting/development plus retained independent native/AI trajectories; no deployment claim'
     args.reports.mkdir(exist_ok=True,parents=True);path=args.reports/(args.trial+'.json')
     raw=json.dumps(record,indent=2,sort_keys=True,allow_nan=False)+'\n'
     if path.exists():assert path.read_text()==raw,'immutable record differs; retain a separately named revision'

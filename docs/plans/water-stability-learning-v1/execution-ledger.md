@@ -34,3 +34,19 @@ Unchanged native build source and binary hashes verified against the retained
 qualified build. Reuse all three native/native 64-step controls: each has 49
 post-warm-up qualified solves and no hard stop (reports/native-controls.json).
 Analytical sample generation and loss details are in reports/commands.md.
+
+Execution scheduling clarification: full-mode admission overlapped the fresh
+smoke CPU-restore queue. The real two-update CUDA smoke and its in-process CPU
+transfer plus 18 CPU source checks had passed; fresh managed CPU restore remains
+mandatory before accepting results. This overlap changes no scientific control
+or deployment gate. Tuldok owns all actual Run scheduling. Added a CPU-only
+72-case mixed-mode development probe while the GPU fits: independent seed,
+signed amplitudes, three grids, analytical labels, ideal f64/f32 controls,
+eight proposals, immutable captured CPU model loader and one core per worker.
+This is sampled development evidence, not a global convergence guarantee.
+
+CPU baseline mixture probe completed while CUDA was training: 14/72 first
+proposals reduce equation error, worst first gain 7.1994, worst after eight
+wrapper proposals 7.5678e10. Exact analytical f64 solutions passed all 72 operator
+checks; no CUDA context. This strengthens the sampled amplification diagnosis.
+Full rows and identities retained in reports/baseline-mixed-modes.json.

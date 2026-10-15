@@ -28,6 +28,7 @@ evaluation boundaries remain unchanged.
 
 Write set: experiments/water-conditioning-v1/training/{policy,model,train,
 project,physical_residual}.py; new analytical training owner and focused test;
+experiments/water-residual-learning-v1/record.py for explicit result roots;
 new reusable configurations; experiments/water-stability-learning-v1;
 docs/plans/water-stability-learning-v1; README.md and tuldok-project.json links.
 Ignored runs/water-stability-learning-v1 owns new captures and local results.
@@ -65,9 +66,11 @@ Resource limits: one managed GPU trainer, 600 seconds and 32 MiB output per Run;
 available distinct cores, one Torch thread each, following measured throughput.
 Analytical generation/cache is bounded and captured with configuration/source.
 
-Current phase: qualify real managed CUDA/CPU execution.
-Exactly one next slice: run two-update managed CUDA/CPU smoke, then the fixed
-5,000-update mode-feedback comparison. Source is committed before capture. Replan if numerical or lifecycle evidence
+Current phase: run fixed CUDA fits with CPU qualification and diagnostics.
+Exactly one next slice: complete the fixed 5,000-update mode-feedback comparison
+and its required fresh CPU/native evidence. Runtime preparation may overlap;
+Tuldok owns execution order. CUDA smoke and CPU source checks precede full fit;
+fresh managed CPU restore remains required before accepting its evidence. Replan if numerical or lifecycle evidence
 invalidates the comparison. Standards MCP snapshot
 snapshot:v1:1a9db05b-79b2-439d-b423-d316efeeb5a0.
 

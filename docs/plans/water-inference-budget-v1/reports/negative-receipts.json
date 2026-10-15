@@ -1,0 +1,24 @@
+{
+  "schema": "rheon-inference-budget-negative-receipts-v1",
+  "source": "actual completed adaptive CPU receipt and fresh managed restore",
+  "checks": [
+    {
+      "mutation": "relaxed-target",
+      "rejected_before_native_execution": true,
+      "exit_code": 1,
+      "diagnostic": "ValueError: stopping policy cannot relax existing physical limits"
+    },
+    {
+      "mutation": "false-max-passes",
+      "rejected_before_native_execution": true,
+      "exit_code": 1,
+      "diagnostic": "support.ContractError: iteration_policy: explicit bounded learned-only diagnostic"
+    },
+    {
+      "mutation": "false-case-passes",
+      "rejected_before_native_execution": true,
+      "exit_code": 1,
+      "diagnostic": "support.ContractError: iteration_policy: same selected cases and bounded adaptive work"
+    }
+  ]
+}

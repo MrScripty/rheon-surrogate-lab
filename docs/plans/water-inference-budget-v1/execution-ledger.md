@@ -22,3 +22,13 @@ shebang unsuitable for those disposable script fixtures). Historical fixed
 correction path remains covered. New scaling driver compares serial same-core
 whole-track timings, three repetitions and an excluded neural warm-up step.
 Native/AI retain their distinct existing 1e-8/1e-6 equation profiles.
+
+Adaptive CPU development check: all 128 states pass the unchanged float32
+physical profile, averaging 14.96875 neural evaluations (8–28), 53.22% fewer
+than fixed 32. Median relative residual 2.33592e-7, worst 9.95478e-7; none
+meet the stricter original native 1e-8 profile at this stopping point. All
+147 AI steps pass across three independent 64-step trajectories after native
+warm-up. Cube/rectangular use 12 evaluations; compact averages 15.8367.
+Distinct-core execution overlaps managed work, so no speedup claim from those
+non-isolated timings. Three altered real receipts (relaxed target, false cap,
+false actual work) reject before native execution. CPU source ad89d11.

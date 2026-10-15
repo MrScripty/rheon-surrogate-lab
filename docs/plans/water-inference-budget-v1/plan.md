@@ -55,17 +55,16 @@ Milestones and acceptance:
    C2 system/automated/required-real CUDA+Tuldok: pending. Completed/drained Runs,
    restored bit parity, actual updates and independent native accuracy retained.
 3. Fewer-pass and adaptive CPU policy. C3 system/automated/required-real CPU:
-   pending. Focused residual/budget tests, independent native gates, actual paired
+   satisfied for scoped development/short trajectories (reports/adaptive-evidence.json). Focused residual/budget tests, independent native gates, actual paired
    trajectories and pass counts; failures remain diagnostics, not acceptance.
 4. Controlled scaling and synthesis. C4 performance/automated/required-real CPU:
    pending. Same inputs per comparison, repeated timings, all physical outcomes,
    supported-grid limits and variability retained. C5 system/automated/required-real
    Tuldok: pending. Methods/results linked in the user's existing project UI.
 
-Current acceptance: partial. Current phase: capture and launch single-pass fits,
-then implement CPU budget/scaling diagnostics while training executes.
-Exactly one next slice: qualify bounded adaptive stopping on the existing
-128-state development population and actual trajectories while CUDA fits run.
+Current acceptance: partial. Current phase: managed single-pass restore/validation and controlled scaling preparation.
+Exactly one next slice: finish both managed single-pass stages, qualify their
+CPU predictions, then run the serial scaling study without task CPU contention.
 Blockers: none. Replan on invalid native controls, exhausted resource limits,
 failed known-case fits or evidence that the supported composition cannot deliver
 the comparison. A negative scientific result still completes an experiment.

@@ -58,7 +58,8 @@ Milestones and acceptance:
    bytes/hashes and source semantics; no optimizer during qualification.
 2. Managed CUDA train/CPU restore/development inference for completed fits, plus the drained failed combined Run and its separately
    configured tenfold-lower-learning-rate follow-up.
-   C2 system/automated/required-real CUDA+Tuldok: pending. Completed/drained Runs,
+   C2 system/automated/required-real CUDA+Tuldok: satisfied (two completed
+   trial records and reports/single-pass-combined-failure.json). Completed/drained Runs,
    restored bit parity, actual updates and independent native accuracy retained.
 3. Fewer-pass and adaptive CPU policy. C3 system/automated/required-real CPU:
    satisfied for scoped development/short trajectories (reports/adaptive-evidence.json). Focused residual/budget tests, independent native gates, actual paired
@@ -68,10 +69,10 @@ Milestones and acceptance:
    supported-grid limits and variability retained. C5 system/automated/required-real
    Tuldok: pending. Methods/results linked in the user's existing project UI.
 
-Current acceptance: partial. Current phase: qualify the completed single-pass model and capture the bounded
-lower-learning-rate follow-up; preserve numerical failure as evidence.
-Exactly one next slice: capture and execute the separately configured lower-rate
-fit while finishing the first model CPU checks; then resume serial scaling.
+Current acceptance: partial. Current phase: Verifying controlled grid scaling; both completed single-pass
+models fail accuracy gates, and the drained numerical failure remains retained.
+Exactly one next slice: finish the serial scaling study, retain its qualified
+and failed cases, derive the final comparison and register the result index.
 Blockers: none. Replan on invalid native controls, exhausted resource limits,
 failed known-case fits or evidence that the supported composition cannot deliver
 the comparison. A negative scientific result still completes an experiment.

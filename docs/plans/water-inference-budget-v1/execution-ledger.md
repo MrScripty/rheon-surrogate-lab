@@ -55,3 +55,14 @@ match the four-pass control exactly. No capacity/generalization success is
 inferred from completed optimization. Original CPU controller stopped upon the
 retained failed second fit; a separately owned follow-up controller waits only
 for the new lr1e4 trial, then qualifies it before serial scaling.
+
+Lower-rate combined single-pass fitting completed 5,000 CUDA updates at
+47.3483 updates/s and all managed CPU restore/validation artifacts reopened
+and redownloaded identically. Native CPU fit residual .00781890, development
+median .0258949, worst .107453, physical passes 0/128. Three short trajectories
+complete with 0/147 qualified AI steps. Initialization, real/analytical order
+and train-only normalization match the four-pass combined control; one pass
+and lower learning rate are both changed, so no single-factor attribution.
+Six managed stages completed and drained; one failed/drained training Run
+is separately retained. Isolated serial scaling began only after all those
+stages and CPU workers finished. New retention remains below 2 GiB.

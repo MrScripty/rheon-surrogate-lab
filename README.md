@@ -1,5 +1,7 @@
 # Rheon Surrogate Lab
 
+Current data work trains on [varied sealed domains full of water](experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The configuration reserves 256 training, 64 validation and 64 final-test simulations. Results will distinguish execution qualification from pressure accuracy.
+
 Current model work uses [CUDA training with CPU deployment inference](experiments/cuda-pressure-v1/README.md)
 for the unchanged seven-channel variable-shape pressure network. A managed
 20-update CUDA run and fresh CPU restore passed [portability qualification](docs/plans/cuda-training-cpu-inference/results.md);

@@ -49,6 +49,7 @@ def main():
         'checkpoints':{name:{key:spec[key] for key in ('update','sha256','bytes')} for name,spec in history['checkpoints'].items()},
         'training_trace':history['trace'],'validation_loss':history['validation'],
         'optimizer_updates_per_s':history['optimizer_updates_per_s'],'native_evaluations':evaluations,'cpu_audits':audits,
+        'trajectories':{path.parent.name:load(path) for path in sorted(root.glob('*trajectory*/receipt.json'))},
         'retained_artifacts':str(root.relative_to(LAB)),'new_reserved_test_used':False}
     REPORTS.mkdir(exist_ok=True,parents=True);path=REPORTS/(args.trial+'.json')
     raw=json.dumps(record,indent=2,sort_keys=True,allow_nan=False)+'\n'

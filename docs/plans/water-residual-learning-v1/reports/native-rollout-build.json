@@ -1,0 +1,71 @@
+{
+  "schema": "rheon-residual-rollout-build-v1",
+  "status": "qualified_build",
+  "source_sha256": {
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/Cargo.toml": "9d21484bedce2777d3ea13c14414dc3229bc8266e254fc3c29f7ac340dabfd91",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/Cargo.lock": "94fbd50f937dfa0a3b9479bfa0e1fbedbd9107af952da83b22f2add2e8c9fd3e",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/build.rs": "e22e46e41e257f7f04e7260beeb41d3bebdec1af67763d7d8198c0a591fa8f3b",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/src/main.rs": "f4e31d4f7357b9cbe18c401cbf86d9fa1fd945894b2e5daef03d768bf61093fd",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-learning-sequence-v1/Rheon/src/bin/desktop/ai_comparison/engine.rs": "f36d815f4f0e9bd81053f45c4576dee49ce420c47e0ad75167eebf388d3b01f6",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-learning-sequence-v1/Rheon/src/bin/desktop/ai_comparison/scene.rs": "c9e40ec2ce5712594d40372087d7ec8d51f2123c350af5c7220825f9ec5f058a",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/build_rollout.py": "e026b31c16029786823d233cd380c08ea348cfae2db4bdc209b2494c8d8bf859"
+  },
+  "native_receipt": {
+    "base_commit": "43ed26b645dd42de906d0fac7d1ec7d5ab6e351a",
+    "base_tree": "a357cd4daaa0554fe1dd53e6b5406e1e8a69b6d8",
+    "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "patch_sha256": "b851b38d2d03280220bc4648cd4d721b2e796786fb18d8188dc335336fe2a998",
+    "prepared_tree_sha256": "60493e832d451acf12d90b68e9ba4c58ebc806f4b51174aa173001bb314dc0d4",
+    "schema": "rheon-local-pressure-dependency-v1"
+  },
+  "commands": [
+    [
+      "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "build",
+      "--manifest-path",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/Cargo.toml",
+      "--config",
+      "patch.\"https://github.com/MrScripty/Rheon.git\".rheon.path=\"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/local-pressure-v1-fresh-bootstrap-2/prepared-rheon\"",
+      "--offline",
+      "--locked",
+      "--release"
+    ],
+    [
+      "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "test",
+      "--manifest-path",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/Cargo.toml",
+      "--config",
+      "patch.\"https://github.com/MrScripty/Rheon.git\".rheon.path=\"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/local-pressure-v1-fresh-bootstrap-2/prepared-rheon\"",
+      "--offline",
+      "--locked",
+      "--release"
+    ],
+    [
+      "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/cargo",
+      "clippy",
+      "--manifest-path",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/probes/residual-rollout-v1/Cargo.toml",
+      "--config",
+      "patch.\"https://github.com/MrScripty/Rheon.git\".rheon.path=\"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/local-pressure-v1-fresh-bootstrap-2/prepared-rheon\"",
+      "--offline",
+      "--locked",
+      "--release",
+      "--",
+      "-D",
+      "warnings"
+    ]
+  ],
+  "environment": {
+    "CARGO_HOME": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/.cargo-local",
+    "CARGO_TARGET_DIR": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/local-pressure-native-target",
+    "RUSTUP_TOOLCHAIN": "1.92.0",
+    "RUSTC": "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/rustc",
+    "RUSTDOC": "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/rustdoc",
+    "RAYON_NUM_THREADS": "1",
+    "RHEON_COMPARISON_SOURCE": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-learning-sequence-v1/Rheon"
+  },
+  "cargo_version": "cargo 1.92.0 (344c4567c 2025-10-21)",
+  "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+  "metadata_sha256": "ae3c596e44fa10a04d4c081a51a599c546bee9093ed9f1bf3e55325588f8535d"
+}

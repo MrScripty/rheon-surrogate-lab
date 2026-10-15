@@ -73,3 +73,10 @@ seed, input, objective and 3,000/4,500-step schedule. The 10,000-update linear
 trial alone cannot isolate recurrence because its budget/schedule differ. The
 new control uses the numerically qualified prepared path; recurrence necessarily
 recomputes intermediate residuals. Report compute/sample exposure separately.
+
+Independent nonlinear trajectory: new cube force/seed, 15 native warm-up steps,
+26 actual CPU AI predictions before the unchanged hard stop at step41. All
+41 reference steps qualify, 0/26 AI steps qualify; worst residual3.07294 and
+actual divergence92.39115. Child exits/reaps. This reveals accumulated deployment
+error despite lower teacher-state validation median; it is not a cold-start
+failure or accepted simulation. Source/build and native-control receipts retained.

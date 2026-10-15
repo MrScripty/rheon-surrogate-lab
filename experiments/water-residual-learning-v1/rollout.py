@@ -15,7 +15,7 @@ import time
 import audit
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'experiments/water-stability-learning-v1'))
-from learned_iteration import correct,stopping_policy
+from learned_iteration import correct,stopping_policy,validate_budget
 
 LIMIT=8*1024*1024
 
@@ -39,13 +39,14 @@ def messages(child,deadline):
 
 
 def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None):
-    if type(proposals) is not int or not 1<=proposals<=8 or control and proposals!=1:
-        raise ValueError('one to eight learned proposals; native control requires one')
+    if type(proposals) is not int or not 1<=proposals<=32 or control and proposals!=1:
+        raise ValueError('at most 32 learned proposals; native control requires one')
     if stopping is not None:
         stopping_policy(stopping)
         if control:raise ValueError('native control does not use learned stopping')
     if not control:
         audit.initialize(project,artifacts,sorted(os.sched_getaffinity(0)))
+        validate_budget(proposals,audit.MODEL.CORRECTION['steps'])
     output.mkdir(parents=True,exist_ok=False)
     (output/'scene.json').write_text(json.dumps(scene,indent=2)+'\n')
     environment={**os.environ,'OMP_NUM_THREADS':'1','MKL_NUM_THREADS':'1','RAYON_NUM_THREADS':'1','CUDA_VISIBLE_DEVICES':'','TULDOK_TORCH_DEVICE':'cpu'}
@@ -106,7 +107,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('binary','scene','output'):parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--project',type=Path);parser.add_argument('--artifacts',type=Path);parser.add_argument('--reference-control',action='store_true')
-    parser.add_argument('--proposals',type=int,choices=range(1,9),default=1)
+    parser.add_argument('--proposals',type=int,choices=range(1,33),default=1)
     parser.add_argument('--adaptive-profile',type=Path)
     args=parser.parse_args()
     if not args.reference_control and not (args.project and args.artifacts):parser.error('CPU restore project and artifacts required')

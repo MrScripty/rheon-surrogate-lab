@@ -66,3 +66,11 @@ and lower learning rate are both changed, so no single-factor attribution.
 Six managed stages completed and drained; one failed/drained training Run
 is separately retained. Isolated serial scaling began only after all those
 stages and CPU workers finished. New retention remains below 2 GiB.
+
+All seven scaling scenes pass both inference policies in three repetitions.
+Before closure, identified a comparison boundary: the old eight-proposal cap
+allows 32 neural evaluations for four-pass weights, but only eight for the new
+one-pass weights. Preserve a maximum of 32 actual neural evaluations and test
+the completed one-pass checkpoint under that matched adaptive compute ceiling.
+The old four-pass cap stays eight proposals. This is a bounded iterative-policy
+comparison with zero additional training; a one-pass solve remains unqualified.

@@ -15,6 +15,12 @@ from pathlib import Path
 import sys
 
 LAB=Path(__file__).resolve().parents[2]
+MAX_NETWORK_EVALUATIONS=32
+
+
+def validate_budget(proposals,width):
+    if type(width) is not int or not 1<=width<=4 or type(proposals) is not int or not 1<=proposals or proposals*width>MAX_NETWORK_EVALUATIONS:
+        raise ValueError('one to eight proposals for four-pass networks; at most 32 network evaluations')
 
 
 def stopping_policy(value):
@@ -41,7 +47,7 @@ def equation_quality(model,pressure,sample,rhs,policy):
 
 
 def correct(model,network,normalization,sample,budget,stopping=None,trace=None):
-    if type(budget) is not int or not 1<=budget<=8:raise ValueError('one to eight learned proposals')
+    validate_budget(budget,model.CORRECTION['steps'])
     initial=sample['base'];pressure=initial
     if stopping is not None:
         stopping_policy(stopping)
@@ -75,7 +81,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('project','artifacts','packet','output'):parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--population',choices=('train','validation'),required=True)
-    parser.add_argument('--proposals',type=int,choices=range(1,9),required=True)
+    parser.add_argument('--proposals',type=int,choices=range(1,33),required=True)
     parser.add_argument('--adaptive-profile',type=Path)
     args=parser.parse_args()
     stopping=stopping_policy(json.loads(args.adaptive_profile.read_text())) if args.adaptive_profile else None
@@ -83,6 +89,8 @@ def main():
     import audit
     sys.path.insert(0,str(args.project.absolute()))
     import data
+    config=json.loads((args.project/'config.json').read_text())
+    validate_budget(args.proposals,config['correction']['steps'])
     import numpy as np
     reservation,parents=data.read_view(args.packet.absolute())
     cases=[{'parent':i,'frame':slot,'native_frame':frame['index'],'trajectory_id':parent['entry']['trajectory_id'],
@@ -98,7 +106,6 @@ def main():
     arrays={f'case_{i:03d}':r[1] for i,r in enumerate(records)}
     with (args.output/'predictions.npz').open('xb') as stream:np.savez(stream,**arrays)
     source=json.loads((args.artifacts/'receipt.json').read_text())
-    config=json.loads((args.project/'config.json').read_text())
     def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
     receipt={'schema':'rheon-learned-iteration-diagnostic-v1','optimizer_updates':0,
         'scope':'local CPU diagnostic from a managed restore; not a managed inference Run',

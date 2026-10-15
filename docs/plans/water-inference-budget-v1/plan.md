@@ -65,14 +65,19 @@ Milestones and acceptance:
    satisfied for scoped development/short trajectories (reports/adaptive-evidence.json). Focused residual/budget tests, independent native gates, actual paired
    trajectories and pass counts; failures remain diagnostics, not acceptance.
 4. Controlled scaling and synthesis. C4 performance/automated/required-real CPU:
-   pending. Same inputs per comparison, repeated timings, all physical outcomes,
+   satisfied for the original study (all seven scenes, three repetitions per policy). Same inputs per comparison, repeated timings, all physical outcomes,
    supported-grid limits and variability retained. C5 system/automated/required-real
    Tuldok: pending. Methods/results linked in the user's existing project UI.
 
-Current acceptance: partial. Current phase: Verifying controlled grid scaling; both completed single-pass
-models fail accuracy gates, and the drained numerical failure remains retained.
-Exactly one next slice: finish the serial scaling study, retain its qualified
-and failed cases, derive the final comparison and register the result index.
+Current acceptance: partial. Current phase: Verifying a matched neural-compute iterative comparison; both
+completed single-pass models fail one-evaluation accuracy. Original scaling is complete.
+Exactly one next slice: compare the completed one-pass-trained checkpoint under
+the same 32-network-evaluation adaptive cap, then seal the final result index.
+Additional bounded comparison: one-pass-trained weights may use up to 32
+one-evaluation proposals, preserving the same maximum neural work as eight
+four-evaluation proposals. This is iterative inference, not one-pass success.
+Require unchanged native development and trajectory checks before any timing
+claim; retain failures. No additional GPU training.
 Blockers: none. Replan on invalid native controls, exhausted resource limits,
 failed known-case fits or evidence that the supported composition cannot deliver
 the comparison. A negative scientific result still completes an experiment.

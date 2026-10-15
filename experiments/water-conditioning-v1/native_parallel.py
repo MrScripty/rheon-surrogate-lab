@@ -55,8 +55,9 @@ def run(args):
             and restored['outputs']['normalization.json']['sha256']==receipt['normalization_sha256'],
             'iteration_source','same measured model and preprocessing')
         policy.require(receipt['inference_policy']['name'] in ('fixed-repeated-learned-correction','adaptive-learned-correction')
-            and type(receipt['inference_policy']['proposals']) is int and 1<=receipt['inference_policy']['proposals']<=8
+            and type(receipt['inference_policy']['proposals']) is int and 1<=receipt['inference_policy']['proposals']<=32
             and receipt['inference_policy']['nn_passes_per_pressure_solve']==receipt['inference_policy']['proposals']*restored['architecture']['correction']['steps']
+            and receipt['inference_policy']['nn_passes_per_pressure_solve']<=32
             and receipt['inference_policy']['native_pressure_refinement'] is False,
             'iteration_policy','explicit bounded learned-only diagnostic')
         if receipt['inference_policy']['name']=='adaptive-learned-correction':

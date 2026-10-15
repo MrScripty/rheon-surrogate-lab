@@ -5,6 +5,7 @@ from learned_iteration import correct,equation_quality,stopping_policy
 
 
 class TwoCells:
+    CORRECTION={'steps':4}
     @staticmethod
     def full_operator(pressure,h,rho):
         difference=pressure[...,0]-pressure[...,1]
@@ -71,6 +72,14 @@ class Iteration(unittest.TestCase):
             with self.assertRaises(ValueError):stopping_policy(value)
         sample=self.sample();rhs=torch.full_like(sample['base'],float('nan'))
         self.assertFalse(equation_quality(TwoCells,sample['base'],sample,rhs,self.policy)['equation_passed'])
+
+    def test_budget_counts_network_evaluations_for_single_pass_models(self):
+        class SinglePass(TwoCells):CORRECTION={'steps':1}
+        sample=self.sample();trace=[]
+        correct(SinglePass,None,None,sample,32,trace=trace)
+        self.assertEqual(len(trace),32)
+        for model,budget in ((TwoCells,9),(SinglePass,33)):
+            with self.assertRaisesRegex(ValueError,'at most 32'):correct(model,None,None,sample,budget)
 
 
 if __name__=='__main__':unittest.main()

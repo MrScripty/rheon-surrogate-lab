@@ -99,3 +99,14 @@ exposure and learning rates; it uses twice the neural evaluations/voxel work.
 The first trial's full CPU restore/validation qualification remains pending;
 no learned acceptance is inferred from this training diagnostic. Its optimizer
 has ended before the second job is submitted through Tuldok's serial owner.
+
+Prepared the conditional cohort feedback contract separately from the running
+captured trials. Schema v5 names train-correction-cell-rms: all cached real
+training cell-states determine analytical amplitude, with common rho/dt checked.
+It does not select an arbitrary first parent or use validation statistics.
+Historical v3/v4 one-frame paths remain unchanged. Cohort preprocessing still
+fits only real training data; that population change is explicit, not a
+single-factor learning claim. Added independent weighted-RMS, authority and
+physics-mismatch tests. Admission of a cohort Run remains conditional on the
+current trials' actual iterative fit/development/grid evidence; no Run starts
+merely because these configurations exist.

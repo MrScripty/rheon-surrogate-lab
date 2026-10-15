@@ -58,4 +58,27 @@ class MultiGrid(unittest.TestCase):
             for key in a:self.assertTrue(torch.equal(a[key],b[key]))
 
 
+    def test_global_train_cell_rms_and_explicit_amplitude_authority(self):
+        first={**self.sample,'base':torch.zeros((1,1,1,1,2),dtype=torch.float64),
+            'reference':torch.tensor([0.,2.],dtype=torch.float64).reshape(1,1,1,1,2)}
+        second={**self.sample,'base':torch.zeros((1,1,1,1,4),dtype=torch.float64),
+            'reference':torch.tensor([0.,4.,4.,4.],dtype=torch.float64).reshape(1,1,1,1,4)}
+        amplitude=analytical.training_correction_rms([first,second])
+        self.assertAlmostEqual(amplitude,(52/6)**.5)
+        self.assertEqual(amplitude,analytical.training_correction_rms([second,first]))
+        with self.assertRaisesRegex(ValueError,'analytical_physics'):
+            analytical.training_correction_rms([first,{**second,'dt':second['dt']*2}])
+        with self.assertRaisesRegex(ValueError,'analytical_training'):analytical.training_correction_rms([])
+        spec={**self.spec,'amplitude_reference':'train-correction-cell-rms'}
+        with self.assertRaisesRegex(ValueError,'analytical_amplitude_reference'):analytical.bank(self.sample,spec,10)
+        values,_,evidence=analytical.bank(self.sample,spec,10,amplitude_pa=amplitude)
+        self.assertEqual(evidence['amplitude_rms_pa'],amplitude)
+        self.assertAlmostEqual(float(values[0]['reference'].square().mean().sqrt()),2*amplitude)
+        with self.assertRaisesRegex(ValueError,'analytical_amplitude_reference'):
+            analytical.bank(self.sample,self.spec,10,amplitude_pa=amplitude)
+        config=policy.decode(policy.read(policy.LAB/'experiments/water-conditioning-v1/configs/multigrid-cohort16-1pass.json'))
+        policy.experiment(config);config['analytical_feedback']['amplitude_reference']='first-parent'
+        with self.assertRaisesRegex(ValueError,'analytical_amplitude_reference'):policy.experiment(config)
+
+
 if __name__=='__main__':unittest.main()

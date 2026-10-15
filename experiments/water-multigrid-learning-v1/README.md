@@ -49,3 +49,12 @@ configured and unrelated task CPU/GPU work must finish first. Without
 `--timing-study`, even a serial run is qualification evidence only. The optional
 thread count is execution policy; it changes neither weights nor default
 single-threaded inference. A fresh one-AI-step fixture qualifies this path.
+
+Prepared schema-v5 cohort configurations use `train-correction-cell-rms` as the
+analytical amplitude authority. The trainer computes a cell-weighted RMS over
+all real training states and checks common water density/timestep. Normalization
+continues to use actual training data only. This permits the prepared 16-scene,
+32-state cohort without treating its first frame as representative. It changes
+the training population/statistics; comparisons must not imply those remain
+identical to one-frame fitting. Historical v3/v4 paths remain supported unchanged.
+Prepared configurations do not authorize bypassing the plan's admission gate.

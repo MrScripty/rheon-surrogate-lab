@@ -7,7 +7,7 @@ initialization randomness or read validation fields. Inference never uses labels
 import math
 import numpy as np
 import torch
-from policy import canonical, require, sha
+from policy import MAX_CELLS, canonical, require, sha
 
 
 AMPLITUDES=(-2.,-.5,.5,2.)
@@ -99,7 +99,7 @@ def validate_grids(specification):
             'analytical_grid','closed counts and cubic spacing')
         counts=grid['counts_xyz'];density=grid['cells_per_metre']
         require(type(counts) is list and len(counts)==3 and all(type(n) is int and 2<=n<=128 for n in counts)
-            and math.prod(counts)<=65536,'analytical_grid','bounded rectangular cubic-voxel grid')
+            and math.prod(counts)<=MAX_CELLS,'analytical_grid','bounded rectangular cubic-voxel grid')
         require(type(density) is int and 1<=density<=128,
             'analytical_spacing','positive integer cells per metre')
         key=(*counts,density)
@@ -113,11 +113,16 @@ def validate_grids(specification):
     return projected
 
 
-def bank(template,specification,updates):
+def bank(template,specification,updates,amplitude_pa=None):
     if 'grids' not in specification:
         return single_grid_bank(template,specification,updates)
     projected=validate_grids(specification)
-    amplitude=float((template['reference']-template['base']).square().mean().sqrt())
+    if specification.get('amplitude_reference')=='train-correction-cell-rms':
+        require(type(amplitude_pa) in (int,float),'analytical_amplitude_reference','caller supplies measured training RMS')
+        amplitude=amplitude_pa
+    else:
+        require(amplitude_pa is None,'analytical_amplitude_reference','legacy one-frame bank has no override')
+        amplitude=float((template['reference']-template['base']).square().mean().sqrt())
     require(math.isfinite(amplitude) and amplitude>0,'analytical_amplitude','positive fitted correction RMS')
     samples=[];banks=[];size=specification['patterns']*len(AMPLITUDES)
     # A separate private stream changes only analytical shape/example selection.
@@ -140,4 +145,21 @@ def bank(template,specification,updates):
         'loss_weights':LOSS_WEIGHTS,'weight':specification['weight'],'additional_examples':updates,
         'resident_tensor_bytes':actual,'cache_max_bytes':specification['cache_max_bytes'],
         'scope':'manufactured operator training, not additional CFD simulations; normalization remains real-train-only'}
+    if 'amplitude_reference' in specification:
+        evidence.update(amplitude_reference=specification['amplitude_reference'],amplitude_rms_pa=amplitude,
+            source='all real train cell-state correction RMS; explicit grids and common water density/timestep')
     return samples,order,evidence
+
+
+def training_correction_rms(samples):
+    """Cell-weighted global RMS from the caller's train-only resident samples."""
+    values=list(samples)
+    require(values,'analytical_training','nonempty actual training states')
+    for name in ('rho','dt'):
+        require(all(torch.equal(s[name],values[0][name]) for s in values),
+            'analytical_physics','shared density/timestep for the manufactured bank')
+    squared=math.fsum(float((s['reference']-s['base']).square().sum()) for s in values)
+    cells=sum(s['base'].numel() for s in values)
+    result=math.sqrt(squared/cells)
+    require(math.isfinite(result) and result>0,'analytical_amplitude','positive all-train correction RMS')
+    return result

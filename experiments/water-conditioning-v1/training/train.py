@@ -241,8 +241,13 @@ def run(args):
         feedback=config.get('analytical_feedback')
         if feedback is not None and feedback['weight']>0:
             import analytical
-            require(len(cache or {})==1,'analytical_training','one recorded fitting frame for this controlled comparison')
-            analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'])
+            if config['schema']=='rheon-water-residual-experiment-v5':
+                require(cache,'analytical_training','resident actual training states required')
+                amplitude=analytical.training_correction_rms(cache.values())
+                analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'],amplitude_pa=amplitude)
+            else:
+                require(len(cache or {})==1,'analytical_training','one recorded fitting frame for this controlled comparison')
+                analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'])
         profile_report = {'schema':'rheon-cuda-training-profile-v2','enabled':False,'execution':strategy}
         def capture_profile(profiler):
             events = profiler.key_averages()

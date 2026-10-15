@@ -441,3 +441,5 @@ artifacts. Historical results and the existing deployed comparison are preserved
 The completed [stability-aware pressure sequence](docs/plans/water-stability-learning-v1/results.md) retains a development-qualified 32-evaluation iterative CPU policy.
 
 Latest experiment: [inference budget and scaling](docs/plans/water-inference-budget-v1/plan.md), with [methods and results](docs/plans/water-inference-budget-v1/results.md).
+
+Current continuation: [multi-grid pressure learning](docs/plans/water-multigrid-learning-v1/plan.md), retaining equal-stopping checkpoint comparisons and controlled CUDA feedback experiments.

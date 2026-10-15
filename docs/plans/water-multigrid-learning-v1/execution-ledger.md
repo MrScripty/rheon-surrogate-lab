@@ -38,3 +38,12 @@ Added reusable configured CPU study driver. Every checkpoint episode uses a
 fresh Python process, exact captured sources and a distinct output/log. Fixed
 worker/core partitions prevent contention between candidate jobs. Concurrent
 checks are numerical/throughput evidence; repeated timings must run separately.
+
+Matched fine-stopping CPU study completed all seven native controls and fourteen
+candidate episodes: 112/112 AI steps qualify, every native/controller child is
+reaped. Latest weights need 22.875 evaluations on 40-cubed versus 29.75 for older
+weights, under the same per-evaluation stopping. These overlapping timings carry
+no latency claim. Older checkpoint development recheck passes 128/128 with mean
+13.4375 evaluations, versus its prior block-of-four mean 14.96875. Retain fresh
+latest-checkpoint development verification separately before final attribution.
+The two existing native process failure/deadline tests also pass.

@@ -44,3 +44,14 @@ follow-up, not an automatic replay. First single-pass fit completed normally.
 Adaptive extended windows qualify all 854/854 AI steps; source receipts are
 authoritative (the session extended wrapper initially printed short-run summaries
 after executing correct extended commands; corrected its display path, no rerun).
+
+Completed the first single-pass managed sequence and full CPU qualification.
+Known frame residual .00737933; development median .0164437, worst .106447;
+0/128 physical passes. All three 64-step trajectories finish, with 0/147 AI
+steps qualified. Independent mode mixtures all reduce first-pass error (72/72),
+but worst after eight one-network proposals is 6.36510e-5, above the target.
+Initial parameters, real-frame order, auxiliary bank/order and normalization
+match the four-pass control exactly. No capacity/generalization success is
+inferred from completed optimization. Original CPU controller stopped upon the
+retained failed second fit; a separately owned follow-up controller waits only
+for the new lr1e4 trial, then qualifies it before serial scaling.

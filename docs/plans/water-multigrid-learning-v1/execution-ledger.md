@@ -47,3 +47,16 @@ no latency claim. Older checkpoint development recheck passes 128/128 with mean
 13.4375 evaluations, versus its prior block-of-four mean 14.96875. Retain fresh
 latest-checkpoint development verification separately before final attribution.
 The two existing native process failure/deadline tests also pass.
+
+Fresh latest-checkpoint development replay again qualifies 128/128. With stopping
+fixed per evaluation, the earlier/current means are 13.4375/12.6015625, a 6.22%
+reduction attributable to changed training/checkpoint on this population. The
+previous 15.81% comparison also included stopping granularity and is not a
+training-only claim. Larger-grid qualification is short and development-only.
+
+Tuldok enforces immutable manifest snapshots: reusing the previous project ID
+for new content returned HTTP409. Preserved that snapshot and registered the new
+multi-grid project a5e968a9ceb740c3b775ed14103bc519 in the same catalog. This is a
+project snapshot, not a separate dataset catalog. Local CPU profile startup also
+caught a stdlib module-name collision; renamed profile.py to cpu_profile.py and
+retained its failed startup log. Neither issue is a model numerical result.

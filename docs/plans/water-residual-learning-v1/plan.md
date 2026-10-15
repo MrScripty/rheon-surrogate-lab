@@ -44,12 +44,12 @@ Milestones:
    Write set: training model/policy/preparation/project source, new model source,
    focused tests, configurations, plan and reports. Gate: algebraic/operator and
    zero/shape/scaling checks; committed source; managed CUDA/CPU smoke; bounded
-   10,000-update fit and native development evaluation. State: Active.
+   10,000-update fit and native development evaluation. State: Verifying.
 2. Fixed-representation linear versus nonlinear correction. Same seed, loss,
    frame and update schedule; positive/negative/superposition diagnostics and
-   actual fitted/held-out equation and physical errors. State: Planned.
+   actual fitted/held-out equation and physical errors. State: Verifying.
 3. Coarse control and shared recurrent correction with recomputed residual.
-   Retain convergence/error-scale and full CPU costs. State: Planned.
+   Retain convergence/error-scale and full CPU costs. State: Verifying.
 4. Pressure-gradient/divergence feedback and independent trajectory evaluation.
    Write set also includes probes/residual-rollout-v1 and the laboratory CPU
    trajectory controller. Reuse the existing Rheon paired engine by compiled
@@ -57,7 +57,7 @@ Milestones:
    Parent owns bounded child stdin/stdout, deadline, termination/reaping and
    failure receipts. Native/native control must qualify after warm-up first.
    Preserve physical oracle; learning loss changes are separate comparisons.
-   State: Planned.
+   State: Verifying.
 5. Conditional small varied cohort, then larger population and several seeds.
    Admit expansion only after known-case fitting is credible; reserve a new
    untouched final test before candidate selection. State: Planned.
@@ -68,9 +68,11 @@ native physical checks and durable per-trial method/result records visible in
 the existing project. Model qualification additionally requires physical gates
 on unseen cases; no guaranteed accuracy improvement is assumed.
 
-Current phase: implement and qualify the physical-residual input intervention.
-Exactly one next slice: add the versioned physical-residual/linear model contract
-and focused checks, commit it, then run the managed smoke and one-frame fits.
+Current phase: execute the bounded CUDA comparisons and CPU/native evaluation.
+Exactly one next slice: complete and retain native development and independent
+trajectory evidence for the captured input, linear, recurrent and physical-loss
+trials, including the matched recurrent-budget control; then apply the cohort
+expansion gate. Source contracts, focused checks and CUDA/CPU smoke are accepted.
 Blockers: none observed. Replan for failed source/lifecycle checks, changed
 physics/operator, exhausted bounded resources, or a representation/optimization
 finding that invalidates the next experiment. Later dataset expansion remains

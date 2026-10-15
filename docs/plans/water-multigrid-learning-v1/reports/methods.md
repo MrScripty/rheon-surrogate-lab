@@ -48,7 +48,7 @@ and native commands, 128 independent native physical results and actual neural
 counts. Every diagnostic pool uses one thread/core per worker, up to 23 workers;
 case count and available independent work bound effective CPU occupancy.
 
-Profile: profile.py uses explicit checkpoint, fitting amplitude, analytical mode
+Profile: cpu_profile.py uses explicit checkpoint, fitting amplitude, analytical mode
 mixture and cubic grid. One warm-up, three unprofiled repetitions and one Torch
 CPU profile separate network and physical operator work. Explicit core affinity
 and 1/4/8 thread counts characterize this mechanism only; whole-track IPC/native

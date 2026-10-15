@@ -92,3 +92,24 @@ Final source formatting requires rebuilding the measured producer and repeating
 fixture/pilot/full capture in runs/sealed-water-v1-3; no physics changed. Five
 Python contract tests pass. Exactly one next slice: freeze qualified sources and
 assemble the three-stage CUDA training / CPU restore / reserved CPU test project.
+
+Final material and managed stages: source frozen at 11408e9. Namespace
+runs/sealed-water-v1-3 passed fixture, pilot and all 384 parents / 768 snapshots;
+24,576 native timesteps qualified. Normal Tuldok collection imports contain
+320 train/validation and 64 reserved-test field records in the existing catalog.
+CUDA training completed 2000 updates; CPU restore and reserved inference both
+completed and drained. All artifacts reopened/redownloaded with exact hashes.
+
+Replan from concrete diagnostic evidence: the historical native evaluation binary
+admits only rho=1.25, contrary to the initial assumption that its density argument
+was generic. The unchanged captured first water request deterministically refused
+"development density". A separate probes/sealed-water-evaluation-v1 and
+experiments/sealed-water-v1/evaluation_native.py retain pressure arithmetic,
+physical thresholds and fallback policy, but admit water at rho=1000. The new
+material regression failed on the original guard, then all seven native tests,
+release build, formatting and Clippy passed after the isolated guard correction.
+The exact original request now accepts its reference and reports learned pressure
+failure as data. Historical probe/source/binary/results are untouched. No training,
+normalization, checkpoint selection or reserved predictions were rerun or changed.
+Exactly one next slice: finish all 128 frozen reserved native diagnostics and
+record measured accuracy, source/material/Run lineage and final visibility.

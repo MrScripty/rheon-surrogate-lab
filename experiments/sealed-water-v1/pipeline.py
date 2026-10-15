@@ -16,6 +16,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);commands=parser.add_subparsers(dest='command',required=True)
     build=commands.add_parser('build')
     for name in ('config','prepared','cargo','output'):build.add_argument('--'+name,type=Path,required=True)
+    native_eval=commands.add_parser('build-evaluation')
+    for name in ('prepared','cargo','output'):native_eval.add_argument('--'+name,type=Path,required=True)
     generate=commands.add_parser('generate')
     for name in ('config','binary','output'):generate.add_argument('--'+name,type=Path,required=True)
     generate.add_argument('--fixture',action='store_true')
@@ -37,6 +39,9 @@ def main():
     if args.command=='build':
         import build_native
         result={'binary':str(build_native.build('capture',decode(read(args.config)),args.prepared.absolute(),args.cargo.absolute(),args.output.absolute()))}
+    elif args.command=='build-evaluation':
+        import evaluation_native
+        result={'binary':str(evaluation_native.build('evaluation',{},args.prepared.absolute(),args.cargo.absolute(),args.output.absolute()))}
     elif args.command=='generate':
         import capture
         result=capture.generate(decode(read(args.config)),args.binary.absolute(),args.output.absolute(),fixture=args.fixture,

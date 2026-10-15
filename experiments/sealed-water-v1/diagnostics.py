@@ -5,8 +5,7 @@ import numpy as np
 from policy import LAB,MIB,canonical,decode,fresh,load_module,read,require,sha,write
 import data
 
-native=load_module('water_existing_native_diagnostics',LAB/'experiments/variable-pressure-v2/build_native.py')
-native.HERE=LAB/'experiments/variable-pressure-v2'
+import evaluation_native as native
 checks=load_module('water_existing_diagnostic_checks',LAB/'experiments/variable-pressure-v2/evaluate.py')
 targets=load_module('water_float32_targets',LAB/'experiments/float32-pressure-target-v1/targets.py')
 
@@ -38,7 +37,13 @@ def run(packet,inference,output,binary,observer=None):
             'reference_pressure':parent['arrays']['reference'][slot].reshape(-1).tolist(),
             'previous_pressure':parent['arrays']['base'][slot].reshape(-1).tolist(),'pre_velocity':velocity,
             'candidate_pressure':candidate,'candidate_error':None}
-        response,process=native.call(binary,'--evaluate',request);independent=checks.check_response(request,response,oracle,validator)
+        try:
+            response,process=native.call(binary,'--evaluate',request)
+            independent=checks.check_response(request,response,oracle,validator)
+        except BaseException as error:
+            write(output/'failure.json',{'case':case,'error':str(error),'process':getattr(error,'measurement',None)})
+            if observer:observer.publish('Reserved water diagnostics failed',str(error),state='failed')
+            raise
         record={**case,'force':parent['scene']['force'],**response,'float32_acceptance':targets.assess(response['raw_learned'],profile),
             'independent_candidate_residual_l2':independent,'process':process}
         with (output/'cases.jsonl').open('ab') as stream:stream.write(canonical(record)+b'\n')

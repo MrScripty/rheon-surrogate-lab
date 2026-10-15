@@ -76,8 +76,11 @@ Tuldok authenticated HTTP client. The catalog owns measured runtime resolution,
 material preflight, exact grants, all three Runs, typed checkpoint custody,
 artifacts and teardown. It reopens the completed Runs and redownloads every output.
 No separate catalog or local substitute optimizer is used. `pipeline.py evaluate`
-then checks reserved CPU predictions with the independently qualified generic
-native pressure diagnostics binary.
+then checks reserved CPU predictions with the independently qualified water
+native pressure diagnostics binary. Build it with `pipeline.py build-evaluation
+--prepared ... --cargo ... --output ...`; its pressure arithmetic and gates are
+the frozen variable-pressure-v1 diagnostic, with a separate water-density admission
+contract. The historical binary still admits only its original 1.25 kg/m³ material.
 
 `pipeline.py export-fields` creates validated scientific-field bundles.
 `collection.publish` imports them through normal Tuldok project/data endpoints,
@@ -96,7 +99,9 @@ identities. Reproducibility is scoped to the measured platform/toolchain.
 
 Run `python -m unittest discover -s experiments/sealed-water-v1` and
 `cargo fmt --manifest-path probes/sealed-water-v1/Cargo.toml --check`.
-The native builder runs release build, tests and Clippy with warnings denied.
+Both native builders run release build, tests and Clippy with warnings denied.
+The water evaluator adds a regression admitting water and rejecting non-cubic
+cells; its unchanged independent face-balance and fallback tests also pass.
 The narrow-force regression exercises the real viscosity stage: infinite Gaussian
 tails previously created subnormal values and were rejected; the finite smooth
 support fixes the source without weakening native arithmetic or physical gates.

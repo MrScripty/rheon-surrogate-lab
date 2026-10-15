@@ -83,3 +83,43 @@ material, grant, checkpoint custody, all CUDA/CPU Runs and artifacts. There is n
 private catalog, local substitute optimizer, automatic CPU training fallback or
 silent runtime resource extension. Scientific results and limitations are recorded
 for every stage, including failures.
+
+The independent observation path replays real native training scenes without
+modifying the frozen captures or in-flight recipes. `preview.py build` qualifies
+`probes/water-preview-v1` against the same prepared native source and reservation.
+`preview.py replay` publishes a bounded timeline only after all original fields
+at indices 15 and 63 reproduce byte for byte. For example:
+
+```bash
+.venv/bin/python experiments/water-learning-sequence-v1/preview.py replay \
+  --binary runs/water-learning-sequence-v1/preview-native-build-2/rheon-water-preview \
+  --capture runs/sealed-water-v1-3/capture --trajectory-id water-train-0000 \
+  --steps 256 --stride 4 --output runs/water-learning-sequence-v1/my-preview
+.venv/bin/python experiments/water-learning-sequence-v1/tracer_check.py \
+  --session runs/water-learning-sequence-v1/my-preview/session.json \
+  --output runs/water-learning-sequence-v1/my-preview/tracer-diagnostic.json
+```
+
+Use a fresh output path. The 256-step example runs 4.27 seconds of native
+simulation and records 64 states. Steps beyond the original 64 are observation
+continuation only. The native preview's independent test moves a compact tracer
+exactly one cell in each axis under a known velocity. `tracer_check.py` measures
+centroid travel and width in physical units; `--require-visible` returns 2 when
+travel is under half a voxel and width changes under 10%. That is a display
+diagnostic, not a physics or model-accuracy gate. Semi-Lagrangian concentration
+transport is diffusive and does not conserve tracer mass exactly.
+
+`preview_fields.py` exports the verified replay through Tuldok's existing
+scientific-field bundle format, including pressure, tracer, cell-centered
+velocity components, speed and exact force provenance. Import through the
+normal project's data reference into the existing catalog. Verify the stored
+bundle through `/api/workbench/asset/{record_id}`. Project manifests are immutable
+catalog snapshots; registering changed references requires a fresh project ID,
+while activity and unpinned source contents remain observable at their existing
+paths. Do not mutate an old project snapshot or create a separate catalog.
+
+Rheon's `rheon-training-viewer` accepts one to sixteen `--session` paths. It pins
+one scene, uses its real timestamps and shares native translucent voxel rendering
+with the ordinary desktop. The force inspector and water velocity arrows describe
+the actual recorded scene. The separate AI-comparison application still owns
+native-versus-model dynamics and qualification.

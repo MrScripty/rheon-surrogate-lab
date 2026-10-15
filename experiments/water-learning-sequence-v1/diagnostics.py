@@ -2,12 +2,18 @@
 import math
 from pathlib import Path
 import subprocess
+import sys
 import time
 import numpy as np
 from policy import LAB, MIB, canonical, decode, fresh, load_module, read, require, sha, write
 import data
 
-checks = load_module('sequence_independent_checks',LAB/'experiments/variable-pressure-v2/evaluate.py')
+_paths = list(sys.path)
+try:
+    sys.path.insert(0,str(LAB/'experiments/variable-pressure-v2'))
+    checks = load_module('sequence_independent_checks',LAB/'experiments/variable-pressure-v2/evaluate.py')
+finally:
+    sys.path[:] = _paths
 targets = load_module('sequence_float32_targets',LAB/'experiments/float32-pressure-target-v1/targets.py')
 
 
@@ -17,7 +23,7 @@ def admit(binary):
     binding=decode(read(binary.parent/'binding.json',2*MIB))
     require(receipt['status']=='qualified_build' and sha(read(binary))==receipt['binary_sha256'] and receipt['identity']==identity and identity['binding']==binding,'native_identity','unchanged measured evaluator')
     for path,digest in binding['source_sha256'].items():require(sha(read(LAB/path,2*MIB))==digest,'native_source',path)
-    dependency=load_module('sequence_measured_dependency',LAB/'experiments/local-pressure-v1/dependency.py')
+    dependency=checks.build_native.dependency
     require(dependency.verify(Path(binding['prepared_source']))==binding['native_receipt'],'native_dependency','same qualified native physics')
     return receipt
 

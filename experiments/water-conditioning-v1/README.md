@@ -117,3 +117,19 @@ captured sample; learned values and optimizer state remain checked each update.
 CPU regression requires identical predictions/loss/gradients, and managed CUDA
 qualification requires exact checkpoint inventory parity through 500 updates.
 The ordinary deployment path and its zero-residual bypass are unchanged.
+
+
+The authorized [residual learning continuation](../../docs/plans/water-residual-learning-v1/plan.md)
+uses `residual-smoke`, `residual-nonlinear`, `residual-linear` and conditional
+`residual-recurrent` configurations. `rheon-water-residual-experiment-v1` declares
+one `(rho/h)*residual` input channel, train-only physical RMS scaling, explicit
+SiLU/linear activation and one to four shared corrections. Linear removes all
+convolution biases and nonlinear activations; pooling/interpolation remain linear.
+Full pressure is reconstructed with the supplied preceding estimate and cell-zero
+gauge. The same sealed uniform cubic operator and physical loss remain authoritative.
+Normalization has a distinct schema; historical seven-channel consumers must reject
+these checkpoints. No comparison deployment migration is implied. Source capture
+includes `physical_residual.py`; the old configurations and captured artifacts retain
+their original semantics. Recurrent training recomputes residuals and does not use
+the immutable prepared-input shortcut. Both focused suites should pass:
+`test_conditioning.py` and `test_residual.py`.

@@ -208,7 +208,7 @@ def run(args):
     manifest = decode(inputs['splits']); packet_config, parents = data.load((inputs['dataset'], inputs['dataset_extra']), manifest)
     require(sha(canonical(packet_config)) == witness['packet_experiment_sha256'], 'packet_config', 'unchanged qualified physical experiment')
     model.configure(device); torch.manual_seed(config['training']['seed'])
-    normalization = data.fit_normalization(parents)
+    normalization = model.fit_normalization(parents,data.fit_normalization)
     require(sha(canonical(normalization)) == witness['normalization_sha256'], 'normalization', 'train-only scales')
     network = model.PressureCorrectionNet().to(device); initial_inventory = helpers.state_inventory(network)
     sample_order = order(parents, config); population = cases(parents)

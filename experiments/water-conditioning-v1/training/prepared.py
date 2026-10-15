@@ -24,7 +24,7 @@ class PreparedSample:
             self.selected=torch.nonzero((sample['native_input_residual'].flatten(1)!=0).any(dim=1),as_tuple=False).flatten()
             self.sample=sample
             self.gain=model.amplitude(sample['native_input_residual'],normalization).reshape(-1,1,1,1,1)
-            scale=model.owner.scales(normalization);self.pressure_scale=scale['pressure']
+            scale=model.scales(normalization);self.pressure_scale=scale['pressure']
             cells=sample['base'][0].numel()
             self.denominator_p=sample['reference'].flatten(1).square().sum(dim=1).clamp_min((1e-6*math.sqrt(cells)*scale['pressure'])**2)
             self.denominator_b=sample['rhs'].flatten(1).square().sum(dim=1).clamp_min((1e-6*math.sqrt(cells)*scale['rhs'])**2)

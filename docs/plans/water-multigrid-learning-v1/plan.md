@@ -56,7 +56,7 @@ Milestones and acceptance claims:
 1. C1 automated/artifact: versioned multi-grid contract rejects invalid grids and
    budgets, preserves legacy bank behavior, independent eigenvalue/operator tests
    cover admitted shapes and units. Single-evaluation inference preserves four
-   uninterrupted evaluations and counts actual work. State: Active.
+   uninterrupted evaluations and counts actual work. State: Accepted.
 2. C2 required-real CUDA+Tuldok: smoke then full fit complete/drain, CPU restore
    preserves weights, managed artifacts reopen/redownload. Failed attempts are
    retained and do not masquerade as completed fits. State: Planned.

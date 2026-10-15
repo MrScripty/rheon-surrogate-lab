@@ -84,4 +84,3 @@ def fit_normalization(parents):
                                     'frames': len(trains)*24, 'cells': cells,
                                     'grids': [p['counts_xyz'] for p in trains],
                                     'parent_numeric_sha256': [{field: sha(p['arrays'][field].tobytes()) for field in FIELDS} for p in trains]}}
-

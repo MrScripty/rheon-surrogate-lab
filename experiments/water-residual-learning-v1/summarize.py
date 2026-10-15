@@ -29,12 +29,14 @@ def main():
             'training_started_utc':datetime.fromtimestamp(history['training_started_unix'],timezone.utc).isoformat(),
             'training_finished_utc':datetime.fromtimestamp(history['training_finished_unix'],timezone.utc).isoformat(),
             'updates_per_s':value['optimizer_updates_per_s'],'fitted_relative_residual':fitted['relative_residual']['median'],
+            'fitted_qualified':fitted['float32_qualified'],
             'validation_median_relative_residual':validation['relative_residual']['median'] if validation else None,
             'validation_max_relative_residual':validation['relative_residual']['maximum'] if validation else None,
             'validation_qualified':validation['float32_qualified'] if validation else None,
             'validation_cases':validation['cases'] if validation else None,
             'validation_repeated8_median':value['cpu_audits']['validation-audit']['median_repeated_8'],
             'validation_superposition_median':value['cpu_audits']['validation-audit']['median_superposition_error'],
+            'trajectory_scenarios':len(value.get('trajectories',{})),
             'trajectory_ai_steps':sum(t['result']['ai_steps'] for t in value.get('trajectories',{}).values()),
             'trajectory_qualified_ai_steps':sum(t['result']['qualified_ai_steps'] for t in value.get('trajectories',{}).values()),
             'trajectory_hard_stops':sum(t['result']['hard_stop'] for t in value.get('trajectories',{}).values()),
@@ -43,7 +45,7 @@ def main():
     assert len({s['run_id'] for s in stages})==len(stages)
     assert all(s['state']=='completed' and s['custody_phase']=='drained' for s in stages)
     summary={'schema':'rheon-residual-learning-summary-v1','scope':'known-frame fitting and development evaluation; no untouched test or qualified deployment',
-        'model_accuracy_qualified':any(r['validation_qualified']==r['validation_cases'] and r['validation_cases'] and not r['trajectory_hard_stops'] and r['trajectory_qualified_ai_steps']==r['trajectory_ai_steps'] and r['trajectory_ai_steps'] for r in rows),
+        'model_accuracy_qualified':any(r['fitted_qualified']==1 and r['trajectory_scenarios']==3 and r['validation_qualified']==r['validation_cases'] and r['validation_cases'] and not r['trajectory_hard_stops'] and r['trajectory_qualified_ai_steps']==r['trajectory_ai_steps'] and r['trajectory_ai_steps'] for r in rows),
         'relative_residual_target':1e-6,'physical_gates_changed':False,'new_reserved_test_used':False,
         'cuda_optimizer_updates':sum(json.loads((REPORTS/r['report']).read_text())['cuda_optimizer_updates'] for r in records),
         'managed_stages':stages,'records':records,'comparison':rows,

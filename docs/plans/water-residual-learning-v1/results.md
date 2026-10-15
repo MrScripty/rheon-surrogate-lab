@@ -1,120 +1,127 @@
 # Residual learning results
 
-Methods are versioned before managed source capture. No weights or datasets are
-in Git; Tuldok retains Run/checkpoint custody and verified local downloads remain
-under runs/water-residual-learning-v1. Each completed trial gets a small immutable
-report with exact configuration, source/input hashes, sampling order, checkpoints,
-training trace and CPU/native evaluation. No reserved final test has been used.
+Completed: 17 normal Tuldok stages, all completed/drained, reopened and whole
+artifacts redownloaded with parity; 40,002 CUDA optimizer updates. Five controlled
+fits plus a two-update CUDA/CPU smoke. No model meets physical qualification.
+No new final test or deployed checkpoint was used. Historical results remain intact.
 
-## Method and controls
+## Accuracy comparison
 
-One native 16x16x16 water state at frame 15, with actual preceding native pressure;
-same model seed 20261015, sampling seed 2026102501, Adam and original 10,000-update
-schedule. Initial interventions change only input representation, then activation
-and offsets. Float32 CUDA parameters/gradients/moments; deterministic eager,
-TF32/AMP disabled; physical assembly/reconstruction f64 as before. CPU restore is
-fresh and optimizer-free. The fit is a capacity diagnostic. The 64-parent,
-128-state validation is development evidence, not untouched qualification.
+Entries are relative equation residuals; the unchanged target is 1e-6. These
+are one-frame capacity experiments evaluated on the same 64 independent native
+validation parents at two saved states each. Validation is development evidence.
 
-Physical residual input: q=(rho/h)*(b-A p_previous), one full-grid channel divided
-by train-only q RMS. The output is float32, multiplied by training pressure RMS,
-cell-zero gauge fixed and added to supplied base. Grid shape identifies the sealed
-Neumann stencil. Density/time-step/coordinate maps are removed from the network;
-one cubic cell spacing remains physical metadata. This contract is restricted to
-uniform-density sealed full-fluid domains; no masks, obstacles or free surface.
+| Trial | CUDA updates | Network applications per proposal | Fitted residual | Validation median | Validation worst | Qualified |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Retained seven-channel no-GroupNorm baseline | 10,000 | 1 | 0.000398222 | 0.082815901 | 0.293090166 | 0/128 |
+| [One physical residual channel, SiLU](reports/residual-nonlinear.json) | 10,000 | 1 | 0.000519353 | 0.044418082 | 0.291001740 | 0/128 |
+| [One physical residual channel, linear](reports/residual-linear.json) | 10,000 | 1 | 0.000419244 | 0.047737922 | 0.289982696 | 0/128 |
+| [Matched 5,000-update linear control](reports/residual-linear-5000.json) | 5,000 | 1 | 0.000427563 | 0.054937861 | 0.291362902 | 0/128 |
+| [Four shared linear corrections](reports/residual-recurrent.json) | 5,000 | 4 | 0.000349860 | 0.014334834 | 0.221805073 | 0/128 |
+| [Correction/gradient/divergence objective](reports/residual-physical-loss.json) | 10,000 | 1 | 0.000940524 | 0.043581483 | 0.270796572 | 0/128 |
 
-Linear variant removes all convolution offsets and SiLU activations, retaining
-linear pooling, resizing and skip/global-average operations. Test scaling, sign
-and superposition separately from pressure accuracy. Recurrent variant applies
-shared parameters with the actual residual recomputed between proposals.
+The recurrent median is 73.9% lower than its matched single-correction
+control. Its optimizer interval is 206.77 seconds versus 51.17 seconds, with four
+network applications and residual recomputation per proposal. Initial parameter
+bytes, train inputs, normalization, sampling and learning-rate schedule match;
+see [parity receipt](reports/recurrent-control-parity.json). This is improved
+saved-state accuracy at greater computation, not demonstrated simulation success.
+The older 1,024-parent candidate had median 0.0385793 and worst 0.207926; its
+population/budget differs, and its lower worst error should not be hidden.
 
-## Baseline CPU diagnosis
+## Independent simulations and stability
 
-The retained no-GroupNorm checkpoint on 128 validation states has median residual
-0.0828159014 and median superposition discrepancy 0.463623591. Eight raw proposals
-reach median 0.0755236577, so iteration alone does not establish convergence.
-Analytic correction using the lowest 2/4/8 cosine modes per axis gives median
-0.0756360062 / 0.0488392523 / 0.0128119390; the full analytic pseudoinverse gives
-2.03706e-15. These are separately labelled f64 algorithmic controls, not learned
-accuracy or full physical qualification. Rounded float32 ideal learned corrections
-pass the equation-only gate on all 128 states. This motivates testing input and
-linearity first, then training coarse/recurrent correction rather than assuming
-that model size or data count alone is responsible.
+All five candidates were evaluated in three new paired native/AI development
+trajectories: cube [16,16,16], elongated [24,16,12] and compact [12,8,10], with
+varied force centers, strength, swirl, fluctuation and frequency. Cells remain
+cubic, with one spacing and proportions determined by per-axis counts. Every
+trajectory starts with 15 native steps; first actual AI inference is step 16.
+The native/native controls qualify all 64 reference frames and 49 subsequent
+projected steps in each scenario. These are full new simulations, distinct from
+recorded-state teacher evaluations. Reusable scene JSON and receipts are retained.
 
-CPU audit used 23 single-thread workers with distinct core affinity, 22 observed
-cores for this small workload, no CUDA initialization, 7.59 seconds including pool
-startup. The independent spectral regression recovers a known rectangular-grid
-Neumann cosine eigenfunction and checks low-mode truncation.
+| Candidate | Actual AI steps before stops, cube / elongated / compact | Qualifying AI steps | Hard stops |
+| --- | --- | ---: | ---: |
+| One physical residual channel, SiLU | 26 / 23 / 12 | 0/61 | 3/3 |
+| One physical residual channel, linear | 7 / 6 / 7 | 0/20 | 3/3 |
+| Matched 5,000-update linear control | 7 / 6 / 7 | 0/20 | 3/3 |
+| Four shared linear corrections | 5 / 4 / 6 | 0/15 | 3/3 |
+| Correction/gradient/divergence objective | 8 / 6 / 7 | 0/21 | 3/3 |
 
-## Managed experiments
+The lower recurrent validation median does not carry over to stable simulation.
+All native references observed before the learned stops qualify. Raw learned
+pressure failures remain visible; no native fallback is counted as AI success.
+CPU native warm-start checks also require fallback on all 128 validation states
+for every candidate. There is no qualified full-simulation speedup.
 
-The two-update CUDA/CPU smoke passed and both Runs completed/drained, reopened
-and redownloaded with whole-artifact parity. Full nonlinear training completed
-10,000 updates at 91.44 updates/s in the optimizer interval; fresh CPU restore
-preserved exact predictions. Fitted native residual is 0.0005193531068, with
-0/1 physical qualification. Validation CPU diagnostic median is 0.04441808198,
-maximum 0.2910017402; native validation confirms the same errors and 0/128
-physical qualifications. All native child groups drain. Learned warm-start PCG
-uses 15,963 iterations including fallback versus 11,867 for native temporal PCG;
-this candidate does not accelerate the pressure solve. This improves
-on the matched one-frame baseline but remains above the earlier large-cohort
-median 0.0385793. Eight raw proposals reach median 0.01134085; all 128 rounded ideal
-float32 corrections pass the equation-only control. All 23 worker cores were used.
+Structural linearity reduces median superposition discrepancy to approximately
+2e-7 for the single-step linear models, but does not ensure a stable inverse.
+Eight wrapper proposals amplify median equation residual to 201/222 for the
+single-step controls and 930 for recurrent (32 internal network applications).
+The nonlinear model reaches 0.01134 after eight proposals, still unqualified.
 
-The independent cube trajectory had 15 native warm-up steps and 26 actual model
-predictions before the unchanged physical hard stop at step 41; 0/26 learned
-proposals qualify, 41/41 native references qualify. Worst actual divergence reaches
-92.39115. The raw failure and drained child are retained; this is accumulated
-model error, not missing previous-pressure context. The native/native control
-qualifies all 49 post-warm-up steps of a 64-step run. Two rectangular force scenarios
-also have separate native controls and will evaluate learned checkpoints.
+[Manufactured Neumann mode probes](reports/recurrent-mode-probes.json) test 24
+compatible modes on the three grids, at the fitted correction's 2.1793 Pa RMS.
+The recurrent model reduces first-proposal error on 21/24; all three finest
+checkerboard modes grow (up to 7.25x), and repeated proposals reach worst 1.65e10.
+This identifies an unstable spatial component, without claiming a global proof
+or calling these algebraic probes simulations/cold-start qualifications.
 
-The matched linear 10,000-update trial completed fresh CPU restore/development
-inference. Fitted residual is 0.0004192441490 and validation diagnostic median
-0.04773792218. Superposition error falls to 2.23e-7, but eight raw proposals
-increase median equation error to about 222.126. Linearity alone does not
-establish a stable approximate inverse. Its native validation is being checked.
-All planned CUDA fits have completed: recurrent 5,000 updates, physical-feedback
-10,000 updates and matched single-correction 5,000 updates. CPU qualification
-and independent trajectories remain in progress. A varied 16-simulation 32-state
-cohort has been prepared without starting training; expansion remains gated on
-credible known-case fitting. See execution ledger and per-trial reports for
-terminal statuses as they become available.
+## Method and scientific controls
 
+Train on the same native 16-cubed frame 15, with actual previous solved pressure;
+seed 20261015 and sampling seed 2026102501. CUDA float32 model parameters, gradients
+and Adam moments, deterministic eager execution, AMP/TF32 off. Physical operator,
+labels and pressure reconstruction retain their existing f64 arithmetic. Fresh
+CPU restores construct no optimizer or CUDA context and reproduce the exact
+prediction inventory. All physical equation/divergence/flux/Courant gates remain
+unchanged. Twenty focused checks pass (16 Python, four existing native engine
+tests), including independent stencil/spectral and real process cleanup checks.
 
-Completed nonlinear trial: [full method/result record](reports/residual-nonlinear.json),
-including all three independent development trajectories and their hard stops.
+The new input is q=(rho/h)*(b-A p_previous), divided by train-only q RMS, one
+channel on the original grid. For the admitted uniform-density cubic sealed
+operator, A=(h/rho)L. The output uses the historical train pressure RMS, cell-zero
+gauge and supplied base pressure. Coordinates/density/timestep are not network
+maps; density/spacing act through physical assembly and scaling. The versioned
+contract is restricted to the existing full-fluid sealed Neumann setting.
+Masks, free surfaces and different material operators are not established.
 
+First compare representation against the retained seven-channel no-normalization
+baseline, then remove SiLU and offsets for the linear experiment. Unrolled
+training uses shared weights and recomputes actual residuals after each proposal.
+Canonical input/linearity/recurrent comparisons retain the same pressure/equation
+loss. The separate physical-feedback objective weights correction-relative MSE
+0.25, correction-gradient MSE 0.25, relative equation MSE 0.40 and maximum normalized
+equation error squared 0.10. Loss values between objectives are not comparable.
+Exact schedules, configurations, source/input hashes and traces are per-trial.
 
-The separately qualified native paired controls pass all 64 reference frames and
-49 post-warm-up projected steps for each cube, elongated [24,16,12] and compact
-[12,8,10] scenario. Every domain retains one cubic spacing. These are development
-scenarios with different force location, strength, swirl and fluctuation, not
-an untouched final test. Their receipts and reusable JSON configurations are
-retained. The next 16-simulation cohort contains 32 real native snapshots with
-actual preceding pressure; it is prepared, not trained.
+CPU ideal float32 correction controls pass the equation-only gate on all 128
+validation states for each model; earlier fitted controls also pass native
+physical checks. The target is representable for these controls. Analytic
+low/full spectral corrections remain explicitly algorithmic controls; the full
+f64 inverse removes the equation error and is not counted as learned accuracy.
+The measured learning gap and unstable modes remain after precision controls.
 
+## Retention and disposition
 
-## Recurrent and physical-feedback interim evidence
+[JSON index](reports/summary.json) and [CSV comparison](reports/comparison.csv)
+index immutable per-trial method/result records, Run/catalog IDs, source commits,
+config/input/preprocessing hashes, sample order, checkpoint hashes, traces, UTC
+training intervals, CPU/native outcomes and trajectory receipts. Large weights
+and simulation arrays remain in the original Tuldok catalog and verified ignored
+local downloads; none are added to Git. All native children are drained/reaped;
+the lab trajectory parent retains failure/deadline cleanup evidence. See
+[commands/environment](reports/commands.md) and [checks](reports/tests.json).
+All earlier v1 records remain unchanged; later v2 adds explicit runtime/time fields.
 
-Four shared corrections, trained for 5,000 updates, reduce the validation
-CPU diagnostic median to 0.01433483391, worst 0.2218051. The matched 5,000-update
-single-step control has identical initial weights, input bytes, normalization,
-sampling and learning-rate schedule; compute differs by four network applications
-per proposal. Its complete native comparison is retained after evaluation.
-The recurrent candidate still fails the fitted target and eight wrapper proposals
-(32 network applications) amplify errors. Independent trajectories hard-stop
-following 5/4/6 AI predictions for cube/elongated/compact, all after 15 native
-warm-up steps, with no qualifying learned proposals.
+The prepared next cohort has 16 genuine independent simulations and 32 actual native
+snapshots with preceding pressure and varied physical setups. It has not trained:
+all five fitted candidates still miss 1e-6 and actual simulations are unstable.
+The larger-cohort/several-seed stage therefore remains conditional, as agreed.
+No unused final-test population was consumed. Current comparison UI deployment
+remains unchanged; it requires an explicit new adapter contract before admitting
+one-channel checkpoints. See [findings](issues.md).
 
-Manufactured mode probes isolate the problem: all three highest-frequency
-checkerboard patterns grow on the first four-step proposal (up to 7.25 times
-initial equation error). Across 24 modes, eight wrapper proposals amplify the
-worst error to 1.65e10. These are compatible equation diagnostics, not native
-physical qualifications or cold-start simulations. The improved saved-state
-median does not establish a stable solver. See [mode report](reports/recurrent-mode-probes.json).
-
-Physical-feedback training completed 10,000 CUDA updates. Its fresh CPU diagnostic
-median is 0.04358148320, worst 0.2707966; eight raw proposals reach median 82.3856.
-This objective does not remove the instability. Native validation remains pending;
-loss numbers between the two objectives are not directly comparable.
+The next priority is constraining the measured high-frequency amplification and
+closing the known-frame fitting gap before expanding the corpus. The
+[evidence-based next experiments](next-steps.md) are prepared, not executed.

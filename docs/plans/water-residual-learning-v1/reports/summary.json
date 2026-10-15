@@ -5,8 +5,32 @@
   "relative_residual_target": 1e-06,
   "physical_gates_changed": false,
   "new_reserved_test_used": false,
-  "cuda_optimizer_updates": 25002,
+  "cuda_optimizer_updates": 40002,
   "managed_stages": [
+    {
+      "trial": "residual-linear-5000",
+      "name": "restore",
+      "run_id": "5a8831bfe27c4b62a9a11f473a1e7e5e",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-linear-5000",
+      "name": "validation",
+      "run_id": "18ccc16e44634267b703d4d087ff0757",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-linear-5000",
+      "name": "train",
+      "run_id": "1a3b7578bbf74277aeac3ec0743aeb96",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
     {
       "trial": "residual-linear",
       "name": "restore",
@@ -56,6 +80,30 @@
       "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
     },
     {
+      "trial": "residual-physical-loss",
+      "name": "restore",
+      "run_id": "748a925753eb4e0e88d82daa1d4bca74",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-physical-loss",
+      "name": "validation",
+      "run_id": "e5bd434053b54c2f9708726d275b70ce",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-physical-loss",
+      "name": "train",
+      "run_id": "ea16176b7f644038aa503affa22354fd",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
       "trial": "residual-recurrent",
       "name": "restore",
       "run_id": "77013413ef814fe1be37da2690876ddb",
@@ -98,6 +146,11 @@
   ],
   "records": [
     {
+      "trial": "residual-linear-5000",
+      "report": "residual-linear-5000.json",
+      "sha256": "8ecc8040c9e9763ffc9d45c51cd9219238890d0da2accabf3ef640cdf07316b9"
+    },
+    {
       "trial": "residual-linear",
       "report": "residual-linear.json",
       "sha256": "4f5b2158f2a24380d11ac1b8c83f86bf7ac160d4badf0ed7dcadc38f91288455"
@@ -106,6 +159,11 @@
       "trial": "residual-nonlinear",
       "report": "residual-nonlinear.json",
       "sha256": "4185acaa9b073f3a40a51fb8d01bc9b8b144953baee3ce174a3442195fc908e8"
+    },
+    {
+      "trial": "residual-physical-loss",
+      "report": "residual-physical-loss.json",
+      "sha256": "6243d302881e33a6aca4b76161c843f30687d3b65c52cc336982d9373f261537"
     },
     {
       "trial": "residual-recurrent",
@@ -120,6 +178,29 @@
   ],
   "comparison": [
     {
+      "trial": "residual-linear-5000",
+      "source_commit": "03f98044e107afae7c350da18a14063e88ea2cad",
+      "updates": 5000,
+      "steps_per_prediction": 1,
+      "training_started_utc": "2026-10-15T19:58:19.680816+00:00",
+      "training_finished_utc": "2026-10-15T19:59:10.855626+00:00",
+      "updates_per_s": 97.7043189800919,
+      "fitted_relative_residual": 0.00042756349942464546,
+      "fitted_qualified": 0,
+      "validation_median_relative_residual": 0.05493786089655592,
+      "validation_max_relative_residual": 0.2913629020430306,
+      "validation_qualified": 0,
+      "validation_cases": 128,
+      "validation_repeated8_median": 201.01036491714487,
+      "validation_superposition_median": 2.287456809694146e-07,
+      "trajectory_scenarios": 3,
+      "trajectory_ai_steps": 20,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_hard_stops": 3,
+      "weights_sha256": "dace11ff08948f59aa5224fbda2e50d8cb321cbb2fd4ebaa47f6132062aa8302",
+      "report": "residual-linear-5000.json"
+    },
+    {
       "trial": "residual-linear",
       "source_commit": "725b10022f091ec298997aee9fdffb68a8f4f781",
       "updates": 10000,
@@ -128,12 +209,14 @@
       "training_finished_utc": "2026-10-15T19:43:15.520807+00:00",
       "updates_per_s": 96.0335711595445,
       "fitted_relative_residual": 0.00041924414903267817,
+      "fitted_qualified": 0,
       "validation_median_relative_residual": 0.04773792217917261,
       "validation_max_relative_residual": 0.28998269636148705,
       "validation_qualified": 0,
       "validation_cases": 128,
       "validation_repeated8_median": 222.12597192524075,
       "validation_superposition_median": 2.2315924508739758e-07,
+      "trajectory_scenarios": 3,
       "trajectory_ai_steps": 20,
       "trajectory_qualified_ai_steps": 0,
       "trajectory_hard_stops": 3,
@@ -149,17 +232,42 @@
       "training_finished_utc": "2026-10-15T19:41:08.429904+00:00",
       "updates_per_s": 91.44442597907698,
       "fitted_relative_residual": 0.0005193531068407955,
+      "fitted_qualified": 0,
       "validation_median_relative_residual": 0.04441808197616948,
       "validation_max_relative_residual": 0.29100174022059844,
       "validation_qualified": 0,
       "validation_cases": 128,
       "validation_repeated8_median": 0.011340851521740518,
       "validation_superposition_median": 0.006420218895484206,
+      "trajectory_scenarios": 3,
       "trajectory_ai_steps": 61,
       "trajectory_qualified_ai_steps": 0,
       "trajectory_hard_stops": 3,
       "weights_sha256": "94afe6d741a1ff784cbc0b1e170be604ca12f8ef4cca9a4de4d8b4495f793755",
       "report": "residual-nonlinear.json"
+    },
+    {
+      "trial": "residual-physical-loss",
+      "source_commit": "dde8241c8082b095e6d15757ec4b5fbb0b76d2c1",
+      "updates": 10000,
+      "steps_per_prediction": 1,
+      "training_started_utc": "2026-10-15T19:55:49.237590+00:00",
+      "training_finished_utc": "2026-10-15T19:57:55.730916+00:00",
+      "updates_per_s": 79.05555416580661,
+      "fitted_relative_residual": 0.0009405243616687031,
+      "fitted_qualified": 0,
+      "validation_median_relative_residual": 0.04358148319767963,
+      "validation_max_relative_residual": 0.2707965721570932,
+      "validation_qualified": 0,
+      "validation_cases": 128,
+      "validation_repeated8_median": 82.38559334697065,
+      "validation_superposition_median": 2.0924252027837208e-07,
+      "trajectory_scenarios": 3,
+      "trajectory_ai_steps": 21,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_hard_stops": 3,
+      "weights_sha256": "638fa2b97415cfc87b40ccdc0dc9932aa69d94a140495d92f6b5decef2fdb10f",
+      "report": "residual-physical-loss.json"
     },
     {
       "trial": "residual-recurrent",
@@ -170,12 +278,14 @@
       "training_finished_utc": "2026-10-15T19:55:24.464589+00:00",
       "updates_per_s": 24.18117259099084,
       "fitted_relative_residual": 0.0003498601638110977,
+      "fitted_qualified": 0,
       "validation_median_relative_residual": 0.014334833908936931,
       "validation_max_relative_residual": 0.2218050727713399,
       "validation_qualified": 0,
       "validation_cases": 128,
       "validation_repeated8_median": 930.4441263130152,
       "validation_superposition_median": 2.310082141062447e-06,
+      "trajectory_scenarios": 3,
       "trajectory_ai_steps": 15,
       "trajectory_qualified_ai_steps": 0,
       "trajectory_hard_stops": 3,

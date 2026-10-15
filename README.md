@@ -422,3 +422,18 @@ The owner supplied the [Apache-2.0 project license](LICENSE) when creating the
 repository. Dependencies retain their own licenses. See
 [dependency provenance](THIRD_PARTY.md). The optional Rheon API patch remains a
 separate proposal; this publication changes no upstream Rheon code or dependency.
+
+
+## Residual pressure learning experiments
+
+The [completed controlled sequence](docs/plans/water-residual-learning-v1/results.md)
+retains 17 managed stages and 40,002 CUDA updates, including physical residual
+inputs, linearity, repeated corrections and changed physical feedback. Median
+saved-state error improved, but all candidates remain physically unqualified
+and independent simulations become unstable. See the
+[JSON index](docs/plans/water-residual-learning-v1/reports/summary.json),
+[CSV comparison](docs/plans/water-residual-learning-v1/reports/comparison.csv),
+[method/commands](docs/plans/water-residual-learning-v1/reports/commands.md) and
+[prepared next experiments](docs/plans/water-residual-learning-v1/next-steps.md).
+Weights/datasets remain in the existing Tuldok catalog and ignored local Run
+artifacts. Historical results and the existing deployed comparison are preserved.

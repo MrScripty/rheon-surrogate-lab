@@ -1,6 +1,7 @@
 # Residual pressure learning sequence
 
-Status: Active. Operation: start, authorized by the user's instruction to proceed
+Status: Accepted (bounded experiments and records; model accuracy unqualified).
+Admission operation: start, authorized by the user's instruction to proceed
 with the sequence and retain methods and results. Canonical plan:
 `docs/plans/water-residual-learning-v1/plan.md`.
 
@@ -44,12 +45,12 @@ Milestones:
    Write set: training model/policy/preparation/project source, new model source,
    focused tests, configurations, plan and reports. Gate: algebraic/operator and
    zero/shape/scaling checks; committed source; managed CUDA/CPU smoke; bounded
-   10,000-update fit and native development evaluation. State: Verifying.
+   10,000-update fit and native development evaluation. State: Accepted (experiment evidence; model remains unqualified).
 2. Fixed-representation linear versus nonlinear correction. Same seed, loss,
    frame and update schedule; positive/negative/superposition diagnostics and
-   actual fitted/held-out equation and physical errors. State: Verifying.
+   actual fitted/held-out equation and physical errors. State: Accepted (experiment evidence; model remains unqualified).
 3. Coarse control and shared recurrent correction with recomputed residual.
-   Retain convergence/error-scale and full CPU costs. State: Verifying.
+   Retain convergence/error-scale and full CPU costs. State: Accepted (experiment evidence; model remains unqualified).
 4. Pressure-gradient/divergence feedback and independent trajectory evaluation.
    Write set also includes probes/residual-rollout-v1 and the laboratory CPU
    trajectory controller. Reuse the existing Rheon paired engine by compiled
@@ -57,10 +58,13 @@ Milestones:
    Parent owns bounded child stdin/stdout, deadline, termination/reaping and
    failure receipts. Native/native control must qualify after warm-up first.
    Preserve physical oracle; learning loss changes are separate comparisons.
-   State: Verifying.
+   State: Accepted (experiment evidence; model remains unqualified).
 5. Conditional small varied cohort, then larger population and several seeds.
    Admit expansion only after known-case fitting is credible; reserve a new
-   untouched final test before candidate selection. State: Planned.
+   untouched final test before candidate selection. State: Deferred: all fitted
+   candidates miss the unchanged 1e-6 target and independent simulations fail.
+   The 16-simulation/32-state view is prepared; revisit after fitting/stability
+   evidence supports admission. Larger populations/seeds were not trained.
 
 Objective acceptance: completed and drained normal managed Runs, exact source,
 config/input/checkpoint lineage, fresh optimizer-free CPU restore, unchanged
@@ -68,15 +72,21 @@ native physical checks and durable per-trial method/result records visible in
 the existing project. Model qualification additionally requires physical gates
 on unseen cases; no guaranteed accuracy improvement is assumed.
 
-Current phase: execute the bounded CUDA comparisons and CPU/native evaluation.
-Exactly one next slice: complete and retain native development and independent
-trajectory evidence for the captured input, linear, recurrent and physical-loss
-trials, including the matched recurrent-budget control; then apply the cohort
-expansion gate. Source contracts, focused checks and CUDA/CPU smoke are accepted.
-Blockers: none observed. Replan for failed source/lifecycle checks, changed
-physics/operator, exhausted bounded resources, or a representation/optimization
-finding that invalidates the next experiment. Later dataset expansion remains
-conditional on the measured fitting result.
+Current phase: completed bounded experiments and durable review records.
+Exactly one next slice: none (terminal tranche). Prepared subsequent experiments
+are in next-steps.md; they have not been executed. Acceptance: all 17 managed
+stages completed/drained/reopened/redownloaded, 40,002 CUDA updates, fresh CPU
+restores,645 native teacher-state checks, 15 actual model trajectories and three
+native controls. All learned physical checks fail and all 15 model trajectories
+hit unchanged hard stops; the scientific negative results are retained. The
+model/deployment accuracy objective is not accepted. No execution blocker remains.
+Conditional cohort expansion is deferred under its existing evidence gate.
+
+The retained branch supports continued laboratory experiments and later adapter
+qualification, owned by this task/future maintainer. Synchronize by reviewed new
+commits without rewriting captured history. Supported consumers are retained Run
+reconstruction and experimental continuation; retire after accepted integration
+or explicit retirement of that continuation. No task worktree was created.
 
 Retention: committed configurations, methods, summaries and small receipts;
 Tuldok owns checkpoints and artifacts, with verified local downloads under
@@ -90,4 +100,4 @@ snapshot:v1:00b6738f-09b4-4388-9cda-42bf949b1d52. Atomic conventional commits,
 explicit source/contracts, independent native evidence, claim-scoped metrics.
 
 See [execution ledger](execution-ledger.md), [issues](issues.md),
-[results](results.md) and [previous prepared sequence](../water-conditioning-v1/next-steps.md).
+[results](results.md), [prepared next experiments](next-steps.md) and [previous prepared sequence](../water-conditioning-v1/next-steps.md).

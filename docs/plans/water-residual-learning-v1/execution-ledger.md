@@ -109,3 +109,25 @@ simulations or cold-start qualification. They identify unstable spatial modes
 that single-frame supervised fitting leaves unconstrained. Preserve the negative
 rollout evidence alongside improved saved-state error; no deployment or cohort
 expansion follows. Full native validation remains pending.
+
+All planned GPU optimization finished:40,002 updates across five fits and the
+two-update smoke. The paired5,000-update control has CPU validation diagnostic
+median0.05493786090 versus recurrent0.01433483391, about73.9% lower for recurrent
+with four network applications per proposal. Physical-feedback median0.04358148
+is modestly lower than the10,000-update linear control, but its fitted error is
+worse and repeated solves remain unstable. Final two native validation Runs are
+still being drained/evaluated. The next experiments document is prepared from
+the measured instability; no additional GPU experiments were started.
+
+Closure: all 17 managed stages completed/drained, reopened and re-downloaded with
+whole-artifact parity; 40,002 actual CUDA updates and fresh CPU-only restores.
+All five candidates received 1 fitted  + 128 validation native checks (645 total)
+and three independent post-warm-up trajectories each. Each 0/128 physical gates;
+all 15 trajectories hit hard stops, while native/native controls qualify 49/49
+post-warm-up steps in each scene. 20 focused checks pass. Methods, results, CPU
+mode diagnosis, future experiments, JSON/CSV indexes and per-trial source/config/
+checkpoint custody are retained. No new reserved test, no deployed model change,
+no new Rheon/Tuldok source edits. Larger-cohort training is deferred because the
+agreed known-case gate remains unmet; 16 independent simulations / 32 native states
+are prepared for later admission. Source/record branch is retained for continued
+experiments and reviewed adapter integration, with no worktree created.

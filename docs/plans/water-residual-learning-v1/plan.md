@@ -51,6 +51,11 @@ Milestones:
 3. Coarse control and shared recurrent correction with recomputed residual.
    Retain convergence/error-scale and full CPU costs. State: Planned.
 4. Pressure-gradient/divergence feedback and independent trajectory evaluation.
+   Write set also includes probes/residual-rollout-v1 and the laboratory CPU
+   trajectory controller. Reuse the existing Rheon paired engine by compiled
+   source inclusion with measured source/build receipts; no application edits.
+   Parent owns bounded child stdin/stdout, deadline, termination/reaping and
+   failure receipts. Native/native control must qualify after warm-up first.
    Preserve physical oracle; learning loss changes are separate comparisons.
    State: Planned.
 5. Conditional small varied cohort, then larger population and several seeds.

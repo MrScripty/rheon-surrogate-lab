@@ -21,7 +21,8 @@ BASES={}
 
 def initialize(project,artifacts,cpus):
     global MODEL,DATA,TORCH,NETWORK,NORM
-    index=multiprocessing.current_process()._identity[0]-1
+    identity=multiprocessing.current_process()._identity
+    index=identity[0]-1 if identity else 0
     os.sched_setaffinity(0,{cpus[index%len(cpus)]})
     sys.path.insert(0,str(project))
     import torch
@@ -30,11 +31,15 @@ def initialize(project,artifacts,cpus):
     import policy
     TORCH=torch;MODEL=model;DATA=data
     model.configure('cpu');torch.set_num_threads(1)
-    config=policy.decode(policy.read(Path(project)/'config.json'));model.select(config)
+    witness_raw=policy.read(Path(project)/'source-witness.json');witness=policy.decode(witness_raw)
+    for name,digest in witness['sources'].items():assert policy.sha(policy.read(Path(project)/name))==digest
+    config_raw=policy.read(Path(project)/'config.json');config=policy.decode(config_raw);model.select(config)
     artifacts=Path(artifacts)
     receipt=policy.decode(policy.read(artifacts/'receipt.json'));history=policy.decode(policy.read(artifacts/'history.json'))
     assert receipt['mode']=='restore' and receipt['optimizer_updates']==0
     assert receipt['execution']['cuda_initialized'] is False and receipt['architecture']==model.ARCHITECTURE
+    assert receipt['closure']['source_witness_sha256']==policy.sha(witness_raw)
+    assert receipt['closure']['experiment_sha256']==policy.sha(config_raw)
     for name in ('weights.npz','normalization.json','history.json'):
         assert policy.sha(policy.read(artifacts/name))==receipt['outputs'][name]['sha256']
     NORM=policy.decode(policy.read(artifacts/'normalization.json'))

@@ -24,3 +24,20 @@ local paths. Failed Runs remain in the catalog with their local failure receipts
 Use the installed qualified Torch interpreter for audits and tests. `record.py`
 needs only standard Python. Run spectral regression with `python -m unittest
 discover -s experiments/water-residual-learning-v1 -p test_audit.py`.
+
+
+`build_rollout.py --prepared PREPARED_RHEON --rheon-source RHEON_CHECKOUT
+--cargo CARGO --output FRESH` builds/tests/lints the separate
+`probes/residual-rollout-v1` against the qualified prepared native library and
+selected existing paired-engine/scene source. It retains source/dependency/build
+commands and binary hashes; it does not edit the Rheon checkout or application.
+`rollout.py --binary PROBE --scene SCENE_JSON --output FRESH --project PROJECT
+--artifacts CPU_RESTORE` serves that captured checkpoint to independent native/AI
+tracks after the scene's native warm-up. `--reference-control` substitutes a
+native solve for the prediction callback and needs no checkpoint. The parent
+owns the native process group, a 120-second deadline, termination/reaping and
+failure receipts. Existing hard physical stops remain enforced; failed pressure
+qualification stays visible and is not fallback success. These runs are new
+simulation trajectories, unlike the recorded-state audits. The deployed UI
+bridge's seven-channel contract stays unchanged. Run `test_rollout.py` for actual
+failed-exit and timeout process cleanup evidence.

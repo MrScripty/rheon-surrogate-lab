@@ -48,3 +48,16 @@ Canonical loss/preparation remains unchanged for the earlier input/linearity
 controls. All six residual tests pass, including zero loss at a manufactured
 reference and an independent finite-difference directional gradient. The later
 objective trial has not been assembled or run yet.
+
+Trajectory preparation: the old application bridge explicitly admits only seven
+channels. Preserve that independently deployed contract. A separate lab probe
+includes the existing Rheon paired Engine/Scene source without editing its
+checkout and uses the qualified prepared Rheon library. A CPU parent serves the
+new captured checkpoint directly. Release build and four actual existing engine
+tests pass; Clippy passes after correcting a local wrapper argument placement
+(the first malformed invocation failed, no source issue). The native/native
+64-step control has 15 native warm-up +49 actual projected steps, 49/49 qualified,
+64/64 reference frames qualified, no hard stop, child exited/reaped. No model
+inference is claimed for that algorithmic control. Model trajectories follow
+after fresh CPU restores. This adds a bounded lab verification seam, not a
+production deployment migration or changes to the Rheon team's source.

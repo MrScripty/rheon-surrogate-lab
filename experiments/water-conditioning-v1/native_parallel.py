@@ -54,10 +54,20 @@ def run(args):
             and restored['outputs']['weights.npz']['sha256']==receipt['weights_sha256']
             and restored['outputs']['normalization.json']['sha256']==receipt['normalization_sha256'],
             'iteration_source','same measured model and preprocessing')
-        policy.require(receipt['inference_policy']['name']=='fixed-repeated-learned-correction'
+        policy.require(receipt['inference_policy']['name'] in ('fixed-repeated-learned-correction','adaptive-learned-correction')
             and type(receipt['inference_policy']['proposals']) is int and 1<=receipt['inference_policy']['proposals']<=8
+            and receipt['inference_policy']['nn_passes_per_pressure_solve']==receipt['inference_policy']['proposals']*restored['architecture']['correction']['steps']
             and receipt['inference_policy']['native_pressure_refinement'] is False,
             'iteration_policy','explicit bounded learned-only diagnostic')
+        if receipt['inference_policy']['name']=='adaptive-learned-correction':
+            owner=policy.load_module('learned_stopping_owner',LAB/'experiments/water-stability-learning-v1/learned_iteration.py')
+            owner.stopping_policy(receipt['inference_policy']['stopping'])
+            policy.require(len(receipt['case_iterations'])==len(receipt['cases'])
+                and all(c['case']==case and type(c['proposals']) is int
+                    and 0<=c['proposals']<=receipt['inference_policy']['proposals']
+                    and c['network_passes']==c['proposals']*restored['architecture']['correction']['steps']
+                    for c,case in zip(receipt['case_iterations'],receipt['cases'])),
+                'iteration_policy','same selected cases and bounded adaptive work')
         weights=receipt['weights_sha256'];predictions_sha=receipt['predictions_sha256']
     else:
         policy.require(receipt['schema']=='rheon-water-learning-inference-v1' and receipt['runtime']['device']=='cpu'

@@ -1,0 +1,15 @@
+{
+  "schema": "rheon-inference-budget-focused-checks-v1",
+  "adaptive_two_cell_checks": {
+    "passed": 5,
+    "command": "Pumas v2.14.0 Python -m unittest discover -s experiments/water-stability-learning-v1 -p test_learned_iteration.py -v"
+  },
+  "process_cleanup_checks": {
+    "passed": 2,
+    "command": "/usr/bin/python3 -m unittest discover -s experiments/water-residual-learning-v1 -p test_rollout.py -v",
+    "environment_note": "Pumas interpreter path contains spaces and cannot be used directly in the fixtures Linux shebang. Those attempts failed before spawning; rerun with system Python passed, no production code change needed."
+  },
+  "compileall": "passed",
+  "whitespace": "passed",
+  "scope": "deterministic stopping arithmetic, budget/exhaustion and old fixed-path behavior; real native physical acceptance still pending"
+}

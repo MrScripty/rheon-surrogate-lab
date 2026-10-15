@@ -8,6 +8,7 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor
 import hashlib
 import json
+import math
 import multiprocessing
 import os
 from pathlib import Path
@@ -16,22 +17,58 @@ import sys
 LAB=Path(__file__).resolve().parents[2]
 
 
-def correct(model,network,normalization,sample,budget):
+def stopping_policy(value):
+    expected={'schema','relative_residual','absolute_residual','predicted_divergence'}
+    if type(value) is not dict or set(value)!=expected or value['schema']!='rheon-learned-stopping-policy-v1':
+        raise ValueError('closed learned stopping policy required')
+    for name,maximum in [('relative_residual',1e-6),('absolute_residual',1e-12),('predicted_divergence',1e-7)]:
+        x=value[name]
+        if type(x) not in (int,float) or not math.isfinite(x) or not 0<x<=maximum:
+            raise ValueError('stopping policy cannot relax existing physical limits')
+    return value
+
+
+def equation_quality(model,pressure,sample,rhs,policy):
+    import torch
+    error=rhs-model.full_operator(pressure,sample['cell_size_m'],sample['rho'])
+    norm=float(torch.linalg.vector_norm(error));rhs_norm=float(torch.linalg.vector_norm(rhs))
+    predicted=float(error.abs().amax()*sample['dt'][0]/sample['cell_size_m'][0]**3)
+    finite=all(math.isfinite(x) for x in (norm,rhs_norm,predicted))
+    return {'residual_l2':norm,'rhs_l2':rhs_norm,'relative_residual':norm/max(rhs_norm,1e-30),
+        'predicted_divergence':predicted,'equation_passed':finite
+        and norm<=max(policy['absolute_residual'],policy['relative_residual']*rhs_norm)
+        and predicted<=policy['predicted_divergence']}
+
+
+def correct(model,network,normalization,sample,budget,stopping=None,trace=None):
     if type(budget) is not int or not 1<=budget<=8:raise ValueError('one to eight learned proposals')
     initial=sample['base'];pressure=initial
+    if stopping is not None:
+        stopping_policy(stopping)
+        if sample['base'].shape[0]!=1:raise ValueError('adaptive stopping requires one physical sample')
+        rhs=sample['native_input_residual']+model.full_operator(initial,sample['cell_size_m'],sample['rho'])
+        quality=equation_quality(model,pressure,sample,rhs,stopping)
+        if quality['equation_passed']:
+            if trace is not None:trace.append({'proposals':0,**quality})
+            return pressure
     for index in range(budget):
         residual=sample['native_input_residual'] if index==0 else sample['native_input_residual']-model.full_operator(pressure-initial,sample['cell_size_m'],sample['rho'])
         pressure=model.predict_pressure(network,{**sample,'base':pressure,'native_input_residual':residual},normalization)
+        if stopping is not None:
+            quality=equation_quality(model,pressure,sample,rhs,stopping)
+            if trace is not None:trace.append({'proposals':index+1,**quality})
+            if quality['equation_passed']:break
+        elif trace is not None:trace.append({'proposals':index+1})
     return pressure
 
 
 def predict(task):
     import audit
-    parent,slot,case,budget=task
+    parent,slot,case,budget,stopping=task
     sample=audit.DATA.sample(parent,slot,labels=False)
     with audit.TORCH.no_grad():
-        pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,budget)
-    return case,pressure[0,0].numpy().copy(),os.getpid(),sorted(os.sched_getaffinity(0)),audit.TORCH.cuda.is_initialized()
+        trace=[];pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,budget,stopping,trace)
+    return case,pressure[0,0].numpy().copy(),os.getpid(),sorted(os.sched_getaffinity(0)),audit.TORCH.cuda.is_initialized(),trace
 
 
 def main():
@@ -39,7 +76,9 @@ def main():
     for name in ('project','artifacts','packet','output'):parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--population',choices=('train','validation'),required=True)
     parser.add_argument('--proposals',type=int,choices=range(1,9),required=True)
+    parser.add_argument('--adaptive-profile',type=Path)
     args=parser.parse_args()
+    stopping=stopping_policy(json.loads(args.adaptive_profile.read_text())) if args.adaptive_profile else None
     sys.path.insert(0,str(LAB/'experiments/water-residual-learning-v1'))
     import audit
     sys.path.insert(0,str(args.project.absolute()))
@@ -50,7 +89,7 @@ def main():
         'split':args.population,'counts_xyz':parent['counts_xyz'],'cell_size_m':parent['cell_size_m']}
         for i,parent in enumerate(parents) if parent['entry']['split']==args.population for slot,frame in enumerate(parent['frames'])]
     if not cases:raise ValueError('nonempty selected population required')
-    tasks=[(parents[c['parent']],c['frame'],c,args.proposals) for c in cases]
+    tasks=[(parents[c['parent']],c['frame'],c,args.proposals,stopping) for c in cases]
     cpus=sorted(os.sched_getaffinity(0));cpus=cpus[1:] or cpus
     args.output.mkdir(parents=True,exist_ok=False)
     with ProcessPoolExecutor(max_workers=min(len(cpus),len(tasks)),mp_context=multiprocessing.get_context('spawn'),
@@ -76,6 +115,11 @@ def main():
         'used_cpus':sorted({cpu for r in records for cpu in r[3]}),
         'source_sha256':{str(Path(__file__).relative_to(LAB)):digest(Path(__file__)),
             str(Path(audit.__file__).relative_to(LAB)):digest(Path(audit.__file__))}}
+    if stopping is not None:
+        receipt['inference_policy'].update(name='adaptive-learned-correction',stopping=stopping,
+            scope='equation/predicted-divergence stopping only; actual native physical checks remain required')
+        receipt['case_iterations']=[{'case':r[0],'trace':r[5],'proposals':r[5][-1]['proposals'],
+            'network_passes':r[5][-1]['proposals']*config['correction']['steps']} for r in records]
     (args.output/'receipt.json').write_text(json.dumps(receipt,indent=2,allow_nan=False)+'\n')
     print(json.dumps({'cases':len(cases),'policy':receipt['inference_policy'],'cuda_initialized':receipt['runtime']['cuda_initialized']}),flush=True)
 

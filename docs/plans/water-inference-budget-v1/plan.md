@@ -49,7 +49,7 @@ measurement/configuration drivers compose those owners without deployment.
 
 Milestones and acceptance:
 1. Parameter/file comparison and immutable capture of both single-pass fits.
-   C1 artifact/automated/local CPU: pending. Exact numeric inventories, checkpoint
+   C1 artifact/automated/local CPU: satisfied (reports/model-sizes.json). Exact numeric inventories, checkpoint
    bytes/hashes and source semantics; no optimizer during qualification.
 2. Managed CUDA train/CPU restore/development inference for both fits.
    C2 system/automated/required-real CUDA+Tuldok: pending. Completed/drained Runs,
@@ -62,10 +62,10 @@ Milestones and acceptance:
    supported-grid limits and variability retained. C5 system/automated/required-real
    Tuldok: pending. Methods/results linked in the user's existing project UI.
 
-Current acceptance: pending. Current phase: capture and launch single-pass fits,
+Current acceptance: partial. Current phase: capture and launch single-pass fits,
 then implement CPU budget/scaling diagnostics while training executes.
-Exactly one next slice: retain model-size evidence, commit the experiment contract,
-capture both unchanged single-pass configurations and launch the first normal Run.
+Exactly one next slice: qualify bounded adaptive stopping on the existing
+128-state development population and actual trajectories while CUDA fits run.
 Blockers: none. Replan on invalid native controls, exhausted resource limits,
 failed known-case fits or evidence that the supported composition cannot deliver
 the comparison. A negative scientific result still completes an experiment.

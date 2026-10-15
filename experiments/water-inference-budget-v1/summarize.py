@@ -59,6 +59,18 @@ def main():
         'trajectory_hard_stops':sum(t['result']['hard_stop'] for t in adaptive['trajectories'].values()),
         'weights_sha256':adaptive['weights_sha256']})
     scaling=load(args.reports/'scaling.json')
+    timing_rows=[]
+    for scene in scaling['records']:
+        if 'same_scene_as' in scene:continue
+        for name in ('fixed','adaptive'):
+            result=scene.get(name,{})
+            timing_rows.append({'scene':scene['label'],'sweep':scene['sweep'],'axis_cells':scene['n'],
+                'cells':scene['n']**3,'cell_size_m':scene['cell_size_m'],'policy':name,
+                'qualified':result.get('qualified',False),'native_median_seconds':result.get('native_median_seconds'),
+                'ai_median_seconds':result.get('ai_median_seconds'),
+                'ai_to_native_time_ratio':result.get('ai_to_native_time_ratio'),
+                'mean_network_passes':result.get('mean_network_passes'),
+                'measured_steps':result.get('timing_samples',0)})
     total=sum(r['cuda_optimizer_updates'] for r in records)
     summary={'schema':'rheon-inference-budget-summary-v1','sources':sources,'comparison':rows,
         'managed_stages':stages,'successful_cuda_optimizer_updates':total,
@@ -67,10 +79,14 @@ def main():
         'failed_run_exact_update_count_available':False,'failed_training':failure['run_id'],
         'scaling':scaling,'single_pass_model_qualified':any(r['max_network_evaluations']==1 and r['fitted_qualified']==1 and r['development_qualified']==r['development_cases'] and r['trajectory_ai_steps']>0 and r['trajectory_qualified_ai_steps']==r['trajectory_ai_steps'] and not r['trajectory_hard_stops'] for r in rows),
         'deployment_changed':False,'untouched_test_used':False,'physical_gates_changed':False,
+        'any_qualified_ai_faster_than_native':any(r['qualified'] and r['ai_to_native_time_ratio']<1 for r in timing_rows),
+        'timing_scope':'whole independently evolving tracks; same scene inputs; existing distinct native/AI equation profiles; serial CPU core',
         'scope':'bounded development experiments; negative training/scaling outcomes retained; policy speed distinct from trained-model accuracy'}
     (args.reports/'summary.json').write_text(json.dumps(summary,indent=2,allow_nan=False)+'\n')
     stream=io.StringIO();writer=csv.DictWriter(stream,fieldnames=list(rows[0]),lineterminator='\n');writer.writeheader();writer.writerows(rows)
     (args.reports/'comparison.csv').write_text(stream.getvalue())
+    stream=io.StringIO();writer=csv.DictWriter(stream,fieldnames=list(timing_rows[0]),lineterminator='\n');writer.writeheader();writer.writerows(timing_rows)
+    (args.reports/'scaling.csv').write_text(stream.getvalue())
     print(json.dumps({'completed_training_trials':len(records),'managed_stages':len(stages),'successful_cuda_updates':total,'failed_run_updates_lower_bound':failure['last_reported_completed_updates']}))
 
 

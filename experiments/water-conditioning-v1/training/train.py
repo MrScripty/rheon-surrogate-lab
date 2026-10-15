@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Managed CUDA training, portable checkpoints and exact CPU deployment restore."""
 import argparse
+from contextlib import nullcontext
 import math
 import os
 from pathlib import Path
@@ -10,7 +11,7 @@ import time
 import numpy as np
 import torch
 
-from policy import HERE, MIB, canonical, decode, experiment, load_module, read, require, sha, write
+from policy import HERE, MIB, canonical, decode, execution, experiment, load_module, read, require, sha, write
 import data
 import model
 
@@ -20,7 +21,7 @@ DATA = data.DATA
 def outputs(config):
     result = {'weights.npz': ('checkpoint', 2*MIB), 'predictions.npz': ('predictions', 2*MIB),
               'normalization.json': ('preprocessing', MIB), 'splits.json': ('training_splits', 4*MIB),
-              'history.json': ('training_diagnostics', MIB), 'receipt.json': ('training_result', MIB),
+              'history.json': ('training_diagnostics', MIB), 'profile.json': ('training_diagnostics', MIB), 'receipt.json': ('training_result', MIB),
               'summary.json': ('result_summary', 64*1024)}
     for update in config['training']['checkpoints']:
         result[f'checkpoint-{update:03d}.npz'] = ('checkpoint', 2*MIB)
@@ -46,22 +47,34 @@ def order(parents, config):
 
 
 
-def one_update(network, optimizer, parents, indices, normalization):
+def finite_tensors(tensors):
+    """One exact finite reduction and host synchronization across a tensor group."""
+    return bool(torch.isfinite(torch.cat([value.detach().reshape(-1) for value in tensors])).all())
+
+
+def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None):
     network.train(); optimizer.zero_grad(set_to_none=True)
+    strategy=strategy or {'finite_checks':'per-tensor','batch_mode':'serial'}
+    samples=[cache[(int(parent),int(frame))] if cache is not None else
+             data.sample(parents[int(parent)],int(frame),device=next(network.parameters()).device)
+             for parent,frame in indices]
+    if strategy['batch_mode']=='stacked':
+        require(len({tuple(s['base'].shape[2:]) for s in samples})==1,'batch_shape','stack only identical grid dimensions')
+        samples=[{key:torch.cat([sample[key] for sample in samples],dim=0) for key in samples[0]}]
     losses = []
-    for parent, frame in indices:
-        sample = data.sample(parents[int(parent)], int(frame), device=next(network.parameters()).device)
+    for sample in samples:
         require(all(value.device == next(network.parameters()).device for value in sample.values()), 'batch_device', 'all conditioning and fields colocated')
         loss = model.pressure_loss(model.predict_pressure(network, sample, normalization), sample, normalization).mean()
         require(bool(torch.isfinite(loss)), 'training_nonfinite', 'per-frame loss')
         if loss.requires_grad:
-            (loss/len(indices)).backward()
+            (loss/len(samples)).backward()
         else:
             require(float(loss) == 0, 'zero_residual_labels', 'bypassed exact solution must have zero loss')
         losses.append(float(loss.detach()))
     gradient = torch.nn.utils.clip_grad_norm_(network.parameters(), 1.0, error_if_nonfinite=True)
     optimizer.step()
-    require(all(bool(torch.isfinite(p).all()) for p in network.parameters()), 'training_nonfinite', 'weights')
+    finite=finite_tensors(network.parameters()) if strategy['finite_checks']=='combined' else all(bool(torch.isfinite(p).all()) for p in network.parameters())
+    require(finite, 'training_nonfinite', 'weights')
     return math.fsum(losses)/len(losses), float(gradient)
 
 
@@ -113,7 +126,21 @@ def predictions(network, parents, normalization, population):
     return predictions_on_device(network, parents, normalization, population)
 
 
-def verify_cuda_update(network, optimizer):
+def verify_cuda_update(network, optimizer, combined=False):
+    if combined:
+        parameters=list(network.parameters());gradients=[];moments=[]
+        for parameter in parameters:
+            require(parameter.device.type=='cuda' and parameter.dtype==torch.float32
+                    and parameter.grad is not None and parameter.grad.device==parameter.device
+                    and parameter.grad.dtype==torch.float32,'cuda_gradient','float32 CUDA parameters and gradients')
+            gradients.append(parameter.grad)
+            for name in ('exp_avg','exp_avg_sq'):
+                value=optimizer.state[parameter][name]
+                require(value.device==parameter.device and value.dtype==torch.float32,'cuda_optimizer','float32 CUDA Adam buffers')
+                moments.append(value)
+        require(finite_tensors(gradients),'cuda_gradient','all finite gradients')
+        require(finite_tensors(moments),'cuda_optimizer','all finite Adam buffers')
+        return
     for parameter in network.parameters():
         require(parameter.device.type=='cuda' and parameter.dtype==torch.float32
                 and parameter.grad is not None and parameter.grad.device==parameter.device
@@ -156,6 +183,7 @@ def custody(evidence, trained, declared, validator_path, validator_sha):
 def run(args):
     start = time.perf_counter(); helpers = data.helpers()
     config_raw = read(args.config, MIB); config = experiment(decode(config_raw))
+    strategy = execution(config)
     model.select(config)
     witness_raw = read(args.source_witness, 2*MIB); witness = decode(witness_raw)
     require(witness['schema'] == 'rheon-water-learning-source-v1' and witness['experiment_sha256'] == sha(config_raw)
@@ -195,35 +223,56 @@ def run(args):
         device_evidence = {'device': str(next(network.parameters()).device), 'gpu': torch.cuda.get_device_name(0), 'model_dtype': 'float32', 'amp': False, 'tf32': False, 'deterministic_algorithms': torch.are_deterministic_algorithms_enabled()}
         checkpoint(0); initial_loss = evaluate(network, parents, normalization)
         training_started_unix = time.time()
+        cache = {(i,slot):data.sample(parent,slot,device=device) for i,parent in enumerate(parents) if parent['entry']['split']=='train' for slot in range(len(parent['frames']))} if strategy['resident_inputs'] else None
+        profile_report = {'enabled':False,'execution':strategy}
+        def capture_profile(profiler):
+            events = profiler.key_averages()
+            require(any(getattr(e,'self_device_time_total',0)>0 for e in events),
+                    'cuda_profiler','actual device events required')
+            def row(event):
+                return {'name':event.key,'calls':event.count,'self_cpu_us':event.self_cpu_time_total,
+                        'self_device_us':getattr(event,'self_device_time_total',None)}
+            profile_report.update(enabled=True,scope='managed CUDA updates after ten-step warm-up',
+                top_cpu=[row(e) for e in sorted(events,key=lambda e:e.self_cpu_time_total,reverse=True)[:20]],
+                top_device=[row(e) for e in sorted(events,key=lambda e:getattr(e,'self_device_time_total',0),reverse=True)[:20]],
+                scalar_extractions=sum(e.count for e in events if e.key=='aten::_local_scalar_dense'),
+                host_device_copies=sum(e.count for e in events if e.key=='aten::_to_copy'))
+        profiler = torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU,torch.profiler.ProfilerActivity.CUDA],
+            schedule=torch.profiler.schedule(wait=10,warmup=1,active=strategy['profile_updates'],repeat=1),
+            on_trace_ready=capture_profile) if strategy['profile_updates'] else nullcontext()
         optimizer = torch.optim.Adam(network.parameters(), lr=config['training']['learning_rate'], betas=(.9, .999), eps=1e-8, weight_decay=0)
-        for update, indices in enumerate(sample_order, 1):
-            require(time.perf_counter()-start < config['resources']['wall_seconds']-10, 'deadline', 'publication reserve')
-            helpers.observed_peak_rss_bytes()
-            for change in config['training']['schedule']:
-                if change['update'] == update:
-                    for group in optimizer.param_groups: group['lr'] = change['learning_rate']
-            loss, gradient = one_update(network, optimizer, parents, indices, normalization)
-            verify_cuda_update(network, optimizer)
-            if update % 100 == 0:
-                with torch.no_grad():
-                    parent, slot = indices[0]
-                    sample = data.sample(parents[int(parent)], int(slot), device=device)
-                    predicted = model.predict_pressure(network,sample,normalization)
-                    residual = model.full_operator(predicted,sample['cell_size_m'],sample['rho'])-sample['rhs']
-                    physical_ratio = float(torch.linalg.vector_norm(residual))/max(float(torch.linalg.vector_norm(sample['rhs'])),1e-30)
-                trace.append({'update': update, 'loss': loss, 'gradient_norm_before_clip': gradient,
-                    'gradient_clipped': gradient>1., 'learning_rate': optimizer.param_groups[0]['lr'],
-                    'post_update_sample_relative_residual':physical_ratio})
-                helpers.progress('water-learning-sequence', update, config['training']['updates'], loss=loss)
-            if update in config['training']['checkpoints']:
-                checkpoint(update); history.append({'update': update, 'loss': loss, 'gradient_norm_before_clip': gradient})
-                helpers.progress('variable-grid-training', update, config['training']['updates'], loss=loss)
+        with profiler:
+            for update, indices in enumerate(sample_order, 1):
+                require(time.perf_counter()-start < config['resources']['wall_seconds']-10, 'deadline', 'publication reserve')
+                helpers.observed_peak_rss_bytes()
+                for change in config['training']['schedule']:
+                    if change['update'] == update:
+                        for group in optimizer.param_groups: group['lr'] = change['learning_rate']
+                loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy)
+                verify_cuda_update(network, optimizer, combined=strategy['finite_checks']=='combined')
+                if update % 100 == 0:
+                    with torch.no_grad():
+                        parent, slot = indices[0]
+                        sample = data.sample(parents[int(parent)], int(slot), device=device)
+                        predicted = model.predict_pressure(network,sample,normalization)
+                        residual = model.full_operator(predicted,sample['cell_size_m'],sample['rho'])-sample['rhs']
+                        physical_ratio = float(torch.linalg.vector_norm(residual))/max(float(torch.linalg.vector_norm(sample['rhs'])),1e-30)
+                    trace.append({'update': update, 'loss': loss, 'gradient_norm_before_clip': gradient,
+                        'gradient_clipped': gradient>1., 'learning_rate': optimizer.param_groups[0]['lr'],
+                        'post_update_sample_relative_residual':physical_ratio})
+                    helpers.progress('water-learning-sequence', update, config['training']['updates'], loss=loss)
+                if update in config['training']['checkpoints']:
+                    checkpoint(update); history.append({'update': update, 'loss': loss, 'gradient_norm_before_clip': gradient})
+                    helpers.progress('variable-grid-training', update, config['training']['updates'], loss=loss)
+                if strategy['profile_updates']: profiler.step()
         training_finished_unix = time.time()
+        write(output/'profile.json',profile_report)
         validation = {'initial': initial_loss, 'final': evaluate(network, parents, normalization)}
         device_evidence.update(peak_allocated_bytes=torch.cuda.max_memory_allocated(), peak_reserved_bytes=torch.cuda.max_memory_reserved(), parameters_gradients_adam_moments_cuda=True, batches_cuda=True)
         write(output/'history.json', {'history': history, 'checkpoints': checkpoint_specs, 'validation': validation,
                                      'trace': trace, 'scope': 'final update candidate; no optimizer resume; loss before update, physical ratio after update',
-                                     'training_started_unix':training_started_unix,'training_finished_unix':training_finished_unix})
+                                     'training_started_unix':training_started_unix,'training_finished_unix':training_finished_unix,
+                                     'execution_strategy':strategy,'optimizer_updates_per_s':config['training']['updates']/(training_finished_unix-training_started_unix)})
         final_name = f'checkpoint-{config["training"]["updates"]:03d}.npz'
         (output/'weights.npz').write_bytes(read(output/final_name))
         gpu_predicted, _ = predictions_on_device(network, parents, normalization, population)
@@ -289,7 +338,7 @@ def main():
         parser.add_argument('--'+name.replace('_', '-'), dest=name.replace('-', '_'), type=Path, required=True)
     known, _unknown = parser.parse_known_args()
     config = experiment(decode(read(known.config)))
-    for name in ('weights.npz', 'predictions.npz', 'normalization.json', 'splits.json', 'history.json', 'receipt.json', *(f'checkpoint-{u:03d}.npz' for u in config['training']['checkpoints'])):
+    for name in ('weights.npz', 'predictions.npz', 'normalization.json', 'splits.json', 'history.json', 'profile.json', 'receipt.json', *(f'checkpoint-{u:03d}.npz' for u in config['training']['checkpoints'])):
         slot = 'trained_'+name.replace('-', '_').replace('.', '_'); parser.add_argument('--'+slot.replace('_', '-'), dest=slot, type=Path)
     args = parser.parse_args()
     require(args.mode != 'restore' or all(getattr(args, slot) is not None for slot in trained_inputs(config)), 'restore_slots', 'all originating artifacts')

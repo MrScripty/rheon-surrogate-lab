@@ -102,3 +102,44 @@ physical residual, rate and clipping. Unmodified data/scenes preserve historical
 view interpretation; original source hashes are not replaced. Exactly one next
 slice: qualify the conditioned model and source capture, then execute its managed
 smoke and scalar-units comparison after the already queued schedule controls.
+
+
+User steering: diagnose why 24 CPU threads are slower than eight, benchmark three
+CPU workloads at once, and improve GPU throughput before considering concurrent
+training. This replaces the next-slice authority with a measured execution slice.
+Current Tuldok runs.py owns a single serial supervisor; two submissions queue,
+so parallel managed GPU jobs require a separate scheduler/lifecycle change. Do
+not modify the serving application or bypass managed custody for convenience.
+
+CPU profiler identifies time in many small convolution, GroupNorm, padding and
+fill operations at 24 threads. The host uses an Intel Core Ultra 9 275HX with
+24 cores. No blanket single-cause claim is established. Compare persistent
+1x8, 3x8, 6x4, 12x2 and 23x1 core partitions on the same 1,024 recorded states,
+retaining startup and steady-state separately. This is pressure inference, not
+full time-evolving simulations. The default 3x8 layout has a severe second-pass
+stall; a passive wait-policy control removes the stall but does not outperform
+23x1. Do not promote an unstable layout or silently change deployed witnesses.
+
+The accepted GPU performance slice adds version-2 execution configuration:
+resident immutable training fields, combined finite reductions, an explicitly
+stacked same-shape batch path, and a ten-update managed CUDA/CPU profiler window
+after warm-up. Existing version-1 configuration retains its serial/per-tensor
+execution defaults. Finite checks still cover every parameter, gradient and Adam
+moment every update. Combined checks remove repeated host scalar round trips;
+resident inputs remove repeated copies. Compare 500 updates for original and
+optimized batch-1 execution with the same initialization and amplitude-model
+conditioning; verify update-2 parity against the completed managed smoke and
+full update-500 tensor inventory parity between the two paths. Batch-4 is a
+throughput diagnostic with four times the sample exposure, not an accuracy
+comparison. Reject heterogeneous stacked shapes; do not pad physical grids.
+Batched float32 reductions can differ from serial arithmetic, so it has its own
+fresh CPU restore and no exact state-parity claim. Mathematical loss-gradient
+comparison uses a norm-relative tolerance and an absolute floor for near-zero
+bias gradients, separate from unchanged physical acceptance limits.
+
+Exactly one next slice: qualify and commit the execution changes, run managed
+baseline/resident/batch-4 profiles, and retain CPU/native and CUDA metrics with
+fresh restores. Scalar-units training continues from its earlier immutable
+capture while this work proceeds. Later fitting/architecture decisions depend
+on these actual native gates; no additional dataset expansion is admitted by a
+performance benchmark result alone.

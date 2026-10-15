@@ -7,7 +7,7 @@ import uuid
 from unittest.mock import patch
 import numpy as np
 import torch
-from policy import HERE, LAB, MIB, canonical, decode, experiment, fresh, read, require, sha, write
+from policy import HERE, LAB, MIB, canonical, decode, execution, experiment, fresh, read, require, sha, write
 import data
 import model
 import train
@@ -38,6 +38,9 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     packet_config, parents = data.read_view(packet)
     config = experiment(decode(read(configuration, MIB)))
     model.select(config)
+    if execution(config)['batch_mode']=='stacked':
+        require(len({tuple(p['counts_xyz']) for p in parents if p['entry']['split']=='train'})==1,
+                'batch_shape','stacked benchmark requires one grid shape; heterogeneous batching is unsupported')
     packet_receipt = decode(read(packet/'dataset-receipt.json', MIB))
     require(packet_receipt['status'] == 'verified_lossless_water_view' and packet_receipt['reader_source_sha256'] == sha(read(HERE/'data.py')), 'view_receipt', 'qualified current reader')
     inputs = data.inputs(packet)

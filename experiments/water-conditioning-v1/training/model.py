@@ -20,7 +20,7 @@ SELECTED=None
 
 def select(config):
     global SELECTED
-    require(config['schema']=='rheon-water-conditioning-experiment-v1',
+    require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2'),
             'conditioning_configuration','explicit versioned model transformation')
     SELECTED=config['conditioning']
     require(SELECTED in ('scalar-units','amplitude-and-units'),'conditioning_configuration','supported variant')

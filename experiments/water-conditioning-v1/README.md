@@ -67,3 +67,37 @@ meaning. Run its focused checks separately to avoid flat-module name collisions:
 "$TORCH_PYTHON" -m unittest discover \
   -s experiments/water-conditioning-v1/training -p 'test_conditioning.py'
 ```
+
+
+`native_parallel.py` checks independent teacher-state cases on separate CPU
+processes. It consumes the existing managed predictions and original captures,
+uses the unchanged native evaluator and independent oracle, and preserves each
+native child's termination/reaping receipt. `--workers` controls outer
+parallelism; each worker has one native/Torch thread. The source is qualified
+against the historical one-frame fixture and all 128 validation results;
+scientific fields match exactly, excluding three explicitly named timing fields.
+This does not change inference arithmetic, thresholds or model behavior.
+
+```bash
+"$TORCH_PYTHON" experiments/water-conditioning-v1/native_parallel.py \
+  --packet runs/water-learning-sequence-v1/views/validation \
+  --inference runs/water-learning-sequence-v1/scale-1024/managed/stage-02/artifacts \
+  --binary runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation \
+  --output runs/water-conditioning-v1/my-native-check
+```
+
+
+`cpu_throughput.py` compares disjoint persistent worker/core partitions, retaining
+startup separately from synchronized repeated passes. It replays actual recorded
+pressure inputs, without advancing native simulations or training. The default
+layouts include three eight-threaded workers and 23 single-threaded workers.
+
+Version-2 GPU configurations `gpu-baseline`, `gpu-resident` and `gpu-batch4` add
+execution policy separately from model conditioning. Each runs 500 CUDA updates,
+records a short CPU/CUDA profiler summary after warm-up, and restores on CPU.
+Resident inputs and combined finite checks must preserve the batch-1 checkpoint
+inventory exactly. The batch-4 path stacks only identical grid shapes and changes
+sample exposure; it is a throughput probe rather than a controlled accuracy gain.
+Profiler summaries, transfer/scalar extraction counts, update rates and peak GPU
+memory are retained as managed artifacts. The current Tuldok supervisor executes
+one Run at a time, so concurrent GPU training is a distinct future scheduler task.

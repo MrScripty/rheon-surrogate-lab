@@ -1,6 +1,8 @@
 # Variable-shape pressure model with cubic physical cells
 
-Status: active. Acceptance: pending.
+Status: complete. Acceptance: accepted for variable-shape cubic-cell input,
+training/restore and native diagnostic execution. Raw learned pressure accuracy
+and acceleration remain unqualified, as recorded in completion.md.
 Owner authorized model and training changes after the accepted cubic-cell capture
 setup. Root agent owns this serial implementation; no delegated agents.
 
@@ -42,8 +44,16 @@ Implementation qualification: nine focused model/training checks pass, including
 exact original 16³ feature-forward/initialization, odd and singleton dimensions,
 a 257-cell axis, mixed-shape mean-gradient updates and spacing rejection before
 numeric loading/inference. Six native checks, Rustfmt and Clippy pass. Source
-commit will precede material freezing; scientific Run acceptance remains pending.
+commit preceded material freezing; completed Run acceptance is recorded below.
 
 Runtime prefix runs/variable-pressure-runtime-1 failed private-directory checks
-before publication; the idle user's Tuldok server was restored. Correct the
-caller umask to 0077 and retain the failed prefix. No optimizer/Run was admitted.
+before publication; the idle user's Tuldok server was restored. The caller umask was
+corrected to 0077 and runtime-2 succeeded; the failed prefix remains retained.
+That failed prefix admitted no optimizer or Run.
+
+Accepted execution: 144 reference frames, 200 managed updates and exact zero-update
+restore in the existing Tuldok catalog. Actual weights also pass unseen 11×9×7
+and 257×2×1 input/operator checks. Native raw pressure 0/12; fallback 12/12, with
+384 extra warm iterations. All 36 artifacts survive service/catalog reopen.
+Six verified whole-parent reference bundles are visible as draft Data records.
+Source, branches, apps and evidence are retained locally; no push or merge.

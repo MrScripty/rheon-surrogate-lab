@@ -136,3 +136,12 @@ smoke plus CPU restore now. Full cohort fitting still follows smoke and the
 one/two-evaluation comparison. This clarifies 'no material regression' as no
 lost physical acceptance within the named compute cap, while retaining per-grid
 work regressions explicitly rather than hiding them in an aggregate.
+
+First full trial record sealed after all three managed Runs reopened/drained,
+whole artifacts redownloaded identically, raw native checks, adaptive fit128-state
+checks, 120 analytical signed cases, seven grid settings and three512-step
+trajectories. All20 native trajectory children are reaped/exit0. Raw output
+remains0/128; iterative policy retains full physical acceptance. Three control
+parities (initial parameters, normalization, real sampling) are exact. Forward
+voxel-evaluation proxy139,776,000 is3.4125 times the prior single-grid fit despite
+equal forward/example counts; do not call the training compute equal.

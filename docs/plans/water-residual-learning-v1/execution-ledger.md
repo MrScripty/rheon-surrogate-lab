@@ -29,3 +29,10 @@ CPU diagnostics commit fc2b160: independent spectral regression passes; old
 no-GroupNorm validation audit completed on 128 states, 23 one-thread workers
 (22 observed cores), 7.59s, no CUDA. Summary retained in reports. Full analytic
 control is not AI success; eight raw learned proposals do not converge well.
+
+Physical-residual smoke accepted: train 455586b9f3c24a06ba0b50df1d932c12 and
+CPU restore 87786368c8794a8eb827a7f35a9db458 completed/drained, reopened and
+whole artifacts redownloaded with parity. CPU has no optimizer or CUDA context,
+exact fresh prediction inventory. The full nonlinear 10,000-update input ablation
+is now executing through the same catalog. Exactly next scientific slice remains
+its native evaluation, followed by the matched linear architecture comparison.

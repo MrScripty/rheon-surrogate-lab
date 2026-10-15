@@ -109,9 +109,26 @@ def predict_pressure(network,sample,normalization,owner,correction):
     return pressure
 
 
-def pressure_loss(prediction,sample,normalization,owner):
+def pressure_loss(prediction,sample,normalization,owner,objective='canonical'):
     # Keep the old physical objective exactly for the input/linearity ablations.
     scales(normalization)
     previous={**normalization,'schema':'rheon-cubic-pressure-normalization-v2',
         'channels':owner.CHANNELS,'scales':{key:value for key,value in normalization['scales'].items() if key!='laplacian_rhs'}}
-    return owner.pressure_loss(prediction,sample,previous)
+    canonical=owner.pressure_loss(prediction,sample,previous)
+    if objective=='canonical':return canonical
+    require(objective=='correction-gradient-divergence','residual_objective','known physical objective')
+    scale=scales(normalization);cells=prediction[0].numel()
+    target=sample['reference']-sample['base'];error=prediction-sample['reference']
+    floor=(1e-6*math.sqrt(cells)*scale['pressure'])**2
+    correction_error=error.flatten(1).square().sum(1)/target.flatten(1).square().sum(1).clamp_min(floor)
+    gradient_error=torch.zeros_like(correction_error);gradient_norm=torch.zeros_like(correction_error)
+    for axis in (2,3,4):
+        gradient_error=gradient_error+torch.diff(error,dim=axis).flatten(1).square().sum(1)
+        gradient_norm=gradient_norm+torch.diff(target,dim=axis).flatten(1).square().sum(1)
+    residual=owner.full_operator(prediction,sample['cell_size_m'],sample['rho'])-sample['rhs']
+    # dt/h^3 converts integrated equation residual to predicted divergence.
+    # Relative terms cancel this scalar, retaining each case's physical scale.
+    denominator=sample['rhs'].flatten(1).square().sum(1).clamp_min((1e-6*math.sqrt(cells)*scale['rhs'])**2)
+    equation=residual.flatten(1).square().sum(1)/denominator
+    maximum=residual.flatten(1).abs().amax(1).square()/(denominator/cells)
+    return .25*correction_error+.25*gradient_error/gradient_norm.clamp_min(floor)+.4*equation+.1*maximum

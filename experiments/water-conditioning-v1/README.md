@@ -133,3 +133,11 @@ includes `physical_residual.py`; the old configurations and captured artifacts r
 their original semantics. Recurrent training recomputes residuals and does not use
 the immutable prepared-input shortcut. Both focused suites should pass:
 `test_conditioning.py` and `test_residual.py`.
+
+
+Residual experiment schema v2 adds an explicit objective. `residual-physical-loss`
+compares correction-relative pressure/gradient errors and mean/maximum equation
+errors against the canonical objective, keeping the representation and linear
+architecture fixed. Its coefficients are in model metadata and the plan ledger.
+It uses the ordinary canonical loss path; prepared legacy loss is rejected for
+this objective. Actual float32 corrected-velocity checks remain native evidence.

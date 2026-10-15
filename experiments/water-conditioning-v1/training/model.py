@@ -17,12 +17,14 @@ ARCHITECTURE=copy.deepcopy(owner.ARCHITECTURE)
 SELECTED=None
 NORMALIZATION='groupnorm'
 CORRECTION=None
+OBJECTIVE='canonical'
 
 
 def select(config):
-    global SELECTED,NORMALIZATION,CORRECTION
+    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE
     CORRECTION=None
-    if config['schema']=='rheon-water-residual-experiment-v1':
+    OBJECTIVE=config.get('objective','canonical')
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2'):
         import physical_residual
         SELECTED='physical-residual';NORMALIZATION='none';CORRECTION=config['correction']
         ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
@@ -33,6 +35,10 @@ def select(config):
             reconstruction='float32 raw times train pressure RMS, cell-zero gauge, add supplied base',
             initialization='retain original first-convolution residual column and all surviving seeded tensors',
             restrictions='uniform-density cubic sealed Neumann operator; no independently specified geometry masks')
+        if OBJECTIVE!='canonical':
+            ARCHITECTURE.update(training_objective=OBJECTIVE,
+                loss_weights={'relative_correction_mse':.25,'relative_correction_gradient_mse':.25,
+                    'relative_equation_mse':.4,'relative_equation_max_squared':.1})
         return
     require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'),
             'conditioning_configuration','explicit versioned model transformation')
@@ -121,4 +127,4 @@ def predict_pressure(network,sample,normalization):
 def pressure_loss(prediction,sample,normalization):
     if CORRECTION is None:return owner.pressure_loss(prediction,sample,normalization)
     import physical_residual
-    return physical_residual.pressure_loss(prediction,sample,normalization,owner)
+    return physical_residual.pressure_loss(prediction,sample,normalization,owner,OBJECTIVE)

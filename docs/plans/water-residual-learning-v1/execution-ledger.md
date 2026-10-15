@@ -36,3 +36,15 @@ whole artifacts redownloaded with parity. CPU has no optimizer or CUDA context,
 exact fresh prediction inventory. The full nonlinear 10,000-update input ablation
 is now executing through the same catalog. Exactly next scientific slice remains
 its native evaluation, followed by the matched linear architecture comparison.
+
+Prepared the later physical-feedback comparison while managed execution proceeds:
+version-2 residual configuration selects canonical or correction-gradient-divergence
+objective explicitly. The changed objective uses 0.25 relative correction MSE,
+0.25 relative correction-gradient MSE, 0.40 relative equation MSE and 0.10
+normalized maximum equation error squared. dt/h^3 maps equation error to
+predicted divergence; normalization cancels that per-case scalar. This is
+training feedback, not a substitute for corrected-f32 native physical gates.
+Canonical loss/preparation remains unchanged for the earlier input/linearity
+controls. All six residual tests pass, including zero loss at a manufactured
+reference and an independent finite-difference directional gradient. The later
+objective trial has not been assembled or run yet.

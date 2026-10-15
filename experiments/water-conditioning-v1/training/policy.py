@@ -15,8 +15,10 @@ dimensions=portable.dimensions
 
 def experiment(value):
     require(type(value) is dict,'conditioning_configuration','object required')
-    if value.get('schema') == 'rheon-water-residual-experiment-v1':
-        require(set(value)=={'schema','id','training','resources','conditioning','normalization','execution','correction'},
+    if value.get('schema') in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2'):
+        expected={'schema','id','training','resources','conditioning','normalization','execution','correction'}
+        if value['schema']=='rheon-water-residual-experiment-v2':expected.add('objective')
+        require(set(value)==expected,
                 'residual_configuration','closed residual experiment')
         require(value['conditioning']=='physical-residual' and value['normalization']=='none',
                 'residual_configuration','one physically scaled residual channel without normalization')
@@ -28,6 +30,11 @@ def experiment(value):
         original['schema']='rheon-cuda-pressure-experiment-v1'
         base_experiment(original)
         execution(value)
+        if 'objective' in value:
+            require(value['objective'] in ('canonical','correction-gradient-divergence'),
+                    'residual_objective','explicit independently compared physical feedback')
+            require(value['objective']=='canonical' or not value['execution']['prepared_fields'],
+                    'residual_objective','changed objective uses its canonical loss path')
         return decode(canonical(value))
     # Existing physical reservations embed the original training specification.
     if value.get('schema') == 'rheon-cuda-pressure-experiment-v1':
@@ -52,7 +59,7 @@ def experiment(value):
 def execution(config):
     selected=config.get('execution',{'resident_inputs':False,'finite_checks':'per-tensor','batch_mode':'serial','profile_updates':0})
     expected={'resident_inputs','finite_checks','batch_mode','profile_updates'}
-    if config['schema'] in ('rheon-water-conditioning-experiment-v4','rheon-water-residual-experiment-v1'):expected.add('prepared_fields')
+    if config['schema'] in ('rheon-water-conditioning-experiment-v4','rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2'):expected.add('prepared_fields')
     require(type(selected) is dict and set(selected)==expected
             and type(selected['resident_inputs']) is bool and selected['finite_checks'] in ('per-tensor','combined')
             and selected['batch_mode'] in ('serial','stacked') and type(selected['profile_updates']) is int
@@ -61,7 +68,7 @@ def execution(config):
         require(type(selected['prepared_fields']) is bool and (not selected['prepared_fields'] or
                 selected['resident_inputs'] and selected['batch_mode']=='serial'),
                 'prepared_inputs','prepared fields require resident serial execution')
-    if config['schema']=='rheon-water-residual-experiment-v1':
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2'):
         require(not selected['prepared_fields'] or config['correction']['steps']==1,
                 'prepared_inputs','recurrent residuals must be recomputed through the ordinary model path')
     require(not selected['profile_updates'] or config['training']['updates']>=12+selected['profile_updates'],

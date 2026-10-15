@@ -90,5 +90,22 @@ class Residual(unittest.TestCase):
                 expected=model.predict_pressure(network,{**s,'base':expected,'native_input_residual':residual},self.norm)
         torch.testing.assert_close(actual,expected,rtol=0,atol=0)
 
+    def test_physical_feedback_has_zero_at_reference_and_correct_directional_gradient(self):
+        config=copy.deepcopy(self.config)
+        config.update(schema='rheon-water-residual-experiment-v2',objective='correction-gradient-divergence')
+        config['execution']['prepared_fields']=False
+        policy.experiment(config);model.select(config)
+        self.assertEqual(float(model.pressure_loss(self.sample['reference'],self.sample,self.norm)),0.)
+        pressure=self.sample['base'].clone().requires_grad_(True)
+        loss=model.pressure_loss(pressure,self.sample,self.norm).sum()
+        gradient,=torch.autograd.grad(loss,pressure)
+        direction=torch.cos(torch.arange(pressure.numel(),dtype=torch.float64)).reshape_as(pressure)
+        direction/=torch.linalg.vector_norm(direction)
+        step=1e-5
+        numeric=(model.pressure_loss(pressure.detach()+step*direction,self.sample,self.norm)
+                 -model.pressure_loss(pressure.detach()-step*direction,self.sample,self.norm)).sum()/(2*step)
+        expected=(gradient*direction).sum()
+        torch.testing.assert_close(numeric,expected,rtol=1e-6,atol=1e-8)
+
 
 if __name__=='__main__':unittest.main()

@@ -30,6 +30,9 @@ Binding decisions:
   distinguish solve/callback time from whole-track timing and CPU/GPU contention.
 - Train stability-modes-single-pass and stability-combined-single-pass with the
   already prepared 5,000-update configurations, one managed GPU job at a time.
+  Retain the combined single-pass non-finite-gradient failure; a separately
+  named lr1e4 follow-up lowers the entire learning-rate schedule tenfold while
+  preserving initialization, sampling, objective, analytical bank and exposure.
   CPU work can overlap GPU fitting, but not the isolated timing repetitions.
 - Broader cohort training and architectural replacement remain conditional on
   fitting/stability evidence. No fresh final test is consumed in this tranche.
@@ -39,6 +42,8 @@ focused test; experiments/water-residual-learning-v1/rollout.py;
 experiments/water-conditioning-v1/native_parallel.py if adaptive receipts need
 an explicit diagnostic contract; new experiments/water-inference-budget-v1;
 docs/plans/water-inference-budget-v1; README.md and tuldok-project.json links.
+Additional write set: experiments/water-conditioning-v1/configs/
+stability-combined-single-pass-lr1e4.json for the bounded numerical follow-up.
 No historical reports or checkpoints are overwritten. New captures/results live
 under ignored runs/water-inference-budget-v1. Prepared training configurations
 are reused without changing their scientific specification.
@@ -51,7 +56,8 @@ Milestones and acceptance:
 1. Parameter/file comparison and immutable capture of both single-pass fits.
    C1 artifact/automated/local CPU: satisfied (reports/model-sizes.json). Exact numeric inventories, checkpoint
    bytes/hashes and source semantics; no optimizer during qualification.
-2. Managed CUDA train/CPU restore/development inference for both fits.
+2. Managed CUDA train/CPU restore/development inference for completed fits, plus the drained failed combined Run and its separately
+   configured tenfold-lower-learning-rate follow-up.
    C2 system/automated/required-real CUDA+Tuldok: pending. Completed/drained Runs,
    restored bit parity, actual updates and independent native accuracy retained.
 3. Fewer-pass and adaptive CPU policy. C3 system/automated/required-real CPU:
@@ -62,9 +68,10 @@ Milestones and acceptance:
    supported-grid limits and variability retained. C5 system/automated/required-real
    Tuldok: pending. Methods/results linked in the user's existing project UI.
 
-Current acceptance: partial. Current phase: managed single-pass restore/validation and controlled scaling preparation.
-Exactly one next slice: finish both managed single-pass stages, qualify their
-CPU predictions, then run the serial scaling study without task CPU contention.
+Current acceptance: partial. Current phase: qualify the completed single-pass model and capture the bounded
+lower-learning-rate follow-up; preserve numerical failure as evidence.
+Exactly one next slice: capture and execute the separately configured lower-rate
+fit while finishing the first model CPU checks; then resume serial scaling.
 Blockers: none. Replan on invalid native controls, exhausted resource limits,
 failed known-case fits or evidence that the supported composition cannot deliver
 the comparison. A negative scientific result still completes an experiment.

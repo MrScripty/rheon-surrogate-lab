@@ -32,3 +32,15 @@ warm-up. Cube/rectangular use 12 evaluations; compact averages 15.8367.
 Distinct-core execution overlaps managed work, so no speedup claim from those
 non-isolated timings. Three altered real receipts (relaxed target, false cap,
 false actual work) reject before native execution. CPU source ad89d11.
+
+Replan: combined single-pass Run 2500fc7690c14049876250d8c3f5a981 failed
+and drained. Custody-verified progress reports 2,400 completed updates, loss
+77,382.87, then gradient-norm non-finite rejection; no artifacts were published.
+Exact terminal update is unavailable, so retain a lower bound rather than
+counting 5,000. No CPU restore/inference is claimed for that failed fit. Keep
+the original capture/Run and add one distinct lr1e4 trial: all learning rates
+tenfold lower, other settings/exposure fixed. This is a controlled optimization
+follow-up, not an automatic replay. First single-pass fit completed normally.
+Adaptive extended windows qualify all 854/854 AI steps; source receipts are
+authoritative (the session extended wrapper initially printed short-run summaries
+after executing correct extended commands; corrected its display path, no rerun).

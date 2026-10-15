@@ -35,7 +35,8 @@ Binding decisions:
   thread per worker. Isolate repeated CPU timing after training/diagnostics drain.
   Do not assume using more threads minimizes latency.
 - Broader 16-simulation training follows credible known-case fitting at a named
-  inference budget and no material regression in this tranche. Otherwise retain
+  inference budget and retained physical acceptance on prior development/grids.
+  Per-grid work regressions remain explicit and do not authorize default promotion. Otherwise retain
   the failed scientific hypothesis and prepare a concrete follow-up. Larger-grid
   capture contract, architecture replacement and deployment remain separate.
 

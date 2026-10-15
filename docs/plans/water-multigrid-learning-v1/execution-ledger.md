@@ -124,3 +124,15 @@ operator mismatch6.44257e-14, global real-train correction RMS2.853573464078259P
 Legacy bank remains bit-identical and model RNG unchanged. No cohort Run has
 been admitted yet. Corrected the mode-probe description to60 distinct mixtures
 at two signed amplitudes (120 cases); generated inputs are unchanged.
+
+Broader-cohort admission review: one-pass multi-grid weights pass known fit1/1,
+development128/128 and all seven supported short grid scenes under the original
+32-evaluation cap and unchanged physical gates. They improve40-cubed work from
+22.875 to13.625 evaluations but regress16-cubed from10 to12.75. Preserve the
+current reference and report this Pareto tradeoff; this is not default promotion.
+Those physical fitting/generalization checks satisfy the evidence prerequisite
+for a bounded cohort qualification. Admit only the prepared10-update cohort
+smoke plus CPU restore now. Full cohort fitting still follows smoke and the
+one/two-evaluation comparison. This clarifies 'no material regression' as no
+lost physical acceptance within the named compute cap, while retaining per-grid
+work regressions explicitly rather than hiding them in an aggregate.

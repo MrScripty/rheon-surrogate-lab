@@ -1,0 +1,166 @@
+{
+  "schema": "rheon-pressure-training-sequence-proposal-v1",
+  "status": "proposal; no runs admitted",
+  "execution_ready": false,
+  "baseline_model": "experiments/variable-pressure-v2",
+  "target_profile": "experiments/float32-pressure-target-v1/configs/development.json",
+  "shared": {
+    "device": "cpu",
+    "dtype": "float32",
+    "torch_threads": 1,
+    "cubic_cells": true,
+    "batch_size": 2,
+    "optimizer": "Adam",
+    "learning_rate_schedule": {
+      "0": 0.001,
+      "2000": 0.0001,
+      "6000": 1e-05
+    },
+    "max_updates": 10000,
+    "max_wall_seconds_per_run": 600,
+    "max_output_bytes": 33554432,
+    "checkpoint_updates": [
+      0,
+      100,
+      500,
+      1000,
+      2000,
+      5000,
+      10000
+    ],
+    "initialization_seeds": [
+      20261015,
+      20261016,
+      20261017
+    ],
+    "sampling_seed": 20261018,
+    "fit_case": {
+      "trajectory_id": "variable-train-510100",
+      "frame": 0,
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cell_size_m": 0.0625
+    },
+    "candidate_policy": "R1/R2: first scheduled full fitted-frame pass or terminal state; R3-R5: terminal reached state, no intermediate checkpoint selection"
+  },
+  "stages": [
+    {
+      "id": "D0",
+      "kind": "diagnostic",
+      "optimizer_updates": 0,
+      "question": "Does correction preserve residual amplitude and sign?",
+      "population": "first/final snapshots of training parents only",
+      "residual_multipliers": [
+        0,
+        0.25,
+        0.5,
+        1,
+        2,
+        4,
+        -1
+      ],
+      "note": "Algebraic fixed-operator probe, not new simulated trajectories."
+    },
+    {
+      "id": "R1",
+      "kind": "training",
+      "question": "Can the unchanged seven-channel model fit one frame?",
+      "training_population": "shared.fit_case only",
+      "batch_size": 1,
+      "initialization_seeds": [
+        20261015
+      ],
+      "variants": [
+        "current_groupnorm"
+      ],
+      "entry": "after trainer preparation and D0",
+      "gate": "raw model passes target profile and physical limits on the fitted frame; no PCG counted as model success"
+    },
+    {
+      "id": "R2",
+      "kind": "training",
+      "question": "Does normalization obstruct fitting or amplitude?",
+      "training_population": "same R1 frame",
+      "batch_size": 1,
+      "initialization_seeds": [
+        20261015
+      ],
+      "variants": [
+        "groupnorm_removed",
+        "groupnorm_with_explicit_residual_amplitude_scaling"
+      ],
+      "control": "R1; identical surviving initialization, optimizer schedule, case and checkpoint locations",
+      "entry": "if R1 misses target or D0 identifies amplitude failure",
+      "note": "Separate runs; never remove GroupNorm and add amplitude scaling together. Define amplitude scaling before execution."
+    },
+    {
+      "id": "R3",
+      "kind": "training",
+      "question": "Does a longer training budget or selected normalization change improve the existing cohort?",
+      "training_population": "existing 96 training frames; 48 validation frames excluded from updates",
+      "variants": [
+        "current_groupnorm",
+        "best_R2_variant_if_any"
+      ],
+      "initialization_seeds": [
+        20261015,
+        20261016,
+        20261017
+      ],
+      "entry": "after resolving one-case fitting; paired initialization and sampling across variants"
+    },
+    {
+      "id": "R4",
+      "kind": "training",
+      "question": "Do two learned correction steps improve accuracy on model-generated residuals?",
+      "variants": [
+        "two_shared_weight_correction_steps"
+      ],
+      "control": "matched one-step R3 runs",
+      "initialization_seeds": [
+        20261015,
+        20261016,
+        20261017
+      ],
+      "entry": "if R3 still needs iterative correction; keep architecture and loss fixed",
+      "note": "Backpropagate through correction/residual recomputation; record doubled model-call cost. No autonomous rollout claim."
+    },
+    {
+      "id": "R5",
+      "kind": "training_and_final_evaluation",
+      "question": "Does the frozen candidate generalize to new simulations and grids?",
+      "proposed_parents": {
+        "train": 24,
+        "validation": 8,
+        "reserved_test": 8
+      },
+      "proposed_cells_per_metre": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "cell_budget": 65536,
+      "initialization_seeds": [
+        20261015,
+        20261016,
+        20261017
+      ],
+      "entry": "after selecting a working method; freeze splits and independent native seeds before capture",
+      "note": "Some shapes/resolutions must remain unseen during training. Real test-split support is a prerequisite. One-frame fixture first; reserved tests once after selection."
+    }
+  ],
+  "implementation_prerequisites": [
+    "New versioned trainer policy: existing v2 caps updates at 200 and restore CLI slots at 201 checkpoints.",
+    "Declare bounded checkpoint inventory and select final candidate consistently; preserve all old recipes.",
+    "Separate initialization and sample-order seeds for paired comparisons.",
+    "Apply current float32 target feedback during inspection without changing physical gates.",
+    "Define and verify each R2 normalization variant before any training.",
+    "Represent genuine reserved test splits before R5; never relabel them as validation."
+  ],
+  "conditional_replan": "If one-case fitting remains unsuccessful, inspect optimization and coarse-grid communication before enlarging the model or data cohort.",
+  "execution_visibility": "Normal existing Tuldok managed Runs and CPU runtime; publish real native snapshots and progress to existing Rheon egui observer; distinct labels for synthetic algebraic probes."
+}

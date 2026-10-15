@@ -5,6 +5,8 @@ Voxel size is one scalar in physical metadata, with no voxel-size network channe
 Current learned-output acceptance uses a [float32-calibrated residual target of
 1e-6](experiments/float32-pressure-target-v1/README.md), with existing physical
 limits retained. Historical experiments keep their original targets and results.
+The [proposed next training sequence](docs/plans/pressure-learning-next-runs/proposal.md)
+starts with one-case fitting and controlled normalization comparisons.
 Explore its `[batch, channel, Z, Y, X]` inputs in the interactive
 [pressure tensor page](viewer/tensor.html), with [recorded-data instructions](viewer/TENSOR-README.md).
 Variable-domain capture uses [cubic physical cells](experiments/cubic-pressure-v1/README.md):

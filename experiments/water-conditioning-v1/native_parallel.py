@@ -41,6 +41,24 @@ def run(args):
         policy.require(receipt['mode']=='restore' and receipt['execution']['device']=='cpu'
                        and receipt['execution']['cuda_initialized'] is False,'cpu_restore','fresh completed CPU restore')
         weights=receipt['outputs']['weights.npz']['sha256'];predictions_sha=receipt['outputs']['predictions.npz']['sha256']
+    elif receipt['schema']=='rheon-learned-iteration-diagnostic-v1':
+        source=Path(receipt['source_cpu_restore']);raw_source=policy.read(source/'receipt.json')
+        restored=policy.decode(raw_source)
+        policy.require(policy.sha(raw_source)==receipt['source_cpu_restore_sha256']
+            and restored['schema']=='rheon-water-learning-training-v1' and restored['mode']=='restore'
+            and restored['optimizer_updates']==0 and restored['execution']['device']=='cpu'
+            and restored['execution']['cuda_initialized'] is False,
+            'iteration_source','exact fresh managed CPU restore source')
+        policy.require(receipt['runtime']=={'device':'cpu','cuda_initialized':False}
+            and restored['closure']['source_witness_sha256']==receipt['source_witness_sha256']
+            and restored['outputs']['weights.npz']['sha256']==receipt['weights_sha256']
+            and restored['outputs']['normalization.json']['sha256']==receipt['normalization_sha256'],
+            'iteration_source','same measured model and preprocessing')
+        policy.require(receipt['inference_policy']['name']=='fixed-repeated-learned-correction'
+            and type(receipt['inference_policy']['proposals']) is int and 1<=receipt['inference_policy']['proposals']<=8
+            and receipt['inference_policy']['native_pressure_refinement'] is False,
+            'iteration_policy','explicit bounded learned-only diagnostic')
+        weights=receipt['weights_sha256'];predictions_sha=receipt['predictions_sha256']
     else:
         policy.require(receipt['schema']=='rheon-water-learning-inference-v1' and receipt['runtime']['device']=='cpu'
                        and receipt['runtime']['cuda_initialized'] is False,'cpu_inference','completed managed inference')
@@ -50,6 +68,9 @@ def run(args):
     policy.require(policy.sha(raw)==predictions_sha,'predictions','complete restored artifact')
     arrays=data.helpers().read_npz(raw,receipt['prediction_inventory'],2*policy.MIB)
     _reservation,parents=data.read_view(args.packet)
+    if receipt['schema']=='rheon-learned-iteration-diagnostic-v1':
+        policy.require(policy.sha(policy.canonical(_reservation))==receipt['packet_experiment_sha256'],
+            'iteration_population','exact selected diagnostic packet')
     cases=[(i,c) for i,c in enumerate(receipt['cases']) if not args.training_only or c['split']=='train']
     policy.require(cases,'population','nonempty exact restored cases')
     measured=diagnostics.admit(args.binary)
@@ -88,6 +109,7 @@ def run(args):
     values=[r['raw_learned']['relative_residual'] for r in records]
     finite=[v for v in values if v is not None and math.isfinite(v)]
     result={'status':'complete_native_diagnostic','cases':len(records),
+        'candidate_policy':receipt.get('inference_policy'),
         'raw_native_qualified':sum(r['raw_learned']['qualified'] for r in records),
         'float32_qualified':sum(r['float32_acceptance']['qualified'] for r in records),
         'relative_residual':{'minimum':min(finite) if finite else None,'median':float(np.median(finite)) if finite else None,'maximum':max(finite) if finite else None},

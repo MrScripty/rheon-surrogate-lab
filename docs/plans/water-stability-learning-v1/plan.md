@@ -28,7 +28,9 @@ evaluation boundaries remain unchanged.
 
 Write set: experiments/water-conditioning-v1/training/{policy,model,train,
 project,physical_residual}.py; new analytical training owner and focused test;
-experiments/water-residual-learning-v1/record.py for explicit result roots;
+experiments/water-residual-learning-v1/{record,rollout}.py and
+experiments/water-conditioning-v1/native_parallel.py for explicitly labelled
+CPU repeated-correction diagnostics;
 new reusable configurations; experiments/water-stability-learning-v1;
 docs/plans/water-stability-learning-v1; README.md and tuldok-project.json links.
 Ignored runs/water-stability-learning-v1 owns new captures and local results.
@@ -38,14 +40,20 @@ Milestones:
    mixed-mode labels; signed amplitudes; non-amplification plus nonzero accuracy
    loss; deterministic train-only generation. Regression checks must prove the
    operator against analytical eigenvalues and reject invalid configurations.
-   State: Accepted (focused implementation checks; managed hardware smoke pending).
+   State: Accepted (focused checks and real managed CUDA/fresh CPU smoke).
 2. Matched bounded 5,000-update mode-feedback comparison against the retained
    four-pass recurrent control, then a separately configured correction-RMS
-   output-scale comparison. Source/config/input/initial-state lineage, CUDA
+   output-scale comparison. Combine the two isolated changes in the preconfigured
+   factorial comparison when their fitting/development evidence supports it.
+   Source/config/input/initial-state lineage, CUDA
    updates, fresh CPU parity, all 128 development states, mode probes and three
    independent 64-step simulations retained. No assumption of improvement.
-   State: Planned.
-3. Admit full-trajectory feedback and the prepared 16-parent cohort only when
+   State: Active.
+3. Test fixed eight-proposal CPU inference after measured convergence: 32 neural
+   passes, unchanged checkpoint/physical arithmetic, no native refinement. Qualify
+   the fitted state, 128 development states and three full independent trajectories.
+   Keep single-proposal qualification separate. State: Active.
+4. Admit full-trajectory feedback and the prepared 16-parent cohort only when
    known-case fitting and stability are credible. Replan with measured evidence;
    otherwise retain the next experiment and explicitly defer expansion.
    State: Conditional.

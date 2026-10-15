@@ -76,3 +76,26 @@ fresh CPU audits, physical evaluations, mode probes and actual trajectory
 receipts. Re-recording different results under an existing ID is rejected.
 The existing seven-channel UI deployment remains unchanged; these laboratory
 CPU comparisons do not imply deployment qualification or simulation speedup.
+
+Repeated CPU policy: run experiments/water-stability-learning-v1/learned_iteration.py
+with the same --project, --artifacts, --packet, fresh --output, --population
+train|validation and --proposals 8. It creates a separately typed local CPU
+diagnostic from a managed restore, never a fabricated managed inference Run.
+Native_parallel accepts that explicit diagnostic only with matching restore,
+weights, normalization and population identity. Run the native evaluator on its
+predictions with unchanged gates. For trajectories add --proposals 8 to the
+existing rollout.py command; default remains one proposal. Eight calls execute
+32 f32 neural passes, recomputing residuals using the existing f64 physical
+operator/base accumulation. There is no native pressure refinement. Record
+both the failed single-proposal and successful repeated-policy results.
+
+Extended scenarios are committed under experiments/water-stability-learning-v1/
+configs. Run native controls first, then learned comparisons. Rectangular and
+compact use 256 steps; cube uses 240 after the native 256-step attempt fails
+Courant at step242. Keep the failed control. The session script
+/tmp/run-stability-long.py ran independent scenes on distinct CPU cores, and
+/tmp/run-stability-cube-240.py retained the bounded cube comparison. Exact scene,
+binary, process cleanup, proposal count and result are retained in each receipt.
+The local CPU helper source hashes and qualification evidence are in
+iteration-policy-evidence.json; six negative/feedback/process checks distinguish
+source identity, proposal bounds, residual feedback and process reaping.

@@ -1,0 +1,21 @@
+{
+  "schema": "rheon-iteration-rejection-evidence-v1",
+  "valid_source_receipt": "runs/water-stability-learning-v1/stability-modes/iterative-8-validation/receipt.json",
+  "cases": [
+    {
+      "mutated_field": "weights_sha256",
+      "expected_diagnostic": "iteration_source: same measured model and preprocessing",
+      "observed": "support.ContractError: iteration_source: same measured model and preprocessing",
+      "returncode": 1,
+      "native_evaluation_not_started": true
+    },
+    {
+      "mutated_field": "inference_policy",
+      "expected_diagnostic": "iteration_policy: explicit bounded learned-only diagnostic",
+      "observed": "support.ContractError: iteration_policy: explicit bounded learned-only diagnostic",
+      "returncode": 1,
+      "native_evaluation_not_started": true
+    }
+  ],
+  "scope": "one mutation of a fully valid completed CPU diagnostic; no incidental earlier rejection"
+}

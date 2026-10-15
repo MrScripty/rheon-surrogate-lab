@@ -58,6 +58,15 @@ def main():
     if history.get('analytical_feedback') is not None:record['analytical_training_feedback']=history['analytical_feedback']
     if (root/'mode-probe/report.json').exists():record['mode_probes']=load(root/'mode-probe/report.json')
     if (root/'mixed-mode-probe/report.json').exists():record['mixed_mode_probes']=load(root/'mixed-mode-probe/report.json')
+    iterative={}
+    for population in ('fit','validation'):
+        folder=root/('iterative-8-'+population+'-evaluation')
+        if (folder/'evaluation.json').exists():
+            prediction=root/('iterative-8-'+population)/'receipt.json'
+            iterative[population]={'native_evaluation':load(folder/'evaluation.json'),
+                'prediction_receipt_sha256':hashlib.sha256(prediction.read_bytes()).hexdigest(),
+                'inference_policy':load(prediction)['inference_policy']}
+    if iterative:record['iterative_cpu_evaluations']=iterative
     if record['trajectories']:
         record['method']['scope']='recorded-state fitting/development plus retained independent native/AI trajectories; no deployment claim'
     reports=args.reports.absolute()

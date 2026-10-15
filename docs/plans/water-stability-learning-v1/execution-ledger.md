@@ -50,3 +50,50 @@ proposals reduce equation error, worst first gain 7.1994, worst after eight
 wrapper proposals 7.5678e10. Exact analytical f64 solutions passed all 72 operator
 checks; no CUDA context. This strengthens the sampled amplification diagnosis.
 Full rows and identities retained in reports/baseline-mixed-modes.json.
+
+Fresh smoke CPU restore completed/drained/reopened with whole-artifact parity in
+Run f63f31bda2904b65a3da282f875f8ef1. Smoke record retained. Its first recording
+exposed a relative --reports path bug in the new generic recorder: the record
+was written correctly, but the final display path failed. Normalize the selected
+output root to absolute, then re-record the same immutable report successfully
+with identical bytes (reports/record-cli-check.json). No training retry needed.
+Full mode-feedback fit completed 5,000 updates at 12.8053 updates/s including
+bank/setup: final training-frame residual 0.000436322 versus retained 0.000349860.
+Canonical development loss improves from 0.00171135 to 0.0000134667; independent
+CPU physical checks remain pending. All initial parameter bits and real-frame
+sample order match the retained recurrent control (reports/control-parity.json).
+
+Scale-only fit completed 5,000 updates: fitted residual 0.000322258 (7.9% lower
+than retained recurrent), canonical development loss 0.000794065 versus baseline
+0.00171135. Mode feedback improves the same development objective, while scaling
+improves fitted residual; admit the already committed combined configuration as
+a bounded factorial interaction test, fixed terminal 5,000 updates. All three
+configurations were captured at source 042d839 before these outcomes. The new
+combined run adds no CFD data or new parameter seed. Native qualification and
+fresh CPU acceptance remain separate; cohort expansion is still conditional.
+
+Mode-feedback CPU evidence: first-proposal development median 0.000747636
+versus matched baseline 0.0143348 (94.8% lower); worst 0.0328209 versus 0.221805.
+All 24 single modes and 72 independently seeded mixtures reduce error; worst
+first gains 0.03563 and 0.02265. All three full 64-step simulations complete,
+with 49 AI steps each and no hard stop, versus 4–6 before. Raw four-pass pressure
+still fails physical qualification on every simulated step and the fitted frame.
+Repeated recorded-state corrections now converge: all 128 equation checks pass
+by seven proposals; eight-proposal worst relative residual 5.8231e-8. Replan the
+next CPU inference slice around that evidence: explicitly budget eight proposals
+(32 neural passes), no native refinement, same captured checkpoint and f64
+physical accumulation, verify all native physical gates on fitted/development
+states and full trajectories. It is a distinct inference-policy experiment,
+not a relabelled successful single-proposal model. Two independent two-cell
+feedback/budget tests and two existing real process-cleanup tests pass.
+
+Eight-proposal native evaluation passes the fitted frame and all 128/128
+float32-profile development cases (121/128 also pass the stricter original
+native 1e-8 profile). No native pressure cleanup contributes to this candidate.
+All three 64-step trajectories pass all 49 AI steps. Longer 256-step controls
+and learned trajectories pass all 241 AI steps for rectangular and compact
+scenes. The cube native control fails at step242 on Courant 0.502272 > 0.5;
+its pressure/divergence checks pass, and every earlier 241 native frame qualifies.
+This is a native fixed-timestep/forcing horizon limit, not a learned-model fail.
+Retain the failed control and bound the cube comparison at 240 steps with a fresh
+native control. No timestep, force, density, cell spacing or gate is changed.

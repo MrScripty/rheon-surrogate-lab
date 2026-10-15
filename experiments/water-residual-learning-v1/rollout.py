@@ -13,6 +13,9 @@ import signal
 import subprocess
 import time
 import audit
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'experiments/water-stability-learning-v1'))
+from learned_iteration import correct
 
 LIMIT=8*1024*1024
 
@@ -35,7 +38,9 @@ def messages(child,deadline):
     raise TimeoutError('native trajectory deadline')
 
 
-def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120):
+def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1):
+    if type(proposals) is not int or not 1<=proposals<=8 or control and proposals!=1:
+        raise ValueError('one to eight learned proposals; native control requires one')
     if not control:
         audit.initialize(project,artifacts,sorted(os.sched_getaffinity(0)))
     output.mkdir(parents=True,exist_ok=False)
@@ -52,7 +57,7 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                     torch=audit.TORCH;shape=(1,1,*value['counts_xyz'][::-1])
                     sample={key:torch.tensor(value[source],dtype=torch.float64).reshape(shape) for key,source in [('base','base_pressure'),('native_input_residual','native_input_residual')]}
                     sample.update(cell_size_m=torch.tensor([value['cell_size_m']],dtype=torch.float64),rho=torch.tensor([value['density_kg_m3']],dtype=torch.float64),dt=torch.tensor([value['dt_s']],dtype=torch.float64))
-                    with torch.no_grad():pressure=audit.MODEL.predict_pressure(audit.NETWORK,sample,audit.NORM).flatten().tolist()
+                    with torch.no_grad():pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,proposals).flatten().tolist()
                     child.stdin.write(json.dumps({'id':value['id'],'pressure':pressure},allow_nan=False).encode()+b'\n');child.stdin.flush()
                 elif value['kind']=='frame':
                     frames.append(value)
@@ -78,6 +83,8 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                 'source_project':str(project) if project else None,'cpu_restore':str(artifacts) if artifacts else None,
                 'kind':'native-algorithm-control' if control else 'raw-learned-independent-trajectory-after-native-warmup',
                 'deployment_changed':False,'cuda_initialized':False if control else audit.TORCH.cuda.is_initialized(),
+                'learned_proposals_per_pressure_solve':None if control else proposals,
+                'native_pressure_refinement':False,
                 'qualified_native_frames':sum(bool((f.get('reference_quality') or {}).get('qualified')) for f in frames),
                 'worst_ai_relative_residual':max([f['ai_quality']['relative_residual'] or 0 for f in frames if f.get('ai_quality')] or [0]),
                 'worst_ai_actual_divergence':max([f['ai_quality']['actual_divergence'] for f in frames if f.get('ai_quality')] or [0])}
@@ -89,9 +96,10 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('binary','scene','output'):parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--project',type=Path);parser.add_argument('--artifacts',type=Path);parser.add_argument('--reference-control',action='store_true')
+    parser.add_argument('--proposals',type=int,choices=range(1,9),default=1)
     args=parser.parse_args()
     if not args.reference_control and not (args.project and args.artifacts):parser.error('CPU restore project and artifacts required')
-    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control)
+    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals)
     print(json.dumps(result),flush=True)
 
 

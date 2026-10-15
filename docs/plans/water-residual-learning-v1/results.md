@@ -79,3 +79,12 @@ terminal statuses as they become available.
 
 Completed nonlinear trial: [full method/result record](reports/residual-nonlinear.json),
 including all three independent development trajectories and their hard stops.
+
+
+The separately qualified native paired controls pass all 64 reference frames and
+49 post-warm-up projected steps for each cube, elongated [24,16,12] and compact
+[12,8,10] scenario. Every domain retains one cubic spacing. These are development
+scenarios with different force location, strength, swirl and fluctuation, not
+an untouched final test. Their receipts and reusable JSON configurations are
+retained. The next 16-simulation cohort contains 32 real native snapshots with
+actual preceding pressure; it is prepared, not trained.

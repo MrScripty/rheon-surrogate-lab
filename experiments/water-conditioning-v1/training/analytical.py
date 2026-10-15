@@ -42,7 +42,7 @@ def make_sample(template, components, amplitude_pa):
     return {name:value.to(device) for name,value in sample.items()}
 
 
-def bank(template, specification, updates):
+def single_grid_bank(template, specification, updates, amplitude=None):
     rng=np.random.Generator(np.random.PCG64(specification['seed']))
     shape=tuple(template['base'].shape[2:])
     require(template['base'].shape[:2]==(1,1) and min(shape)>=2,
@@ -50,7 +50,7 @@ def bank(template, specification, updates):
     high=tuple(n-1 for n in shape)
     fixed=[(0,0,1),(0,1,0),(1,0,0),(0,1,2),(3,2,1),(4,4,4),(0,0,high[2]),high]
     fixed=[tuple(min(k,n-1) for k,n in zip(f,shape)) for f in fixed]
-    amplitude=float((template['reference']-template['base']).square().mean().sqrt())
+    if amplitude is None:amplitude=float((template['reference']-template['base']).square().mean().sqrt())
     require(math.isfinite(amplitude) and amplitude>0,'analytical_amplitude','positive fitted correction RMS')
     samples=[];descriptions=[]
     for index in range(specification['patterns']):
@@ -85,3 +85,59 @@ def loss(prediction,sample,operator):
     gain_squared=residual.square().sum()/sample['rhs'].square().sum()
     w=LOSS_WEIGHTS
     return w['pressure']*pressure+w['gradient']*gradient_error/gradient_norm+w['equation']*gain_squared+w['amplification']*torch.relu(gain_squared-1).square()
+
+
+def validate_grids(specification):
+    """Own uniform-grid sampling and a hard resident tensor budget."""
+    grids=specification['grids']
+    require(type(grids) is list and 1<=len(grids)<=8,'analytical_grids','one to eight explicit grids')
+    require(specification['sampling']=='uniform-balanced-grid',
+        'analytical_sampling','equal grid exposure, shuffled independently of real frames')
+    seen=set();cells=0
+    for grid in grids:
+        require(type(grid) is dict and set(grid)=={'counts_xyz','cells_per_metre'},
+            'analytical_grid','closed counts and cubic spacing')
+        counts=grid['counts_xyz'];density=grid['cells_per_metre']
+        require(type(counts) is list and len(counts)==3 and all(type(n) is int and 2<=n<=128 for n in counts)
+            and math.prod(counts)<=65536,'analytical_grid','bounded rectangular cubic-voxel grid')
+        require(type(density) is int and 1<=density<=128,
+            'analytical_spacing','positive integer cells per metre')
+        key=(*counts,density)
+        require(key not in seen,'analytical_grid','no duplicate grid/spacing')
+        seen.add(key);cells+=math.prod(counts)
+    # Four dense float64 fields and three scalar tensors per bank entry.
+    projected=specification['patterns']*len(AMPLITUDES)*(32*cells+24*len(grids))
+    limit=specification['cache_max_bytes']
+    require(type(limit) is int and 0<limit<=768*1024**2 and projected<=limit,
+        'analytical_cache','resident tensor projection must fit explicit budget')
+    return projected
+
+
+def bank(template,specification,updates):
+    if 'grids' not in specification:
+        return single_grid_bank(template,specification,updates)
+    projected=validate_grids(specification)
+    amplitude=float((template['reference']-template['base']).square().mean().sqrt())
+    require(math.isfinite(amplitude) and amplitude>0,'analytical_amplitude','positive fitted correction RMS')
+    samples=[];banks=[];size=specification['patterns']*len(AMPLITUDES)
+    # A separate private stream changes only analytical shape/example selection.
+    rng=np.random.Generator(np.random.PCG64(specification['seed']))
+    grid_order=np.concatenate([rng.permutation(len(specification['grids']))
+        for _ in range(math.ceil(updates/len(specification['grids'])))])[:updates]
+    within=rng.integers(size,size=updates,dtype=np.int64)
+    order=(grid_order*size+within).astype('<i8')
+    for grid in specification['grids']:
+        shape=tuple(reversed(grid['counts_xyz']))
+        grid_template={**template,'base':torch.zeros((1,1,*shape),dtype=torch.float64,device=template['base'].device),
+            'cell_size_m':torch.tensor([1/grid['cells_per_metre']],dtype=torch.float64,device=template['base'].device)}
+        values,_,evidence=single_grid_bank(grid_template,specification,1,amplitude=amplitude)
+        samples.extend(values);banks.append({'grid':grid,'bank':evidence})
+    actual=sum(value.numel()*value.element_size() for sample in samples for value in sample.values())
+    require(actual==projected,'analytical_cache','exact resident tensor projection')
+    evidence={'schema':'rheon-analytical-feedback-v2','source':'real train frame correction RMS and scalar water physics; explicit grid shapes/spacing',
+        'grids':banks,'sampling':specification['sampling'],'grid_exposures':np.bincount(grid_order,minlength=len(banks)).tolist(),
+        'sampling_order_sha256':sha(order.tobytes()),'bank_description_sha256':sha(canonical(banks)),
+        'loss_weights':LOSS_WEIGHTS,'weight':specification['weight'],'additional_examples':updates,
+        'resident_tensor_bytes':actual,'cache_max_bytes':specification['cache_max_bytes'],
+        'scope':'manufactured operator training, not additional CFD simulations; normalization remains real-train-only'}
+    return samples,order,evidence

@@ -26,7 +26,7 @@ def select(config):
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
-    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3'):
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4'):
         import physical_residual
         SELECTED='physical-residual';NORMALIZATION='none';CORRECTION=config['correction']
         ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
@@ -41,7 +41,7 @@ def select(config):
         if OBJECTIVE!='canonical':
             ARCHITECTURE.update(training_objective=OBJECTIVE,
                 loss_weights=copy.deepcopy(physical_residual.LOSS_WEIGHTS))
-        if config['schema']=='rheon-water-residual-experiment-v3':
+        if config['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4'):
             ARCHITECTURE.update(output_scale=OUTPUT_SCALE,
                 reconstruction='float32 raw times selected train-only RMS, cell-zero gauge, add supplied base',
                 analytical_training_feedback=copy.deepcopy(config['analytical_feedback']))

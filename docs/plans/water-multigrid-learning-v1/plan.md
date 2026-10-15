@@ -44,7 +44,7 @@ capture, neural implementation and native process/oracle owners remain in use;
 this tranche adds a bounded training population and measurement policy.
 
 Write set: experiments/water-conditioning-v1/training/{policy,model,analytical,
-train,test_analytical}.py; new training configuration files;
+train,test_analytical,test_multigrid}.py; new training configuration files;
 experiments/water-stability-learning-v1/{learned_iteration,test_learned_iteration}.py;
 experiments/water-residual-learning-v1/rollout.py;
 experiments/water-conditioning-v1/native_parallel.py;

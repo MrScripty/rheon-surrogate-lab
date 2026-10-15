@@ -13,3 +13,10 @@ an actual four-evaluation recurrence versus four separate evaluations: identical
 pressure bits, four observed forwards in each, original metadata unchanged.
 Existing two-cell RHS/divergence and budget checks remain passing. This is an
 inference-policy measurement change, separate from training-population changes.
+
+Added closed schema-v4 feedback with explicit grid counts, one cubic spacing per
+grid, balanced private-RNG sampling and an exact 768 MiB cache projection.
+Legacy analytical bank dispatch retains tensors/order/evidence. Three new
+contract/eigenvalue tests, five historical analytical tests and six residual
+contract tests pass. Scope explicitly includes the new test_multigrid.py and
+training configuration files. The 10-update smoke covers every grid twice.

@@ -59,3 +59,22 @@ All experiment outputs use fresh directories under ignored runs/. Small receipts
 methods and decisions are committed here. Checkpoints/data stay in the existing
 Tuldok managed artifacts and local ignored captures. The preceding tranche remains
 unchanged. Fixed32, original adaptive and refined adaptive are distinct policies.
+
+The optional rollout `--threads 1|4|8` applies the same explicit thread budget
+to native and AI tracks. The study gives each worker a disjoint core group and
+accepts `--timing-study` only for serial repeated observations; caller isolation
+is still required. The four-thread positive fixture uses one AI step after
+native history and records actual affinity. Default policy remains one thread.
+
+Longer-window configuration long-window.json doubles the previous largest
+bounded time window to 512 steps (8.5333 s), with quarter-strength internal
+forcing. This is a separate set of native-qualified conditions, not an extension
+of the earlier full-force claim. Report early/intermediate/final pressure-field
+relative L2 difference alongside every step's unchanged physical gates.
+
+Prepared-cohort audit reads the existing lossless cohort-16 view, inspects only
+training parents, verifies 16 distinct physical-setup identities and 32 real
+snapshots, and records cubic spacing/force/history metadata. It neither trains
+nor infers on the untouched final population. Broad-cohort feedback needs an
+explicit amplitude-reference contract because the current controlled bank takes
+one fitting frame; do not silently use the first parent as the global statistic.

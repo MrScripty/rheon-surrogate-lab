@@ -11,3 +11,10 @@ Initial focused test: 4/5 passed; superposition's per-cell tolerance rejected
 Use a correction-vector norm-relative 3e-5 comparison for this algebraic
 arithmetic check; unchanged 1e-6 physical acceptance is evaluated independently.
 The operator, preprocessing and prepared gradient checks already passed.
+
+Focused checks: all five residual tests and seven historical conditioning tests
+pass. First registration returned Tuldok HTTP 409 because an immutable project
+ID already referred to the prior snapshot. Assign a new snapshot ID, retaining
+the old project and the same catalog/root. No Run was submitted by that failed
+registration. The initial observer used system Python without NumPy; restart
+with the existing laboratory virtual environment. No source/model change.

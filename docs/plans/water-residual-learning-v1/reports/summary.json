@@ -5,8 +5,32 @@
   "relative_residual_target": 1e-06,
   "physical_gates_changed": false,
   "new_reserved_test_used": false,
-  "cuda_optimizer_updates": 10002,
+  "cuda_optimizer_updates": 20002,
   "managed_stages": [
+    {
+      "trial": "residual-linear",
+      "name": "restore",
+      "run_id": "b8fbc4fa24e14ff3b89f9278d40ff8c5",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-linear",
+      "name": "validation",
+      "run_id": "5401bff7a763426a9dc058d5b10f2c79",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-linear",
+      "name": "train",
+      "run_id": "513cc79c10544eb5a06e1eb4cb71beb8",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
     {
       "trial": "residual-nonlinear",
       "name": "train",
@@ -50,6 +74,11 @@
   ],
   "records": [
     {
+      "trial": "residual-linear",
+      "report": "residual-linear.json",
+      "sha256": "4f5b2158f2a24380d11ac1b8c83f86bf7ac160d4badf0ed7dcadc38f91288455"
+    },
+    {
       "trial": "residual-nonlinear",
       "report": "residual-nonlinear.json",
       "sha256": "4185acaa9b073f3a40a51fb8d01bc9b8b144953baee3ce174a3442195fc908e8"
@@ -61,6 +90,27 @@
     }
   ],
   "comparison": [
+    {
+      "trial": "residual-linear",
+      "source_commit": "725b10022f091ec298997aee9fdffb68a8f4f781",
+      "updates": 10000,
+      "steps_per_prediction": 1,
+      "training_started_utc": "2026-10-15T19:41:31.390554+00:00",
+      "training_finished_utc": "2026-10-15T19:43:15.520807+00:00",
+      "updates_per_s": 96.0335711595445,
+      "fitted_relative_residual": 0.00041924414903267817,
+      "validation_median_relative_residual": 0.04773792217917261,
+      "validation_max_relative_residual": 0.28998269636148705,
+      "validation_qualified": 0,
+      "validation_cases": 128,
+      "validation_repeated8_median": 222.12597192524075,
+      "validation_superposition_median": 2.2315924508739758e-07,
+      "trajectory_ai_steps": 20,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_hard_stops": 3,
+      "weights_sha256": "3fbdf5c43c0f541962d951c744624f08317f7379aa80e81ad0bbab2771a7f16a",
+      "report": "residual-linear.json"
+    },
     {
       "trial": "residual-nonlinear",
       "source_commit": "725b10022f091ec298997aee9fdffb68a8f4f781",

@@ -69,9 +69,14 @@ model error, not missing previous-pressure context. The native/native control
 qualifies all 49 post-warm-up steps of a 64-step run. Two rectangular force scenarios
 also have separate native controls and will evaluate learned checkpoints.
 
-The matched linear 10,000-update train completed; fresh CPU restore/development
-inference are pending. Recurrent, physical-feedback and matched 5,000-update
-single-correction trials remain managed/queued. A varied 16-simulation 32-state
+The matched linear 10,000-update trial completed fresh CPU restore/development
+inference. Fitted residual is 0.0004192441490 and validation diagnostic median
+0.04773792218. Superposition error falls to 2.23e-7, but eight raw proposals
+increase median equation error to about 222.126. Linearity alone does not
+establish a stable approximate inverse. Its native validation is being checked.
+All planned CUDA fits have completed: recurrent 5,000 updates, physical-feedback
+10,000 updates and matched single-correction 5,000 updates. CPU qualification
+and independent trajectories remain in progress. A varied 16-simulation 32-state
 cohort has been prepared without starting training; expansion remains gated on
 credible known-case fitting. See execution ledger and per-trial reports for
 terminal statuses as they become available.

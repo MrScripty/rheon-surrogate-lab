@@ -7,6 +7,7 @@ import train
 
 class Conditioning(unittest.TestCase):
     def setUp(self):
+        model.select({'schema':'rheon-water-conditioning-experiment-v1','conditioning':'scalar-units'})
         model.configure('cpu'); torch.manual_seed(31)
         self.net=model.PressureCorrectionNet().eval()
         self.norm={'schema':'rheon-cubic-pressure-normalization-v2','channels':model.CHANNELS,
@@ -51,6 +52,17 @@ class Conditioning(unittest.TestCase):
         self.assertTrue(train.finite_tensors([torch.ones(3),torch.zeros(2)]))
         for bad in (float('nan'),float('inf'),-float('inf')):
             self.assertFalse(train.finite_tensors([torch.ones(3),torch.tensor([0.,bad])]))
+
+    def test_remove_groupnorm_preserves_every_seeded_parameter(self):
+        model.select({'schema':'rheon-water-conditioning-experiment-v3','conditioning':'scalar-units','normalization':'none'})
+        torch.manual_seed(31);without=model.PressureCorrectionNet().eval()
+        self.assertFalse(any(isinstance(layer,torch.nn.GroupNorm) for layer in without.modules()))
+        self.assertEqual(set(without.state_dict()),set(self.net.state_dict()))
+        for name,value in without.state_dict().items():self.assertTrue(torch.equal(value,self.net.state_dict()[name]))
+        with torch.no_grad():
+            prediction=model.predict_pressure(without,self.sample,self.norm)
+        self.assertEqual(prediction.shape,self.sample['base'].shape)
+        self.assertTrue(bool(torch.isfinite(prediction).all()))
 
     def test_stacked_examples_preserve_independent_loss_gradient(self):
         self.select('scalar-units')

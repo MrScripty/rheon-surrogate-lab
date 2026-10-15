@@ -7,7 +7,6 @@ source=HERE/'portable_model.py'
 if not source.exists(): source=LAB/'experiments/cuda-pressure-v1/model.py'
 owner=load_module('conditioning_portable_model',source)
 CHANNELS=owner.CHANNELS
-PressureCorrectionNet=owner.PressureCorrectionNet
 configure_cpu=owner.configure_cpu
 configure=owner.configure
 parameter_count=owner.parameter_count
@@ -16,17 +15,33 @@ pressure_loss=owner.pressure_loss
 frozen=owner.frozen
 ARCHITECTURE=copy.deepcopy(owner.ARCHITECTURE)
 SELECTED=None
+NORMALIZATION='groupnorm'
 
 
 def select(config):
-    global SELECTED
-    require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2'),
+    global SELECTED,NORMALIZATION
+    require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3'),
             'conditioning_configuration','explicit versioned model transformation')
     SELECTED=config['conditioning']
+    NORMALIZATION=config.get('normalization','groupnorm')
     require(SELECTED in ('scalar-units','amplitude-and-units'),'conditioning_configuration','supported variant')
+    require(NORMALIZATION in ('groupnorm','none'),'normalization_configuration','supported block intervention')
+    ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
     ARCHITECTURE.update(schema='rheon-conditioned-cubic-groupnorm-v1',conditioning=SELECTED,
         scalar_feature_units={'rho_kg_m3':1000.,'dt_s':1/60},
         amplitude='per-sample residual RMS / training residual RMS; restore output amplitude' if SELECTED=='amplitude-and-units' else 'historical fixed training RMS')
+    if NORMALIZATION=='none':
+        ARCHITECTURE.update(schema='rheon-conditioned-cubic-no-normalization-v1',
+            block_normalization={'name':'Identity','position':'replace only parameter-free GroupNorm'})
+
+
+class PressureCorrectionNet(owner.PressureCorrectionNet):
+    def __init__(self):
+        super().__init__()
+        if NORMALIZATION=='none':
+            for block in [*self.encoders,self.bottleneck,*self.decoders]:
+                for index,layer in enumerate(block.layers):
+                    if isinstance(layer,torch.nn.GroupNorm):block.layers[index]=torch.nn.Identity()
 
 
 def amplitude(residual,normalization):

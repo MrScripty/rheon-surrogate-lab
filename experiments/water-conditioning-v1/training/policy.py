@@ -20,12 +20,15 @@ def experiment(value):
         return base_experiment(value)
     version=value.get('schema')
     expected={'schema','id','training','resources','conditioning'}
-    if version=='rheon-water-conditioning-experiment-v2':expected.add('execution')
-    require(set(value)==expected and version in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2'),
+    if version in ('rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3'):expected.add('execution')
+    if version=='rheon-water-conditioning-experiment-v3':expected.add('normalization')
+    require(set(value)==expected and version in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3'),
             'conditioning_configuration','closed versioned experiment')
     require(value['conditioning'] in ('scalar-units','amplitude-and-units'),
             'conditioning_configuration','declared feature/output transformation')
-    original={k:v for k,v in value.items() if k not in ('conditioning','execution')}
+    require(value.get('normalization','groupnorm') in ('groupnorm','none'),
+            'normalization_configuration','explicit parameter-free block normalization intervention')
+    original={k:v for k,v in value.items() if k not in ('conditioning','execution','normalization')}
     original['schema']='rheon-cuda-pressure-experiment-v1'
     base_experiment(original)
     execution(value)

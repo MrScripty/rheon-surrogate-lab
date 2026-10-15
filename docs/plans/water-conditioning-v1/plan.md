@@ -37,7 +37,7 @@ parallelism. All cores remain available across the composed CPU/GPU workload;
 do not claim that 24 threads per tiny inference is necessarily faster. Retain
 worker affinity, timings, task completion and observed concurrency. Process-pool
 owner drains workers on completion/error; no detached scientific jobs. Keep
-additional artifacts below 500 MiB and at least 1 GiB filesystem reserve.
+additional artifacts below 768 MiB and at least 1 GiB filesystem reserve.
 
 Acceptance: source checks and independently computed stencil regression pass;
 the old fitting command fails its 1e-6 equation gate; known reference controls
@@ -143,3 +143,36 @@ fresh restores. Scalar-units training continues from its earlier immutable
 capture while this work proceeds. Later fitting/architecture decisions depend
 on these actual native gates; no additional dataset expansion is admitted by a
 performance benchmark result alone.
+
+
+GPU execution acceptance measured: baseline and resident batch-1 controls have
+identical checkpoint inventories at updates 0, 2 and 500. Measured training
+interval rates are 31.1926 and 42.0984 updates/s; profile scalar extractions fall
+from 2,520 to 1,030 per ten updates, copies from 100 to 30. Batch-4 gives
+41.3233 updates/s, 165.293 samples/s, on repeated fixture data. These intervals
+include optimizer/cache setup and the bounded profiler window; they are not
+steady-state kernel-only or full Tuldok workflow times. CPU restores and
+aggregate device-utilization observations remain separately retained evidence.
+
+The agreed normalization alternative is now a bounded model slice: compare the
+scalar-units one-frame fit with parameter-free GroupNorm replaced by Identity.
+Preserve every seeded convolution/head parameter, scalar units, Adam schedule,
+frame and 10,000-update budget. Use the numerically equivalent resident-input
+execution. Version-3 configuration declares normalization explicitly; the new
+architecture profile identifies the decoder contract. Same tensor shapes do not
+make it an old deployment model. CPU fixtures prove all initial parameter bytes
+match, GroupNorm is absent and rectangular output is finite. Gate a full fitting
+run on qualified execution controls; retain failures and do not infer held-out
+accuracy from memorizing one frame. No additional corpus is generated.
+Exactly one next scientific slice: complete the managed no-GroupNorm fitting and
+fresh CPU/native checks, then use fitting evidence to select the next architecture
+experiment. Existing GPU performance captures are immutable and unaffected by
+this separately committed model change.
+
+
+Resource replan: measured retained artifacts reached 488 MiB after the added
+CPU/GPU throughput controls. Increase the task-owned retention bound from 500 to
+768 MiB for the approved normalization comparison and final receipts; 1.9 GiB
+currently remains free, preserving the unchanged 1 GiB reserve. This is a local
+experiment retention bound, not an increase to any Tuldok recipe/runtime cap.
+Do not delete scientific artifacts or overwrite old captures to fit the bound.

@@ -101,3 +101,11 @@ sample exposure; it is a throughput probe rather than a controlled accuracy gain
 Profiler summaries, transfer/scalar extraction counts, update rates and peak GPU
 memory are retained as managed artifacts. The current Tuldok supervisor executes
 one Run at a time, so concurrent GPU training is a distinct future scheduler task.
+
+
+Version-3 `no-groupnorm.json` is a separate architecture ablation: scalar-unit
+conditioning and the original one-frame schedule, with parameter-free GroupNorm
+layers replaced by Identity and every seeded parameter retained. It uses the
+qualified resident-input execution. Its distinct architecture profile prevents
+accidental interpretation through the historical deployment adapter. This tests
+normalization as a cause of the fitting gap; it does not assume it is the cause.

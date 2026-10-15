@@ -41,3 +41,11 @@ qualification stays visible and is not fallback success. These runs are new
 simulation trajectories, unlike the recorded-state audits. The deployed UI
 bridge's seven-channel contract stays unchanged. Run `test_rollout.py` for actual
 failed-exit and timeout process cleanup evidence.
+
+
+`summarize.py` builds `reports/summary.json` and `reports/comparison.csv` from the
+retained per-trial records. It indexes their hashes and Run custody, training
+UTC intervals, update rates, fitted/held-out errors, consistency/repetition
+checks and actual post-warm-up trajectory outcomes. This derived comparison can
+be regenerated; per-trial records are immutable. Older v1 reports remain valid;
+v2 records add explicit training timestamps and runtime snapshot identity.

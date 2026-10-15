@@ -80,3 +80,11 @@ Independent nonlinear trajectory: new cube force/seed, 15 native warm-up steps,
 actual divergence92.39115. Child exits/reaps. This reveals accumulated deployment
 error despite lower teacher-state validation median; it is not a cold-start
 failure or accepted simulation. Source/build and native-control receipts retained.
+
+Fresh CPU linear evidence: fitted residual0.0004192441490, validation diagnostic
+median0.04773792218. Superposition discrepancy falls to2.23e-7 (f32 arithmetic),
+but eight raw applications diverge to median222.126. Thus structural linearity
+is established without a convergent approximate inverse. Do not promote the
+linear model based on the algebraic test or assume recurrence is safe. Its
+separately trained four-correction alternative remains an experiment. Native
+validation and independent trajectories will retain the actual physical failures.

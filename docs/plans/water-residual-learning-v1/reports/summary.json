@@ -1,0 +1,96 @@
+{
+  "schema": "rheon-residual-learning-summary-v1",
+  "scope": "known-frame fitting and development evaluation; no untouched test or qualified deployment",
+  "model_accuracy_qualified": false,
+  "relative_residual_target": 1e-06,
+  "physical_gates_changed": false,
+  "new_reserved_test_used": false,
+  "cuda_optimizer_updates": 10002,
+  "managed_stages": [
+    {
+      "trial": "residual-nonlinear",
+      "name": "train",
+      "run_id": "17e4b3b6454b4e3e9d233b0ea6488d74",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-nonlinear",
+      "name": "restore",
+      "run_id": "fd598e3eb8a04092a51a952611bffecb",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-nonlinear",
+      "name": "validation",
+      "run_id": "22440d9805dd4ca6a6390ba28b33e58e",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-smoke",
+      "name": "train",
+      "run_id": "455586b9f3c24a06ba0b50df1d932c12",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "residual-smoke",
+      "name": "restore",
+      "run_id": "87786368c8794a8eb827a7f35a9db458",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    }
+  ],
+  "records": [
+    {
+      "trial": "residual-nonlinear",
+      "report": "residual-nonlinear.json",
+      "sha256": "4185acaa9b073f3a40a51fb8d01bc9b8b144953baee3ce174a3442195fc908e8"
+    },
+    {
+      "trial": "residual-smoke",
+      "report": "residual-smoke.json",
+      "sha256": "a62eac561f14764a1ad1469ad2ed8bdd2fee7d4889298a12351f8bd1a5873ea8"
+    }
+  ],
+  "comparison": [
+    {
+      "trial": "residual-nonlinear",
+      "source_commit": "725b10022f091ec298997aee9fdffb68a8f4f781",
+      "updates": 10000,
+      "steps_per_prediction": 1,
+      "training_started_utc": "2026-10-15T19:39:19.073868+00:00",
+      "training_finished_utc": "2026-10-15T19:41:08.429904+00:00",
+      "updates_per_s": 91.44442597907698,
+      "fitted_relative_residual": 0.0005193531068407955,
+      "validation_median_relative_residual": 0.04441808197616948,
+      "validation_max_relative_residual": 0.29100174022059844,
+      "validation_qualified": 0,
+      "validation_cases": 128,
+      "validation_repeated8_median": 0.011340851521740518,
+      "validation_superposition_median": 0.006420218895484206,
+      "trajectory_ai_steps": 61,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_hard_stops": 3,
+      "weights_sha256": "94afe6d741a1ff784cbc0b1e170be604ca12f8ef4cca9a4de4d8b4495f793755",
+      "report": "residual-nonlinear.json"
+    }
+  ],
+  "baselines": {
+    "matched_historical_no_groupnorm_one_frame": {
+      "fitted_relative_residual": 0.0003982221868309573,
+      "validation_median_relative_residual": 0.0828159014298824
+    },
+    "prior_1024_parent_different_training_population": {
+      "validation_median_relative_residual": 0.0385792962090315
+    }
+  },
+  "cohort16": "prepared; training remains conditional on known-case physical accuracy"
+}

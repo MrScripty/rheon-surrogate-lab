@@ -2,6 +2,13 @@
 
 Current model work uses [varied sealed domains full of water](experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The unchanged seven-channel network completed 2,000 CUDA updates on 256 training simulations, with 64 validation and 64 reserved test simulations. Median reserved equation residual was 4.37%, but **0/128 model proposals passed** the pressure gates. Fresh CPU restore and all managed artifacts qualified. See [measured results and previous-run comparison](docs/plans/sealed-water-pressure-v1/results.md).
 
+The [fresh native / AI comparison](experiments/live-water-comparison-v1/README.md)
+now uses 15 native warm-up steps before the first prediction and offers signed
+voxel pressure differences with a Pa legend. Cold-start attempts are unsupported
+test setups. The new 64-step warm-start run still passes 0/49 AI checks; the prior
+0/128 held-out snapshots already included previous reference pressure. See
+[context correction and measured results](docs/plans/live-ai-pressure-comparison/results.md).
+
 The earlier [CUDA training and CPU inference qualification](docs/plans/cuda-training-cpu-inference/results.md) retains its original 20-update result and twelve failed accuracy checks.
 Voxel size is one scalar in physical metadata, with no voxel-size network channels.
 Current learned-output acceptance uses a [float32-calibrated residual target of

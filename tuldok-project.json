@@ -1,5 +1,5 @@
 {
-  "activity_path": "runs/live-project/activity.json",
+  "activity_path": "runs/live-ai-comparison/project/activity.json",
   "data": [
     {
       "id": "cpu-results",
@@ -28,6 +28,17 @@
       "label": "Qualified water corpus: 384 scenes and 768 snapshots",
       "path": "runs/sealed-water-v1-3/capture/manifest.json",
       "sha256": "41ca720cb153321b65dcee50b2c97564628026e9d2348a8b4b4308be5812294d"
+    },
+    {
+      "id": "live-ai-pair",
+      "label": "Latest fresh paired simulation frame and native verdicts",
+      "path": "runs/live-ai-comparison/project/latest.json"
+    },
+    {
+      "id": "ai-comparison-fields",
+      "label": "65 fresh paired frames: native warm-up, raw AI and signed pressure error",
+      "path": "runs/live-ai-comparison/fields-1/comparison.zip",
+      "sha256": "823c4782c531249f8d24c4d49f41090869ed29b088450dd31c837396a6bf9c72"
     }
   ],
   "evidence": [
@@ -171,10 +182,45 @@
       "id": "water-acceptance",
       "label": "Measured water material, CUDA/CPU and held-out acceptance",
       "path": "docs/plans/sealed-water-pressure-v1/acceptance.json"
+    },
+    {
+      "id": "ai-comparison-plan",
+      "label": "Fresh simulation and voxel difference comparison plan",
+      "path": "docs/plans/live-ai-pressure-comparison/plan.md"
+    },
+    {
+      "id": "ai-comparison-bridge",
+      "label": "Measured CPU checkpoint bridge",
+      "path": "experiments/live-water-comparison-v1/cpu_bridge.py"
+    },
+    {
+      "id": "ai-comparison-engine",
+      "label": "Independent Rheon and AI native water tracks",
+      "path": "runs/live-ai-comparison/Rheon/src/bin/desktop/ai_comparison/engine.rs"
+    },
+    {
+      "id": "ai-comparison-view",
+      "label": "Signed voxel colors, zero-centered scale and picking",
+      "path": "runs/live-ai-comparison/Rheon/src/bin/desktop/ai_comparison/view.rs"
+    },
+    {
+      "id": "ai-comparison-results",
+      "label": "Native warm-up correction and fresh live results",
+      "path": "docs/plans/live-ai-pressure-comparison/results.md"
+    },
+    {
+      "id": "ai-comparison-acceptance",
+      "label": "Preserved cold-start disposition and warm-start accuracy audit",
+      "path": "docs/plans/live-ai-pressure-comparison/reports/acceptance.json"
+    },
+    {
+      "id": "ai-comparison-workflow",
+      "label": "CPU deployment and reusable Tuldok field export",
+      "path": "experiments/live-water-comparison-v1/README.md"
     }
   ],
-  "id": "6460b40983b64da2a7ac21d40a6aa688",
-  "name": "Rheon Surrogate Lab \u00b7 water baseline \u00b7 accuracy unqualified",
+  "id": "80706347782e49f78bf2f79066abd4b4",
+  "name": "Rheon Surrogate Lab \u00b7 fresh solver / AI comparison",
   "recipes": [],
   "requirements": [
     {

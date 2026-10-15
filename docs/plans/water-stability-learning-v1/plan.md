@@ -1,6 +1,7 @@
 # Stability-aware pressure learning
 
-Status: Active. Admission: start, authorized by the user's “proceed” following
+Status: Verifying (experiment evidence; no one-pass or deployment qualification).
+Admission: start, authorized by the user's “proceed” following
 the retained residual-learning next sequence. Previous tranche remains accepted
 as experiment evidence, with no qualified learned solver.
 
@@ -48,22 +49,33 @@ Milestones:
    Source/config/input/initial-state lineage, CUDA
    updates, fresh CPU parity, all 128 development states, mode probes and three
    independent 64-step simulations retained. No assumption of improvement.
-   State: Active.
+   State: Accepted (all three full fits and CPU/native comparisons retained).
 3. Test fixed eight-proposal CPU inference after measured convergence: 32 neural
    passes, unchanged checkpoint/physical arithmetic, no native refinement. Qualify
    the fitted state, 128 development states and three full independent trajectories.
-   Keep single-proposal qualification separate. State: Active.
+   Keep single-proposal qualification separate. State: Accepted (128/128
+   development states and 854/854 AI trajectory steps with 32 neural evaluations).
 4. Admit full-trajectory feedback and the prepared 16-parent cohort only when
    known-case fitting and stability are credible. Replan with measured evidence;
    otherwise retain the next experiment and explicitly defer expansion.
-   State: Conditional.
+   State: Deferred. Iterative-policy success does not establish one-pass
+   accuracy. Single-pass follow-up configurations are prepared, not trained;
+   broader data and deployment need an explicit inference-budget decision.
 
 Acceptance claims (all automated): focused analytical/configuration checks
 (deterministic environment); real managed CUDA train and fresh optimizer-free
 CPU restore (required-real GPU/Tuldok); native teacher-state and three independent
 trajectory comparisons after 15 native warm-up steps (required-real native CPU);
 durable method/results/checkpoint custody and project evidence (system).
-Current acceptance: pending. Scientific completion does not imply model
+Current acceptance: partial; final project comparison links are pending.
+C1 focused/deterministic/automated: satisfied (18 model checks, two residual-feedback
+checks, two process checks, two real-source rejection checks, report CLI check).
+C2 system/required-real GPU and Tuldok/automated: satisfied (11 completed/drained
+stages, 15,002 CUDA updates, fresh CPU parity and whole redownloads).
+C3 system/required-real native CPU/automated: satisfied for the scoped comparison
+and separately qualified iterative policy; see results.md and per-trial reports.
+C4 system/required-real Tuldok/automated: verifying final comparison/evidence index.
+Scientific completion does not imply model
 qualification. Numerical gates stay 1e-6 equation residual plus existing physical
 limits. A sampled mode pass is not a convergence guarantee. Final candidate is
 fixed by terminal update, not selected from validation. Existing evaluated cases
@@ -74,12 +86,10 @@ Resource limits: one managed GPU trainer, 600 seconds and 32 MiB output per Run;
 available distinct cores, one Torch thread each, following measured throughput.
 Analytical generation/cache is bounded and captured with configuration/source.
 
-Current phase: run fixed CUDA fits with CPU qualification and diagnostics.
-Exactly one next slice: complete the fixed 5,000-update mode-feedback comparison
-and its required fresh CPU/native evidence. Runtime preparation may overlap;
-Tuldok owns execution order. CUDA smoke and CPU source checks precede full fit;
-fresh managed CPU restore remains required before accepting its evidence. Replan if numerical or lifecycle evidence
-invalidates the comparison. Standards MCP snapshot
+Current phase: publish and verify the final comparison/evidence index.
+Exactly one next slice: register final project links, retain its receipt, resolve
+all task-owned controllers, and seal the completed experiment record.
+ Standards MCP snapshot
 snapshot:v1:1a9db05b-79b2-439d-b423-d316efeeb5a0.
 
 See [ledger](execution-ledger.md), [issues](issues.md), and [results](results.md).

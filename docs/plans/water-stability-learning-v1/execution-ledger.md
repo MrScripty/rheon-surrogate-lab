@@ -97,3 +97,24 @@ its pressure/divergence checks pass, and every earlier 241 native frame qualifie
 This is a native fixed-timestep/forcing horizon limit, not a learned-model fail.
 Retain the failed control and bound the cube comparison at 240 steps with a fresh
 native control. No timestep, force, density, cell spacing or gate is changed.
+
+All three full CUDA fits and their fresh managed CPU restores/validation Runs
+completed and drained, reopened/redownloaded with whole-artifact parity: 11
+stages and 15,002 optimizer updates including smoke. Combined four-evaluation
+model median 0.000741674, worst 0.00612879, physical passes 0/128; three actual
+64-step trajectories complete with no hard stop but no qualified AI pressure.
+The mode-only 32-evaluation policy remains the separately qualified inference
+result. Its six short/extended trajectories qualify all 854 AI steps. The cube
+240-step replacement control/AI run passes all 225 AI steps. Native 256-step cube
+failure remains retained. No threshold changed; no untouched test was consumed.
+
+User questions clarified that 32 network evaluations occur at CPU inference,
+not only during training. The same network executes 32 times before advancing
+one simulation step. These passes do not disappear in deployment. Keep that
+result as an iterative solver diagnostic; it does not establish one-pass
+pressure accuracy or a faster solver. Prepared two one-evaluation configurations
+and validated their policy contracts; neither was captured/trained. Subsequent
+one-pass training, adaptive inference, broader data and deployment are prepared
+follow-ups, not completed results. Source 54365af retains the qualified repeated
+CPU policy. Final derived summary indexes four immutable trial records and all
+11 normal Tuldok stages, excluding retained baseline updates from new totals.

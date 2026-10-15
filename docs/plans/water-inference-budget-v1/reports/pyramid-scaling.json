@@ -1,0 +1,87 @@
+{
+  "schema": "rheon-pressure-pyramid-scaling-v1",
+  "source": "captured architecture encoder count and per-axis ceil average pooling",
+  "source_witness": "runs/water-stability-learning-v1/stability-modes/project/source-witness.json",
+  "training_counts_xyz": [
+    16,
+    16,
+    16
+  ],
+  "pool_stages": 4,
+  "grids": [
+    {
+      "input_counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "axis_after_each_pool": [
+        8,
+        4,
+        2,
+        1
+      ],
+      "bottleneck_counts_xyz": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "input_counts_xyz": [
+        24,
+        24,
+        24
+      ],
+      "axis_after_each_pool": [
+        12,
+        6,
+        3,
+        2
+      ],
+      "bottleneck_counts_xyz": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "input_counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "axis_after_each_pool": [
+        16,
+        8,
+        4,
+        2
+      ],
+      "bottleneck_counts_xyz": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "input_counts_xyz": [
+        40,
+        40,
+        40
+      ],
+      "axis_after_each_pool": [
+        20,
+        10,
+        5,
+        3
+      ],
+      "bottleneck_counts_xyz": [
+        3,
+        3,
+        3
+      ]
+    }
+  ],
+  "scope": "derived structural fact only; no execution, optimization or timing measurement",
+  "interpretation": "16-cubed training has a one-cell bottleneck; larger grids expose distinct coarsest spatial patterns absent from that training shape. This motivates a controlled multi-grid analytical training test, not a proven attribution of observed latency or error."
+}

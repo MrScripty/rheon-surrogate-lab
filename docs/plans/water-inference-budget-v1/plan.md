@@ -1,6 +1,6 @@
 # Pressure inference budget and scaling
 
-Status: Active. Admission: start, authorized by the user's request to continue
+Status: Verifying. Admission: start, authorized by the user's request to continue
 the proposed sequence after comparing model parameter counts and file sizes.
 Canonical plan: docs/plans/water-inference-budget-v1/plan.md. Owner: this task.
 
@@ -69,15 +69,20 @@ Milestones and acceptance:
    supported-grid limits and variability retained. C5 system/automated/required-real
    Tuldok: pending. Methods/results linked in the user's existing project UI.
 
-Current acceptance: partial. Current phase: Verifying a matched neural-compute iterative comparison; both
-completed single-pass models fail one-evaluation accuracy. Original scaling is complete.
-Exactly one next slice: compare the completed one-pass-trained checkpoint under
-the same 32-network-evaluation adaptive cap, then seal the final result index.
+Current acceptance: partial. Current phase: seal completed evidence and register the final Tuldok index.
+Both raw one-evaluation models fail, but the mode-feedback weights qualify with
+adaptive iteration under the matched 32-evaluation cap; all measured timings
+and native lifecycle checks are retained.
+Exactly one next slice: retain immutable/derived record checks, register final
+project links, stop the task observer and seal the accepted experiment.
 Additional bounded comparison: one-pass-trained weights may use up to 32
 one-evaluation proposals, preserving the same maximum neural work as eight
 four-evaluation proposals. This is iterative inference, not one-pass success.
-Require unchanged native development and trajectory checks before any timing
-claim; retain failures. No additional GPU training.
+The matched-compute candidate passes fitted 1/1, development 128/128 and
+854/854 trajectory steps; fresh serial timings cover three scenes/repetitions.
+Weights and stopping granularity both change. No additional GPU training.
+Broader CFD training and architecture replacement are Deferred to the explicit
+next-steps.md follow-ups; first resolve multi-grid bank/inference-budget contracts.
 Blockers: none. Replan on invalid native controls, exhausted resource limits,
 failed known-case fits or evidence that the supported composition cannot deliver
 the comparison. A negative scientific result still completes an experiment.

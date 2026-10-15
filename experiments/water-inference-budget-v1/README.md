@@ -30,3 +30,11 @@ Existing native/AI residual profiles are 1e-8/1e-6 respectively, so this is a
 comparison of supported tracks, not identical equation tolerances. Native
 pressure-kernel time is not isolated; neural callback time and whole-track time
 are recorded separately. CPU runtime overhead is part of the latter.
+
+Matched-compute addendum: the reusable corrector now enforces at most 32 total
+network evaluations, so a four-pass checkpoint permits eight proposals and a
+one-pass checkpoint permits 32. `compare.py` measures two explicit restored
+checkpoints in separate fresh Python processes with native controls, alternating
+repetitions and one CPU core. The new weights use finer stopping, so the combined
+result does not isolate a weight-only effect. Both the failed one-evaluation
+results and the successful iterative policy remain retained.

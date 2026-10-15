@@ -1,0 +1,5206 @@
+{
+  "schema": "rheon-inference-budget-summary-v1",
+  "sources": [
+    {
+      "path": "docs/plans/water-stability-learning-v1/reports/stability-modes.json",
+      "sha256": "8bc90db2ff94e5fb01f07fd22510ef62b0905d04bb8e7b922ad0379ed26553e5",
+      "role": "retained control; updates excluded from new totals"
+    },
+    {
+      "path": "docs/plans/water-stability-learning-v1/reports/stability-combined.json",
+      "sha256": "4e8e08c29bcf18f73692c3a8bd447de6c826a2e6b13668d286c1674047dfe24b",
+      "role": "retained control; updates excluded from new totals"
+    },
+    {
+      "path": "docs/plans/water-inference-budget-v1/reports/stability-combined-single-pass-lr1e4.json",
+      "sha256": "5870b500c649f31013e4b3f0d7e3fa579e527e553a7c26411d0e6feefef959ea",
+      "role": "completed new trial"
+    },
+    {
+      "path": "docs/plans/water-inference-budget-v1/reports/stability-modes-single-pass.json",
+      "sha256": "90b38c6712d66172efba542a3c623a011d6cf78feb386d9e5ea83cee2a47365d",
+      "role": "completed new trial"
+    },
+    {
+      "path": "docs/plans/water-inference-budget-v1/reports/adaptive-evidence.json",
+      "sha256": "250e22f76e734097274274e157609a72f3ab547f1364d2e4cd5c8f1dacbdbc9f",
+      "role": "CPU policy evidence; zero additional training"
+    },
+    {
+      "path": "docs/plans/water-inference-budget-v1/reports/single-pass-adaptive-evidence.json",
+      "sha256": "4922f54e303f03fd45e8c28bec51be1b0e18191b0ce5629494e82d5cb8754005",
+      "role": "CPU policy evidence; zero additional training"
+    }
+  ],
+  "comparison": [
+    {
+      "trial": "stability-modes",
+      "mean_network_evaluations": 4,
+      "min_network_evaluations": 4,
+      "max_network_evaluations": 4,
+      "cuda_updates": 5000,
+      "fitted_relative_residual": 0.0004363204729017258,
+      "fitted_qualified": 0,
+      "development_median_relative_residual": 0.000747635582982646,
+      "development_worst_relative_residual": 0.032820909231160614,
+      "development_qualified": 0,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_ai_steps": 147,
+      "trajectory_hard_stops": 0,
+      "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179"
+    },
+    {
+      "trial": "stability-modes \u00b7 fixed repeated reference",
+      "mean_network_evaluations": 32,
+      "min_network_evaluations": 32,
+      "max_network_evaluations": 32,
+      "cuda_updates": 5000,
+      "fitted_relative_residual": 3.6905268046754057e-13,
+      "fitted_qualified": 1,
+      "development_median_relative_residual": 1.4431660131689734e-12,
+      "development_worst_relative_residual": 5.823111580507467e-08,
+      "development_qualified": 128,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 854,
+      "trajectory_ai_steps": 854,
+      "trajectory_hard_stops": 0,
+      "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179"
+    },
+    {
+      "trial": "stability-combined",
+      "mean_network_evaluations": 4,
+      "min_network_evaluations": 4,
+      "max_network_evaluations": 4,
+      "cuda_updates": 5000,
+      "fitted_relative_residual": 0.0003561202940509266,
+      "fitted_qualified": 0,
+      "development_median_relative_residual": 0.0007416743977273025,
+      "development_worst_relative_residual": 0.006128790509688862,
+      "development_qualified": 0,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_ai_steps": 147,
+      "trajectory_hard_stops": 0,
+      "weights_sha256": "8b4431cebd20223ee9cbbb2d03573150f475d0fa86d49936b12772218e4bab9f"
+    },
+    {
+      "trial": "stability-combined-single-pass-lr1e4",
+      "mean_network_evaluations": 1,
+      "min_network_evaluations": 1,
+      "max_network_evaluations": 1,
+      "cuda_updates": 5000,
+      "fitted_relative_residual": 0.007818902135478143,
+      "fitted_qualified": 0,
+      "development_median_relative_residual": 0.025894893026479196,
+      "development_worst_relative_residual": 0.10745338686425336,
+      "development_qualified": 0,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_ai_steps": 95,
+      "trajectory_hard_stops": 3,
+      "weights_sha256": "f940a5c02631db5c89397ec05150817028ee9810ffa6358ca9c6fe56fac92528"
+    },
+    {
+      "trial": "stability-modes-single-pass",
+      "mean_network_evaluations": 1,
+      "min_network_evaluations": 1,
+      "max_network_evaluations": 1,
+      "cuda_updates": 5000,
+      "fitted_relative_residual": 0.0073793330144795635,
+      "fitted_qualified": 0,
+      "development_median_relative_residual": 0.0164437434509977,
+      "development_worst_relative_residual": 0.10644702514166868,
+      "development_qualified": 0,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 0,
+      "trajectory_ai_steps": 147,
+      "trajectory_hard_stops": 0,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7"
+    },
+    {
+      "trial": "stability-modes \u00b7 adaptive inference",
+      "mean_network_evaluations": 14.96875,
+      "min_network_evaluations": 8,
+      "max_network_evaluations": 28,
+      "cuda_updates": 0,
+      "fitted_relative_residual": null,
+      "fitted_qualified": null,
+      "development_median_relative_residual": 2.3359239094832888e-07,
+      "development_worst_relative_residual": 9.954778812693139e-07,
+      "development_qualified": 128,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 854,
+      "trajectory_ai_steps": 854,
+      "trajectory_hard_stops": 0,
+      "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179"
+    },
+    {
+      "trial": "single-pass-trained weights \u00b7 adaptive iterative inference",
+      "mean_network_evaluations": 12.6015625,
+      "min_network_evaluations": 8,
+      "max_network_evaluations": 26,
+      "cuda_updates": 0,
+      "fitted_relative_residual": 5.118238642774484e-07,
+      "fitted_qualified": 1,
+      "development_median_relative_residual": 6.884152867189686e-07,
+      "development_worst_relative_residual": 9.918963829441758e-07,
+      "development_qualified": 128,
+      "development_cases": 128,
+      "trajectory_qualified_ai_steps": 854,
+      "trajectory_ai_steps": 854,
+      "trajectory_hard_stops": 0,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7"
+    }
+  ],
+  "managed_stages": [
+    {
+      "trial": "stability-combined-single-pass-lr1e4",
+      "name": "train",
+      "run_id": "985dfc9ffaa9425ebefd92d78eca70e0",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "stability-combined-single-pass-lr1e4",
+      "name": "restore",
+      "run_id": "c2d1b1abe8d14bb99b47cccab2e6bd09",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "stability-combined-single-pass-lr1e4",
+      "name": "validation",
+      "run_id": "2734437cc2884408a0374db6eca3ae4a",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "stability-modes-single-pass",
+      "name": "train",
+      "run_id": "406b606cd7a8431db744e86b2631f28e",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "stability-modes-single-pass",
+      "name": "restore",
+      "run_id": "c905e15bdf08424785010a69070095af",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "stability-modes-single-pass",
+      "name": "validation",
+      "run_id": "8b7969402b634cc6b021d24ebab9e7af",
+      "state": "completed",
+      "custody_phase": "drained",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71"
+    },
+    {
+      "trial": "stability-combined-single-pass",
+      "name": "train",
+      "run_id": "2500fc7690c14049876250d8c3f5a981",
+      "state": "failed",
+      "custody_phase": "drained"
+    }
+  ],
+  "successful_cuda_optimizer_updates": 10000,
+  "failed_run_completed_updates_lower_bound": 2400,
+  "all_attempts_cuda_updates_lower_bound": 12400,
+  "failed_run_exact_update_count_available": false,
+  "failed_training": "2500fc7690c14049876250d8c3f5a981",
+  "checkpoint_comparison": {
+    "schema": "rheon-restored-checkpoint-latency-v1",
+    "records": [
+      {
+        "scene": {
+          "seed": 20261031,
+          "counts": [
+            16,
+            16,
+            16
+          ],
+          "cells_per_metre": 16,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false
+        },
+        "name": "trajectory-cube",
+        "runs": [
+          {
+            "policy": "reference",
+            "repetition": 0,
+            "receipt_sha256": "0a488de5f4342ff6111f74f20e529734963002b4e4125faad46bead23d624e7d",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428815,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.01653644,
+              0.014964869,
+              0.014952994,
+              0.014871677,
+              0.014482869,
+              0.014676218,
+              0.014652609
+            ],
+            "ai_seconds": [
+              0.085338944,
+              0.080964444,
+              0.081180403,
+              0.080291274,
+              0.080589356,
+              0.081635503,
+              0.080248526
+            ],
+            "callback_seconds": [
+              0.07417962799081579,
+              0.07030423200922087,
+              0.07102489899261855,
+              0.07031150101101957,
+              0.07032286000321619,
+              0.07108976499876007,
+              0.07019199899514206
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 1.6273445502508783e-07,
+            "final_pressure_difference": 2.2110655208865415e-08
+          },
+          {
+            "policy": "candidate",
+            "repetition": 0,
+            "receipt_sha256": "54715061cfbbd5c5023fd3897d420d4cdead426905dc1c157935cbb336728762",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428856,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.013979018,
+              0.014052874,
+              0.014176337,
+              0.014386356,
+              0.014661225,
+              0.014620881,
+              0.014251967
+            ],
+            "ai_seconds": [
+              0.070004946,
+              0.070111645,
+              0.075284159,
+              0.069562408,
+              0.069898611,
+              0.069465145,
+              0.069377031
+            ],
+            "callback_seconds": [
+              0.05966577600338496,
+              0.0594626980018802,
+              0.0643370869802311,
+              0.05937205598456785,
+              0.05919913001707755,
+              0.059145940002053976,
+              0.05916970199905336
+            ],
+            "network_passes": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "worst_relative_residual": 9.208289219444567e-07,
+            "final_pressure_difference": 2.133456931345841e-08
+          },
+          {
+            "policy": "candidate",
+            "repetition": 1,
+            "receipt_sha256": "bc850e98077fc060e0bc8b3c7b07f3c966cab378d3343c77fd58d56f95482c2d",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428860,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.014432436,
+              0.014591423,
+              0.014460288,
+              0.014162079,
+              0.014272455,
+              0.014489849,
+              0.01449561
+            ],
+            "ai_seconds": [
+              0.068660394,
+              0.069609689,
+              0.069619102,
+              0.070279571,
+              0.072264806,
+              0.06995899,
+              0.07001176
+            ],
+            "callback_seconds": [
+              0.058668824000051245,
+              0.05904907500371337,
+              0.05965277101495303,
+              0.06018477299949154,
+              0.06150628501200117,
+              0.05907959397882223,
+              0.059728916006861255
+            ],
+            "network_passes": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "worst_relative_residual": 9.208289219444567e-07,
+            "final_pressure_difference": 2.133456931345841e-08
+          },
+          {
+            "policy": "reference",
+            "repetition": 1,
+            "receipt_sha256": "6d2b19078e2ac319c0744c8d3739ddb6de9511e5faad9c771a1163ff6feb564e",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428870,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.016296361,
+              0.016094618,
+              0.014663106,
+              0.014369749,
+              0.014479389,
+              0.015836422,
+              0.015595777
+            ],
+            "ai_seconds": [
+              0.088077663,
+              0.086797507,
+              0.081067556,
+              0.088644134,
+              0.090293951,
+              0.088221569,
+              0.085435752
+            ],
+            "callback_seconds": [
+              0.07622692501172423,
+              0.0752758499875199,
+              0.07053652298054658,
+              0.0785086730029434,
+              0.07898548999219202,
+              0.07688698198762722,
+              0.07432579499436542
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 1.6273445502508783e-07,
+            "final_pressure_difference": 2.2110655208865415e-08
+          },
+          {
+            "policy": "reference",
+            "repetition": 2,
+            "receipt_sha256": "3ddc15422248f5e3d2908f95382cf3f01bce57d0338eaaa52189632fe4370e4a",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428904,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.014504625,
+              0.014182142,
+              0.014584813,
+              0.015634112,
+              0.014254886,
+              0.014530203,
+              0.01424662
+            ],
+            "ai_seconds": [
+              0.079973853,
+              0.07956405,
+              0.087677734,
+              0.082672228,
+              0.080001563,
+              0.080698962,
+              0.080211217
+            ],
+            "callback_seconds": [
+              0.06978272402193397,
+              0.06946067299577408,
+              0.07666493800934404,
+              0.07153999598813243,
+              0.06953146698651835,
+              0.07028925098711625,
+              0.06981728799291886
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 1.6273445502508783e-07,
+            "final_pressure_difference": 2.2110655208865415e-08
+          },
+          {
+            "policy": "candidate",
+            "repetition": 2,
+            "receipt_sha256": "0d6ac05bc47ba8f1e1e1fdc06d595aeb7cc800df95d423f402d3d5c9fc35abe2",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428907,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.013980582,
+              0.01394185,
+              0.014363353,
+              0.014390929,
+              0.014918229,
+              0.016257101,
+              0.017375528
+            ],
+            "ai_seconds": [
+              0.070416568,
+              0.06976861,
+              0.07234668,
+              0.072570792,
+              0.077612474,
+              0.082154767,
+              0.078636853
+            ],
+            "callback_seconds": [
+              0.060182749992236495,
+              0.05974381900159642,
+              0.06179984999471344,
+              0.06189332899521105,
+              0.06662560798577033,
+              0.07068777398671955,
+              0.06659098598174751
+            ],
+            "network_passes": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10,
+              10
+            ],
+            "worst_relative_residual": 9.208289219444567e-07,
+            "final_pressure_difference": 2.133456931345841e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "counts": [
+              16,
+              16,
+              16
+            ],
+            "cells_per_metre": 16,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 0.4569105390110053,
+          "native_process": {
+            "pid": 1428799,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.981877866775345e-09,
+          "worst_ai_actual_divergence": 1.341104507446289e-07
+        },
+        "reference": {
+          "qualified": true,
+          "ai_median_seconds": 0.081180403,
+          "native_median_seconds": 0.014663106,
+          "mean_network_evaluations": 12,
+          "per_repetition_ai_median_seconds": [
+            0.080964444,
+            0.088077663,
+            0.080211217
+          ]
+        },
+        "candidate": {
+          "qualified": true,
+          "ai_median_seconds": 0.07001176,
+          "native_median_seconds": 0.014390929,
+          "mean_network_evaluations": 10,
+          "per_repetition_ai_median_seconds": [
+            0.069898611,
+            0.06995899,
+            0.072570792
+          ]
+        },
+        "reference_to_candidate_time_ratio": 1.1595252426163831
+      },
+      {
+        "scene": {
+          "seed": 20261032,
+          "counts": [
+            24,
+            16,
+            12
+          ],
+          "cells_per_metre": 16,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.65,
+            0.35,
+            0.55
+          ],
+          "acceleration": 1.5,
+          "radius": 0.25,
+          "swirl": -0.5,
+          "fluctuation": 0.6,
+          "frequency": 2.0,
+          "sgs": false
+        },
+        "name": "trajectory-long",
+        "runs": [
+          {
+            "policy": "reference",
+            "repetition": 0,
+            "receipt_sha256": "7bb9f813bb022c83e118c1e15f8074d0f6d579ca86f41bec6a69fdda7053682e",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428954,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.016129808,
+              0.015828852,
+              0.019468754,
+              0.019498874,
+              0.019528383,
+              0.018531021,
+              0.018409342
+            ],
+            "ai_seconds": [
+              0.072267979,
+              0.083442835,
+              0.089124893,
+              0.089819042,
+              0.085707863,
+              0.083606701,
+              0.082747313
+            ],
+            "callback_seconds": [
+              0.062126785021973774,
+              0.07236715001636185,
+              0.07705243502277881,
+              0.07742529100505635,
+              0.07351286002085544,
+              0.07158598900423385,
+              0.07107107399497181
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.759197993573693e-07,
+            "final_pressure_difference": 2.100375095451026e-07
+          },
+          {
+            "policy": "candidate",
+            "repetition": 0,
+            "receipt_sha256": "0cba3bcda077a50a9fa318c776e469dcd92190e67ce1765dcc3f84d6354eb286",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1428968,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.018805078,
+              0.018583565,
+              0.018583685,
+              0.018132229,
+              0.019004015,
+              0.018570786,
+              0.018706701
+            ],
+            "ai_seconds": [
+              0.074197731,
+              0.066559977,
+              0.065914223,
+              0.066137793,
+              0.071541706,
+              0.066559731,
+              0.07014164
+            ],
+            "callback_seconds": [
+              0.06261307199019939,
+              0.054838640993693843,
+              0.054567448009038344,
+              0.05476513601024635,
+              0.058405065996339545,
+              0.05501150598865934,
+              0.05824133998248726
+            ],
+            "network_passes": [
+              10,
+              10,
+              9,
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "worst_relative_residual": 9.092664189532202e-07,
+            "final_pressure_difference": 6.049749388472e-07
+          },
+          {
+            "policy": "candidate",
+            "repetition": 1,
+            "receipt_sha256": "2b9f543e4fccb05f6c855f4a5f915af4764de7a4628bfab0900e607aa97a17bf",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429009,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.018123982,
+              0.017946722,
+              0.017857832,
+              0.017932994,
+              0.018531668,
+              0.018510206,
+              0.018247996
+            ],
+            "ai_seconds": [
+              0.072957673,
+              0.066682457,
+              0.066776693,
+              0.067209427,
+              0.06706155,
+              0.066031743,
+              0.069018409
+            ],
+            "callback_seconds": [
+              0.06079534598393366,
+              0.054741108004236594,
+              0.055199658003402874,
+              0.05568012600997463,
+              0.05522180499974638,
+              0.054451259988127276,
+              0.05725108098704368
+            ],
+            "network_passes": [
+              10,
+              10,
+              9,
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "worst_relative_residual": 9.092664189532202e-07,
+            "final_pressure_difference": 6.049749388472e-07
+          },
+          {
+            "policy": "reference",
+            "repetition": 1,
+            "receipt_sha256": "7e87e2fe6ee67c54e2a96533515e690791c26c8529310d2b78275c1f567227df",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429012,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.018343412,
+              0.015657062,
+              0.01555407,
+              0.016557959,
+              0.018242921,
+              0.018303267,
+              0.018532025
+            ],
+            "ai_seconds": [
+              0.073048523,
+              0.07165178,
+              0.070679735,
+              0.082485896,
+              0.082112077,
+              0.084322286,
+              0.083213982
+            ],
+            "callback_seconds": [
+              0.062256749981315807,
+              0.061904008995043114,
+              0.0612519130227156,
+              0.07128352599102072,
+              0.070636618998833,
+              0.07265507799456827,
+              0.07201823001378216
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.759197993573693e-07,
+            "final_pressure_difference": 2.100375095451026e-07
+          },
+          {
+            "policy": "reference",
+            "repetition": 2,
+            "receipt_sha256": "c3918eb924c19fcc04439eef6ab43032a15dac484b4e6920a5e40c91423003ee",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429046,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.018647561,
+              0.018289481,
+              0.018298634,
+              0.018553729,
+              0.018248023,
+              0.018320525,
+              0.018288979
+            ],
+            "ai_seconds": [
+              0.088050595,
+              0.083281795,
+              0.082920364,
+              0.082446422,
+              0.08156996,
+              0.082446491,
+              0.082039136
+            ],
+            "callback_seconds": [
+              0.07670248299837112,
+              0.07193205400835723,
+              0.0711669440206606,
+              0.07109587101149373,
+              0.07029912099824287,
+              0.07109806998050772,
+              0.07078040300984867
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.759197993573693e-07,
+            "final_pressure_difference": 2.100375095451026e-07
+          },
+          {
+            "policy": "candidate",
+            "repetition": 2,
+            "receipt_sha256": "38fa6bc810dbfe6cbc855055dec2274664c39d058b5c7f73c2edea59131d6c3a",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429055,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.019170253,
+              0.018679561,
+              0.018316615,
+              0.01938799,
+              0.018128815,
+              0.017934085,
+              0.018388891
+            ],
+            "ai_seconds": [
+              0.08030126,
+              0.066508085,
+              0.066926489,
+              0.069317492,
+              0.06717351,
+              0.067498313,
+              0.067088278
+            ],
+            "callback_seconds": [
+              0.06806625900208019,
+              0.054774919990450144,
+              0.05534771500970237,
+              0.056107190990587696,
+              0.05514741101069376,
+              0.056002462981268764,
+              0.054946707998169586
+            ],
+            "network_passes": [
+              10,
+              10,
+              9,
+              9,
+              9,
+              9,
+              9,
+              9
+            ],
+            "worst_relative_residual": 9.092664189532202e-07,
+            "final_pressure_difference": 6.049749388472e-07
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261032,
+            "counts": [
+              24,
+              16,
+              12
+            ],
+            "cells_per_metre": 16,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.65,
+              0.35,
+              0.55
+            ],
+            "acceleration": 1.5,
+            "radius": 0.25,
+            "swirl": -0.5,
+            "fluctuation": 0.6,
+            "frequency": 2.0,
+            "sgs": false
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 0.6250591579882894,
+          "native_process": {
+            "pid": 1428916,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.747826900216035e-09,
+          "worst_ai_actual_divergence": 2.682209014892578e-07
+        },
+        "reference": {
+          "qualified": true,
+          "ai_median_seconds": 0.082747313,
+          "native_median_seconds": 0.018303267,
+          "mean_network_evaluations": 12,
+          "per_repetition_ai_median_seconds": [
+            0.083606701,
+            0.082112077,
+            0.082446491
+          ]
+        },
+        "candidate": {
+          "qualified": true,
+          "ai_median_seconds": 0.067088278,
+          "native_median_seconds": 0.018510206,
+          "mean_network_evaluations": 9.25,
+          "per_repetition_ai_median_seconds": [
+            0.066559977,
+            0.06706155,
+            0.06717351
+          ]
+        },
+        "reference_to_candidate_time_ratio": 1.2334094042479373
+      },
+      {
+        "scene": {
+          "seed": 20261033,
+          "counts": [
+            12,
+            8,
+            10
+          ],
+          "cells_per_metre": 8,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.3,
+            0.65,
+            0.45
+          ],
+          "acceleration": 2.0,
+          "radius": 0.35,
+          "swirl": 0.4,
+          "fluctuation": 0.7,
+          "frequency": 2.5,
+          "sgs": false
+        },
+        "name": "trajectory-compact",
+        "runs": [
+          {
+            "policy": "reference",
+            "repetition": 0,
+            "receipt_sha256": "92ff66d0bd6441f5833e1d70d1bffe65d0c118c6da5ff5df4508848179dcfd5f",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429067,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.00362838,
+              0.002958224,
+              0.002959177,
+              0.003095237,
+              0.002978968,
+              0.00295945,
+              0.003095169
+            ],
+            "ai_seconds": [
+              0.043700059,
+              0.042605418,
+              0.033184699,
+              0.042045728,
+              0.041462397,
+              0.042406762,
+              0.042552808
+            ],
+            "callback_seconds": [
+              0.04058119497494772,
+              0.03954094200162217,
+              0.030360272008692846,
+              0.039238230005139485,
+              0.03862825897522271,
+              0.0394424149999395,
+              0.03977007701178081
+            ],
+            "network_passes": [
+              16,
+              16,
+              16,
+              12,
+              16,
+              16,
+              16,
+              16
+            ],
+            "worst_relative_residual": 3.3315052644135127e-07,
+            "final_pressure_difference": 7.452412980932343e-08
+          },
+          {
+            "policy": "candidate",
+            "repetition": 0,
+            "receipt_sha256": "a45814b2f73247608a50440bb92ac0182377cffe7e4be5f0404308d87f95687f",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429099,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.002858608,
+              0.002760217,
+              0.00278194,
+              0.002862647,
+              0.002734404,
+              0.002795131,
+              0.00276152
+            ],
+            "ai_seconds": [
+              0.026830378,
+              0.026455799,
+              0.026431095,
+              0.026901179,
+              0.025723712,
+              0.026124442,
+              0.026933584
+            ],
+            "callback_seconds": [
+              0.024013508984353393,
+              0.023741962999338284,
+              0.02370057100779377,
+              0.024077523994492367,
+              0.023027049988741055,
+              0.02355106599861756,
+              0.02431944600539282
+            ],
+            "network_passes": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              9,
+              10,
+              10
+            ],
+            "worst_relative_residual": 9.485234639016771e-07,
+            "final_pressure_difference": 8.269785553787669e-08
+          },
+          {
+            "policy": "candidate",
+            "repetition": 1,
+            "receipt_sha256": "6d816e74e0d6448e6569a4bcc44fc7b37b9dba6e60960c3dd60a035ac613b619",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429102,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.003005039,
+              0.002792891,
+              0.002806872,
+              0.002769074,
+              0.002774492,
+              0.002831608,
+              0.002820999
+            ],
+            "ai_seconds": [
+              0.026621159,
+              0.026561121,
+              0.02678639,
+              0.027027055,
+              0.023875321,
+              0.026283073,
+              0.028166679
+            ],
+            "callback_seconds": [
+              0.023871586978202686,
+              0.02382745998329483,
+              0.024068624974461272,
+              0.024326278013177216,
+              0.021214181993855163,
+              0.0237632539938204,
+              0.025568546989234164
+            ],
+            "network_passes": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              9,
+              10,
+              10
+            ],
+            "worst_relative_residual": 9.485234639016771e-07,
+            "final_pressure_difference": 8.269785553787669e-08
+          },
+          {
+            "policy": "reference",
+            "repetition": 1,
+            "receipt_sha256": "f1a768c4d3739246a79eb09be8e506829c36b8da96357b4b4576c9a82fd6f5d7",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429105,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.002820084,
+              0.00280788,
+              0.002794018,
+              0.00295802,
+              0.003264745,
+              0.003196051,
+              0.003021702
+            ],
+            "ai_seconds": [
+              0.038963991,
+              0.039378722,
+              0.031342591,
+              0.042585463,
+              0.042868191,
+              0.045643489,
+              0.047106709
+            ],
+            "callback_seconds": [
+              0.03616539700306021,
+              0.03661644001840614,
+              0.02849759699893184,
+              0.03985473301145248,
+              0.03993839799659327,
+              0.042831333994399756,
+              0.043975161999696866
+            ],
+            "network_passes": [
+              16,
+              16,
+              16,
+              12,
+              16,
+              16,
+              16,
+              16
+            ],
+            "worst_relative_residual": 3.3315052644135127e-07,
+            "final_pressure_difference": 7.452412980932343e-08
+          },
+          {
+            "policy": "reference",
+            "repetition": 2,
+            "receipt_sha256": "0754e27712cce566b1d34ab8a87fbc801355320058a1287f42d98dc83bb0378a",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429157,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.002855928,
+              0.002814809,
+              0.002812812,
+              0.002774847,
+              0.002773518,
+              0.002764276,
+              0.002783124
+            ],
+            "ai_seconds": [
+              0.041141042,
+              0.039791267,
+              0.030525391,
+              0.040010677,
+              0.039543454,
+              0.039729852,
+              0.040513612
+            ],
+            "callback_seconds": [
+              0.038513151986990124,
+              0.03700152400415391,
+              0.02779137299512513,
+              0.03721782800857909,
+              0.03679302698583342,
+              0.03699435800081119,
+              0.03773087600711733
+            ],
+            "network_passes": [
+              16,
+              16,
+              16,
+              12,
+              16,
+              16,
+              16,
+              16
+            ],
+            "worst_relative_residual": 3.3315052644135127e-07,
+            "final_pressure_difference": 7.452412980932343e-08
+          },
+          {
+            "policy": "candidate",
+            "repetition": 2,
+            "receipt_sha256": "fac8ffa368846b4f23bf286e02dfe588561d6eddf35f74e84a9bf0e9c3633aab",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1429160,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.002836695,
+              0.002720458,
+              0.002771556,
+              0.002812049,
+              0.002751594,
+              0.002781089,
+              0.002793748
+            ],
+            "ai_seconds": [
+              0.026836417,
+              0.026514709,
+              0.026205851,
+              0.02733991,
+              0.024616581,
+              0.026316514,
+              0.026536893
+            ],
+            "callback_seconds": [
+              0.0240313209942542,
+              0.02387734700459987,
+              0.023493112006690353,
+              0.02458341099554673,
+              0.021911087998887524,
+              0.02363286100444384,
+              0.02382142498390749
+            ],
+            "network_passes": [
+              10,
+              10,
+              10,
+              10,
+              10,
+              9,
+              10,
+              10
+            ],
+            "worst_relative_residual": 9.485234639016771e-07,
+            "final_pressure_difference": 8.269785553787669e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261033,
+            "counts": [
+              12,
+              8,
+              10
+            ],
+            "cells_per_metre": 8,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.3,
+              0.65,
+              0.45
+            ],
+            "acceleration": 2.0,
+            "radius": 0.35,
+            "swirl": 0.4,
+            "fluctuation": 0.7,
+            "frequency": 2.5,
+            "sgs": false
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 0.08987336902646348,
+          "native_process": {
+            "pid": 1429057,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.598931069000626e-09,
+          "worst_ai_actual_divergence": 1.4901161193847656e-07
+        },
+        "reference": {
+          "qualified": true,
+          "ai_median_seconds": 0.041141042,
+          "native_median_seconds": 0.00295802,
+          "mean_network_evaluations": 15.5,
+          "per_repetition_ai_median_seconds": [
+            0.042406762,
+            0.042585463,
+            0.039791267
+          ]
+        },
+        "candidate": {
+          "qualified": true,
+          "ai_median_seconds": 0.026536893,
+          "native_median_seconds": 0.002792891,
+          "mean_network_evaluations": 9.875,
+          "per_repetition_ai_median_seconds": [
+            0.026455799,
+            0.026621159,
+            0.026514709
+          ]
+        },
+        "reference_to_candidate_time_ratio": 1.5503337937866353
+      }
+    ],
+    "cpu": 1,
+    "repetitions": 3,
+    "sources": {
+      "reference": {
+        "project": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stability-learning-v1/stability-modes/project",
+        "artifacts": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stability-learning-v1/stability-modes/managed-post/stage-00/artifacts",
+        "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179"
+      },
+      "candidate": {
+        "project": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-inference-budget-v1/stability-modes-single-pass/project",
+        "artifacts": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-inference-budget-v1/stability-modes-single-pass/managed-full/stage-01/artifacts",
+        "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7"
+      }
+    },
+    "scope": "same short scenes, fresh processes, one CPU core; whole-track timings after history/neural warm-up; zero additional training",
+    "attribution": "checkpoint and stopping granularity both change; not an isolated learned-weight effect"
+  },
+  "scaling": {
+    "schema": "rheon-pressure-scaling-report-v1",
+    "source_sha256": "f6f8190a4d082fe693bc3d52afad95850cdc25b7b44ad4b9827fc825f26852b8",
+    "config_sha256": "373f0f6e5e1671c3601e1b2911cf71b37445814238b5cff975ecce4f9f2bfad2",
+    "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+    "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179",
+    "configuration": {
+      "schema": "rheon-pressure-scaling-study-v1",
+      "axis_counts": [
+        16,
+        24,
+        32,
+        40
+      ],
+      "fixed_cells_per_metre": 16,
+      "repetitions": 3,
+      "steps": 23,
+      "warmup_steps": 15,
+      "timeout_seconds": 180,
+      "reference_proposals": 8,
+      "seed": 20261031,
+      "center": [
+        0.4,
+        0.55,
+        0.6
+      ],
+      "acceleration": 1.0,
+      "radius": 0.25,
+      "swirl": 0.7,
+      "fluctuation": 0.4,
+      "frequency": 1.2,
+      "sgs": false
+    },
+    "source_witness_sha256": "4eb76af325842485b8dd8fe06101a5f0e8af84c8ba710f177b05b801bfe17a91",
+    "cpu": 1,
+    "torch_threads": 1,
+    "started_at_utc": "2026-10-15T22:32:59.152855+00:00",
+    "elapsed_s": 808.8818311691284,
+    "runtime": {
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "cuda_initialized": false,
+      "checkpoint_runtime": {
+        "inference_device": "cpu",
+        "interop_threads": 1,
+        "numpy": "2.5.3",
+        "peak_rss_bytes": 822153216,
+        "threads": 1,
+        "torch": "2.14.0+cu132"
+      }
+    },
+    "records": [
+      {
+        "label": "fixed-volume-16",
+        "sweep": "fixed-volume",
+        "n": 16,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            16,
+            16,
+            16
+          ],
+          "cells_per_metre": 16
+        },
+        "extents_m": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cell_size_m": 0.0625,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "15906b8f1e6d349d9556c00be5c750a5c6c83466951556590e28b955d5df5e6b",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419597,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.015384642,
+              0.015575982,
+              0.015383452,
+              0.016309488,
+              0.015833656,
+              0.014361911,
+              0.014183515
+            ],
+            "ai_seconds": [
+              0.213950667,
+              0.222515856,
+              0.211553279,
+              0.260718146,
+              0.19318249,
+              0.190367669,
+              0.198250767
+            ],
+            "callback_seconds": [
+              0.2026210030016955,
+              0.2108922299812548,
+              0.2003223589854315,
+              0.24981008298345841,
+              0.18239265200099908,
+              0.17966491798870265,
+              0.1882504749810323
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 3.041702715472614e-13,
+            "final_pressure_difference": 1.427483986061976e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "69ca8a03326ccfc5f4297a8b992cfc4c67c19e15b5074fc256067e92c44fc281",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419629,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.013963244,
+              0.014027858,
+              0.014203225,
+              0.014228188,
+              0.013944398,
+              0.013668346,
+              0.01393704
+            ],
+            "ai_seconds": [
+              0.080066853,
+              0.080328638,
+              0.080209965,
+              0.079361204,
+              0.079376386,
+              0.079792022,
+              0.081322564
+            ],
+            "callback_seconds": [
+              0.07003002302371897,
+              0.06979424197925255,
+              0.07039887498831376,
+              0.06892704300116748,
+              0.06916786899091676,
+              0.06985065099433996,
+              0.07093503899523057
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 1.6273445502508783e-07,
+            "final_pressure_difference": 2.2110655208865415e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "164938a01300e97dbb56274841cc497dd37a1f6e02343459fdec16392c3ac92d",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419631,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.014043301,
+              0.01463887,
+              0.014501305,
+              0.01431498,
+              0.014021704,
+              0.014640405,
+              0.014687078
+            ],
+            "ai_seconds": [
+              0.080316799,
+              0.079978948,
+              0.079703962,
+              0.078940951,
+              0.078422528,
+              0.079371025,
+              0.078891648
+            ],
+            "callback_seconds": [
+              0.07001755601959303,
+              0.06996794100268744,
+              0.0694996640086174,
+              0.06895151099888608,
+              0.06827784300548956,
+              0.06919334499980323,
+              0.06874549598433077
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 1.6273445502508783e-07,
+            "final_pressure_difference": 2.2110655208865415e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "7aabd80553f6e61f0581ab57aeac1d3819801dada57437ef581aff09933aae71",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419632,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.011998747,
+              0.013737645,
+              0.014133912,
+              0.014481555,
+              0.014072958,
+              0.014319373,
+              0.013885179
+            ],
+            "ai_seconds": [
+              0.189962613,
+              0.193280253,
+              0.19072012,
+              0.199202252,
+              0.190246524,
+              0.191215807,
+              0.19109937
+            ],
+            "callback_seconds": [
+              0.1807692849833984,
+              0.18269075898570009,
+              0.1805020440078806,
+              0.1879393919953145,
+              0.18000356602715328,
+              0.18112716701580212,
+              0.18133911999757402
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 3.041702715472614e-13,
+            "final_pressure_difference": 1.427483986061976e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "cb51844c9300e001119d3e62b60e908f105af80ae13ac573a4cfb029f2e19e00",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419635,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.017547738,
+              0.016322676,
+              0.015100448,
+              0.015346896,
+              0.015799799,
+              0.014936503,
+              0.013721646
+            ],
+            "ai_seconds": [
+              0.220953892,
+              0.210874411,
+              0.210465134,
+              0.230045528,
+              0.213045182,
+              0.192909113,
+              0.190846251
+            ],
+            "callback_seconds": [
+              0.20974272600142285,
+              0.19926453102380037,
+              0.19940782198682427,
+              0.21842815697891638,
+              0.20154238998657092,
+              0.18257663000258617,
+              0.1808628889848478
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 3.041702715472614e-13,
+            "final_pressure_difference": 1.427483986061976e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "e3cdb38deafaba2ad3512aa83fc4ff931f9ca93e0bbff48481c419c02de709b8",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419681,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.013889141,
+              0.013976221,
+              0.014104906,
+              0.012198886,
+              0.011951259,
+              0.012808547,
+              0.01436543
+            ],
+            "ai_seconds": [
+              0.079354591,
+              0.080459635,
+              0.067954361,
+              0.068993684,
+              0.067333602,
+              0.076344634,
+              0.07917143
+            ],
+            "callback_seconds": [
+              0.06895720501779579,
+              0.07013444899348542,
+              0.059626874019159004,
+              0.060516184981679544,
+              0.05917648700415157,
+              0.06758809098391794,
+              0.06893690998549573
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 1.6273445502508783e-07,
+            "final_pressure_difference": 2.2110655208865415e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              16,
+              16,
+              16
+            ],
+            "cells_per_metre": 16
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 0.47241078698425554,
+          "native_process": {
+            "pid": 1419588,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.981877866775345e-09,
+          "worst_ai_actual_divergence": 1.341104507446289e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.014936503,
+          "ai_median_seconds": 0.198250767,
+          "ai_to_native_time_ratio": 13.272903771384774,
+          "per_repetition_ai_median_seconds": [
+            0.211553279,
+            0.19109937,
+            0.210874411
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.014027858,
+          "ai_median_seconds": 0.079371025,
+          "ai_to_native_time_ratio": 5.658100117637346,
+          "per_repetition_ai_median_seconds": [
+            0.080066853,
+            0.079371025,
+            0.076344634
+          ],
+          "mean_network_passes": 12,
+          "timing_samples": 21
+        }
+      },
+      {
+        "label": "fixed-volume-24",
+        "sweep": "fixed-volume",
+        "n": 24,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            24,
+            24,
+            24
+          ],
+          "cells_per_metre": 24
+        },
+        "extents_m": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cell_size_m": 0.041666666666666664,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "9507fd27043eadb1a46bd2f03223df5d384831ae02f0455b3601c19dba5c0236",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419684,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.078653134,
+              0.063438779,
+              0.062718435,
+              0.054340905,
+              0.064794328,
+              0.078927161,
+              0.065877483
+            ],
+            "ai_seconds": [
+              1.246080212,
+              1.174744254,
+              1.153311129,
+              1.181281658,
+              1.218778288,
+              1.325913266,
+              1.193014732
+            ],
+            "callback_seconds": [
+              1.2093618889921345,
+              1.141157859005034,
+              1.1215744240034837,
+              1.150514390988974,
+              1.1848162510141265,
+              1.28722341300454,
+              1.1591217450040858
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 1.1134514354933837e-13,
+            "final_pressure_difference": 9.817468212138801e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "ac864b8781a390733d5872bf5c7dcf627f777d7e9f45d4d8b7fcd7901635acd2",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419784,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.063393686,
+              0.069086097,
+              0.062389606,
+              0.062483256,
+              0.067680012,
+              0.067657143,
+              0.068777506
+            ],
+            "ai_seconds": [
+              0.44885128,
+              0.480062416,
+              0.508143474,
+              0.432285849,
+              0.50701464,
+              0.52282451,
+              0.500680683
+            ],
+            "callback_seconds": [
+              0.41404399400926195,
+              0.44502692500827834,
+              0.47464687199681066,
+              0.3980752080096863,
+              0.4698305090132635,
+              0.48509086901322007,
+              0.4658365279901773
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.6684512681564486e-07,
+            "final_pressure_difference": 1.972232783469123e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "46b2207489116ba40c49e9a7a2f62acfd1187026cf5eff4f4d1e106780a2adb7",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419834,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.065342468,
+              0.063878648,
+              0.068724175,
+              0.082439179,
+              0.064993939,
+              0.065491033,
+              0.069047133
+            ],
+            "ai_seconds": [
+              0.470316309,
+              0.451311551,
+              0.504898168,
+              0.513565167,
+              0.460860412,
+              0.500734648,
+              0.506506213
+            ],
+            "callback_seconds": [
+              0.4294293540006038,
+              0.4164872349938378,
+              0.4692017180204857,
+              0.46982532998663373,
+              0.4273818810179364,
+              0.4655884869862348,
+              0.46777600300265476
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.6684512681564486e-07,
+            "final_pressure_difference": 1.972232783469123e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "a04e9adb67cbde5755a2729d7a0f34abf0a89232eb2a701c21201f96bc9270dc",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419855,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.06407323,
+              0.064547705,
+              0.063474059,
+              0.072108564,
+              0.064459309,
+              0.063549106,
+              0.063433006
+            ],
+            "ai_seconds": [
+              1.256405711,
+              1.205973248,
+              1.146746432,
+              1.274982377,
+              1.197015605,
+              1.232834806,
+              1.188630671
+            ],
+            "callback_seconds": [
+              1.222923677007202,
+              1.1722268490120769,
+              1.1123079550161492,
+              1.2319666479888838,
+              1.1631339979940094,
+              1.1997440079867374,
+              1.1542384049971588
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 1.1134514354933837e-13,
+            "final_pressure_difference": 9.817468212138801e-09
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "c6db38d6cc3193c84c258f90517701afa86683a50805d3dd7f7ede80b29c537e",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1419921,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.062914376,
+              0.062688425,
+              0.069240211,
+              0.063519485,
+              0.068298953,
+              0.063240021,
+              0.063579329
+            ],
+            "ai_seconds": [
+              1.150532755,
+              1.206361828,
+              1.293785298,
+              1.294074815,
+              1.33408795,
+              1.199605647,
+              1.262954823
+            ],
+            "callback_seconds": [
+              1.1166697530134115,
+              1.1726638460240792,
+              1.2569896900095046,
+              1.259393758024089,
+              1.2964626330067404,
+              1.1649111210135743,
+              1.228155646007508
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 1.1134514354933837e-13,
+            "final_pressure_difference": 9.817468212138801e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "8030502e48c35344abe3c99941ecd535b19ffe3b18577a78b328e782cb17bfc9",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420007,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.063017902,
+              0.063195024,
+              0.072722452,
+              0.068785581,
+              0.053707051,
+              0.067305268,
+              0.063826303
+            ],
+            "ai_seconds": [
+              0.455679277,
+              0.493137076,
+              0.514926738,
+              0.543021835,
+              0.447665536,
+              0.490941453,
+              0.495488655
+            ],
+            "callback_seconds": [
+              0.42133987799752504,
+              0.45896139700198546,
+              0.478005270997528,
+              0.5070389700122178,
+              0.41806830497807823,
+              0.45404631400015205,
+              0.46212827699491754
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.6684512681564486e-07,
+            "final_pressure_difference": 1.972232783469123e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              24,
+              24,
+              24
+            ],
+            "cells_per_metre": 24
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 1.9534787730081007,
+          "native_process": {
+            "pid": 1419682,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 7.390132440035079e-09,
+          "worst_ai_actual_divergence": 2.0116567611694336e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.063579329,
+          "ai_median_seconds": 1.206361828,
+          "ai_to_native_time_ratio": 18.974120157826764,
+          "per_repetition_ai_median_seconds": [
+            1.193014732,
+            1.205973248,
+            1.262954823
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.065491033,
+          "ai_median_seconds": 0.495488655,
+          "ai_to_native_time_ratio": 7.565748046759317,
+          "per_repetition_ai_median_seconds": [
+            0.500680683,
+            0.500734648,
+            0.493137076
+          ],
+          "mean_network_passes": 12,
+          "timing_samples": 21
+        }
+      },
+      {
+        "label": "fixed-volume-32",
+        "sweep": "fixed-volume",
+        "n": 32,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            32,
+            32,
+            32
+          ],
+          "cells_per_metre": 32
+        },
+        "extents_m": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cell_size_m": 0.03125,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "f1d6f25db24981d8201cfadfeba12e990d1731afd16748df263624319d1479c1",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420130,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.202497146,
+              0.219069953,
+              0.185383898,
+              0.184438393,
+              0.213784744,
+              0.18339605,
+              0.159915524
+            ],
+            "ai_seconds": [
+              1.534422319,
+              1.461864802,
+              1.523891271,
+              1.282693188,
+              1.447378666,
+              1.474234893,
+              1.644485274
+            ],
+            "callback_seconds": [
+              1.445288154995069,
+              1.3795034530048724,
+              1.4362440760014579,
+              1.2005788090173155,
+              1.358562957990216,
+              1.3953983820101712,
+              1.5674593860167079
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 7.626216698273045e-10,
+            "final_pressure_difference": 6.800951519319747e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "299fab655a17fd770c8b7cfc031d73236fcac4e25316086c3bdc3be19a93660c",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420226,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.190393139,
+              0.183319188,
+              0.181977067,
+              0.182875895,
+              0.2016419,
+              0.184181,
+              0.181698777
+            ],
+            "ai_seconds": [
+              0.879826783,
+              0.915337861,
+              0.882810556,
+              0.879382771,
+              0.900123447,
+              0.862595957,
+              0.787702741
+            ],
+            "callback_seconds": [
+              0.8006748560001142,
+              0.8352013440162409,
+              0.8027012349921279,
+              0.7967915820190683,
+              0.8087120470008813,
+              0.7824697349860799,
+              0.7076226570061408
+            ],
+            "network_passes": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ],
+            "worst_relative_residual": 6.023551162478496e-07,
+            "final_pressure_difference": 7.373370151243115e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "bcae7fbc4276c5eb4c4038c4cdc571abb451953585b7130e62838a8f4f57d6ef",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420304,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.18296068,
+              0.184924364,
+              0.18471351,
+              0.188928849,
+              0.198922327,
+              0.186917937,
+              0.205085282
+            ],
+            "ai_seconds": [
+              0.727641457,
+              0.753729889,
+              0.748326239,
+              0.742079896,
+              0.696075507,
+              0.777495308,
+              0.833178528
+            ],
+            "callback_seconds": [
+              0.657017135003116,
+              0.6730455539945979,
+              0.6670289350149687,
+              0.6622759099991526,
+              0.6165552900056355,
+              0.6951113110117149,
+              0.7459439009835478
+            ],
+            "network_passes": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ],
+            "worst_relative_residual": 6.023551162478496e-07,
+            "final_pressure_difference": 7.373370151243115e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "48a816924b7fe4242853435140a62cbba3714e88de2e53dee44a481910749996",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420379,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.186953908,
+              0.197732177,
+              0.195976586,
+              0.18426448,
+              0.183020047,
+              0.190080083,
+              0.205354558
+            ],
+            "ai_seconds": [
+              1.3589491169999999,
+              1.273044333,
+              1.13152979,
+              1.176640612,
+              1.090900676,
+              1.216738356,
+              1.485831355
+            ],
+            "callback_seconds": [
+              1.2777682750020176,
+              1.1875814239901956,
+              1.0517439779941924,
+              1.0966727329941932,
+              1.0105314050160814,
+              1.1352041019999888,
+              1.3968664959829766
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 7.626216698273045e-10,
+            "final_pressure_difference": 6.800951519319747e-09
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "f842398949159288b073e1e71f5edf698e68852f8a3a27854e003d98b63444bc",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420485,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.199799203,
+              0.182649961,
+              0.195857955,
+              0.191305133,
+              0.188306558,
+              0.183278616,
+              0.176750533
+            ],
+            "ai_seconds": [
+              1.448026782,
+              1.134463586,
+              1.316629097,
+              1.364957841,
+              1.625543032,
+              1.298178984,
+              1.34951543
+            ],
+            "callback_seconds": [
+              1.3612396499956958,
+              1.0537486600223929,
+              1.235171021980932,
+              1.2820042470120825,
+              1.5382833949988708,
+              1.217791411007056,
+              1.276706186006777
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 7.626216698273045e-10,
+            "final_pressure_difference": 6.800951519319747e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "4b3ecdec0c97756cfd49330437c73d3bf9e6e23b5bdeee0780f4ec2bea672363",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420593,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.184062419,
+              0.184032066,
+              0.184587627,
+              0.183851201,
+              0.187276554,
+              0.211512586,
+              0.216806537
+            ],
+            "ai_seconds": [
+              0.880040231,
+              0.90447574,
+              0.762080003,
+              0.901852544,
+              0.895783322,
+              0.770189003,
+              1.023902349
+            ],
+            "callback_seconds": [
+              0.7983628329820931,
+              0.8231093059876002,
+              0.6760935659985989,
+              0.8288769460050389,
+              0.8082217629998922,
+              0.6816570849914569,
+              0.9421858529967722
+            ],
+            "network_passes": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ],
+            "worst_relative_residual": 6.023551162478496e-07,
+            "final_pressure_difference": 7.373370151243115e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              32,
+              32,
+              32
+            ],
+            "cells_per_metre": 32
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 5.9067524790007155,
+          "native_process": {
+            "pid": 1420063,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.941636866163999e-09,
+          "worst_ai_actual_divergence": 2.980232238769531e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.188306558,
+          "ai_median_seconds": 1.3589491169999999,
+          "ai_to_native_time_ratio": 7.21668502378977,
+          "per_repetition_ai_median_seconds": [
+            1.474234893,
+            1.216738356,
+            1.34951543
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.18471351,
+          "ai_median_seconds": 0.862595957,
+          "ai_to_native_time_ratio": 4.6699126501358785,
+          "per_repetition_ai_median_seconds": [
+            0.879826783,
+            0.748326239,
+            0.895783322
+          ],
+          "mean_network_passes": 20,
+          "timing_samples": 21
+        }
+      },
+      {
+        "label": "fixed-volume-40",
+        "sweep": "fixed-volume",
+        "n": 40,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            40,
+            40,
+            40
+          ],
+          "cells_per_metre": 40
+        },
+        "extents_m": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "cell_size_m": 0.025,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "910978b4d109b3323def851d0c7de666415c2716a825e748747d05aee1623d75",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1420761,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.422468063,
+              0.468292418,
+              0.381734856,
+              0.423512993,
+              0.425093955,
+              0.422949344,
+              0.421441164
+            ],
+            "ai_seconds": [
+              4.199123599,
+              4.244581637,
+              4.311556568,
+              4.345078377,
+              4.149895891,
+              4.248173789,
+              4.336983982
+            ],
+            "callback_seconds": [
+              4.040611634001834,
+              4.080916820996208,
+              4.148789580998709,
+              4.183500857994659,
+              3.9927011740219314,
+              4.090012361004483,
+              4.176551059994381
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.867737108930767e-07,
+            "final_pressure_difference": 3.941350425055791e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "43accf3a4de643f812beb672b50f623b02b95dfcf4dc58ede80c60747e1702b8",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1421084,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.467633388,
+              0.430978537,
+              0.425124258,
+              0.425349951,
+              0.43244115,
+              0.42409467,
+              0.444383622
+            ],
+            "ai_seconds": [
+              4.181660653,
+              4.315513889,
+              4.265475419,
+              4.157704211,
+              4.024292127,
+              4.031824498,
+              4.047054375
+            ],
+            "callback_seconds": [
+              4.011074321984779,
+              4.158215764997294,
+              4.104181978007546,
+              4.002019212988671,
+              3.852281083993148,
+              3.8728387730079703,
+              3.8859537660027854
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.867737108930767e-07,
+            "final_pressure_difference": 3.941350425055791e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "80d6d865a2b7269ab0b5c2a910c631a66d0f8e159c2eb9c02da0fdd30be3e2f4",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1421361,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.423256643,
+              0.443621922,
+              0.476818609,
+              0.432536718,
+              0.423092032,
+              0.435325007,
+              0.424775267
+            ],
+            "ai_seconds": [
+              4.081636673,
+              4.038090167,
+              3.930453438,
+              4.093114956,
+              4.038970497,
+              3.964995744,
+              4.3290408750000005
+            ],
+            "callback_seconds": [
+              3.9193784030212555,
+              3.877938157005701,
+              3.7671112359967083,
+              3.9364363469940145,
+              3.87952881999081,
+              3.806900579977082,
+              4.170695528999204
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.867737108930767e-07,
+            "final_pressure_difference": 3.941350425055791e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "3b9db665797cc0f55906b191ae95d59c30dc7ab2b538c289a59a1a54a16787ba",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1421671,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.426397857,
+              0.474504574,
+              0.423302511,
+              0.423399939,
+              0.429720779,
+              0.424528246,
+              0.430689837
+            ],
+            "ai_seconds": [
+              4.233197152,
+              4.266494524,
+              4.333271371,
+              4.209698411,
+              4.067757217,
+              4.442773618,
+              4.318964492
+            ],
+            "callback_seconds": [
+              4.0737793410080485,
+              4.096311881003203,
+              4.175520577002317,
+              4.048913314996753,
+              3.910609338985523,
+              4.2847567980061285,
+              4.157263246015646
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.867737108930767e-07,
+            "final_pressure_difference": 3.941350425055791e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "73e9b2b601839e6ffac850069758c80ba4820d44a86d18eb01c662e20a992c7d",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1421957,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.472868018,
+              0.425247444,
+              0.424349686,
+              0.471066388,
+              0.426222678,
+              0.425550236,
+              0.469990656
+            ],
+            "ai_seconds": [
+              3.8878776630000003,
+              3.873958098,
+              4.257639374,
+              3.898422673,
+              3.9874336980000002,
+              3.839249585,
+              3.96317803
+            ],
+            "callback_seconds": [
+              3.7158927650016267,
+              3.713586394995218,
+              4.094530189002398,
+              3.727088883984834,
+              3.8256813590123784,
+              3.6816498350235634,
+              3.79413732199464
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.867737108930767e-07,
+            "final_pressure_difference": 3.941350425055791e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "5f4cd125bc1bf89ce49fb5cc066fc09e0d4e69b4cf1543adbde7386b8291d930",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422216,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.432464642,
+              0.480035186,
+              0.427605514,
+              0.424640351,
+              0.475115539,
+              0.426220526,
+              0.430171924
+            ],
+            "ai_seconds": [
+              3.826045382,
+              3.84724228,
+              3.991503333,
+              3.833337699,
+              3.817539119,
+              3.949112227,
+              3.850047629
+            ],
+            "callback_seconds": [
+              3.6670339239935856,
+              3.6824185680015944,
+              3.8345570920209866,
+              3.675176843011286,
+              3.6521665919863153,
+              3.7789753639954142,
+              3.6858015960024204
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.867737108930767e-07,
+            "final_pressure_difference": 3.941350425055791e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              40,
+              40,
+              40
+            ],
+            "cells_per_metre": 40
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 13.353893040010007,
+          "native_process": {
+            "pid": 1420686,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.780614777246627e-09,
+          "worst_ai_actual_divergence": 3.725290298461914e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.425247444,
+          "ai_median_seconds": 4.233197152,
+          "ai_to_native_time_ratio": 9.954668068504605,
+          "per_repetition_ai_median_seconds": [
+            4.248173789,
+            4.266494524,
+            3.898422673
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.430978537,
+          "ai_median_seconds": 4.031824498,
+          "ai_to_native_time_ratio": 9.35504706583567,
+          "per_repetition_ai_median_seconds": [
+            4.157704211,
+            4.038970497,
+            3.84724228
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        }
+      },
+      {
+        "sweep": "fixed-spacing",
+        "n": 16,
+        "same_scene_as": "fixed-volume-16"
+      },
+      {
+        "label": "fixed-spacing-24",
+        "sweep": "fixed-spacing",
+        "n": 24,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            24,
+            24,
+            24
+          ],
+          "cells_per_metre": 16
+        },
+        "extents_m": [
+          1.5,
+          1.5,
+          1.5
+        ],
+        "cell_size_m": 0.0625,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "334409f6c9a99171f7e971a269ef767cf184526475b33481600ee6a94281c8c0",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422506,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.063563171,
+              0.062616339,
+              0.063646644,
+              0.068865149,
+              0.068549425,
+              0.0667234,
+              0.065279066
+            ],
+            "ai_seconds": [
+              0.663332267,
+              0.661618517,
+              0.665591325,
+              0.74481436,
+              0.687566116,
+              0.663657336,
+              0.668699891
+            ],
+            "callback_seconds": [
+              0.6295722129871137,
+              0.6274508550122846,
+              0.631525266013341,
+              0.7053603070089594,
+              0.6450413040001877,
+              0.6293511900003068,
+              0.6349048349948134
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 1.1072156272529019e-13,
+            "final_pressure_difference": 8.85560048002164e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "a395480070c5ac8919882fe681f11f7f34ded4ba78ad8684af434cb8c356770c",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422546,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.064130908,
+              0.063370022,
+              0.062824313,
+              0.055266798,
+              0.062424404,
+              0.063572032,
+              0.063887851
+            ],
+            "ai_seconds": [
+              0.275933924,
+              0.270536332,
+              0.24842242,
+              0.268452667,
+              0.271342149,
+              0.2698221,
+              0.334325699
+            ],
+            "callback_seconds": [
+              0.24254209600621834,
+              0.23687486199196428,
+              0.21387858598609455,
+              0.2387435499986168,
+              0.23743194702547044,
+              0.23582968598930165,
+              0.29221084600430913
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.659084036579759e-07,
+            "final_pressure_difference": 2.4187457511543394e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "06df60ae2ea660b60a0e849aec2a2e52a9eaabaa2c454d64d296e36c81fe722c",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422556,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.064178451,
+              0.066996486,
+              0.064392961,
+              0.064154826,
+              0.066857553,
+              0.058462352,
+              0.064639794
+            ],
+            "ai_seconds": [
+              0.274235789,
+              0.267357936,
+              0.270126882,
+              0.2664037,
+              0.233542529,
+              0.27282713,
+              0.266018318
+            ],
+            "callback_seconds": [
+              0.23823793098563328,
+              0.23280171400983818,
+              0.23617617299896665,
+              0.23265637300210074,
+              0.20188410801347345,
+              0.23900766298174858,
+              0.23174173300503753
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.659084036579759e-07,
+            "final_pressure_difference": 2.4187457511543394e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "28b92ecdcc6f4dc9da444bccb5a8d3fe0b499727b7819ff468d5c77dacc880c5",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422587,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.062405811,
+              0.065217642,
+              0.069238135,
+              0.062861246,
+              0.063452821,
+              0.063099843,
+              0.064304245
+            ],
+            "ai_seconds": [
+              0.665722481,
+              0.74288134,
+              0.69648247,
+              0.654632363,
+              0.664855297,
+              0.663103585,
+              0.666763604
+            ],
+            "callback_seconds": [
+              0.6317609940015245,
+              0.70717399197747,
+              0.6603534279856831,
+              0.6178073479968589,
+              0.631340674997773,
+              0.6296942240151111,
+              0.6325306789949536
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 1.1072156272529019e-13,
+            "final_pressure_difference": 8.85560048002164e-09
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "70629fdc2bbb791dde60c92a9e2bd434a69a68810a1cfbda4abb2f55aaa16603",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422626,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.066518545,
+              0.074158574,
+              0.074948519,
+              0.062559474,
+              0.064217448,
+              0.062895734,
+              0.062905293
+            ],
+            "ai_seconds": [
+              0.705650593,
+              0.759014638,
+              0.69612259,
+              0.684102501,
+              0.678047374,
+              0.668141335,
+              0.659864422
+            ],
+            "callback_seconds": [
+              0.669935195997823,
+              0.722064493020298,
+              0.6574469479965046,
+              0.6500143969897181,
+              0.6433729359996505,
+              0.6348976790031884,
+              0.6252934979856946
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 1.1072156272529019e-13,
+            "final_pressure_difference": 8.85560048002164e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "fa81841c85405c5a7bce62080c964ffd84d4c6e7c1c86c35e4b2389c48481abc",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422713,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.062665852,
+              0.070133951,
+              0.068167852,
+              0.068434806,
+              0.062961823,
+              0.062360257,
+              0.06368506
+            ],
+            "ai_seconds": [
+              0.277714174,
+              0.300649334,
+              0.300261154,
+              0.300567217,
+              0.264815173,
+              0.276623727,
+              0.26683473
+            ],
+            "callback_seconds": [
+              0.2435253179864958,
+              0.260356562997913,
+              0.2639406000089366,
+              0.2631816070061177,
+              0.23371692598448135,
+              0.24138486801530235,
+              0.23265170998638496
+            ],
+            "network_passes": [
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12,
+              12
+            ],
+            "worst_relative_residual": 2.659084036579759e-07,
+            "final_pressure_difference": 2.4187457511543394e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              24,
+              24,
+              24
+            ],
+            "cells_per_metre": 16
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 2.0359459049941506,
+          "native_process": {
+            "pid": 1422475,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 7.3177512859319556e-09,
+          "worst_ai_actual_divergence": 1.2293457984924316e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.064217448,
+          "ai_median_seconds": 0.668141335,
+          "ai_to_native_time_ratio": 10.40435825167017,
+          "per_repetition_ai_median_seconds": [
+            0.665591325,
+            0.665722481,
+            0.684102501
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.063887851,
+          "ai_median_seconds": 0.270536332,
+          "ai_to_native_time_ratio": 4.234550509454451,
+          "per_repetition_ai_median_seconds": [
+            0.270536332,
+            0.267357936,
+            0.277714174
+          ],
+          "mean_network_passes": 12,
+          "timing_samples": 21
+        }
+      },
+      {
+        "label": "fixed-spacing-32",
+        "sweep": "fixed-spacing",
+        "n": 32,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            32,
+            32,
+            32
+          ],
+          "cells_per_metre": 16
+        },
+        "extents_m": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "cell_size_m": 0.0625,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "8ac0bea792ec24edf6c544251b9310cc6baed2b92e0578e21c8f464072523aa6",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422788,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.183004691,
+              0.192074205,
+              0.183817081,
+              0.185608289,
+              0.183975927,
+              0.197789728,
+              0.180728585
+            ],
+            "ai_seconds": [
+              1.487020531,
+              1.4175302570000001,
+              1.422696929,
+              1.196729133,
+              1.2947137770000001,
+              1.330882155,
+              1.313775925
+            ],
+            "callback_seconds": [
+              1.4070769690151792,
+              1.3287612800195348,
+              1.3384245189954527,
+              1.109907359990757,
+              1.2086348590091802,
+              1.246740642003715,
+              1.2288779520022217
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 7.575262508238715e-10,
+            "final_pressure_difference": 7.354509147729326e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "278d959071b52bb0bb124ef5cfa8c4385d67bba15e064be2e16b011497a36486",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422875,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.211199549,
+              0.183491065,
+              0.186441407,
+              0.183393742,
+              0.185313833,
+              0.20143341,
+              0.208531409
+            ],
+            "ai_seconds": [
+              0.957378341,
+              0.921482386,
+              0.884128924,
+              0.983970456,
+              0.927556041,
+              0.837071178,
+              0.967224495
+            ],
+            "callback_seconds": [
+              0.870448106987169,
+              0.841477592010051,
+              0.8042633559962269,
+              0.9040453670022544,
+              0.8467996739782393,
+              0.7373131389904302,
+              0.8784780639980454
+            ],
+            "network_passes": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ],
+            "worst_relative_residual": 5.982474234442043e-07,
+            "final_pressure_difference": 6.982728901899537e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "26327b7efc01ba362216ec52adc1518c976059f1dc14b53fa11959fa6404de93",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1422952,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.189103195,
+              0.186743062,
+              0.189532558,
+              0.1857973,
+              0.18312638,
+              0.176862365,
+              0.183338992
+            ],
+            "ai_seconds": [
+              0.782008257,
+              0.962361676,
+              0.910709779,
+              0.926839276,
+              0.89627406,
+              0.803228846,
+              0.786540117
+            ],
+            "callback_seconds": [
+              0.7001122989750002,
+              0.8721562089922372,
+              0.8313539380033035,
+              0.8459908939839806,
+              0.8172335879935417,
+              0.7228768530185334,
+              0.704826266010059
+            ],
+            "network_passes": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ],
+            "worst_relative_residual": 5.982474234442043e-07,
+            "final_pressure_difference": 6.982728901899537e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "e7c52d1ff348af35b50aecaeb918ba62e9d24d53364ee564d320fec935147e47",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1423001,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.184383711,
+              0.183757609,
+              0.186293712,
+              0.188247564,
+              0.184922511,
+              0.202787433,
+              0.180620052
+            ],
+            "ai_seconds": [
+              1.353774034,
+              1.8066048609999998,
+              1.694424632,
+              1.395898178,
+              1.543309295,
+              1.516548991,
+              1.24759483
+            ],
+            "callback_seconds": [
+              1.2727467419754248,
+              1.722702464001486,
+              1.6106023479951546,
+              1.3159665459825192,
+              1.462833022000268,
+              1.4286213910090737,
+              1.1769762620097026
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 7.575262508238715e-10,
+            "final_pressure_difference": 7.354509147729326e-09
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "8f7059e5bf8ec17d2a4d42c52539ef398c5b86c4720c8f595887085ef8d7d9f2",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1423141,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.18976712,
+              0.184908611,
+              0.169219202,
+              0.185718971,
+              0.210944753,
+              0.184918882,
+              0.183075976
+            ],
+            "ai_seconds": [
+              1.220151438,
+              1.131558511,
+              1.314269277,
+              1.549780174,
+              1.257763574,
+              1.295704904,
+              1.287646862
+            ],
+            "callback_seconds": [
+              1.1397652929881588,
+              1.0518306449812371,
+              1.2443742009927519,
+              1.4655931269808207,
+              1.164660570997512,
+              1.2149347020022105,
+              1.2062121939961798
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 7.575262508238715e-10,
+            "final_pressure_difference": 7.354509147729326e-09
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "bad6c6f1701130e6474b537d1bb75a1f7c942cc2d547a03f80d8e2545bc7c6de",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1423217,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.183084581,
+              0.164280741,
+              0.183599908,
+              0.197649919,
+              0.194297222,
+              0.162283828,
+              0.186525716
+            ],
+            "ai_seconds": [
+              1.108755619,
+              0.920671916,
+              0.802795833,
+              1.009038948,
+              0.963906888,
+              0.975103306,
+              0.955141648
+            ],
+            "callback_seconds": [
+              1.0282231430173852,
+              0.8519344040250871,
+              0.7207722000021022,
+              0.915939027996501,
+              0.8858335229742806,
+              0.8959207769948989,
+              0.8744410439976491
+            ],
+            "network_passes": [
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+            ],
+            "worst_relative_residual": 5.982474234442043e-07,
+            "final_pressure_difference": 6.982728901899537e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              32,
+              32,
+              32
+            ],
+            "cells_per_metre": 16
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 5.81782538301195,
+          "native_process": {
+            "pid": 1422751,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.850778903370689e-09,
+          "worst_ai_actual_divergence": 1.2014061212539673e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.184918882,
+          "ai_median_seconds": 1.330882155,
+          "ai_to_native_time_ratio": 7.197113353735288,
+          "per_repetition_ai_median_seconds": [
+            1.330882155,
+            1.516548991,
+            1.287646862
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.1857973,
+          "ai_median_seconds": 0.926839276,
+          "ai_to_native_time_ratio": 4.988443190509227,
+          "per_repetition_ai_median_seconds": [
+            0.927556041,
+            0.89627406,
+            0.963906888
+          ],
+          "mean_network_passes": 20,
+          "timing_samples": 21
+        }
+      },
+      {
+        "label": "fixed-spacing-40",
+        "sweep": "fixed-spacing",
+        "n": 40,
+        "scene": {
+          "seed": 20261031,
+          "steps": 23,
+          "warmup_steps": 15,
+          "center": [
+            0.4,
+            0.55,
+            0.6
+          ],
+          "acceleration": 1.0,
+          "radius": 0.25,
+          "swirl": 0.7,
+          "fluctuation": 0.4,
+          "frequency": 1.2,
+          "sgs": false,
+          "counts": [
+            40,
+            40,
+            40
+          ],
+          "cells_per_metre": 16
+        },
+        "extents_m": [
+          2.5,
+          2.5,
+          2.5
+        ],
+        "cell_size_m": 0.0625,
+        "runs": [
+          {
+            "policy": "fixed",
+            "repetition": 0,
+            "receipt_sha256": "1a20f62d5b76421a3f024672a69a611e05b7b459657add509c45a4fc77ca18c9",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1423400,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.435374742,
+              0.429044817,
+              0.466817672,
+              0.430075228,
+              0.429540476,
+              0.471610403,
+              0.398990166
+            ],
+            "ai_seconds": [
+              4.327882059,
+              4.184552375,
+              4.258662777,
+              4.284777092,
+              4.323151698,
+              4.234761764,
+              4.312134188
+            ],
+            "callback_seconds": [
+              4.171462767990306,
+              4.023151215020334,
+              4.0907342080026865,
+              4.127759394992609,
+              4.163453996006865,
+              4.100027818989474,
+              4.151060186995892
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.826119017402575e-07,
+            "final_pressure_difference": 3.7752742779583976e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 0,
+            "receipt_sha256": "9723360e756306e0658b5b2a1860b28e45de1f946673ba3ca49fc7b3529fe4a0",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1423696,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.427948503,
+              0.476722559,
+              0.385325487,
+              0.429565108,
+              0.440648727,
+              0.501623324,
+              0.428624265
+            ],
+            "ai_seconds": [
+              4.256023069,
+              4.274404098,
+              4.312725715,
+              4.389199968,
+              4.220074568,
+              4.270730021,
+              4.323894745
+            ],
+            "callback_seconds": [
+              4.094825844018487,
+              4.1003700729925185,
+              4.152758151001763,
+              4.2301748910103925,
+              4.060060018993681,
+              4.101361840002937,
+              4.1646406759973615
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.826119017402575e-07,
+            "final_pressure_difference": 3.7752742779583976e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 1,
+            "receipt_sha256": "7fa2c37fa313867bc573423c4c48705fe287b7b2e519ff67526f3a77ca5b9ef3",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1423990,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.42968269,
+              0.429250949,
+              0.432907386,
+              0.428388801,
+              0.475757987,
+              0.427665843,
+              0.425515743
+            ],
+            "ai_seconds": [
+              4.247188643,
+              4.196556285,
+              4.286289022,
+              4.266697457,
+              4.103900901,
+              4.36422727,
+              4.076157823
+            ],
+            "callback_seconds": [
+              4.084531574015273,
+              4.035440420993837,
+              4.129551427991828,
+              4.10382108099293,
+              3.932873586018104,
+              4.207118767983047,
+              3.911506114003714
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.826119017402575e-07,
+            "final_pressure_difference": 3.7752742779583976e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 1,
+            "receipt_sha256": "f6b4b9d98abd6fa3249c8425a67947d751e8893be98a3c51d13116c8293642ad",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1424293,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.43383222,
+              0.42808106,
+              0.427164291,
+              0.430253975,
+              0.435167492,
+              0.428175965,
+              0.430960712
+            ],
+            "ai_seconds": [
+              3.89559526,
+              3.901665414,
+              3.8267325100000003,
+              3.849012464,
+              4.341512721,
+              3.803505612,
+              3.859314533
+            ],
+            "callback_seconds": [
+              3.737198618997354,
+              3.7433297320094425,
+              3.668515390018001,
+              3.690681506006513,
+              4.183885139005724,
+              3.645054828026332,
+              3.6898767790116835
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.826119017402575e-07,
+            "final_pressure_difference": 3.7752742779583976e-08
+          },
+          {
+            "policy": "fixed",
+            "repetition": 2,
+            "receipt_sha256": "e73164d42e912929e88b2ad86d86c8b2b82f93d9007a385be0accca12e185f66",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1424534,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.390058928,
+              0.382794031,
+              0.386771403,
+              0.400299029,
+              0.391049534,
+              0.403507284,
+              0.400577117
+            ],
+            "ai_seconds": [
+              3.843467128,
+              3.950035364,
+              3.889443228,
+              3.835631707,
+              3.923868575,
+              3.888700524,
+              3.780577839
+            ],
+            "callback_seconds": [
+              3.689140614005737,
+              3.790875255013816,
+              3.725297794007929,
+              3.685705961979693,
+              3.7734130499884486,
+              3.7386217530001886,
+              3.6317897500121035
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.826119017402575e-07,
+            "final_pressure_difference": 3.7752742779583976e-08
+          },
+          {
+            "policy": "adaptive",
+            "repetition": 2,
+            "receipt_sha256": "90ede7f291e0855e0aa8ef6f1e53934c797aebdd245e2fd9c364478c55c909b0",
+            "result": {
+              "ai_steps": 8,
+              "hard_stop": false,
+              "kind": "complete",
+              "qualified_ai_steps": 8,
+              "reference_control": false,
+              "warmup_steps": 15
+            },
+            "status": "completed",
+            "native_process": {
+              "pid": 1424801,
+              "returncode": 0,
+              "reaped": true,
+              "terminated": false
+            },
+            "all_ai_steps_qualified": true,
+            "all_reference_steps_qualified": true,
+            "timing_samples": 7,
+            "native_seconds": [
+              0.429351255,
+              0.427897784,
+              0.435809811,
+              0.425036444,
+              0.430828734,
+              0.452615962,
+              0.428322635
+            ],
+            "ai_seconds": [
+              4.038613759,
+              3.822304256,
+              4.100783683,
+              4.034416592,
+              4.006843119,
+              4.085905278,
+              4.001440039
+            ],
+            "callback_seconds": [
+              3.878741149994312,
+              3.660578840004746,
+              3.9374328129924834,
+              3.876128891017288,
+              3.8493144290114287,
+              3.913180139992619,
+              3.8417866119998507
+            ],
+            "network_passes": [
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32,
+              32
+            ],
+            "worst_relative_residual": 4.826119017402575e-07,
+            "final_pressure_difference": 3.7752742779583976e-08
+          }
+        ],
+        "native_control": {
+          "schema": "rheon-residual-trajectory-v1",
+          "status": "completed",
+          "error": null,
+          "scene": {
+            "seed": 20261031,
+            "steps": 23,
+            "warmup_steps": 15,
+            "center": [
+              0.4,
+              0.55,
+              0.6
+            ],
+            "acceleration": 1.0,
+            "radius": 0.25,
+            "swirl": 0.7,
+            "fluctuation": 0.4,
+            "frequency": 1.2,
+            "sgs": false,
+            "counts": [
+              40,
+              40,
+              40
+            ],
+            "cells_per_metre": 16
+          },
+          "result": {
+            "ai_steps": 8,
+            "hard_stop": false,
+            "kind": "complete",
+            "qualified_ai_steps": 8,
+            "reference_control": true,
+            "warmup_steps": 15
+          },
+          "frames": 23,
+          "command": [
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--reference-control"
+          ],
+          "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+          "elapsed_s": 13.458513560995925,
+          "native_process": {
+            "pid": 1423303,
+            "returncode": 0,
+            "reaped": true,
+            "terminated": false
+          },
+          "source_project": null,
+          "cpu_restore": null,
+          "kind": "native-algorithm-control",
+          "deployment_changed": false,
+          "cuda_initialized": false,
+          "learned_proposals_per_pressure_solve": null,
+          "native_pressure_refinement": false,
+          "adaptive_stopping": null,
+          "qualified_native_frames": 23,
+          "worst_ai_relative_residual": 9.813185364558765e-09,
+          "worst_ai_actual_divergence": 1.4901161193847656e-07
+        },
+        "fixed": {
+          "qualified": true,
+          "native_median_seconds": 0.428175965,
+          "ai_median_seconds": 3.901665414,
+          "ai_to_native_time_ratio": 9.11229432039699,
+          "per_repetition_ai_median_seconds": [
+            4.284777092,
+            3.859314533,
+            3.888700524
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        },
+        "adaptive": {
+          "qualified": true,
+          "native_median_seconds": 0.429351255,
+          "ai_median_seconds": 4.220074568,
+          "ai_to_native_time_ratio": 9.82895593958378,
+          "per_repetition_ai_median_seconds": [
+            4.274404098,
+            4.247188643,
+            4.034416592
+          ],
+          "mean_network_passes": 32,
+          "timing_samples": 21
+        }
+      }
+    ],
+    "memory": {
+      "python_process_peak_rss_bytes": 890400768,
+      "reaped_native_child_peak_rss_bytes": 890351616,
+      "scope": "process-lifetime high-water marks across all episodes so far; not per-policy allocation or simultaneous total"
+    },
+    "scope": "actual short trajectories; whole Engine.advance timing including prepare/projection/IPC; neural callback separately recorded; no isolated native pressure timing",
+    "tolerances": {
+      "native_relative_residual": 1e-08,
+      "ai_relative_residual": 1e-06,
+      "predicted_divergence": 1e-07
+    },
+    "warmup": "15 native history steps plus one excluded AI timing step per run",
+    "isolation": "serial CPU core; run only after managed training/validation and other task CPU workers finish",
+    "larger_than_65536_cells": "unsupported; no extrapolated crossover or accuracy claim"
+  },
+  "single_pass_model_qualified": false,
+  "iterative_candidate_development_qualified": true,
+  "deployment_changed": false,
+  "untouched_test_used": false,
+  "physical_gates_changed": false,
+  "any_qualified_ai_faster_than_native": false,
+  "timing_scope": "whole independently evolving tracks; same scene inputs; existing distinct native/AI equation profiles; serial CPU core",
+  "scope": "bounded development experiments; negative training/scaling outcomes retained; policy speed distinct from trained-model accuracy"
+}

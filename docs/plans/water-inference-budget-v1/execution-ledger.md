@@ -74,3 +74,13 @@ one-pass weights. Preserve a maximum of 32 actual neural evaluations and test
 the completed one-pass checkpoint under that matched adaptive compute ceiling.
 The old four-pass cap stays eight proposals. This is a bounded iterative-policy
 comparison with zero additional training; a one-pass solve remains unqualified.
+
+Matched-compute one-pass-trained candidate qualifies all 128 development states
+and 854/854 AI steps over the same six short/extended trajectories. Mean
+development evaluations 12.6015625 (8–26), versus 14.96875 for old adaptive and
+32 fixed. New weights plus per-evaluation stopping jointly change behavior;
+there is no isolated learned-weight attribution. Fresh-process serial paired
+CPU benchmarks over three scenes show reference/candidate time ratios 1.160,
+1.233 and 1.550, all 144 candidate/reference AI steps qualified. Controls and
+all children drained. No extra training or reserved test. Iteration budget
+owner/test source a40d32c; timing owner ddc3e82.

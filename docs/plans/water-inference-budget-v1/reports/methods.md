@@ -61,3 +61,22 @@ limits stay unchanged. The 16-cubed scene is shared by both scaling sweeps.
 Data/checkpoints, failed native controls and full process logs stay outside Git.
 Small receipts/results in this directory retain source/input/checkpoint hashes,
 normal Run IDs, lifecycle outcomes and numerical failures for future review.
+
+Matched neural-compute addendum: source a40d32c bounds total network evaluations
+at 32, preserving eight proposals for a four-pass checkpoint and admitting up
+to 32 proposals for a one-pass checkpoint. Single-pass adaptive validation and
+fitting use the completed stability-modes-single-pass CPU restore; the usual
+native evaluator checks raw predictions independently. Short/extended scenes
+use the same scalar stopping profile and no pressure labels. Zero additional
+optimizer updates occur. This is an iterative policy, not one-pass accuracy.
+
+`compare.py` accepts explicit reference/candidate project/restore paths, native
+binary, profile, scenes, output, CPU and repetitions. Each episode is a fresh
+Python process to avoid cached captured-module identity across configurations.
+Three native controls precede three alternating repetitions of both policies,
+with 15 native history steps, one excluded neural warm-up and seven timed
+steps. Executed source ddc3e82; commands/logs under checkpoint-comparison. Both
+weights and stopping granularity change; the measured gain belongs to that
+combined intervention. Original seven-grid scaling uses the earlier checkpoint
+and is not attributed to the new checkpoint. All raw sources/checksums remain
+in scaling-source-evidence.json and per-diagnostic receipts.

@@ -84,3 +84,18 @@ CPU benchmarks over three scenes show reference/candidate time ratios 1.160,
 1.233 and 1.550, all 144 candidate/reference AI steps qualified. Controls and
 all children drained. No extra training or reserved test. Iteration budget
 owner/test source a40d32c; timing owner ddc3e82.
+
+Final evidence committed in a6e69d7. Final Tuldok project
+757039a5e02d48f7915dc8fcb0594e4a registered in the existing catalog with 64
+evidence references. The exact owned observer PID 1404208 received SIGINT and
+its controller exited normally; final activity reports six completed managed
+stages and one failed/drained attempt. All 88 retained native trajectory
+children reopened with exit 0/reaped; 179,179,313 retained local bytes remain
+within the 2 GiB budget. Both immutable trial records re-record identically;
+derived totals assert 10,000 successful CUDA updates plus at least 2,400 in the
+failed attempt. Historical result directories remain unchanged. Full branch
+range review, staged scope/sensitive-key review, compilation and whitespace
+checks pass. No weights, simulation datasets, Rheon/Tuldok source, final-test
+results, history rewrites or publication were introduced. Branch remains
+retained under the plan review/continuation contract. Experiment accepted;
+one-pass solving and production deployment remain unqualified.

@@ -1,6 +1,6 @@
 # Pressure inference budget and scaling
 
-Status: Verifying. Admission: start, authorized by the user's request to continue
+Status: Accepted. Admission: start, authorized by the user's request to continue
 the proposed sequence after comparing model parameter counts and file sizes.
 Canonical plan: docs/plans/water-inference-budget-v1/plan.md. Owner: this task.
 
@@ -67,14 +67,15 @@ Milestones and acceptance:
 4. Controlled scaling and synthesis. C4 performance/automated/required-real CPU:
    satisfied for the original study (all seven scenes, three repetitions per policy). Same inputs per comparison, repeated timings, all physical outcomes,
    supported-grid limits and variability retained. C5 system/automated/required-real
-   Tuldok: pending. Methods/results linked in the user's existing project UI.
+   Tuldok: satisfied. Final project registered; reports/project-registration.json
+   retains the exact manifest/source and existing catalog identity.
 
-Current acceptance: partial. Current phase: seal completed evidence and register the final Tuldok index.
+Current acceptance: satisfied. Current phase: complete; final Tuldok evidence index registered.
 Both raw one-evaluation models fail, but the mode-feedback weights qualify with
 adaptive iteration under the matched 32-evaluation cap; all measured timings
 and native lifecycle checks are retained.
-Exactly one next slice: retain immutable/derived record checks, register final
-project links, stop the task observer and seal the accepted experiment.
+Exactly one next slice: none within this completed tranche. Prepared follow-ups
+remain unexecuted; no managed job, native child or task observer remains active.
 Additional bounded comparison: one-pass-trained weights may use up to 32
 one-evaluation proposals, preserving the same maximum neural work as eight
 four-evaluation proposals. This is iterative inference, not one-pass success.

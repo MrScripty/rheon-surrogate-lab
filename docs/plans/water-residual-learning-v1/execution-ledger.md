@@ -88,3 +88,12 @@ is established without a convergent approximate inverse. Do not promote the
 linear model based on the algebraic test or assume recurrence is safe. Its
 separately trained four-correction alternative remains an experiment. Native
 validation and independent trajectories will retain the actual physical failures.
+
+GPU training complete for recurrent and physical feedback. The four-step model's
+last sampled CUDA residual is0.0003498759 (5,000 updates,24.18 updates/s); physical
+feedback's last sample is0.0009405187 (10,000 updates,79.06 updates/s). These are
+training diagnostics awaiting independent CPU/native checks. Loss values across
+different objectives are not directly comparable. Recurrent proposals use four
+network applications and extra operator work; eight audited wrapper proposals
+therefore mean32 network applications versus8 for single-step models. The
+matched5,000-update control is finishing. Keep accuracy and compute cost separate.

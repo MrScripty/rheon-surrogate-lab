@@ -88,6 +88,17 @@ class VariableModelTests(unittest.TestCase):
         self.assertEqual(pressure.dtype, torch.float64)
         self.assertEqual(float(pressure[0,0,0,0,0].detach()), 0)
 
+    def test_scalar_geometry_preserves_the_existing_physical_loss(self):
+        state = sample((5,3,7), .125)
+        state['reference'] = torch.linspace(0, 1, 105, dtype=torch.float64).reshape_as(state['base'])
+        state['rhs'] = torch.linspace(-.02, .02, 105, dtype=torch.float64).reshape_as(state['base'])
+        predicted = state['reference']*.83
+        old_norm = {'schema': 'rheon-global-pressure-normalization-v1', 'scales':
+                    {name: {'value': 1.0} for name in ('residual','pressure','rhs','hx','hy','hz','rho','dt')}}
+        old = model.frozen.pressure_loss(predicted, state['reference'], state['rhs'],
+                                        state['cell_size_m'][:,None].expand(-1,3), state['rho'], old_norm)
+        self.assertTrue(torch.equal(model.pressure_loss(predicted, state, normalization()), old))
+
     def test_resource_invalid_shape_and_nonfinite_rejection(self):
         network = model.PressureCorrectionNet()
         for values in (torch.zeros((1,7,1,1,0)), torch.zeros((1,7,41,41,41)), torch.zeros((1,7,2,2,2), dtype=torch.float64), torch.full((1,7,2,2,2), float('nan'))):

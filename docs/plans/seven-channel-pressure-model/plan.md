@@ -33,7 +33,12 @@ Apply previously adopted Coding Standards 188beda implementation, frontend,
 verification and commit workflows. Keep model and viewer changes in separate
 reviewable commits.
 
-Status: source implementation qualified. Nine model/training checks pass; the
-unchanged native probe passes six tests and Clippy. Existing whole-parent cubic
-captures have been independently reverified and repacked for the seven-channel
-profile without changing original fields. Managed execution remains pending.
+Status: complete. Ten model/training checks, six native tests, Clippy and nine
+real-browser checks pass. Existing 144-frame cubic captures were reverified;
+all physical array hashes and surviving input channels match v1 exactly. Fresh
+managed training completed 200 updates; restore completed zero updates with
+exact recomputed predictions and 16 shared byte-identical artifacts. Both Runs
+are completed/drained in the existing catalog. Raw pressure remains 0/12 under
+the unchanged gates; conventional fallback qualifies all 12 cases. The actual
+seven-channel tensor is open in the viewer and current sources are registered
+as a Tuldok project. Completion.md and acceptance.json record measured evidence.

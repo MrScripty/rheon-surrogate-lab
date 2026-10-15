@@ -93,3 +93,28 @@ scenarios with different force location, strength, swirl and fluctuation, not
 an untouched final test. Their receipts and reusable JSON configurations are
 retained. The next 16-simulation cohort contains 32 real native snapshots with
 actual preceding pressure; it is prepared, not trained.
+
+
+## Recurrent and physical-feedback interim evidence
+
+Four shared corrections, trained for 5,000 updates, reduce the validation
+CPU diagnostic median to 0.01433483391, worst 0.2218051. The matched 5,000-update
+single-step control has identical initial weights, input bytes, normalization,
+sampling and learning-rate schedule; compute differs by four network applications
+per proposal. Its complete native comparison is retained after evaluation.
+The recurrent candidate still fails the fitted target and eight wrapper proposals
+(32 network applications) amplify errors. Independent trajectories hard-stop
+following 5/4/6 AI predictions for cube/elongated/compact, all after 15 native
+warm-up steps, with no qualifying learned proposals.
+
+Manufactured mode probes isolate the problem: all three highest-frequency
+checkerboard patterns grow on the first four-step proposal (up to 7.25 times
+initial equation error). Across 24 modes, eight wrapper proposals amplify the
+worst error to 1.65e10. These are compatible equation diagnostics, not native
+physical qualifications or cold-start simulations. The improved saved-state
+median does not establish a stable solver. See [mode report](reports/recurrent-mode-probes.json).
+
+Physical-feedback training completed 10,000 CUDA updates. Its fresh CPU diagnostic
+median is 0.04358148320, worst 0.2707966; eight raw proposals reach median 82.3856.
+This objective does not remove the instability. Native validation remains pending;
+loss numbers between the two objectives are not directly comparable.

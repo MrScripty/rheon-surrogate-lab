@@ -145,3 +145,9 @@ remains0/128; iterative policy retains full physical acceptance. Three control
 parities (initial parameters, normalization, real sampling) are exact. Forward
 voxel-evaluation proxy139,776,000 is3.4125 times the prior single-grid fit despite
 equal forward/example counts; do not call the training compute equal.
+
+Second fit's CPU development evidence passes128/128 at mean12.4140625 and
+maximum19 evaluations, versus reference12.6015625/max26 and multi-grid one-pass
+13.46875/max23. Independently seeded low-frequency40-cubed mixtures improve from
+23 to12.5 evaluations, while broad-frequency mixtures regress; report both.
+Seven physical grid scenes and longer trajectories remain pending at this point.

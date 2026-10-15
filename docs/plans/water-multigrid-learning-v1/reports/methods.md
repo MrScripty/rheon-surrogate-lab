@@ -78,3 +78,14 @@ snapshots, and records cubic spacing/force/history metadata. It neither trains
 nor infers on the untouched final population. Broad-cohort feedback needs an
 explicit amplitude-reference contract because the current controlled bank takes
 one fitting frame; do not silently use the first parent as the global statistic.
+
+Final timing design: final-timings.json names each restored checkpoint explicitly,
+uses three alternating repetitions on fixed-volume16/24/32/40-cubed and a
+rectangular24×16×12 scene, and retains native controls. Run only admitted/completed
+checkpoints; a prepared cohort entry must be removed if its fit is not admitted
+or completed. Two serial studies use `--threads 1` and `--threads 4`, one worker,
+and `--timing-study`, after GPU training and task CPU qualifications drain. All
+tracks get the same core/thread allocation within each study. Existing distinct
+native1e-8/AI1e-6 residual profiles remain stated; do not present them as a
+matched-tolerance pressure-kernel benchmark. Exclude first AI timing step and
+retain seven samples/repetition and all physical outcomes.

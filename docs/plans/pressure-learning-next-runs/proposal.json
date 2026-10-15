@@ -2,7 +2,7 @@
   "schema": "rheon-pressure-training-sequence-proposal-v1",
   "status": "proposal; no runs admitted",
   "execution_ready": false,
-  "baseline_model": "experiments/variable-pressure-v2",
+  "baseline_model": "experiments/cuda-pressure-v1",
   "target_profile": "experiments/float32-pressure-target-v1/configs/development.json",
   "shared": {
     "device": "cuda",
@@ -158,19 +158,18 @@
     }
   ],
   "implementation_prerequisites": [
-    "Qualify a real CUDA training runtime in the existing Tuldok catalog; the current captured_cpu_python_v1 owner intentionally excludes CUDA.",
-    "Add a versioned device-portability implementation of the unchanged seven-channel model: CUDA forward/backward/optimizer, CPU inference; preserve all historical CPU-only sources.",
-    "Prove a small managed CUDA training attempt exports portable float32 weights and a separate CPU restore reproduces those checkpoint tensor bytes and repeats CPU inference.",
-    "Measure GPU/driver/Torch/CUDA versions and allocated/reserved GPU memory; require CUDA parameters, batches, gradients and optimizer moment buffers, with no training fallback.",
-    "Evaluate deployed CPU predictions against the existing float32/physical targets. Do not require bitwise CUDA-vs-CPU prediction equality or quietly relax CPU accuracy targets.",
-    "New versioned trainer policy: existing v2 caps updates at 200 and restore CLI slots at 201 checkpoints.",
-    "Declare bounded checkpoint inventory and select final candidate consistently; preserve all old recipes.",
-    "Separate initialization and sample-order seeds for paired comparisons.",
-    "Apply current float32 target feedback during inspection without changing physical gates.",
+    "Implement explicit single-frame training selection and scheduled fitted-frame physics inspection before R1.",
+    "Implement D0 amplitude probes as labelled algebraic probes.",
     "Define and verify each R2 normalization variant before any training.",
     "Represent genuine reserved test splits before R5; never relabel them as validation."
   ],
   "conditional_replan": "If one-case fitting remains unsuccessful, inspect optimization and coarse-grid communication before enlarging the model or data cohort.",
   "execution_visibility": "Existing Tuldok catalog owns CUDA training Runs and CPU restore/inference Runs, with actual device and VRAM evidence; Rheon egui observes native CPU simulation/diagnostics. No isolated training catalog.",
-  "scope_correction": "CPU-first applies to deployment inference, not training. All proposed optimizer work requires CUDA. The 600-second limit is elapsed wall time, not CPU time."
+  "scope_correction": "CPU-first applies to deployment inference, not training. All proposed optimizer work requires CUDA. The 600-second limit is elapsed wall time, not CPU time.",
+  "portability_qualification": {
+    "acceptance": "docs/plans/cuda-training-cpu-inference/acceptance.json",
+    "planned_scientific_runs_started": false,
+    "qualification_updates": 20,
+    "status": "passed"
+  }
 }

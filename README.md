@@ -1,6 +1,9 @@
 # Rheon Surrogate Lab
 
-Current model work uses [seven-channel variable-shape pressure training](experiments/variable-pressure-v2/README.md).
+Current model work uses [CUDA training with CPU deployment inference](experiments/cuda-pressure-v1/README.md)
+for the unchanged seven-channel variable-shape pressure network. A managed
+20-update CUDA run and fresh CPU restore passed [portability qualification](docs/plans/cuda-training-cpu-inference/results.md);
+all twelve learned proposals still fail the pressure accuracy target.
 Voxel size is one scalar in physical metadata, with no voxel-size network channels.
 Current learned-output acceptance uses a [float32-calibrated residual target of
 1e-6](experiments/float32-pressure-target-v1/README.md), with existing physical

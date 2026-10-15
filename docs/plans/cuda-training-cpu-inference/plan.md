@@ -1,75 +1,63 @@
 # CUDA training with CPU deployment inference
 
-Status: Active. User explicitly requested CUDA training support after correcting
-CPU-first to mean inference. Root agent owns serial integration. Private branches
-feat/cuda-training-cpu-inference (lab, base d04116f) and feat/managed-torch-cuda
-(Tuldok clean worktree, base 9eeb653) remain local for review. No push or merge.
+Status: Accepted. Serial owner: root. The user requested CUDA training support;
+CPU-first refers to inference. The completed scope is portability qualification,
+not pressure accuracy or execution of the longer scientific training proposal.
 
-Objective: train the unchanged seven-channel float32 model on CUDA under normal
-Tuldok custody; export portable checkpoints; restore and infer on CPU; perform
-actual native physical diagnostics with the accepted float32 profile. Longer
-scientific experiments and normalization/architecture changes remain outside this
-portability slice. Preserve every historical source, profile, checkpoint and result.
+Canonical evidence: [results](results.md), [acceptance](acceptance.json),
+[ledger](ledger.md). All requested implementation and acceptance work is complete.
+No active next slice. Separate future work is described in the
+[next scientific sequence](../pressure-learning-next-runs/proposal.md).
 
-Write sets: Tuldok adds an explicit managed_torch_python_v1 runtime owner,
-bootstrap, generic external-recipe integration, tests and documentation. Lab adds
-experiments/cuda-pressure-v1 with versioned device portability, bounded reusable
-training/checkpoint policies, project/qualification helpers and focused tests;
-this plan/evidence and current user-facing pointers. Rheon numerical code is not
-changed. Tuldok worktree and existing catalog are used, never dirty originals.
+Branches: lab feat/cuda-training-cpu-inference from d04116f; clean Tuldok worktree
+feat/managed-torch-cuda from 9eeb653. Keep both local; no push or merge. Retain the
+Tuldok worktree under runs/live-integration/Tuldok because it serves the user's
+open application and existing catalog. Retain runs/cuda-pressure-v1-workspace-1
+and-2, the measured runtime manifest, and qualified native/capture assets for
+review/replay. Do not clean the original dirty Tuldok or conflicted Rheon checkout.
 
-Runtime design: the new profile references explicitly selected installed Pumas
-Python/package assets, recording and verifying their full content inventory before
-and after execution. It does not claim a captured/hermetic CUDA closure. Host OS,
-GPU driver/kernel and GPU device remain declared host dependencies, with observed
-versions and mappings recorded. The installation must remain immutable for the
-attempt. The manifest is owned by the existing catalog and its exact bytes are
-captured in approved material. CUDA and CPU modes are explicit in the recipe;
-training cannot silently fall back. Historical captured CPU snapshots keep their
-existing semantics and checks. Existing generic child custody remains the sole
-process owner; no detached local training or wrapper CPU Run hiding GPU work.
+Implemented owners and write set: Tuldok owns managed_torch_python_v1 registration,
+measured bootstrap, explicit CUDA/CPU mode, generic recipe integration, dispatch,
+authorization and normal Run lifecycle. Lab experiments/cuda-pressure-v1 owns
+versioned device portability, bounded reusable training/checkpoints, managed
+project assembly/execution and native acceptance. This plan/results and current
+README/project/proposal pointers expose the completed qualification. Rheon
+numerical source and every historical experiment namespace remain unchanged.
 
-Composed-design review: applicable. Canonical responsibilities are separated:
-Tuldok owns authorization, runtime identity, material capture and Run lifecycle;
-the lab owns device-portable model/training and numerical acceptance; Rheon owns
-simulation/operator/physics. The runtime bootstrap uses the existing generic
-trusted-local execution seam, adding no second scheduler or catalog. Source and
-runtime manifests bind the cross-process interface, while typed Run artifacts
-carry checkpoint custody into CPU restore. Native physics remains independently
-measured. Physical data and model architecture are reused unchanged.
+Design: reference explicitly selected Pumas Python/package assets and verify their
+full content/topology before and after execution. Capture the approved manifest
+and bootstrap; declare host OS, GPU driver/kernel and hardware as external
+trusted-local dependencies with observed versions/mappings. This is not a
+hermetic captured CUDA closure. Registration is in the existing catalog, not a
+second database or scheduler. The generic custodian remains sole process owner.
+Legacy captured CPU profiles retain their original material/cold-read semantics.
 
-Acceptance: real CUDA parameters, batches, gradients and Adam moment buffers;
-finite updates with GPU memory/device evidence; float32 checkpoint bytes preserved
-through CPU transfer; fresh deterministic CPU predictions repeat exactly from
-managed restore. Report CUDA/CPU differences rather than requiring cross-device
-bit identity. Verify all existing physical gates and current 1e-6 model-output
-profile honestly. Qualification success is portability, not pressure accuracy.
-No optimizer during preflight. Same Torch runtime release in both device modes.
+Model fidelity: seven input channels, cubic scalar h, arbitrary positive per-axis
+counts within 65,536 cells, 371,729 float32 parameters, the same train-only scales,
+initialization, forward architecture and loss. CUDA uses equivalent deterministic
+backward reductions where native Torch operations lack them. CPU retains native
+operations. AMP/TF32 are disabled. Float32 checkpoint tensor inventories survive
+CPU transfer; same-version CPU predictions repeat exactly. Cross-device forward
+roundoff is measured separately. No normalization/architecture/loss ablation.
 
-Current phase: runtime/model portability implementation. Exactly one next slice:
-qualify the new generic Tuldok runtime and device-capable lab model, then commit
-source before freezing managed qualification recipes. Follow with a small real
-CUDA training Run and CPU restore, source/weight checks and native diagnostics.
-Blockers: none observed. Replan if installed assets cannot be measured reliably,
-CUDA lacks a required operation, or runtime/Run ownership cannot be preserved.
-Use adopted Coding Standards 188beda implementation, contracts, verification,
-planning and commit workflows. Detailed evidence will live beside this plan.
+Acceptance achieved: optimizer-free fixture/grid preflight; actual CUDA parameters,
+batches, gradients and Adam moments; 20 finite GPU updates; portable checkpoint
+export; separate managed zero-update CPU restore with CUDA uninitialized; 12 exact
+CPU predictions; both Runs completed/drained, reopened and every artifact downloaded
+again. Native diagnostics independently checked all 12 predictions using unchanged
+physical gates and the current 1e-6 float32 output profile. Learned proposals pass
+0/12; conventional fallback passes 12/12. This is successful device portability,
+without an accuracy or acceleration claim. Full numbers and source identities are
+in the linked acceptance report.
 
-Implementation evidence (2026-10-14): installed runtime registration succeeded in
-the existing catalog a7da4a8de53541a2a0e2aad08005bb71. Manifest identity
-74bbe92e160f14266b850cfebad01655192f3cb272083f8a87c1ae224c9e1e4e measures
-25,765 files / 5,744,383,179 bytes. Runtime manifest and descriptor are retained in
-runs/cuda-pressure-runtime-1 (local measured assets, not checked-in packages).
-Fourteen model checks pass on the real CUDA host, including arbitrary grids,
-finite gradients, physical operator agreement and no fallback. Fifty-one Tuldok
-checks pass for runtime/legacy recipe/frozen input/process custody contracts.
-CUDA average-pool backward lacks deterministic support; preserve its forward and
-supply equivalent disjoint backward reductions, with differential CPU tests.
-Nearest interpolation and replicated padding receive the same deterministic CUDA
-portability treatment. CPU forward/native operator/model weights remain unchanged.
+Verification: 14 real-host model CPU/CUDA checks; 51 runtime/legacy material/frozen
+input/custody checks, followed by 25 focused checks including a new early aggregate
+asset-budget regression. Initial 38 parameter tensors match the historical CPU Run.
+The first managed attempt stopped before process creation because dispatch selected
+the legacy host closure; it remains preserved. The corrected fresh attempt passed.
+The final inventory-only resource fix does not change the qualified child path.
 
-Current phase: Implemented, verifying managed execution. Exactly one next slice:
-commit runtime and model portability sources, freeze a 20-update qualification,
-then run approved CUDA training and fresh CPU restore in the existing catalog.
-No longer R1/normalization/cohort experiment has started. The retained Tuldok
-worktree serves the user's open UI and must remain until explicit replacement.
+No blockers remain in this scope. D0/R1 population/probe/inspection changes and any
+scientific comparisons require their own implementation slice. Adopted Coding
+Standards 188beda implementation, contracts, verification and commit workflows
+were used; source was committed before approved training material was frozen.

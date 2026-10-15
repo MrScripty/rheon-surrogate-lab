@@ -1,6 +1,6 @@
 # Next pressure-model training runs
 
-Status: proposed sequence, requested for review; no training submitted. This is
+Status: proposed scientific sequence; no D0/R1 or later experiment submitted. This is
 not an executable recipe or an admitted implementation plan. Machine-readable
 budgets and factors are in [proposal.json](proposal.json). Existing historical
 results and current float32 target remain unchanged.
@@ -58,18 +58,18 @@ GPU can be probed read-only before any training; that smoke check does not
 qualify managed lab-model training or fabricate a Tuldok Run.
 The [installed-runtime smoke](reports/cuda-kernel-smoke.json) passed on the
 RTX 5090 Laptop GPU with Pumas Torch 2.14.0+cu132 / CUDA 13.2. No optimizer
-updates were performed. Managed CUDA training and CPU checkpoint portability
-remain to be implemented and qualified before submitting R1.
+updates were performed. Managed CUDA training and CPU checkpoint portability subsequently passed a
+[separate 20-update qualification](../cuda-training-cpu-inference/results.md).
+The new versioned trainer supports 1–10,000 updates, sparse bounded checkpoints,
+explicit learning-rate changes and independent sampling/initialization seeds.
+It preserves the architecture and all older CPU sources/results. Both actual
+managed Runs completed and drained; twelve CPU predictions repeated exactly.
 
-The current trainer also permits only
-200 updates, has fixed restore argument coverage, and derives sampling order
-from initialization seed. A new versioned trainer must support the larger budget,
-bounded checkpoint list, consistent checkpoint selection, independent sampling
-seed and target feedback. The current capture contract also lacks a true test
-split; introduce one before R5 instead of calling reserved tests validation.
-The artifact cap must be projected before any managed Run is admitted. Qualify
-CUDA-to-CPU portability in its own slice before changing normalization, the loss
-or architecture, so those scientific comparisons all share one qualified path.
+Before D0/R1, implement the labelled algebraic probes, explicit fitted-frame
+selection and scheduled native target inspection. The current qualification uses
+all training parents; it is not a one-case fitting experiment. Define each R2
+variant independently and add a genuine reserved test split before R5. Keep
+physical thresholds fixed and project artifact limits before admission.
 
 If one-case fitting remains unsuccessful after the controlled comparisons,
 inspect gradients, learning-rate behavior and coarse-grid communication before

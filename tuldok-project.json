@@ -1,7 +1,4 @@
 {
-  "schema_version": 1,
-  "id": "efcacc0dd75141c492aad4ab6640eecf",
-  "name": "Rheon Surrogate Lab \u00b7 seven-channel model \u00b7 float32 target",
   "activity_path": "runs/live-project/activity.json",
   "data": [
     {
@@ -21,7 +18,6 @@
       "sha256": "d91c7e7136a5d1a4589db02f0ad86cca904571e500c9ab76ba99104e5d3a42b5"
     }
   ],
-  "recipes": [],
   "evidence": [
     {
       "id": "readme",
@@ -103,8 +99,41 @@
       "label": "External native float32 calibration report \u00b7 no training Run",
       "path": "runs/float32-pressure-target-v1-1/report.json",
       "sha256": "86262c09843f92ccccd38a8a2eaae8bebf6b764854de94087153b598fe276265"
+    },
+    {
+      "id": "cuda-plan",
+      "label": "CUDA training and CPU inference plan",
+      "path": "docs/plans/cuda-training-cpu-inference/plan.md"
+    },
+    {
+      "id": "cuda-results",
+      "label": "Managed CUDA and CPU portability results",
+      "path": "docs/plans/cuda-training-cpu-inference/results.md"
+    },
+    {
+      "id": "cuda-acceptance",
+      "label": "Measured CUDA training and CPU restore acceptance",
+      "path": "docs/plans/cuda-training-cpu-inference/acceptance.json"
+    },
+    {
+      "id": "cuda-model",
+      "label": "Current portable seven-channel model",
+      "path": "experiments/cuda-pressure-v1/model.py"
+    },
+    {
+      "id": "cuda-training",
+      "label": "Current CUDA training and CPU restore source",
+      "path": "experiments/cuda-pressure-v1/train.py"
+    },
+    {
+      "id": "cuda-reusable-config",
+      "label": "Reusable CUDA qualification configuration",
+      "path": "experiments/cuda-pressure-v1/configs/qualification.json"
     }
   ],
+  "id": "ed5357f2d4c84763ba6dc826a0c9465b",
+  "name": "Rheon Surrogate Lab \u00b7 CUDA training \u00b7 CPU inference",
+  "recipes": [],
   "requirements": [
     {
       "id": "tuldok",
@@ -114,5 +143,6 @@
       "id": "rheon",
       "label": "Rheon egui with external experiment observation"
     }
-  ]
+  ],
+  "schema_version": 1
 }

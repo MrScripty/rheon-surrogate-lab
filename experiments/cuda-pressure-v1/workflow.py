@@ -29,7 +29,9 @@ def execute(client, project, output, observer=None):
                     prior = completed[binding['stage']]; item = next(a for a in prior['artifacts'] if a['name'] == binding['artifact'])
                     inputs[slot] = {'kind': 'run_artifact', 'run_id': prior['id'], 'artifact_name': item['name'], 'expected_sha256': item['sha256']}
             recipe = recipes[stage['recipe_id']]
-            arguments = {'name': 'Variable-grid '+stage['name'], 'project_id': opened['id'], 'recipe_id': recipe['id'],
+            label = 'CUDA pressure training' if stage['name'] == 'train' else 'CPU pressure restore'
+            if observer: observer.publish(label, 'Preparing exact inputs and verifying the measured runtime')
+            arguments = {'name': label, 'project_id': opened['id'], 'recipe_id': recipe['id'],
                          'expected_sha256': recipe['sha256'], 'inputs': inputs, 'parameters': {}}
             graph = client.request('POST', '/api/workspace/graphs/external', arguments)
             preflight = client.request('POST', f'/api/workspace/graphs/{graph["id"]}/preflight-external', {'revision': graph['revision']})
@@ -49,7 +51,7 @@ def execute(client, project, output, observer=None):
                 progress = client.request('GET', f'/api/workspace/runs/{run["id"]}/progress')
                 current = progress.get('progress') or {}
                 if observer:
-                    observer.publish('Variable-grid managed '+stage['name'], f'Run {run["id"]}: {run["state"]}; {current.get("stage", "preparing")}',
+                    observer.publish(label, f'Run {run["id"]}: {run["state"]}; {current.get("stage", "preparing")}',
                                      current.get('completed', 0), current.get('total'))
                 time.sleep(.5)
                 run = client.request('GET', f'/api/workspace/runs/{run["id"]}')
@@ -61,6 +63,7 @@ def execute(client, project, output, observer=None):
                 require(len(raw) == item['bytes'] and sha(raw) == item['sha256'], 'download_hash', item['name'])
                 require('/' not in item['name'] and item['name'] not in ('.', '..'), 'artifact_name', 'flat exact output')
                 (artifacts/item['name']).write_bytes(raw)
+            if observer: observer.publish(label, f'Run {run["id"]} completed and drained; artifacts verified', 1, 1)
             completed[stage['name']] = run
             report['stages'].append({'name': stage['name'], 'run_id': run['id'], 'state': run['state'], 'custody_phase': run['custody_phase'],
                                      'material_sha256': preflight['material_sha256'], 'artifacts': run['artifacts']})
@@ -73,6 +76,7 @@ def execute(client, project, output, observer=None):
                 require(sha(raw) == item['sha256'] and raw == read(output/f'stage-{index:02d}'/'artifacts'/item['name'], 4*MIB), 'repeat_download', 'whole artifact parity')
                 (destination/item['name']).write_bytes(raw)
         report['status'] = 'completed_and_drained'; write(output/'receipt.json', report)
+        if observer: observer.publish('CUDA/CPU portability stages complete', 'Both managed Runs completed and drained; artifacts re-downloaded and verified', len(stages), len(stages), state='completed')
         return report
     except BaseException as error:
         report.update(status='failed', error=str(error)); write(output/'failure.json', report)

@@ -18,13 +18,15 @@ SELECTED=None
 NORMALIZATION='groupnorm'
 CORRECTION=None
 OBJECTIVE='canonical'
+OUTPUT_SCALE='previous-pressure-rms'
 
 
 def select(config):
-    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE
+    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE,OUTPUT_SCALE
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
-    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2'):
+    OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3'):
         import physical_residual
         SELECTED='physical-residual';NORMALIZATION='none';CORRECTION=config['correction']
         ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
@@ -39,6 +41,10 @@ def select(config):
         if OBJECTIVE!='canonical':
             ARCHITECTURE.update(training_objective=OBJECTIVE,
                 loss_weights=copy.deepcopy(physical_residual.LOSS_WEIGHTS))
+        if config['schema']=='rheon-water-residual-experiment-v3':
+            ARCHITECTURE.update(output_scale=OUTPUT_SCALE,
+                reconstruction='float32 raw times selected train-only RMS, cell-zero gauge, add supplied base',
+                analytical_training_feedback=copy.deepcopy(config['analytical_feedback']))
         return
     require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'),
             'conditioning_configuration','explicit versioned model transformation')
@@ -82,7 +88,7 @@ def fit_normalization(parents,fit):
     result=fit(parents)
     if CORRECTION is not None:
         import physical_residual
-        result=physical_residual.fit_normalization(parents,result)
+        result=physical_residual.fit_normalization(parents,result,OUTPUT_SCALE)
     return result
 
 

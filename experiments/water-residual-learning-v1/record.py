@@ -18,9 +18,11 @@ def load(path):return json.loads(path.read_text())
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--trial',required=True)
+    parser.add_argument('--root',type=Path,default=LAB/'runs/water-residual-learning-v1')
+    parser.add_argument('--reports',type=Path,default=REPORTS)
     args=parser.parse_args()
     assert args.trial and all(c.isalnum() or c=='-' for c in args.trial)
-    root=LAB/'runs/water-residual-learning-v1'/args.trial;project=root/'project'
+    root=args.root.absolute()/args.trial;project=root/'project'
     config=load(project/'config.json');source=load(project/'source-witness.json')
     stages=[];train=None;history=None
     for path in sorted(root.glob('managed-*/receipt.json')):
@@ -53,7 +55,9 @@ def main():
         'runtime_snapshot':load(project/'runtime-manifest.json'),'native_evaluations':evaluations,'cpu_audits':audits,
         'trajectories':{path.parent.name:load(path) for path in sorted(root.glob('*trajectory*/receipt.json'))},
         'retained_artifacts':str(root.relative_to(LAB)),'new_reserved_test_used':False}
-    REPORTS.mkdir(exist_ok=True,parents=True);path=REPORTS/(args.trial+'.json')
+    if history.get('analytical_feedback') is not None:record['analytical_training_feedback']=history['analytical_feedback']
+    if (root/'mode-probe/report.json').exists():record['mode_probes']=load(root/'mode-probe/report.json')
+    args.reports.mkdir(exist_ok=True,parents=True);path=args.reports/(args.trial+'.json')
     raw=json.dumps(record,indent=2,sort_keys=True,allow_nan=False)+'\n'
     if path.exists():assert path.read_text()==raw,'immutable record differs; retain a separately named revision'
     else:path.write_text(raw)

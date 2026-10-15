@@ -53,7 +53,7 @@ def finite_tensors(tensors):
     return bool(torch.isfinite(torch.cat([value.detach().reshape(-1) for value in tensors])).all())
 
 
-def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None):
+def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None, analytical_sample=None, analytical_weight=0.):
     network.train(); optimizer.zero_grad(set_to_none=True)
     strategy=strategy or {'finite_checks':'per-tensor','batch_mode':'serial'}
     samples=[cache[(int(parent),int(frame))] if cache is not None else
@@ -76,11 +76,18 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
         else:
             require(float(loss) == 0, 'zero_residual_labels', 'bypassed exact solution must have zero loss')
         losses.append(float(loss.detach()))
+    if analytical_sample is not None:
+        import analytical
+        extra=analytical.loss(model.predict_pressure(network,analytical_sample,normalization),analytical_sample,model.full_operator)
+        require(bool(torch.isfinite(extra)), 'training_nonfinite', 'analytical feedback')
+        (analytical_weight*extra).backward()
+        extra_value=float(extra.detach())*analytical_weight
+    else:extra_value=0.
     gradient = torch.nn.utils.clip_grad_norm_(network.parameters(), 1.0, error_if_nonfinite=True)
     optimizer.step()
     finite=finite_tensors(network.parameters()) if strategy['finite_checks']=='combined' else all(bool(torch.isfinite(p).all()) for p in network.parameters())
     require(finite, 'training_nonfinite', 'weights')
-    return math.fsum(losses)/len(losses), float(gradient)
+    return math.fsum(losses)/len(losses)+extra_value, float(gradient)
 
 
 def evaluate(network, parents, normalization):
@@ -230,6 +237,12 @@ def run(args):
         training_started_unix = time.time()
         cache = {(i,slot):data.sample(parent,slot,device=device) for i,parent in enumerate(parents) if parent['entry']['split']=='train' for slot in range(len(parent['frames']))} if strategy['resident_inputs'] else None
         prepared={key:PreparedSample(sample,normalization) for key,sample in cache.items()} if strategy.get('prepared_fields') else None
+        analytical_samples=None;analytical_evidence=None
+        feedback=config.get('analytical_feedback')
+        if feedback is not None and feedback['weight']>0:
+            import analytical
+            require(len(cache or {})==1,'analytical_training','one recorded fitting frame for this controlled comparison')
+            analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'])
         profile_report = {'schema':'rheon-cuda-training-profile-v2','enabled':False,'execution':strategy}
         def capture_profile(profiler):
             events = profiler.key_averages()
@@ -256,7 +269,9 @@ def run(args):
                 for change in config['training']['schedule']:
                     if change['update'] == update:
                         for group in optimizer.param_groups: group['lr'] = change['learning_rate']
-                loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared)
+                extra=analytical_samples[int(analytical_order[update-1])] if analytical_samples is not None else None
+                loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared,
+                    analytical_sample=extra,analytical_weight=feedback['weight'] if extra is not None else 0.)
                 verify_cuda_update(network, optimizer, combined=strategy['finite_checks']=='combined')
                 if update % 100 == 0:
                     with torch.no_grad():
@@ -278,6 +293,7 @@ def run(args):
         validation = {'initial': initial_loss, 'final': evaluate(network, parents, normalization)}
         device_evidence.update(peak_allocated_bytes=torch.cuda.max_memory_allocated(), peak_reserved_bytes=torch.cuda.max_memory_reserved(), parameters_gradients_adam_moments_cuda=True, batches_cuda=True)
         write(output/'history.json', {'history': history, 'checkpoints': checkpoint_specs, 'validation': validation,
+                                     'analytical_feedback':analytical_evidence,
                                      'trace': trace, 'scope': 'final update candidate; no optimizer resume; loss before update, physical ratio after update',
                                      'training_started_unix':training_started_unix,'training_finished_unix':training_finished_unix,
                                      'execution_strategy':strategy,'optimizer_updates_per_s':config['training']['updates']/(training_finished_unix-training_started_unix)})

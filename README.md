@@ -437,3 +437,5 @@ and independent simulations become unstable. See the
 [prepared next experiments](docs/plans/water-residual-learning-v1/next-steps.md).
 Weights/datasets remain in the existing Tuldok catalog and ignored local Run
 artifacts. Historical results and the existing deployed comparison are preserved.
+
+Current experimental continuation: [stability-aware pressure learning](docs/plans/water-stability-learning-v1/plan.md), with [methods and results](docs/plans/water-stability-learning-v1/results.md).

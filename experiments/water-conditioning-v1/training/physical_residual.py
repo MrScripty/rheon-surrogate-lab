@@ -17,7 +17,7 @@ LOSS_WEIGHTS={'relative_correction_mse':.25,'relative_correction_gradient_mse':.
     'relative_equation_mse':.4,'relative_equation_max_squared':.1}
 
 
-def fit_normalization(parents,previous):
+def fit_normalization(parents,previous,output_scale='previous-pressure-rms'):
     result=copy.deepcopy(previous)
     train=[p for p in parents if p['entry']['split']=='train']
     cells=sum(p['arrays']['native_input_residual'].size for p in train)
@@ -30,14 +30,26 @@ def fit_normalization(parents,previous):
         operator='A=(h/rho)L; q=(rho/h)r in Pa; scalar cubic h in metres')
     result['scales']['laplacian_rhs']={'value':rms,'units':'Pa','method':'train_cell_rms',
         'source':'native_input_residual * density_kg_m3 / cell_size_m'}
+    if output_scale=='correction-rms':
+        squared=math.fsum(float(((p['arrays']['reference']-p['arrays']['base'])**2).sum()) for p in train)
+        correction_rms=math.sqrt(squared/cells)
+        require(math.isfinite(correction_rms) and correction_rms>0,'correction_scale','positive train-only correction RMS')
+        result.update(schema='rheon-physical-residual-normalization-v2',output_scale='correction_pressure')
+        result['scales']['correction_pressure']={'value':correction_rms,'units':'Pa',
+            'method':'train_cell_rms','source':'reference minus actual previous pressure'}
     return result
 
 
 def scales(normalization):
-    require(normalization.get('schema')==SCHEMA and normalization.get('channels')==CHANNELS,
+    newer=normalization.get('schema')=='rheon-physical-residual-normalization-v2'
+    require((normalization.get('schema')==SCHEMA or newer) and normalization.get('channels')==CHANNELS,
             'residual_normalization','versioned one-channel normalization')
     result=normalization['scales']
-    require(set(result)=={'residual','pressure','rhs','rho','dt','laplacian_rhs'},
+    expected={'residual','pressure','rhs','rho','dt','laplacian_rhs'}
+    if newer:
+        expected.add('correction_pressure')
+        require(normalization.get('output_scale')=='correction_pressure','residual_normalization','declared correction output scale')
+    require(set(result)==expected,
             'residual_normalization','explicit scale inventory')
     require(all(type(s['value']) in (int,float) and math.isfinite(s['value']) and s['value']>0
                 for s in result.values()),'residual_normalization','positive finite scales')
@@ -106,7 +118,7 @@ def predict_pressure(network,sample,normalization,owner,correction):
         raw=network(values.index_select(0,selected))
         require(raw.dtype==torch.float32 and raw.shape==(selected.numel(),1,*base.shape[2:])
                 and bool(torch.isfinite(raw).all()),'residual_output','finite f32 same-grid correction')
-        delta=owner.frozen.gauge_correction(raw,scales(normalization)['pressure'])
+        delta=owner.frozen.gauge_correction(raw,scales(normalization)[normalization.get('output_scale','pressure')])
         pressure=pressure.clone().index_copy(0,selected,pressure.index_select(0,selected)+delta)
     return pressure
 
@@ -115,7 +127,7 @@ def pressure_loss(prediction,sample,normalization,owner,objective='canonical'):
     # Keep the old physical objective exactly for the input/linearity ablations.
     scales(normalization)
     previous={**normalization,'schema':'rheon-cubic-pressure-normalization-v2',
-        'channels':owner.CHANNELS,'scales':{key:value for key,value in normalization['scales'].items() if key!='laplacian_rhs'}}
+        'channels':owner.CHANNELS,'scales':{key:value for key,value in normalization['scales'].items() if key not in ('laplacian_rhs','correction_pressure')}}
     canonical=owner.pressure_loss(prediction,sample,previous)
     if objective=='canonical':return canonical
     require(objective=='correction-gradient-divergence','residual_objective','known physical objective')

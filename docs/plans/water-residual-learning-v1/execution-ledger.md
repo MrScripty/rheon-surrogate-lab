@@ -61,3 +61,15 @@ tests pass; Clippy passes after correcting a local wrapper argument placement
 inference is claimed for that algorithmic control. Model trajectories follow
 after fresh CPU restores. This adds a bounded lab verification seam, not a
 production deployment migration or changes to the Rheon team's source.
+
+Initial one-channel nonlinear CPU evidence: fitted native residual
+0.0005193531068407955 (0/1 physical qualification), validation diagnostic median
+0.04441808198, max0.29100174022. This improves held-out residual relative to the
+matched historical one-frame no-GroupNorm model, but not prior larger-cohort
+best, and not the acceptance gate. Full native validation remains pending.
+
+Add a 5,000-update single-correction control matched to the recurrent run's
+seed, input, objective and 3,000/4,500-step schedule. The 10,000-update linear
+trial alone cannot isolate recurrence because its budget/schedule differ. The
+new control uses the numerically qualified prepared path; recurrence necessarily
+recomputes intermediate residuals. Report compute/sample exposure separately.

@@ -1,11 +1,8 @@
 # Rheon Surrogate Lab
 
-Current data work trains on [varied sealed domains full of water](experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The configuration reserves 256 training, 64 validation and 64 final-test simulations. Results will distinguish execution qualification from pressure accuracy.
+Current model work uses [varied sealed domains full of water](experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The unchanged seven-channel network completed 2,000 CUDA updates on 256 training simulations, with 64 validation and 64 reserved test simulations. Median reserved equation residual was 4.37%, but **0/128 model proposals passed** the pressure gates. Fresh CPU restore and all managed artifacts qualified. See [measured results and previous-run comparison](docs/plans/sealed-water-pressure-v1/results.md).
 
-Current model work uses [CUDA training with CPU deployment inference](experiments/cuda-pressure-v1/README.md)
-for the unchanged seven-channel variable-shape pressure network. A managed
-20-update CUDA run and fresh CPU restore passed [portability qualification](docs/plans/cuda-training-cpu-inference/results.md);
-all twelve learned proposals still fail the pressure accuracy target.
+The earlier [CUDA training and CPU inference qualification](docs/plans/cuda-training-cpu-inference/results.md) retains its original 20-update result and twelve failed accuracy checks.
 Voxel size is one scalar in physical metadata, with no voxel-size network channels.
 Current learned-output acceptance uses a [float32-calibrated residual target of
 1e-6](experiments/float32-pressure-target-v1/README.md), with existing physical

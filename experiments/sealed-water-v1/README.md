@@ -1,5 +1,7 @@
 # Varied sealed-water pressure experiment
 
+[Measured execution, held-out accuracy and previous-run comparison](../../docs/plans/sealed-water-pressure-v1/results.md) record the completed baseline: 0/128 pressure proposals qualified.
+
 This experiment trains the qualified seven-channel pressure-correction CNN on
 256 distinct training simulations, with 64 validation and 64 reserved test
 simulations. See [configuration](configs/water.json) and the

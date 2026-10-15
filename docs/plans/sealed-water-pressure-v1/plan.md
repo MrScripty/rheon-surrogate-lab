@@ -1,6 +1,6 @@
 # Varied sealed-water pressure training
 
-Status: Active. Canonical operation: implement and execute the user's requested
+Status: Completed for the sealed-water training baseline. Canonical operation: implement and execute the user's requested
 water training experiment. Serial owner: root; no delegation. New lab branch
 feat/sealed-water-pressure-training from a44584b. Keep all historical namespaces,
 results, dirty original Tuldok and Rheon checkouts intact. No push or merge.
@@ -113,3 +113,34 @@ failure as data. Historical probe/source/binary/results are untouched. No traini
 normalization, checkpoint selection or reserved predictions were rerun or changed.
 Exactly one next slice: finish all 128 frozen reserved native diagnostics and
 record measured accuracy, source/material/Run lineage and final visibility.
+
+Accepted slice: all dataset, CUDA training, fresh CPU restore, frozen reserved
+inference, artifact custody/redownload and native evaluation requirements passed
+as execution requirements. Learned accuracy failed 0/128 under both target profiles;
+this is the recorded scientific outcome, not an accuracy acceptance. All 384 normal
+reference field records are in the existing catalog. Measured completion and
+historical comparisons are in results.md and acceptance.json. No model changes or
+held-out tuning followed the final test. There are no unfinished training Runs.
+
+Branch disposition: retained for owner review under an explicit continuing
+contract. Owner: repository maintainer; task implementation owner: root. Base:
+a44584b. Purpose/consumer: review and recovery of this experiment and its measured
+source lineage. Synchronization: no automatic rebase, merge, push or cleanup.
+Retire the branch when the owner integrates or rejects it with its accepted
+commits protected. No new external worktree was created in this slice. Existing
+Tuldok/Rheon serving worktrees remain active UI dependencies; original dirty
+checkouts and later observed Rheon viewer edits remain untouched.
+
+New user direction: fresh live side-by-side conventional/AI simulations, not
+recorded field switching. Read-only capability audit found desktop Jacobi/SGS
+comparison and a library pressure-provider seam, but no current checkpoint adapter;
+the provider path excludes viscosity. Rejection/diagnostic/fallback behavior needs
+the user's preference before implementing dependent live comparison behavior.
+This is separate from the completed baseline and is not claimed implemented.
+
+User clarified the next capability: fresh independent reference/AI simulation
+tracks with an optional AI-minus-reference voxel color view and a pressure-style
+legend. This starts a separate live comparison slice; the completed training
+checkpoint remains frozen. The Tuldok catalog and six numeric field inspections
+verified; the final process check did not find a persistent Rheon observer, so
+window liveness is not claimed as accepted training evidence.

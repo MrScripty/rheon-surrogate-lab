@@ -83,6 +83,8 @@ train.py,project.py,pipeline.py,direction_feedback.py,test_direction_feedback.py
 experiments/water-multigrid-learning-v1/{record.py,qualify_bank.py};
 experiments/water-coverage-feedback-v1/run.py (bounded completed-comparison recovery
 and capture-duration preflight only; normal scientific execution unchanged);
+experiments/water-inference-budget-v1/scaling.py (retain rejected zero-frame native
+controls without masking setup errors with frame-file IO failures);
 experiments/water-late-residual-v1/**; docs/plans/water-late-residual-v1/**;
 README.md; tuldok-project.json. Ignored runs/water-late-residual-v1/** and activity.
 OOM fix also owns experiments/water-residual-learning-v1/audit.py and the existing
@@ -109,8 +111,15 @@ Milestones and acceptance, automated:
   process/timing/failure records and same-catalog project visibility. Pending.
 
 Current acceptance: pending. Current phase: follow-up CPU comparisons.
-Next slice: recover completed-comparison reporting, run remaining development and
-frozen final populations; preserve the first failed outer attempt.
+Next slice: amended final validation of the frozen candidate; preserve both failed
+outer attempts and the invalid original final population. The original pre-fit
+final protocol cannot be marked satisfied or authorize promotion. All58 development
+trajectories qualify for both new models; fixed-call improvement and full-trajectory
+pressure tradeoffs remain separately reported. Two final swirl values exceed the
+selected native range[-1,1]; clip only those two in a separately committed amended
+config, preserving all seeds/shapes/other physics, before any final AI evaluation.
+Qualify both repaired setups with one actual post-warm-up algorithm step first.
+No retraining, reselection or promotion from this post-fit protocol amendment.
 Blockers: none. Replan on invalid labels, incomplete lineage, parity violation,
 resource breach, unavailable CUDA/custody or unreaped work. Numerical improvement
 is measured, not a completion prerequisite. Decisions/issues/receipts live in

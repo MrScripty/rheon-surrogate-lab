@@ -1,0 +1,149 @@
+{
+  "schema": "rheon-final-validation-amendment-v1",
+  "original_config": "experiments/water-late-residual-v1/configs/final-holdout.json",
+  "original_sha256": "c2f4e824331d4ee8cc45971cc8a3045292d3cb3143e77598de87668462c063db",
+  "amended_config": "experiments/water-late-residual-v1/configs/final-holdout-amended.json",
+  "amended_sha256": "c6cdf6ae7bb7233d33f33c7f6ad3fdf3a56aa8dd0190d784f20a0c6e462f04df",
+  "selection_sha256": "2859b2f60da6089b4bce57b64caf1c9933b4e84b488f622d250f9f50d8fe875e",
+  "changes": [
+    {
+      "scene_index": 1,
+      "seed": 2026102901,
+      "field": "swirl",
+      "original": 1.072512,
+      "amended": 1.0
+    },
+    {
+      "scene_index": 6,
+      "seed": 2026102906,
+      "field": "swirl",
+      "original": -1.075191,
+      "amended": -1.0
+    }
+  ],
+  "rule": "only unsupported swirl values clipped to the selected native validator range [-1,1]; all eight original seeds, shapes and other forcing values retained",
+  "native_validator_source": "runs/water-learning-sequence-v1/Rheon/src/bin/desktop/ai_comparison/scene.rs",
+  "native_validator_sha256": "c9e40ec2ce5712594d40372087d7ec8d51f2123c350af5c7220825f9ec5f058a",
+  "original_ai_evaluations": 0,
+  "original_controls": [
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-00/native-0/receipt.json",
+      "sha256": "e845c9e76ccffe3a57e7e045396a8ae64abae80f10274c50816ab5480c1e9838",
+      "status": "completed",
+      "frames": 128,
+      "native_process": {
+        "pid": 62190,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-01/native-0/receipt.json",
+      "sha256": "7dc441bb45bfa9402867fade226c7f6271358709839b00f0f0114c37b9453fc0",
+      "status": "failed",
+      "frames": 0,
+      "native_process": {
+        "pid": 62188,
+        "returncode": 1,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-02/native-0/receipt.json",
+      "sha256": "cf8350d9147a5c0b85595b699d03c8fcb8cea75c91a46b41b7efa190ae622ae3",
+      "status": "completed",
+      "frames": 128,
+      "native_process": {
+        "pid": 62193,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-03/native-0/receipt.json",
+      "sha256": "3ea25bedaa261c0fbabd9eeb567323dddb4c8071e1fbc11ee4d402dea9618cc4",
+      "status": "completed",
+      "frames": 128,
+      "native_process": {
+        "pid": 62187,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-04/native-0/receipt.json",
+      "sha256": "8127bce3050d6b570853152f4e8156ba3269dd5370b1f2775785735b1dc83262",
+      "status": "completed",
+      "frames": 128,
+      "native_process": {
+        "pid": 62189,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-05/native-0/receipt.json",
+      "sha256": "5b20afda725a4f87456ef6044ccf008680c6198f526d09cc87df24a02d9ec8d1",
+      "status": "completed",
+      "frames": 128,
+      "native_process": {
+        "pid": 62191,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-06/native-0/receipt.json",
+      "sha256": "56ba4b37701866b11b2775b7e2f17cfed3bedadcd600ee9166d1cb0801f5bc14",
+      "status": "failed",
+      "frames": 0,
+      "native_process": {
+        "pid": 62192,
+        "returncode": 1,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-07/native-0/receipt.json",
+      "sha256": "3fe3eb691ad7d38e48a61ec8ef354e1734f37472317b25972aff8563c86b5a89",
+      "status": "completed",
+      "frames": 128,
+      "native_process": {
+        "pid": 62194,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    }
+  ],
+  "candidate_or_selection_changed": false,
+  "training_repeated": false,
+  "timing": {
+    "argv": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/study.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout.study.json",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout",
+      "--workers",
+      "8"
+    ],
+    "started_at_utc": "2026-10-16T11:42:05.405489+00:00",
+    "status": "failed",
+    "pid": 62147,
+    "returncode": 1,
+    "error_type": "CalledProcessError",
+    "finished_at_utc": "2026-10-16T11:42:51.834857+00:00",
+    "elapsed_seconds": 46.42931336399943,
+    "child_reaped": true
+  },
+  "limitation": "Post-fit setup amendment; original pre-fit final protocol remains invalid. This amended measurement cannot authorize promotion under that original protocol."
+}

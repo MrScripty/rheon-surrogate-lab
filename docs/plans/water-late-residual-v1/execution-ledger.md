@@ -194,3 +194,28 @@
   capture-duration validation before any new managed work. Local regression loop
   catches missing-duration admission before fix; altered-source and attempted-
   final guards also qualify. No model, labels, objective or inference change.
+- All58 standard development trajectories qualify for both new models. Frozen
+  rank(reference/early/late): max calls13/10/10; worst paired pressure relativeL2
+  6.140e-6/3.125e-5/2.880e-5; mean calls9.664/6.903/6.941. Thus late wins the
+  predeclared new-candidate rank and fixed-call accuracy, while its worst
+  autonomous paired pressure deviation remains4.69x above retained reference.
+  Do not present same-input gains as uniform trajectory-accuracy improvement.
+- Selection freezes at11:42:05 UTC before the original final's native controls.
+  Two controls reject before any frame/AI prediction: seeds2026102901/2906 have
+  swirl1.072512/-1.075191, beyond the selected native Scene range[-1,1]. This is
+  my final-config generation error. All8 native children are reaped; six controls
+  complete, two return1 with0 frames. The report loader then masks that setup
+  failure with FileNotFoundError for frames.jsonl. No final model evaluation,
+  new training or reselection has occurred. Preserve original config/selection,
+  failed final output and failed recovery status, not a model-failure label.
+- Fix the shared frame-summary boundary to retain failed zero-frame receipts;
+  still reject a completed receipt lacking its frame file. Two tests fail before
+  the fix and pass after it; original physics and successful metrics unchanged.
+  A final-validation amendment clips only those two swirl values to+1/-1 and
+  retains every original seed, domain and other forcing parameter. Commit its
+  exact bytes before any AI evaluation; qualify each repair on16 algorithm-only
+  steps (15 warm-up plus one controlled step) before the full8-scene comparison.
+  Model choice/weights/source/scales/acceptance remain frozen. The amendment is
+  post-fit: original pre-fit final protocol remains unsatisfied, so no promotion
+  is authorized from this amended measurement. All numerical outcomes remain
+  reportable and can guide a later independently qualified protocol.

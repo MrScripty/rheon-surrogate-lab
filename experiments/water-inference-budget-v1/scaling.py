@@ -28,7 +28,10 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def summarize(output):
     receipt=json.loads((output/'receipt.json').read_text())
-    frames=[json.loads(s) for s in (output/'frames.jsonl').read_text().splitlines()]
+    frame_path=output/'frames.jsonl'
+    if not frame_path.exists() and receipt['status']=='completed':
+        raise ValueError('completed native receipt requires frames')
+    frames=[json.loads(s) for s in frame_path.read_text().splitlines()] if frame_path.exists() else []
     frames=[f for f in frames if f.get('ai_quality')]
     callbacks=[json.loads(s) for s in (output/'callbacks.jsonl').read_text().splitlines()] if (output/'callbacks.jsonl').exists() else []
     # Exclude one explicit inference warm-up step from steady-state timing.

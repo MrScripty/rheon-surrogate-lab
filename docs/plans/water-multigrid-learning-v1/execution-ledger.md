@@ -175,3 +175,12 @@ GPU fit overlaps, so no uniform gain or whole-track speed claim is supported.
 Retain the profiles and optional diagnostic flag, without adding a rollout or
 checkpoint-adapter layout migration. Isolated final timings retain the qualified
 contiguous execution path and compare1/4 threads. No model/training change here.
+
+Timing-readiness review found the CPU study published aggregate observations
+only after a whole fixed-core partition completed; a serial study could hide
+intermediate results until every episode ended. Replaced that scheduling join
+with one in-flight job per core group and parent-owned streaming consumption.
+Every completed episode now updates retained reports and live activity. This
+also extends exclusive core leases to native controls with uneven durations.
+Independent event-driven scheduling/failure tests cover progress, exclusion and
+failure cleanup; existing native child lifecycle ownership remains unchanged.

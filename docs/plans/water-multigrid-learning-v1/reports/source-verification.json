@@ -1,0 +1,122 @@
+{
+  "schema": "rheon-multigrid-source-verification-v1",
+  "source_commit": "4d9bf2308bec9d17be31787e7a1a9619f0e1dcd8",
+  "records": [
+    {
+      "suite": "conditioning",
+      "command": [
+        "taskset",
+        "-c",
+        "1",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-conditioning-v1/training",
+        "-p",
+        "test_conditioning.py"
+      ],
+      "tests": 7,
+      "returncode": 0,
+      "log_sha256": "8d6584cba4b2de68a61416dbb28ea4770aaec0d4a3e14278e883019f3f9eeafe"
+    },
+    {
+      "suite": "residual",
+      "command": [
+        "taskset",
+        "-c",
+        "2",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-conditioning-v1/training",
+        "-p",
+        "test_residual.py"
+      ],
+      "tests": 6,
+      "returncode": 0,
+      "log_sha256": "25e566f181e27d5d8f6d44b37b68658049d4c061c57e92bb823a7f22fca7fb18"
+    },
+    {
+      "suite": "analytical",
+      "command": [
+        "taskset",
+        "-c",
+        "3",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-conditioning-v1/training",
+        "-p",
+        "test_analytical.py"
+      ],
+      "tests": 5,
+      "returncode": 0,
+      "log_sha256": "fa239822ae2fb9f55ee32f64036e94fabcd93356fc351979f4341d430afeec88"
+    },
+    {
+      "suite": "multigrid",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-conditioning-v1/training",
+        "-p",
+        "test_multigrid.py"
+      ],
+      "tests": 4,
+      "returncode": 0,
+      "log_sha256": "098fce7084f47ec7b26db4fe4f322fd3c78e648fea9a70d8f817d962efba51d4"
+    },
+    {
+      "suite": "iteration",
+      "command": [
+        "taskset",
+        "-c",
+        "5",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stability-learning-v1",
+        "-p",
+        "test_learned_iteration.py"
+      ],
+      "tests": 7,
+      "returncode": 0,
+      "log_sha256": "a4e52b24b76ac61c1e5d822af901a724af64730225f3e9ee55b5942e822a5937"
+    },
+    {
+      "suite": "native-lifecycle",
+      "command": [
+        "taskset",
+        "-c",
+        "6",
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1",
+        "-p",
+        "test_rollout.py"
+      ],
+      "tests": 2,
+      "returncode": 0,
+      "log_sha256": "be00dda77487c03c3af30e10a109ed9838a32a8e60f139736f385340508b5aca"
+    }
+  ],
+  "tests": 31,
+  "scope": "CPU source contract/gradient/property and process lifecycle fixtures; scientific CUDA training remains managed separately"
+}

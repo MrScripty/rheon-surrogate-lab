@@ -5,7 +5,7 @@ isolated serial repetitions suitable for comparing elapsed timings. Each native
 child retains the existing rollout owner's deadline and termination receipt.
 """
 import argparse
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import FIRST_COMPLETED,ThreadPoolExecutor,wait
 from datetime import datetime,timezone
 import hashlib
 import json
@@ -19,9 +19,28 @@ import time
 LAB=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(LAB/'experiments/water-inference-budget-v1'))
 from scaling import summarize
+sys.path.insert(0,str(LAB/'experiments/live-project-v1'))
+from observer import Observer
 
 
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def execute_partitioned(tasks,workers,execute,consume):
+    """Stream completed observations while one in-flight job owns each core group."""
+    partitions=[iter(tasks[index::workers]) for index in range(workers)]
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        pending={}
+        def submit(index):
+            task=next(partitions[index],None)
+            if task is not None:pending[pool.submit(execute,task)]=index
+        for index in range(workers):submit(index)
+        while pending:
+            completed,_=wait(pending,return_when=FIRST_COMPLETED)
+            for future in completed:
+                index=pending.pop(future)
+                consume(future.result())
+                submit(index)
 
 
 def main():
@@ -79,7 +98,8 @@ def main():
         if (output/'receipt.json').exists():result.update(summarize(output))
         else:result['failure']='no complete rollout receipt; inspect retained log'
         return result
-    records=[]
+    records=[];observer=Observer(args.output/'live')
+    observer.publish('CPU trajectory study','Native controls before matched checkpoint episodes')
     def save():
         aggregate=[]
         for index,_ in scenes:
@@ -105,8 +125,13 @@ def main():
         (args.output/'report.json').write_text(json.dumps(report,indent=2,allow_nan=False)+'\n')
         (args.output/'commands.json').write_text(json.dumps([r['command'] for r in records],indent=2)+'\n')
     controls=[(i,p,'native',None,0,partitions[j%args.workers]) for j,(i,p) in enumerate(scenes)]
-    with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for row in pool.map(execute,controls):records.append(row);save();print(json.dumps({'control':row['scene'],'returncode':row['returncode'],'result':row.get('result')}),flush=True)
+    def consume(row):
+        records.append(row);save()
+        observer.publish('CPU trajectory study',f"{row['model']}, scene {row['scene']}, repetition {row['repetition']+1}; qualified steps {(row.get('result') or {}).get('qualified_ai_steps','?')}",len(records))
+        print(json.dumps({k:row.get(k) for k in ('scene','model','returncode','result')}),flush=True)
+    try:execute_partitioned(controls,args.workers,execute,consume)
+    except BaseException:
+        observer.publish('CPU native controls failed','Inspect retained control outputs and lifecycle receipts',len(records),state='failed');raise
     valid={r['scene'] for r in records if r['returncode']==0 and r.get('result') and not r['result']['hard_stop'] and r['all_ai_steps_qualified'] and r['all_reference_steps_qualified']}
     tasks=[]
     for index,path in scenes:
@@ -114,15 +139,11 @@ def main():
         for repetition in range(config['repetitions']):
             for model in (models if repetition%2==0 else models[::-1]):
                 tasks.append((index,path,model['name'],model,repetition,partitions[len(tasks)%args.workers]))
-    # Map fixed core partitions to persistent workers; uneven job duration cannot
-    # cause two active subprocesses to contend on the same assigned core.
-    def partition(items):return [execute(item) for item in items]
-    task_partitions=[tasks[i::args.workers] for i in range(args.workers)]
-    with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for group in pool.map(partition,task_partitions):
-            for row in group:
-                records.append(row);save();print(json.dumps({k:row.get(k) for k in ('scene','model','returncode','result')}),flush=True)
+    try:execute_partitioned(tasks,args.workers,execute,consume)
+    except BaseException:
+        observer.publish('CPU trajectory study failed','Inspect retained per-episode commands, logs and lifecycle receipts',len(records),state='failed');raise
     save()
+    observer.publish('CPU trajectory study complete','All episode observations and physical outcomes retained',len(records),len(records),state='completed')
 
 
 if __name__=='__main__':main()

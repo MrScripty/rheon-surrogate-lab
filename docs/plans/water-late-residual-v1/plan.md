@@ -16,6 +16,10 @@ Decisions:
   Same original initialization, seeds, real/primary/supplemental exposure,
   two-correction intermediate objective, weight 0.1 and one extra draw/update.
   CPU inference retains original adaptive 1e-6/physical gates and 32-call cap.
+- User reaffirmed direct low-frequency improvement first. Frequency-loss
+  curricula stay deferred. Retain configuration/source/checkpoint identities,
+  exposure, accuracy by band, timings, failures/retries and selection decisions
+  as durable small receipts for later review, alongside the live Tuldok project.
 - Freeze extra pairs from targeted checkpoint 5bbdc315… using its actual eight
   single-call corrections, independently solved compatible early/late residuals.
   Use original 16 training parents/32 states plus eight fixed pattern directions
@@ -92,7 +96,8 @@ to existing project-input/training owners, preserving numerical/runtime composit
 Milestones and acceptance, automated:
 - M1 CPU bank qualification: independent neighbor-action defects, gauges,
   homogeneous prediction, train-only lineage, paired sampling/cell work and
-  memory bounds; one example before broad generation. Active.
+  memory bounds; one example before broad generation. Accepted:144 paired cases,
+  no exclusions, independent defects <=4.08e-13,12.158s bounded preparation.
 - M2 focused contract/gradient/parity evidence and clean committed-source capture;
   managed one-update CUDA fit and CPU restore qualify the real new input boundary
   before full fits. Required-real local RTX5090/Tuldok. Pending.
@@ -100,8 +105,8 @@ Milestones and acceptance, automated:
   58 development trajectories, frozen final comparison, complete source/custody,
   process/timing/failure records and same-catalog project visibility. Pending.
 
-Current acceptance: pending. Current phase: paired-bank preparation.
-Next slice: qualify a real/analytical pair before preparing all selected directions.
+Current acceptance: pending. Current phase: managed source/fixture preparation.
+Next slice: committed clean source capture and one-update CUDA/CPU restore fixture.
 Blockers: none. Replan on invalid labels, incomplete lineage, parity violation,
 resource breach, unavailable CUDA/custody or unreaped work. Numerical improvement
 is measured, not a completion prerequisite. Decisions/issues/receipts live in

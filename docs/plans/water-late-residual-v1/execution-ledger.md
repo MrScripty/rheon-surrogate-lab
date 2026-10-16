@@ -91,3 +91,24 @@
   Preserve unchanged full-band physical evaluation even for a future masked-loss
   warm-up. Timings, inputs, calls, decomposition and identities are retained in
   reports/spatial-band-probe.json and its command receipt. No model promotion.
+- User confirms direct low-frequency response first and reiterates durable
+  methods/results retention. Keep curricula deferred. Completed bounded bank:
+  144 paired directions (32 real train states plus112 manufactured directions),
+  no exclusions, worst independent operator defect4.071e-13,12.158s, parent peak
+  886,439,936bytes. Matching5,000 extra draws and54,460,289 cells/correction;
+  combined logical residency706,219,584bytes. Reports/bank-preparation.json and
+  direction-loader.json retain exact lineage, bounds and sampling identities.
+- Final source review caught packet-receipt verification comparing original
+  packet slots against added direction slots; check original packet before
+  extending the typed inputs. Reuse existing trial record owner, adding direction
+  draws/cell work only when present; previous record accounting stays unchanged.
+  All32 focused trainer tests pass after source changes (1.176s test interval).
+- Before source capture, reserve8 new whole final scenes with unique seeds and
+  physical setups, disjoint from136 prior configured scenes. Config file hash
+  c2f4e824331d4ee8cc45971cc8a3045292d3cb3143e77598de87668462c063db.
+  Prior independent-seed confirmation remains unconsumed. No optimizer yet.
+- Register live snapshot2cce354d8b724a1dbce76989e470a437, late residual training,
+  in the same catalog a7da4a8de53541a2a0e2aad08005bb71; reopen it and confirm old
+  pressure-accuracy project retained. GPU is available on the host RTX5090;
+  sandbox nvidia-smi lacks device access, host query succeeds. Use real managed
+  host CUDA execution, never substitute CPU fitting.

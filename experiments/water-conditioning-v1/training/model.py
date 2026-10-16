@@ -26,6 +26,11 @@ def select(config):
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
+    if config['schema'] == 'rheon-water-residual-experiment-v8':
+        select({k: ('rheon-water-residual-experiment-v7' if k == 'schema' else v)
+                for k, v in config.items() if k != 'direction_feedback'})
+        ARCHITECTURE['direction_training_feedback'] = copy.deepcopy(config['direction_feedback'])
+        return
     if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
         import physical_residual
         SELECTED='physical-residual';NORMALIZATION='none';CORRECTION=config['correction']

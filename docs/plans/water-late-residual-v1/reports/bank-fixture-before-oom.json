@@ -1,0 +1,168 @@
+{
+  "schema": "rheon-pressure-direction-bank-v1",
+  "created_at_utc": "2026-10-16T09:52:08.611188+00:00",
+  "source": {
+    "project": "runs/water-targeted-feedback-v1/targeted-feedback/project",
+    "artifacts": "runs/water-targeted-feedback-v1/targeted-feedback/managed-full/stage-01/artifacts",
+    "weights_sha256": "5bbdc3159fe965b4768c14501bcb678ecffc837e0ccd01a513003bcad533f3fe",
+    "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+    "source_witness_sha256": "30f35107050997bbf29bd734097047e1912aa42dd63004eda5d5449524b1f0f2"
+  },
+  "packet_splits_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+  "train_trajectory_ids": [
+    "baseline--water-train-0000",
+    "baseline--water-train-0001",
+    "baseline--water-train-0002",
+    "baseline--water-train-0003",
+    "baseline--water-train-0004",
+    "baseline--water-train-0005",
+    "baseline--water-train-0006",
+    "baseline--water-train-0007",
+    "baseline--water-train-0008",
+    "baseline--water-train-0009",
+    "baseline--water-train-0010",
+    "baseline--water-train-0011",
+    "baseline--water-train-0012",
+    "baseline--water-train-0013",
+    "baseline--water-train-0014",
+    "baseline--water-train-0015"
+  ],
+  "amplitude_rms_pa": 2.8535734640782584,
+  "source_corrections": 8,
+  "configuration": {
+    "schema": "rheon-pressure-direction-preparation-v1",
+    "source": {
+      "project": "runs/water-targeted-feedback-v1/targeted-feedback/project",
+      "artifacts": "runs/water-targeted-feedback-v1/targeted-feedback/managed-full/stage-01/artifacts"
+    },
+    "packet": "runs/water-residual-learning-v1/views/cohort-16",
+    "patterns_per_grid": 8,
+    "source_amplitude_slot": 2,
+    "corrections": 8,
+    "minimum_late_ratio": 1e-12,
+    "workers": 24,
+    "output": "runs/water-late-residual-v1/directions"
+  },
+  "cases": [
+    {
+      "identity": {
+        "kind": "real",
+        "group": "real",
+        "trajectory_id": "baseline--water-train-0000",
+        "frame": 15
+      },
+      "late_over_initial": 3.4526632121648364e-07,
+      "cpu_affinity": [
+        0
+      ],
+      "cuda_initialized": false,
+      "stages": {
+        "early": {
+          "gain": 1.3093891790833085,
+          "unscaled_correction_rms_pa": 2.1793165161759007,
+          "scaled_correction_rms_pa": 2.8535734640782584,
+          "operator_relative_error": 8.122777889042653e-14,
+          "removed_constant_over_residual": 5.2415364829719945e-18
+        },
+        "late": {
+          "gain": 657579.2108882827,
+          "unscaled_correction_rms_pa": 4.3395128933950695e-06,
+          "scaled_correction_rms_pa": 2.853573464078258,
+          "operator_relative_error": 3.75073231141322e-13,
+          "removed_constant_over_residual": 2.2846625886250783e-11
+        }
+      },
+      "homogeneity": [
+        {
+          "gain": 0.3,
+          "relative_error": 1.6335617780886545e-06
+        },
+        {
+          "gain": 2.0,
+          "relative_error": 0.0
+        }
+      ],
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "rho": 1000.0,
+      "dt": 0.016666666666666666,
+      "cell_size_m": 0.125
+    },
+    {
+      "identity": {
+        "kind": "manufactured",
+        "group": "primary-00",
+        "bank": "primary",
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            16,
+            16,
+            16
+          ]
+        },
+        "pattern": 0,
+        "amplitude_slot": 2
+      },
+      "late_over_initial": 2.503897296290356e-06,
+      "cpu_affinity": [
+        1
+      ],
+      "cuda_initialized": false,
+      "stages": {
+        "early": {
+          "gain": 1.9999999999999827,
+          "unscaled_correction_rms_pa": 1.4267867320391416,
+          "scaled_correction_rms_pa": 2.8535734640782584,
+          "operator_relative_error": 1.9056287185001765e-14,
+          "removed_constant_over_residual": 5.963861418812859e-17
+        },
+        "late": {
+          "gain": 911331.5696066723,
+          "unscaled_correction_rms_pa": 3.13121322605981e-06,
+          "scaled_correction_rms_pa": 2.853573464078259,
+          "operator_relative_error": 1.9957868779363875e-14,
+          "removed_constant_over_residual": 2.5963943432496105e-11
+        }
+      },
+      "homogeneity": [
+        {
+          "gain": 0.3,
+          "relative_error": 1.8794055981327137e-06
+        },
+        {
+          "gain": 2.0,
+          "relative_error": 0.0
+        }
+      ],
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "rho": 1000.0,
+      "dt": 0.016666666666666666,
+      "cell_size_m": 0.0625
+    }
+  ],
+  "excluded": [],
+  "source_sha256": "0b1bd50224fec15aa7cb95eeda54bd736aad6b5cad73c6b0de8c4972ab72c64f",
+  "elapsed_seconds": 4.0663233320228755,
+  "optimizer_updates": 0,
+  "scope": "frozen train-only extra pressure directions; not new CFD parents or inference inputs",
+  "stages": {
+    "early": {
+      "sha256": "c51ca39783c4023326493e56a2b65e4e383441a93bfb1e415b3eba894eb1d3f7",
+      "bytes": 132142
+    },
+    "late": {
+      "sha256": "82be7ac5ca4364224eb8ea15a400f44ae4b820f50589983489342aa01f7742f8",
+      "bytes": 132142
+    }
+  },
+  "manifest_sha256": "eac4f2c7cd050193c80f4ce4b80cb74c81d55837bafce70095497c2c5ea01dee",
+  "output": "runs/water-late-residual-v1/directions-fixture-1"
+}

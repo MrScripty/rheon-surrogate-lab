@@ -14,7 +14,7 @@ import train
 
 
 def definition(config, sources, snapshot, mode, prefix):
-    inputs = {name: {'max_bytes': 4*MIB if name == 'splits' else 32*MIB} for name in train.DATA}
+    inputs = {name: {'max_bytes': 4*MIB if name in ('splits', 'direction_manifest') else 32*MIB} for name in train.input_slots(config)}
     arguments = [{'literal': mode}]
     for slot in inputs:
         arguments += [{'literal': '--'+slot.replace('_', '-')}, {'input': slot}]
@@ -33,7 +33,7 @@ def definition(config, sources, snapshot, mode, prefix):
         'environment': {}, 'resources': config['resources']}
 
 
-def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, configuration):
+def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, configuration, direction_bank=None):
     require(not subprocess.check_output(['git', 'status', '--porcelain'], cwd=LAB), 'source_commit', 'commit qualified experiment source before material capture')
     packet_config, parents = data.read_view(packet)
     config = experiment(decode(read(configuration, MIB)))
@@ -44,7 +44,16 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     packet_receipt = decode(read(packet/'dataset-receipt.json', MIB))
     require(packet_receipt['status'] == 'verified_lossless_water_view' and packet_receipt['reader_source_sha256'] == sha(read(HERE/'data.py')), 'view_receipt', 'qualified current reader')
     inputs = data.inputs(packet)
-    require(packet_receipt['inputs'] == {k: {'bytes': len(v), 'sha256': sha(v)} for k,v in inputs.items()}, 'view_receipt', 'exact complete training inputs')
+    require(packet_receipt['inputs'] == {k: {'bytes': len(v), 'sha256': sha(v)} for k,v in inputs.items()}, 'view_receipt', 'exact complete training packet inputs')
+    if config['schema'] == 'rheon-water-residual-experiment-v8':
+        require(direction_bank is not None, 'direction_input', 'explicit qualified paired-bank directory')
+        direction_bank = direction_bank.absolute()
+        inputs['direction_manifest'] = read(direction_bank/'manifest.json', 4*MIB)
+        require(sha(inputs['direction_manifest']) == config['direction_feedback']['manifest_sha256'],
+                'direction_manifest', 'selected prequalified paired bank')
+        inputs['direction_dataset'] = read(direction_bank/(config['direction_feedback']['stage']+'.npz'), 32*MIB)
+    else:
+        require(direction_bank is None, 'direction_input', 'direction bank requires v8')
     evaluations = {}; evaluation_parents = {}
     for population, directory in [('validation', validation), ('reserved_test', reserved)]:
         reservation, records = data.read_view(directory)
@@ -84,6 +93,8 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     qualification = {'status':'passed','optimizer_constructed':False,'optimizer_updates':0,'normalization_sha256':sha(canonical(normalization)),
         'grid_shapes_xyz':checked,'zero_residual_exact':True,'physical_cells':'cubic','train_parents':len(train_ids),'validation_parents':len(val_ids),'reserved_test_parents':len(test_ids),'output_projection_bytes':projection}
     sources = {name: read(HERE/name, 2*MIB) for name in ('policy.py','support.py','scenes.py','model.py','data.py','train.py','prepared.py','physical_residual.py','analytical.py','test_inference.py')}
+    if config['schema'] == 'rheon-water-residual-experiment-v8':
+        sources['direction_feedback.py'] = read(HERE/'direction_feedback.py', MIB)
     for name,path in [('portable_model.py','experiments/cuda-pressure-v1/model.py'),('portable_policy.py','experiments/cuda-pressure-v1/policy.py'),
         ('frozen_gn.py','experiments/global-pressure-v1/groupnorm-v1/model.py'),('historical-reservation.json','docs/plans/global-pressure-correction-v1/reservation.json')]: sources[name] = read(LAB/path, MIB)
     for name in ('model','train','data'): sources['original_'+name+'.py'] = read(LAB/'experiments/global-pressure-v1/training'/(name+'.py'), MIB)
@@ -99,7 +110,7 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     output = fresh(output); prefix = output.relative_to(LAB).as_posix()+'/'
     for name,raw in sources.items(): (output/name).write_bytes(raw)
     (output/'inputs').mkdir()
-    input_names = {slot:slot+('.json' if slot.endswith('splits') else '.npz') for slot in inputs}
+    input_names = {slot:slot+('.json' if slot.endswith('splits') or slot == 'direction_manifest' else '.npz') for slot in inputs}
     for slot,raw in inputs.items(): (output/'inputs'/input_names[slot]).write_bytes(raw)
     sys.path.insert(0,str(tuldok))
     from recipe_contract import decode_definition
@@ -116,8 +127,8 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
         'data':[{'id':slot,'label':slot,'path':prefix+'inputs/'+input_names[slot],'sha256':sha(raw)} for slot,raw in inputs.items()],
         'recipes':recipes,'evidence':[],'requirements':[]}
     validate_project(manifest);write(output/'project.json',manifest)
-    stages=[{'name':'train','recipe_id':'train','inputs':{slot:slot for slot in train.DATA}},
-        {'name':'restore','recipe_id':'restore','inputs':{**{slot:slot for slot in train.DATA},**{slot:{'stage':'train','artifact':name} for slot,(name,_role,_cap) in train.trained_inputs(config).items()}}}]
+    stages=[{'name':'train','recipe_id':'train','inputs':{slot:slot for slot in train.input_slots(config)}},
+        {'name':'restore','recipe_id':'restore','inputs':{**{slot:slot for slot in train.input_slots(config)},**{slot:{'stage':'train','artifact':name} for slot,(name,_role,_cap) in train.trained_inputs(config).items()}}}]
     for population in ('validation','reserved_test'):
         stages.append({'name':population,'recipe_id':population,'inputs':{**{population+'_'+slot:population+'_'+slot for slot in train.DATA},
             **{slot:{'stage':'train','artifact':name} for slot,(name,_role,_cap) in test_inference.TRAINED.items()}}})

@@ -15,6 +15,17 @@ dimensions=portable.dimensions
 
 def experiment(value):
     require(type(value) is dict,'conditioning_configuration','object required')
+    if value.get('schema') == 'rheon-water-residual-experiment-v8':
+        import direction_feedback
+        require('direction_feedback' in value, 'direction_feedback', 'captured direction bank required')
+        previous = {k: v for k, v in value.items() if k != 'direction_feedback'}
+        previous['schema'] = 'rheon-water-residual-experiment-v7'
+        experiment(previous)
+        direction_feedback.specification(value['direction_feedback'])
+        require(value['correction'] == {'activation': 'linear', 'steps': 2}
+                and value['objective'] == 'canonical-intermediate-contraction',
+                'direction_feedback', 'qualified linear two-correction recipe')
+        return decode(canonical(value))
     if value.get('schema') in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
         expected={'schema','id','training','resources','conditioning','normalization','execution','correction'}
         if value['schema'] in ('rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):expected.add('objective')
@@ -110,6 +121,8 @@ def experiment(value):
 
 
 def execution(config):
+    if config['schema'] == 'rheon-water-residual-experiment-v8':
+        return execution({**config, 'schema': 'rheon-water-residual-experiment-v7'})
     selected=config.get('execution',{'resident_inputs':False,'finite_checks':'per-tensor','batch_mode':'serial','profile_updates':0})
     expected={'resident_inputs','finite_checks','batch_mode','profile_updates'}
     if config['schema'] in ('rheon-water-conditioning-experiment-v4','rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):expected.add('prepared_fields')

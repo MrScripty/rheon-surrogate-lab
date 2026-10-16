@@ -19,6 +19,13 @@ from prepared import PreparedSample
 DATA = data.DATA
 
 
+def input_slots(config):
+    if config['schema'] == 'rheon-water-residual-experiment-v8':
+        import direction_feedback
+        return {**DATA, **direction_feedback.SLOTS}
+    return DATA
+
+
 def outputs(config):
     result = {'weights.npz': ('checkpoint', 2*MIB), 'predictions.npz': ('predictions', 2*MIB),
               'normalization.json': ('preprocessing', MIB), 'splits.json': ('training_splits', 4*MIB),
@@ -53,7 +60,7 @@ def finite_tensors(tensors):
     return bool(torch.isfinite(torch.cat([value.detach().reshape(-1) for value in tensors])).all())
 
 
-def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None, analytical_sample=None, analytical_weight=0., supplemental_sample=None, supplemental_weight=0.):
+def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None, analytical_sample=None, analytical_weight=0., supplemental_sample=None, supplemental_weight=0., direction_sample=None, direction_weight=0.):
     network.train(); optimizer.zero_grad(set_to_none=True)
     strategy=strategy or {'finite_checks':'per-tensor','batch_mode':'serial'}
     samples=[cache[(int(parent),int(frame))] if cache is not None else
@@ -91,6 +98,13 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
         require(bool(torch.isfinite(extra)), 'training_nonfinite', 'supplemental feedback')
         (supplemental_weight*extra).backward()
         extra_value+=float(extra.detach())*supplemental_weight
+    if direction_sample is not None:
+        import analytical
+        extra = model.training_loss(network, direction_sample, normalization,
+            criterion=lambda prediction: analytical.loss(prediction, direction_sample, model.full_operator)).mean()
+        require(bool(torch.isfinite(extra)), 'training_nonfinite', 'captured direction feedback')
+        (direction_weight*extra).backward()
+        extra_value += float(extra.detach())*direction_weight
     gradient = torch.nn.utils.clip_grad_norm_(network.parameters(), 1.0, error_if_nonfinite=True)
     optimizer.step()
     finite=finite_tensors(network.parameters()) if strategy['finite_checks']=='combined' else all(bool(torch.isfinite(p).all()) for p in network.parameters())
@@ -216,9 +230,9 @@ def run(args):
             and runtime['packages']['torch'] == torch.__version__ and runtime['packages']['numpy'] == np.__version__
             and runtime['python_version'] == f'{sys.version_info.major}.{sys.version_info.minor}'
             and os.environ.get('TULDOK_TORCH_DEVICE') == device, 'runtime', 'approved installed Torch and explicit device')
-    inputs = {slot: read(getattr(args, slot), 4*MIB if slot == 'splits' else 32*MIB) for slot in DATA}
+    inputs = {slot: read(getattr(args, slot), 4*MIB if slot in ('splits', 'direction_manifest') else 32*MIB) for slot in input_slots(config)}
     evidence = decode(read(args.input_evidence, MIB)); declared = trained_inputs(config) if args.mode == 'restore' else {}
-    require(set(evidence) == set(DATA) | set(declared), 'inputs', 'all typed slots')
+    require(set(evidence) == set(input_slots(config)) | set(declared), 'inputs', 'all typed slots')
     project_inputs(evidence, inputs, witness)
     manifest = decode(inputs['splits']); packet_config, parents = data.load((inputs['dataset'], inputs['dataset_extra']), manifest)
     require(sha(canonical(packet_config)) == witness['packet_experiment_sha256'], 'packet_config', 'unchanged qualified physical experiment')
@@ -249,7 +263,7 @@ def run(args):
         feedback=config.get('analytical_feedback')
         if feedback is not None and feedback['weight']>0:
             import analytical
-            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
+            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7','rheon-water-residual-experiment-v8'):
                 require(cache,'analytical_training','resident actual training states required')
                 amplitude=analytical.training_correction_rms(cache.values())
                 analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'],amplitude_pa=amplitude)
@@ -262,6 +276,17 @@ def run(args):
             supplemental_samples,supplemental_order,supplemental_evidence=analytical.supplemental_bank(
                 next(iter(cache.values())),supplemental,config['training']['updates'],
                 (analytical_samples,analytical_order,analytical_evidence),feedback,amplitude)
+        direction_samples = None
+        direction_evidence = None
+        direction = config.get('direction_feedback')
+        if direction is not None:
+            import direction_feedback
+            resident = analytical_evidence['resident_tensor_bytes']+supplemental_evidence['resident_tensor_bytes']
+            direction_samples, direction_order, direction_evidence = direction_feedback.bank(
+                inputs, direction, normalization,
+                [p['entry']['trajectory_id'] for p in parents if p['entry']['split'] == 'train'],
+                config['training']['updates'], device, resident,
+                min(feedback['cache_max_bytes'], supplemental['cache_max_bytes']))
         profile_report = {'schema':'rheon-cuda-training-profile-v2','enabled':False,'execution':strategy}
         def capture_profile(profiler):
             events = profiler.key_averages()
@@ -290,9 +315,11 @@ def run(args):
                         for group in optimizer.param_groups: group['lr'] = change['learning_rate']
                 extra=analytical_samples[int(analytical_order[update-1])] if analytical_samples is not None else None
                 second=supplemental_samples[int(supplemental_order[update-1])] if supplemental_samples is not None else None
+                third = direction_samples[int(direction_order[update-1])] if direction_samples is not None else None
                 loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared,
                     analytical_sample=extra,analytical_weight=feedback['weight'] if extra is not None else 0.,
-                    supplemental_sample=second,supplemental_weight=supplemental['weight'] if second is not None else 0.)
+                    supplemental_sample=second,supplemental_weight=supplemental['weight'] if second is not None else 0.,
+                    direction_sample=third,direction_weight=direction['weight'] if third is not None else 0.)
                 verify_cuda_update(network, optimizer, combined=strategy['finite_checks']=='combined')
                 if update % 100 == 0:
                     with torch.no_grad():
@@ -316,6 +343,7 @@ def run(args):
         write(output/'history.json', {'history': history, 'checkpoints': checkpoint_specs, 'validation': validation,
                                      'analytical_feedback':analytical_evidence,
                                      **({'supplemental_feedback':supplemental_evidence} if supplemental_evidence is not None else {}),
+                                     **({'direction_feedback':direction_evidence} if direction_evidence is not None else {}),
                                      'trace': trace, 'scope': 'final update candidate; no optimizer resume; loss before update, physical ratio after update',
                                      'training_started_unix':training_started_unix,'training_finished_unix':training_finished_unix,
                                      'execution_strategy':strategy,'optimizer_updates_per_s':config['training']['updates']/(training_finished_unix-training_started_unix)})
@@ -384,6 +412,8 @@ def main():
         parser.add_argument('--'+name.replace('_', '-'), dest=name.replace('-', '_'), type=Path, required=True)
     known, _unknown = parser.parse_known_args()
     config = experiment(decode(read(known.config)))
+    for slot in set(input_slots(config))-set(DATA):
+        parser.add_argument('--'+slot.replace('_', '-'), dest=slot, type=Path, required=True)
     for name in ('weights.npz', 'predictions.npz', 'normalization.json', 'splits.json', 'history.json', 'profile.json', 'receipt.json', *(f'checkpoint-{u:03d}.npz' for u in config['training']['checkpoints'])):
         slot = 'trained_'+name.replace('-', '_').replace('.', '_'); parser.add_argument('--'+slot.replace('_', '-'), dest=slot, type=Path)
     args = parser.parse_args()

@@ -496,3 +496,5 @@ The completed [stability-aware pressure sequence](docs/plans/water-stability-lea
 Previous experiment: [inference budget and scaling](docs/plans/water-inference-budget-v1/plan.md), with [methods and results](docs/plans/water-inference-budget-v1/results.md).
 
 Earlier experiment: [multi-grid pressure learning results](docs/plans/water-multigrid-learning-v1/results.md), with [retained comparison data](docs/plans/water-multigrid-learning-v1/reports/summary.json), CUDA cohort training and qualified iterative CPU inference.
+
+Current experiment: [matched early and late residual feedback](docs/plans/water-late-residual-v1/plan.md), with [methods and timing](docs/plans/water-late-residual-v1/execution-ledger.md) and [current results](docs/plans/water-late-residual-v1/reports/current.json). The two CUDA fits preserve existing inputs and compare additional train-only correction directions; CPU inference and physical qualification remain unchanged.

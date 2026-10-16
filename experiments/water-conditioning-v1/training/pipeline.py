@@ -10,6 +10,7 @@ def main():
     assemble=commands.add_parser('assemble')
     for name in ('packet','validation','reserved','runtime-manifest','tuldok','output','config'):
         assemble.add_argument('--'+name,type=Path,required=True)
+    assemble.add_argument('--direction-bank', type=Path)
     evaluate=commands.add_parser('evaluate')
     for name in ('packet','inference','output','binary'):evaluate.add_argument('--'+name,type=Path,required=True)
     evaluate.add_argument('--training-only',action='store_true')
@@ -17,7 +18,7 @@ def main():
     args=parser.parse_args()
     if args.command=='assemble':
         import project
-        result=project.assemble(args.packet.absolute(),args.validation.absolute(),args.reserved.absolute(),args.runtime_manifest.absolute(),args.tuldok.absolute(),args.output.absolute(),args.config.absolute())
+        result=project.assemble(args.packet.absolute(),args.validation.absolute(),args.reserved.absolute(),args.runtime_manifest.absolute(),args.tuldok.absolute(),args.output.absolute(),args.config.absolute(),direction_bank=args.direction_bank)
     else:
         import diagnostics
         from importlib.util import spec_from_file_location,module_from_spec

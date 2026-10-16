@@ -55,3 +55,14 @@ staged whitespace check caught a trailing space emitted by unittest; only traili
 whitespace in the retained display log was normalized, with outcomes unchanged.
 No model/data/credential payloads were staged. Review scope is the complete
 assessment branch from 03c05e8; no preceding history was changed.
+
+## 2026-10-16 — requested coding standards review
+
+Reviewed the committed plan at 58d37a1 against fresh coding standards MCP
+snapshot e1406d64-d247-449d-9410-3875bd1a6e67. The routed 25-policy selection has
+zero unresolved fact categories; that is routing coverage, not a conformance
+certificate. The [review](reports/standards-review.md) records two high, two
+medium and one low finding: numerical acceptance, component cutover ordering,
+CUDA lifecycle evidence, persisted contract policy and acceptance metadata.
+The review recommends revisions before execution. The plan remains unchanged;
+no migration, new scientific tests, catalog writes or service changes occurred.

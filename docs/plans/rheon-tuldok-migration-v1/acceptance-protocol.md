@@ -1,7 +1,7 @@
 # Migration acceptance procedures
 
 This protocol is the binding evidence procedure delegated by [plan.md](plan.md).
-The plan owns scope, compatibility policy, gates and lifecycle. All procedures
+The plan owns scope, one-time conversion policy, gates and lifecycle. All procedures
 below are **planned, not executed**. Updating this document cannot make a pending
 claim pass. Owners T/R are defined in the plan. Save command, executable/source
 and input hashes, environment qualification, elapsed time, exit status and small
@@ -20,7 +20,9 @@ the identities at completion. Missing or changed material fails admission.
 
 The baseline freeze was assembled from existing bytes/records without executing
 models. It is not a fresh validation of every installed Torch file. Full runtime
-verification remains mandatory before Q3/Q4. Keep the same measured Python 3.14,
+verification remains mandatory before Q3/Q4. The old manifest is reference evidence;
+the new runtime owner emits only its current descriptor, binding the same installed
+numerical assets. Keep the same measured Python 3.14,
 Torch 2.14.0+cu132, NumPy 2.5.3 numerical installation for old/new comparison; app
 hosting uses a separately provisioned application environment. Do not add GPU
 libraries to the captured-CPU profile or mutate the live app environment.
@@ -63,68 +65,83 @@ an ambient default. Raw backups/model files remain private and outside Git.
    cannot prove that external lab directories have been copied: inventory and
    preserve those separately as the plan requires.
 3. Require first upgrade to recognize exact8→9→10 and second to report verified
-   `already_current`. Compare every source domain row/document byte, managed file
+   `already_current`. At this schema-only stage compare every source domain row, managed file
    hash, sequence state and identity against the stopped bookend. New schema 9/10
    tables start empty. Complete schema 10 backup/restore into another absent
    destination must reproduce the upgraded state. No refreshed signature, row
    rewrite or mutable cached source is acceptable evidence.
 4. Use existing `tests/test_workspace_metadata.py` and
    `tests/test_experiment_lineage.py` for transactional failure, re-entry and
-   retained restore contracts. Cold-open actual old history with Q2. An unknown
+   retained restore contracts. Then perform Q2's separate one-time domain
+   conversion and inspect its current-format outputs. An unknown
    upgrade commit keeps writers stopped; re-enter only the same upstream
    verifying upgrade command. Never repeat Run admission as recovery.
 
 After the rehearsal backup the old service may resume against its unchanged
 schema 8 store. A new source bookend/backup is required for Q8. If new writes add
-an unsupported retained representation, replan its compatibility disposition.
+an unhandled source representation, extend and requalify the converter before
+cutover; do not add that representation to normal app readers.
 
-## Q2 — compatibility and historical inspection (T; A1/A9)
+## Q2 — one-time conversion and current-format inspection (T; A1/A9)
 
-From the restored copy, enumerate all saved project/material/runtime variants
-and Run terminal states, including failed/interrupted records. Bind that complete
-inventory to the plan's compatibility table; no unclassified variant may pass.
-Compare all underlying row/file hashes. Exercise owner APIs, CLI and browser
-cold reads for every actual form, with original package roots hidden for retained
-artifact reads where the owning contract permits rootless access. Opening must
-neither launch code nor recapture a new host identity. Verify new writes only
-through the selected current contract, fresh material and fresh exact approval.
+The converter runs offline against the stopped restored copy, with explicit
+source/target identities and an independently verified archive of original rows,
+files and metadata. Enumerate every Project, Run, material/runtime form, terminal
+state and external reference before conversion. Produce an accounting manifest
+with source IDs/hashes, disposition, destination IDs/hashes, preserved facts and
+any representation changes. Every source record must be accounted for exactly
+once; target counts/IDs may differ, but no source result or artifact may disappear.
 
-Implement focused fixture cases in the existing owners and, if needed,
-`tests/test_managed_torch_retention.py`. Test local-v1 activity recognition,
-selected snapshot inspection, ordinary v1 evidence-based activity, unchanged
-v1/v2 action support, new negotiated operations and unknown/extra-field rejection.
-Retained local-v1 creation must reject; historical reads through the explicit
-selected interface must succeed without altering manifest IDs or bytes. A
-legacy operation cannot return a newly widened response under its frozen hash.
-Historical material validates its captured bootstrap/host hashes; new execution
-uses current measured host material and never reuses the old grant.
+Convert projects/activity, runnable recipes and model descriptors to their chosen
+current forms. Rebuild current execution material from current source/runtime;
+old approvals do not authorize it. Do not rewrite an old success receipt to claim
+the old job ran under the new host. Records already valid under current semantics
+can stay unchanged. Where no truthful current Run representation exists, retain
+the exact original and expose its results/artifacts through existing current
+Project evidence/data inspection, visibly marked historical evidence. Do not
+create a new history framework, obsolete material decoder or fake current Run.
 
-Run the following from the candidate Tuldok source, with explicit disposable
-PostgreSQL fixture configuration and `PYTHONDONTWRITEBYTECODE=1`:
+Stage conversion outputs privately, validate them through current owners, then
+publish the coordinated row/reference changes transactionally while writers
+remain stopped. Keep archived originals recoverable before replacing active rows.
+Compare model weights, normalization values and scientific results exactly.
+Validate source→destination relationships and all converted references independently
+of the converter's success message. A failure rolls back publication; an unknown
+commit keeps writers stopped and is reconciled by checking the exact conversion
+receipt and inventories, never by guessing or automatically rerunning conversion.
+Repeat invocation against a completed conversion verifies it or explicitly
+refuses; it must not create duplicates. Back up/restore the completed current state
+and confirm inspection works with the converter/source directories unavailable.
 
-```sh
-"$MIGRATION_APP_PYTHON" -B -m unittest discover -s tests -p test_projects.py -v
-"$MIGRATION_APP_PYTHON" -B -m unittest discover -s tests -p test_recipe_contract.py -v
-"$MIGRATION_APP_PYTHON" -B -m unittest discover -s tests -p test_cpu_recipe_contract.py -v
-"$MIGRATION_APP_PYTHON" -B -m unittest discover -s tests -p test_agent_negotiation.py -v
-"$MIGRATION_APP_PYTHON" -B -m unittest discover -s tests -p test_agent_project_snapshots.py -v
-"$MIGRATION_APP_PYTHON" -B -m unittest discover -s tests -p test_managed_torch_retention.py -v
-```
+Implement bounded conversion fixtures under `tools/migrations/rheon-lab-once/**`
+and, if needed, `tests/test_rheon_lab_migration.py`. Test original/converted facts,
+all source dispositions, duplicate/lost-ack handling, failure before publication,
+missing/corrupt inputs and normal-app rejection of obsolete forms. Run that test
+file plus affected current Projects, recipe/runtime, public API/client and UI
+tests from candidate Tuldok with explicit isolated PostgreSQL configuration and
+`PYTHONDONTWRITEBYTECODE=1`, using
+`python -B -m unittest discover -s tests -p FILE -v` for each recorded selector.
+The migration test file is planned, not an existing pass. Require positive test
+discovery. No frozen old discovery digest, old-client matrix or legacy loader
+test is a migration acceptance requirement. Remove superseded application paths
+and update their callers/fixtures in the same deployment.
 
-The last file is planned evidence, not an existing test claim. Require positive
-test discovery; a missing file or zero tests is unavailable, not a pass. If
-existing tests adequately contain the new cases, record their exact selectors
-and retire the unneeded planned filename before executing this procedure.
+The converter is not imported by the app or invoked at startup. After successful
+cutover retire it from the deployed artifact and ongoing compatibility CI; retain
+its frozen source and receipts as historical migration evidence only. Current
+app cold reads must succeed without it, without the old runtime installation
+where reading results needs no execution, and without parsing obsolete records.
 
 ## Q3 — managed CUDA/CPU success and failure lifecycle (T; A2/A8)
 
 Through the candidate's real approval/admission/Run/custody owner, using a
 disposable schema 10 fixture first and then the rehearsal installation:
 
-The success case uses the actual captured pressure trainer and its original
-train-only packet, with one declared batch/update in a new qualification recipe
-and the ordinary fresh-process restore stage. Source/model/loss semantics stay
-unchanged; only the bounded qualification schedule differs. Do not replace this
+The success case uses the pressure trainer and its original train-only packet,
+with one declared batch/update in a current qualification recipe and the ordinary
+fresh-process restore stage. Numerical model/loss semantics stay unchanged;
+runtime orchestration and recipe/custody glue migrate to the current contract.
+Record their changed source identity. Do not replace this
 pipeline claim with a toy CUDA tensor check, train on a regression/holdout frame,
 or modify any historical recipe/checkpoint. Failure-injection cases may use
 small dedicated fixtures because their claim is custody/lifecycle, not learning.
@@ -177,9 +194,12 @@ the pressure operator independently with the existing analytical two-cell stenci
 and lab neighbor oracle; retain their original tolerances. Exactness applies to
 numerical arrays, not timestamps, Run IDs, archive encoding or elapsed time.
 
-Also run the pinned legacy deployment verifier against its original packet and
-retained predictions as specified by upstream `measured-pressure-bundle-handoff.md`.
-Its seven-channel preprocessing is distinct from the control's one-channel model.
+Before cutover, use the original aa82 bundle and retained predictions as an
+offline numerical reference for its newly packaged current adapter. The original
+seven-channel preprocessing is distinct from the control's one-channel model.
+The converted descriptor has a new hash; weights and predicted pressure must
+match the original reference exactly. The reference tool/bundle is not shipped
+as an alternative loader or decoder in the migrated app.
 Reject unsupported physical/history contexts before invoking inference. No
 non-bit-identical replay result passes merely because its difference is explained;
 replan any necessary arithmetic/runtime change separately.
@@ -187,30 +207,31 @@ replan any necessary arithmetic/runtime change separately.
 ## Q5 — Rheon process and recording lifecycle (R; A4/A6 rehearsal)
 
 First run existing public pressure-context/configured-session/recording contracts
-and affected `rheon-ai-compare` tests on the selected release build. Then use the
-real original deployment and a fresh evidence directory:
+and affected current `rheon-ai-compare` tests on the selected release build:
 
 ```sh
-RHEON_AI_TEST_DEPLOYMENT="$LEGACY_DEPLOYMENT" \
-RHEON_AI_TEST_OUTPUT="$FRESH_LIFECYCLE_OUTPUT" \
 cargo test --offline --locked --features desktop --bin rheon-ai-compare \
-  real_cpu_deployment_cancellation_drains_child_and_allows_restart -- --ignored --nocapture
+  configurable_cpu_adapter_cancels_after_predictions_and_restarts -- --nocapture
 ```
 
+This existing analytic adapter test is supporting evidence only. Extend the
+existing worker tests with the real current-format package containing the same
+aa82 weights, using a new evidence directory and no old deployment loader.
+Record the exact trained-package test selector and assert it actually executed.
 Require consumed predictions before cancellation, child termination/reaping,
 new run identity on restart and exactly one prediction for the 16-step restart
 after 15 actual native seed steps. Test configured generic adapter startup,
 failure/blocked I/O, cancel, shutdown and saved cold inspection through the
 existing Worker/ModelProcess owner; package-hidden cold reading must execute
 no model. Record accepted native fallback, raw rejection and dispatch facts
-separately. The legacy model's known numerical failure must remain visible.
+separately. The original model's known numerical failure must remain visible.
 
 ## Q6 — rehearsal user paths (T/R; A5/A6 rehearsal)
 
 For Tuldok, run its actual `tests/browser_workspace_project.cjs --lab-root`
 fixture against the migration lab source, then use the rehearsal endpoint to
-open an original local-v1 snapshot through the selected interface and a new
-ordinary-v1 live project. Import a small declared scientific reference, inspect
+open the converted project through the current interface and a new live project.
+Inspect mapped historical evidence, import a small declared scientific reference, inspect
 old evidence and update one disposable live activity file. Observe visible
 refresh without navigating to a private collection. Confirm source changes do
 not fabricate Run custody or numerical acceptance.
@@ -281,10 +302,12 @@ eight-scene data, training update or checkpoint selection is allowed in Q7.
 
 Admission requires satisfied A1/A2/A5-rehearsal/A8/A9 for the candidate composition.
 Stop writers again, capture the current source bookend and new complete verified
-backup, and check its states against the qualified compatibility inventory.
-Run the same explicit upgrade against the original store and start only the
+backup, and check its source states against the qualified conversion inventory.
+Run the same explicit schema upgrade and one-time domain conversion against the
+original store, verify complete accounting/current reads, and start only the
 new service with unchanged intended endpoint/catalog identity and explicit roots.
-Rheon binary/package selection remains unchanged by this operation.
+Rheon binary/package enablement remains gated separately. Converted Tuldok
+records do not require an old Rheon client, manifest or protocol to remain supported.
 
 Keep general Run submissions closed while checking current history/artifact
 reads and the live project refresh/import/evidence path, then admit only one
@@ -298,8 +321,9 @@ restore of the stopped pre-upgrade backup and old binary is the rollback path.
 ## Q9 — Rheon enablement and post-switch smoke (R; A6 live)
 
 Admission requires satisfied A3/A4/A6-rehearsal/A7 for the exact candidate. Preserve
-old binary/package selectors. Select the qualified new binary with the original
-desktop model selection, perform one 16-step desktop comparison, inspect pressure
+old binary/package selectors as offline rollback evidence. Select the qualified
+new binary and converted current-format package with the original model weights,
+perform one 16-step desktop comparison, inspect pressure
 and signed difference/legend and cold-open its recording. Keep numerical
 rejection truthful. A regression-control evaluation cannot implicitly deploy
 that control in place of the original model. On runtime/UI failure restore the

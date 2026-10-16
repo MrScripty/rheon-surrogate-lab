@@ -89,3 +89,19 @@ runtime manifest and train/restore identities. No raw tensors or model weights
 were copied into Git, and no numerical/library/runtime change was made. Planned
 Q1–Q10 actions remain unexecuted. Current next slice is M1; deployment gates
 remain pending. Document/binding verification is retained with the resolution.
+
+## 2026-10-16 — replace compatibility support with a one-time conversion
+
+User explicitly rejected backward compatibility and authorized a one-time
+migration. The retained-reader/API/deployment compatibility policy at 53605af is
+Superseded. [Decision and rationale](reports/one-time-migration-decision.md) now
+require a temporary offline converter, coordinated current consumers and no
+obsolete source-format branches in deployed code. Re-ran the composition probe;
+updated M1/M2-T/M2-R, A1/A9 and Q1/Q2/Q4/Q5/Q6/Q8/Q9 accordingly.
+
+Original results/weights/source records remain exact recoverable archive evidence.
+Active representations/IDs may change with verified mappings; original Runs do
+not become invented current executions. Numerical, GPU lifecycle and separate
+cutover gates remain. MCP snapshot 1d80959f-e983-499c-aa41-ed47dbc1a82f supports
+coordinated breaking replacement plus verified persisted-state conversion.
+No application code, catalog or runtime was changed in this planning correction.

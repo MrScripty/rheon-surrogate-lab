@@ -10,6 +10,8 @@ Next slice: M1, integrate and qualify the existing managed Torch and live-projec
 capabilities on a new Tuldok branch based on the fetched main, including the
 Tuldok runtime failure cases in A8. Keep the running schema-8 service in place.
 This revision addresses R1–R5 from the retained [standards review](reports/standards-review.md).
+The user's subsequent direction supersedes the previous compatibility design:
+this is a one-time coordinated migration with no backward-compatibility support.
 
 ## Outcome and boundaries
 
@@ -43,27 +45,31 @@ an upgrade of the current water model. Do not rewrite either lineage.
    take and verify a complete backup, rehearse restore and explicit 8→9→10 upgrade,
    then perform a controlled cutover. Never point the new app at the live store
    to discover whether startup migrates it; startup explicitly refuses old schemas.
-2. Port required local capabilities into current Tuldok owners. Main currently
-   rejects the managed CUDA and CPU recipes and the live activity manifest.
-   Preserve the existing managed runtime's historical descriptor/custody meaning;
-   qualify new execution against the new host source. The compatibility table
-   below owns the retained-read/new-execution distinction. Do not relabel a CUDA
+2. Implement required CUDA/CPU execution and live activity in current Tuldok
+   owners. Select one current representation for each concern and convert this
+   project's consumers and data to it. Old runtime descriptors, recipes and
+   captured host metadata are converter inputs or archived evidence, not formats
+   the migrated runtime must support. Qualify fresh material against the new
+   host; never attribute old execution to that new material. Do not relabel a CUDA
    installation as `captured_cpu_python_v1`, route GPU work through an unqualified
    system-Python escape, or introduce a second runner/catalog. CPU-only captured
    snapshots may be adopted later through their own supported runtime contract.
-3. Keep live-project data import and evidence inspection working before the
-   Tuldok cutover. Preserve the closed upstream v1 contract; read the existing
-   local activity-bearing v1 snapshots through an explicitly selected interface.
-   New live projects use ordinary v1 evidence references for activity. New
-   v2 extension snapshots currently have different action support. Adopt typed
+3. Keep live-project data import, evidence inspection and activity working before
+   cutover through the chosen current project contract. The one-time converter
+   consumes the local `activity_path` variant and emits the current form; no
+   historical snapshot reader or compatibility-only API is added. Update the UI,
+   CLI, API schemas, recipes and callers together. Adopt typed
    Model/Study/Trial lineage and field evidence in a subsequent vertical slice,
    using the actual pressure task, preprocessing, output and evaluator contracts.
    Upstream scalar-A examples are workflow examples, not our pressure model.
 4. Update the lab's dependency selection through a new reusable migration
    configuration: separately select source roots/revisions, build artifacts,
    runtime profiles and their measured identities. Derive fresh build/source
-   witnesses from that selection. Keep historical Cargo pins, dependency
-   manifests, patches, captured recipes, checkpoints and results unchanged.
+   witnesses from that selection. Preserve original Cargo pins, manifests,
+   patches, captured recipes and results in the historical evidence/archive;
+   active configuration and representations may change in the one-time migration.
+   Keep model weight/normalization values unchanged. Converted content gets its
+   actual new identity and an explicit old→new provenance mapping.
    Each source, runtime, model and catalog version keeps its own authority.
 5. Replace the probe's dependence on private desktop-engine representation at
    its owning boundary. Reuse Rheon's typed pressure context, existing numerical
@@ -85,17 +91,19 @@ an upgrade of the current water model. Do not rewrite either lineage.
    pressure gauge and correction reconstruction unchanged for migration parity.
    Previous pressure is added exactly once. Current iterative correction and
    stopping policies stay explicit; they are not supplied automatically by a
-   generic one-call adapter. The older aa82 deployment and the later residual
-   models are separate source/model contracts and need separate adapters/tests.
+   generic one-call adapter. The older aa82 model and later residual model keep
+   their distinct numerical mappings, packaged under the current adapter contract.
+   Old bundle/recording formats are read only by the one-time converter or
+   pre-cutover reference tools, never by a compatibility branch in production.
 
-## Fixed comparison and compatibility policy
+## Fixed comparison and one-time migration policy
 
 The control for migration regression is the existing harder-data checkpoint
 `26b66232928ce81d428dbdb1c8cc750a0cf5c0bc5f678977efc111a0a56d2d9a`,
 normalization `f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1`.
 Its train/restore Runs are e20126d732a24013aafa6cc09ebbc0a5 and
 56adc4f5651d495489650f0ed5355a38. This is a fixed diagnostic comparator, not
-a replacement for the desktop's aa82 deployment or a model promotion. No other
+a replacement for the desktop's aa82 weights or a model promotion. No other
 checkpoint may be chosen after observing migration results. The exact source,
 runtime, old binary, policy, 74 scene identities, group membership and archived
 case metrics are bound in [baseline-bindings.json](reports/baseline-bindings.json).
@@ -110,28 +118,35 @@ a mismatch. Timing is recorded as advisory evidence, with no speedup claim.
 Freeze candidate build/source/runtime hashes before comparisons. If the existing
 installed numerical runtime cannot be retained, replan before selecting another.
 
-| Contract / owner | Retained reads | New writes or execution / rejection policy |
+| State / owner | One-time treatment | Migrated application |
 | --- | --- | --- |
-| PostgreSQL schema 8 / Tuldok Metadata | Exact source definition and historical rows/files retained in complete stopped backup | Only ordered explicit 8→9→10 upgrade; no domain-row rewriting, automatic startup migration or downgrade. Unknown/corrupt source refuses. Rehearsal uses an absent destination in a separate PostgreSQL database |
-| Ordinary upstream project v1 and extension project v2 / Projects | Existing supported snapshots remain byte-identical and readable through their supported projections | Existing closed forms and operation versions stay unchanged. V2 still does not acquire v1 actions by implication |
-| Local project v1 with bounded `activity_path` / Projects | Recognize this exact persisted local variant, with its original strict field/path validation, in the selected snapshot reader; keep original manifest/ID/hash | No new creation of the local variant. Add `project_snapshots.get/2` for explicit inspection of ordinary v1/v2 plus the retained local variant; `/1` and legacy `projects.*` retain their published forms and return typed unsupported for the local variant. New v1 projects declare activity JSON as an ordinary evidence reference, read by a new selected `projects.activity/1` operation. UI and caller migrate together; historical snapshot bytes are never stripped or rehashed |
-| `external_recipe_v1` with `managed_torch_python_v1`, explicit cpu/cuda and its material/spec/runtime descriptors / recipe_contract, Runs, TorchRuntimes | Preserve exact current local managed-profile meanings, manifest/bootstrap hashes and captured host closure; cold reads must not compare retained host files against current installation | Newly prepared material uses the same managed profile only after its implementation passes A2/A8/A9; current host/runtime files are remeasured and approval is fresh. No execution replay of historical material, reused approval or silent runtime substitution |
-| Existing `system_python`, `captured_cpu_python_v1`, project/recipe/material and public operation contracts / existing Tuldok owners | All actual retained forms keep their present semantics and cold-read support | Preserve the frozen 56-operation legacy discovery bytes. A changed public request/result shape requires an explicit new negotiated version and coordinated producer/UI/client/fixture update. Unknown versions remain unsupported; malformed supported forms remain invalid. Unchanged operation bodies may keep their existing selected versions |
-| Rheon legacy deployment v2 versus generic adapter v1 / ModelProcess and lab adapters | Preserve legacy descriptor/checkpoint and recorded frame meanings; inspect historical archives without loading a model | Validate exact selected package/role/context. Legacy full pressure must not have prior added again. Generic correction adds prior once. Unsupported physical/history settings reject before inference; numerical rejection remains visible, with accepted native fallback separately reported |
+| Source schema 8/catalog / Metadata and migration owner | Stop writers, retain verified complete source backup, rehearse the explicit 8→9→10 upgrade and a separate one-time domain conversion. Verify a source→destination accounting manifest before publication | Only current schema and current records; no startup conversion, downgrade path or mixed-version writers |
+| Projects, local `activity_path`, recipes, CLI/UI/API callers / current owners | Convert to the chosen current project/activity and execution definitions. Replace all affected references together; retain original bytes in archive and map changed IDs/hashes | Current producers/readers only. No `project_snapshots.get/2` solely for old snapshots, frozen legacy discovery requirement, aliases, dual reads/writes or old-client overlap window |
+| Historical Run/material/approval/descriptor records / migration owner | Preserve exact originals and artifacts in verified archive. Retain records already valid under current semantics; otherwise convert truthfully into a current history/evidence representation. If a Run cannot become a current Run without changing its execution meaning, expose it through existing Project evidence/data inspection as a historical import, not a fabricated new Run | Current result/evidence readers only; original results/source identity remain inspectable as generic archived evidence. No old material validator/bootstrap/launch path. New execution always gets fresh current material and approval |
+| Model packages and scientific recordings / lab/Rheon owners | Repackage unchanged weights and preprocessing into the current generic adapter contract; convert recordings needed for inspection or expose them as archived evidence. Retain package/source hashes and old→new descriptor/record identities | One current wire/package/record contract per concern. Preserve pressure reconstruction exactly, adding prior only once; no old deployment loader or recording-format branch |
 
-These compatibility obligations cover actual retained material, not arbitrary
-old variants. A9 binds the real snapshot/material inventory and representative
-cold reads to each row. Material/source/schema changes with different meanings
-require a separately versioned contract rather than widening an old decoder.
+One temporary offline converter owns source-format decoding. It is explicitly
+invoked with exact source/target identities while writers are stopped, is excluded
+from app startup/normal execution and retired from deployed code after verified
+cutover. Its frozen source/receipts may remain in Git as migration evidence; it
+does not become an ongoing compatibility suite. Every source record must have
+exactly one disposition: already-current, converted-current or archived-visible
+evidence. Preserve original numerical values, timestamps, failures and custody
+claims; never invent acceptance, ancestry or execution under the new runtime.
+Any unaccounted or unconvertible record blocks publication. Verify before/after
+backups and the mapping; keep originals recoverable even where active rows/IDs
+are replaced. The production service must not parse the obsolete source formats.
+Unrelated upstream surfaces outside this migration are not a repo-wide cleanup
+task; they create no compatibility obligation for this project.
 
 ## Milestones and allowed implementation writes
 
 | Milestone | Coherent outcome and write set | Gate | State |
 | --- | --- | --- | --- |
 | M0 | Fetch all three remotes; fast-forward clean primary Tuldok; create isolated fetched Rheon; write only this planning directory in the lab | Immutable version, dirty-state, compatibility and catalog observations retained | Accepted |
-| M1 | New Tuldok branch based on 300f12d. Runtime: `torch_runtime.py`, `torch_runtimes.py`, `recipe_contract.py`, `runs.py`; live inspection: `project_activity.py`, `projects.py`, `app.py`, `agent_api.py`, `project_cli.py`, `static/workspace-project*`, `static/workspaces*`; corresponding contracts/tests, including new `tests/test_torch_runtime_lifecycle.py` and `tests/test_managed_torch_retention.py` if needed for these missing claims. New application environment under the migration run root | A2/A8/A9 on a disposable schema 10 fixture; source/contract and browser live-path checks in protocol. Keep production untouched | Planned |
-| M2-T | Tuldok retained-state rehearsal: existing backup/restore/upgrade tools, isolated database/destination, root bindings and reports; no changes to domain rows or historical files | A1 and A5-rehearsal, repeating A2/A8/A9 through the restored candidate as specified. Requires M1 | Planned |
-| M2-R | Lab branch from 1548266 plus this assessment: new `experiments/dependency-migration-v1/**`, build/adapter callers under `experiments/local-pressure-v1`, `experiments/water-residual-learning-v1`, `experiments/live-water-comparison-v1`, `probes/residual-rollout-v1`, live manifest and reports. A necessary upstream public seam gets its own narrow branch, contract tests and docs | A3 first (one frame), then A4/A6-rehearsal/A7. No new numerical-runtime selection or model change. Can proceed independently of M2-T/M3 | Planned |
+| M1 | New Tuldok branch based on 300f12d. Current `torch_runtime.py`, `torch_runtimes.py`, `recipe_contract.py`, `recipe_process.py`, `runs.py`, `projects.py`, `project_activity.py`, `agent_api.py`, `project_cli.py`, `app.py`, `static/workspace-project*`, `static/workspaces*`, affected current tests/contracts and new application environment. Temporary converter under `tools/migrations/rheon-lab-once/**` and its conversion fixtures/tests use existing Metadata/Projects/data/evidence publication owners | A2/A8 on disposable schema 10 fixture; A9 current-contract and converter-source tests. No backward-compatible paths. Keep production untouched | Planned |
+| M2-T | Rehearse schema upgrade plus one-time domain conversion on isolated restored database/destination; preserve originals, validate identity mapping and converted evidence/history through current readers | A1/A5-rehearsal/A9; repeat changed A2/A8 boundaries. Requires M1. Domain representations/IDs may change only with verified source→destination mapping | Planned |
+| M2-R | Lab branch from 1548266 plus this assessment: new `experiments/dependency-migration-v1/**`, build/adapter callers under `experiments/local-pressure-v1`, `experiments/water-residual-learning-v1`, `experiments/live-water-comparison-v1`, `probes/residual-rollout-v1`, live manifest and reports. Rheon current public seam/package/process changes and obsolete project-path removal are isolated to their owners, `src/bin/desktop/ai_comparison/{model_process,worker,adapter}.rs` and directly affected current contracts/tests/docs, on a separate branch | A3 first (one frame), then A4/A6-rehearsal/A7. No new numerical-runtime selection or model change. Can proceed independently of M2-T/M3 | Planned |
 | M3 | Tuldok service cutover only: stopped-writer backup/upgrade/service launch/root bindings and small receipts | Requires M1/M2-T and satisfied A1/A2/A5-rehearsal/A8/A9. Then A10 post-cutover smoke before ordinary submissions resume. Does not enable a new Rheon binary or model | Planned |
 | M4 | Rheon enablement and separately qualified typed project workflow: new deployment selection/project snapshot, owned task/model/evaluator/field-evidence contributions and reports through existing owners | Rheon switch requires M2-R with satisfied A3/A4/A6-rehearsal/A7; then A6-live smoke. Typed workflow A11 additionally requires M3; it cannot weaken the runtime, pressure or provenance gates | Planned |
 
@@ -157,7 +172,7 @@ used; substitute fixture-only runs establish only their declared contracts.
 | ID | Observable criterion | Owner / procedure / evidence / environment / mode / status |
 | --- | --- | --- |
 | A0 | Targets, local deviations, live source, schema and incompatible consumers identified | T/R; existing [assessment](reports/assessment.md), [probes](reports/contract-probes.json), [nine checks](reports/negotiation-qualified-env.json); contract/integration; required-real local sources/PostgreSQL; automated; satisfied |
-| A1 | Every retained domain row/file matches before/after schema upgrade and restore, with only the declared DDL/version-ledger changes; cold reads cover each actual project/runtime/material form and terminal Run state | T; Q1/Q2; contract/system; required-real quiesced catalog copy/PostgreSQL; automated; pending |
+| A1 | All source records/artifacts are accounted for in verified converted-current or archived-visible evidence, preserving original scientific facts and exact archived bytes; no unaccounted loss | T; Q1/Q2; contract/system; required-real quiesced catalog copy/PostgreSQL; automated; pending |
 | A2 | Actual CUDA float32 optimizer update and fresh CPU restore complete/drain with matching artifact hashes; CPU hides CUDA and has zero optimizer updates | T; Q3; system; required-real RTX5090/Pumas runtime/candidate Tuldok; automated; pending |
 | A3 | Fixed saved-input preprocessing, tensor/output reconstruction and zero-residual bypass match exactly; independent operator/gauge check passes | R; Q4 and fixed bindings; contract/integration; required-real CPU/native/checkpoint; automated; pending |
 | A4 | Rheon real model startup/failure/cancel/reap/restart/shutdown/cold inspection pass; 16-step restart has exactly one prediction after 15 native steps | R; Q5; system/user-workflow; required-real CPU model child and egui desktop; automated plus manual recorded desktop interaction; pending |
@@ -165,7 +180,7 @@ used; substitute fixture-only runs establish only their declared contracts.
 | A6 | Live/saved native–AI signed voxel difference and legend work, with honest rejection/fallback and distinct same-request/trajectory metrics | R; Q5/Q6 rehearsal and Q9 live; user-workflow/integration; required-real Rheon desktop/CPU package; automated plus manual recorded interaction; pending |
 | A7 | All 74 cases satisfy fixed quality, per-case pressure and call non-regression rules; no native refinement/fallback or heldout use | R; Q7; system; required-real bounded CPU/native builds/checkpoint; automated; pending |
 | A8 | Tuldok CUDA cancellation during hashing/training, startup/deadline failure, drainage and cold interrupted/unknown recovery are qualified without duplicate work or CPU fallback | T; Q3 lifecycle cases; system/contract; required-real GPU plus isolated catalog; automated; pending |
-| A9 | Compatibility table passes actual retained reads, new-profile preparation, unsupported/invalid negatives, unchanged legacy discovery and negotiated new-operation tests | T; Q2; contract/system; required-real candidate app/PostgreSQL and retained fixtures; automated; pending |
+| A9 | One-time conversion mapping and current producer/consumer path pass; obsolete formats are rejected by normal app routes, converter is unreachable there and superseded application paths are removed | T; Q2; contract/system; required-real candidate app/PostgreSQL and conversion fixtures; automated; pending |
 | A10 | Tuldok cutover bookend, identity/root/history and one bounded CUDA→CPU live smoke pass before general submissions resume | T; Q8; system/user-workflow; required-real original catalog/GPU/browser; automated plus manual inspection; pending |
 | A11 | New task/model/Study/Trial and field evidence use exact supported pressure semantics and runtime identity; no invented historical lineage or acceptance | T/R; Q10; contract/user-workflow; required-real candidate service/browser and bounded real GPU/CPU execution; automated plus manual inspection; pending |
 
@@ -193,7 +208,7 @@ source, persistence and process boundaries.
    CUDA runtime change touches Tuldok runtime selection and qualification; an
    operator change touches Rheon plus scientific parity; a catalog change
    touches the existing storage upgrade/backup owners.
-5. Typed context/provider and negotiated operation contracts are the seams.
+5. Typed context/provider and the current operation contracts are the seams.
    Private `engine.rs` imports are current accidental coupling to replace;
    retained historical imports remain historical evidence.
 6. Tuldok cutover requires its retained-state/runtime/live-path rehearsal; Rheon
@@ -203,16 +218,15 @@ source, persistence and process boundaries.
 7. Reusing the existing Runtime/Runs and Worker/ModelProcess owners avoids new
    queues, catalogs and lifecycle registries. Deleting the small pressure adapter
    would move required tensor/physics mapping into its callers; keep that mapping
-   together. Removing the selected retained-project reader would make the actual
-   local-v1 snapshots unreadable; removing the evidence-based activity operation
-   would lose live browser observation. Both remain inside Projects, with no new
-   source store or runner. A second universal training framework adds no capability.
+   together. The temporary converter contains unavoidable one-time source decoding;
+   removing it after conversion leaves no missing runtime capability. Permanent
+   old-format readers/API branches add no requested value and are not retained.
 8. Retained machinery is one explicit dependency selection, the existing runtime
    support port, one model adapter per actually supported contract and existing
-   catalog upgrade tools, plus explicit Projects projections for the retained
-   local variant and new evidence-based activity. Each uses the existing operation
-   registry and bounded project reader. Add no scheduler, automatic retry, shadow
-   catalog or permissive schema fallback.
+   catalog upgrade tools and current project/activity interfaces. Temporary
+   conversion uses those owners plus a frozen accounting manifest and archive.
+   No permanent compatibility registry, alternate history reader, scheduler,
+   automatic retry, shadow catalog or permissive schema fallback is added.
 
 ## Operations, retention and reconsideration
 
@@ -236,7 +250,7 @@ decision; an old backup cannot represent them.
 
 Current blockers: none prevent M1 source work. No runtime, service or solver
 switch is currently qualified: A1–A11 are pending. This is an unsatisfied gate,
-not an assertion that hardware/authority is missing. Required legacy/source
+not an assertion that hardware/authority is missing. Required reference/source
 artifacts have local bindings; full runtime revalidation is a Q3 precondition.
 If a prerequisite is unavailable during execution, record the affected claim as
 blocked and continue only independent work. Do not repeat unknown admissions.
@@ -261,5 +275,7 @@ semantics, unexplained numerical differences or a need for new mutable owners.
 Current findings and dispositions are in [issues](issues.md); performed actions
 and verification are in [the ledger](execution-ledger.md). Standards were routed
 through the coding-standards MCP at the snapshot in the version inventory.
-The revision's [finding dispositions](reports/standards-review-resolution.md)
-retain the original review and current MCP snapshot without overwriting history.
+The earlier [review dispositions](reports/standards-review-resolution.md) remain
+historical. The user's [one-time migration decision](reports/one-time-migration-decision.md)
+supersedes their ongoing-compatibility design; numerical, lifecycle and cutover
+gates remain required.

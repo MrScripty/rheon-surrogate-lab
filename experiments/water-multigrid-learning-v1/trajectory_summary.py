@@ -29,7 +29,9 @@ def main():
             scene=receipt['scene'];frames=[read_line for line in (directory/'frames.jsonl').read_text().splitlines()
                 if (read_line:=json.loads(line)).get('ai_quality')]
             if len(frames)!=receipt['result']['ai_steps']:raise ValueError('complete AI step population required')
-            milestones={scene['warmup_steps']+1,64,128,256,scene['steps']}
+            terminal_step=frames[-1]['step']
+            complete_window=terminal_step==scene['steps'] and not receipt['result']['hard_stop']
+            milestones={scene['warmup_steps']+1,64,128,256,scene['steps'],terminal_step}
             sampled=[]
             for frame in frames:
                 if frame['step'] not in milestones:continue
@@ -39,17 +41,20 @@ def main():
                     'reference_relative_residual':frame['reference_quality']['relative_residual'],
                     'ai_actual_divergence':frame['ai_quality']['actual_divergence'],
                     'ai_predicted_divergence':frame['ai_quality']['predicted_divergence'],
-                    'qualified':frame['ai_quality']['qualified']}
+                    'qualified':frame['ai_quality']['qualified'],
+                    'completed_requested_window':complete_window}
                 sampled.append(point);table.append(point)
             cases.append({'model':row['model'],'weights_sha256':models[row['model']]['weights_sha256'],'scene':scene,
                 'source_receipt_sha256':row['receipt_sha256'],'source_report_sha256':digest(root/'report.json'),
                 'ai_steps':len(frames),'qualified_ai_steps':sum(f['ai_quality']['qualified'] for f in frames),
+                'last_observed_step':terminal_step,'requested_final_step':scene['steps'],
+                'completed_requested_window':complete_window,
                 'final_pressure_relative_l2':frames[-1]['relative_pressure_difference'],
                 'worst_pressure_relative_l2':max(f['relative_pressure_difference'] for f in frames),
                 'worst_ai_actual_divergence':max(f['ai_quality']['actual_divergence'] for f in frames),
                 'hard_stop':receipt['result']['hard_stop'],'native_process':receipt['native_process'],'samples':sampled})
-    result={'schema':'rheon-multigrid-pressure-drift-summary-v1','cases':cases,
-        'scope':'finite development trajectories, common quarter-strength forcing/native controls; pressure-field relative L2 versus native, no asymptotic stability claim'}
+    result={'schema':'rheon-multigrid-pressure-drift-summary-v2','cases':cases,
+        'scope':'finite trajectories with declared scene forcing and native controls; partial windows retain actual terminal frames; pressure-field relative L2 versus native, no asymptotic stability claim'}
     args.output.write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
     stream=io.StringIO();writer=csv.DictWriter(stream,fieldnames=list(table[0]),lineterminator='\n');writer.writeheader();writer.writerows(table)
     args.output.with_suffix('.csv').write_text(stream.getvalue())

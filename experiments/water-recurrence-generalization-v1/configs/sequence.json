@@ -31,7 +31,13 @@
       "name": "cohort-four-control",
       "config": "experiments/water-recurrence-generalization-v1/configs/cohort-four-control.json",
       "admission": "conditional on two-evaluation development comparison"
+    },
+    {
+      "name": "cohort-two-shape-feedback",
+      "config": "experiments/water-recurrence-generalization-v1/configs/cohort-two-shape-feedback.json",
+      "admission": "admitted by reports/shape-feedback-admission.json",
+      "capture_source_commit": "ff9ae119e7c28f50a8f69d4e3c9451b50fc023cf"
     }
   ],
-  "selection": "all adaptive development states pass; minimize mean evaluations, then worst fixed-eight residual; final holdout stays unread until selection is frozen"
+  "selection": "All128 teacher states and all8 fresh physical trajectories and all7 prior-grid regressions must pass for promotion eligibility; among eligible candidates minimize teacher-state mean evaluations, then fixed-eight worst residual. If none qualify, retain the prior development reference and compare the best non-reference teacher-state candidate diagnostically on final holdout; do not promote an unqualified model."
 }

@@ -1,0 +1,74 @@
+{
+  "schema": "rheon-recurrence-comparison-v1",
+  "models": [
+    {
+      "model": "cohort-two-reference",
+      "training_evaluations": 2,
+      "seed": 20261015,
+      "sampling_seed": 2026102501,
+      "updates": 5000,
+      "updates_per_s": 23.247632202955455,
+      "optimizer_seconds": 215.07566690444946,
+      "forward_cell_evaluations": 250139088,
+      "development_cases": 128,
+      "adaptive_passed": 128,
+      "adaptive_mean_evaluations": 8.8828125,
+      "adaptive_maximum_evaluations": 12,
+      "fixed_eight_passed": 46,
+      "fixed_eight_median_residual": 1.2126547088740803e-06,
+      "fixed_eight_worst_residual": 4.532857439879542e-05,
+      "weights_sha256": "0de683cccc3fb878c3310f098676d08bcda519defe3c13275b768fd4931bb4d6",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    {
+      "model": "cohort-two-seed2",
+      "training_evaluations": 2,
+      "seed": 2026101602,
+      "sampling_seed": 2026102602,
+      "updates": 5000,
+      "updates_per_s": 22.714607398452998,
+      "optimizer_seconds": 220.12266874313354,
+      "forward_cell_evaluations": 250392900,
+      "development_cases": 128,
+      "adaptive_passed": 128,
+      "adaptive_mean_evaluations": 9.046875,
+      "adaptive_maximum_evaluations": 14,
+      "fixed_eight_passed": 50,
+      "fixed_eight_median_residual": 1.148598252304806e-06,
+      "fixed_eight_worst_residual": 0.00012108518415819942,
+      "weights_sha256": "2237d0deac73eddd31073ff596b5d30a1ddf38fa52918350ab1a01a7afaca510",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    }
+  ],
+  "new_cuda_updates": 5000,
+  "managed_stages": [
+    {
+      "name": "train",
+      "run_id": "91ccb8b6276642a5a82b99e2a83b1ea1",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "cf523e61443901f5c05a756f64b8f9366107a23e534993d7ff4d49944632a9c1"
+    },
+    {
+      "name": "restore",
+      "run_id": "777d2c55783546b2a5960753c0124642",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "e13d07f2d6c8475711485cbb5f6d07ab5a603b5b042dad2af40fdd9841a245d2"
+    },
+    {
+      "name": "validation",
+      "run_id": "434f3dac4c1c469a9c2bc823fa4fbb32",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "065c46a4c57078734ff0a9afcb69a8a87b8edf1eabb70547549b6a8ad6ea250e"
+    }
+  ],
+  "sources": {
+    "docs/plans/water-multigrid-learning-v1/reports/trial-cohort16-two-pass.json": "d6805c0fbf9d09c9ac3e40eff7a36f5a8a59da48abf11cb8de072c11c061c1ce",
+    "docs/plans/water-multigrid-learning-v1/reports/fixed-eight.json": "bdcce19a3881e9c33cc9ec1c1a8b89571a764571eecf3a66e9da4029963c161a",
+    "docs/plans/water-recurrence-generalization-v1/reports/trial-cohort-two-seed2.json": "696da80c10a3ea2405f1e7d445b53ed5e461910c3f9855563d71313b1f41fa54",
+    "runs/water-recurrence-generalization-v1/cohort-two-seed2/fixed-eight/report.json": "62f07dd4d71d2faaeabd51f5485532efd6c8cab8d41daabd6988bff71fbf7f7e"
+  },
+  "scope": "development comparison; unchanged equation gates; adaptive and fixed-eight policies are distinct; update counts do not imply equal compute"
+}

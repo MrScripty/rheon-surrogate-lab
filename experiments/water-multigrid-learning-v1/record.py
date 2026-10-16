@@ -14,7 +14,8 @@ def read(path):return json.loads(path.read_text())
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--trial',type=Path,required=True);p.add_argument('--control',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True);args=p.parse_args();root=args.trial;managed=root/'managed-full'
+    p.add_argument('--managed',type=Path,help='Explicit custody index after a recorded postprocessing recovery')
+    p.add_argument('--output',type=Path,required=True);args=p.parse_args();root=args.trial;managed=args.managed or root/'managed-full'
     receipt=read(managed/'receipt.json');witness=read(root/'project/source-witness.json');config=read(root/'project/config.json')
     if receipt['status']!='completed_and_drained':raise ValueError('normal reopened/redownloaded managed completion required')
     stages=[]
@@ -66,6 +67,9 @@ def main():
     native=[read(path) for path in root.glob('*-study/scene-*/*/receipt.json')]
     if not native or not all(r['native_process']['reaped'] and r['native_process']['returncode']==0 for r in native):raise ValueError('trajectory lifecycle not drained normally')
     result['native_trajectory_children_reaped']=len(native)
+    if args.managed:
+        result['managed_receipt_path']=str(managed/'receipt.json')
+        result['managed_recovery']=receipt.get('recovery')
     raw=json.dumps(result,indent=2,allow_nan=False)+'\n';args.output.parent.mkdir(parents=True,exist_ok=True)
     if args.output.exists():
         if args.output.read_text()!=raw:raise ValueError('immutable record already differs')

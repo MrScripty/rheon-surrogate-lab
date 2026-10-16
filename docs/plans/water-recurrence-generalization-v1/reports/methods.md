@@ -77,3 +77,9 @@ The final16 whole simulations are declared in two `final-holdout` configs before
 training. Candidate selection must be recorded/frozen from development evidence
 before running either. Retain failures and pressure drift versus native as well
 as equation gates; a1e-6 equation target is not a1e-6 pressure-field error bound.
+
+Raw-output native checks additionally read managed restore and validation
++predictions. The trainer intentionally retains at most12 fitting predictions;
++that raw subset is distinct from the adaptive evaluator's complete32 training
++states. Do not report a12-case raw check as an all-training-state result.
++

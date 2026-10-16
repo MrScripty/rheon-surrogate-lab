@@ -179,3 +179,21 @@ native contract inside a learning experiment. No invalid job was started.
 +accepted and retained for review/continuation under its declared contract; no
 +remote publication, model deployment or Rheon/Tuldok source edit is performed.
 +
+
+## Timing follow-up
+
+The user's timing request owns only results.md, next-steps.md and this ledger.
+The accepted scientific sequence and immutable trial receipts are unchanged.
+Verified the five retained optimizer durations total 1,208.751266002655 seconds;
+the selected shape-feedback fit takes 203.23199582099915 seconds. Results now
+state that these exclude preparation, approval, restore and qualification.
+Full controller wall time and isolated inference latency were not measured for
+this sequence. The next-step measurement requirements distinguish those costs,
+parallel CPU throughput and isolated matched-accuracy inference timing.
+
+Acceptance passed: a Python standard-library check recomputed the total from
+comparison.csv, matched all five durations to sealed trial records and retained
+optimizer intervals, and resolved affected local links. git diff --check passed.
+No training or simulation process is launched.
+The two unrelated untracked cohort-progress files remain untouched. This is a
+documentation follow-up on the retained experiment branch, not a new experiment.

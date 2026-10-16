@@ -80,6 +80,18 @@ spacing remains scalar and physical extent follows cell count.
 | cohort-two-seed3 | 18.77 | 266.39 | 250,395,820 |
 | cohort-two-shape-feedback | 24.60 | 203.23 | 173,120,838 |
 
+The five optimizer intervals total 1,208.75 seconds (20 minutes 8.75 seconds).
+The selected shape-feedback fit takes 203.23 seconds (3 minutes 23.23 seconds)
+for 5,000 updates. These durations are retained per trial in
+[comparison.csv](reports/comparison.csv); their original start/finish timestamps
+are retained in [summary.json](reports/summary.json)'s `optimizer_intervals`.
+They exclude project preparation, queue/approval wait, CPU checkpoint restore,
+validation and trajectory qualification. A complete controller wall-clock total
+and an isolated latest-checkpoint inference latency comparison were not measured
+for this sequence; neither can be inferred from optimizer time or call counts.
+The next experiments must retain the separate timings specified in
+[next steps](next-steps.md#timing-records).
+
 Equal updates are not equal compute. These rates include the declared optimizer
 interval under concurrent preparation/CPU work and are not isolated GPU
 benchmarks. The shape trial's173,120,838 forward cell evaluation proxy is below

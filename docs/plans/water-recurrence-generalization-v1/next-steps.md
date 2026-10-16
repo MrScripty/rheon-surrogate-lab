@@ -34,3 +34,38 @@ previous checkpoint and its better familiar-case work/long-window drift.
    scales,15-step warm-up, previous pressure, bounded iterations, fallback,
    physical restrictions and visible comparison outcomes. No migration occurred
    in this experiment.
+
+## Timing records
+
+For every future run, retain configuration/checkpoint identity, exact command,
+environment, UTC start/finish, elapsed seconds and terminal outcome. Use a
+monotonic clock for new local elapsed measurements; synchronize CUDA at timed
+boundaries when work is asynchronous. Record these costs separately:
+
+- GPU optimizer time and updates/second, with update count, training recurrence
+  and forward cell work alongside accuracy.
+- Full managed pipeline elapsed time, including preparation, queue/approval
+  wait, training, checkpoint restore and validation. Preserve stage timings and
+  all failed/recovered attempts; a recovery must not erase time already spent.
+- CPU data generation and qualification elapsed time, with worker/thread counts
+  and concurrent workloads. Sum of overlapping job durations is not elapsed
+  pipeline time; report the overall start-to-finish interval separately.
+- CPU inference against Rheon's native solver on identical physical cases and
+  matched accuracy gates. Report cold-start separately, declare warm-up and
+  repetitions, retain raw samples, median and tail latency, and include tensor
+  preparation, repeated corrections, residual checks and fallback in the full
+  per-step cost. Report qualified AI steps and failures separately so failure
+  or early termination cannot appear to be a speed gain.
+
+Run the isolated CPU timing comparison without concurrent qualification pools;
+keep CPU preparation concurrent with CUDA training for throughput experiments.
+The resulting speed claims have different scopes. Compare inference over grid
+sizes within the qualified native contract before claiming a scale crossover.
+
+The latest five fits already retain optimizer seconds and updates/second in
+the comparison CSV and optimizer timestamps in summary.json. Full controller
+wall time and isolated latest-checkpoint inference latency are unavailable for
+that historical sequence. Preserve that limitation rather than reconstructing
+an exact duration from file modification times. The existing 16 final scenes
+are now development data; reserve new whole simulations before future fitting
+and freeze selection before their final evaluation.

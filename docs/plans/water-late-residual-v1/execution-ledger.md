@@ -157,3 +157,19 @@
   development trajectories, exploratory cases and final comparison are pending.
   Late-direction CUDA Run ad303611cd064137ab339f7dcbbf968e starts with unchanged
   source, optimizer initialization, data/exposure and full-spectrum objective.
+- Late-direction fit completes5,000 CUDA updates in439.678s (11.372 updates/s),
+  weights a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da.
+  Same extra sample order/group exposures/cell work, original normalization and
+  source as the early control; identical GPU peak allocation765,920,768bytes.
+  Runtime difference is observed cost, not evidence that label choice caused a
+  speedup. Final loss3.938e-4 exceeds the control's1.786e-4; it is not used for
+  candidate selection. Fresh CPU restore3458ac15… has identical weight bytes.
+- Late model common-input worst pressure errors at4/8/12 calls:
+  4.106e-4/7.130e-7/8.961e-10. At8 and12 calls all15 equation checks pass; at4
+  all15 fail. At8 calls, worst pressure error is3.25x below matched early control
+  and21.40x below the prior targeted checkpoint; worst gradient error3.562e-7
+  versus7.797e-7 and5.443e-6. These fixed-input results support direct late-direction
+  learning despite the larger final training loss. Retain all cases in
+  fixed-all-extra-late.json; full trajectory qualification/selection/final still
+  pending. Neural arithmetic staysfloat32; diagnostic physical accumulation and
+  exact oracle retain their existingfloat64 arithmetic, no precision change.

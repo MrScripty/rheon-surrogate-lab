@@ -1,0 +1,385 @@
+{
+  "schema": "rheon-late-residual-completed-summary-v1",
+  "state": "completed",
+  "source_commit": "7df75591de53e0f2da012e30d58aba057fb30ca1",
+  "managed_smoke": "completed_and_drained",
+  "same_exposure_and_normalization": true,
+  "fixed_call_reports": {
+    "retained": {
+      "sha256": "72e204517e00b755efd2d280933c2762332c7521e6ae129a999f28de57905a94",
+      "report": "docs/plans/water-late-residual-v1/reports/fixed-all-retained.json"
+    },
+    "targeted": {
+      "sha256": "ee321aa52aad2cb20fe9fef676ccf36c80e1d216ab12ed6b2fd40eadc24a5976",
+      "report": "docs/plans/water-late-residual-v1/reports/fixed-all-targeted.json"
+    },
+    "extra-early": {
+      "sha256": "60fd45e35db257530c0fe8474f31d1196fbb9bfa09f98ced6aa93016623d60e6",
+      "report": "docs/plans/water-late-residual-v1/reports/fixed-all-extra-early.json"
+    },
+    "extra-late": {
+      "sha256": "e77f9438b0c9f5a80eb849bee01e7885a56b4112769ec8c8ecf07c69920ac533",
+      "report": "docs/plans/water-late-residual-v1/reports/fixed-all-extra-late.json"
+    }
+  },
+  "fits": [
+    {
+      "trial": "extra-early",
+      "weights_sha256": "2503a833eb89d557bdf21cffb0b5035652826c400dc849fc95b71846839a6b33",
+      "cuda_optimizer_updates": 5000,
+      "optimizer_interval_seconds": 500.22736954689026,
+      "optimizer_updates_per_s": 9.995454675998712,
+      "weights_file_bytes": 1485452,
+      "training_exposure": {
+        "real_simulations": 16,
+        "real_states": 32,
+        "real_draws": 5000,
+        "analytical_draws": 5000,
+        "forward_network_evaluations": 40000,
+        "forward_cell_evaluation_proxy": 336776516,
+        "scope": "sample/evaluation/voxel accounting, not FLOPs or backward-work equivalence",
+        "supplemental_draws": 5000,
+        "supplemental_forward_cells": 54735100,
+        "direction_draws": 5000,
+        "direction_forward_cells": 108920578
+      },
+      "control_parity": {
+        "initial_parameter_inventory": true,
+        "normalization": true,
+        "real_sampling_order": true
+      }
+    },
+    {
+      "trial": "extra-late",
+      "weights_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+      "cuda_optimizer_updates": 5000,
+      "optimizer_interval_seconds": 439.67792224884033,
+      "optimizer_updates_per_s": 11.371960580659307,
+      "weights_file_bytes": 1485452,
+      "training_exposure": {
+        "real_simulations": 16,
+        "real_states": 32,
+        "real_draws": 5000,
+        "analytical_draws": 5000,
+        "forward_network_evaluations": 40000,
+        "forward_cell_evaluation_proxy": 336776516,
+        "scope": "sample/evaluation/voxel accounting, not FLOPs or backward-work equivalence",
+        "supplemental_draws": 5000,
+        "supplemental_forward_cells": 54735100,
+        "direction_draws": 5000,
+        "direction_forward_cells": 108920578
+      },
+      "control_parity": {
+        "initial_parameter_inventory": true,
+        "normalization": true,
+        "real_sampling_order": true
+      }
+    }
+  ],
+  "development_scores": {
+    "reference": {
+      "eligible": true,
+      "rank": [
+        13,
+        6.139568120675177e-06,
+        9.66433358153388
+      ],
+      "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8"
+    },
+    "extra-early": {
+      "eligible": true,
+      "rank": [
+        10,
+        3.124654198341125e-05,
+        6.902606105733432
+      ],
+      "weights_sha256": "2503a833eb89d557bdf21cffb0b5035652826c400dc849fc95b71846839a6b33"
+    },
+    "extra-late": {
+      "eligible": true,
+      "rank": [
+        10,
+        2.8803484550688183e-05,
+        6.9411764705882355
+      ],
+      "weights_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da"
+    }
+  },
+  "development_choice": "extra-late",
+  "final": {
+    "reference": {
+      "scenes": 8,
+      "qualified_scenes": 8,
+      "attempted_ai_steps": 904,
+      "qualified_ai_steps": 904,
+      "hard_stops": 0,
+      "network_evaluations": 9457,
+      "mean_network_evaluations": 10.461283185840708,
+      "maximum_network_evaluations": 18,
+      "cap_hits": 0,
+      "worst_pressure_relative_l2": 3.201617454316497e-06,
+      "median_final_pressure_relative_l2": 2.525810344249797e-07
+    },
+    "candidate": {
+      "scenes": 8,
+      "qualified_scenes": 8,
+      "attempted_ai_steps": 904,
+      "qualified_ai_steps": 904,
+      "hard_stops": 0,
+      "network_evaluations": 7567,
+      "mean_network_evaluations": 8.370575221238939,
+      "maximum_network_evaluations": 11,
+      "cap_hits": 0,
+      "worst_pressure_relative_l2": 1.1796200025518645e-05,
+      "median_final_pressure_relative_l2": 4.844205964312213e-07
+    }
+  },
+  "candidate_promoted": false,
+  "original_final_protocol_satisfied": false,
+  "amended_final_numeric_gates_passed": false,
+  "retained_weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+  "sequence_elapsed_seconds": 4707.288359,
+  "execution_attempts": [
+    {
+      "started_at_utc": "2026-10-16T10:44:05.616137+00:00",
+      "state": "failed",
+      "reference_bindings": {
+        "fresh": {
+          "path": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/grid-study/report.json",
+          "sha256": "8e9ee973f3b6ad78572429dfc116160dfafb32df0b91284efd72adba0eb942e1"
+        },
+        "prior": {
+          "path": "runs/water-recurrence-generalization-v1/shape-prior-grids/report.json",
+          "sha256": "eb13e186e8d32cb967575918e28892c16ec2d2becd66198640237f80a2ca4f54"
+        },
+        "long": {
+          "path": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/long-study/report.json",
+          "sha256": "4b48c6963ea22c6a4ef1f1f39dace5706f0cc31041b54a8338745a2d94732b89"
+        },
+        "consumed-0": {
+          "path": "runs/water-shape-repeatability-v1/final-holdout-0/report.json",
+          "sha256": "9bf5bc72ab79edd35b189ebbde9f45b0df0e69a2bf8a90c433ceee36c2ab77cc"
+        },
+        "consumed-1": {
+          "path": "runs/water-shape-repeatability-v1/final-holdout-1/report.json",
+          "sha256": "f329fc9c53ee2ffbeec3cb6b59474ff3bdbfbdc016d0cd92b0035aeb457bf983"
+        },
+        "consumed-2": {
+          "path": "runs/water-two-pass-long-v1/final-holdout/report.json",
+          "sha256": "17d0167678365cfbec46c10fdc841ff2d33ce26989724f1bf04449b47f3623e9"
+        },
+        "consumed-3": {
+          "path": "runs/water-coverage-feedback-v1/final-holdout/report.json",
+          "sha256": "b66de091814fe8b199865680641fe0d0cf1954852dbdebec1e9728a9f42fd01b"
+        },
+        "consumed-4": {
+          "path": "runs/water-targeted-feedback-v1/final-holdout/report.json",
+          "sha256": "f3cd7f0d47a4ea61772c06872598049c40b13941b22453ad15784037acb3c975"
+        },
+        "elongated": {
+          "path": "runs/water-shape-repeatability-v1/elongated-diagnostic/report.json",
+          "sha256": "325c90ba745d5b8e09d6d775e8111e61a85d93fbdd6b687ab3937a7045fdedbd"
+        }
+      },
+      "error_type": "CalledProcessError",
+      "recovery": "Retain attempts; reconcile owners before any new execution",
+      "finished_at_utc": "2026-10-16T11:26:15.867484+00:00",
+      "elapsed_seconds": 2530.2513373730003
+    },
+    {
+      "started_at_utc": "2026-10-16T11:31:08.070516+00:00",
+      "state": "failed",
+      "reference_bindings": {
+        "fresh": {
+          "path": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/grid-study/report.json",
+          "sha256": "8e9ee973f3b6ad78572429dfc116160dfafb32df0b91284efd72adba0eb942e1"
+        },
+        "prior": {
+          "path": "runs/water-recurrence-generalization-v1/shape-prior-grids/report.json",
+          "sha256": "eb13e186e8d32cb967575918e28892c16ec2d2becd66198640237f80a2ca4f54"
+        },
+        "long": {
+          "path": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/long-study/report.json",
+          "sha256": "4b48c6963ea22c6a4ef1f1f39dace5706f0cc31041b54a8338745a2d94732b89"
+        },
+        "consumed-0": {
+          "path": "runs/water-shape-repeatability-v1/final-holdout-0/report.json",
+          "sha256": "9bf5bc72ab79edd35b189ebbde9f45b0df0e69a2bf8a90c433ceee36c2ab77cc"
+        },
+        "consumed-1": {
+          "path": "runs/water-shape-repeatability-v1/final-holdout-1/report.json",
+          "sha256": "f329fc9c53ee2ffbeec3cb6b59474ff3bdbfbdc016d0cd92b0035aeb457bf983"
+        },
+        "consumed-2": {
+          "path": "runs/water-two-pass-long-v1/final-holdout/report.json",
+          "sha256": "17d0167678365cfbec46c10fdc841ff2d33ce26989724f1bf04449b47f3623e9"
+        },
+        "consumed-3": {
+          "path": "runs/water-coverage-feedback-v1/final-holdout/report.json",
+          "sha256": "b66de091814fe8b199865680641fe0d0cf1954852dbdebec1e9728a9f42fd01b"
+        },
+        "consumed-4": {
+          "path": "runs/water-targeted-feedback-v1/final-holdout/report.json",
+          "sha256": "f3cd7f0d47a4ea61772c06872598049c40b13941b22453ad15784037acb3c975"
+        },
+        "elongated": {
+          "path": "runs/water-shape-repeatability-v1/elongated-diagnostic/report.json",
+          "sha256": "325c90ba745d5b8e09d6d775e8111e61a85d93fbdd6b687ab3937a7045fdedbd"
+        }
+      },
+      "recovery": "Retain attempts; reconcile owners before any new execution",
+      "error_type": "CalledProcessError",
+      "finished_at_utc": "2026-10-16T11:42:51.835622+00:00",
+      "elapsed_seconds": 703.7516194939999
+    },
+    {
+      "started_at_utc": "2026-10-16T11:53:02.372217+00:00",
+      "state": "failed",
+      "amendment_sha256": "a2f3923cabb0545e97e73af5daea73dfe3672c0be7713947c705b4e079406aa8",
+      "selection_sha256": "2859b2f60da6089b4bce57b64caf1c9933b4e84b488f622d250f9f50d8fe875e",
+      "source_sha256": "84b99ac58d48bc9c4447a355a15186dbdd63d6004d393a8b66d10cc85e5cce3d",
+      "original_protocol_amended_after_fitting": true,
+      "training_repeated": false,
+      "selection_changed": false,
+      "error_type": "CalledProcessError",
+      "finished_at_utc": "2026-10-16T11:57:14.418899+00:00",
+      "elapsed_seconds": 252.0466115579993
+    },
+    {
+      "started_at_utc": "2026-10-16T12:00:02.986440+00:00",
+      "state": "completed",
+      "workers": 2,
+      "original_report_sha256": "98e961b8b48b21f0ded8fef06164d338760d62b41b419dce2ff7846c021778f0",
+      "selection_sha256": "2859b2f60da6089b4bce57b64caf1c9933b4e84b488f622d250f9f50d8fe875e",
+      "source_sha256": "dcb836281433655f69d18c43465c67e7b8d914e65731496a5ab30a44716d1229",
+      "deadline_or_physics_changed": false,
+      "model_or_scene_changed": false,
+      "retries": [
+        {
+          "scene": 0,
+          "model": "shape-two-reference",
+          "output": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-00-shape-two-reference-0",
+          "matching_prefix_frames": 111,
+          "timing": {
+            "argv": [
+              "taskset",
+              "-c",
+              "1",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py",
+              "--binary",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+              "--scene",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout-amended/scene-00/scene.json",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-00-shape-two-reference-0",
+              "--threads",
+              "1",
+              "--project",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+              "--artifacts",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+              "--proposals",
+              "32",
+              "--adaptive-profile",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-inference-budget-v1/configs/adaptive.json",
+              "--single-evaluation"
+            ],
+            "started_at_utc": "2026-10-16T12:00:02.987310+00:00",
+            "status": "completed",
+            "pid": 69382,
+            "returncode": 0,
+            "finished_at_utc": "2026-10-16T12:01:29.082223+00:00",
+            "elapsed_seconds": 86.09473339099986,
+            "child_reaped": true
+          }
+        },
+        {
+          "scene": 1,
+          "model": "shape-two-reference",
+          "output": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-01-shape-two-reference-0",
+          "matching_prefix_frames": 124,
+          "timing": {
+            "argv": [
+              "taskset",
+              "-c",
+              "3",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py",
+              "--binary",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+              "--scene",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout-amended/scene-01/scene.json",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-01-shape-two-reference-0",
+              "--threads",
+              "1",
+              "--project",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+              "--artifacts",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+              "--proposals",
+              "32",
+              "--adaptive-profile",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-inference-budget-v1/configs/adaptive.json",
+              "--single-evaluation"
+            ],
+            "started_at_utc": "2026-10-16T12:00:02.987591+00:00",
+            "status": "completed",
+            "pid": 69383,
+            "returncode": 0,
+            "finished_at_utc": "2026-10-16T12:01:08.725434+00:00",
+            "elapsed_seconds": 65.73746698299965,
+            "child_reaped": true
+          }
+        },
+        {
+          "scene": 7,
+          "model": "shape-two-reference",
+          "output": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-07-shape-two-reference-0",
+          "matching_prefix_frames": 120,
+          "timing": {
+            "argv": [
+              "taskset",
+              "-c",
+              "7",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py",
+              "--binary",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+              "--scene",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout-amended/scene-07/scene.json",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-07-shape-two-reference-0",
+              "--threads",
+              "1",
+              "--project",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+              "--artifacts",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+              "--proposals",
+              "32",
+              "--adaptive-profile",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-inference-budget-v1/configs/adaptive.json",
+              "--single-evaluation"
+            ],
+            "started_at_utc": "2026-10-16T12:01:08.727763+00:00",
+            "status": "completed",
+            "pid": 69784,
+            "returncode": 0,
+            "finished_at_utc": "2026-10-16T12:02:32.819755+00:00",
+            "elapsed_seconds": 84.09189317800065,
+            "child_reaped": true
+          }
+        }
+      ],
+      "finished_at_utc": "2026-10-16T12:02:32.904496+00:00",
+      "elapsed_seconds": 149.91773342800025
+    }
+  ],
+  "recorded_attempt_seconds_sum": 3635.9673018529998,
+  "diagnosis_and_recovery_gap_seconds": 1071.3210571470004,
+  "managed_sequence_elapsed_seconds": 2529.585003769,
+  "elapsed_scope": "first outer attempt start through final recovery finish, including diagnosis gap; optimizer and managed times separately recorded",
+  "scope": "laboratory comparison; full-spectrum physical gates unchanged; no deployment update or final-informed refit"
+}

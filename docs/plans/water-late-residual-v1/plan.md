@@ -1,6 +1,8 @@
 # Matched early and late residual feedback
 
-Status: Active. Admission: start, user-authorized continuation of the prepared
+Status: Accepted. Experiment records complete; no model promotion. The original
+pre-fit final protocol was invalid; amended validation is separately labelled.
+Admission: start, user-authorized continuation of the prepared
 pressure-accuracy protocol. Canonical path: docs/plans/water-late-residual-v1/plan.md.
 Owner/integrator: this task. Base a1b84ff593034e747417e063cb261e12d9c429aa,
 private branch experiment/water-late-residual-v1, targeting the retained experiment
@@ -81,6 +83,8 @@ Decisions:
 Write set: experiments/water-conditioning-v1/training/{policy.py,model.py,
 train.py,project.py,pipeline.py,direction_feedback.py,test_direction_feedback.py};
 experiments/water-multigrid-learning-v1/{record.py,qualify_bank.py};
+experiments/water-multigrid-learning-v1/trajectory_summary.py (explicit rejection
+of incomplete native receipts; successful comparison bytes unchanged);
 experiments/water-coverage-feedback-v1/run.py (bounded completed-comparison recovery
 and capture-duration preflight only; normal scientific execution unchanged);
 experiments/water-inference-budget-v1/scaling.py (retain rejected zero-frame native
@@ -108,20 +112,26 @@ Milestones and acceptance, automated:
   zero-update fresh CPU restore, identical weights and redownloaded artifacts.
 - M3 two complete managed CUDA fits, fitting/familiar/fixed-call CPU comparisons,
   58 development trajectories, frozen final comparison, complete source/custody,
-  process/timing/failure records and same-catalog project visibility. Pending.
+  process/timing/failure records and same-catalog project visibility. Completed
+  with documented final-protocol deviation: original8-scene setup invalid,
+  amended8-scene validation completed with frozen models and no promotion.
 
-Current acceptance: pending. Current phase: follow-up CPU comparisons.
-Next slice: amended final validation of the frozen candidate; preserve both failed
-outer attempts and the invalid original final population. The original pre-fit
-final protocol cannot be marked satisfied or authorize promotion. All58 development
-trajectories qualify for both new models; fixed-call improvement and full-trajectory
-pressure tradeoffs remain separately reported. Two final swirl values exceed the
-selected native range[-1,1]; clip only those two in a separately committed amended
-config, preserving all seeds/shapes/other physics, before any final AI evaluation.
-Qualify both repaired setups with one actual post-warm-up algorithm step first.
-No retraining, reselection or promotion from this post-fit protocol amendment.
+Current acceptance: completed comparison and records accepted; original clean
+pre-fit final qualification unsatisfied. Current phase: terminal. Next slice:
+none in this plan. All58 standard and4 exploratory trajectories qualify for each
+new model. Both checkpoints qualify on8 amended final scenes after three reference
+resource recoveries, with all285 native children reaped. Late-direction learning
+improves equal-call pressure accuracy, but adaptive autonomous worst pressure
+deviation regresses versus reference; retain17b423b7… and preserve all checkpoints.
+No further fitting, seed confirmation, final-informed reselection or deployment.
+Prepared next diagnostic, not executed: test the frozen late checkpoint with a
+minimum8-call policy on already consumed trajectories before further CUDA fitting;
+measure pressure/call tradeoffs without relaxing physical gates. This does not
+make the consumed amended population a fresh holdout again.
 Blockers: none. Replan on invalid labels, incomplete lineage, parity violation,
 resource breach, unavailable CUDA/custody or unreaped work. Numerical improvement
 is measured, not a completion prerequisite. Decisions/issues/receipts live in
 execution-ledger.md, issues.md and reports/. Standards snapshot
 snapshot:v1:be8a88a8-99b2-4355-a04c-f1306390fe13;23 policies, no unresolved facts.
+
+[Results and timings](reports/summary.json) · [Equal-call accuracy CSV](reports/fixed-call-comparison.csv) · [Full-trajectory decision](reports/decision.json) · [Verification and retained failures](reports/verification.json).

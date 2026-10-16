@@ -17,10 +17,23 @@ class Recovery(unittest.TestCase):
     def setUp(self):
         self.sequence_path = LAB/'experiments/water-late-residual-v1/configs/sequence.json'
         self.sequence = owner.read(self.sequence_path)
-        self.root = LAB/self.sequence['root']
-        self.reports = LAB/'docs/plans/water-late-residual-v1/reports'
-        if not (self.reports/'comparison.json').exists():
+        source_root = LAB/self.sequence['root']
+        source_reports = LAB/'docs/plans/water-late-residual-v1/reports'
+        if not (source_reports/'comparison.json').exists() or not (source_root/'execution.json').exists():
             self.skipTest('requires retained completed local comparison records')
+        scratch = tempfile.TemporaryDirectory()
+        self.addCleanup(scratch.cleanup)
+        self.root = Path(scratch.name)
+        self.reports = self.root/'reports'
+        self.reports.mkdir()
+        for name in ('comparison.json', *(f'trial-{t["name"]}.json' for t in self.sequence['trials'])):
+            (self.reports/name).symlink_to(source_reports/name)
+        # Isolate the admission boundary from subsequently evaluated populations.
+        # Completed model/custody files remain the real, read-only fixtures.
+        for name in ('study-status.json', 'execution.json'):
+            (self.root/name).write_bytes((source_root/name).read_bytes())
+        for trial in self.sequence['trials']:
+            (self.root/trial['name']).symlink_to(source_root/trial['name'], target_is_directory=True)
         self.bindings = owner.references(self.sequence)
 
     def test_missing_capture_duration_refuses_before_any_managed_work(self):

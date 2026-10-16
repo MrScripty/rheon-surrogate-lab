@@ -219,3 +219,40 @@
   post-fit: original pre-fit final protocol remains unsatisfied, so no promotion
   is authorized from this amended measurement. All numerical outcomes remain
   reportable and can guide a later independently qualified protocol.
+- Both repaired scenes pass native16-step fixtures; all8 amended native controls
+  qualify. The late model completes and qualifies904/904 AI steps on8/8 scenes.
+  Reference episodes0/1/7 hit the unchanged120s resource deadline under8-way
+  concurrency, terminate/reap at111/124/120 total frames, and preserve partial
+  records. Incomplete-result reporting requests explicit reconciliation instead
+  of TypeError; successful completed summaries remain byte-identical.
+- Recover only those three resource failures at2-way concurrency, with unchanged
+  scene/checkpoint/binary, CPU affinity, physical gates and120s deadline. Reuse all
+  other first attempts. Retries complete in86.095/65.737/84.092s, matching every
+  recorded non-timing field across355 old prefix frames. Reconciled study links
+  exact original/retry outputs; all285 observed native child receipts are reaped.
+- Amended final,904 AI steps/model,8/8 scenes each: retained mean/max calls
+  10.461/18, worst paired pressure3.202e-6; late8.371/11, worst1.180e-5. Thus late
+  uses19.98% fewer calls but worst pressure deviation is3.68x higher. Numeric
+  no-pressure-regression gate fails independently of the post-fit protocol limit.
+  Keep17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8.
+  No deployment, promotion, refit or final-informed reselection occurs.
+- Exploratory elongated cases qualify4/4 for both new models; early/late max
+  calls29/24 and worst pressure1.680e-3/1.388e-3. Preserve the prior failure and
+  these finite-case gains without claiming universal geometric accuracy.
+- Final experiment regression suite passes8 tests in1.255s, including40-cubed
+  bounded allocation, transform parity, recovery admission and failed-summary
+  guards. Retain the first final suite failure caused by a test fixture reading
+  live post-selection reports; isolate only fixture report links, leaving the
+  production no-repeat-final guard intact, then rerun successfully.
+- Complete sequence first outer start through last recovery finish:4707.288s
+  (78.455min), including1071.321s diagnosis/recovery gaps. Recorded attempt sum
+  3635.967s; original managed/CPU sequence2529.585s; CUDA optimizer intervals
+  500.227+439.678=939.905s, plus separate one-update smoke. These boundaries are
+  distinct; overlapping per-job times are not added as elapsed makespan.
+- Results retained in summary.json, fixed-call-comparison.csv, comparison.csv,
+  per-population drift JSON/CSV, decision.json, verification.json and individual
+  receipts. Configuration/source/exposure identities and original failures remain
+  attached. Unused seed confirmation stays unconsumed. Next proposed CPU-only
+  test: keep the late checkpoint frozen and compare a minimum8-call floor with
+  current adaptive stopping on consumed scenes, before more CUDA fitting. It is
+  not executed here and does not recycle amended final scenes as a fresh holdout.

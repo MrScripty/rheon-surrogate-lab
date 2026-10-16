@@ -1,0 +1,48 @@
+{
+  "previous_attempt": {
+    "timing": {
+      "argv": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-late-residual-v1",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-10-16T12:06:40.267721+00:00",
+      "status": "failed",
+      "pid": 4,
+      "returncode": 1,
+      "error_type": "CalledProcessError",
+      "finished_at_utc": "2026-10-16T12:06:42.633158+00:00",
+      "elapsed_seconds": 2.3653223339997567,
+      "child_reaped": true
+    },
+    "output": "test_completed_native_without_frame_file_is_rejected (test_failed_summary.FailedSummary.test_completed_native_without_frame_file_is_rejected) ... ok\ntest_failed_native_without_frames_retains_failure_and_reaping (test_failed_summary.FailedSummary.test_failed_native_without_frames_retains_failure_and_reaping) ... ok\ntest_incomplete_trajectory_requests_reconciliation (test_failed_summary.FailedSummary.test_incomplete_trajectory_requests_reconciliation) ... ok\ntest_changed_source_and_attempted_final_are_rejected (test_recovery.Recovery.test_changed_source_and_attempted_final_are_rejected) ... ok\ntest_missing_capture_duration_refuses_before_any_managed_work (test_recovery.Recovery.test_missing_capture_duration_refuses_before_any_managed_work) ... ok\ntest_real_completed_comparison_reuses_six_drained_runs (test_recovery.Recovery.test_real_completed_comparison_reuses_six_drained_runs) ... ERROR\ntest_large_real_solve_under_hard_additional_memory_limit (test_spectral_memory.SpectralMemory.test_large_real_solve_under_hard_additional_memory_limit) ... ok\ntest_small_transform_matches_independent_dense_contraction (test_spectral_memory.SpectralMemory.test_small_transform_matches_independent_dense_contraction) ... ok\n\n======================================================================\nERROR: test_real_completed_comparison_reuses_six_drained_runs (test_recovery.Recovery.test_real_completed_comparison_reuses_six_drained_runs)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-late-residual-v1/test_recovery.py\", line 52, in test_real_completed_comparison_reuses_six_drained_runs\n    receipt = owner.recovery_evidence(self.root, self.reports, self.sequence, self.bindings, self.sequence_path)\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-coverage-feedback-v1/run.py\", line 59, in recovery_evidence\n    raise ValueError('cannot repeat frozen selection or final evaluation')\nValueError: cannot repeat frozen selection or final evaluation\n\n----------------------------------------------------------------------\nRan 8 tests in 1.243s\n\nFAILED (errors=1)\n",
+    "reason": "test admission fixture still referenced live reports after final selection; isolate its report links without weakening production guard"
+  },
+  "timing": {
+    "argv": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-late-residual-v1",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "started_at_utc": "2026-10-16T12:07:59.668690+00:00",
+    "status": "completed",
+    "pid": 4,
+    "returncode": 0,
+    "finished_at_utc": "2026-10-16T12:08:02.034300+00:00",
+    "elapsed_seconds": 2.3654800579997755,
+    "child_reaped": true
+  },
+  "output": "test_completed_native_without_frame_file_is_rejected (test_failed_summary.FailedSummary.test_completed_native_without_frame_file_is_rejected) ... ok\ntest_failed_native_without_frames_retains_failure_and_reaping (test_failed_summary.FailedSummary.test_failed_native_without_frames_retains_failure_and_reaping) ... ok\ntest_incomplete_trajectory_requests_reconciliation (test_failed_summary.FailedSummary.test_incomplete_trajectory_requests_reconciliation) ... ok\ntest_changed_source_and_attempted_final_are_rejected (test_recovery.Recovery.test_changed_source_and_attempted_final_are_rejected) ... ok\ntest_missing_capture_duration_refuses_before_any_managed_work (test_recovery.Recovery.test_missing_capture_duration_refuses_before_any_managed_work) ... ok\ntest_real_completed_comparison_reuses_six_drained_runs (test_recovery.Recovery.test_real_completed_comparison_reuses_six_drained_runs) ... ok\ntest_large_real_solve_under_hard_additional_memory_limit (test_spectral_memory.SpectralMemory.test_large_real_solve_under_hard_additional_memory_limit) ... ok\ntest_small_transform_matches_independent_dense_contraction (test_spectral_memory.SpectralMemory.test_small_transform_matches_independent_dense_contraction) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.255s\n\nOK\n"
+}

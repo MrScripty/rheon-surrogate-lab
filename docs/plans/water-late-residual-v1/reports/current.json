@@ -1,13 +1,13 @@
 {
   "schema": "rheon-late-residual-progress-v1",
-  "state": "running-matched-cuda-fits",
+  "state": "completed",
   "paired_directions": 144,
   "preparation_seconds": 12.157674715,
   "cuda_optimizer_updates": 10001,
   "scope": "matched extra early versus extra late residual feedback; frequency-loss curricula deferred",
   "reports": "docs/plans/water-late-residual-v1/reports/",
   "managed_smoke": "passed",
-  "active_trial": "extra-late",
+  "active_trial": null,
   "managed_train_run_id": "ad303611cd064137ab339f7dcbbf968e",
   "comparison_inputs": 15,
   "records": {
@@ -18,9 +18,13 @@
       "reports/fixed-all-targeted.json"
     ],
     "protocol": "plan.md",
-    "methods": "execution-ledger.md"
+    "methods": "execution-ledger.md",
+    "summary": "reports/summary.json",
+    "fixed_call_csv": "reports/fixed-call-comparison.csv",
+    "final_decision": "reports/decision.json",
+    "verification": "reports/verification.json"
   },
-  "active_phase": "extra-late managed validation; full native evaluations pending",
+  "active_phase": "comparison complete; retained reference, no promotion",
   "completed_fits": [
     "extra-early",
     "extra-late"
@@ -32,5 +36,47 @@
     "equation_passed": 15,
     "worst_pressure_relative_l2": 7.129863401797893e-07,
     "scope": "common consumed saved RHS only; no full trajectory/final selection claim"
-  }
+  },
+  "report_recovery": {
+    "original_attempt": "runs/water-late-residual-v1/study-status.json",
+    "current_attempt": "runs/water-late-residual-v1/study-recovery-status.json",
+    "training_repeated": false
+  },
+  "candidate_promoted": false,
+  "retained_weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+  "original_final_protocol_satisfied": false,
+  "amended_final_numeric_gates_passed": false,
+  "amended_final": {
+    "reference": {
+      "scenes": 8,
+      "qualified_scenes": 8,
+      "attempted_ai_steps": 904,
+      "qualified_ai_steps": 904,
+      "hard_stops": 0,
+      "network_evaluations": 9457,
+      "mean_network_evaluations": 10.461283185840708,
+      "maximum_network_evaluations": 18,
+      "cap_hits": 0,
+      "worst_pressure_relative_l2": 3.201617454316497e-06,
+      "median_final_pressure_relative_l2": 2.525810344249797e-07
+    },
+    "candidate": {
+      "scenes": 8,
+      "qualified_scenes": 8,
+      "attempted_ai_steps": 904,
+      "qualified_ai_steps": 904,
+      "hard_stops": 0,
+      "network_evaluations": 7567,
+      "mean_network_evaluations": 8.370575221238939,
+      "maximum_network_evaluations": 11,
+      "cap_hits": 0,
+      "worst_pressure_relative_l2": 1.1796200025518645e-05,
+      "median_final_pressure_relative_l2": 4.844205964312213e-07
+    }
+  },
+  "cuda_optimizer_seconds": {
+    "extra-early": 500.22736954689026,
+    "extra-late": 439.67792224884033
+  },
+  "updated_at_utc": "2026-10-16T12:12:54.303211+00:00"
 }

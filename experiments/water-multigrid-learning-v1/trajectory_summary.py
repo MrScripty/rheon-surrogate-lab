@@ -26,6 +26,8 @@ def main():
             receipt=read(directory/'receipt.json')
             if digest(directory/'receipt.json')!=row['receipt_sha256'] or not receipt['native_process']['reaped']:
                 raise ValueError('exact completed/reaped source receipt required')
+            if receipt.get('result') is None:
+                raise ValueError('incomplete native trajectory requires reconciliation before comparison')
             scene=receipt['scene'];frames=[read_line for line in (directory/'frames.jsonl').read_text().splitlines()
                 if (read_line:=json.loads(line)).get('ai_quality')]
             if len(frames)!=receipt['result']['ai_steps']:raise ValueError('complete AI step population required')

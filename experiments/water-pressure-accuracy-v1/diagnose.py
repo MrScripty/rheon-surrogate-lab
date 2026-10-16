@@ -96,7 +96,7 @@ def mode_metrics(pressure, exact):
     torch = audit.TORCH
     (a, b, c), _ = audit.BASES[pressure.shape[2:]]
     error = (pressure-exact)[0, 0]
-    coefficients = torch.einsum('az,by,cx,zyx->abc', a, b, c, error-error.mean())
+    coefficients = audit.cosine_transform(error-error.mean(), (a, b, c))
     energy = coefficients.square()
     total = float(energy.sum())
     indices = torch.topk(energy.flatten(), min(5, energy.numel())).indices.tolist()

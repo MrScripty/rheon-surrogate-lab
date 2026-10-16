@@ -57,6 +57,24 @@ def ratio(pressure,sample):
     return vector_norm(error)/max(vector_norm(sample['rhs']),1e-30)
 
 
+def cosine_transform(values,bases,inverse=False):
+    """Contract one axis at a time, keeping intermediates the size of the grid.
+
+    A four-operand einsum may form an n^6 outer product without opt_einsum.
+    Explicit two-operand contractions keep memory independent of that optional
+    optimizer and preserve the same orthonormal separable transform.
+    """
+    torch=TORCH
+    a,b,c=bases
+    if inverse:
+        values=torch.einsum('az,abc->zbc',a,values)
+        values=torch.einsum('by,zbc->zyc',b,values)
+        return torch.einsum('cx,zyc->zyx',c,values)
+    values=torch.einsum('az,zyx->ayx',a,values)
+    values=torch.einsum('by,ayx->abx',b,values)
+    return torch.einsum('cx,abx->abc',c,values)
+
+
 def spectral_correction(residual,sample,modes=None):
     """Analytic pseudoinverse of sealed L, optionally truncated to low modes.
 
@@ -77,11 +95,11 @@ def spectral_correction(residual,sample,modes=None):
         BASES[key]=(bases,eigen)
     (a,b,c),eigen=BASES[key]
     q=residual[0,0]*(sample['rho']/sample['cell_size_m']).item()
-    coefficients=torch.einsum('az,by,cx,zyx->abc',a,b,c,q)/eigen
+    coefficients=cosine_transform(q,(a,b,c))/eigen
     coefficients[0,0,0]=0
     if modes is not None:
         coefficients[modes:]=0;coefficients[:,modes:]=0;coefficients[:,:,modes:]=0
-    delta=torch.einsum('az,by,cx,abc->zyx',a,b,c,coefficients)[None,None]
+    delta=cosine_transform(coefficients,(a,b,c),inverse=True)[None,None]
     return delta-delta[:,:,:1,:1,:1]
 
 

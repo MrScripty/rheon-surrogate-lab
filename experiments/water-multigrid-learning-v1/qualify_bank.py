@@ -25,7 +25,7 @@ def main():
     _,parents=data.read_view(args.packet);parent=next(p for p in parents if p['entry']['split']=='train');sample=data.sample(parent,0)
     rng=torch.random.get_rng_state().clone()
     train=[p for p in parents if p['entry']['split']=='train']
-    amplitude=analytical.training_correction_rms(data.sample(p,slot) for p in train for slot in range(len(p['frames']))) if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6') else None
+    amplitude=analytical.training_correction_rms(data.sample(p,slot) for p in train for slot in range(len(p['frames']))) if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7') else None
     samples,order,evidence=analytical.bank(sample,config['analytical_feedback'],config['training']['updates'],amplitude_pa=amplitude)
     records=[]
     with torch.no_grad():

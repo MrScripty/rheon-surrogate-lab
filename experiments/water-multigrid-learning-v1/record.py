@@ -42,6 +42,9 @@ def main():
     if hashlib.sha256(order.tobytes()).hexdigest()!=trained['closure']['sample_order_sha256']:raise ValueError('real exposure reconstruction differs')
     real_cells=sum(math.prod(parents[int(parent)]['counts_xyz']) for batch in order for parent,_ in batch)
     analytical_cells=sum(n*math.prod(g['grid']['counts_xyz']) for n,g in zip(feedback['grid_exposures'],feedback['grids']))
+    supplement=history.get('supplemental_feedback')
+    extra_draws=supplement['additional_examples'] if supplement else 0
+    extra_cells=sum(n*math.prod(g['grid']['counts_xyz']) for n,g in zip(supplement['grid_exposures'],supplement['grids'])) if supplement else 0
     result={'schema':'rheon-multigrid-trial-record-v1','trial':root.name,'configuration':config,'source_commit':witness['source_commit'],
         'source_witness_sha256':digest(root/'project/source-witness.json'),'catalog_id':receipt['catalog_id'],'managed_stages':stages,
         'cuda_optimizer_updates':trained['optimizer_updates'],'cuda_execution':trained['execution'],'cpu_restore_execution':restored['execution'],
@@ -50,8 +53,8 @@ def main():
         'normalization_sha256':trained['closure']['normalization_sha256'],'analytical_training':{k:v for k,v in feedback.items() if k!='grids'},
         'training_exposure':{'real_simulations':len(eligible),'real_states':sum(len(parents[i]['frames']) for i in eligible),
             'real_draws':int(order.shape[0]*order.shape[1]),'analytical_draws':feedback['additional_examples'],
-            'forward_network_evaluations':(order.shape[0]*order.shape[1]+feedback['additional_examples'])*config['correction']['steps'],
-            'forward_cell_evaluation_proxy':(real_cells+analytical_cells)*config['correction']['steps'],
+            'forward_network_evaluations':(order.shape[0]*order.shape[1]+feedback['additional_examples']+extra_draws)*config['correction']['steps'],
+            'forward_cell_evaluation_proxy':(real_cells+analytical_cells+extra_cells)*config['correction']['steps'],
             'scope':'sample/evaluation/voxel accounting, not FLOPs or backward-work equivalence'},
         'control_parity':{'initial_parameter_inventory':history['checkpoints']['checkpoint-000.npz']['inventory']==control['checkpoints']['checkpoint-000.npz']['inventory'],
             'normalization':trained['closure']['normalization_sha256']==old['closure']['normalization_sha256'],
@@ -62,6 +65,9 @@ def main():
         'grid_study':{k:v for k,v in read(root/'grid-study/report.json').items() if k not in ('records','configuration')},
         'raw_native':{name:read(root/name/'evaluation.json') for name in ('raw-fit-native','raw-validation-native') if (root/name/'evaluation.json').exists()},
         'scope':'development, iterative CPU inference, unchanged physical targets; no deployment or final-test claim'}
+    if supplement:
+        result['supplemental_training']={k:v for k,v in supplement.items() if k!='grids'}
+        result['training_exposure'].update(supplemental_draws=extra_draws, supplemental_forward_cells=extra_cells*config['correction']['steps'])
     if (root/'long-study/report.json').exists():result['long_study']={k:v for k,v in read(root/'long-study/report.json').items() if k not in ('records','configuration')}
     # Validate every native trajectory receipt, including failed scientific cases.
     native=[read(path) for path in root.glob('*-study/scene-*/*/receipt.json')]

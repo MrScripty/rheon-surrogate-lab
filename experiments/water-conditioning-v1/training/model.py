@@ -26,7 +26,7 @@ def select(config):
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
-    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
         import physical_residual
         SELECTED='physical-residual';NORMALIZATION='none';CORRECTION=config['correction']
         ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
@@ -45,10 +45,12 @@ def select(config):
         elif OBJECTIVE!='canonical':
             ARCHITECTURE.update(training_objective=OBJECTIVE,
                 loss_weights=copy.deepcopy(physical_residual.LOSS_WEIGHTS))
-        if config['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+        if config['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
             ARCHITECTURE.update(output_scale=OUTPUT_SCALE,
                 reconstruction='float32 raw times selected train-only RMS, cell-zero gauge, add supplied base',
                 analytical_training_feedback=copy.deepcopy(config['analytical_feedback']))
+        if config['schema']=='rheon-water-residual-experiment-v7':
+            ARCHITECTURE['supplemental_training_feedback']=copy.deepcopy(config['supplemental_feedback'])
         return
     require(config['schema'] in ('rheon-water-conditioning-experiment-v1','rheon-water-conditioning-experiment-v2','rheon-water-conditioning-experiment-v3','rheon-water-conditioning-experiment-v4'),
             'conditioning_configuration','explicit versioned model transformation')

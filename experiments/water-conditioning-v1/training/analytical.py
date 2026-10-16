@@ -127,12 +127,7 @@ def bank(template,specification,updates,amplitude_pa=None):
         amplitude=float((template['reference']-template['base']).square().mean().sqrt())
     require(math.isfinite(amplitude) and amplitude>0,'analytical_amplitude','positive fitted correction RMS')
     samples=[];banks=[];size=specification['patterns']*len(AMPLITUDES)
-    # A separate private stream changes only analytical shape/example selection.
-    rng=np.random.Generator(np.random.PCG64(specification['seed']))
-    grid_order=np.concatenate([rng.permutation(len(specification['grids']))
-        for _ in range(math.ceil(updates/len(specification['grids'])))])[:updates]
-    within=rng.integers(size,size=updates,dtype=np.int64)
-    order=(grid_order*size+within).astype('<i8')
+    order,grid_order=_balanced_order(len(specification['grids']),size,updates,specification['seed'])
     for grid in specification['grids']:
         shape=tuple(reversed(grid['counts_xyz']))
         grid_template={**template,'base':torch.zeros((1,1,*shape),dtype=torch.float64,device=template['base'].device),
@@ -167,3 +162,37 @@ def training_correction_rms(samples):
     result=math.sqrt(squared/cells)
     require(math.isfinite(result) and result>0,'analytical_amplitude','positive all-train correction RMS')
     return result
+
+
+
+def _balanced_order(grid_count,size,updates,seed):
+    """One private RNG owns balanced grid exposure and within-grid draws."""
+    rng=np.random.Generator(np.random.PCG64(seed))
+    grids=np.concatenate([rng.permutation(grid_count)
+        for _ in range(math.ceil(updates/grid_count))])[:updates]
+    within=rng.integers(size,size=updates,dtype=np.int64)
+    return (grids*size+within).astype('<i8'),grids
+
+
+def supplemental_bank(template,specification,updates,primary,primary_spec,amplitude_pa):
+    """Add a private stream; reuse primary tensors or enforce combined residency."""
+    samples,_,parent=primary
+    if specification['source']=='primary':
+        size=len(samples)//len(parent['grids'])
+        order,grids=_balanced_order(len(parent['grids']),size,updates,specification['seed'])
+        evidence={**parent,'weight':specification['weight'],
+            'sampling_order_sha256':sha(order.tobytes()),
+            'grid_exposures':np.bincount(grids,minlength=len(parent['grids'])).tolist(),
+            'resident_tensor_bytes':0}
+    else:
+        raw={k:v for k,v in specification.items() if k!='source'}
+        projected=validate_grids(raw)
+        require(parent['resident_tensor_bytes']+projected<=min(primary_spec['cache_max_bytes'],raw['cache_max_bytes']),
+                'analytical_cache','combined supplemental and primary tensor residency')
+        samples,order,evidence=bank(template,raw,updates,amplitude_pa=amplitude_pa)
+    evidence={**evidence,'schema':'rheon-supplemental-feedback-v1',
+        'source_bank_schema':parent['schema'] if specification['source']=='primary' else evidence['schema'],
+        'reuses_primary':specification['source']=='primary','seed':specification['seed'],
+        'combined_resident_tensor_bytes':parent['resident_tensor_bytes']+evidence['resident_tensor_bytes'],
+        'primary_bank_description_sha256':parent['bank_description_sha256']}
+    return samples,order,evidence

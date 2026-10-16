@@ -15,10 +15,11 @@ dimensions=portable.dimensions
 
 def experiment(value):
     require(type(value) is dict,'conditioning_configuration','object required')
-    if value.get('schema') in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+    if value.get('schema') in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
         expected={'schema','id','training','resources','conditioning','normalization','execution','correction'}
-        if value['schema'] in ('rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):expected.add('objective')
-        if value['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):expected.update(('analytical_feedback','output_scale'))
+        if value['schema'] in ('rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):expected.add('objective')
+        if value['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):expected.update(('analytical_feedback','output_scale'))
+        if value['schema']=='rheon-water-residual-experiment-v7':expected.add('supplemental_feedback')
         require(set(value)==expected,
                 'residual_configuration','closed residual experiment')
         require(value['conditioning']=='physical-residual' and value['normalization']=='none',
@@ -31,26 +32,26 @@ def experiment(value):
         original['schema']='rheon-cuda-pressure-experiment-v1'
         base_experiment(original)
         execution(value)
-        if value['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+        if value['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
             feedback=value['analytical_feedback']
             feedback_keys={'weight','seed','patterns'}
-            if value['schema'] in ('rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+            if value['schema'] in ('rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                 feedback_keys.update(('grids','sampling','cache_max_bytes'))
-            if value['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):feedback_keys.add('amplitude_reference')
-            if value['schema']=='rheon-water-residual-experiment-v6':
+            if value['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):feedback_keys.add('amplitude_reference')
+            if value['schema'] in ('rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                 feedback_keys.add('grid_capacity')
             require(type(feedback) is dict and set(feedback)==feedback_keys
                     and type(feedback['weight']) in (int,float) and 0<=feedback['weight']<=1
                     and type(feedback['seed']) is int and 0<=feedback['seed']<2**32
                     and type(feedback['patterns']) is int and 8<=feedback['patterns']<=64,
                     'analytical_feedback','bounded weight, seed and analytical pattern count')
-            if value['schema'] in ('rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+            if value['schema'] in ('rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                 import analytical
-                if value['schema']=='rheon-water-residual-experiment-v6':
+                if value['schema'] in ('rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                     require(type(feedback['grid_capacity']) is int and feedback['grid_capacity']==16,
                             'analytical_capacity','v6 selects the sixteen-grid capacity contract')
                 analytical.validate_grids(feedback)
-            if value['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+            if value['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                 require(feedback['amplitude_reference']=='train-correction-cell-rms',
                     'analytical_amplitude_reference','all real train cell-states, no validation statistics')
             require(value['output_scale'] in ('previous-pressure-rms','correction-rms')
@@ -59,9 +60,27 @@ def experiment(value):
             require(not feedback['weight'] or value['execution']['resident_inputs']
                     and value['execution']['batch_mode']=='serial' and value['training']['batch_size']==1,
                     'analytical_feedback','resident serial fitting; one real sample per update')
+        if value['schema']=='rheon-water-residual-experiment-v7':
+            extra=value['supplemental_feedback']
+            require(type(extra) is dict and extra.get('source') in ('primary','grids'),
+                    'supplemental_feedback','explicit reused-primary or additional-grid source')
+            keys={'source','weight','seed'} if extra['source']=='primary' else feedback_keys|{'source'}
+            require(set(extra)==keys and type(extra['weight']) in (int,float) and 0<=extra['weight']<=1
+                    and type(extra['seed']) is int and 0<=extra['seed']<2**32 and feedback['weight']>0,
+                    'supplemental_feedback','closed bounded source/weight/private seed; active primary required')
+            require(value['execution']['resident_inputs'] and value['execution']['batch_mode']=='serial'
+                    and value['training']['batch_size']==1,'supplemental_feedback','resident serial updates')
+            if extra['source']=='grids':
+                require(type(extra['patterns']) is int and 8<=extra['patterns']<=64
+                        and type(extra['grid_capacity']) is int and extra['grid_capacity']==16
+                        and extra['amplitude_reference']=='train-correction-cell-rms',
+                        'supplemental_feedback','versioned train-only bounded grid bank')
+                combined=analytical.validate_grids(feedback)+analytical.validate_grids(extra)
+                require(combined<=min(feedback['cache_max_bytes'],extra['cache_max_bytes']),
+                        'analytical_cache','combined supplemental and primary tensor residency')
         if 'objective' in value:
             allowed=('canonical','correction-gradient-divergence')
-            if value['schema']=='rheon-water-residual-experiment-v6':
+            if value['schema'] in ('rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                 allowed+=('canonical-intermediate-contraction',)
             require(value['objective'] in allowed,
                     'residual_objective','explicit independently compared physical feedback')
@@ -93,7 +112,7 @@ def experiment(value):
 def execution(config):
     selected=config.get('execution',{'resident_inputs':False,'finite_checks':'per-tensor','batch_mode':'serial','profile_updates':0})
     expected={'resident_inputs','finite_checks','batch_mode','profile_updates'}
-    if config['schema'] in ('rheon-water-conditioning-experiment-v4','rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):expected.add('prepared_fields')
+    if config['schema'] in ('rheon-water-conditioning-experiment-v4','rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):expected.add('prepared_fields')
     require(type(selected) is dict and set(selected)==expected
             and type(selected['resident_inputs']) is bool and selected['finite_checks'] in ('per-tensor','combined')
             and selected['batch_mode'] in ('serial','stacked') and type(selected['profile_updates']) is int
@@ -102,7 +121,7 @@ def execution(config):
         require(type(selected['prepared_fields']) is bool and (not selected['prepared_fields'] or
                 selected['resident_inputs'] and selected['batch_mode']=='serial'),
                 'prepared_inputs','prepared fields require resident serial execution')
-    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
         require(not selected['prepared_fields'] or config['correction']['steps']==1,
                 'prepared_inputs','recurrent residuals must be recomputed through the ordinary model path')
     require(not selected['profile_updates'] or config['training']['updates']>=12+selected['profile_updates'],

@@ -53,7 +53,7 @@ def finite_tensors(tensors):
     return bool(torch.isfinite(torch.cat([value.detach().reshape(-1) for value in tensors])).all())
 
 
-def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None, analytical_sample=None, analytical_weight=0.):
+def one_update(network, optimizer, parents, indices, normalization, cache=None, strategy=None, prepared=None, analytical_sample=None, analytical_weight=0., supplemental_sample=None, supplemental_weight=0.):
     network.train(); optimizer.zero_grad(set_to_none=True)
     strategy=strategy or {'finite_checks':'per-tensor','batch_mode':'serial'}
     samples=[cache[(int(parent),int(frame))] if cache is not None else
@@ -84,6 +84,13 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
         (analytical_weight*extra).backward()
         extra_value=float(extra.detach())*analytical_weight
     else:extra_value=0.
+    if supplemental_sample is not None:
+        import analytical
+        extra=model.training_loss(network,supplemental_sample,normalization,
+            criterion=lambda prediction:analytical.loss(prediction,supplemental_sample,model.full_operator)).mean()
+        require(bool(torch.isfinite(extra)), 'training_nonfinite', 'supplemental feedback')
+        (supplemental_weight*extra).backward()
+        extra_value+=float(extra.detach())*supplemental_weight
     gradient = torch.nn.utils.clip_grad_norm_(network.parameters(), 1.0, error_if_nonfinite=True)
     optimizer.step()
     finite=finite_tensors(network.parameters()) if strategy['finite_checks']=='combined' else all(bool(torch.isfinite(p).all()) for p in network.parameters())
@@ -242,13 +249,19 @@ def run(args):
         feedback=config.get('analytical_feedback')
         if feedback is not None and feedback['weight']>0:
             import analytical
-            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
+            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7'):
                 require(cache,'analytical_training','resident actual training states required')
                 amplitude=analytical.training_correction_rms(cache.values())
                 analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'],amplitude_pa=amplitude)
             else:
                 require(len(cache or {})==1,'analytical_training','one recorded fitting frame for this controlled comparison')
                 analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'])
+        supplemental_samples=None;supplemental_evidence=None
+        supplemental=config.get('supplemental_feedback')
+        if supplemental is not None and supplemental['weight']>0:
+            supplemental_samples,supplemental_order,supplemental_evidence=analytical.supplemental_bank(
+                next(iter(cache.values())),supplemental,config['training']['updates'],
+                (analytical_samples,analytical_order,analytical_evidence),feedback,amplitude)
         profile_report = {'schema':'rheon-cuda-training-profile-v2','enabled':False,'execution':strategy}
         def capture_profile(profiler):
             events = profiler.key_averages()
@@ -276,8 +289,10 @@ def run(args):
                     if change['update'] == update:
                         for group in optimizer.param_groups: group['lr'] = change['learning_rate']
                 extra=analytical_samples[int(analytical_order[update-1])] if analytical_samples is not None else None
+                second=supplemental_samples[int(supplemental_order[update-1])] if supplemental_samples is not None else None
                 loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared,
-                    analytical_sample=extra,analytical_weight=feedback['weight'] if extra is not None else 0.)
+                    analytical_sample=extra,analytical_weight=feedback['weight'] if extra is not None else 0.,
+                    supplemental_sample=second,supplemental_weight=supplemental['weight'] if second is not None else 0.)
                 verify_cuda_update(network, optimizer, combined=strategy['finite_checks']=='combined')
                 if update % 100 == 0:
                     with torch.no_grad():
@@ -300,6 +315,7 @@ def run(args):
         device_evidence.update(peak_allocated_bytes=torch.cuda.max_memory_allocated(), peak_reserved_bytes=torch.cuda.max_memory_reserved(), parameters_gradients_adam_moments_cuda=True, batches_cuda=True)
         write(output/'history.json', {'history': history, 'checkpoints': checkpoint_specs, 'validation': validation,
                                      'analytical_feedback':analytical_evidence,
+                                     **({'supplemental_feedback':supplemental_evidence} if supplemental_evidence is not None else {}),
                                      'trace': trace, 'scope': 'final update candidate; no optimizer resume; loss before update, physical ratio after update',
                                      'training_started_unix':training_started_unix,'training_finished_unix':training_finished_unix,
                                      'execution_strategy':strategy,'optimizer_updates_per_s':config['training']['updates']/(training_finished_unix-training_started_unix)})

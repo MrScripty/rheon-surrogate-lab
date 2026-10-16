@@ -1,0 +1,1970 @@
+{
+  "preparation": {
+    "status": "prepared_not_trained",
+    "training_simulations": 32,
+    "training_states": 64,
+    "validation_simulations": 64,
+    "validation_states": 128,
+    "source_packet": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/sealed-water-v1-3/packets/train_validation",
+    "receipt": {
+      "status": "verified_lossless_water_view",
+      "reader_source_sha256": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f",
+      "parents": 96,
+      "frames": 192,
+      "population": "train_validation",
+      "inputs": {
+        "dataset": {
+          "bytes": 3349334,
+          "sha256": "b79a930d4fd362352066295668f5d56ff695cba4a21a1042ab7c2b07418358d2"
+        },
+        "dataset_extra": {
+          "bytes": 3353750,
+          "sha256": "41f1a3afe38385e9bec13cd7c6d7da65d3da6d907944ba6891bffe5c2653aa25"
+        },
+        "splits": {
+          "bytes": 449505,
+          "sha256": "87734dbd394dbc37d620b71a90135a5548eadc406f1639808e05ced8464bef91"
+        }
+      }
+    },
+    "reserved_or_final_test_used": false,
+    "scope": "existing native captures only; future training requires a separate controlled configuration and train-only scales"
+  },
+  "audit": {
+    "schema": "rheon-prepared-cohort-audit-v1",
+    "training_simulations": 32,
+    "training_states": 64,
+    "distinct_actual_setups": 32,
+    "training_cell_states": 70228,
+    "global_training_correction_rms_pa": 3.2051561202600105,
+    "normalization": {
+      "schema": "rheon-cubic-pressure-normalization-v2",
+      "model_profile": "rheon-cubic-groupnorm-model-v3",
+      "channels": [
+        "native_residual",
+        "previous_pressure",
+        "x",
+        "y",
+        "z",
+        "rho",
+        "dt"
+      ],
+      "coordinates": "actual cell centres in metres; unit scale 1 m",
+      "scales": {
+        "residual": {
+          "value": 8.412591590642984e-05,
+          "units": "m3/s2",
+          "method": "train_cell_rms",
+          "source": "native_input_residual"
+        },
+        "pressure": {
+          "value": 33.71460396763038,
+          "units": "Pa",
+          "method": "train_cell_rms",
+          "source": "base"
+        },
+        "rhs": {
+          "value": 0.0005976671058271487,
+          "units": "m3/s2",
+          "method": "train_cell_rms",
+          "source": "rhs"
+        },
+        "rho": {
+          "value": 1.0,
+          "units": "kg/m3",
+          "method": "constant_unit_scale",
+          "source": "rho"
+        },
+        "dt": {
+          "value": 1.0,
+          "units": "s",
+          "method": "constant_unit_scale",
+          "source": "dt"
+        }
+      },
+      "training_provenance": {
+        "trajectory_ids": [
+          "baseline--water-train-0000",
+          "baseline--water-train-0001",
+          "baseline--water-train-0002",
+          "baseline--water-train-0003",
+          "baseline--water-train-0004",
+          "baseline--water-train-0005",
+          "baseline--water-train-0006",
+          "baseline--water-train-0007",
+          "baseline--water-train-0008",
+          "baseline--water-train-0009",
+          "baseline--water-train-0010",
+          "baseline--water-train-0011",
+          "baseline--water-train-0012",
+          "baseline--water-train-0013",
+          "baseline--water-train-0014",
+          "baseline--water-train-0015",
+          "baseline--water-train-0016",
+          "baseline--water-train-0017",
+          "baseline--water-train-0018",
+          "baseline--water-train-0019",
+          "baseline--water-train-0020",
+          "baseline--water-train-0021",
+          "baseline--water-train-0022",
+          "baseline--water-train-0023",
+          "baseline--water-train-0024",
+          "baseline--water-train-0025",
+          "baseline--water-train-0026",
+          "baseline--water-train-0027",
+          "baseline--water-train-0028",
+          "baseline--water-train-0029",
+          "baseline--water-train-0030",
+          "baseline--water-train-0031"
+        ],
+        "frames": 64,
+        "cells": 70228,
+        "grids": [
+          [
+            16,
+            16,
+            16
+          ],
+          [
+            16,
+            10,
+            6
+          ],
+          [
+            12,
+            7,
+            13
+          ],
+          [
+            12,
+            6,
+            11
+          ],
+          [
+            10,
+            15,
+            6
+          ],
+          [
+            11,
+            10,
+            6
+          ],
+          [
+            8,
+            5,
+            9
+          ],
+          [
+            13,
+            11,
+            8
+          ],
+          [
+            12,
+            8,
+            9
+          ],
+          [
+            6,
+            14,
+            9
+          ],
+          [
+            10,
+            16,
+            16
+          ],
+          [
+            10,
+            5,
+            7
+          ],
+          [
+            6,
+            13,
+            12
+          ],
+          [
+            5,
+            15,
+            15
+          ],
+          [
+            6,
+            16,
+            8
+          ],
+          [
+            14,
+            15,
+            7
+          ],
+          [
+            5,
+            16,
+            8
+          ],
+          [
+            12,
+            9,
+            6
+          ],
+          [
+            13,
+            15,
+            9
+          ],
+          [
+            11,
+            5,
+            7
+          ],
+          [
+            12,
+            6,
+            7
+          ],
+          [
+            15,
+            5,
+            7
+          ],
+          [
+            11,
+            5,
+            16
+          ],
+          [
+            15,
+            10,
+            14
+          ],
+          [
+            9,
+            5,
+            8
+          ],
+          [
+            12,
+            10,
+            14
+          ],
+          [
+            14,
+            8,
+            8
+          ],
+          [
+            7,
+            10,
+            8
+          ],
+          [
+            11,
+            15,
+            10
+          ],
+          [
+            14,
+            5,
+            10
+          ],
+          [
+            14,
+            7,
+            11
+          ],
+          [
+            15,
+            8,
+            16
+          ]
+        ],
+        "parent_numeric_sha256": [
+          {
+            "base": "c7e61cc1e566177d86a4935607e803b6b37f56e09834be010f87c3071796bba8",
+            "reference": "0899205ea3c2e185a4b47851526055809d073d478a2ce84c524e2c8fde1eddec",
+            "rhs": "a30d2ef51339319164a5ed6cbe4ae3dfad4da8bfc81cae854409fc0464919737",
+            "native_input_residual": "66dd06def50e73993b3aae1570b1655329220f58e4200e1e8d84c0412935d54a"
+          },
+          {
+            "base": "93e0aa94aaaba89cfa677112ce95350685d2dff6cebd68fa749c6af1677de3cd",
+            "reference": "6faeb5e2f8f607dde8109805625175bb8fcd8c93060eb051b85a4dac7bd88ff3",
+            "rhs": "eeb689443c55e806739f4360d64f7426799ff03d0f2b47242f900b3c684f257c",
+            "native_input_residual": "b940aa961f9371dc60a41e829f24d68ae2ddbf3d7e10bbf048100e7740076fa7"
+          },
+          {
+            "base": "773b8d1c99e8edf7fb75b89e0d16cb0ebbad8fa5c4d39b9dd8db1feec1ad5ada",
+            "reference": "909e50098462ce6ad7d4d31a5761308887b289a4927599d691948e5b1adc36c0",
+            "rhs": "6c29b1c04bc79cbbe8a78113eb561048f90d9e0544d81937730b1716ec37d434",
+            "native_input_residual": "8c9d0397c40c8cbe89f116d187dd7783a2a69f4220354cdc099386c229aed0a3"
+          },
+          {
+            "base": "eea47c998dfeb4fe365d4992e041f2c9f3244b47e807d85a319f5d7ae58dca14",
+            "reference": "757da120400e370b7391859820a127ff6b109998990183748422714ff24eb22c",
+            "rhs": "7fd589b6641e7b42158611cf5cc985f662e70e245629a47a1a37b0d4e6e63c49",
+            "native_input_residual": "5dcbbca8eb2b041c058a755144a31abc5c45ba8147ec482f2864f16975c09bef"
+          },
+          {
+            "base": "ecc2ca6776b0a61d907d8a6c9c7b4f7191e64d3e69ff1b6fc76bbff02d354adc",
+            "reference": "5e4c98a39ce2a885eb1bc76ebf8956c6b683fae9cb5179b479153e17ce64bea4",
+            "rhs": "279a9a31e2df27e36f54de9fb7c57200b3ea4ad42d0e9b0e5499dfe4f2a35cc4",
+            "native_input_residual": "e7f20aafe407dfa13a34ceb16871bc5f0d99e7085f57be626b4dd9fc63c5a390"
+          },
+          {
+            "base": "ef87edbdecd2318503ed93b931c51ca76a371544ebdf547be8df5814ba2f76a3",
+            "reference": "58e2b2885b25903e76de89fabd9a09877c1f4d5471abd53fce64b7f11a06635f",
+            "rhs": "eb3e8b6ae6a92d2f049176423c7d6830ebd891adb26f93965ad935abe87f2f40",
+            "native_input_residual": "065ab34a0d271f5e9033bff1d699699a020e9285f1db52a76f25b84044edcd47"
+          },
+          {
+            "base": "711494789e3dbd0192a62330b229384cade37bcdf065176d0f8311a2fcb1f4ab",
+            "reference": "1a66609bbc9ee9a5257ec51131acdd9b32280f1d58600d52f2a83f1834ed597a",
+            "rhs": "a62774ef97ec471fcb05c9d392cda182d6e8ed960460b4f2adb3f84bced8c445",
+            "native_input_residual": "5b32a715f5eeabe86d05ac243ce197d19000f2f35232d0988f74892859bfef8f"
+          },
+          {
+            "base": "4d44724da43f1b5087b3f4e881968883b65234b4471e55b52906d8eadc3788eb",
+            "reference": "12b91586f59d58a806801546062763cd1713c9f7fa92f3b64644f53b4440ae64",
+            "rhs": "9f604c1e803226db4e6eb14e7966c5b603dbaad227e9cd2f5f63cfc161bc6235",
+            "native_input_residual": "e10cc07839d17b2f1a2c7e8f2a87216ce45183f9be846ca319218d67275159f9"
+          },
+          {
+            "base": "9c5a6a7162af3ca6a018902dcc5c0c8a94af48596bec5d8e65687d21b825428c",
+            "reference": "b994aa5455eeead77b11214a0b72fcb8cedd047928b2815ce783adb170210b92",
+            "rhs": "fb756c5fed87055f30b87cd70776357a9e2e8c943dd2ec10603842be111629b8",
+            "native_input_residual": "f15a1b242e2cbc6b45d29211db7378f8413d11a142f1de740e4b2bbaae9b6d22"
+          },
+          {
+            "base": "a28f3b1f992a171a0594421cbaf08f3bf7f03788c5e4416db4a404a1b9c2489b",
+            "reference": "881586880d4c5f14884d06572005defb6d4e5d3b0fced6057f07a9e93816d284",
+            "rhs": "f6db359153d2d6ddf8dcdb24f613625f76821a823866c31c2a268dae07b2ed3e",
+            "native_input_residual": "afd2365c91f2a5cafab0255f82c3c33e4f7ea90dfcad29b8db933eabc64f013f"
+          },
+          {
+            "base": "a4690419af44b373c489ed04d400b68801b22c32c714105b0b7e0e28beb8d3b6",
+            "reference": "7aeead81ecc668f9107654de3b9fe20759383d82f2ed9881b88fadfe649254be",
+            "rhs": "3d05c00250b8dc32280597254725fbec9e0ba3f913fe22bef8138dec07abf8a3",
+            "native_input_residual": "cc54332d47d59f06699e991c60d125dbdcc980a2d8fe1b8d3afe5623b7102e6e"
+          },
+          {
+            "base": "113f180ae23d08cbe66c001339962106f03865687d2aa887eb853dd7fbd0c339",
+            "reference": "e1db1033508baaf17fa1c22e790d35afb85a3c261a4de57a4353761da2b0d42b",
+            "rhs": "2774760c24ceb60c20ce761f918defd1aaf1b5a6eefafe1f6444ec8586e60bb6",
+            "native_input_residual": "f7f2ec4a6a47a518e044e07de80ceef0a0ad971d6bf584ce78ff7816fc6d19e1"
+          },
+          {
+            "base": "e30215285cd39d86ca00245dc2f043261d19186554cd4a1b782b7b9399efdd9c",
+            "reference": "02ee9315a334637299922cef20a57da303516ad02cff4fd6e66bee81ce9327b3",
+            "rhs": "ed581060123492655d22ca79adae92364cf93345d2eab1fd0d8307a502000a53",
+            "native_input_residual": "12b4d5b7ea7741e25bddb8aa579c625f883f22dab6a4bdc733ad7f5f468cf7e5"
+          },
+          {
+            "base": "735344bae21993085b710068a9e4f4ed5f087e0f7fdea1d53abb1cf7e7268db3",
+            "reference": "e57e4f88e5c3a5226e137127fcd26becf628ac02aa1aa97cdaee176a9702d820",
+            "rhs": "4cddeb31a5aed613fb8e7958e5c620ba44c86b179d44716d831cb310294788be",
+            "native_input_residual": "d1385cc865847e33850f9b98f3c9db44f2996ffe459ecb570bdf7a611066bcef"
+          },
+          {
+            "base": "dc6c9695a36ff090fa733773fba941b8c2810b7a24511f38a7ec9deaa7b95a85",
+            "reference": "5a2bf5a4337691625506abf15265b49e012d3306182741f445242d5a6fa04431",
+            "rhs": "36708c0f38c5d23d1daea0b60c8ca8ab261b709d72f9897ef04f941a6c7b8fac",
+            "native_input_residual": "3bbfb1816835f15486a8d22577663e9b28fa299d47f2da67c41d9122265ad2d5"
+          },
+          {
+            "base": "826dfbebf4131764685f1d60222bf594d7d2461a0ea6b5b5e18774bbc74af543",
+            "reference": "a40d731f3653e65c4611fdbdb18da48a7a79995e30b0b5fe94ec922583df967f",
+            "rhs": "8ab0015e9e896a081a8934d8c37c58efe1427bc6677e434af8eb3a47bfd31448",
+            "native_input_residual": "f81754dc8051d709aee98891a9314d026ae9f3f5bf7c2f10d9f7afdb8574e294"
+          },
+          {
+            "base": "36c9890c817a2ea1b025849269a22981a09e35d5a97eeee3cb9355ce33eb7000",
+            "reference": "20e0f056c6ff3e160a795e35abe8a56a72692f09f2fdb950ec84f7bd15c103ce",
+            "rhs": "4a0acd218a08501f6b0c8183f8dd8d0b7e6abc431b332b4280c99f23e20ddd52",
+            "native_input_residual": "52f8fb3cf6accd9ae381970cb9472d06b349bb03813e5ae28adcb23426c2e49d"
+          },
+          {
+            "base": "7f2a0a60e86828cfca96552ce401901af8ada8ad6dbda348ea120e3024223c94",
+            "reference": "41ca9d9c93c05814068b9a97de3b397773254b4fc17a09b5105322f252297c0e",
+            "rhs": "b2a8023d8e5ec86af4971b4b282f1a9481fde561a02d241e516fab3be7293b4a",
+            "native_input_residual": "5eb75c95160e7cf278896e2ef9833097fed3095716654c0b8f9ead59b6452383"
+          },
+          {
+            "base": "5aa20a7f84ff9a3a0d5418e7f5c08377cba4bc5c75b72d9a3678e2645bfd3f3e",
+            "reference": "6e19dc458630b3272f1ff2eccd054ccf17aca7a68120ebb61b8283941950a0f0",
+            "rhs": "1eaebfcb44ba35a551c27b5ed58f289af8f8aa63ad52919f5ce4c753f0209c4e",
+            "native_input_residual": "2d6bc35e1f032fb08dab87f1dcdac6e82bc6ceaf1771cd9ee2bf1eb6d0d00fb1"
+          },
+          {
+            "base": "c2d6af954e172e55df9eafcce4956fa3e36ca82d6b716b391abcf5575a3d051d",
+            "reference": "c2e5e6123c78e1278e2c1f4cb95dee7ffbf187170d16dfdb1b65e515a1423f5f",
+            "rhs": "00595cad9ca69a12fc72e4e1fedcb7c49b46ed4421d2503f29d3d5b0244c33a8",
+            "native_input_residual": "bd1cbe7e10998e4753592ffc7399998f5151e45b4bf005ed5345c828546bebf2"
+          },
+          {
+            "base": "0340cd3769550431414e736cffb4d6634c7716df73f26769470d193ca2138eb1",
+            "reference": "ec0dfb2c62a2b9338504bd985602177497603d9c23fdbe5f1be1fe2418e06181",
+            "rhs": "a6423f1fbbebd08d9d86fe7e4ae888865947ba14d7fac4a03587b54a068e2345",
+            "native_input_residual": "4aaeae3685783ac330dda0b747a1c83cb521e1e7e18b401ac06f4dc3971dadb2"
+          },
+          {
+            "base": "db19981e41bf072dc9dab33f8256e56c7ba5f13e43fb356503c366d935979a7d",
+            "reference": "507eb0587193b9c4bdb862697b9b5e4271018d1b6d91c81105f9b98e82d28385",
+            "rhs": "aecbc5c7587b0d9ea7959f321882c87ac43513115bcfdc87266ede5530789172",
+            "native_input_residual": "3900c3394914354d6bf939ee2085c286b3af8179feb411203e901cfbb9383936"
+          },
+          {
+            "base": "7c617af626d025e99f38c20de01a3122f00b1ba289b888058ca38fd6c59f1b8b",
+            "reference": "a88810fcd3d5f1fe3012e040b959ee59f6bbcb73a6b4d81f65792df750d11348",
+            "rhs": "5d45538787ac25d2145e11dc5b547940eef6f8aeee3b892524a2614ee61b0f32",
+            "native_input_residual": "cb3b42ffa98bd26e4f0ac0ee33388ff77688a1fe315fc7a57dcbceb73c3135c3"
+          },
+          {
+            "base": "dab2bca6993b4b36725929debb112d574916f98193b482c6f5f739ebbc1e67a7",
+            "reference": "2d369a24f8b3e8a2a50e126304cb5b6b7008929449f2b3b47493e830be0d7e88",
+            "rhs": "b78135f03418a79712706f48c850bcd38013408fac8a6caae882769eb39ff15a",
+            "native_input_residual": "304810b439ea734ee8a108d27e6e99cc4f3ec5f2ced12d409ddd2e5d1a371387"
+          },
+          {
+            "base": "e325992c0a54c3c405e31a9fcf577f059e943cf8538dcf204382eb9eb58bc8ce",
+            "reference": "fd0da1753b2067da0af89fa282b350c0f1fe5b537614da6d9d6c64aeb237d675",
+            "rhs": "1111b93e7d197bde582b2c59e04ebcee542509e048a2d9a0983d2a0031af9180",
+            "native_input_residual": "09197bd38d5ad790f3497f67e29ecc4e9b25f59fb9983dc151f7692c33dc035d"
+          },
+          {
+            "base": "47e8404a5c3434f16ddab962432b6e3695c0af0ae9fb6ba5c71ec21e2e60aa5e",
+            "reference": "b9ec4fb1be693415306b491908a5153a5c419649d6baa8e442942058b4f79b2a",
+            "rhs": "e693a2e416d2eafbdcfcb0e424e663ab42184d7eeb38631b1623c23b79903d44",
+            "native_input_residual": "80a52feb6e2ba808f9fe19a4981fe6212d70aa639de4d6f1740568b2cd1234e9"
+          },
+          {
+            "base": "7dcc1e7161b401101ce4f6f0ddcb91bd9321c75249a48956561ccb58e24e1d8f",
+            "reference": "aef116498efd50fc0d6e7f10213385a5225001a1d08ba53de6d4a3fdee4171c0",
+            "rhs": "2e65418d2430ae1c65c37c79f3585352f328f84fed5aa35ce6b9e4def5c53eea",
+            "native_input_residual": "4047b41d1af867eea6902050d2a837f69d46632997fab222c50db917f917b346"
+          },
+          {
+            "base": "bc20cb451b51e68c8ddc7850a940b7865619e0e380aa8edd85257a4d13ad0f44",
+            "reference": "cf5d99c15f3496b5feb28d4195363520fb56547c5be43c6022408db78a41fce0",
+            "rhs": "bce2ad84902ee6d6255174dedc2c3ffce046c42f1202c94bdc4c3339a1e2d169",
+            "native_input_residual": "a738db4a8b6b207ba77f2dbd621c390d7c535532d7c9cae88c74a0a76598b323"
+          },
+          {
+            "base": "0f1b4e6c205330c6c4b18322ece9cd643634c64f6c6fba5d79bd49b642895c36",
+            "reference": "d9d63759efafc7497af4acb7fdfdd74aa49cd46e1b0dc5b1351d0ffc5b8bb0be",
+            "rhs": "cff0214c455835857964a157f250bf7298604a5bf1894835a3cc0f0b3249f11b",
+            "native_input_residual": "c8b2ddcb2b15ed0ea579abd76f444bc6884c4051e3f5aafa58b32df8d76c99a4"
+          },
+          {
+            "base": "52534c9931ca65193248b474cf1d952a04bf7123099955ebf4ac1fc437eb83ca",
+            "reference": "6ad0cb7847785827496bfbf0ac5f752a515f0d3499d27df02302b2d5ffa3532f",
+            "rhs": "98a7ac41e95228792bb2232242d8dbd658b98a288e049adaf90de8edfa05c3b0",
+            "native_input_residual": "f25357a370acd480be1111f2e10a45818cf250ac3a0b8d499839aab4aca335eb"
+          },
+          {
+            "base": "3aeaedd30beed52912d2bbf9acbd6e1b11572c1172e8f683706e09ae221299c1",
+            "reference": "010690b758b3786931285748884f13467cad703660fbcb3359986767d721e8d9",
+            "rhs": "a78e36f590475ea201bad71e17a6476fa0353947c4264f84a0d8fdd0598c735a",
+            "native_input_residual": "3cf20226b52d5341aa170da8c3b728bf55c2a632c8c75be930f7a52063d40dbc"
+          },
+          {
+            "base": "dcfa03db66a8320d45a4a5356cba0fedc93443ab27a3972498c97479254be552",
+            "reference": "a863098f132863c5e40f70732caaa27d76ed6e2351bf03973064e90e4322605f",
+            "rhs": "dd2091dc430d89d59ed9285cacaf157aa8caa7adde6d63cedf743083150fa0ff",
+            "native_input_residual": "66c32869279997d5cc41d4d6d58b9aff97ebe6b92d379460438f51d5ff9aad1f"
+          }
+        ]
+      }
+    },
+    "records": [
+      {
+        "trajectory_id": "baseline--water-train-0000",
+        "setup_sha256": "50d2c53d3ffa21b76595eacb832990a9ec82cf3bcd38210632098739f870584c",
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.5438596075490909,
+          "center_fraction": [
+            0.5548434953286808,
+            0.4820218433374877,
+            0.22007241119074594
+          ],
+          "direction": [
+            0.5361021489571167,
+            -0.3580362683015534,
+            0.7644635481592694
+          ],
+          "fluctuation_fraction": 0.11749137557187019,
+          "frequency_hz": 2.036276967950223,
+          "motion_fraction": 0.07804975603475325,
+          "phase": 6.015833164857326,
+          "radius_fraction": 0.19878293377883205,
+          "spatial_modes": [
+            4,
+            2,
+            4
+          ],
+          "swirl_fraction": 0.5266419804728922
+        },
+        "correction_rms_pa": 2.141225369571001,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0001",
+        "setup_sha256": "28cd995cbd71a2fc328e95807d308062ddad5ea1c9d1cf0db8b28d6b82db5944",
+        "counts_xyz": [
+          16,
+          10,
+          6
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          1.0,
+          0.625,
+          0.375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.7251226219010147,
+          "center_fraction": [
+            0.3581076807254193,
+            0.24462405053823671,
+            0.47761726423122214
+          ],
+          "direction": [
+            0.8436796820368269,
+            -0.5153139710660217,
+            -0.1505194517077648
+          ],
+          "fluctuation_fraction": 0.4010825798691939,
+          "frequency_hz": 2.6636070428434095,
+          "motion_fraction": 0.018865191265859598,
+          "phase": 1.125959330722919,
+          "radius_fraction": 0.39169883514091086,
+          "spatial_modes": [
+            3,
+            2,
+            1
+          ],
+          "swirl_fraction": -0.2655928607051746
+        },
+        "correction_rms_pa": 10.362042644290252,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0002",
+        "setup_sha256": "7d768de6d0240617b6ce9d0f27b0bf2473af100681416f278f99fb7b2b0d81f4",
+        "counts_xyz": [
+          12,
+          7,
+          13
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.5,
+          0.875,
+          1.625
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.25842138280334254,
+          "center_fraction": [
+            0.2688332563474493,
+            0.2366358418854339,
+            0.45808200663111015
+          ],
+          "direction": [
+            -0.8543522439331563,
+            -0.5137101307788653,
+            0.07863933380657247
+          ],
+          "fluctuation_fraction": 0.5492337864860051,
+          "frequency_hz": 2.8467934217283273,
+          "motion_fraction": 0.10214391568431314,
+          "phase": 4.761563152376162,
+          "radius_fraction": 0.2338061445399978,
+          "spatial_modes": [
+            1,
+            1,
+            3
+          ],
+          "swirl_fraction": 0.7619009821127444
+        },
+        "correction_rms_pa": 1.139798964189165,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0003",
+        "setup_sha256": "b0d8e0d8003ba25bf96e684ec2ed4dc0750c7bfc576547d19575bc2491fbe95f",
+        "counts_xyz": [
+          12,
+          6,
+          11
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.75,
+          0.375,
+          0.6875
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.16475092497856597,
+          "center_fraction": [
+            0.3910927112036793,
+            0.36335857647840464,
+            0.5983526989202663
+          ],
+          "direction": [
+            0.00419915913536819,
+            -0.9746502247579367,
+            -0.22369467235913174
+          ],
+          "fluctuation_fraction": 0.32930945511840004,
+          "frequency_hz": 0.9261966495150951,
+          "motion_fraction": 0.10830945612650027,
+          "phase": 5.939936504812422,
+          "radius_fraction": 0.333085159153115,
+          "spatial_modes": [
+            2,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.8038830549391984
+        },
+        "correction_rms_pa": 0.15563309279199103,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0004",
+        "setup_sha256": "818e8d168bc4bd93e757e4797ed33fb15bf89acb12ee031f52279c48979c3718",
+        "counts_xyz": [
+          10,
+          15,
+          6
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.25,
+          1.875,
+          0.75
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.10114335622142764,
+          "center_fraction": [
+            0.7106991890002818,
+            0.40161878025403325,
+            0.3348323028335124
+          ],
+          "direction": [
+            0.18314067138832238,
+            0.8222152016689502,
+            0.5389078368588844
+          ],
+          "fluctuation_fraction": 0.32773309899679487,
+          "frequency_hz": 2.197575806751788,
+          "motion_fraction": 0.09705621896514512,
+          "phase": 1.351808723033937,
+          "radius_fraction": 0.39815378206891294,
+          "spatial_modes": [
+            1,
+            3,
+            1
+          ],
+          "swirl_fraction": 0.6716319698151083
+        },
+        "correction_rms_pa": 0.61369251914384,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0005",
+        "setup_sha256": "51e28ed171a208c7478d5f5c9992e84e4ffeb5885c950f26eeb698674d8e7191",
+        "counts_xyz": [
+          11,
+          10,
+          6
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.6875,
+          0.625,
+          0.375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.3648622338218623,
+          "center_fraction": [
+            0.4102051630429999,
+            0.7508753884168018,
+            0.40024658257244927
+          ],
+          "direction": [
+            -0.4904009667661332,
+            -0.08735605448481579,
+            0.8671077277591798
+          ],
+          "fluctuation_fraction": 0.1213436138865467,
+          "frequency_hz": 2.4997196160411974,
+          "motion_fraction": 0.07736872765401147,
+          "phase": 4.79089222047042,
+          "radius_fraction": 0.29975666317145555,
+          "spatial_modes": [
+            1,
+            2,
+            1
+          ],
+          "swirl_fraction": -0.9198859148975308
+        },
+        "correction_rms_pa": 0.8005522959727801,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0006",
+        "setup_sha256": "b655dba4e696ee5d8237de44edaeb8e240d8ab7a78d4fb9f91be73e0caa313a0",
+        "counts_xyz": [
+          8,
+          5,
+          9
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.0,
+          0.625,
+          1.125
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.56369144401838,
+          "center_fraction": [
+            0.29924469985370344,
+            0.7704691961460184,
+            0.3785893852236386
+          ],
+          "direction": [
+            0.08225517454301678,
+            -0.9017872842083952,
+            0.4242803086415219
+          ],
+          "fluctuation_fraction": 0.4262811835679618,
+          "frequency_hz": 1.536272333738131,
+          "motion_fraction": 0.03379489792470833,
+          "phase": 3.967360563287869,
+          "radius_fraction": 0.3520351995376887,
+          "spatial_modes": [
+            2,
+            1,
+            1
+          ],
+          "swirl_fraction": 0.5193971999129734
+        },
+        "correction_rms_pa": 1.6285218320123147,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0007",
+        "setup_sha256": "9f818a9fd66f3c797b374ae672bf99b79661aed71f0a39715a2e4df39d6430e2",
+        "counts_xyz": [
+          13,
+          11,
+          8
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.8125,
+          0.6875,
+          0.5
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.1563730668042268,
+          "center_fraction": [
+            0.6791323342122038,
+            0.37559666323888885,
+            0.368061525857833
+          ],
+          "direction": [
+            -0.5737286730823307,
+            -0.8144167688205253,
+            0.08695249477227951
+          ],
+          "fluctuation_fraction": 0.48642251464059694,
+          "frequency_hz": 0.8938293253928016,
+          "motion_fraction": 0.006664282053258947,
+          "phase": 1.2559264957364709,
+          "radius_fraction": 0.3387281858319037,
+          "spatial_modes": [
+            2,
+            2,
+            2
+          ],
+          "swirl_fraction": -0.5688653236943905
+        },
+        "correction_rms_pa": 0.2515864165019925,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0008",
+        "setup_sha256": "07e8ea0861f3b5942e5dc8d901e2237b8bf2cc2af12c75c12a999f899a02068d",
+        "counts_xyz": [
+          12,
+          8,
+          9
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.5,
+          1.0,
+          1.125
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.7548757232621078,
+          "center_fraction": [
+            0.3778956082491305,
+            0.21114435822486857,
+            0.7175209906954558
+          ],
+          "direction": [
+            -0.13467622177987468,
+            -0.8772534195202998,
+            0.46074803659596714
+          ],
+          "fluctuation_fraction": 0.1955148879078086,
+          "frequency_hz": 1.1879859458546453,
+          "motion_fraction": 0.024276784750417172,
+          "phase": 3.6810142232598135,
+          "radius_fraction": 0.2740022618380567,
+          "spatial_modes": [
+            1,
+            2,
+            2
+          ],
+          "swirl_fraction": 0.2741326034093537
+        },
+        "correction_rms_pa": 0.7865665544258048,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0009",
+        "setup_sha256": "c087ababf0414e502f0c3fbfe329b2cb7bc3d86ebe899297f2b826fd5cb515bd",
+        "counts_xyz": [
+          6,
+          14,
+          9
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.375,
+          0.875,
+          0.5625
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.5512974259623148,
+          "center_fraction": [
+            0.6691862436707012,
+            0.7969404201410968,
+            0.4543609999939916
+          ],
+          "direction": [
+            0.6757304573915882,
+            -0.19831095657676415,
+            0.7099726145809876
+          ],
+          "fluctuation_fraction": 0.5806769937155069,
+          "frequency_hz": 2.8051321226265977,
+          "motion_fraction": 0.10850251822269341,
+          "phase": 1.2294318086709568,
+          "radius_fraction": 0.19186657300992635,
+          "spatial_modes": [
+            1,
+            3,
+            2
+          ],
+          "swirl_fraction": -0.8594596303720109
+        },
+        "correction_rms_pa": 0.7106289333265864,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0010",
+        "setup_sha256": "9451005807e47e49769361bcb05cf94e183c6c87181b412b13aa924a4a5e452d",
+        "counts_xyz": [
+          10,
+          16,
+          16
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.25,
+          2.0,
+          2.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.654804017456193,
+          "center_fraction": [
+            0.7780083346493969,
+            0.4168194588003576,
+            0.2816344260973291
+          ],
+          "direction": [
+            -0.493491302413659,
+            -0.05769535613249923,
+            0.8678349960233309
+          ],
+          "fluctuation_fraction": 0.09426231997782665,
+          "frequency_hz": 2.234816913435042,
+          "motion_fraction": 0.0716861889938613,
+          "phase": 6.181671809878383,
+          "radius_fraction": 0.3171417404734125,
+          "spatial_modes": [
+            1,
+            3,
+            4
+          ],
+          "swirl_fraction": 0.7264437274119422
+        },
+        "correction_rms_pa": 2.792377596060941,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0011",
+        "setup_sha256": "4757c6c007bb3d4e2805a6a9cb6d6507deb93f7d4009a1cce1946ff6caed1d3b",
+        "counts_xyz": [
+          10,
+          5,
+          7
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.625,
+          0.3125,
+          0.4375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.2887411248168605,
+          "center_fraction": [
+            0.44901733043959857,
+            0.5969169335062984,
+            0.4483892896420642
+          ],
+          "direction": [
+            0.416675844840412,
+            0.6378251682081003,
+            0.6477347413307685
+          ],
+          "fluctuation_fraction": 0.5137938317437303,
+          "frequency_hz": 2.144065427485893,
+          "motion_fraction": 0.010666737248930143,
+          "phase": 4.049156043787414,
+          "radius_fraction": 0.2712690612250686,
+          "spatial_modes": [
+            1,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.5532077390728515
+        },
+        "correction_rms_pa": 0.5188855162263423,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0012",
+        "setup_sha256": "6a21cdafde7e085c202f66bf20b5fcefc1719ceab2b641051e631db85f055775",
+        "counts_xyz": [
+          6,
+          13,
+          12
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          0.75,
+          1.625,
+          1.5
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.12755393301815607,
+          "center_fraction": [
+            0.7743403835579235,
+            0.7224563241360571,
+            0.49042399476544773
+          ],
+          "direction": [
+            -0.8041064463938138,
+            0.10482391096016136,
+            0.585170719157178
+          ],
+          "fluctuation_fraction": 0.561346491536418,
+          "frequency_hz": 2.4314865994787285,
+          "motion_fraction": 0.06975878059259301,
+          "phase": 2.4812353011021213,
+          "radius_fraction": 0.28349601928014934,
+          "spatial_modes": [
+            1,
+            2,
+            3
+          ],
+          "swirl_fraction": 0.9157213415555583
+        },
+        "correction_rms_pa": 0.3687133255368104,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0013",
+        "setup_sha256": "69cbf5bba58ea79df02000b5600b68ca89be511b04631943fb309584f699e9dc",
+        "counts_xyz": [
+          5,
+          15,
+          15
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.3125,
+          0.9375,
+          0.9375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.4383051166555612,
+          "center_fraction": [
+            0.697388926931451,
+            0.7544228098230001,
+            0.7419873594951789
+          ],
+          "direction": [
+            0.7233655491484665,
+            0.599169240969674,
+            -0.3431304460128277
+          ],
+          "fluctuation_fraction": 0.22692994934012456,
+          "frequency_hz": 2.8771100428234155,
+          "motion_fraction": 0.05162490650151163,
+          "phase": 2.6170112623428587,
+          "radius_fraction": 0.29579994786933006,
+          "spatial_modes": [
+            1,
+            3,
+            2
+          ],
+          "swirl_fraction": -0.19329609782031404
+        },
+        "correction_rms_pa": 0.4260610902147466,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0014",
+        "setup_sha256": "df5be1800d18cc037ee704390d31ea28deaed94d57d86cf3b855474f7044379f",
+        "counts_xyz": [
+          6,
+          16,
+          8
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          0.75,
+          2.0,
+          1.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.41024233610891064,
+          "center_fraction": [
+            0.7990135059851164,
+            0.5127544137970211,
+            0.6203977022093973
+          ],
+          "direction": [
+            0.70659666788639,
+            0.6798489392605929,
+            0.1962818603898417
+          ],
+          "fluctuation_fraction": 0.24743153093956097,
+          "frequency_hz": 0.43152219352451227,
+          "motion_fraction": 0.053372164967863296,
+          "phase": 2.1494967171156834,
+          "radius_fraction": 0.34555667524940037,
+          "spatial_modes": [
+            1,
+            2,
+            2
+          ],
+          "swirl_fraction": 0.6523325793964628
+        },
+        "correction_rms_pa": 0.33617017010036543,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0015",
+        "setup_sha256": "d82f0ee712c95d7371aecc202ae13eae6702a9c36fda693a47c294e4a9b31789",
+        "counts_xyz": [
+          14,
+          15,
+          7
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.875,
+          0.9375,
+          0.4375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.8520177208396782,
+          "center_fraction": [
+            0.6584622171002155,
+            0.695503435108108,
+            0.5730648637767334
+          ],
+          "direction": [
+            -0.7148983003624234,
+            -0.3265399303710678,
+            0.6182977389673816
+          ],
+          "fluctuation_fraction": 0.22813742894428,
+          "frequency_hz": 2.0430092778328826,
+          "motion_fraction": 0.058764782451085754,
+          "phase": 2.8019448068255155,
+          "radius_fraction": 0.38588636755713324,
+          "spatial_modes": [
+            1,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.8732677284428273
+        },
+        "correction_rms_pa": 2.1635935717875587,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0016",
+        "setup_sha256": "37c8cd27f41165e4740bcaf79c7d8abdef0291ec082a78e7aef2db878971a200",
+        "counts_xyz": [
+          5,
+          16,
+          8
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          0.625,
+          2.0,
+          1.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.1531754373159082,
+          "center_fraction": [
+            0.34817336098046264,
+            0.4674930058309307,
+            0.37442476379188827
+          ],
+          "direction": [
+            0.7214777229696336,
+            0.49980512331750676,
+            0.4792334858543636
+          ],
+          "fluctuation_fraction": 0.5038716587087819,
+          "frequency_hz": 2.5124657460331554,
+          "motion_fraction": 0.004178678880355791,
+          "phase": 5.23780224536419,
+          "radius_fraction": 0.3653525265581977,
+          "spatial_modes": [
+            1,
+            1,
+            2
+          ],
+          "swirl_fraction": 0.9975631875270197
+        },
+        "correction_rms_pa": 1.238176603248581,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0017",
+        "setup_sha256": "de3eadbe0d87c0912e13c41eb5394191416c51eedd523712496693ff99b4eb47",
+        "counts_xyz": [
+          12,
+          9,
+          6
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.75,
+          0.5625,
+          0.375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.6029306709559952,
+          "center_fraction": [
+            0.32200255775735814,
+            0.45540138310271,
+            0.32734080128184695
+          ],
+          "direction": [
+            0.6040856725047923,
+            0.5759099895724056,
+            -0.5508250032316475
+          ],
+          "fluctuation_fraction": 0.006921422283452117,
+          "frequency_hz": 2.089307137762947,
+          "motion_fraction": 0.038476954670770405,
+          "phase": 5.3806446002799095,
+          "radius_fraction": 0.2580942129126973,
+          "spatial_modes": [
+            1,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.5596155867059216
+        },
+        "correction_rms_pa": 2.498674650049042,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0018",
+        "setup_sha256": "ea6f818ca86632a14217267b7ce5db74059b7d4b1da97ed1265e328a7fb6e75a",
+        "counts_xyz": [
+          13,
+          15,
+          9
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.625,
+          1.875,
+          1.125
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.3090476258094403,
+          "center_fraction": [
+            0.3644337049027254,
+            0.5402003746210909,
+            0.5482796493656935
+          ],
+          "direction": [
+            -0.6698456257788219,
+            0.7019222111898347,
+            -0.2420992504394668
+          ],
+          "fluctuation_fraction": 0.5121245387812272,
+          "frequency_hz": 1.1323966525261415,
+          "motion_fraction": 0.11186375558411066,
+          "phase": 2.509856873760034,
+          "radius_fraction": 0.3328236614148836,
+          "spatial_modes": [
+            2,
+            2,
+            2
+          ],
+          "swirl_fraction": 0.44072255734410115
+        },
+        "correction_rms_pa": 1.046666955688444,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0019",
+        "setup_sha256": "eac123615182511969ee50d3c400ae14f55717713d3bf1e29e93a06ffe01a566",
+        "counts_xyz": [
+          11,
+          5,
+          7
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.6875,
+          0.3125,
+          0.4375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.8428311383087685,
+          "center_fraction": [
+            0.30085520428419316,
+            0.6960946837481863,
+            0.46015207793786583
+          ],
+          "direction": [
+            -0.42077840221411233,
+            0.892380619965247,
+            0.16310231555860893
+          ],
+          "fluctuation_fraction": 0.5495722887796174,
+          "frequency_hz": 1.6843529413847385,
+          "motion_fraction": 0.1042573475228354,
+          "phase": 2.7921065140523567,
+          "radius_fraction": 0.35205188976024837,
+          "spatial_modes": [
+            2,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.8580742795073298
+        },
+        "correction_rms_pa": 0.9567018992924482,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0020",
+        "setup_sha256": "9f1c67dda3bf5208efb1c8b883dc21dbbcabafe8ed6a721ba44801aeb682ac6c",
+        "counts_xyz": [
+          12,
+          6,
+          7
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.5,
+          0.75,
+          0.875
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.7184898708848917,
+          "center_fraction": [
+            0.42919459830595047,
+            0.5039669874349593,
+            0.7298170301663569
+          ],
+          "direction": [
+            -0.5399932292662311,
+            0.5874729311819145,
+            -0.6027295143554504
+          ],
+          "fluctuation_fraction": 0.22250441019354716,
+          "frequency_hz": 0.8273001853699552,
+          "motion_fraction": 0.008995031365204888,
+          "phase": 1.2765254643746848,
+          "radius_fraction": 0.2880768042307277,
+          "spatial_modes": [
+            2,
+            1,
+            1
+          ],
+          "swirl_fraction": 0.25575528387639823
+        },
+        "correction_rms_pa": 1.3582370402377006,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0021",
+        "setup_sha256": "cba18d4d01979bf1dd247b0efa4254ee7cf1e6a6ddf8882328c00e8defe91626",
+        "counts_xyz": [
+          15,
+          5,
+          7
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.9375,
+          0.3125,
+          0.4375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.14297765145102623,
+          "center_fraction": [
+            0.26031334818892304,
+            0.7507052099336986,
+            0.21424114707823871
+          ],
+          "direction": [
+            0.02974599189996749,
+            -0.9225259998572979,
+            0.3847868962856974
+          ],
+          "fluctuation_fraction": 0.04817502732190906,
+          "frequency_hz": 2.1733026181766335,
+          "motion_fraction": 0.04648794813090841,
+          "phase": 6.254569635203653,
+          "radius_fraction": 0.3251738662773569,
+          "spatial_modes": [
+            3,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.9328231207215033
+        },
+        "correction_rms_pa": 0.1619884210363406,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0022",
+        "setup_sha256": "889de73194b10252e14f0268e1cbf53f3964f715c977b8b7fdaf152d8ad8b223",
+        "counts_xyz": [
+          11,
+          5,
+          16
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.375,
+          0.625,
+          2.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.1827072281216995,
+          "center_fraction": [
+            0.44811271755700843,
+            0.5832967010443377,
+            0.401455570834937
+          ],
+          "direction": [
+            0.6725438174296863,
+            0.4312866320154223,
+            -0.601395589177289
+          ],
+          "fluctuation_fraction": 0.5989986873826875,
+          "frequency_hz": 1.4557361692469653,
+          "motion_fraction": 0.03634874806715485,
+          "phase": 0.15508994382408825,
+          "radius_fraction": 0.386948066554655,
+          "spatial_modes": [
+            2,
+            1,
+            4
+          ],
+          "swirl_fraction": 0.45101127809922603
+        },
+        "correction_rms_pa": 3.6674149563187135,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0023",
+        "setup_sha256": "b9c64a31a7a745d1f4bf6ad44384a2d208c24b84c5acfc641f3d90680d6c1025",
+        "counts_xyz": [
+          15,
+          10,
+          14
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.9375,
+          0.625,
+          0.875
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.3524031593867423,
+          "center_fraction": [
+            0.2405098746483182,
+            0.6124659997325513,
+            0.718883997472096
+          ],
+          "direction": [
+            -0.6153798953253257,
+            -0.6121296903064871,
+            -0.49659322052830684
+          ],
+          "fluctuation_fraction": 0.12847299096249884,
+          "frequency_hz": 2.64824620966582,
+          "motion_fraction": 0.00025719708706152923,
+          "phase": 0.07291617868532532,
+          "radius_fraction": 0.19625270591302602,
+          "spatial_modes": [
+            2,
+            2,
+            2
+          ],
+          "swirl_fraction": -0.9647670344491996
+        },
+        "correction_rms_pa": 0.23688528729058506,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0024",
+        "setup_sha256": "8de66aa45ab3ddf96e91f5cf0d59e919d3364b2b5f2cb2f984a3c9e9cd5cda8a",
+        "counts_xyz": [
+          9,
+          5,
+          8
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.125,
+          0.625,
+          1.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.9741195970211223,
+          "center_fraction": [
+            0.589737738833533,
+            0.6288000499660108,
+            0.7031516271939644
+          ],
+          "direction": [
+            -0.6267883872988745,
+            -0.7615559321995073,
+            0.16482985069160044
+          ],
+          "fluctuation_fraction": 0.2772929032264966,
+          "frequency_hz": 0.6962353026219918,
+          "motion_fraction": 0.0003594877950799624,
+          "phase": 0.5233391467401973,
+          "radius_fraction": 0.27867193801591217,
+          "spatial_modes": [
+            1,
+            1,
+            2
+          ],
+          "swirl_fraction": 0.5472166851510569
+        },
+        "correction_rms_pa": 0.49227476334868847,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0025",
+        "setup_sha256": "e40909a1642cee8a116b363d2cf555b71f50597f2eb4698c6d43fb8c23de2089",
+        "counts_xyz": [
+          12,
+          10,
+          14
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.75,
+          0.625,
+          0.875
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.4525307505711132,
+          "center_fraction": [
+            0.684060594936571,
+            0.29518736465218487,
+            0.6052654352212331
+          ],
+          "direction": [
+            0.8203234410798032,
+            -0.41330392614848666,
+            -0.39528384313710185
+          ],
+          "fluctuation_fraction": 0.19043531545945294,
+          "frequency_hz": 0.6091765915081536,
+          "motion_fraction": 0.03446986121750947,
+          "phase": 1.8676298159659916,
+          "radius_fraction": 0.32102022586652457,
+          "spatial_modes": [
+            3,
+            2,
+            1
+          ],
+          "swirl_fraction": -0.6211870726478391
+        },
+        "correction_rms_pa": 0.38844756386455837,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0026",
+        "setup_sha256": "fe1d4118e75554b556805e1d1f2d9d177c7275a8f523eee7c6ee82f0cb7b055c",
+        "counts_xyz": [
+          14,
+          8,
+          8
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.75,
+          1.0,
+          1.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.43137603001081,
+          "center_fraction": [
+            0.4127592468432605,
+            0.21324358768156326,
+            0.43353259057985555
+          ],
+          "direction": [
+            0.707059223181607,
+            0.5526359054689108,
+            0.44120382013348386
+          ],
+          "fluctuation_fraction": 0.3686716277703741,
+          "frequency_hz": 1.9739700680567747,
+          "motion_fraction": 0.015118240997565983,
+          "phase": 3.829250715991492,
+          "radius_fraction": 0.27199219685787007,
+          "spatial_modes": [
+            3,
+            2,
+            1
+          ],
+          "swirl_fraction": 0.8820804509424012
+        },
+        "correction_rms_pa": 7.759412955260012,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0027",
+        "setup_sha256": "ea5da3ad5ec3bd4b3c0c73b0006562c3cc4fe8154e8143c74d1956ff6f81e725",
+        "counts_xyz": [
+          7,
+          10,
+          8
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.4375,
+          0.625,
+          0.5
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.12374498106172546,
+          "center_fraction": [
+            0.7125594442500578,
+            0.4803143155706101,
+            0.259218401893445
+          ],
+          "direction": [
+            0.6365526507892698,
+            -0.7521719838824029,
+            -0.17040548534470404
+          ],
+          "fluctuation_fraction": 0.20393603728541837,
+          "frequency_hz": 2.316299553237754,
+          "motion_fraction": 0.054773876108527,
+          "phase": 5.508425144122008,
+          "radius_fraction": 0.2641083273438617,
+          "spatial_modes": [
+            1,
+            1,
+            2
+          ],
+          "swirl_fraction": -0.37737109301851435
+        },
+        "correction_rms_pa": 0.1536621800280859,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0028",
+        "setup_sha256": "f8c07001fb87317e48ca6b6781ab819ea3bcd53ba3c2c6987ca0c45df4736371",
+        "counts_xyz": [
+          11,
+          15,
+          10
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.375,
+          1.875,
+          1.25
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.6019576932615298,
+          "center_fraction": [
+            0.4051639037832432,
+            0.5597830372429797,
+            0.4132913193779444
+          ],
+          "direction": [
+            -0.7156344481270496,
+            0.6504824505761735,
+            0.2544404019535997
+          ],
+          "fluctuation_fraction": 0.03691766028565546,
+          "frequency_hz": 2.0142650985064585,
+          "motion_fraction": 0.06494844089979748,
+          "phase": 3.6080713013152383,
+          "radius_fraction": 0.2732903609348568,
+          "spatial_modes": [
+            2,
+            3,
+            2
+          ],
+          "swirl_fraction": 0.8541546475413514
+        },
+        "correction_rms_pa": 8.7177975484372,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0029",
+        "setup_sha256": "6695d0f06ba810f030edc6ccf21d8fa6ce0c95ac20da7e331c21ddadd32f901e",
+        "counts_xyz": [
+          14,
+          5,
+          10
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.875,
+          0.3125,
+          0.625
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.4972717081020046,
+          "center_fraction": [
+            0.5598536658913337,
+            0.48462291303089333,
+            0.20364833285595366
+          ],
+          "direction": [
+            -0.8517945179843516,
+            -0.34568329791283253,
+            0.39363581731838637
+          ],
+          "fluctuation_fraction": 0.36026563445770393,
+          "frequency_hz": 1.8869702892083515,
+          "motion_fraction": 0.0716532557477928,
+          "phase": 0.28766177608294546,
+          "radius_fraction": 0.31892528899399664,
+          "spatial_modes": [
+            1,
+            1,
+            1
+          ],
+          "swirl_fraction": -0.2827997539641638
+        },
+        "correction_rms_pa": 2.7109485992704943,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0030",
+        "setup_sha256": "af038e9f1c444445b6435425ad2c65c94c8bd3c869912d2135a4b9a0de76488d",
+        "counts_xyz": [
+          14,
+          7,
+          11
+        ],
+        "cell_size_m": 0.125,
+        "extents_m": [
+          1.75,
+          0.875,
+          1.375
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 0.24062418605316757,
+          "center_fraction": [
+            0.5231406026684868,
+            0.5095588936805451,
+            0.5471306025793953
+          ],
+          "direction": [
+            0.2792615366353478,
+            -0.20740525573600557,
+            0.9375478942694855
+          ],
+          "fluctuation_fraction": 0.10078459682360578,
+          "frequency_hz": 0.8217084755427005,
+          "motion_fraction": 0.043855373786582816,
+          "phase": 2.1593810753722433,
+          "radius_fraction": 0.30805974430958283,
+          "spatial_modes": [
+            1,
+            1,
+            1
+          ],
+          "swirl_fraction": 0.7437592061723092
+        },
+        "correction_rms_pa": 0.4303427046961082,
+        "states_differ": true
+      },
+      {
+        "trajectory_id": "baseline--water-train-0031",
+        "setup_sha256": "c856410e74470f2ce4d6afd8580e1a71e02e15166c4911e62c22f462a4d0f081",
+        "counts_xyz": [
+          15,
+          8,
+          16
+        ],
+        "cell_size_m": 0.0625,
+        "extents_m": [
+          0.9375,
+          0.5,
+          1.0
+        ],
+        "native_frames": [
+          15,
+          63
+        ],
+        "force": {
+          "acceleration_m_s2": 1.3348600019037133,
+          "center_fraction": [
+            0.21208725356806274,
+            0.48834062890861213,
+            0.23780486194423234
+          ],
+          "direction": [
+            0.2429535195136801,
+            0.968560140655253,
+            0.05352421218282835
+          ],
+          "fluctuation_fraction": 0.4924275141187866,
+          "frequency_hz": 1.508624176092965,
+          "motion_fraction": 0.04001833848830757,
+          "phase": 3.6725431204679055,
+          "radius_fraction": 0.18274381428083386,
+          "spatial_modes": [
+            2,
+            1,
+            2
+          ],
+          "swirl_fraction": -0.2407604973190921
+        },
+        "correction_rms_pa": 1.052785627978294,
+        "states_differ": true
+      }
+    ],
+    "packet_splits_sha256": "87734dbd394dbc37d620b71a90135a5548eadc406f1639808e05ced8464bef91",
+    "source_sha256": "c9444078874a49d72b7b2392785f2699459883fa2c13651c5beeeacb4a46d156",
+    "scope": "prepared train cohort only; no optimizer, reserved-test inference or new CFD generation"
+  },
+  "timings": [
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "1",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-shape-repeatability-v1/prepare_cohort.py",
+        "--packet",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/sealed-water-v1-3/packets/train_validation",
+        "--count",
+        "32",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-shape-repeatability-v1/prepared-cohorts/32/view"
+      ],
+      "started_at_utc": "2026-10-16T03:49:56.422719+00:00",
+      "status": "completed",
+      "pid": 1603569,
+      "returncode": 0,
+      "finished_at_utc": "2026-10-16T03:49:57.924342+00:00",
+      "elapsed_seconds": 1.5013441150076687,
+      "child_reaped": true
+    },
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "1",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/cohort_audit.py",
+        "--packet",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-shape-repeatability-v1/prepared-cohorts/32/view",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-shape-repeatability-v1/prepared-cohorts/32/audit.json"
+      ],
+      "started_at_utc": "2026-10-16T03:49:57.924533+00:00",
+      "status": "completed",
+      "pid": 1603581,
+      "returncode": 0,
+      "finished_at_utc": "2026-10-16T03:49:59.943641+00:00",
+      "elapsed_seconds": 2.0189859089732636,
+      "child_reaped": true
+    }
+  ]
+}

@@ -29,7 +29,13 @@ Binding decisions:
   adaptive cap32, raw/fixed8 distinctions and unchanged equation/physical gates.
 - Reuse prior development/long/grid cases as regressions. Declare 16 fresh final
   whole simulations before fitting. Freeze development selection before final
-  evaluation; prior final16 are consumed, not new final evidence.
+  evaluation; prior final16 are consumed, not new final evidence. If the reference
+  wins development, compare the best eligible new challenger as well; if none
+  qualify, retain the reference and label the best new challenger diagnostic.
+  Final results cannot trigger reselection or refitting.
+- CPU preparation may create audited32/64-training-parent views from the existing
+  qualified source packet for subsequent experiments. Do not substitute these
+  into any current fit or consume reserved/final data.
 - No model deployment, application source edits, capacity/objective changes or
   enlarged native grid/history contract. Profile/integrate in a separate slice.
 - Local new retention budget 2 GiB plus 1 GiB reserve. No weights/data in Git.
@@ -45,15 +51,15 @@ Preserve unrelated cohort-progress HTML/refresh script and historical records.
 
 Milestones:
 - M1 configure/capture/qualify inputs and publish the existing-catalog project.
-  Gate C1; state Active.
+  Gate C1; state Accepted.
 - M2 execute four fits with CPU restore/development/regression qualification.
-  Gate C2/C3; state Planned.
+  Gate C2/C3; state Active.
 - M3 freeze selection, evaluate new finals and retain results/timings/lifecycle.
   Gate C4; state Planned.
 
 Acceptance claims, automated:
 - C1 focused/artifact, not-applicable environment: policy accepts configurations,
-  controlled quantities and fresh final identities verified. Pending.
+  controlled quantities and fresh final identities verified. Satisfied; reports/configuration.json and reports/capture.json.
 - C2 system, required-real CUDA/Tuldok: fits have terminal outcomes, artifacts
   reopen/redownload, CPU restore identity matches. Pending.
 - C3 system, required-real native CPU: adaptive/fixed8, native-controlled fresh,
@@ -62,7 +68,7 @@ Acceptance claims, automated:
   commands/methods/elapsed times/results/UI references retained; own jobs drain.
   Pending. Improvement itself is not an acceptance condition.
 
-Current acceptance: pending. Current phase: configuration and runtime admission.
+Current acceptance: partial. Current phase: managed CUDA fits and CPU qualification.
 Exactly one next slice: execute the declared sequence and retain its evidence.
 Blockers: none. Replan on native-control failure, exceeded budgets, unknown
 submission outcome or changed custody/physics contracts. See execution-ledger.md,

@@ -49,6 +49,15 @@ def main():
     if args.phase == 'validation':
         selection = read(root/'selection.json')
         assert selection['consumed_acceptance_passed'] and digest(args.config) == selection['validation_config_sha256']
+        fixtures=LAB/config['fresh_native_fixtures_report']
+        assert digest(fixtures)==selection['fresh_fixture_report_sha256'] and read(fixtures)['all_qualified']
+        assert digest(LAB/config['binary'])==selection['binary_sha256']
+        for model in config['models']:
+            binding=selection['models'][model['name']]
+            assert digest(LAB/model['artifacts']/'weights.npz')==binding['weights_sha256']
+            assert digest(LAB/model['artifacts']/'normalization.json')==binding['normalization_sha256']
+            assert digest(LAB/model.get('stopping_profile',config['profile']))==binding['stopping_profile_sha256']
+            assert model['minimum_network_evaluations']==binding['minimum_network_evaluations']
     if args.attempt and not args.attempt.replace('-', '').isalnum():
         raise ValueError('simple fresh attempt label required')
     directory = root/(args.phase+('-'+args.attempt if args.attempt else ''))

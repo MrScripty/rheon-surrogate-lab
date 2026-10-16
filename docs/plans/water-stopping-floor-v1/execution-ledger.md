@@ -95,3 +95,23 @@ mean calls and maximum calls. Otherwise retain the established candidate. Fresh
 results cannot change this choice or trigger a refit. An initial generator command
 had a syntax error before writing any file or starting work; corrected generation
 retains the intended seeds and ranges.
+
+## M3 consumed bound result and frozen fresh choice
+
+- Pressure-bound study:30 episodes, all qualify/reap;934 AI steps/policy,
+  237.373s CPU phase. Reference/current and late/minimum8 reproduce2048 full native
+  frame records bit-for-bit apart from timing fields across the two studies.
+- Late/pressure worst paired error1.414675e-6, mean7.90364 calls, max10;
+  late/minimum8 worst2.024209e-6, mean/max8. The bound improves accuracy and mean
+  work but does not dominate the eight-call policy's maximum work. Reference/pressure
+  costs11.0032 mean/13max calls and reaches1.175035e-6 worst paired deviation.
+- All48 independently solved sparse bound states satisfy the claimed upper bound.
+  Late/pressure worst sparse same-RHS error7.22345e-7, gradient2.48583e-7, low-band
+  component6.42982e-7. This validates the bound on sampled supplied states, not a
+  universal guarantee on future trajectory drift or a temporal-frequency claim.
+- Frozen choice remains late/minimum8 under the predeclared dominance rule.
+  Choice frozen at2026-10-16T16:53:59.688834+00:00, exact checkpoint/profile/config
+  identities in reports/selection.json. Both alternatives retained; no CUDA refit.
+- Eight fresh native16-step fixtures qualify, all children reaped. Full fresh
+  native controls will run before any final AI episode. Final setup has not been
+  repaired or amended after AI observation. No fresh AI result informed selection.

@@ -1,6 +1,6 @@
 # Two-correction longer training control
 
-Status: Active. Admission: start, authorized by the user's continuation of the
+Status: Accepted. Admission: start, authorized by the user's continuation of the
 prepared next steps. Owner and serial integrator: this task. Canonical plan:
 docs/plans/water-two-pass-long-v1/plan.md.
 
@@ -29,12 +29,12 @@ Binding decisions:
   single small convolution. CPU bank preparation may overlap CUDA on other
   cores. Concurrent durations are throughput observations, not latency evidence.
 - Preserve cubic scalar spacing, water density/viscosity, sealed/free-slip
-  boundary contract, 15-step history, cap32 and unchanged physical/equation gates.
+  boundary contract, 15-step history, cap 32 and unchanged physical/equation gates.
   Reuse the prior model contract and native binaries; no deployment changes.
-- Prior final16 are consumed development, including 16x23x25. Include all34
-  development trajectories (fresh8, prior7, long3, consumed16) in eligibility.
+- Prior final 16 are consumed development, including 16x23x25. Include all 34
+  development trajectories (fresh 8, prior 7, long 3, consumed 16) in eligibility.
   Rank eligible models by maximum actual calls, worst pressure relative L2,
-  then step-weighted mean calls; familiar mean remains diagnostic. Elongated4
+  then step-weighted mean calls; familiar mean remains diagnostic. Elongated 4
   remain exploratory because the control already fails the thinnest scene.
 - Declare eight new whole final simulations before fitting. Freeze checkpoint
   and development choice before final. Always report challenger versus control;
@@ -61,18 +61,18 @@ retained-ref reachability and retained commit disposition.
 Milestones and claims (all automated):
 - M1 configuration, capture and active catalog registration. C1 focused/artifact,
   environment not-applicable: exact controlled differences, policy validation,
-  final identities and capture parity. State Active; claim pending.
+  final identities and capture parity. State Accepted; claim satisfied; reports/configuration.json, capture.json and project-registration.json.
 - M2 managed CUDA fit, CPU restore and development qualification. C2 system,
-  required-real RTX5090/Tuldok/native CPU: terminal managed custody, artifact
+  required-real RTX 5090/Tuldok/native CPU: terminal managed custody, artifact
   restoration parity, fixed/adaptive work and physical results retained.
-  State Planned; claim pending.
+  State Accepted; claim satisfied; reports/trial-two-pass-10000.json and comparison.json.
 - M3 frozen final evaluation and retained review evidence. C3 system/artifact,
   required-real native CPU: native controls, frozen selection, timings, failure
-  disposition, UI references and owned child reaping. State Planned; claim pending.
+  disposition, UI references and owned child reaping. State Accepted; claim satisfied; reports/decision.json, timings.json, summary.json, verification.json and project-registration.json.
 
-Current acceptance: pending. Current phase: M1.
-Exactly one next slice: capture the committed controlled configuration and start
-its managed fit; prepare the independent mixed-odd bank while CUDA runs.
+Current acceptance: satisfied. Current phase: complete.
+Exactly one next slice: none within this completed tranche. Prepared follow-ups
+are in next-steps.md. All owned jobs and observers are stopped.
 Blockers: none. Replan on native-control failure, unknown submission outcome,
 exceeded resource budget or changed physics/custody contracts. Improvement is
 not an acceptance condition. See execution-ledger.md, issues.md and reports/.

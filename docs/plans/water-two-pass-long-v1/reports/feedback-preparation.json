@@ -1,0 +1,77 @@
+{
+  "schema": "rheon-training-feedback-preparation-v1",
+  "source_sha256": {
+    "experiments/water-conditioning-v1/training/physical_residual.py": "59ce14ab0d73024b6d728eab0d3bb4bf316bd80cab15066cf06e732f4cb87c03",
+    "experiments/water-conditioning-v1/training/train.py": "5001b5123a6d468be8ae401c0bf54af60dd4289c577c8f930b812b2e978e493b",
+    "experiments/water-conditioning-v1/training/analytical.py": "b4b9bb8ad37f51bf0e7190f881588c5503c5d80d85b9c110d06fdaa42068ffcf"
+  },
+  "current_training_corrections": 2,
+  "current_feedback": "Loss applied to final reconstructed pressure after two shared learned corrections; second correction already sees the first prediction residual; gradients flow through both. Analytical loss penalizes final pressure/gradient/equation errors plus amplification above1.",
+  "missing_explicit_terms": [
+    "separate first-correction contraction loss",
+    "residual distributions after more than two learned corrections",
+    "shape coverage for mixed odd rectangles such as16x23x25"
+  ],
+  "current_training_grids": [
+    [
+      16,
+      16,
+      16
+    ],
+    [
+      24,
+      24,
+      24
+    ],
+    [
+      32,
+      32,
+      32
+    ],
+    [
+      40,
+      40,
+      40
+    ],
+    [
+      24,
+      16,
+      12
+    ],
+    [
+      17,
+      13,
+      9
+    ],
+    [
+      33,
+      17,
+      9
+    ],
+    [
+      9,
+      25,
+      13
+    ]
+  ],
+  "diagnostic_longest_axis_eigenvalues": {
+    "25": 0.015770597371044248,
+    "40": 0.006165332533744072,
+    "65": 0.0023355463353467165,
+    "127": 0.0006118854938337304
+  },
+  "prepared_mixed_odd_tensor_bytes": 113058816,
+  "existing_bank_tensor_bytes": 529469440,
+  "combined_projection_bytes": 642528256,
+  "enforced_resident_budget_bytes": 805306368,
+  "combined_grid_count": 11,
+  "enforced_grid_count_limit": 8,
+  "combined_status": "unsupported_by_current_count_contract; no submission or optimizer update",
+  "candidate_followups": [
+    "versioned bank-capacity change plus old tensor/order/evidence parity, preserving old grid exposure as a separate controlled sampling decision",
+    "explicit intermediate residual-contraction objective while retaining train-only labels, gauge and physical gates",
+    "only after separate controls: combine coverage and objective or broaden real parents"
+  ],
+  "optimizer_updates": 0,
+  "scope": "source-backed preparation; no new loss or dataset used in current fit; eigenvalues do not establish a neural convergence cause"
+}

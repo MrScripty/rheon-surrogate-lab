@@ -72,21 +72,50 @@ def main():
     for name in ('sequence', 'reports', 'managed-controller'):
         parser.add_argument('--'+name, type=Path, required=True)
     parser.add_argument('--torch-python', required=True)
+    parser.add_argument('--resume-development', action='store_true',
+                        help='Recover only the retained missing-reference comparison failure; never submit training again')
     args = parser.parse_args()
     sequence = read(args.sequence)
     root = LAB/sequence['root']
-    if (root/'study-status.json').exists():
+    status_path = root/('development-recovery-status.json' if args.resume_development else 'study-status.json')
+    if status_path.exists():
         raise FileExistsError('attempt already exists; reconcile without replay')
     trial, = sequence['trials']
     directory = root/trial['name']
     candidate = {'name': trial['name'], 'project': str((directory/'project').relative_to(LAB)),
                  'artifacts': str((directory/'managed-full/stage-01/artifacts').relative_to(LAB)),
                  'single_evaluation': True}
+    record = args.reports/('trial-'+trial['name']+'.json')
+    if args.resume_development:
+        captured = read(root/'sequence-at-fit.json')
+        captured_commit = read(root/'capture.json')['source_commit']
+        committed = subprocess.check_output(['git','show',captured_commit+':'+str(args.sequence.resolve().relative_to(LAB))], cwd=LAB)
+        if (committed != (root/'sequence-at-fit.json').read_bytes()
+                or digest(root/'sequence-at-fit.json') != read(root/'execution.json')['sequence_sha256']):
+            raise ValueError('original sequence identity required for recovery')
+        changed = {key for key in sequence.keys() | captured.keys()
+                   if sequence.get(key) != captured.get(key)}
+        reference_sha = digest(LAB/sequence['reference']['artifacts']/'weights.npz')
+        failed = read(root/'study-status.json')
+        custody = read(directory/'managed-full/receipt.json')
+        if (changed != {'reference_development_studies'} or failed['state'] != 'failed'
+                or failed['error_type'] != 'ValueError'
+                or custody['status'] != 'completed_and_drained'
+                or not read(directory/'cpu-complete.json')['all_development_qualified']
+                or not record.exists() or not (args.reports/'comparison.json').exists()
+                or (args.reports/'final-selection.json').exists()
+                or (root/'consumed-0.study.json').exists()
+                or reference_sha in {c['weights_sha256'] for c in read(args.reports/'fresh-drift.json')['cases']}):
+            raise ValueError('unsupported recovery state; inspect original attempts')
+        for key, source in sequence['reference_development_studies'].items():
+            report = read(LAB/source/'report.json')
+            if not any(model['weights_sha256'] == reference_sha for model in report['models']):
+                raise ValueError('corrected reference missing retained checkpoint: '+key)
     tools = LAB/'experiments/water-multigrid-learning-v1'
     previous = LAB/'experiments/water-shape-repeatability-v1'
     started = time.monotonic()
     status = {'started_at_utc': utc(), 'state': 'running'}
-    write(root/'study-status.json', status)
+    write(status_path, status)
     observer = Observer(LAB/'runs/live-project')
     phase = ['Preparing managed CUDA training']
 
@@ -117,22 +146,27 @@ def main():
 
     try:
         with Watch(lambda: observer.publish('Two-pass 10,000-update control', phase[0])):
-            timed([sys.executable, previous/'run.py', '--sequence', args.sequence,
-                   '--torch-python', args.torch_python,
-                   '--managed-controller', args.managed_controller], 'managed-sequence')
-            phase[0] = 'Sealing managed custody, CPU restore and development qualification'
-            record = args.reports/('trial-'+trial['name']+'.json')
-            timed([args.torch_python, tools/'record.py', '--trial', directory,
-                   '--control', (LAB/sequence['reference']['project']).parent/'managed-full/stage-00/artifacts',
-                   '--output', record], 'seal')
-            timed([sys.executable, previous/'summarize.py', '--sequence', args.sequence,
-                   '--reports', args.reports, '--reference-record', LAB/sequence['reference_record'],
-                   '--reference-index', LAB/sequence['reference_index']], 'comparison')
+            if not args.resume_development:
+                timed([sys.executable, previous/'run.py', '--sequence', args.sequence,
+                       '--torch-python', args.torch_python,
+                       '--managed-controller', args.managed_controller], 'managed-sequence')
+                phase[0] = 'Sealing managed custody, CPU restore and development qualification'
+                timed([args.torch_python, tools/'record.py', '--trial', directory,
+                       '--control', (LAB/sequence['reference']['project']).parent/'managed-full/stage-00/artifacts',
+                       '--output', record], 'seal')
+                timed([sys.executable, previous/'summarize.py', '--sequence', args.sequence,
+                       '--reports', args.reports, '--reference-record', LAB/sequence['reference_record'],
+                       '--reference-index', LAB/sequence['reference_index']], 'comparison')
+            else:
+                timed([args.torch_python, tools/'record.py', '--trial', directory,
+                       '--control', (LAB/sequence['reference']['project']).parent/'managed-full/stage-00/artifacts',
+                       '--output', record], 'seal-recovery')
             weights = {'reference': digest(LAB/sequence['reference']['artifacts']/'weights.npz'),
                        'candidate': digest(LAB/candidate['artifacts']/'weights.npz')}
             populations = {}
             for name, child in [('fresh','grid-study'), ('prior','prior-study'), ('long','long-study')]:
-                populations[name] = summarize(name, [LAB/sequence['reference_development_studies'][name],
+                output_name = name+'-recovered' if args.resume_development else name
+                populations[name] = summarize(output_name, [LAB/sequence['reference_development_studies'][name],
                                                       directory/child])
             for item in sequence['regressions']:
                 output = study(LAB/item['config'], item['name'], [candidate])
@@ -189,7 +223,7 @@ def main():
     finally:
         status['finished_at_utc'] = utc()
         status['elapsed_seconds'] = time.monotonic()-started
-        write(root/'study-status.json', status)
+        write(status_path, status)
         observer.publish('Two-pass experiment '+status['state'],
                          'Methods, timings, native verdicts and attempts retained', state='completed' if status['state']=='completed' else 'failed')
 

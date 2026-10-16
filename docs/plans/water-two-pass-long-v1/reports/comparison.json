@@ -1,0 +1,108 @@
+{
+  "schema": "rheon-shape-repeatability-comparison-v1",
+  "recorded_at_utc": "2026-10-16T05:39:01.061805+00:00",
+  "models": [
+    {
+      "model": "shape-two-reference",
+      "training_evaluations": 2,
+      "seed": 20261015,
+      "sampling_seed": 2026102501,
+      "updates": 5000,
+      "updates_per_s": 24.602425320882325,
+      "optimizer_seconds": 203.23199582099915,
+      "forward_cell_evaluations": 173120838,
+      "development_cases": 128,
+      "adaptive_passed": 128,
+      "adaptive_mean_evaluations": 9.4140625,
+      "adaptive_maximum_evaluations": 12,
+      "fixed_eight_passed": 26,
+      "fixed_eight_median_residual": 2.5861662978295967e-06,
+      "fixed_eight_worst_residual": 3.22709106396515e-05,
+      "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "managed_seconds": null,
+      "cpu_qualification_seconds": null,
+      "all_development_qualified": true
+    },
+    {
+      "model": "two-pass-10000",
+      "training_evaluations": 2,
+      "seed": 20261015,
+      "sampling_seed": 2026102501,
+      "updates": 10000,
+      "updates_per_s": 24.66095920081348,
+      "optimizer_seconds": 405.499231338501,
+      "forward_cell_evaluations": 346296198,
+      "development_cases": 128,
+      "adaptive_passed": 128,
+      "adaptive_mean_evaluations": 7.546875,
+      "adaptive_maximum_evaluations": 10,
+      "fixed_eight_passed": 106,
+      "fixed_eight_median_residual": 2.4003074736627406e-07,
+      "fixed_eight_worst_residual": 4.441220219219855e-06,
+      "weights_sha256": "4d43f7866a291aceafa31755609e720349f7f633e8b94c20169f3375e7308cf2",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "managed_seconds": 1024.1602455410175,
+      "cpu_qualification_seconds": 207.60349576800945,
+      "all_development_qualified": true
+    }
+  ],
+  "new_cuda_updates": 10000,
+  "new_optimizer_seconds": 405.499231338501,
+  "sequence_elapsed_seconds": 1231.7659022309817,
+  "capture_elapsed_seconds": 2.4871293849719223,
+  "optimizer_intervals": [
+    {
+      "trial": "two-pass-10000",
+      "started_unix": 1792128060.321485,
+      "finished_unix": 1792128465.8207164
+    }
+  ],
+  "optimizer_intervals_disjoint": true,
+  "managed_stages": [
+    {
+      "trial": "two-pass-10000",
+      "stage": "train",
+      "run_id": "816e6c5815e549a8aa73c26152f5df7b",
+      "state": "completed",
+      "custody_phase": "drained",
+      "created_at": "2026-10-16T05:20:41.359987+00:00",
+      "started_at": "2026-10-16T05:20:46.877048+00:00",
+      "finished_at": "2026-10-16T05:27:52.094778+00:00",
+      "queue_seconds": 5.517061,
+      "run_seconds": 425.21773
+    },
+    {
+      "trial": "two-pass-10000",
+      "stage": "restore",
+      "run_id": "21315a3a3c6e4c91ae73884a95f0daf1",
+      "state": "completed",
+      "custody_phase": "drained",
+      "created_at": "2026-10-16T05:31:05.590145+00:00",
+      "started_at": "2026-10-16T05:31:10.971176+00:00",
+      "finished_at": "2026-10-16T05:31:28.144439+00:00",
+      "queue_seconds": 5.381031,
+      "run_seconds": 17.173263
+    },
+    {
+      "trial": "two-pass-10000",
+      "stage": "validation",
+      "run_id": "f3cb36b349c14a748597edbf4b4cca97",
+      "state": "completed",
+      "custody_phase": "drained",
+      "created_at": "2026-10-16T05:34:15.322202+00:00",
+      "started_at": "2026-10-16T05:34:20.740112+00:00",
+      "finished_at": "2026-10-16T05:34:38.174325+00:00",
+      "queue_seconds": 5.41791,
+      "run_seconds": 17.434213
+    }
+  ],
+  "sources": {
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/docs/plans/water-recurrence-generalization-v1/reports/trial-cohort-two-shape-feedback.json": "a168b6577bf8e9d7cde1688445d856b3f5718478cc90bcb3fe890e0a1bdaf613",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/docs/plans/water-recurrence-generalization-v1/reports/summary.json": "36cebe68f0967cdcc109865ef4339371b0f5022cce25a9db4242365dcbc570a2",
+    "experiments/water-two-pass-long-v1/configs/sequence.json": "9fe0ec41324c4ca645a48ca87dba08cbcfaa3e758087d448940e01a984fce6e1",
+    "docs/plans/water-two-pass-long-v1/reports/trial-two-pass-10000.json": "20e91359ed57911c3443bb3feb6f0c45dd333d0b81bc3e6ae39545c6fc75a0ef",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-two-pass-long-v1/two-pass-10000/fixed-eight/report.json": "8c6a1d39db57cb9f58602225eac59390a47f68f72cbf94df82ae5cbc43f1dcb2"
+  },
+  "scope": "managed sequence overlaps CPU qualification; sum of job times is not elapsed makespan; isolated inference latency unavailable"
+}

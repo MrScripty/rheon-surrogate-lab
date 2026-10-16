@@ -1,6 +1,14 @@
 # Rheon Surrogate Lab
 
-The latest [shape repeatability and correction-efficiency experiments](docs/plans/water-shape-repeatability-v1/results.md)
+The latest [longer two-correction control](docs/plans/water-two-pass-long-v1/results.md)
+completes 10,000 CUDA updates and passes all eight new final simulations. It fixes
+the preceding one-correction model's odd-domain qualification failure, but needs
+12% more calls than the retained control on the new final cases and has higher
+pressure error. The prior control remains preferred. [Methods and timings](docs/plans/water-two-pass-long-v1/reports/methods.md),
+the [retained decision](docs/plans/water-two-pass-long-v1/reports/decision.json) and
+[prepared next steps](docs/plans/water-two-pass-long-v1/next-steps.md) are recorded.
+
+The preceding [shape repeatability and correction-efficiency experiments](docs/plans/water-shape-repeatability-v1/results.md)
 complete four CUDA fits and 25,000 updates. The frozen candidate improves familiar
 mean work 9.41→6.68 calls but passes 15/16 new simulations, versus 16/16 for the prior
 reference. The prior reference remains the qualified control. Full optimizer,
@@ -459,4 +467,4 @@ The completed [stability-aware pressure sequence](docs/plans/water-stability-lea
 
 Previous experiment: [inference budget and scaling](docs/plans/water-inference-budget-v1/plan.md), with [methods and results](docs/plans/water-inference-budget-v1/results.md).
 
-Latest experiment: [multi-grid pressure learning results](docs/plans/water-multigrid-learning-v1/results.md), with [retained comparison data](docs/plans/water-multigrid-learning-v1/reports/summary.json), CUDA cohort training and qualified iterative CPU inference.
+Earlier experiment: [multi-grid pressure learning results](docs/plans/water-multigrid-learning-v1/results.md), with [retained comparison data](docs/plans/water-multigrid-learning-v1/reports/summary.json), CUDA cohort training and qualified iterative CPU inference.

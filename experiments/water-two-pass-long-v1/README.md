@@ -20,3 +20,10 @@ stay in memory. Source capture and normal existing-catalog custody are required.
 Attempts are fresh and never silently replayed. See the canonical plan for
 selection, limits, retention, physics and lifecycle obligations. The separate
 mixed-odd bank configuration is preparation only and does not affect this fit.
+
+A failed comparison caused by a missing retained reference has an explicit
+`--resume-development` operation. It verifies the original sequence/source
+identity, completed managed custody and sealed CPU qualification, accepts only
+corrected reference bindings, and never resubmits training. A separate recovery
+status and recovered drift paths preserve the original failure. Other failures
+require reconciliation rather than this recovery operation.

@@ -17,3 +17,5 @@
 - Weight0.1 CUDA5000-update optimizer562.049s, managed train+restore1256.730s, peak CUDA770565632B. Existing input/feedback/initialization match will be bound with the pair after second restore. Weight0.25 now training. Weight0.1 CPU spectral diagnostics overlap that fit after native policy workers drained.
 
 - While weight0.25 fits on GPU, weight0.1 diagnostics completed:18 saved-input replays21.221s and temporal/manufactured amplitude73.136s. At8 calls, worst same-input pressure6.0483e-6 versus archived harder-data control8.3229e-6 on the same18 states. Long9×11×33 pure low1Pa coefficient error2.9783e-5Pa improves control4.6344e-5Pa; high-only leakage3.5035e-4Pa worsens control1.2682e-4Pa. Diagnostic-only; no settings altered.
+
+- Retention formatting repair: spectral-summary.csv used csv.writer default CRLF and failed git diff --check. The shell command returned the later stat status and the commit proceeded. Corrected to LF with exact parsed-cell equality, no numerical change; subsequent checks use separate checked calls. Repair retained as a new commit, without history rewrite.

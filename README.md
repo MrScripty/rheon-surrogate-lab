@@ -1,6 +1,15 @@
 # Rheon Surrogate Lab
 
-The latest [longer two-correction control](docs/plans/water-two-pass-long-v1/results.md)
+The latest [coverage and intermediate-feedback experiments](docs/plans/water-coverage-feedback-v1/results.md)
+complete two CUDA fits and 10,000 updates. Intermediate feedback reduces familiar
+mean calls by 30%, but regresses worst-shape work and pressure error. Coverage
+passes eight fresh final simulations with 3.4× lower worst pressure error, while
+requiring 68% more calls. The retained control remains preferred. Full
+[methods and timings](docs/plans/water-coverage-feedback-v1/reports/methods.md),
+[decision](docs/plans/water-coverage-feedback-v1/reports/decision.json) and
+[next experiments](docs/plans/water-coverage-feedback-v1/next-steps.md) are recorded.
+
+The preceding [longer two-correction control](docs/plans/water-two-pass-long-v1/results.md)
 completes 10,000 CUDA updates and passes all eight new final simulations. It fixes
 the preceding one-correction model's odd-domain qualification failure, but needs
 12% more calls than the retained control on the new final cases and has higher

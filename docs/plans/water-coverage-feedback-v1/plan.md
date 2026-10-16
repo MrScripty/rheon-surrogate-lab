@@ -1,6 +1,6 @@
 # Separate coverage and intermediate-feedback experiments
 
-Status: Active. Admission: start, user-authorized continuation of the prepared
+Status: Accepted. Admission: start, user-authorized continuation of the prepared
 next steps. Owner/serial integrator: this task. Canonical plan:
 docs/plans/water-coverage-feedback-v1/plan.md.
 
@@ -18,27 +18,27 @@ Binding decisions:
   the same seeds, 5,000 updates, schedule, architecture, float32 parameters,
   16 real parents/32 states, train-only scales and two shared corrections.
 - Coverage-only: original eight analytical grids plus the three independently
-  qualified mixed-odd grids; canonical objective. Balanced sampling across11
-  changes old-grid exposure from625 to454/455 draws; disclose this data/sampling
+  qualified mixed-odd grids; canonical objective. Balanced sampling across 11
+  changes old-grid exposure from 625 to 454/455 draws; disclose this data/sampling
   effect. Keep all old tensors and original configurations unchanged.
-- Feedback-only: original eight grids and draw order; add weight0.1 times mean
+- Feedback-only: original eight grids and draw order; add weight 0.1 times mean
   relative residual squared at nonfinal training corrections to the existing
   final loss, on both real and analytical training samples. No later-than-two
   residual sampling, coverage extension or inference policy change in this fit.
-- A versioned v6 experiment contract explicitly selects a16-grid capacity and
-  the optional named intermediate objective. Old schemas retain their8-grid
+- A versioned v6 experiment contract explicitly selects a 16-grid capacity and
+  the optional named intermediate objective. Old schemas retain their 8-grid
   restriction, tensors, RNG, loss, predictions and gradients. All banks retain
-  the768MiB tensor projection and existing cubic spacing/cell limits.
+  the 768 MiB tensor projection and existing cubic spacing/cell limits.
 - Existing managed workflow owns CUDA training and Run custody; one optimizer,
   600-second/32MiB Run limits. CPU qualification/preparation can overlap on
   disjoint cores, using bounded single-thread worker pools. No blind retry.
 - Reuse exact native binaries and existing catalog/project observation. Match
   reference checkpoint identity, scenes and binary before starting. Keep water,
-  sealed/free-slip boundaries, scalar cubic h,15 history steps,32-call cap and
+  sealed/free-slip boundaries, scalar cubic h, 15 history steps, 32-call cap and
   physical/equation gates. No deployment or GPU inference qualification change.
-- Include42 development trajectories: standard8, prior7, long3, consumed16 and
-  the last eight final simulations. Elongated4 remain exploratory. Eligibility
-  requires all fitting/familiar states and42 trajectories to qualify; rank
+- Include 42 development trajectories: standard 8, prior 7, long 3, consumed 16 and
+  the last eight final simulations. Elongated 4 remain exploratory. Eligibility
+  requires all fitting/familiar states and 42 trajectories to qualify; rank
   maximum calls, worst pressure relative L2, then weighted mean calls. Familiar
   mean and analytical probes remain separately retained diagnostics.
 - Reserve eight fresh whole final simulations before fitting. Freeze the best
@@ -46,7 +46,10 @@ Binding decisions:
   development choice before final. Compare control/challenger once. Promotion
   requires development choice plus final qualification and no regression in
   maximum/mean calls or worst pressure error. No final-informed fit/reselection.
-- New local retention2GiB plus1GiB reserve. No weights/raw simulation arrays in
+- CPU preparation may run eight fixed learned corrections from the retained
+  checkpoint on training snapshots only, retaining late residual/teacher-label
+  defect diagnostics. This does not modify either fit or consume final data.
+- New local retention 2 GiB plus 1 GiB reserve. No weights/raw simulation arrays in
   Git. Preserve all historical results and unrelated cohort-progress files.
 
 Composed-design review: not-applicable. Network architecture and runtime
@@ -70,19 +73,22 @@ Milestones/acceptance (automated):
   C1 focused/contract, not-applicable environment: legacy bounds/tensors/order/
   prediction/loss/gradient parity, intermediate feedback meaning/gradient,
   capacity rejection, CPU bank label qualification and source capture.
-  State Active; claim pending.
+  State Accepted; claim satisfied; reports/configuration.json, unit-tests.json,
+  reference-bindings.json and capture.json.
 - M2 two managed CUDA fits with fresh CPU restore and native development.
   C2 system, required-real RTX5090/Tuldok/nativeCPU: terminal custody, identical
-  redownloads, restored weights, real numerical results and work. State Planned;
-  claim pending.
+  redownloads, restored weights, real numerical results and work. State Accepted;
+  claim satisfied; reports/trial-*.json, comparison.json and final-selection.json.
 - M3 frozen final qualification, result/timing/UI/lifecycle records.
   C3 system/artifact, required-real nativeCPU: final after selection, all native
   controls checked, attempted failures retained, owned jobs reaped, sources and
-  evidence discoverable in existing project. State Planned; claim pending.
+  evidence discoverable in existing project. State Accepted; claim satisfied;
+  reports/summary.json, timings.json,
+  decision.json, project-registration.json and worktree-lifecycle.json.
 
-Current acceptance: pending. Current phase: M1.
-Exactly one next slice: implement and qualify the two separate training changes
-before capturing committed sources and launching managed fits.
+Current acceptance: satisfied. Current phase: terminal.
+No active slice remains. Prepared follow-ups in next-steps.md require a new
+bounded admission; the two fits and frozen final evaluation are complete.
 Blockers: none. Replan on native control failure, unknown submission outcome,
 resource overrun, lost legacy parity or changed physics/custody contracts.
 Improvement is not required for acceptance. See execution-ledger.md, issues.md,

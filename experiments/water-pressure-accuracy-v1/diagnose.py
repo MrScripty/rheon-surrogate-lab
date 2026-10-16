@@ -106,7 +106,7 @@ def mode_metrics(pressure, exact):
             'energy_fraction': float(energy.flatten()[i])/max(total, 1e-60)} for i in indices]}
 
 
-def replay(config, model, sample_path, output):
+def replay(config, model, sample_path, output, spectral_metrics=None):
     import numpy as np
     sample_path = sample_path.absolute()
     started = time.perf_counter()
@@ -138,7 +138,8 @@ def replay(config, model, sample_path, output):
             qualities = {name: equation_quality(audit.MODEL, pressure, sample, rhs, policy)
                          for name, policy in config['policies'].items()}
             frontier.append({'calls': calls, 'correction_seconds_cumulative': inference_seconds,
-                **error_metrics(pressure, exact), **mode_metrics(pressure, exact), 'quality': qualities})
+                **error_metrics(pressure, exact),
+                **(spectral_metrics or mode_metrics)(pressure, exact), 'quality': qualities})
     selected = {}
     for name in config['policies']:
         first = next((row for row in frontier if row['quality'][name]['equation_passed']), None)

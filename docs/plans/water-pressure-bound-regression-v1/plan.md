@@ -1,6 +1,7 @@
 # Broader pressure-aware stopping regression
 
-Status: Active. Admission: start, user-authorized continuation of the next
+Status: Accepted. Measurements and records complete; no replacement.
+Admission: start, user-authorized continuation of the next
 pressure-aware regression and conditional independent validation sequence.
 Canonical plan: docs/plans/water-pressure-bound-regression-v1/plan.md.
 Owner/integrator: this task. Private branch experiment/water-pressure-bound-regression-v1
@@ -17,7 +18,7 @@ Decisions:
   preserving original equation/divergence gates, cubic cells, history warm-up,
   fixed sealed-water physics, float32 network arithmetic and32-call maximum.
   No tuning, new model inputs, optimizer, training examples, fallback or refinement.
-- Run all58 original standard regression scenes plus both subsequent consumed
+- Run all 58 original standard regression scenes plus both subsequent consumed
   eight-scene sets (late amended validation and the failed minimum8 validation).
   The original setup amendment remains historical; these populations are consumed.
   Keep elongated exploratory cases outside this standard replacement gate.
@@ -63,17 +64,26 @@ an explicit write-set extension and evidence before continuing.
 
 Milestones:
 - M1 Accepted: reproducible population/reference binding and first real fixture.
-  Gate: all74 declared references verified, one real prefix parity observation,
+  Gate: all 74 declared references verified, one real prefix parity observation,
   pressure-bound coverage, CPU-only inference, observed children reaped.
-- M2 Active: all74 candidate trajectories, per-population comparison and current
+- M2 Accepted: all 74 candidate trajectories, per-population comparison and current
   serial timing. Gate: complete retained measurement, including negative results;
   replacement eligibility is a separate all-population decision.
-- M3 Planned: independent fresh validation only when M2 replacement gates pass.
+- M3 Deferred (consumed maximum-work gate failed; fresh scenes unconsumed):
+  independent fresh validation only when M2 replacement gates pass.
   Otherwise defer it explicitly, retain unused fixtures and record rejection.
 
-Acceptance partial. Current phase M2; next slice: full consumed regression and current serial timing.
+Acceptance satisfied for the measurement task. Current phase: terminal; next
+slice: none in this plan. All 74 scenes and 233 bound checks qualify; worst pressure
+deviation improves in each population, but recent maximum calls 17 vs 11 reject
+replacement. Fresh validation remains Deferred and its eight scenes unconsumed.
+Serial timings complete. Saved-input replay indicates most extra calls are needed
+for pressure accuracy; future matched CUDA training for fewer passes is proposed,
+not executed. No deployment or final-informed refit.
 Replan on invalid reference/setup, resource/lifecycle failure, bound violation,
 changed numerical semantics or evidence invalidating conditional continuation.
 Standards snapshot: snapshot:v1:8003a2b9-6b39-48ec-820f-fe66f59fc90a;
 16 routed policies, zero unresolved facts. Records: execution-ledger.md, issues.md,
 reports/. Measurement completion does not imply replacement qualification.
+
+[Complete results](reports/summary.json) · [Population CSV](reports/population-comparison.csv) · [Timing CSV](reports/timing-comparison.csv) · [Hard-case replay](reports/hard-case-frontier-summary.json) · [Methods](execution-ledger.md).

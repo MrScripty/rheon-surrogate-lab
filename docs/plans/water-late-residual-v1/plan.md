@@ -65,6 +65,14 @@ Decisions:
   growth, no new trajectories, training examples, temporal history or refits.
   Record limits: this does not qualify actual changed-dt dynamics, and wavelength
   alone gives no temporal frequency without a motion/dispersion relationship.
+- Follow-up hypothesis diagnostic: split the same consumed saved residuals into
+  the existing first-three-cosine-modes-per-axis band (excluding constant gauge)
+  and its complement. Measure intrinsic low-input solve error, other-band leakage
+  and their superposition at4/8 calls, bounded CPU only. This is input isolation,
+  not a curriculum fit, temporal spectrum or a frequency-independent guarantee.
+  A high/middle-first then full-spectrum curriculum remains a proposed separate
+  ablation against full-spectrum and band-balanced training at matched budgets.
+  Keep all-band evaluation/physical gates throughout; do not alter current fits.
 
 Write set: experiments/water-conditioning-v1/training/{policy.py,model.py,
 train.py,project.py,pipeline.py,direction_feedback.py,test_direction_feedback.py};

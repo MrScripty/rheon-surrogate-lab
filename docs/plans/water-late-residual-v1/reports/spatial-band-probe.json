@@ -1,0 +1,249 @@
+{
+  "schema": "rheon-pressure-spatial-band-probe-v1",
+  "scope": "six consumed saved residuals; frozen checkpoint, zero-base correction map; no trajectory/label-noise or curriculum claim",
+  "argv": [
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+    "experiments/water-late-residual-v1/band_probe.py",
+    "--study",
+    "experiments/water-pressure-accuracy-v1/configs/study.json",
+    "--model",
+    "targeted",
+    "--output",
+    "docs/plans/water-late-residual-v1/reports/spatial-band-probe.json"
+  ],
+  "study_sha256": "a7598968d93211671f7a3584788313fcdf2d9a9f9a7615696719692bd3efc915",
+  "source": {
+    "project": "runs/water-targeted-feedback-v1/targeted-feedback/project",
+    "artifacts": "runs/water-targeted-feedback-v1/targeted-feedback/managed-full/stage-01/artifacts"
+  },
+  "weights_sha256": "5bbdc3159fe965b4768c14501bcb678ecffc837e0ccd01a513003bcad533f3fe",
+  "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+  "source_witness_sha256": "30f35107050997bbf29bd734097047e1912aa42dd63004eda5d5449524b1f0f2",
+  "source_sha256": {
+    "experiments/water-late-residual-v1/band_probe.py": "acfaa4feecbe96b4a06c4db137792ec11138d52538fb1fb4d52d12808f765570",
+    "experiments/water-residual-learning-v1/audit.py": "9c9c92742f91ff6e3e384116e5d25153226f83128724e7efb46d66679b68f4f9"
+  },
+  "low_band": "cosine mode indices 0..2 on each axis, excluding constant gauge mode",
+  "identity": "low output error approximately equals intrinsic low-input solve error plus leakage from other input modes",
+  "cases": [
+    {
+      "sample": {
+        "step": 16,
+        "path": "runs/water-pressure-accuracy-v1/witness-00-targeted-original/sample-016.npz",
+        "sha256": "e31c8ad8efd4c16f3e83a8249d0b1c59115852e12ebc82a402f464340677167f"
+      },
+      "counts_xyz": [
+        31,
+        11,
+        7
+      ],
+      "partition_relative_defect": 0.0,
+      "results": [
+        {
+          "calls": 4,
+          "combined_low_pressure_relative_l2": 0.010578289097332268,
+          "low_input_only_pressure_relative_l2": 0.015020820355487394,
+          "other_band_to_low_leakage_relative_l2": 0.004451607737193541,
+          "leakage_over_intrinsic_error": 0.2963624909852066,
+          "intrinsic_leakage_cosine": -0.9985645029282516,
+          "superposition_discrepancy_over_exact_low": 7.313412604473537e-09,
+          "removing_other_band_improves_low_error": false
+        },
+        {
+          "calls": 8,
+          "combined_low_pressure_relative_l2": 0.00010941133671403885,
+          "low_input_only_pressure_relative_l2": 0.00016056734395471226,
+          "other_band_to_low_leakage_relative_l2": 5.115776616602071e-05,
+          "leakage_over_intrinsic_error": 0.31860629257496886,
+          "intrinsic_leakage_cosine": -0.9999803741860064,
+          "superposition_discrepancy_over_exact_low": 2.9915810441202334e-10,
+          "removing_other_band_improves_low_error": false
+        }
+      ]
+    },
+    {
+      "sample": {
+        "step": 96,
+        "path": "runs/water-pressure-accuracy-v1/witness-00-targeted-original/sample-096.npz",
+        "sha256": "fa184845720ff847f44398bf2d5966e83081d2afafdeeacb00ac3e121fc2fc84"
+      },
+      "counts_xyz": [
+        31,
+        11,
+        7
+      ],
+      "partition_relative_defect": 0.0,
+      "results": [
+        {
+          "calls": 4,
+          "combined_low_pressure_relative_l2": 0.010754325046975249,
+          "low_input_only_pressure_relative_l2": 0.013817700227284093,
+          "other_band_to_low_leakage_relative_l2": 0.0030759975837602884,
+          "leakage_over_intrinsic_error": 0.2226128467953371,
+          "intrinsic_leakage_cosine": -0.9968147319864942,
+          "superposition_discrepancy_over_exact_low": 2.8898417911818834e-08,
+          "removing_other_band_improves_low_error": false
+        },
+        {
+          "calls": 8,
+          "combined_low_pressure_relative_l2": 0.00011209186265235224,
+          "low_input_only_pressure_relative_l2": 0.0001478021753513294,
+          "other_band_to_low_leakage_relative_l2": 3.5713038437182875e-05,
+          "leakage_over_intrinsic_error": 0.24162728560856503,
+          "intrinsic_leakage_cosine": -0.9999387977854812,
+          "superposition_discrepancy_over_exact_low": 1.6339751583313796e-10,
+          "removing_other_band_improves_low_error": false
+        }
+      ]
+    },
+    {
+      "sample": {
+        "step": 16,
+        "path": "runs/water-pressure-accuracy-v1/witness-01-targeted-original/sample-016.npz",
+        "sha256": "4eb4dfdf041b04eece35f68ddddfd56197789cd79e19bc105c11b4d6021ecdd7"
+      },
+      "counts_xyz": [
+        24,
+        16,
+        12
+      ],
+      "partition_relative_defect": 0.0,
+      "results": [
+        {
+          "calls": 4,
+          "combined_low_pressure_relative_l2": 0.0034986979856144323,
+          "low_input_only_pressure_relative_l2": 0.0028529089834028265,
+          "other_band_to_low_leakage_relative_l2": 0.0010067271770134035,
+          "leakage_over_intrinsic_error": 0.3528774254174148,
+          "intrinsic_leakage_cosine": 0.5376111865710287,
+          "superposition_discrepancy_over_exact_low": 2.6409617469731094e-08,
+          "removing_other_band_improves_low_error": true
+        },
+        {
+          "calls": 8,
+          "combined_low_pressure_relative_l2": 1.0479400897196764e-05,
+          "low_input_only_pressure_relative_l2": 1.0101881438851741e-05,
+          "other_band_to_low_leakage_relative_l2": 1.4734793838863393e-06,
+          "leakage_over_intrinsic_error": 0.14586187660244668,
+          "intrinsic_leakage_cosine": 0.1880020213173426,
+          "superposition_discrepancy_over_exact_low": 1.014955869874319e-10,
+          "removing_other_band_improves_low_error": true
+        }
+      ]
+    },
+    {
+      "sample": {
+        "step": 512,
+        "path": "runs/water-pressure-accuracy-v1/witness-01-targeted-original/sample-512.npz",
+        "sha256": "5e133d842e4cf44fb58a5c72aa839faa808e4237b5b84fb62cc39d5912eb1438"
+      },
+      "counts_xyz": [
+        24,
+        16,
+        12
+      ],
+      "partition_relative_defect": 0.0,
+      "results": [
+        {
+          "calls": 4,
+          "combined_low_pressure_relative_l2": 0.0025971098770945556,
+          "low_input_only_pressure_relative_l2": 0.0034583211503660433,
+          "other_band_to_low_leakage_relative_l2": 0.0008861601767706997,
+          "leakage_over_intrinsic_error": 0.2562399899375756,
+          "intrinsic_leakage_cosine": -0.978971743030205,
+          "superposition_discrepancy_over_exact_low": 1.8299163567292832e-08,
+          "removing_other_band_improves_low_error": false
+        },
+        {
+          "calls": 8,
+          "combined_low_pressure_relative_l2": 8.92749640668163e-06,
+          "low_input_only_pressure_relative_l2": 1.2484349951980964e-05,
+          "other_band_to_low_leakage_relative_l2": 3.580898348976646e-06,
+          "leakage_over_intrinsic_error": 0.2868309814087232,
+          "intrinsic_leakage_cosine": -0.9952063727998304,
+          "superposition_discrepancy_over_exact_low": 3.480289332673849e-11,
+          "removing_other_band_improves_low_error": false
+        }
+      ]
+    },
+    {
+      "sample": {
+        "step": 16,
+        "path": "runs/water-pressure-accuracy-v1/witness-02-targeted-original/sample-016.npz",
+        "sha256": "c76d9b801f047f2b15cf1b3a23b272f2836c44ec00234d87fd81395e3a116105"
+      },
+      "counts_xyz": [
+        31,
+        15,
+        23
+      ],
+      "partition_relative_defect": 0.0,
+      "results": [
+        {
+          "calls": 4,
+          "combined_low_pressure_relative_l2": 0.0056593959939279055,
+          "low_input_only_pressure_relative_l2": 0.005172507396923855,
+          "other_band_to_low_leakage_relative_l2": 0.0008138573883347253,
+          "leakage_over_intrinsic_error": 0.1573429143511201,
+          "intrinsic_leakage_cosine": 0.5477695472247702,
+          "superposition_discrepancy_over_exact_low": 2.9018490657801316e-08,
+          "removing_other_band_improves_low_error": true
+        },
+        {
+          "calls": 8,
+          "combined_low_pressure_relative_l2": 4.966520789292951e-05,
+          "low_input_only_pressure_relative_l2": 5.1486335440761595e-05,
+          "other_band_to_low_leakage_relative_l2": 2.0778750068919174e-06,
+          "leakage_over_intrinsic_error": 0.04035779569673683,
+          "intrinsic_leakage_cosine": -0.881019646660733,
+          "superposition_discrepancy_over_exact_low": 2.0922258245560483e-10,
+          "removing_other_band_improves_low_error": false
+        }
+      ]
+    },
+    {
+      "sample": {
+        "step": 128,
+        "path": "runs/water-pressure-accuracy-v1/witness-02-targeted-original/sample-128.npz",
+        "sha256": "8bd6e2364ff65f972652b906e515dccd31a4ced7168d2a9fbea8a07ff011715f"
+      },
+      "counts_xyz": [
+        31,
+        15,
+        23
+      ],
+      "partition_relative_defect": 0.0,
+      "results": [
+        {
+          "calls": 4,
+          "combined_low_pressure_relative_l2": 0.005134322413084029,
+          "low_input_only_pressure_relative_l2": 0.0033456795565400595,
+          "other_band_to_low_leakage_relative_l2": 0.0017959861417886297,
+          "leakage_over_intrinsic_error": 0.5368075786809517,
+          "intrinsic_leakage_cosine": 0.9937115106361514,
+          "superposition_discrepancy_over_exact_low": 1.1387377531723296e-08,
+          "removing_other_band_improves_low_error": true
+        },
+        {
+          "calls": 8,
+          "combined_low_pressure_relative_l2": 5.4658291516764684e-05,
+          "low_input_only_pressure_relative_l2": 3.4241380828693985e-05,
+          "other_band_to_low_leakage_relative_l2": 2.0417158026236615e-05,
+          "leakage_over_intrinsic_error": 0.596271456702681,
+          "intrinsic_leakage_cosine": 0.9999672765338261,
+          "superposition_discrepancy_over_exact_low": 1.7560466969938547e-10,
+          "removing_other_band_improves_low_error": true
+        }
+      ]
+    }
+  ],
+  "optimizer_updates": 0,
+  "simulations_advanced": 0,
+  "cuda_initialized": false,
+  "cpu_threads": 1,
+  "cpu_affinity": [
+    0
+  ],
+  "peak_rss_bytes": 760332288,
+  "elapsed_seconds": 2.718455721999817
+}

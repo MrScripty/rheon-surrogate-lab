@@ -68,3 +68,26 @@
   smaller dt improves or worsens total error. Existing saved trajectories can
   measure total pressure separation over time, but cannot identify a changed-dt
   causal effect or add per-step relative pressure errors as velocity drift.
+- User proposes postponing low-frequency loss to reduce other-band error first,
+  then restoring low-frequency training. Treat this as a curriculum hypothesis,
+  not permission to hide low-frequency evaluation error or change the currently
+  matched early/late fit protocol. Spatial band balancing and a staged objective
+  are possible separate ablations; neither has been trained or qualified here.
+- CPU band_probe.py reuses six consumed targeted-checkpoint residuals, zero-base
+  correction map, original h/rho/dt/scales and4/8 actual single calls. Partition
+  by the existing cosine index cube0..2, excluding gauge, into low and remainder;
+  evaluate each input separately and their sum. Qualify partition <1e-14 and
+  prediction superposition discrepancy <1e-5 relative to exact low-mode pressure.
+  This index cutoff is spatial, not temporal, and is not a common physical
+  wavenumber cutoff across different domain proportions.
+- Probe passes in2.718s, no CUDA, advanced simulations or optimizer updates.
+  Leakage from the other input band has4.04%–59.63% of the intrinsic low-input
+  error norm across12 comparisons. Removing the other input band improves low
+  accuracy5/12 times and worsens7/12, where useful cancellation is removed.
+  Thus cross-band contamination exists but intrinsic low-input error is larger
+  on every sampled case/call count. Neither a universal noise floor nor a benefit
+  from high-first training is established. Masking low output error would also
+  cease penalizing leakage into that band; it need not reduce that contamination.
+  Preserve unchanged full-band physical evaluation even for a future masked-loss
+  warm-up. Timings, inputs, calls, decomposition and identities are retained in
+  reports/spatial-band-probe.json and its command receipt. No model promotion.

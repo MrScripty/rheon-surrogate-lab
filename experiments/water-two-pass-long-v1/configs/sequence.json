@@ -1,0 +1,55 @@
+{
+  "training_packet": "runs/water-residual-learning-v1/views/cohort-16",
+  "validation_packet": "runs/water-learning-sequence-v1/views/validation",
+  "reserved_packet": "runs/water-learning-sequence-v1/views/reserved-test",
+  "runtime_manifest": "runs/cuda-pressure-runtime-1/manifest.json",
+  "tuldok": "runs/live-integration/Tuldok",
+  "schema": "rheon-two-pass-long-sequence-v1",
+  "reference": {
+    "name": "shape-two-reference",
+    "project": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+    "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "trials": [
+    {
+      "name": "two-pass-10000",
+      "config": "experiments/water-two-pass-long-v1/configs/two-pass-10000.json"
+    }
+  ],
+  "root": "runs/water-two-pass-long-v1",
+  "native_binary": "runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation",
+  "probe_packet": "runs/water-learning-sequence-v1/views/fit-one",
+  "fresh-development": "experiments/water-shape-repeatability-v1/configs/fresh-development.json",
+  "prior-grids": "experiments/water-shape-repeatability-v1/configs/prior-grids.json",
+  "long-study": "experiments/water-shape-repeatability-v1/configs/long-study.json",
+  "final_configs": [
+    "experiments/water-two-pass-long-v1/configs/final-holdout.json"
+  ],
+  "selection": "All fitting/validation states and 34 development trajectories must qualify. Rank eligible checkpoints lexicographically by maximum calls, worst pressure relative L2, then step-weighted mean calls across those trajectories; familiar mean is secondary diagnostic. Elongated four are exploratory. Freeze before eight new whole final simulations; no final-informed refit/reselection. Unqualified challenger may run final as diagnostic; qualified control is retained unless development choice and final non-regression both support promotion.",
+  "regressions": [
+    {
+      "name": "consumed-0",
+      "config": "experiments/water-shape-repeatability-v1/configs/final-holdout-0.json",
+      "reference_study": "runs/water-shape-repeatability-v1/final-holdout-0"
+    },
+    {
+      "name": "consumed-1",
+      "config": "experiments/water-shape-repeatability-v1/configs/final-holdout-1.json",
+      "reference_study": "runs/water-shape-repeatability-v1/final-holdout-1"
+    },
+    {
+      "name": "elongated",
+      "config": "experiments/water-shape-repeatability-v1/configs/elongated-diagnostic.json",
+      "reference_study": "runs/water-shape-repeatability-v1/elongated-diagnostic",
+      "exploratory": true
+    }
+  ],
+  "reference_record": "docs/plans/water-recurrence-generalization-v1/reports/trial-cohort-two-shape-feedback.json",
+  "reference_index": "docs/plans/water-recurrence-generalization-v1/reports/summary.json",
+  "reference_development_studies": {
+    "fresh": "runs/water-recurrence-generalization-v1/reference-fresh-development",
+    "prior": "runs/water-recurrence-generalization-v1/prior-grid-controls",
+    "long": "runs/water-recurrence-generalization-v1/reference-long-study"
+  }
+}

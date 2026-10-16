@@ -32,6 +32,9 @@ Decisions:
   captured source witnesses own this contract. Fresh CPU restores required.
 - Run one actual CUDA smoke/restore before full fits. While GPU trains, CPU
   diagnostic and preparation run independently with bounded worker/thread counts.
+- Supplement diagnostics with4/8/12-call replays on the15 existing consumed
+  common RHSs through the established fixed_compare owner; reuse verified archived
+  baselines. Diagnostic only, no training or selection-gate change.
 - Measure reference signal and prediction error temporal PSD on retained teacher
   states with the same detrending/Hann windows; record absolute and signal-relative
   power and weak-signal cases. Controlled spatial pure/mixed amplitude sweeps

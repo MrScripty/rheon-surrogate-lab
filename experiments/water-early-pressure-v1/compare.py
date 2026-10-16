@@ -91,7 +91,8 @@ def main():
     def rank(m):
         selected=[r for r in cases if r['model']==m]
         v=owner.describe(selected)
-        return [v['maximum_network_evaluations'] or 10**9,v['worst_paired_pressure_relative_l2'] or 10**9,v['mean_network_evaluations'] or 10**9]
+        return [v[k] if v[k] is not None else 10**9 for k in
+                ('maximum_network_evaluations','worst_paired_pressure_relative_l2','mean_network_evaluations')]
     diagnostic_choice=min(eligible or models,key=rank)
     result={'schema':'rheon-earlier-pressure-comparison-v1','groups':groups,'cases':cases,'failures':failures,
         'eligible_for_fresh_validation':eligible,'frozen_challenger':diagnostic_choice,

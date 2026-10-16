@@ -46,3 +46,17 @@ and drained, repeated artifact downloads verified. Run IDs and actual arithmetic
 are retained in smoke-result.json. Source admitted at e43d4d9. A premature pair
 invocation before workflow final receipt was refused by the guard, before any
 new Run; full pair admitted only after receipt publication.
+
+M2 diagnostic detail:reuse fixed_compare.py on15 already consumed common saved
+RHSs at4/8/12calls for both new fits, with archived identical-input baseline
+receipts. This directly measures earlier-correction accuracy without autonomous
+trajectory confounding. No new samples enter training or change selection gates.
+Control replay runs on CPU6 after control restore, during next managed preflight.
+
+Control completed5000updates:416.9863s optimizer,11.9908updates/s; managed train
+plus CPU restore/repeat download889.3034s, child reaped. Added data alone reduces
+manufactured9x11x33 pure-low8-call coefficient error39.66x and high-only leakage
+143.93x, but worsens15-state equal-call worst mean-free pressure error by
+24.2%/28.4%/92.2% at4/8/12calls. Those distinct probes show a tradeoff, not
+replacement qualification. CPU control amplitude69.89s; common-input replay2.98s.
+New first-pressure feedback fit proceeding unchanged.

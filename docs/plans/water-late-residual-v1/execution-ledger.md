@@ -112,3 +112,24 @@
   pressure-accuracy project retained. GPU is available on the host RTX5090;
   sandbox nvidia-smi lacks device access, host query succeeds. Use real managed
   host CUDA execution, never substitute CPU fitting.
+- Capture smoke/early/late project materials from clean source7df75591de53e0f2da012e30d58aba057fb30ca1.
+  Verify copied witness identities, then remove only the clean task worktree,
+  confirming exact OID retention on the experiment branch and absence of its
+  path/registration. Source-capture and worktree-cleanup receipts retained.
+- Managed smoke qualifies1 CUDA optimizer update followed by fresh CPU restore
+  with0 updates/no CUDA initialization. Both Runs complete and drain in the same
+  catalog; restored weight bytes and every artifact's second download match.
+  Run IDs/execution details and total managed elapsed boundary are in
+  reports/managed-smoke.json. Full controlled sequence starts only after this.
+- Prepare fixed4/8/12-call common-input comparison against six consumed saved
+  inputs, independently enumerating the operator against spectral labels. Both
+  retained/targeted baseline probes pass. At8 calls: retained0/6 equation checks,
+  targeted6/6; worst pressure errors8.516e-6 and1.526e-5 respectively. At12 both
+  pass6/6, worst errors1.824e-8 and1.618e-7. These are same-RHS pressure metrics,
+  not autonomous trajectory accuracy or isolated timing benchmarks.
+- Describe train-only paired-bank spectra: median reference correction energy
+  in the existing low-mode cube rises90.012%→99.655% for real states and
+  50.0%→99.666% for manufactured directions. RHS low-mode medians23.226%→78.326%
+  and50.0%→67.683%. Description0.140s, no optimizer/CUDA; this characterizes the
+  extra direction effect, not a newly trained model result. Matched full fits and
+  their measured CPU/native outcomes remain pending.

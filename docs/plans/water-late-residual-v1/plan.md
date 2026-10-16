@@ -100,13 +100,14 @@ Milestones and acceptance, automated:
   no exclusions, independent defects <=4.08e-13,12.158s bounded preparation.
 - M2 focused contract/gradient/parity evidence and clean committed-source capture;
   managed one-update CUDA fit and CPU restore qualify the real new input boundary
-  before full fits. Required-real local RTX5090/Tuldok. Pending.
+  before full fits. Required-real local RTX5090/Tuldok. Accepted:1 CUDA update,
+  zero-update fresh CPU restore, identical weights and redownloaded artifacts.
 - M3 two complete managed CUDA fits, fitting/familiar/fixed-call CPU comparisons,
   58 development trajectories, frozen final comparison, complete source/custody,
   process/timing/failure records and same-catalog project visibility. Pending.
 
-Current acceptance: pending. Current phase: managed source/fixture preparation.
-Next slice: committed clean source capture and one-update CUDA/CPU restore fixture.
+Current acceptance: pending. Current phase: matched managed CUDA fits.
+Next slice: complete both fits and their CPU/native development comparisons.
 Blockers: none. Replan on invalid labels, incomplete lineage, parity violation,
 resource breach, unavailable CUDA/custody or unreaped work. Numerical improvement
 is measured, not a completion prerequisite. Decisions/issues/receipts live in

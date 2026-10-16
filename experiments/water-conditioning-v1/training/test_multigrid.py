@@ -81,4 +81,33 @@ class MultiGrid(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'analytical_amplitude_reference'):policy.experiment(config)
 
 
+
+    def test_versioned_capacity_preserves_legacy_bank_and_limits(self):
+        config=policy.decode(policy.read(policy.LAB/'experiments/water-conditioning-v1/configs/multigrid-cohort16-1pass.json'))
+        legacy=copy.deepcopy(config)
+        config['schema']='rheon-water-residual-experiment-v6'
+        config['analytical_feedback']['grid_capacity']=16
+        policy.experiment(config)
+        spec={**self.spec,'amplitude_reference':'train-correction-cell-rms'}
+        before=analytical.bank(self.sample,spec,31,amplitude_pa=2.)
+        after=analytical.bank(self.sample,{**spec,'grid_capacity':16},31,amplitude_pa=2.)
+        self.assertTrue((before[1]==after[1]).all())
+        for a,b in zip(before[0],after[0]):
+            for key in a:self.assertTrue(torch.equal(a[key],b[key]))
+        self.assertEqual(before[2],{k:v for k,v in after[2].items() if k!='grid_capacity'}|{'schema':before[2]['schema']})
+        eleven=[{'counts_xyz':[n,3,2],'cells_per_metre':16} for n in range(2,13)]
+        with self.assertRaisesRegex(ValueError,'analytical_grids'):
+            analytical.validate_grids({**spec,'grids':eleven})
+        analytical.validate_grids({**spec,'grids':eleven,'grid_capacity':16})
+        for capacity in (True,8,17):
+            invalid=copy.deepcopy(config);invalid['analytical_feedback']['grid_capacity']=capacity
+            with self.assertRaisesRegex(ValueError,'analytical_capacity'):policy.experiment(invalid)
+        invalid=copy.deepcopy(legacy);invalid['analytical_feedback']['grid_capacity']=16
+        with self.assertRaisesRegex(ValueError,'analytical_feedback'):policy.experiment(invalid)
+        with self.assertRaisesRegex(ValueError,'analytical_grids'):
+            analytical.validate_grids({**spec,'grid_capacity':16,'grids':[{'counts_xyz':[n,3,2],'cells_per_metre':16} for n in range(2,19)]})
+        with self.assertRaisesRegex(ValueError,'analytical_cache'):
+            analytical.validate_grids({**spec,'grid_capacity':16,'grids':eleven,'cache_max_bytes':1})
+
+
 if __name__=='__main__':unittest.main()

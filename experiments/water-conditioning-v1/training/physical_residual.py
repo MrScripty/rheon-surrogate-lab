@@ -108,7 +108,7 @@ def build_inputs(residual,base,h,rho,dt,normalization,owner):
     return values
 
 
-def predict_pressure(network,sample,normalization,owner,correction):
+def predict_pressure(network,sample,normalization,owner,correction,intermediates=None):
     base=sample['base'];initial=sample['native_input_residual'];pressure=base.clone()
     for step in range(correction['steps']):
         residual=initial if step==0 else initial-owner.full_operator(pressure-base,sample['cell_size_m'],sample['rho'])
@@ -120,6 +120,7 @@ def predict_pressure(network,sample,normalization,owner,correction):
                 and bool(torch.isfinite(raw).all()),'residual_output','finite f32 same-grid correction')
         delta=owner.frozen.gauge_correction(raw,scales(normalization)[normalization.get('output_scale','pressure')])
         pressure=pressure.clone().index_copy(0,selected,pressure.index_select(0,selected)+delta)
+        if intermediates is not None:intermediates.append(pressure)
     return pressure
 
 
@@ -147,3 +148,18 @@ def pressure_loss(prediction,sample,normalization,owner,objective='canonical'):
     maximum=residual.flatten(1).abs().amax(1).square()/(denominator/cells)
     w=LOSS_WEIGHTS
     return w['relative_correction_mse']*correction_error+w['relative_correction_gradient_mse']*gradient_error/gradient_norm.clamp_min(floor)+w['relative_equation_mse']*equation+w['relative_equation_max_squared']*maximum
+
+
+INTERMEDIATE_CONTRACTION_WEIGHT=.1
+
+
+def intermediate_contraction(pressures,sample,owner):
+    """Mean squared residual contraction on nonfinal training corrections."""
+    initial=sample['native_input_residual']
+    denominator=initial.flatten(1).square().sum(1)
+    terms=[]
+    for pressure in pressures:
+        residual=initial-owner.full_operator(pressure-sample['base'],sample['cell_size_m'],sample['rho'])
+        ratio=residual.flatten(1).square().sum(1)/denominator.clamp_min(torch.finfo(torch.float64).tiny)
+        terms.append(torch.where(denominator>0,ratio,torch.zeros_like(ratio)))
+    return torch.stack(terms).mean(0) if terms else torch.zeros_like(denominator)

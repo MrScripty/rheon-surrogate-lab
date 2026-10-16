@@ -108,4 +108,56 @@ class Residual(unittest.TestCase):
         torch.testing.assert_close(numeric,expected,rtol=1e-6,atol=1e-8)
 
 
+
+    def test_intermediate_feedback_value_zero_case_and_gradient(self):
+        import physical_residual
+        sample=self.sample;delta=sample['reference']-sample['base']
+        half=(sample['base']+delta*.5).requires_grad_(True)
+        value=physical_residual.intermediate_contraction([half],sample,model.owner)
+        torch.testing.assert_close(value,torch.full_like(value,.25),rtol=2e-15,atol=1e-15)
+        gradient,=torch.autograd.grad(value.sum(),half)
+        direction=torch.cos(torch.arange(half.numel(),dtype=torch.float64)).reshape_as(half)
+        direction/=torch.linalg.vector_norm(direction);epsilon=1e-5
+        numeric=(physical_residual.intermediate_contraction([half.detach()+epsilon*direction],sample,model.owner)
+                 -physical_residual.intermediate_contraction([half.detach()-epsilon*direction],sample,model.owner)).sum()/(2*epsilon)
+        torch.testing.assert_close(numeric,(gradient*direction).sum(),rtol=1e-6,atol=1e-9)
+        zero={**sample,'native_input_residual':torch.zeros_like(delta)}
+        self.assertEqual(float(physical_residual.intermediate_contraction([],zero,model.owner).sum()),0.)
+        self.assertEqual(float(physical_residual.intermediate_contraction([zero['base']],zero,model.owner).sum()),0.)
+
+    def test_training_loss_preserves_legacy_values_gradients_and_inference(self):
+        import analytical
+        config=policy.decode(policy.read(policy.LAB/'experiments/water-conditioning-v1/configs/multigrid-cohort16-1pass.json'))
+        config['correction']['steps']=2;model.select(config)
+        torch.manual_seed(47);network=model.PressureCorrectionNet()
+        predicted=model.predict_pressure(network,self.sample,self.norm)
+        expected=model.pressure_loss(predicted,self.sample,self.norm).mean();expected.backward()
+        gradients=[p.grad.clone() for p in network.parameters()]
+        network.zero_grad(set_to_none=True);actual=model.training_loss(network,self.sample,self.norm).mean()
+        self.assertTrue(torch.equal(actual,expected));actual.backward()
+        self.assertTrue(all(torch.equal(p.grad,g) for p,g in zip(network.parameters(),gradients)))
+        criterion=lambda p:analytical.loss(p,self.sample,model.full_operator)
+        network.zero_grad(set_to_none=True)
+        expected_analytical=criterion(model.predict_pressure(network,self.sample,self.norm))
+        expected_analytical.backward();analytical_gradients=[p.grad.clone() for p in network.parameters()]
+        network.zero_grad(set_to_none=True)
+        actual_analytical=model.training_loss(network,self.sample,self.norm,criterion=criterion).mean()
+        self.assertTrue(torch.equal(actual_analytical,expected_analytical));actual_analytical.backward()
+        self.assertTrue(all(torch.equal(p.grad,g) for p,g in zip(network.parameters(),analytical_gradients)))
+        config['schema']='rheon-water-residual-experiment-v6';config['analytical_feedback']['grid_capacity']=16
+        model.select(config);self.assertTrue(torch.equal(model.predict_pressure(network,self.sample,self.norm),predicted))
+        config['objective']='canonical-intermediate-contraction';policy.experiment(config);model.select(config)
+        self.assertTrue(torch.equal(model.predict_pressure(network,self.sample,self.norm),predicted))
+        changed=model.training_loss(network,self.sample,self.norm).mean()
+        self.assertGreater(float(changed.detach()),float(expected.detach()))
+        network.zero_grad(set_to_none=True);changed.backward()
+        self.assertTrue(all(torch.isfinite(p.grad).all() for p in network.parameters()))
+        criterion=lambda p:analytical.loss(p,self.sample,model.full_operator)
+        final=criterion(model.predict_pressure(network,self.sample,self.norm))
+        feedback=model.training_loss(network,self.sample,self.norm,criterion=criterion).mean()
+        self.assertGreater(float(feedback.detach()),float(final.detach()))
+        config['correction']['steps']=1
+        with self.assertRaisesRegex(ValueError,'residual_objective'):policy.experiment(config)
+
+
 if __name__=='__main__':unittest.main()

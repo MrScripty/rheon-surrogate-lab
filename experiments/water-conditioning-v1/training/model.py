@@ -26,7 +26,7 @@ def select(config):
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
-    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5'):
+    if config['schema'] in ('rheon-water-residual-experiment-v1','rheon-water-residual-experiment-v2','rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
         import physical_residual
         SELECTED='physical-residual';NORMALIZATION='none';CORRECTION=config['correction']
         ARCHITECTURE.clear();ARCHITECTURE.update(copy.deepcopy(owner.ARCHITECTURE))
@@ -38,10 +38,14 @@ def select(config):
             reconstruction='float32 raw times train pressure RMS, cell-zero gauge, add supplied base',
             initialization='retain original first-convolution residual column and all surviving seeded tensors',
             restrictions='uniform-density cubic sealed Neumann operator; no independently specified geometry masks')
-        if OBJECTIVE!='canonical':
+        if OBJECTIVE=='canonical-intermediate-contraction':
+            ARCHITECTURE.update(training_objective=OBJECTIVE,
+                intermediate_feedback={'relative_equation_weight':physical_residual.INTERMEDIATE_CONTRACTION_WEIGHT,
+                                       'stages':'all nonfinal corrections; real and analytical train samples'})
+        elif OBJECTIVE!='canonical':
             ARCHITECTURE.update(training_objective=OBJECTIVE,
                 loss_weights=copy.deepcopy(physical_residual.LOSS_WEIGHTS))
-        if config['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5'):
+        if config['schema'] in ('rheon-water-residual-experiment-v3','rheon-water-residual-experiment-v4','rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
             ARCHITECTURE.update(output_scale=OUTPUT_SCALE,
                 reconstruction='float32 raw times selected train-only RMS, cell-zero gauge, add supplied base',
                 analytical_training_feedback=copy.deepcopy(config['analytical_feedback']))
@@ -133,4 +137,18 @@ def predict_pressure(network,sample,normalization):
 def pressure_loss(prediction,sample,normalization):
     if CORRECTION is None:return owner.pressure_loss(prediction,sample,normalization)
     import physical_residual
-    return physical_residual.pressure_loss(prediction,sample,normalization,owner,OBJECTIVE)
+    return physical_residual.pressure_loss(prediction,sample,normalization,owner,
+        'canonical' if OBJECTIVE=='canonical-intermediate-contraction' else OBJECTIVE)
+
+
+def training_loss(network,sample,normalization,criterion=None):
+    """Own intermediate feedback; ordinary inference still returns only pressure."""
+    if OBJECTIVE!='canonical-intermediate-contraction':
+        prediction=predict_pressure(network,sample,normalization)
+        return pressure_loss(prediction,sample,normalization) if criterion is None else criterion(prediction)
+    import physical_residual
+    pressures=[]
+    prediction=physical_residual.predict_pressure(network,sample,normalization,owner,CORRECTION,pressures)
+    final=pressure_loss(prediction,sample,normalization) if criterion is None else criterion(prediction)
+    intermediate=physical_residual.intermediate_contraction(pressures[:-1],sample,owner)
+    return final+physical_residual.INTERMEDIATE_CONTRACTION_WEIGHT*intermediate

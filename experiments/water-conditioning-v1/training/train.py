@@ -69,7 +69,7 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
             parent,slot=indices[position]
             loss=prepared[(int(parent),int(slot))].loss(network).mean()
         else:
-            loss = model.pressure_loss(model.predict_pressure(network, sample, normalization), sample, normalization).mean()
+            loss = model.training_loss(network, sample, normalization).mean()
         require(bool(torch.isfinite(loss)), 'training_nonfinite', 'per-frame loss')
         if loss.requires_grad:
             (loss/len(samples)).backward()
@@ -78,7 +78,8 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
         losses.append(float(loss.detach()))
     if analytical_sample is not None:
         import analytical
-        extra=analytical.loss(model.predict_pressure(network,analytical_sample,normalization),analytical_sample,model.full_operator)
+        extra=model.training_loss(network,analytical_sample,normalization,
+            criterion=lambda prediction:analytical.loss(prediction,analytical_sample,model.full_operator)).mean()
         require(bool(torch.isfinite(extra)), 'training_nonfinite', 'analytical feedback')
         (analytical_weight*extra).backward()
         extra_value=float(extra.detach())*analytical_weight
@@ -241,7 +242,7 @@ def run(args):
         feedback=config.get('analytical_feedback')
         if feedback is not None and feedback['weight']>0:
             import analytical
-            if config['schema']=='rheon-water-residual-experiment-v5':
+            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6'):
                 require(cache,'analytical_training','resident actual training states required')
                 amplitude=analytical.training_correction_rms(cache.values())
                 analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'],amplitude_pa=amplitude)

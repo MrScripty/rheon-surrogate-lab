@@ -90,7 +90,9 @@ def loss(prediction,sample,operator):
 def validate_grids(specification):
     """Own uniform-grid sampling and a hard resident tensor budget."""
     grids=specification['grids']
-    require(type(grids) is list and 1<=len(grids)<=8,'analytical_grids','one to eight explicit grids')
+    capacity=specification.get('grid_capacity',8)
+    require(type(capacity) is int and capacity in (8,16),'analytical_capacity','supported explicit grid capacity')
+    require(type(grids) is list and 1<=len(grids)<=capacity,'analytical_grids','grid count exceeds selected capacity')
     require(specification['sampling']=='uniform-balanced-grid',
         'analytical_sampling','equal grid exposure, shuffled independently of real frames')
     seen=set();cells=0
@@ -148,6 +150,8 @@ def bank(template,specification,updates,amplitude_pa=None):
     if 'amplitude_reference' in specification:
         evidence.update(amplitude_reference=specification['amplitude_reference'],amplitude_rms_pa=amplitude,
             source='all real train cell-state correction RMS; explicit grids and common water density/timestep')
+    if 'grid_capacity' in specification:
+        evidence.update(schema='rheon-analytical-feedback-v3',grid_capacity=specification['grid_capacity'])
     return samples,order,evidence
 
 

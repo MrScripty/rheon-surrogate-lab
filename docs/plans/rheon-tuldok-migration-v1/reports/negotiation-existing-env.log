@@ -1,0 +1,203 @@
+test_actual_legacy_projection_unchanged_with_additions_and_mutated_live_metadata (test_agent_negotiation.ContractSelectionTests.test_actual_legacy_projection_unchanged_with_additions_and_mutated_live_metadata) ... ok
+test_addition_and_one_incompatible_operation_preserve_unrelated_intersections (test_agent_negotiation.ContractSelectionTests.test_addition_and_one_incompatible_operation_preserve_unrelated_intersections) ... ERROR
+test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) ...
+  test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=401, value={'error': 'Revoked.', 'code': 'unauthenticated'}) ... ERROR
+  test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=403, value={'error': 'Denied.', 'code': 'forbidden'}) ... ERROR
+  test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=500, value={'error': 'Unavailable.', 'code': 'storage'}) ... ERROR
+  test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=404, value={'error': 'Catalog missing.', 'code': 'not_found'}) ... ERROR
+  test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=405, value={'error': 'Unexpected.'}) ... ERROR
+  test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=200, value={'ok': True}) ... ERROR
+test_bounded_malformed_catalog_versions_and_digest_schema_contradiction (test_agent_negotiation.ContractSelectionTests.test_bounded_malformed_catalog_versions_and_digest_schema_contradiction) ... ERROR
+test_new_client_uses_definite_legacy_fallback (test_agent_negotiation.ContractSelectionTests.test_new_client_uses_definite_legacy_fallback) ... ERROR
+test_new_only_routes_require_contract_and_select_highest_exact_local_version (test_agent_negotiation.ContractSelectionTests.test_new_only_routes_require_contract_and_select_highest_exact_local_version) ... ERROR
+test_request_projection_rejects_wrong_route_query_injection_and_extra_body (test_agent_negotiation.ContractSelectionTests.test_request_projection_rejects_wrong_route_query_injection_and_extra_body) ... ok
+test_schema_prose_does_not_change_contract_but_same_named_data_fields_do (test_agent_negotiation.ContractSelectionTests.test_schema_prose_does_not_change_contract_but_same_named_data_fields_do) ... ok
+test_unknown_operations_still_require_valid_closed_schema_and_bounded_metadata (test_agent_negotiation.ContractSelectionTests.test_unknown_operations_still_require_valid_closed_schema_and_bounded_metadata) ... FAIL
+
+======================================================================
+ERROR: test_addition_and_one_incompatible_operation_preserve_unrelated_intersections (test_agent_negotiation.ContractSelectionTests.test_addition_and_one_incompatible_operation_preserve_unrelated_intersections)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 64, in test_addition_and_one_incompatible_operation_preserve_unrelated_intersections
+    selected = api.negotiate(value, CATALOG)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/agent_api.py", line 811, in negotiate
+    _validator(item['input_schema'])
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/agent_api.py", line 979, in _validator
+    raise AgentAPIError('Install the documented base JSON Schema dependency.', 'dependency_missing', 503) from None
+agent_api.AgentAPIError: Install the documented base JSON Schema dependency.
+
+======================================================================
+ERROR: test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=401, value={'error': 'Revoked.', 'code': 'unauthenticated'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 123, in test_auth_server_malformed_and_ambiguous_missing_do_not_fallback
+    with self.subTest(status=status, value=value), legacy_stub(capabilities=(status,value)) as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=403, value={'error': 'Denied.', 'code': 'forbidden'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 123, in test_auth_server_malformed_and_ambiguous_missing_do_not_fallback
+    with self.subTest(status=status, value=value), legacy_stub(capabilities=(status,value)) as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=500, value={'error': 'Unavailable.', 'code': 'storage'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 123, in test_auth_server_malformed_and_ambiguous_missing_do_not_fallback
+    with self.subTest(status=status, value=value), legacy_stub(capabilities=(status,value)) as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=404, value={'error': 'Catalog missing.', 'code': 'not_found'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 123, in test_auth_server_malformed_and_ambiguous_missing_do_not_fallback
+    with self.subTest(status=status, value=value), legacy_stub(capabilities=(status,value)) as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=405, value={'error': 'Unexpected.'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 123, in test_auth_server_malformed_and_ambiguous_missing_do_not_fallback
+    with self.subTest(status=status, value=value), legacy_stub(capabilities=(status,value)) as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_auth_server_malformed_and_ambiguous_missing_do_not_fallback (test_agent_negotiation.ContractSelectionTests.test_auth_server_malformed_and_ambiguous_missing_do_not_fallback) (status=200, value={'ok': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 123, in test_auth_server_malformed_and_ambiguous_missing_do_not_fallback
+    with self.subTest(status=status, value=value), legacy_stub(capabilities=(status,value)) as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_bounded_malformed_catalog_versions_and_digest_schema_contradiction (test_agent_negotiation.ContractSelectionTests.test_bounded_malformed_catalog_versions_and_digest_schema_contradiction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 79, in test_bounded_malformed_catalog_versions_and_digest_schema_contradiction
+    self.assertNotIn(value['operations'][0]['id'], api.negotiate(value,CATALOG))
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/agent_api.py", line 811, in negotiate
+    _validator(item['input_schema'])
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/agent_api.py", line 979, in _validator
+    raise AgentAPIError('Install the documented base JSON Schema dependency.', 'dependency_missing', 503) from None
+agent_api.AgentAPIError: Install the documented base JSON Schema dependency.
+
+======================================================================
+ERROR: test_new_client_uses_definite_legacy_fallback (test_agent_negotiation.ContractSelectionTests.test_new_client_uses_definite_legacy_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 111, in test_new_client_uses_definite_legacy_fallback
+    with legacy_stub() as (endpoint,calls):
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_api.py", line 195, in server
+    httpd = ThreadingHTTPServer(('127.0.0.1', 0), Handler)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socketserver.py", line 453, in __init__
+    self.socket = socket.socket(self.address_family,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 233, in __init__
+    _socket.socket.__init__(self, family, type, proto, fileno)
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_new_only_routes_require_contract_and_select_highest_exact_local_version (test_agent_negotiation.ContractSelectionTests.test_new_only_routes_require_contract_and_select_highest_exact_local_version)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 137, in test_new_only_routes_require_contract_and_select_highest_exact_local_version
+    self.assertEqual(api.negotiate(original,CATALOG)['context.get'],1)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/agent_api.py", line 811, in negotiate
+    _validator(item['input_schema'])
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/agent_api.py", line 979, in _validator
+    raise AgentAPIError('Install the documented base JSON Schema dependency.', 'dependency_missing', 503) from None
+agent_api.AgentAPIError: Install the documented base JSON Schema dependency.
+
+======================================================================
+FAIL: test_unknown_operations_still_require_valid_closed_schema_and_bounded_metadata (test_agent_negotiation.ContractSelectionTests.test_unknown_operations_still_require_valid_closed_schema_and_bounded_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/tests/test_agent_negotiation.py", line 164, in test_unknown_operations_still_require_valid_closed_schema_and_bounded_metadata
+    self.assertEqual(error.exception.code,'capabilities_invalid')
+AssertionError: 'dependency_missing' != 'capabilities_invalid'
+- dependency_missing
++ capabilities_invalid
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.379s
+
+FAILED (failures=1, errors=10)

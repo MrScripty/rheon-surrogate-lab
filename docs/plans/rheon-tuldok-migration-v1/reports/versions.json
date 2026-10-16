@@ -1,0 +1,78 @@
+{
+  "observed_utc": "2026-10-16T23:12:59.228311+00:00",
+  "scope": "Source assessment, explicit fetch/pull and isolated checkout; no catalog or running-service migration",
+  "github_targets": {
+    "Rheon": {
+      "head": "43ed26b645dd42de906d0fac7d1ec7d5ab6e351a",
+      "branch": "main",
+      "status": "M .gitignore\n M README.md\n M docs/api/recording.md\n M src/bin/desktop/README.md\n M src/bin/desktop/archive_view.rs\n M src/bin/desktop/history.rs\n M src/bin/desktop/inspector.rs\n M src/bin/desktop/particle_view.rs\n M src/bin/desktop/viewport.rs\n M src/bin/rheon-desktop.rs\n M src/particle_fluid.rs\n M src/recording.rs\n M src/simulation.rs\n M tests/recording_contract.rs\n?? docs/README.md\n?? docs/frontend.md\n?? docs/research/\n?? docs/standards.md",
+      "origin_main": "bc2f472787060d9a69cb619ed2c2fea10fd754b6",
+      "head_vs_origin_main": "0\t150"
+    },
+    "Tuldok": {
+      "head": "300f12df6f48e028fd9379911703f7c89337952a",
+      "branch": "main",
+      "status": "",
+      "origin_main": "300f12df6f48e028fd9379911703f7c89337952a",
+      "head_vs_origin_main": "0\t0"
+    }
+  },
+  "lab": {
+    "assessment_base": "03c05e82383ce0a18ded838803ce1f8f4ea1cd09",
+    "model_lineage_branch": "experiment/water-pressure-recovery-v1",
+    "model_lineage_head": "154826620d26a7dd6c785d36eb7fa33b76463b41",
+    "assessment_branch": "plan/rheon-tuldok-migration-20261016",
+    "origin_main": "03c05e82383ce0a18ded838803ce1f8f4ea1cd09"
+  },
+  "live_sources": {
+    "Tuldok": {
+      "head": "d3514c60d36c978cefefee14bca6ecdb65b3d86e",
+      "branch": "feat/managed-torch-cuda",
+      "status": "",
+      "origin_main": "300f12df6f48e028fd9379911703f7c89337952a",
+      "head_vs_origin_main": "4\t432"
+    },
+    "Rheon_viewer": {
+      "head": "a15e160feddeefb1d2b0718b4012405495107f61",
+      "branch": "feat/live-experiment-view",
+      "status": "M src/bin/desktop/README.md\n M src/bin/desktop/live_project.rs",
+      "origin_main": "bc2f472787060d9a69cb619ed2c2fea10fd754b6",
+      "head_vs_origin_main": "1\t150"
+    },
+    "Rheon_rollout_engine": {
+      "head": "0fbadbe733b5b521e192dc8a2aa980d6d69a1e01",
+      "branch": "integration/ai-pressure-comparison-20261015",
+      "status": "",
+      "origin_main": "bc2f472787060d9a69cb619ed2c2fea10fd754b6",
+      "head_vs_origin_main": "4\t150"
+    }
+  },
+  "catalog": {
+    "id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "schema_version": 8,
+    "target_schema_version": 10,
+    "projects": 120,
+    "runs": 160,
+    "states": {
+      "completed": 158,
+      "interrupted": 1,
+      "failed": 1
+    },
+    "observation": "Read through current Metadata using the running-service connection; no mutations"
+  },
+  "service": {
+    "pid": 11464,
+    "source": "runs/live-integration/Tuldok/app.py",
+    "environment": "Primary Tuldok .venv; not updated or reinstalled"
+  },
+  "isolation": {
+    "Rheon_path": "runs/dependency-migration-v1/Rheon",
+    "head": "bc2f472787060d9a69cb619ed2c2fea10fd754b6",
+    "outcome": "retained-protected",
+    "reachability": "retained-ref: primary Rheon origin/main at fetched target",
+    "owner": "migration task",
+    "purpose": "Source review and candidate qualification without editing dirty primary or historical runtime checkouts",
+    "next_disposition": "Retain for admitted migration; remove only after accepted integration with protected commit reachability and clean state"
+  },
+  "standards_snapshot": "snapshot:v1:d1f2bb97-7c56-430d-8687-e5dd5f78642c"
+}

@@ -21,8 +21,8 @@ def summarize(path):
             'median_first_relative_residual': statistics.median(c['first_relative_residual'] for c in cases),
             'worst_first_relative_residual': max(c['first_relative_residual'] for c in cases),
             'first_correction_increases_residual': sum(c['first_relative_residual'] > 1 for c in cases),
-            'median_successive_residual_ratio': statistics.median(ratios),
-            'maximum_successive_residual_ratio': max(ratios),
+            'median_successive_residual_ratio': statistics.median(ratios) if ratios else None,
+            'maximum_successive_residual_ratio': max(ratios) if ratios else None,
             'nondecreasing_successive_corrections': sum(r >= 1 for r in ratios),
             'successive_corrections': len(ratios),
             'mean_network_evaluations': statistics.mean(c['network_evaluations'] for c in cases)})

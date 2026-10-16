@@ -7,6 +7,9 @@ import sys
 
 from execution import LAB, command, read, utc, write
 
+sys.path.insert(0, str(LAB/'experiments/live-project-v1'))
+from observer import Observer, Watch
+
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -16,6 +19,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sequence', type=Path, required=True)
     parser.add_argument('--reports', type=Path, required=True)
+    parser.add_argument('--diagnostic-config', type=Path,
+                        help='Optional reused development diagnostic after frozen final evaluation')
     args = parser.parse_args()
     sequence = read(args.sequence)
     root = LAB/sequence['root']
@@ -66,10 +71,39 @@ def main():
         import json
         json.dump(selection, stream, indent=2, allow_nan=False)
         stream.write('\n')
-    for index, config in enumerate(configurations):
-        command([sys.executable, LAB/'experiments/water-multigrid-learning-v1/study.py',
-                 '--config', LAB/config['runtime'], '--output', root/f'final-holdout-{index}',
-                 '--workers', '8'], root, f'final-holdout-{index}')
+    observer = Observer(LAB/'runs/live-project')
+    def poll():
+        active = []
+        for path in root.glob('*/live/activity.json'):
+            if path.parent.parent.name.startswith('final-holdout-') or path.parent.parent.name == 'elongated-candidate':
+                value = read(path)
+                if value['state'] == 'running':
+                    active.append(value['message'])
+        observer.publish('Frozen candidate qualification', ' | '.join(active)[:1600]
+                         or 'Preparing native controls and matched independent model tracks')
+    try:
+        with Watch(poll):
+            for index, config in enumerate(configurations):
+                command([sys.executable, LAB/'experiments/water-multigrid-learning-v1/study.py',
+                         '--config', LAB/config['runtime'], '--output', root/f'final-holdout-{index}',
+                         '--workers', '8'], root, f'final-holdout-{index}')
+            if args.diagnostic_config:
+                study = read(args.diagnostic_config)
+                study['models'] = [model]
+                runtime = root/'elongated-candidate.study.json'
+                if runtime.exists():
+                    raise FileExistsError('diagnostic attempt already exists')
+                write(runtime, study)
+                command([sys.executable, LAB/'experiments/water-multigrid-learning-v1/study.py',
+                         '--config', runtime, '--output', root/'elongated-candidate',
+                         '--workers', '4'], root, 'elongated-candidate')
+    except BaseException:
+        observer.publish('Frozen candidate qualification failed',
+                         'Retain selection and attempts; inspect before any new execution', state='failed')
+        raise
+    observer.publish('Frozen candidate qualification complete',
+                     'Final and exploratory outcomes retained; no final-informed refit or reselection',
+                     state='completed')
     print('Final comparisons complete for frozen challenger', model['name'], flush=True)
 
 

@@ -1,12 +1,14 @@
 # Rheon Surrogate Lab
 
-The active [shape repeatability and correction-efficiency sequence](docs/plans/water-shape-repeatability-v1/plan.md)
-compares two new seeds and one-correction training on the same eight-grid bank.
-Its [execution ledger](docs/plans/water-shape-repeatability-v1/execution-ledger.md)
-retains methods, timings and outcomes; training uses CUDA and qualification uses CPU.
+The latest [shape repeatability and correction-efficiency experiments](docs/plans/water-shape-repeatability-v1/results.md)
+complete four CUDA fits and 25,000 updates. The frozen candidate improves familiar
+mean work 9.41→6.68 calls but passes 15/16 new simulations, versus 16/16 for the prior
+reference. The prior reference remains the qualified control. Full optimizer,
+pipeline and qualification [timings](docs/plans/water-shape-repeatability-v1/reports/timings.json)
+and failures are retained; [next experiments](docs/plans/water-shape-repeatability-v1/next-steps.md)
+target odd-grid convergence and robust selection.
 
-
-The latest [recurrence and generalization experiments](docs/plans/water-recurrence-generalization-v1/results.md)
+The earlier [recurrence and generalization experiments](docs/plans/water-recurrence-generalization-v1/results.md)
 complete five CUDA fits and 25,000 updates. The selected shape-feedback checkpoint
 passes all 16 untouched simulations and 1,808 AI steps, versus 11/16 simulations
 for the preceding reference. It uses fewer evaluations on the unseen population

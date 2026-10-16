@@ -10,3 +10,10 @@ Training uses CUDA; fresh checkpoint restore and qualification use CPU. Capture
 committed source before managed execution. Timed command records distinguish
 preparation, managed execution and CPU qualification from optimizer intervals.
 Concurrent CPU/GPU observations are throughput measurements, not isolated latency.
+
+CPU follow-up preparation retains audited32/64-parent cohort views and a
+three-grid elongated auxiliary bank. These are not current training inputs.
+configs/prepared-elongated-bank.json retains a rejected11-grid proposal;
+the existing trainer enforces at most8 grids. The supported auxiliary config
+is configs/prepared-elongated-auxiliary.json. Combining banks requires a new
+controlled trainer-contract decision. See the plan's issues and attempt receipts.

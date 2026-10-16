@@ -41,6 +41,9 @@ def main():
         baseline['populations'][name]['models'][reference['trial']]['qualified_scenes']
         == baseline['populations'][name]['models'][reference['trial']]['scenes']
         for name in ('fresh_development','long_development','prior_grids'))
+    reference_qualified = reference_qualified and all(
+        reference[name]['native']['float32_qualified'] == reference[name]['native']['cases']
+        for name in ('adaptive_fit','adaptive_development'))
     rows = [previous.comparison(sequence['reference']['name'], reference, fixed)]
     rows[0].update(managed_seconds=None, cpu_qualification_seconds=None,
                    all_development_qualified=reference_qualified)

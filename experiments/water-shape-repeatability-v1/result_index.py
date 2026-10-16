@@ -32,8 +32,12 @@ def main():
     definitions = {'fresh_development': ['fresh-drift.json'],
                    'prior_grids': ['prior-drift.json'], 'long_development': ['long-drift.json'],
                    'final_holdout': ['final-holdout-0-drift.json','final-holdout-1-drift.json']}
+    if (args.reports/'elongated-drift.json').exists():
+        definitions['exploratory_elongated'] = ['elongated-drift.json']
     populations = {name: population([args.reports/p for p in paths], studies)
                    for name,paths in definitions.items()}
+    if 'exploratory_elongated' in populations:
+        populations['exploratory_elongated']['selection_gate'] = False
     reference = read(args.reference_record)
     alias = sequence['reference']['name']
     for name in ('fresh_development','prior_grids','long_development'):
@@ -67,15 +71,46 @@ def main():
                 raise ValueError('callback work differs from retained summary')
             observed_final_steps += len(frames)
     native = [read(p) for p in root.glob('**/scene-*/*/receipt.json')]
+    if (root/'elongated-precision/receipt.json').exists():
+        native.append(read(root/'elongated-precision/receipt.json'))
     if not native or not all(r['native_process']['reaped'] and r['native_process']['returncode']==0 for r in native):
         raise ValueError('native trajectory lifecycle must drain')
+    timings = {str(p.relative_to(root)): read(p) for p in sorted(root.rglob('*-timing.json'))}
+    dispositions_path = args.reports/'attempt-dispositions.json'
+    dispositions = read(dispositions_path)['attempts'] if dispositions_path.exists() else {}
+    for name, timing in timings.items():
+        if not timing['child_reaped']:
+            raise ValueError('timed delegated child must reap')
+        if timing['status'] != 'completed':
+            disposition = dispositions.get(name)
+            if not (timing['status']=='failed' and disposition
+                    and disposition['classification']=='configuration_rejected'
+                    and disposition['timing_sha256']==digest(root/name)
+                    and disposition['configuration_sha256']==digest(LAB/disposition['configuration'])
+                    and disposition['optimizer_updates']==0
+                    and disposition['managed_runs_submitted']==0):
+                raise ValueError('incomplete attempt requires an explicit verified disposition')
+    capture = read(root/'capture.json')
+    last = max(datetime.fromisoformat(t['finished_at_utc']) for name,t in timings.items()
+               if name.startswith('final-holdout-') or name=='elongated-candidate-timing.json')
+    write(args.reports/'timings.json', {
+        'schema': 'rheon-shape-execution-timings-v1',
+        'capture_elapsed_seconds': capture['elapsed_seconds'],
+        'managed_and_qualification_sequence': read(root/'execution.json'),
+        'capture_to_last_evaluation_wall_seconds':
+            (last-datetime.fromisoformat(capture['started_at_utc'])).total_seconds(),
+        'last_evaluation_finished_at_utc': last.isoformat(), 'commands': timings,
+        'attempt_dispositions': dispositions,
+        'scope': 'command durations use monotonic clocks; workflow span uses UTC timestamps on this host; observations nest and overlap, so do not sum them; excludes preceding planning and subsequent review/documentation'})
     result = {'schema': 'rheon-shape-repeatability-result-index-v1', 'recorded_at_utc': utc(),
         'comparison_sha256': digest(args.reports/'comparison.json'), 'populations': populations,
+        'timings_sha256': digest(args.reports/'timings.json'),
         'development_reference_alias': {reference['trial']: alias},
         'final_selection_sha256': digest(args.reports/'final-selection.json'),
         'final_population_executed_after_selection': True, 'final_population_now_consumed': True,
         'actual_final_ai_observations_verified': observed_final_steps,
         'native_trajectory_children_exit_zero_reaped': len(native), 'study_sources': sources,
+        'source_sha256': {str(p.relative_to(LAB)): digest(p) for p in Path(__file__).parent.glob('*.py')},
         'deployment_changed': False,
         'scope': 'finite physical coverage with unchanged gates; CPU iterative inference, no isolated latency or universal convergence claim'}
     write(args.reports/'summary.json', result)

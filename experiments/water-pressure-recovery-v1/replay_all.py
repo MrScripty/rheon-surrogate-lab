@@ -17,15 +17,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path, required=True)
     parser.add_argument('--python', required=True)
+    parser.add_argument('--model', help='Run one declared model in its own output namespace')
     args = parser.parse_args()
     config = read(args.config)
+    models = config['models'] if args.model is None else {args.model:config['models'][args.model]}
     root = LAB/config.get('output_root','runs/water-pressure-recovery-v1/frontier')
+    if args.model:
+        root = root.with_name(root.name+'-'+args.model)
     root.mkdir(parents=True, exist_ok=False)
     reports = LAB/config.get('report_root','docs/plans/water-pressure-recovery-v1/reports/frontier')
+    if args.model:
+        reports = reports.with_name(reports.name+'-'+args.model)
     reports.mkdir(exist_ok=False)
     observer = Observer(LAB/'runs/live-project')
     started = time.perf_counter()
-    tasks = [(m, s) for s in config['samples'] for m in config['models']]
+    tasks = [(m, s) for s in config['samples'] for m in models]
     leased = Queue()
     for cpu in (4, 5):
         leased.put(cpu)

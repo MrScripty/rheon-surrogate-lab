@@ -34,7 +34,11 @@ def definition(config, sources, snapshot, mode, prefix):
 
 
 def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, configuration, direction_bank=None):
-    require(not subprocess.check_output(['git', 'status', '--porcelain'], cwd=LAB), 'source_commit', 'commit qualified experiment source before material capture')
+    require(not subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=no'], cwd=LAB), 'source_commit', 'commit qualified tracked experiment source before material capture')
+    # Unrelated untracked user documents do not participate in source custody.
+    relative_configuration = configuration.resolve().relative_to(LAB)
+    require(subprocess.check_output(['git', 'show', 'HEAD:'+relative_configuration.as_posix()], cwd=LAB)
+            == configuration.read_bytes(), 'source_commit', 'configuration must match committed source')
     packet_config, parents = data.read_view(packet)
     config = experiment(decode(read(configuration, MIB)))
     model.select(config)
@@ -45,7 +49,7 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     require(packet_receipt['status'] == 'verified_lossless_water_view' and packet_receipt['reader_source_sha256'] == sha(read(HERE/'data.py')), 'view_receipt', 'qualified current reader')
     inputs = data.inputs(packet)
     require(packet_receipt['inputs'] == {k: {'bytes': len(v), 'sha256': sha(v)} for k,v in inputs.items()}, 'view_receipt', 'exact complete training packet inputs')
-    if config['schema'] == 'rheon-water-residual-experiment-v8':
+    if config['schema'] in ('rheon-water-residual-experiment-v8', 'rheon-water-residual-experiment-v9'):
         require(direction_bank is not None, 'direction_input', 'explicit qualified paired-bank directory')
         direction_bank = direction_bank.absolute()
         inputs['direction_manifest'] = read(direction_bank/'manifest.json', 4*MIB)
@@ -53,7 +57,7 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
                 'direction_manifest', 'selected prequalified paired bank')
         inputs['direction_dataset'] = read(direction_bank/(config['direction_feedback']['stage']+'.npz'), 32*MIB)
     else:
-        require(direction_bank is None, 'direction_input', 'direction bank requires v8')
+        require(direction_bank is None, 'direction_input', 'direction bank requires v8 or v9')
     evaluations = {}; evaluation_parents = {}
     for population, directory in [('validation', validation), ('reserved_test', reserved)]:
         reservation, records = data.read_view(directory)
@@ -93,7 +97,7 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     qualification = {'status':'passed','optimizer_constructed':False,'optimizer_updates':0,'normalization_sha256':sha(canonical(normalization)),
         'grid_shapes_xyz':checked,'zero_residual_exact':True,'physical_cells':'cubic','train_parents':len(train_ids),'validation_parents':len(val_ids),'reserved_test_parents':len(test_ids),'output_projection_bytes':projection}
     sources = {name: read(HERE/name, 2*MIB) for name in ('policy.py','support.py','scenes.py','model.py','data.py','train.py','prepared.py','physical_residual.py','analytical.py','test_inference.py')}
-    if config['schema'] == 'rheon-water-residual-experiment-v8':
+    if config['schema'] in ('rheon-water-residual-experiment-v8', 'rheon-water-residual-experiment-v9'):
         sources['direction_feedback.py'] = read(HERE/'direction_feedback.py', MIB)
     for name,path in [('portable_model.py','experiments/cuda-pressure-v1/model.py'),('portable_policy.py','experiments/cuda-pressure-v1/policy.py'),
         ('frozen_gn.py','experiments/global-pressure-v1/groupnorm-v1/model.py'),('historical-reservation.json','docs/plans/global-pressure-correction-v1/reservation.json')]: sources[name] = read(LAB/path, MIB)

@@ -20,7 +20,7 @@ DATA = data.DATA
 
 
 def input_slots(config):
-    if config['schema'] == 'rheon-water-residual-experiment-v8':
+    if config['schema'] in ('rheon-water-residual-experiment-v8', 'rheon-water-residual-experiment-v9'):
         import direction_feedback
         return {**DATA, **direction_feedback.SLOTS}
     return DATA
@@ -263,7 +263,7 @@ def run(args):
         feedback=config.get('analytical_feedback')
         if feedback is not None and feedback['weight']>0:
             import analytical
-            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7','rheon-water-residual-experiment-v8'):
+            if config['schema'] in ('rheon-water-residual-experiment-v5','rheon-water-residual-experiment-v6','rheon-water-residual-experiment-v7','rheon-water-residual-experiment-v8','rheon-water-residual-experiment-v9'):
                 require(cache,'analytical_training','resident actual training states required')
                 amplitude=analytical.training_correction_rms(cache.values())
                 analytical_samples,analytical_order,analytical_evidence=analytical.bank(next(iter(cache.values())),feedback,config['training']['updates'],amplitude_pa=amplitude)

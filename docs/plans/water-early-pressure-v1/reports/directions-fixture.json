@@ -1,0 +1,235 @@
+{
+  "schema": "rheon-pressure-direction-bank-v1",
+  "created_at_utc": "2026-10-16T18:08:52.276333+00:00",
+  "source": {
+    "project": "runs/water-late-residual-v1/extra-late/project",
+    "artifacts": "runs/water-late-residual-v1/extra-late/managed-full/stage-01/artifacts",
+    "weights_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+    "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+    "source_witness_sha256": "ac8b7ae5a58782e46babc6c209c5e4991bfb1e300888bd8a04660e92c13f8cc9"
+  },
+  "packet_splits_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+  "train_trajectory_ids": [
+    "baseline--water-train-0000",
+    "baseline--water-train-0001",
+    "baseline--water-train-0002",
+    "baseline--water-train-0003",
+    "baseline--water-train-0004",
+    "baseline--water-train-0005",
+    "baseline--water-train-0006",
+    "baseline--water-train-0007",
+    "baseline--water-train-0008",
+    "baseline--water-train-0009",
+    "baseline--water-train-0010",
+    "baseline--water-train-0011",
+    "baseline--water-train-0012",
+    "baseline--water-train-0013",
+    "baseline--water-train-0014",
+    "baseline--water-train-0015"
+  ],
+  "amplitude_rms_pa": 2.8535734640782584,
+  "source_corrections": 8,
+  "configuration": {
+    "schema": "rheon-pressure-direction-preparation-v1",
+    "source": {
+      "project": "runs/water-late-residual-v1/extra-late/project",
+      "artifacts": "runs/water-late-residual-v1/extra-late/managed-full/stage-01/artifacts"
+    },
+    "packet": "runs/water-residual-learning-v1/views/cohort-16",
+    "patterns_per_grid": 8,
+    "source_amplitude_slot": 2,
+    "corrections": 8,
+    "minimum_late_ratio": 1e-12,
+    "workers": 4,
+    "output": "runs/water-early-pressure-v1/directions",
+    "parent_growth_bytes": 1073741824,
+    "worker_growth_bytes": 536870912,
+    "minimum_available_bytes": 8589934592,
+    "reports": "docs/plans/water-early-pressure-v1/reports",
+    "additional_grids": [
+      {
+        "counts_xyz": [
+          8,
+          12,
+          37
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          37,
+          8,
+          12
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          12,
+          37,
+          8
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          12,
+          8,
+          45
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          45,
+          12,
+          8
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          8,
+          45,
+          12
+        ],
+        "cells_per_metre": 16
+      }
+    ]
+  },
+  "cases": [
+    {
+      "identity": {
+        "kind": "real",
+        "group": "real",
+        "trajectory_id": "baseline--water-train-0000",
+        "frame": 15
+      },
+      "late_over_initial": 1.2716493558201258e-07,
+      "cpu_affinity": [
+        0
+      ],
+      "cuda_initialized": false,
+      "stages": {
+        "early": {
+          "gain": 1.3093891790833083,
+          "unscaled_correction_rms_pa": 2.179316516175901,
+          "scaled_correction_rms_pa": 2.853573464078259,
+          "operator_relative_error": 6.551137580786187e-15,
+          "removed_constant_over_residual": 5.2415364829719945e-18
+        },
+        "late": {
+          "gain": 1591993.3644224934,
+          "unscaled_correction_rms_pa": 1.7924531143466243e-06,
+          "scaled_correction_rms_pa": 2.8535734640782584,
+          "operator_relative_error": 2.8058294864148364e-14,
+          "removed_constant_over_residual": 5.919980933478938e-11
+        }
+      },
+      "homogeneity": [
+        {
+          "gain": 0.3,
+          "relative_error": 2.55964340587855e-06
+        },
+        {
+          "gain": 2.0,
+          "relative_error": 0.0
+        }
+      ],
+      "worker_peak_rss_bytes": 851755008,
+      "worker_pid": 5,
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "rho": 1000.0,
+      "dt": 0.016666666666666666,
+      "cell_size_m": 0.125
+    },
+    {
+      "identity": {
+        "kind": "manufactured",
+        "group": "primary-00",
+        "bank": "primary",
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            16,
+            16,
+            16
+          ]
+        },
+        "pattern": 0,
+        "amplitude_slot": 2
+      },
+      "late_over_initial": 7.064714130579012e-08,
+      "cpu_affinity": [
+        1
+      ],
+      "cuda_initialized": false,
+      "stages": {
+        "early": {
+          "gain": 2.0,
+          "unscaled_correction_rms_pa": 1.4267867320391292,
+          "scaled_correction_rms_pa": 2.8535734640782584,
+          "operator_relative_error": 1.3047885816504599e-14,
+          "removed_constant_over_residual": 5.963861418812859e-17
+        },
+        "late": {
+          "gain": 29933871.400892284,
+          "unscaled_correction_rms_pa": 9.532924845775871e-08,
+          "scaled_correction_rms_pa": 2.853573464078258,
+          "operator_relative_error": 1.3382498366451398e-14,
+          "removed_constant_over_residual": 6.842675788727686e-10
+        }
+      },
+      "homogeneity": [
+        {
+          "gain": 0.3,
+          "relative_error": 2.5304376640247768e-06
+        },
+        {
+          "gain": 2.0,
+          "relative_error": 0.0
+        }
+      ],
+      "worker_peak_rss_bytes": 851755008,
+      "worker_pid": 8,
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "rho": 1000.0,
+      "dt": 0.016666666666666666,
+      "cell_size_m": 0.0625
+    }
+  ],
+  "excluded": [],
+  "source_sha256": "acc2756ea0f7c9a2b2d915828039d8ecf2fd59eb67dfb4fd00c4ddd084d3e0a4",
+  "elapsed_seconds": 3.325254840001435,
+  "memory": {
+    "parent_address_space_limit_bytes": 4786401280,
+    "parent_growth_limit_bytes": 1073741824,
+    "worker_growth_limit_bytes": 536870912,
+    "parent_peak_rss_bytes": 851755008,
+    "available_bytes_at_start": 60117471232,
+    "workers": 2,
+    "bounded_submission_buffer": 4
+  },
+  "optimizer_updates": 0,
+  "scope": "frozen train-only extra pressure directions; not new CFD parents or inference inputs",
+  "stages": {
+    "early": {
+      "sha256": "876b6c8282b9d17ca280943af2d9e175c4aff220c5dc6d39a1ac1d2e0d55a201",
+      "bytes": 132142
+    },
+    "late": {
+      "sha256": "b78a9b8c4f4d3af9f3f71920737aa62cea9a42c1ce4f579c3af02bb3374be039",
+      "bytes": 132142
+    }
+  },
+  "manifest_sha256": "7d22f97f26b2b15ee7adac6191a6b4829fcc88710cc6b729b44d226c8163189e",
+  "output": "runs/water-early-pressure-v1/directions-fixture"
+}

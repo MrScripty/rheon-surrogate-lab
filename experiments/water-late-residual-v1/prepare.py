@@ -116,8 +116,12 @@ def main():
     selected = [({'kind': 'real', 'group': 'real', 'trajectory_id': p['entry']['trajectory_id'],
         'frame': p['frames'][i]['index']}, s) for p, i, s in samples]
     source_config = read(LAB/config['source']['project']/'config.json')
-    for bank_name, spec in [('primary', source_config['analytical_feedback']),
-                            ('supplemental', source_config['supplemental_feedback'])]:
+    banks = [('primary', source_config['analytical_feedback']),
+             ('supplemental', source_config['supplemental_feedback'])]
+    if config.get('additional_grids'):
+        banks.append(('long-axis-training', {**source_config['analytical_feedback'],
+                                           'grids': config['additional_grids']}))
+    for bank_name, spec in banks:
         for grid, detail in enumerate(spec['grids']):
             # First eight patterns are fixed in the canonical generator. Build
             # only one grid and its selected patterns, not all amplitude banks.
@@ -185,7 +189,7 @@ def main():
     report = {k: v for k, v in manifest.items() if k != 'stages'}
     report.update(stages={k: {n: v for n, v in value.items() if n != 'arrays'} for k, value in stages.items()},
         manifest_sha256=digest(output/'manifest.json'), output=str(output.relative_to(LAB)))
-    reports = LAB/'docs/plans/water-late-residual-v1/reports'
+    reports = LAB/config.get('reports', 'docs/plans/water-late-residual-v1/reports')
     report_name = (output.name if args.fixture else 'bank-preparation')+'.json'
     if (reports/report_name).exists():
         raise FileExistsError('report attempt already exists; preserve it and choose a fresh output')

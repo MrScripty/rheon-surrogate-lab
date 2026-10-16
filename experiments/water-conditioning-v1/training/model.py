@@ -19,13 +19,21 @@ NORMALIZATION='groupnorm'
 CORRECTION=None
 OBJECTIVE='canonical'
 OUTPUT_SCALE='previous-pressure-rms'
+FIRST_PRESSURE_WEIGHT=0.
 
 
 def select(config):
-    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE,OUTPUT_SCALE
+    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE,OUTPUT_SCALE,FIRST_PRESSURE_WEIGHT
+    FIRST_PRESSURE_WEIGHT=0.
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
+    if config['schema'] == 'rheon-water-residual-experiment-v9':
+        select({**{k: v for k, v in config.items() if k != 'first_pressure_weight'},
+                'schema': 'rheon-water-residual-experiment-v8'})
+        FIRST_PRESSURE_WEIGHT=config['first_pressure_weight']
+        ARCHITECTURE['first_correction_pressure_feedback_weight']=FIRST_PRESSURE_WEIGHT
+        return
     if config['schema'] == 'rheon-water-residual-experiment-v8':
         select({k: ('rheon-water-residual-experiment-v7' if k == 'schema' else v)
                 for k, v in config.items() if k != 'direction_feedback'})
@@ -158,4 +166,8 @@ def training_loss(network,sample,normalization,criterion=None):
     prediction=physical_residual.predict_pressure(network,sample,normalization,owner,CORRECTION,pressures)
     final=pressure_loss(prediction,sample,normalization) if criterion is None else criterion(prediction)
     intermediate=physical_residual.intermediate_contraction(pressures[:-1],sample,owner)
-    return final+physical_residual.INTERMEDIATE_CONTRACTION_WEIGHT*intermediate
+    result=final+physical_residual.INTERMEDIATE_CONTRACTION_WEIGHT*intermediate
+    if FIRST_PRESSURE_WEIGHT and pressures:
+        first=pressure_loss(pressures[0],sample,normalization) if criterion is None else criterion(pressures[0])
+        result=result+FIRST_PRESSURE_WEIGHT*first
+    return result

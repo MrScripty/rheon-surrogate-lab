@@ -1,4 +1,5 @@
 """Current experiment policy with captured immutable CUDA implementation sources."""
+import math
 from pathlib import Path
 from support import MIB, canonical, decode, fresh, load_module, read, require, sha, write
 HERE=Path(__file__).resolve().parent
@@ -15,6 +16,13 @@ dimensions=portable.dimensions
 
 def experiment(value):
     require(type(value) is dict,'conditioning_configuration','object required')
+    if value.get('schema') == 'rheon-water-residual-experiment-v9':
+        weight = value.get('first_pressure_weight')
+        require(type(weight) in (int, float) and math.isfinite(weight)
+                and 0 <= weight <= 1, 'first_pressure_weight', 'finite first-correction loss weight in [0,1]')
+        experiment({**{k: v for k, v in value.items() if k != 'first_pressure_weight'},
+                    'schema': 'rheon-water-residual-experiment-v8'})
+        return decode(canonical(value))
     if value.get('schema') == 'rheon-water-residual-experiment-v8':
         import direction_feedback
         require('direction_feedback' in value, 'direction_feedback', 'captured direction bank required')
@@ -121,6 +129,8 @@ def experiment(value):
 
 
 def execution(config):
+    if config['schema'] == 'rheon-water-residual-experiment-v9':
+        return execution({**config, 'schema': 'rheon-water-residual-experiment-v8'})
     if config['schema'] == 'rheon-water-residual-experiment-v8':
         return execution({**config, 'schema': 'rheon-water-residual-experiment-v7'})
     selected=config.get('execution',{'resident_inputs':False,'finite_checks':'per-tensor','batch_mode':'serial','profile_updates':0})

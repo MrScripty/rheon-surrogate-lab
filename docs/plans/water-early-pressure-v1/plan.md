@@ -66,20 +66,20 @@ No new subsystem or overlapping lifecycle authority. Two reviewable outcomes:
 source-qualified training contract, then measured comparison with retained results.
 
 Milestones:
-- M1 Active: qualify bank and training objective; gate independent labels,
+- M1 Accepted: qualify bank and training objective; gate independent labels,
   v8/weight0 loss+gradient parity, additive first-loss proof, real CUDA smoke and
   CPU checkpoint restore. Write set above; replan on lineage/resource/contract failure.
-- M2 Planned: matched full fits, explanatory CPU amplitude diagnostics and all74
+- M2 Active: matched full fits, explanatory CPU amplitude diagnostics and all74
   trajectories. Gate complete records including failures, unchanged physical
   thresholds, custody drained and children reaped. Improvement is reported separately.
 - M3 Planned: current serial timing and conditional fresh validation; gate frozen
   eligible selection or explicit fresh deferral; records sealed and reviewed.
 
-Acceptance: pending. Claims M1 source/numerics (automated CPU plus real CUDA/
+Acceptance: partial. Claims M1 source/numerics (automated CPU plus real CUDA/
 CPU restore), M2 full comparison (environment-qualified GPU/CPU), M3 retention and
-conditional validation (artifact/real CPU); all pending, reports/ owns evidence.
-Current phase: training preparation. Exactly one next slice: qualify bank/objective
-and real smoke before expanding CUDA fitting. Blockers: none.
+conditional validation (artifact/real CPU); M1 satisfied (reports/smoke-result.json and source-tests.json); M2/M3 pending.
+Current phase: matched CUDA fitting. Exactly one next slice: complete both frozen
+5000-update fits, CPU amplitude diagnostics and74-scene regression. Blockers: none.
 Replan on changed numerical semantics, invalid lineage, resource breach, unavailable
 custody, unreaped workers or evidence invalidating the admitted composition.
 Standards: snapshot:v1:10196c62-2edb-4466-a3c7-c3448f7bc2bc,16 policies,0 unresolved.

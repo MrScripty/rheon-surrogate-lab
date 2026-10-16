@@ -1,0 +1,1867 @@
+{
+  "status": "completed_and_drained",
+  "stages": [
+    {
+      "name": "train",
+      "run_id": "10bfdb9b698e4a36bbe09217808ddb50",
+      "state": "completed",
+      "custody_phase": "drained"
+    },
+    {
+      "name": "restore",
+      "run_id": "da1bba59d16d436482e06f6cc4ff58a9",
+      "state": "completed",
+      "custody_phase": "drained"
+    }
+  ],
+  "training_receipt": {
+    "architecture": {
+      "activation": "silu",
+      "analytical_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              16,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              24,
+              24
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              32,
+              32,
+              32
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              40,
+              40,
+              40
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              16,
+              12
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              17,
+              13,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              33,
+              17,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              9,
+              25,
+              13
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101507,
+        "weight": 0.1
+      },
+      "block_normalization": {
+        "name": "Identity"
+      },
+      "bottleneck_width": 48,
+      "channels": [
+        "dimensionless_laplacian_rhs"
+      ],
+      "conditioning": "physical-residual",
+      "convolutions_per_block": 2,
+      "coordinates": "implicit grid indices; no coordinate feature maps",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "counts_supported": "positive per-axis integers within cell budget",
+      "decoder_widths": [
+        32,
+        24,
+        16,
+        8
+      ],
+      "direction_training_feedback": {
+        "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+        "seed": 2026102701,
+        "stage": "late",
+        "weight": 0.1
+      },
+      "dtype": "float32",
+      "encoder_widths": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "first_correction_pressure_feedback_weight": 1.0,
+      "gauge": "subtract_first_correction_cell",
+      "global_path": "add_spatial_mean_broadcast",
+      "head": "linear_1x1x1",
+      "initialization": "retain original first-convolution residual column and all surviving seeded tensors",
+      "input_channels": 1,
+      "intermediate_feedback": {
+        "relative_equation_weight": 0.1,
+        "stages": "all nonfinal corrections; real and analytical train samples"
+      },
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "max_cells": 65536,
+      "output_scale": "previous-pressure-rms",
+      "padding": "replicate",
+      "physical_cells": "one scalar h per sample; no cell-size network channels",
+      "pool": "per-axis average, kernel=min(2,count), ceil, exclude padding",
+      "preprocessing": "q=(rho/h)*residual; q / train-only q RMS",
+      "pressure_dtype": "float64",
+      "reconstruction": "float32 raw times selected train-only RMS, cell-zero gauge, add supplied base",
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "schema": "rheon-physical-residual-pressure-v1",
+      "supplemental_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              23,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              23,
+              25,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              16,
+              23
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              10,
+              7,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              7,
+              25,
+              10
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              10,
+              7
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101607,
+        "source": "grids",
+        "weight": 0.1
+      },
+      "training_objective": "canonical-intermediate-contraction",
+      "upsampling": "nearest_to_skip_shape"
+    },
+    "cases": [
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 0,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0000"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          16,
+          10,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 1,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0001"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          7,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 2,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0002"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          15,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 4,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0004"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          11,
+          10,
+          6
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 5,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0005"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          8,
+          5,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 6,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0006"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          8,
+          9
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 8,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0008"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          6,
+          14,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 9,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0009"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 10,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0010"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          6,
+          13,
+          12
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 12,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0012"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          15,
+          15
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 13,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0013"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          14,
+          15,
+          7
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 15,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0015"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 16,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0000"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          16,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 21,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0005"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          8,
+          16,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 27,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0011"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          12,
+          13,
+          7
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 33,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0017"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          6,
+          5
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 38,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0022"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          13,
+          10,
+          11
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 44,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0028"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          5,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 50,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0034"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          8,
+          12
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 56,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0040"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          8,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 61,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0045"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          7,
+          9,
+          13
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 67,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0051"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          13,
+          15,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 73,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0057"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          7,
+          8,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 79,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0063"
+      }
+    ],
+    "closure": {
+      "experiment_sha256": "da919085fd5e603c774722023c4afc47818b6b07c33ce415cf829a95f6cf1a4f",
+      "inputs": {
+        "dataset": {
+          "bytes": 2820310,
+          "sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7"
+        },
+        "dataset_extra": {
+          "bytes": 2823990,
+          "sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 513808,
+          "sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06"
+        },
+        "reserved_test_dataset": {
+          "bytes": 2561142,
+          "sha256": "e5c8e6413db8a5f86ddf1b62a4727a8dae26be033cd3617c25bca716eca1ffb9"
+        },
+        "reserved_test_dataset_extra": {
+          "bytes": 2564086,
+          "sha256": "08ef42b15ebdf52e1d840163635bc15d340cfdfd5b6d9438cba66bc3981e4618"
+        },
+        "reserved_test_splits": {
+          "bytes": 339677,
+          "sha256": "45a0a51537c50de2680c47bc76dc3a6be3a5483c25e431ffd2e97cb1cb65d012"
+        },
+        "splits": {
+          "bytes": 411192,
+          "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42"
+        },
+        "validation_dataset": {
+          "bytes": 2209622,
+          "sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e"
+        },
+        "validation_dataset_extra": {
+          "bytes": 2212566,
+          "sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7"
+        },
+        "validation_splits": {
+          "bytes": 372865,
+          "sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "a9154509441d79c4e04991a43e4fcdf5ce96c0ae18c17a2b5f792afa97c1a69d",
+      "sample_order_sha256": "f137c1b9244c69befd532cde2486d4fe8b6f681deda0487b8e5757e0d09619ec",
+      "source_witness_sha256": "9ce4194471763960e412f64c46dcdd3082bf8e02435f41aca50e890163c58ed3"
+    },
+    "elapsed_s": 5.662871291999181,
+    "execution": {
+      "amp": false,
+      "batches_cuda": true,
+      "cuda_cpu_pressure_max_abs_difference": 2.9845510297832334e-05,
+      "deterministic_algorithms": true,
+      "device": "cuda:0",
+      "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+      "model_dtype": "float32",
+      "parameters_gradients_adam_moments_cuda": true,
+      "peak_allocated_bytes": 767402496,
+      "peak_reserved_bytes": 790626304,
+      "tf32": false
+    },
+    "mode": "train",
+    "optimizer_updates": 1,
+    "originating_training_run": null,
+    "outputs": {
+      "checkpoint-000.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713"
+      },
+      "checkpoint-001.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "c5da7d6dd2752756bb83f1584c254842ba1bad00b79154379fc5b984d13ac7b5"
+      },
+      "history.json": {
+        "bytes": 204325,
+        "role": "training_diagnostics",
+        "sha256": "696d7ae096609fe145da03f673e187c9341d3539c4c68e1536011f2ce407118d"
+      },
+      "normalization.json": {
+        "bytes": 6752,
+        "role": "preprocessing",
+        "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+      },
+      "predictions.npz": {
+        "bytes": 261606,
+        "role": "predictions",
+        "sha256": "a2d82bacc7b397adcd088b0e63c406b11d1beb196eba39e2f89d7be2c4a61141"
+      },
+      "profile.json": {
+        "bytes": 189,
+        "role": "training_diagnostics",
+        "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"
+      },
+      "splits.json": {
+        "bytes": 411192,
+        "role": "training_splits",
+        "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42"
+      },
+      "summary.json": {
+        "bytes": 974,
+        "role": "result_summary",
+        "sha256": "26243c9706131cdddbcafbbc5318c6bec705b6288af9e7b8688768384c61092a"
+      },
+      "weights.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "c5da7d6dd2752756bb83f1584c254842ba1bad00b79154379fc5b984d13ac7b5"
+      }
+    },
+    "per_case_inference_s": [
+      0.019295920999866212,
+      0.0035799959987343755,
+      0.004629854000086198,
+      0.0036337519995868206,
+      0.0027085399997304194,
+      0.0027659660008794162,
+      0.0033912480030267034,
+      0.0035805920015263837,
+      0.00743603999944753,
+      0.004053398999531055,
+      0.0048726339991844725,
+      0.004741323002235731,
+      0.011049936998460907,
+      0.00419127300119726,
+      0.006460035001509823,
+      0.004326630998548353,
+      0.00273409999863361,
+      0.005610530999547336,
+      0.003954242998588597,
+      0.004274481998436386,
+      0.004070988998137182,
+      0.004238899000483798,
+      0.007988565001141978,
+      0.0032244650028587785
+    ],
+    "prediction_inventory": {
+      "case_000": {
+        "bytes": 32768,
+        "dtype": "<f8",
+        "sha256": "c10903fd1a9200133150657e38a933d525b90366ee56ee25ca39a2f5e276c546",
+        "shape": [
+          16,
+          16,
+          16
+        ]
+      },
+      "case_001": {
+        "bytes": 7680,
+        "dtype": "<f8",
+        "sha256": "396efbb5c21af637b3a2230a7dd47692ae9cb9ebeea6db4f9dcf1e08abfba890",
+        "shape": [
+          6,
+          10,
+          16
+        ]
+      },
+      "case_002": {
+        "bytes": 8736,
+        "dtype": "<f8",
+        "sha256": "360fa71db1b4c7ae346d63dd3bfa50ed5e6036ead2864f66ebd0b24f81c482dc",
+        "shape": [
+          13,
+          7,
+          12
+        ]
+      },
+      "case_003": {
+        "bytes": 7200,
+        "dtype": "<f8",
+        "sha256": "c5d64cea85258e6bb0f221d73a6a7f95a9231170a597418473d7c1290475a435",
+        "shape": [
+          6,
+          15,
+          10
+        ]
+      },
+      "case_004": {
+        "bytes": 5280,
+        "dtype": "<f8",
+        "sha256": "46868fac2e9ccd382c90723c60257daa38ab54609513d8aad158de13e47cb14e",
+        "shape": [
+          6,
+          10,
+          11
+        ]
+      },
+      "case_005": {
+        "bytes": 2880,
+        "dtype": "<f8",
+        "sha256": "a3da970ee9f734c0c5c20537c9bb8ec1587d4d0d7e9ef889a93eb74988b4b3af",
+        "shape": [
+          9,
+          5,
+          8
+        ]
+      },
+      "case_006": {
+        "bytes": 6912,
+        "dtype": "<f8",
+        "sha256": "6cc421144dbed5332c40805d8912030a4ba48ed3649b0b1fb23866af9b5faf91",
+        "shape": [
+          9,
+          8,
+          12
+        ]
+      },
+      "case_007": {
+        "bytes": 6048,
+        "dtype": "<f8",
+        "sha256": "c38c22a01678705f56c7106b56eb81001c607304e9bf1eb251488443cdab68f5",
+        "shape": [
+          9,
+          14,
+          6
+        ]
+      },
+      "case_008": {
+        "bytes": 20480,
+        "dtype": "<f8",
+        "sha256": "1d373b53e9bcd210194104273a14874805a3f16d14e67bd0e1f2398508d0eaa1",
+        "shape": [
+          16,
+          16,
+          10
+        ]
+      },
+      "case_009": {
+        "bytes": 7488,
+        "dtype": "<f8",
+        "sha256": "65b728d269c79c72cc8bf4bb446ba128fb3252b2339ea78efa293cc017ea27e5",
+        "shape": [
+          12,
+          13,
+          6
+        ]
+      },
+      "case_010": {
+        "bytes": 9000,
+        "dtype": "<f8",
+        "sha256": "e5db8873f820422cef5fbc112b3a45f54e0ecc6b2d00b179ad422fe44e2972a2",
+        "shape": [
+          15,
+          15,
+          5
+        ]
+      },
+      "case_011": {
+        "bytes": 11760,
+        "dtype": "<f8",
+        "sha256": "73f47ef33642eb85fc2f098a7bf67144e40a513086c6e925e04a6cbc33380c40",
+        "shape": [
+          7,
+          15,
+          14
+        ]
+      },
+      "case_012": {
+        "bytes": 32768,
+        "dtype": "<f8",
+        "sha256": "dc42a5056b6c310f3815eed0732fd77a16228831370b56167fa99d2ce70aba1e",
+        "shape": [
+          16,
+          16,
+          16
+        ]
+      },
+      "case_013": {
+        "bytes": 5760,
+        "dtype": "<f8",
+        "sha256": "9f2eb9b8e63189c83baa6d27b1baf26bbc5f3ac606c0bf1af2604f11e68ee776",
+        "shape": [
+          9,
+          16,
+          5
+        ]
+      },
+      "case_014": {
+        "bytes": 13312,
+        "dtype": "<f8",
+        "sha256": "83085b3567c2d6bdb98e8d6db228264bd84b78f8b376a646902015f5a789bf46",
+        "shape": [
+          13,
+          16,
+          8
+        ]
+      },
+      "case_015": {
+        "bytes": 8736,
+        "dtype": "<f8",
+        "sha256": "606723b501e9e1863f473a5282af123a4bb24928ea01a2463c5705e1bd7d9518",
+        "shape": [
+          7,
+          13,
+          12
+        ]
+      },
+      "case_016": {
+        "bytes": 3840,
+        "dtype": "<f8",
+        "sha256": "507651c5a56f8ac214c7ae8a7e00b5832647b8a0a76dd317330398cb9f51e674",
+        "shape": [
+          5,
+          6,
+          16
+        ]
+      },
+      "case_017": {
+        "bytes": 11440,
+        "dtype": "<f8",
+        "sha256": "211448208b9bfd6a163003dbeda6dfc9ada7c3555a46b189c74392cdb8482829",
+        "shape": [
+          11,
+          10,
+          13
+        ]
+      },
+      "case_018": {
+        "bytes": 5200,
+        "dtype": "<f8",
+        "sha256": "7b1f0c3521fc827a1d5019ae4ec8d635a3ba8d34dbbdc5b5e965c0006b429abb",
+        "shape": [
+          13,
+          5,
+          10
+        ]
+      },
+      "case_019": {
+        "bytes": 7680,
+        "dtype": "<f8",
+        "sha256": "50f5579f2d0fd2eeaec52f27564272ece9c6fe2b1812dd3bc3896d94572f4152",
+        "shape": [
+          12,
+          8,
+          10
+        ]
+      },
+      "case_020": {
+        "bytes": 5120,
+        "dtype": "<f8",
+        "sha256": "616b59e62fbf493cf04ba48f1dc2d5f59e424c9736300d2c90640b49e1f01971",
+        "shape": [
+          16,
+          8,
+          5
+        ]
+      },
+      "case_021": {
+        "bytes": 6552,
+        "dtype": "<f8",
+        "sha256": "77a3c3b8ce9dfb6455b7ac15ca82c87102f82f25b4f10261ba3cd8781c99af9f",
+        "shape": [
+          13,
+          9,
+          7
+        ]
+      },
+      "case_022": {
+        "bytes": 24960,
+        "dtype": "<f8",
+        "sha256": "57dd350bc2caf8c49190a7b340eed6f461dbbb2edd3f07177e2d5022c679212e",
+        "shape": [
+          16,
+          15,
+          13
+        ]
+      },
+      "case_023": {
+        "bytes": 4032,
+        "dtype": "<f8",
+        "sha256": "9539ccaa96c808966aeb7f357979dfb3e863927e40e95afaa905d30f9f273c8e",
+        "shape": [
+          9,
+          8,
+          7
+        ]
+      }
+    },
+    "runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 2345431040,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "schema": "rheon-water-learning-training-v1",
+    "status": "complete"
+  },
+  "restore_receipt": {
+    "architecture": {
+      "activation": "silu",
+      "analytical_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              16,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              24,
+              24
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              32,
+              32,
+              32
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              40,
+              40,
+              40
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              16,
+              12
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              17,
+              13,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              33,
+              17,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              9,
+              25,
+              13
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101507,
+        "weight": 0.1
+      },
+      "block_normalization": {
+        "name": "Identity"
+      },
+      "bottleneck_width": 48,
+      "channels": [
+        "dimensionless_laplacian_rhs"
+      ],
+      "conditioning": "physical-residual",
+      "convolutions_per_block": 2,
+      "coordinates": "implicit grid indices; no coordinate feature maps",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "counts_supported": "positive per-axis integers within cell budget",
+      "decoder_widths": [
+        32,
+        24,
+        16,
+        8
+      ],
+      "direction_training_feedback": {
+        "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+        "seed": 2026102701,
+        "stage": "late",
+        "weight": 0.1
+      },
+      "dtype": "float32",
+      "encoder_widths": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "first_correction_pressure_feedback_weight": 1.0,
+      "gauge": "subtract_first_correction_cell",
+      "global_path": "add_spatial_mean_broadcast",
+      "head": "linear_1x1x1",
+      "initialization": "retain original first-convolution residual column and all surviving seeded tensors",
+      "input_channels": 1,
+      "intermediate_feedback": {
+        "relative_equation_weight": 0.1,
+        "stages": "all nonfinal corrections; real and analytical train samples"
+      },
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "max_cells": 65536,
+      "output_scale": "previous-pressure-rms",
+      "padding": "replicate",
+      "physical_cells": "one scalar h per sample; no cell-size network channels",
+      "pool": "per-axis average, kernel=min(2,count), ceil, exclude padding",
+      "preprocessing": "q=(rho/h)*residual; q / train-only q RMS",
+      "pressure_dtype": "float64",
+      "reconstruction": "float32 raw times selected train-only RMS, cell-zero gauge, add supplied base",
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "schema": "rheon-physical-residual-pressure-v1",
+      "supplemental_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              23,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              23,
+              25,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              16,
+              23
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              10,
+              7,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              7,
+              25,
+              10
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              10,
+              7
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101607,
+        "source": "grids",
+        "weight": 0.1
+      },
+      "training_objective": "canonical-intermediate-contraction",
+      "upsampling": "nearest_to_skip_shape"
+    },
+    "cases": [
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 0,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0000"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          16,
+          10,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 1,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0001"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          7,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 2,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0002"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          15,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 4,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0004"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          11,
+          10,
+          6
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 5,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0005"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          8,
+          5,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 6,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0006"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          8,
+          9
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 8,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0008"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          6,
+          14,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 9,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0009"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 10,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0010"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          6,
+          13,
+          12
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 12,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0012"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          15,
+          15
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 13,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0013"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          14,
+          15,
+          7
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 15,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0015"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 16,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0000"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          16,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 21,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0005"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          8,
+          16,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 27,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0011"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          12,
+          13,
+          7
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 33,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0017"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          6,
+          5
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 38,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0022"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          13,
+          10,
+          11
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 44,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0028"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          5,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 50,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0034"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          8,
+          12
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 56,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0040"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          8,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 61,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0045"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          7,
+          9,
+          13
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 67,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0051"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          13,
+          15,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 73,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0057"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          7,
+          8,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 79,
+        "split": "validation",
+        "trajectory_id": "baseline--water-validation-0063"
+      }
+    ],
+    "closure": {
+      "experiment_sha256": "da919085fd5e603c774722023c4afc47818b6b07c33ce415cf829a95f6cf1a4f",
+      "inputs": {
+        "dataset": {
+          "bytes": 2820310,
+          "sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7"
+        },
+        "dataset_extra": {
+          "bytes": 2823990,
+          "sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 513808,
+          "sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06"
+        },
+        "reserved_test_dataset": {
+          "bytes": 2561142,
+          "sha256": "e5c8e6413db8a5f86ddf1b62a4727a8dae26be033cd3617c25bca716eca1ffb9"
+        },
+        "reserved_test_dataset_extra": {
+          "bytes": 2564086,
+          "sha256": "08ef42b15ebdf52e1d840163635bc15d340cfdfd5b6d9438cba66bc3981e4618"
+        },
+        "reserved_test_splits": {
+          "bytes": 339677,
+          "sha256": "45a0a51537c50de2680c47bc76dc3a6be3a5483c25e431ffd2e97cb1cb65d012"
+        },
+        "splits": {
+          "bytes": 411192,
+          "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42"
+        },
+        "validation_dataset": {
+          "bytes": 2209622,
+          "sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e"
+        },
+        "validation_dataset_extra": {
+          "bytes": 2212566,
+          "sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7"
+        },
+        "validation_splits": {
+          "bytes": 372865,
+          "sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "a9154509441d79c4e04991a43e4fcdf5ce96c0ae18c17a2b5f792afa97c1a69d",
+      "sample_order_sha256": "f137c1b9244c69befd532cde2486d4fe8b6f681deda0487b8e5757e0d09619ec",
+      "source_witness_sha256": "9ce4194471763960e412f64c46dcdd3082bf8e02435f41aca50e890163c58ed3"
+    },
+    "elapsed_s": 2.5683597509996616,
+    "execution": {
+      "cuda_initialized": false,
+      "device": "cpu",
+      "optimizer_updates": 0
+    },
+    "mode": "restore",
+    "optimizer_updates": 0,
+    "originating_training_run": {
+      "attempt_id": "10bfdb9b698e4a36bbe09217808ddb50",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+      "custody_identity": {
+        "attempt_id": "10bfdb9b698e4a36bbe09217808ddb50",
+        "helper": {
+          "boot_id": "271ff446-e03d-49d2-b635-5deff9912e70",
+          "pid": 222209,
+          "start_ticks": "2991157"
+        },
+        "request_sha256": "099e4197124dacfd09cc82cfa61d7149ae41014252f73674f2c6999b8e2b790c",
+        "spec_sha256": "47ed85be35d05e87cb6f0dc448270cb6a94ce1a5925ec1ed6af4909b6573b13d"
+      },
+      "custody_receipt_base64": "eyJhdHRlbXB0X2lkIjoiMTBiZmRiOWI2OThlNGEzNmJiZTA5MjE3ODA4ZGRiNTAiLCJkcmFpbmVkIjp0cnVlLCJlY2hpbGQiOnRydWUsImdvX3JlY2VpdmVkIjp0cnVlLCJoZWxwZXIiOnsiYm9vdF9pZCI6IjI3MWZmNDQ2LWUwM2QtNDlkMi1iNjM1LTVkZWZmOTkxMmU3MCIsInBpZCI6MjIyMjA5LCJzdGFydF90aWNrcyI6IjI5OTExNTcifSwibGVhZGVyX3JldHVybmNvZGUiOjAsIm91dGNvbWUiOiJjb21wbGV0ZWQiLCJyZWFzb24iOiJleGl0ZWQiLCJyZXF1ZXN0X3NoYTI1NiI6IjA5OWU0MTk3MTI0ZGFjZmQwOWNjODJjZmE2MWQ3MTQ5YWU0MTAxNDI1MmY3MzY3NGYyYzY5OTliOGUyYjc5MGMiLCJzY2hlbWFfdmVyc2lvbiI6MSwic3Bhd25fY2xvc2VkIjp0cnVlLCJzcGVjX3NoYTI1NiI6IjQ3ZWQ4NWJlMzVkMDVlODdjYjZmMGRjNDQ4MjcwY2I2YTk0Y2UxYTU5MjVlYzFlZDZhZjQ5MDliNjU3M2IxM2QiLCJzdHJlYW1zIjp7InN0ZGVyciI6eyJieXRlcyI6MCwic2hhMjU2IjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9LCJzdGRvdXQiOnsiYnl0ZXMiOjU0NzksInNoYTI1NiI6IjVmM2NmYjY5ZjEyZTlmMjRjYTAzNzMyNTRhOWRkN2U0NzQ0NTYwMjUxODkxM2FhODgxNTlhNjliYzE3NDI1NWUifX19",
+      "custody_receipt_sha256": "46bbefe7667f1e01d0fe400356ea6f3922510615a48407fe1129d67d9336d60e",
+      "material_sha256": "4cbc3116018228cdad76fa9319489d8f28df549ae46f1219503924c65a620ce3",
+      "request_sha256": "099e4197124dacfd09cc82cfa61d7149ae41014252f73674f2c6999b8e2b790c",
+      "run_id": "10bfdb9b698e4a36bbe09217808ddb50"
+    },
+    "outputs": {
+      "checkpoint-000.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713"
+      },
+      "checkpoint-001.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "c5da7d6dd2752756bb83f1584c254842ba1bad00b79154379fc5b984d13ac7b5"
+      },
+      "history.json": {
+        "bytes": 204325,
+        "role": "training_diagnostics",
+        "sha256": "696d7ae096609fe145da03f673e187c9341d3539c4c68e1536011f2ce407118d"
+      },
+      "normalization.json": {
+        "bytes": 6752,
+        "role": "preprocessing",
+        "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+      },
+      "predictions.npz": {
+        "bytes": 261606,
+        "role": "predictions",
+        "sha256": "a2d82bacc7b397adcd088b0e63c406b11d1beb196eba39e2f89d7be2c4a61141"
+      },
+      "profile.json": {
+        "bytes": 189,
+        "role": "training_diagnostics",
+        "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"
+      },
+      "splits.json": {
+        "bytes": 411192,
+        "role": "training_splits",
+        "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42"
+      },
+      "summary.json": {
+        "bytes": 976,
+        "role": "result_summary",
+        "sha256": "8c8a7ffd1da05ac0dc40cac51fb2c5267cf497ec194f1fe058ccb0baac5f7d43"
+      },
+      "weights.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "c5da7d6dd2752756bb83f1584c254842ba1bad00b79154379fc5b984d13ac7b5"
+      }
+    },
+    "per_case_inference_s": [
+      0.018619778002175735,
+      0.0038183090000529774,
+      0.00498737299858476,
+      0.0038178070026333444,
+      0.0033157189973280765,
+      0.0031813360001251567,
+      0.004004327001894126,
+      0.0041405299998587,
+      0.008410648999415571,
+      0.004506094999669585,
+      0.004942433999531204,
+      0.004447498999070376,
+      0.009633047000534134,
+      0.0034808189993782435,
+      0.006212243999470957,
+      0.004436529998201877,
+      0.002788087000226369,
+      0.006007019997923635,
+      0.004494296001212206,
+      0.005087121000542538,
+      0.0053574129997286946,
+      0.005307609000738012,
+      0.010354753001593053,
+      0.003826332002063282
+    ],
+    "prediction_inventory": {
+      "case_000": {
+        "bytes": 32768,
+        "dtype": "<f8",
+        "sha256": "c10903fd1a9200133150657e38a933d525b90366ee56ee25ca39a2f5e276c546",
+        "shape": [
+          16,
+          16,
+          16
+        ]
+      },
+      "case_001": {
+        "bytes": 7680,
+        "dtype": "<f8",
+        "sha256": "396efbb5c21af637b3a2230a7dd47692ae9cb9ebeea6db4f9dcf1e08abfba890",
+        "shape": [
+          6,
+          10,
+          16
+        ]
+      },
+      "case_002": {
+        "bytes": 8736,
+        "dtype": "<f8",
+        "sha256": "360fa71db1b4c7ae346d63dd3bfa50ed5e6036ead2864f66ebd0b24f81c482dc",
+        "shape": [
+          13,
+          7,
+          12
+        ]
+      },
+      "case_003": {
+        "bytes": 7200,
+        "dtype": "<f8",
+        "sha256": "c5d64cea85258e6bb0f221d73a6a7f95a9231170a597418473d7c1290475a435",
+        "shape": [
+          6,
+          15,
+          10
+        ]
+      },
+      "case_004": {
+        "bytes": 5280,
+        "dtype": "<f8",
+        "sha256": "46868fac2e9ccd382c90723c60257daa38ab54609513d8aad158de13e47cb14e",
+        "shape": [
+          6,
+          10,
+          11
+        ]
+      },
+      "case_005": {
+        "bytes": 2880,
+        "dtype": "<f8",
+        "sha256": "a3da970ee9f734c0c5c20537c9bb8ec1587d4d0d7e9ef889a93eb74988b4b3af",
+        "shape": [
+          9,
+          5,
+          8
+        ]
+      },
+      "case_006": {
+        "bytes": 6912,
+        "dtype": "<f8",
+        "sha256": "6cc421144dbed5332c40805d8912030a4ba48ed3649b0b1fb23866af9b5faf91",
+        "shape": [
+          9,
+          8,
+          12
+        ]
+      },
+      "case_007": {
+        "bytes": 6048,
+        "dtype": "<f8",
+        "sha256": "c38c22a01678705f56c7106b56eb81001c607304e9bf1eb251488443cdab68f5",
+        "shape": [
+          9,
+          14,
+          6
+        ]
+      },
+      "case_008": {
+        "bytes": 20480,
+        "dtype": "<f8",
+        "sha256": "1d373b53e9bcd210194104273a14874805a3f16d14e67bd0e1f2398508d0eaa1",
+        "shape": [
+          16,
+          16,
+          10
+        ]
+      },
+      "case_009": {
+        "bytes": 7488,
+        "dtype": "<f8",
+        "sha256": "65b728d269c79c72cc8bf4bb446ba128fb3252b2339ea78efa293cc017ea27e5",
+        "shape": [
+          12,
+          13,
+          6
+        ]
+      },
+      "case_010": {
+        "bytes": 9000,
+        "dtype": "<f8",
+        "sha256": "e5db8873f820422cef5fbc112b3a45f54e0ecc6b2d00b179ad422fe44e2972a2",
+        "shape": [
+          15,
+          15,
+          5
+        ]
+      },
+      "case_011": {
+        "bytes": 11760,
+        "dtype": "<f8",
+        "sha256": "73f47ef33642eb85fc2f098a7bf67144e40a513086c6e925e04a6cbc33380c40",
+        "shape": [
+          7,
+          15,
+          14
+        ]
+      },
+      "case_012": {
+        "bytes": 32768,
+        "dtype": "<f8",
+        "sha256": "dc42a5056b6c310f3815eed0732fd77a16228831370b56167fa99d2ce70aba1e",
+        "shape": [
+          16,
+          16,
+          16
+        ]
+      },
+      "case_013": {
+        "bytes": 5760,
+        "dtype": "<f8",
+        "sha256": "9f2eb9b8e63189c83baa6d27b1baf26bbc5f3ac606c0bf1af2604f11e68ee776",
+        "shape": [
+          9,
+          16,
+          5
+        ]
+      },
+      "case_014": {
+        "bytes": 13312,
+        "dtype": "<f8",
+        "sha256": "83085b3567c2d6bdb98e8d6db228264bd84b78f8b376a646902015f5a789bf46",
+        "shape": [
+          13,
+          16,
+          8
+        ]
+      },
+      "case_015": {
+        "bytes": 8736,
+        "dtype": "<f8",
+        "sha256": "606723b501e9e1863f473a5282af123a4bb24928ea01a2463c5705e1bd7d9518",
+        "shape": [
+          7,
+          13,
+          12
+        ]
+      },
+      "case_016": {
+        "bytes": 3840,
+        "dtype": "<f8",
+        "sha256": "507651c5a56f8ac214c7ae8a7e00b5832647b8a0a76dd317330398cb9f51e674",
+        "shape": [
+          5,
+          6,
+          16
+        ]
+      },
+      "case_017": {
+        "bytes": 11440,
+        "dtype": "<f8",
+        "sha256": "211448208b9bfd6a163003dbeda6dfc9ada7c3555a46b189c74392cdb8482829",
+        "shape": [
+          11,
+          10,
+          13
+        ]
+      },
+      "case_018": {
+        "bytes": 5200,
+        "dtype": "<f8",
+        "sha256": "7b1f0c3521fc827a1d5019ae4ec8d635a3ba8d34dbbdc5b5e965c0006b429abb",
+        "shape": [
+          13,
+          5,
+          10
+        ]
+      },
+      "case_019": {
+        "bytes": 7680,
+        "dtype": "<f8",
+        "sha256": "50f5579f2d0fd2eeaec52f27564272ece9c6fe2b1812dd3bc3896d94572f4152",
+        "shape": [
+          12,
+          8,
+          10
+        ]
+      },
+      "case_020": {
+        "bytes": 5120,
+        "dtype": "<f8",
+        "sha256": "616b59e62fbf493cf04ba48f1dc2d5f59e424c9736300d2c90640b49e1f01971",
+        "shape": [
+          16,
+          8,
+          5
+        ]
+      },
+      "case_021": {
+        "bytes": 6552,
+        "dtype": "<f8",
+        "sha256": "77a3c3b8ce9dfb6455b7ac15ca82c87102f82f25b4f10261ba3cd8781c99af9f",
+        "shape": [
+          13,
+          9,
+          7
+        ]
+      },
+      "case_022": {
+        "bytes": 24960,
+        "dtype": "<f8",
+        "sha256": "57dd350bc2caf8c49190a7b340eed6f461dbbb2edd3f07177e2d5022c679212e",
+        "shape": [
+          16,
+          15,
+          13
+        ]
+      },
+      "case_023": {
+        "bytes": 4032,
+        "dtype": "<f8",
+        "sha256": "9539ccaa96c808966aeb7f357979dfb3e863927e40e95afaa905d30f9f273c8e",
+        "shape": [
+          9,
+          8,
+          7
+        ]
+      }
+    },
+    "runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 826331136,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "schema": "rheon-water-learning-training-v1",
+    "status": "complete"
+  },
+  "execution": {
+    "argv": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/.venv/bin/python",
+      "runs/water-early-pressure-v1/managed-controller.py",
+      "--root",
+      "runs/water-early-pressure-v1",
+      "--trial",
+      "smoke",
+      "--phase",
+      "smoke"
+    ],
+    "started_at_utc": "2026-10-16T18:12:25.483612+00:00",
+    "status": "completed",
+    "pid": 221040,
+    "returncode": 0,
+    "finished_at_utc": "2026-10-16T18:19:56.185129+00:00",
+    "elapsed_seconds": 450.70134151599996,
+    "child_reaped": true
+  },
+  "premature_pair_guard": "First launch attempted before final smoke receipt; refused with FileNotFoundError before any Run or optimizer. Relaunched only after complete/drained receipt."
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "rheon-capture-duration-reconciliation-v1",
+  "missing_field": "elapsed_seconds",
+  "original_capture_sha256": "fc2bf783fb858ec19fc3f78187d9446efab5adf0c5358ee62c4a2f1f45c717bc",
+  "reconciled_capture_sha256": "44c7df8f1665371feac324e09e4ce9fc675fafdb22230976aea6bbfeb3b517c5",
+  "first_command_started_at_utc": "2026-10-16T10:38:05.701036+00:00",
+  "last_command_finished_at_utc": "2026-10-16T10:38:12.365585+00:00",
+  "derived_elapsed_seconds": 6.664549,
+  "boundary": "first assemble command start through last assemble command finish; excludes final copy/report writing",
+  "original_preserved": "runs/water-late-residual-v1/capture-without-duration.json",
+  "failed_comparison_timing": {
+    "argv": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/.venv/bin/python",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-shape-repeatability-v1/summarize.py",
+      "--sequence",
+      "experiments/water-late-residual-v1/configs/sequence.json",
+      "--reports",
+      "docs/plans/water-late-residual-v1/reports",
+      "--reference-record",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/docs/plans/water-recurrence-generalization-v1/reports/trial-cohort-two-shape-feedback.json",
+      "--reference-index",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/docs/plans/water-recurrence-generalization-v1/reports/summary.json"
+    ],
+    "started_at_utc": "2026-10-16T11:26:15.802385+00:00",
+    "status": "failed",
+    "pid": 55273,
+    "returncode": 1,
+    "error_type": "CalledProcessError",
+    "finished_at_utc": "2026-10-16T11:26:15.866710+00:00",
+    "elapsed_seconds": 0.06426204800027335,
+    "child_reaped": true
+  },
+  "failed_comparison_output": "Traceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-shape-repeatability-v1/summarize.py\", line 105, in <module>\n    main()\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-shape-repeatability-v1/summarize.py\", line 91, in main\n    'capture_elapsed_seconds': read(root/'capture.json')['elapsed_seconds'],\n                               ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\nKeyError: 'elapsed_seconds'\n",
+  "model_or_checkpoint_changes": false,
+  "scientific_work_repeated": false
+}

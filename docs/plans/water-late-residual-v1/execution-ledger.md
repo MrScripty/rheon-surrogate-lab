@@ -173,3 +173,24 @@
   fixed-all-extra-late.json; full trajectory qualification/selection/final still
   pending. Neural arithmetic staysfloat32; diagnostic physical accumulation and
   exact oracle retain their existingfloat64 arithmetic, no precision change.
+- Both managed3-stage pipelines and initial CPU qualification complete, all six
+  Runs drained; late fixed8 familiar checks128/128, manufactured mode checks
+  120/120 and initial18 trajectories qualify. Outer reporting then fails on a
+  missing capture.elapsed_seconds field in my capture wrapper's receipt. This
+  is a bookkeeping failure, not a new optimizer or physical failure. Preserve
+  study-status.json/comparison-timing.json/log and original capture bytes.
+- Original report CLI is a tight red/green loop: fails KeyError elapsed_seconds;
+  succeeds after deriving6.664549s from first assembly-command start to final
+  assembly-command finish. Label this boundary explicitly; it excludes final
+  copy/report writing and is not a fabricated wrapper timer. Original committed
+  source-capture receipt stays unchanged; additive reconciliation stores both
+  identities, timestamps and failure output. No scientific work repeated.
+- Replan only report/recovery ownership: canonical coverage runner gets an
+  explicit --resume-after-comparison path. Require failed outer state, completed
+  original managed/CPU sequence, matching sequence/reference/report/checkpoint
+  identities and six drained Run IDs. Refuse existing follow-up attempts or
+  frozen/final selection; skip every managed/record/comparison stage. Write a
+  separate recovery status, leaving the failed attempt immutable. Add preflight
+  capture-duration validation before any new managed work. Local regression loop
+  catches missing-duration admission before fix; altered-source and attempted-
+  final guards also qualify. No model, labels, objective or inference change.

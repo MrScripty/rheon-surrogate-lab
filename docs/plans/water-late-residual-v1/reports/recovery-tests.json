@@ -1,0 +1,19 @@
+{
+  "schema": "rheon-completed-comparison-recovery-tests-v1",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "experiments/water-late-residual-v1",
+    "-p",
+    "test_recovery.py",
+    "-v"
+  ],
+  "red": "test_changed_source_and_attempted_final_are_rejected (test_recovery.Recovery.test_changed_source_and_attempted_final_are_rejected) ... ok\ntest_missing_capture_duration_refuses_before_any_managed_work (test_recovery.Recovery.test_missing_capture_duration_refuses_before_any_managed_work) ... FAIL\ntest_real_completed_comparison_reuses_six_drained_runs (test_recovery.Recovery.test_real_completed_comparison_reuses_six_drained_runs) ... ok\n\n======================================================================\nFAIL: test_missing_capture_duration_refuses_before_any_managed_work (test_recovery.Recovery.test_missing_capture_duration_refuses_before_any_managed_work)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-late-residual-v1/test_recovery.py\", line 39, in test_missing_capture_duration_refuses_before_any_managed_work\n    owner.main()\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-coverage-feedback-v1/run.py\", line 149, in main\n    timed([sys.executable,previous/'run.py','--sequence',args.sequence,\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-coverage-feedback-v1/run.py\", line 125, in timed\n    return command(argv, root, name)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1134, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1138, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 1193, in _execute_mock_call\n    raise effect\nAssertionError: managed work must not start\n\n----------------------------------------------------------------------\nRan 3 tests in 0.089s\n\nFAILED (failures=1)\n",
+  "green": "test_changed_source_and_attempted_final_are_rejected (test_recovery.Recovery.test_changed_source_and_attempted_final_are_rejected) ... ok\ntest_missing_capture_duration_refuses_before_any_managed_work (test_recovery.Recovery.test_missing_capture_duration_refuses_before_any_managed_work) ... ok\ntest_real_completed_comparison_reuses_six_drained_runs (test_recovery.Recovery.test_real_completed_comparison_reuses_six_drained_runs) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.069s\n\nOK\n",
+  "owner_source_sha256": "5148f41413d0a8a0a6bcc0bcd83dbe5e516e32c1caf28e8ec2f18edaab65b883",
+  "test_source_sha256": "d3e757caeff755bfda20d036cd5cb7ee95e8c0787b1128e640021f1d3d9cb04c",
+  "test_work": "mocked managed delegation plus real completed-record read/identity checks; no optimizer, network or new simulations"
+}

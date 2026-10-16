@@ -81,6 +81,8 @@ Decisions:
 Write set: experiments/water-conditioning-v1/training/{policy.py,model.py,
 train.py,project.py,pipeline.py,direction_feedback.py,test_direction_feedback.py};
 experiments/water-multigrid-learning-v1/{record.py,qualify_bank.py};
+experiments/water-coverage-feedback-v1/run.py (bounded completed-comparison recovery
+and capture-duration preflight only; normal scientific execution unchanged);
 experiments/water-late-residual-v1/**; docs/plans/water-late-residual-v1/**;
 README.md; tuldok-project.json. Ignored runs/water-late-residual-v1/** and activity.
 OOM fix also owns experiments/water-residual-learning-v1/audit.py and the existing
@@ -106,8 +108,9 @@ Milestones and acceptance, automated:
   58 development trajectories, frozen final comparison, complete source/custody,
   process/timing/failure records and same-catalog project visibility. Pending.
 
-Current acceptance: pending. Current phase: matched managed CUDA fits.
-Next slice: complete both fits and their CPU/native development comparisons.
+Current acceptance: pending. Current phase: follow-up CPU comparisons.
+Next slice: recover completed-comparison reporting, run remaining development and
+frozen final populations; preserve the first failed outer attempt.
 Blockers: none. Replan on invalid labels, incomplete lineage, parity violation,
 resource breach, unavailable CUDA/custody or unreaped work. Numerical improvement
 is measured, not a completion prerequisite. Decisions/issues/receipts live in

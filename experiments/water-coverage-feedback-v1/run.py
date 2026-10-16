@@ -3,6 +3,7 @@ import argparse
 import hashlib
 from importlib.util import module_from_spec, spec_from_file_location
 import json
+import math
 from pathlib import Path
 import signal
 import subprocess
@@ -40,20 +41,72 @@ def references(sequence):
     return sources
 
 
+def recovery_evidence(root, reports, sequence, bindings, sequence_path):
+    """Resume only a failed outer report after completed managed/CPU work.
+
+    Reuse sealed source-bound records, never infer that a partially executed
+    final or regression population is safe to repeat.
+    """
+    original = root/'study-status.json'
+    execution = read(root/'execution.json')
+    comparison = read(reports/'comparison.json')
+    if (read(original)['state'] != 'failed' or execution['status'] != 'completed'
+            or execution['sequence_sha256'] != digest(sequence_path)
+            or read(original)['reference_bindings'] != bindings
+            or not comparison['optimizer_intervals_disjoint']):
+        raise ValueError('recovery requires failed outer reporting and unchanged completed work')
+    if any((reports/name).exists() for name in ('final-selection.json', 'decision.json')):
+        raise ValueError('cannot repeat frozen selection or final evaluation')
+    pending = ['final-holdout']+[trial['name']+'-'+item['name']
+        for trial in sequence['trials'] for item in sequence['regressions']]
+    if any((root/name).exists() or (root/(name+'.study.json')).exists() for name in pending):
+        raise ValueError('reconcile already attempted follow-up populations; no replay')
+    for path, expected in comparison['sources'].items():
+        if digest(LAB/path) != expected:
+            raise ValueError('completed comparison source changed: '+path)
+    bound = {Path(path).resolve(): expected for path, expected in comparison['sources'].items()}
+    run_ids = []
+    for trial in sequence['trials']:
+        directory = root/trial['name']
+        record = read(reports/('trial-'+trial['name']+'.json'))
+        if (bound.get((reports/('trial-'+trial['name']+'.json')).resolve()) != digest(reports/('trial-'+trial['name']+'.json'))
+                or record['weights_sha256'] != digest(directory/'managed-full/stage-01/artifacts/weights.npz')
+                or read(directory/'cpu-complete.json')['status'] != 'complete'):
+            raise ValueError('completed checkpoint/CPU work differs')
+        for index, stage in enumerate(record['managed_stages']):
+            run = read(directory/f'managed-full/stage-{index:02d}/run.json')
+            if run['id'] != stage['run_id'] or run['state'] != 'completed' or run['custody_phase'] != 'drained':
+                raise ValueError('managed work must already be completed and drained')
+            run_ids.append(run['id'])
+    if len(run_ids) != len(set(run_ids)):
+        raise ValueError('managed Run counted twice')
+    return {'resumed_after': 'completed-comparison', 'previous_status_sha256': digest(original),
+        'completed_comparison_sha256': digest(reports/'comparison.json'),
+        'managed_run_ids_reused': run_ids, 'managed_work_repeated': False}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('sequence','reports','managed-controller'):
         parser.add_argument('--'+name, type=Path, required=True)
     parser.add_argument('--torch-python', required=True)
+    parser.add_argument('--resume-after-comparison', action='store_true',
+        help='Reuse source-bound completed managed/CPU work after an outer reporting failure; no attempted follow-up replay')
     args = parser.parse_args()
     sequence = read(args.sequence)
     root = LAB/sequence['root']
-    if (root/'study-status.json').exists():
+    status_path = root/('study-recovery-status.json' if args.resume_after_comparison else 'study-status.json')
+    if status_path.exists():
         raise FileExistsError('attempt already exists; reconcile without replay')
     bindings = references(sequence)
+    elapsed = read(root/'capture.json').get('elapsed_seconds')
+    if type(elapsed) not in (int, float) or not math.isfinite(elapsed) or elapsed < 0:
+        raise ValueError('capture duration must be finite and recorded before managed work')
     status = {'started_at_utc': utc(), 'state': 'running', 'reference_bindings': bindings}
+    if args.resume_after_comparison:
+        status['recovery'] = recovery_evidence(root, args.reports, sequence, bindings, args.sequence)
     started = time.monotonic()
-    write(root/'study-status.json', status)
+    write(status_path, status)
     multigrid = LAB/'experiments/water-multigrid-learning-v1'
     previous = LAB/'experiments/water-shape-repeatability-v1'
     observer = Observer(LAB/'runs/live-project')
@@ -97,18 +150,19 @@ def main():
 
     try:
         with Watch(poll):
-            delegated[0] = True
-            timed([sys.executable,previous/'run.py','--sequence',args.sequence,
-                   '--torch-python',args.torch_python,'--managed-controller',args.managed_controller],
-                  'managed-sequence')
-            delegated[0] = False
-            for trial in sequence['trials']:
-                timed([args.torch_python,multigrid/'record.py','--trial',root/trial['name'],
-                       '--control',(LAB/sequence['reference']['project']).parent/'managed-full/stage-00/artifacts',
-                       '--output',args.reports/('trial-'+trial['name']+'.json')], 'seal-'+trial['name'])
-            timed([sys.executable,previous/'summarize.py','--sequence',args.sequence,'--reports',args.reports,
-                   '--reference-record',LAB/sequence['reference_record'],
-                   '--reference-index',LAB/sequence['reference_index']], 'comparison')
+            if not args.resume_after_comparison:
+                delegated[0] = True
+                timed([sys.executable,previous/'run.py','--sequence',args.sequence,
+                       '--torch-python',args.torch_python,'--managed-controller',args.managed_controller],
+                      'managed-sequence')
+                delegated[0] = False
+                for trial in sequence['trials']:
+                    timed([args.torch_python,multigrid/'record.py','--trial',root/trial['name'],
+                           '--control',(LAB/sequence['reference']['project']).parent/'managed-full/stage-00/artifacts',
+                           '--output',args.reports/('trial-'+trial['name']+'.json')], 'seal-'+trial['name'])
+                timed([sys.executable,previous/'summarize.py','--sequence',args.sequence,'--reports',args.reports,
+                       '--reference-record',LAB/sequence['reference_record'],
+                       '--reference-index',LAB/sequence['reference_index']], 'comparison')
             populations, scores, models = {}, {}, {}
             ref_sha = digest(LAB/sequence['reference']['artifacts']/'weights.npz')
             for trial in sequence['trials']:
@@ -177,7 +231,7 @@ def main():
         raise
     finally:
         status.update(finished_at_utc=utc(),elapsed_seconds=time.monotonic()-started)
-        write(root/'study-status.json',status)
+        write(status_path,status)
         observer.publish('Coverage/feedback '+status['state'],'Methods, timings and outcomes retained',
                          state='completed' if status['state']=='completed' else 'failed')
 

@@ -1,0 +1,74 @@
+{
+  "schema": "rheon-pressure-bound-regression-protocol-v1",
+  "root": "runs/water-pressure-bound-regression-v1",
+  "lineage_sequence": "experiments/water-late-residual-v1/configs/sequence.json",
+  "policy_study": "experiments/water-stopping-floor-v1/configs/pressure-study.json",
+  "extra_populations": [
+    {
+      "name": "late-amended8",
+      "config": "experiments/water-late-residual-v1/configs/final-holdout-amended.json",
+      "reference_study": "runs/water-late-residual-v1/final-holdout-reconciled",
+      "layout": "study"
+    },
+    {
+      "name": "minimum8-failed8",
+      "config": "experiments/water-stopping-floor-v1/configs/validation.json",
+      "reference_study": "runs/water-stopping-floor-v1/validation",
+      "layout": "episode"
+    }
+  ],
+  "timing_scene_indices": [
+    0,
+    16,
+    13
+  ],
+  "replacement_groups": [
+    "original58",
+    "late-amended8",
+    "minimum8-failed8"
+  ],
+  "fresh_seed_start": 2026110100,
+  "fresh_counts": [
+    [
+      17,
+      19,
+      13
+    ],
+    [
+      29,
+      11,
+      19
+    ],
+    [
+      13,
+      27,
+      11
+    ],
+    [
+      23,
+      23,
+      23
+    ],
+    [
+      37,
+      11,
+      9
+    ],
+    [
+      11,
+      31,
+      9
+    ],
+    [
+      26,
+      20,
+      12
+    ],
+    [
+      7,
+      13,
+      35
+    ]
+  ],
+  "fresh_steps": 128
+}

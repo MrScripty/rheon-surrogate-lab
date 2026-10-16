@@ -141,3 +141,19 @@
   at8 calls; retained2/15. Both pass15/15 at12 calls. Commands and source identity
   are in fixed-all-retained.json and fixed-all-targeted.json. These reused
   consumed inputs do not become training examples or candidate-selection labels.
+- Early-direction control completes5,000 CUDA updates in500.227s
+  (9.995 updates/s); managed Run d29da5cdb5364a7b86dab87073d29fe9 completes and
+  drains within600s. Weights2503a833…; full identity, optimizer trace and GPU
+  execution evidence in fit-extra-early.json. CPU restore2d47ed59… has identical
+  weights, no CUDA/update; validation eb08d8a8… completes and drains. Pipeline
+  preparation and artifact custody are recorded separately from optimizer time.
+- Early control common-input worst pressure errors at4/8/12 calls are
+  6.737e-4/2.320e-6/7.866e-9. At8 calls it passes15/15 equation checks and reduces
+  the targeted checkpoint's worst pressure error6.58x on exactly these inputs.
+  This is an interim diagnostic, not a promotion or a late-treatment result.
+- Early control adaptive fitting32/32 and familiar128/128 native physical checks
+  pass. Fixed8 familiar checks pass123/128; preserve the five failures. Its initial
+  18 configured development trajectories all qualify. Remaining40 standard
+  development trajectories, exploratory cases and final comparison are pending.
+  Late-direction CUDA Run ad303611cd064137ab339f7dcbbf968e starts with unchanged
+  source, optimizer initialization, data/exposure and full-spectrum objective.

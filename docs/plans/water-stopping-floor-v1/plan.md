@@ -1,6 +1,7 @@
 # Frozen-model stopping floor and pressure accuracy
 
-Status: Active. Admission: start, user-authorized continuation of the proposed
+Status: Accepted. Measurement and retained records complete; no promotion.
+Admission: start, user-authorized continuation of the proposed
 CPU stopping diagnostic, conditional CUDA experiment, and fresh validation.
 Canonical path: docs/plans/water-stopping-floor-v1/plan.md.
 Owner and integrator: this task. Private branch experiment/water-stopping-floor-v1
@@ -64,14 +65,21 @@ Milestones:
 - M2 Accepted: consumed autonomous comparison plus independent sparse-state errors
   and serial timings. Gate: complete declared population, including failures,
   reproducible source/checkpoint bindings and machine-readable analysis.
-- M3 Active: evidence-selected follow-up and, when eligible, fresh validation.
-  Gate: freeze decisions before final evaluation; qualify setups first; no
-  accuracy regression and record actual work/time. A negative scientific result
+- M3 Accepted: evidence-selected follow-up and, when eligible, fresh validation.
+  Measurement gate: freeze decisions before final evaluation; qualify setups
+  first; retain the complete no-regression decision and actual work/time.
+  Replacement gate: no accuracy or work regression. A negative scientific result
   completes measurement but does not authorize replacement of the reference.
 
-Acceptance partial. Current phase M3; next slice: qualify the residual-to-pressure stopping bound.
+Acceptance satisfied for the measurement task. Current phase: terminal; next slice:
+none in this plan. Fresh minimum8 validation fails worst-pressure/max-work gates;
+retain reference17b423b7… and all checkpoints. Zero CUDA updates in this sequence.
+The pressure-aware policy remains a proposed next bounded regression candidate,
+not a fresh-qualified replacement. No final-informed refit or reselection.
 Replan on resource/lifecycle failure, numerical mismatch, invalid setup, changed
 experimental question, or evidence ruling out the planned conditional follow-up.
 Standards snapshot: snapshot:v1:12194777-eab9-47d9-b486-7ef0779f2ae7;
 21 routed policies, zero unresolved facts. Findings: issues.md; methods/results:
 execution-ledger.md and reports/.
+
+[Completed results](reports/summary.json) · [Analysis CSV](reports/comparison.csv) · [Fresh validation](reports/validation-summary.json) · [Methods and timings](execution-ledger.md).

@@ -115,3 +115,58 @@ retains the intended seeds and ranges.
 - Eight fresh native16-step fixtures qualify, all children reaped. Full fresh
   native controls will run before any final AI episode. Final setup has not been
   repaired or amended after AI observation. No fresh AI result informed selection.
+
+## Fresh validation and terminal decision
+
+- Original committed eight fresh scenes and frozen minimum8 policy completed
+  without setup amendment, timeout, retry, refit or reselection. Native16-step
+  fixtures qualified first; all eight full native controls finished before any
+  fresh learned episode. Both checkpoints qualify904/904 AI steps across8/8 scenes.
+- Fresh worst paired pressure relativeL2: reference3.37335937037e-6;
+  late/minimum8 2.66559752109e-5 (7.902x worse). Mean calls9.126106 versus8.357301
+  (8.424% fewer); max11 versus12. Worst-pressure and maximum-work gates fail.
+  No promotion. Reference checkpoint17b423b7… and deployment remain unchanged.
+- Worst late case is9x11x33, step106,9 calls, residual9.30817e-7: the original
+  stopping checks pass while pressure deviates. Another27x9x17 case peaks at
+  step24 with8 calls and6.99472e-6 pressure deviation. These are post-final
+  localization only; not new fitting labels, a refit trigger or a changed choice.
+- Fresh validation phase120.997s. Initial consumed comparison230.168s, its serial
+  timing45.225s; pressure-bound comparison237.373s, its serial timing46.907s.
+  First failed fixture through final completion970.953s (16.183min), including
+  source preparation/diagnosis gaps. No CUDA training occurred in this sequence.
+- Second serial timing confirms observed scope: reference38.015ms, minimum8
+  34.420ms and pressure-bound34.768ms/AI step on the same short scene. Slightly
+  fewer average calls do not guarantee lower latency once bound checking is added.
+-126 observed native receipts, all reaped;121 command-owner timing receipts, all
+  controller children reaped. The first immediately rejected wrong-binary child
+  lacks a native receipt because of the now-fixed cleanup exception; retain that
+  evidence gap explicitly rather than fabricate a receipt. Its controller and
+  original stderr/log are retained. The real rejected-binary rerun has a receipt.
+- Final focused suite5 tests passed in0.049s, including model/profile digest drift
+  rejection before dispatch. Legacy recurrence suite10 tests passed in0.483s after
+  v2 addition. Bound coverage48 independent sparse states; physical parity2048
+  non-timing native frames. Runtime: Python3.14.7, Torch2.14.0+cu132, CPU inference,
+  CUDA not initialized, Intel Core Ultra9 275HX. Local raw retention63,237,201bytes.
+- M3 measurement accepted; numerical replacement gates failed. No model weights,
+  datasets or credentials committed. Next proposed work, not executed: use the
+  conservative pressure-aware criterion as the next inference candidate, qualify
+  it across the full consumed58-scene regression population, then freeze a new
+  independent validation set. Its same-RHS bound does not guarantee trajectory
+  accuracy. Defer new CUDA fitting until this inference-policy question is bounded;
+  the current final scenes remain consumed forever for future experiment selection.
+
+## Closure verification
+
+Tuldok readback confirms the completed status is visible in project
+3b1531168837482ea1b2fc035069ef21 in existing cataloga7da4a8de53541a2a0e2aad08005bb71;
+historical project2cce354d8b724a1dbce76989e470a437 remains readable. The root
+manifest is unchanged from its registered snapshot. UI preview is not scientific
+custody. A host process check finds no owned native rollout/episode workers;
+Tuldok and the user's apps/services remain running.
+
+Final protocol verification proves the selected configuration matches commit
+f6b8704 and all full native controls finished at16:55:10.995558UTC before the
+first fresh AI episode began at16:55:10.998436UTC. No final setup amendment or
+model/profile mutation occurred. The branch range from3cc74c9 was reviewed:
+qualified floor implementation, measured pressure-aware follow-up, frozen choice,
+then retained final results. No history rewrite or remote push.

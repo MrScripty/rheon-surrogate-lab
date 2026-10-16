@@ -1,0 +1,79 @@
+{
+  "schema": "rheon-stopping-floor-comparison-v1",
+  "phase": "validation",
+  "source_report_sha256": "33bf53bc5835aed075bd06565bd56284852829a29b2eadd6b729123ca83a270c",
+  "source_sha256": "4aa190ff7363274443cfba5125c68e09eaca1942b2b17e3ef018275c094dad72",
+  "models": {
+    "reference-current": {
+      "episodes": 8,
+      "qualified_episodes": 8,
+      "ai_steps": 904,
+      "mean_network_evaluations": 9.126106194690266,
+      "minimum_network_evaluations": 7,
+      "maximum_network_evaluations": 11,
+      "worst_paired_pressure_relative_l2": 3.3733593703700276e-06,
+      "median_paired_pressure_relative_l2": 1.8095046334871174e-07,
+      "worst_actual_divergence": 2.980232238769531e-07,
+      "steady_ai_seconds_median": 0.068219879,
+      "per_episode_ai_seconds_median": [
+        0.046625387500000004,
+        0.069969901,
+        0.065077077,
+        0.1723565645,
+        0.06465578150000001,
+        0.0525811135,
+        0.0710950205,
+        0.0845824245
+      ],
+      "sampled_same_rhs_states": 24,
+      "sparse_worst_pressure_relative_l2": 2.5364918696065144e-06,
+      "sparse_worst_gradient_relative_l2": 8.303983328883881e-07,
+      "sparse_worst_low_band_relative_l2": 2.2233398613422123e-06,
+      "sparse_worst_other_band_relative_l2": 2.9531363417672063e-07
+    },
+    "late-minimum8": {
+      "episodes": 8,
+      "qualified_episodes": 8,
+      "ai_steps": 904,
+      "mean_network_evaluations": 8.357300884955752,
+      "minimum_network_evaluations": 8,
+      "maximum_network_evaluations": 12,
+      "worst_paired_pressure_relative_l2": 2.6655975210866455e-05,
+      "median_paired_pressure_relative_l2": 1.9531365989096516e-07,
+      "worst_actual_divergence": 3.5762786865234375e-07,
+      "steady_ai_seconds_median": 0.0628891385,
+      "per_episode_ai_seconds_median": [
+        0.0492269445,
+        0.06700187399999999,
+        0.062996729,
+        0.149595436,
+        0.0607415355,
+        0.0423039325,
+        0.0604887525,
+        0.09025643350000001
+      ],
+      "sampled_same_rhs_states": 24,
+      "sparse_worst_pressure_relative_l2": 9.477043049347662e-06,
+      "sparse_worst_gradient_relative_l2": 2.8323796498322645e-06,
+      "sparse_worst_low_band_relative_l2": 8.56157794453943e-06,
+      "sparse_worst_other_band_relative_l2": 6.364940101469055e-07
+    }
+  },
+  "candidate": "late-minimum8",
+  "consumed_acceptance_gates": {
+    "all_episodes_qualified": true,
+    "worst_pressure_not_regressed": false,
+    "mean_calls_not_regressed": true,
+    "maximum_calls_not_regressed": false
+  },
+  "consumed_acceptance_passed": false,
+  "elapsed_seconds": 120.99690263699813,
+  "timing_scope": "parallel/instrumented correctness; no isolated latency claim",
+  "network_call_scope": "all AI steps, including first AI step; steady timing excludes first AI step",
+  "sparse_band_scope": "mean-free spatial pressure error; first3 cosine modes/axis excluding constant gauge; components normalized against entire exact mean-free pressure, not band-specific denominators",
+  "pressure_scope": "paired_pressure compares independently advanced native/AI tracks; sparse_same_rhs errors solve each actual supplied state independently",
+  "optimizer_updates": 0,
+  "candidate_promoted": false,
+  "native_children": 24,
+  "all_native_children_reaped": true
+}

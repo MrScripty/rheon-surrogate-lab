@@ -58,6 +58,13 @@ Decisions:
   memory <=1 GiB, worker <=512 MiB and >=8 GiB available before startup. Generate
   one selected analytical grid at a time. Preserve the interrupted24-worker
   attempt as host-OOM/reboot, not a normally completed/reaped scientific run.
+- User hypothesis check: calculate temporal sinusoid sampling bounds for dt,
+  distinguish observation duration from sample spacing and spatial wavelength.
+  Reuse consumed saved states for a fixed-input dt-metadata check and three
+  stationary fundamental spatial modes. CPU only, <=512 MiB address-space
+  growth, no new trajectories, training examples, temporal history or refits.
+  Record limits: this does not qualify actual changed-dt dynamics, and wavelength
+  alone gives no temporal frequency without a motion/dispersion relationship.
 
 Write set: experiments/water-conditioning-v1/training/{policy.py,model.py,
 train.py,project.py,pipeline.py,direction_feedback.py,test_direction_feedback.py};

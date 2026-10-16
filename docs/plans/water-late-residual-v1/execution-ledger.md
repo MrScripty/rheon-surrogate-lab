@@ -33,3 +33,38 @@
   grid bank at a time. Revised real/analytical fixture qualifies in3.190s. Retain
   all earlier fixture manifests and failed source; next full attempt gets a fresh
   output/timing identity. Memory bounds take precedence over maximizing worker count.
+- User clarified step size means simulation dt and requested an analytic test
+  without many new simulations/refits. Add sampling_probe.py as an isolated CPU
+  diagnostic. Ideal sinusoid samples/cycle=1/(f*dt), Nyquist requires f<1/(2*dt);
+  period=1/f. Slow variation needs a longer observation window, not inherently a
+  smaller dt. Translating wavelength to time requires a propagation/advection
+  model; frozen aligned advection gives f=U/lambda, not a universal fluid rule.
+- Probe completed in2.443s, peak758,595,584bytes, one CPU thread, no CUDA,
+  no optimizer or advanced simulations. Six already consumed saved states at
+  five dt factors(.25,.5,1,2,4), four network calls per solve: input and pressure
+  bits identical in every comparison. Doubling residual changes predictions in
+  all six negative controls. Divergence estimates vary with dt as the existing
+  stopping equation specifies. Holding residual fixed is a contract check;
+  actual changed-dt trajectories need not have the same residual or pressure.
+- Three stationary manufactured fundamental modes on the first saved grid have
+  relative pressure errors0.00744%,0.06043%,0.76741% after four calls (Z,Y,X).
+  Independent neighbor-action defects <=5.95e-16; spectral inverse agrees with
+  each known pressure <1e-9. Spatial solve error thus exists at temporal frequency
+  zero, without temporal aliasing. This does not quantify the temporal error in
+  evolving flows or establish the cause of every historical trajectory error.
+  Command/environment and replay results: reports/temporal-sampling-command.json
+  and reports/temporal-sampling-probe.json. No new data enters fitting or holdout
+  selection; matched early/late training protocol is unchanged.
+- User correctly identifies a separate hypothesis: slowly evolving signals may
+  be contaminated by accumulated step error despite many samples/cycle. The
+  fixed-state probe does NOT reject this hypothesis. For N=1/(f*dt) updates per
+  cycle, coherent local velocity bias b accumulates as N*b only under neutral
+  propagation; uncorrelated zero-mean errors scale in RMS as sqrt(N)*sigma under
+  that assumption, and coupled dynamics may damp or amplify errors. Neither is
+  a measured growth law for Rheon. A local pressure error injects velocity error
+  -dt/rho*grad(delta_p); hence if that gradient bias stays fixed and coherent,
+  neutral accumulation over a cycle is approximately -grad(delta_p)/(rho*f).
+  dt cancels in this restricted example; more steps alone do not imply that a
+  smaller dt improves or worsens total error. Existing saved trajectories can
+  measure total pressure separation over time, but cannot identify a changed-dt
+  causal effect or add per-step relative pressure errors as velocity drift.

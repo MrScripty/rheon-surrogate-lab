@@ -1,0 +1,891 @@
+{
+  "schema": "rheon-pressure-temporal-sampling-probe-v1",
+  "scope": "fixed saved residual/base contract check plus stationary manufactured spatial modes; no changed-dt trajectories",
+  "study": "experiments/water-pressure-accuracy-v1/configs/study.json",
+  "study_sha256": "a7598968d93211671f7a3584788313fcdf2d9a9f9a7615696719692bd3efc915",
+  "model": {
+    "project": "runs/water-targeted-feedback-v1/targeted-feedback/project",
+    "artifacts": "runs/water-targeted-feedback-v1/targeted-feedback/managed-full/stage-01/artifacts"
+  },
+  "weights_sha256": "5bbdc3159fe965b4768c14501bcb678ecffc837e0ccd01a513003bcad533f3fe",
+  "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+  "source_witness_sha256": "30f35107050997bbf29bd734097047e1912aa42dd63004eda5d5449524b1f0f2",
+  "source_sha256": {
+    "experiments/water-late-residual-v1/sampling_probe.py": "e74b830387fd2e9101611c69eea386d90be820e7befade64782925cd10dfc128",
+    "experiments/water-pressure-accuracy-v1/diagnose.py": "4c395f89ca67d4b3831b679c1ec5ab0dbd921660ab397944e8d644d6bd478858",
+    "experiments/water-residual-learning-v1/audit.py": "9c9c92742f91ff6e3e384116e5d25153226f83128724e7efb46d66679b68f4f9"
+  },
+  "network_calls_per_solve": 4,
+  "nominal_dt_seconds": 0.016666666666666666,
+  "saved_states": [
+    {
+      "sample": {
+        "step": 16,
+        "path": "runs/water-pressure-accuracy-v1/witness-00-targeted-original/sample-016.npz",
+        "sha256": "e31c8ad8efd4c16f3e83a8249d0b1c59115852e12ebc82a402f464340677167f"
+      },
+      "counts_xyz": [
+        31,
+        11,
+        7
+      ],
+      "variants": [
+        {
+          "dt_factor": 0.25,
+          "dt_seconds": 0.004166666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.3697740121561974e-07,
+            "rhs_l2": 0.0033802970522007867,
+            "relative_residual": 7.010549592419179e-05,
+            "predicted_divergence": 1.9669005141625118e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 0.5,
+          "dt_seconds": 0.008333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.3697740121561974e-07,
+            "rhs_l2": 0.0033802970522007867,
+            "relative_residual": 7.010549592419179e-05,
+            "predicted_divergence": 3.9338010283250235e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 1.0,
+          "dt_seconds": 0.016666666666666666,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.3697740121561974e-07,
+            "rhs_l2": 0.0033802970522007867,
+            "relative_residual": 7.010549592419179e-05,
+            "predicted_divergence": 7.867602056650047e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 2.0,
+          "dt_seconds": 0.03333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.3697740121561974e-07,
+            "rhs_l2": 0.0033802970522007867,
+            "relative_residual": 7.010549592419179e-05,
+            "predicted_divergence": 1.5735204113300094e-06,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 4.0,
+          "dt_seconds": 0.06666666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.3697740121561974e-07,
+            "rhs_l2": 0.0033802970522007867,
+            "relative_residual": 7.010549592419179e-05,
+            "predicted_divergence": 3.147040822660019e-06,
+            "equation_passed": false
+          }
+        }
+      ],
+      "changed_residual_negative_control_passed": true
+    },
+    {
+      "sample": {
+        "step": 96,
+        "path": "runs/water-pressure-accuracy-v1/witness-00-targeted-original/sample-096.npz",
+        "sha256": "fa184845720ff847f44398bf2d5966e83081d2afafdeeacb00ac3e121fc2fc84"
+      },
+      "counts_xyz": [
+        31,
+        11,
+        7
+      ],
+      "variants": [
+        {
+          "dt_factor": 0.25,
+          "dt_seconds": 0.004166666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.6546121822757596e-07,
+            "rhs_l2": 0.0031225978089841388,
+            "relative_residual": 8.501293937496783e-05,
+            "predicted_divergence": 2.230062450450832e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 0.5,
+          "dt_seconds": 0.008333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.6546121822757596e-07,
+            "rhs_l2": 0.0031225978089841388,
+            "relative_residual": 8.501293937496783e-05,
+            "predicted_divergence": 4.460124900901664e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 1.0,
+          "dt_seconds": 0.016666666666666666,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.6546121822757596e-07,
+            "rhs_l2": 0.0031225978089841388,
+            "relative_residual": 8.501293937496783e-05,
+            "predicted_divergence": 8.920249801803328e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 2.0,
+          "dt_seconds": 0.03333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.6546121822757596e-07,
+            "rhs_l2": 0.0031225978089841388,
+            "relative_residual": 8.501293937496783e-05,
+            "predicted_divergence": 1.7840499603606655e-06,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 4.0,
+          "dt_seconds": 0.06666666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 2.6546121822757596e-07,
+            "rhs_l2": 0.0031225978089841388,
+            "relative_residual": 8.501293937496783e-05,
+            "predicted_divergence": 3.568099920721331e-06,
+            "equation_passed": false
+          }
+        }
+      ],
+      "changed_residual_negative_control_passed": true
+    },
+    {
+      "sample": {
+        "step": 16,
+        "path": "runs/water-pressure-accuracy-v1/witness-01-targeted-original/sample-016.npz",
+        "sha256": "4eb4dfdf041b04eece35f68ddddfd56197789cd79e19bc105c11b4d6021ecdd7"
+      },
+      "counts_xyz": [
+        24,
+        16,
+        12
+      ],
+      "variants": [
+        {
+          "dt_factor": 0.25,
+          "dt_seconds": 0.004166666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 1.9354521043192576e-07,
+            "rhs_l2": 0.000693065110413866,
+            "relative_residual": 0.00027925978024827947,
+            "predicted_divergence": 1.9681466733534182e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 0.5,
+          "dt_seconds": 0.008333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 1.9354521043192576e-07,
+            "rhs_l2": 0.000693065110413866,
+            "relative_residual": 0.00027925978024827947,
+            "predicted_divergence": 3.9362933467068363e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 1.0,
+          "dt_seconds": 0.016666666666666666,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 1.9354521043192576e-07,
+            "rhs_l2": 0.000693065110413866,
+            "relative_residual": 0.00027925978024827947,
+            "predicted_divergence": 7.872586693413673e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 2.0,
+          "dt_seconds": 0.03333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 1.9354521043192576e-07,
+            "rhs_l2": 0.000693065110413866,
+            "relative_residual": 0.00027925978024827947,
+            "predicted_divergence": 1.5745173386827345e-06,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 4.0,
+          "dt_seconds": 0.06666666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 1.9354521043192576e-07,
+            "rhs_l2": 0.000693065110413866,
+            "relative_residual": 0.00027925978024827947,
+            "predicted_divergence": 3.149034677365469e-06,
+            "equation_passed": false
+          }
+        }
+      ],
+      "changed_residual_negative_control_passed": true
+    },
+    {
+      "sample": {
+        "step": 512,
+        "path": "runs/water-pressure-accuracy-v1/witness-01-targeted-original/sample-512.npz",
+        "sha256": "5e133d842e4cf44fb58a5c72aa839faa808e4237b5b84fb62cc39d5912eb1438"
+      },
+      "counts_xyz": [
+        24,
+        16,
+        12
+      ],
+      "variants": [
+        {
+          "dt_factor": 0.25,
+          "dt_seconds": 0.004166666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 3.331828028252133e-07,
+            "rhs_l2": 0.004504099855422758,
+            "relative_residual": 7.397322739727326e-05,
+            "predicted_divergence": 3.6339625600212654e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 0.5,
+          "dt_seconds": 0.008333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 3.331828028252133e-07,
+            "rhs_l2": 0.004504099855422758,
+            "relative_residual": 7.397322739727326e-05,
+            "predicted_divergence": 7.267925120042531e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 1.0,
+          "dt_seconds": 0.016666666666666666,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 3.331828028252133e-07,
+            "rhs_l2": 0.004504099855422758,
+            "relative_residual": 7.397322739727326e-05,
+            "predicted_divergence": 1.4535850240085062e-06,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 2.0,
+          "dt_seconds": 0.03333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 3.331828028252133e-07,
+            "rhs_l2": 0.004504099855422758,
+            "relative_residual": 7.397322739727326e-05,
+            "predicted_divergence": 2.9071700480170123e-06,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 4.0,
+          "dt_seconds": 0.06666666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 3.331828028252133e-07,
+            "rhs_l2": 0.004504099855422758,
+            "relative_residual": 7.397322739727326e-05,
+            "predicted_divergence": 5.814340096034025e-06,
+            "equation_passed": false
+          }
+        }
+      ],
+      "changed_residual_negative_control_passed": true
+    },
+    {
+      "sample": {
+        "step": 16,
+        "path": "runs/water-pressure-accuracy-v1/witness-02-targeted-original/sample-016.npz",
+        "sha256": "c76d9b801f047f2b15cf1b3a23b272f2836c44ec00234d87fd81395e3a116105"
+      },
+      "counts_xyz": [
+        31,
+        15,
+        23
+      ],
+      "variants": [
+        {
+          "dt_factor": 0.25,
+          "dt_seconds": 0.004166666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.439994755548935e-07,
+            "rhs_l2": 0.009443571118375441,
+            "relative_residual": 4.7016056742660916e-05,
+            "predicted_divergence": 2.8521912733986872e-08,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 0.5,
+          "dt_seconds": 0.008333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.439994755548935e-07,
+            "rhs_l2": 0.009443571118375441,
+            "relative_residual": 4.7016056742660916e-05,
+            "predicted_divergence": 5.7043825467973744e-08,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 1.0,
+          "dt_seconds": 0.016666666666666666,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.439994755548935e-07,
+            "rhs_l2": 0.009443571118375441,
+            "relative_residual": 4.7016056742660916e-05,
+            "predicted_divergence": 1.1408765093594749e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 2.0,
+          "dt_seconds": 0.03333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.439994755548935e-07,
+            "rhs_l2": 0.009443571118375441,
+            "relative_residual": 4.7016056742660916e-05,
+            "predicted_divergence": 2.2817530187189498e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 4.0,
+          "dt_seconds": 0.06666666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.439994755548935e-07,
+            "rhs_l2": 0.009443571118375441,
+            "relative_residual": 4.7016056742660916e-05,
+            "predicted_divergence": 4.5635060374378995e-07,
+            "equation_passed": false
+          }
+        }
+      ],
+      "changed_residual_negative_control_passed": true
+    },
+    {
+      "sample": {
+        "step": 128,
+        "path": "runs/water-pressure-accuracy-v1/witness-02-targeted-original/sample-128.npz",
+        "sha256": "8bd6e2364ff65f972652b906e515dccd31a4ced7168d2a9fbea8a07ff011715f"
+      },
+      "counts_xyz": [
+        31,
+        15,
+        23
+      ],
+      "variants": [
+        {
+          "dt_factor": 0.25,
+          "dt_seconds": 0.004166666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.352739029830284e-07,
+            "rhs_l2": 0.008543399769599527,
+            "relative_residual": 5.0948558503827564e-05,
+            "predicted_divergence": 2.2887401492253224e-08,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 0.5,
+          "dt_seconds": 0.008333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.352739029830284e-07,
+            "rhs_l2": 0.008543399769599527,
+            "relative_residual": 5.0948558503827564e-05,
+            "predicted_divergence": 4.577480298450645e-08,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 1.0,
+          "dt_seconds": 0.016666666666666666,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.352739029830284e-07,
+            "rhs_l2": 0.008543399769599527,
+            "relative_residual": 5.0948558503827564e-05,
+            "predicted_divergence": 9.15496059690129e-08,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 2.0,
+          "dt_seconds": 0.03333333333333333,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.352739029830284e-07,
+            "rhs_l2": 0.008543399769599527,
+            "relative_residual": 5.0948558503827564e-05,
+            "predicted_divergence": 1.830992119380258e-07,
+            "equation_passed": false
+          }
+        },
+        {
+          "dt_factor": 4.0,
+          "dt_seconds": 0.06666666666666667,
+          "input_bits_equal": true,
+          "pressure_bits_equal": true,
+          "quality": {
+            "residual_l2": 4.352739029830284e-07,
+            "rhs_l2": 0.008543399769599527,
+            "relative_residual": 5.0948558503827564e-05,
+            "predicted_divergence": 3.661984238760516e-07,
+            "equation_passed": false
+          }
+        }
+      ],
+      "changed_residual_negative_control_passed": true
+    }
+  ],
+  "stationary_spatial_modes": [
+    {
+      "mode_zyx": [
+        1,
+        0,
+        0
+      ],
+      "temporal_frequency_hz": 0,
+      "independent_operator_relative_defect": 1.0344976728003938e-16,
+      "pressure_relative_l2": 7.439104208628125e-05,
+      "mean_free_pressure_relative_l2": 7.633408419959262e-05,
+      "gradient_relative_l2": 7.668247331471226e-05,
+      "pressure_max_abs_pa": 0.00014924248625236558,
+      "mean_error_pa": 7.150925829729833e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997068750658408,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9978848104287922
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0018203471783756148
+        },
+        {
+          "mode": [
+            6,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001231685311840855
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 7.896688851117227e-05
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 5.818575857780659e-05
+        }
+      ]
+    },
+    {
+      "mode_zyx": [
+        0,
+        1,
+        0
+      ],
+      "temporal_frequency_hz": 0,
+      "independent_operator_relative_defect": 3.6825285706779376e-16,
+      "pressure_relative_l2": 0.0006042909221784841,
+      "mean_free_pressure_relative_l2": 0.0006558270806344319,
+      "gradient_relative_l2": 0.0006985200750431815,
+      "pressure_max_abs_pa": 0.0013766021602983347,
+      "mean_error_pa": 0.0005703514468625115,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9925368553126812,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.9687059351325861
+        },
+        {
+          "mode": [
+            0,
+            2,
+            0
+          ],
+          "energy_fraction": 0.023830919811983837
+        },
+        {
+          "mode": [
+            0,
+            3,
+            0
+          ],
+          "energy_fraction": 0.006098500618147077
+        },
+        {
+          "mode": [
+            0,
+            4,
+            0
+          ],
+          "energy_fraction": 0.0013086261545003051
+        },
+        {
+          "mode": [
+            0,
+            5,
+            0
+          ],
+          "energy_fraction": 3.3084867272756205e-05
+        }
+      ]
+    },
+    {
+      "mode_zyx": [
+        0,
+        0,
+        1
+      ],
+      "temporal_frequency_hz": 0,
+      "independent_operator_relative_defect": 5.944881077084141e-16,
+      "pressure_relative_l2": 0.007674135405320667,
+      "mean_free_pressure_relative_l2": 0.008205675533235077,
+      "gradient_relative_l2": 0.00833512535852161,
+      "pressure_max_abs_pa": 0.01613950513705853,
+      "mean_error_pa": 0.007383826720497547,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.99981900725448,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.9905008816370386
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.009318125617407651
+        },
+        {
+          "mode": [
+            0,
+            0,
+            4
+          ],
+          "energy_fraction": 7.723235479410204e-05
+        },
+        {
+          "mode": [
+            0,
+            0,
+            5
+          ],
+          "energy_fraction": 5.606048273057125e-05
+        },
+        {
+          "mode": [
+            0,
+            0,
+            3
+          ],
+          "energy_fraction": 2.7184599889717544e-05
+        }
+      ]
+    }
+  ],
+  "sampling_bounds": [
+    {
+      "frequency_hz": 0.1,
+      "dt_seconds": 0.004166666666666667,
+      "period_seconds": 10.0,
+      "samples_per_cycle": 2400.0,
+      "nyquist_hz": 120.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 0.09999999999999432,
+      "one_cycle_observation_seconds": 10.0
+    },
+    {
+      "frequency_hz": 1.0,
+      "dt_seconds": 0.004166666666666667,
+      "period_seconds": 1.0,
+      "samples_per_cycle": 240.0,
+      "nyquist_hz": 120.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 1.0,
+      "one_cycle_observation_seconds": 1.0
+    },
+    {
+      "frequency_hz": 10.0,
+      "dt_seconds": 0.004166666666666667,
+      "period_seconds": 0.1,
+      "samples_per_cycle": 24.0,
+      "nyquist_hz": 120.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 10.0,
+      "one_cycle_observation_seconds": 0.1
+    },
+    {
+      "frequency_hz": 40.0,
+      "dt_seconds": 0.004166666666666667,
+      "period_seconds": 0.025,
+      "samples_per_cycle": 6.0,
+      "nyquist_hz": 120.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 40.0,
+      "one_cycle_observation_seconds": 0.025
+    },
+    {
+      "frequency_hz": 0.1,
+      "dt_seconds": 0.008333333333333333,
+      "period_seconds": 10.0,
+      "samples_per_cycle": 1200.0,
+      "nyquist_hz": 60.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 0.10000000000000142,
+      "one_cycle_observation_seconds": 10.0
+    },
+    {
+      "frequency_hz": 1.0,
+      "dt_seconds": 0.008333333333333333,
+      "period_seconds": 1.0,
+      "samples_per_cycle": 120.0,
+      "nyquist_hz": 60.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 1.0,
+      "one_cycle_observation_seconds": 1.0
+    },
+    {
+      "frequency_hz": 10.0,
+      "dt_seconds": 0.008333333333333333,
+      "period_seconds": 0.1,
+      "samples_per_cycle": 12.0,
+      "nyquist_hz": 60.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 10.0,
+      "one_cycle_observation_seconds": 0.1
+    },
+    {
+      "frequency_hz": 40.0,
+      "dt_seconds": 0.008333333333333333,
+      "period_seconds": 0.025,
+      "samples_per_cycle": 3.0,
+      "nyquist_hz": 60.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 40.0,
+      "one_cycle_observation_seconds": 0.025
+    },
+    {
+      "frequency_hz": 0.1,
+      "dt_seconds": 0.016666666666666666,
+      "period_seconds": 10.0,
+      "samples_per_cycle": 600.0,
+      "nyquist_hz": 30.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 0.10000000000000142,
+      "one_cycle_observation_seconds": 10.0
+    },
+    {
+      "frequency_hz": 1.0,
+      "dt_seconds": 0.016666666666666666,
+      "period_seconds": 1.0,
+      "samples_per_cycle": 60.0,
+      "nyquist_hz": 30.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 1.0,
+      "one_cycle_observation_seconds": 1.0
+    },
+    {
+      "frequency_hz": 10.0,
+      "dt_seconds": 0.016666666666666666,
+      "period_seconds": 0.1,
+      "samples_per_cycle": 6.0,
+      "nyquist_hz": 30.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 10.0,
+      "one_cycle_observation_seconds": 0.1
+    },
+    {
+      "frequency_hz": 40.0,
+      "dt_seconds": 0.016666666666666666,
+      "period_seconds": 0.025,
+      "samples_per_cycle": 1.5,
+      "nyquist_hz": 30.0,
+      "below_nyquist": false,
+      "aliased_frequency_hz": 20.0,
+      "one_cycle_observation_seconds": 0.025
+    },
+    {
+      "frequency_hz": 0.1,
+      "dt_seconds": 0.03333333333333333,
+      "period_seconds": 10.0,
+      "samples_per_cycle": 300.0,
+      "nyquist_hz": 15.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 0.09999999999999964,
+      "one_cycle_observation_seconds": 10.0
+    },
+    {
+      "frequency_hz": 1.0,
+      "dt_seconds": 0.03333333333333333,
+      "period_seconds": 1.0,
+      "samples_per_cycle": 30.0,
+      "nyquist_hz": 15.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 1.0,
+      "one_cycle_observation_seconds": 1.0
+    },
+    {
+      "frequency_hz": 10.0,
+      "dt_seconds": 0.03333333333333333,
+      "period_seconds": 0.1,
+      "samples_per_cycle": 3.0,
+      "nyquist_hz": 15.0,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 10.0,
+      "one_cycle_observation_seconds": 0.1
+    },
+    {
+      "frequency_hz": 40.0,
+      "dt_seconds": 0.03333333333333333,
+      "period_seconds": 0.025,
+      "samples_per_cycle": 0.75,
+      "nyquist_hz": 15.0,
+      "below_nyquist": false,
+      "aliased_frequency_hz": 10.0,
+      "one_cycle_observation_seconds": 0.025
+    },
+    {
+      "frequency_hz": 0.1,
+      "dt_seconds": 0.06666666666666667,
+      "period_seconds": 10.0,
+      "samples_per_cycle": 150.0,
+      "nyquist_hz": 7.5,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 0.09999999999999964,
+      "one_cycle_observation_seconds": 10.0
+    },
+    {
+      "frequency_hz": 1.0,
+      "dt_seconds": 0.06666666666666667,
+      "period_seconds": 1.0,
+      "samples_per_cycle": 15.0,
+      "nyquist_hz": 7.5,
+      "below_nyquist": true,
+      "aliased_frequency_hz": 1.0,
+      "one_cycle_observation_seconds": 1.0
+    },
+    {
+      "frequency_hz": 10.0,
+      "dt_seconds": 0.06666666666666667,
+      "period_seconds": 0.1,
+      "samples_per_cycle": 1.5,
+      "nyquist_hz": 7.5,
+      "below_nyquist": false,
+      "aliased_frequency_hz": 5.0,
+      "one_cycle_observation_seconds": 0.1
+    },
+    {
+      "frequency_hz": 40.0,
+      "dt_seconds": 0.06666666666666667,
+      "period_seconds": 0.025,
+      "samples_per_cycle": 0.375,
+      "nyquist_hz": 7.5,
+      "below_nyquist": false,
+      "aliased_frequency_hz": 5.0,
+      "one_cycle_observation_seconds": 0.025
+    }
+  ],
+  "sampling_scope": "ideal band-limited sinusoid; Nyquist is an identifiability bound, not an integration-accuracy guarantee; one cycle is illustrative, not a universal detection limit",
+  "spatial_to_temporal_relation": "f=abs(k dot U)/(2*pi) only for a frozen pattern advected at known constant U; no universal conversion from wavelength alone",
+  "optimizer_updates": 0,
+  "simulations_advanced": 0,
+  "cuda_initialized": false,
+  "cpu_threads": 1,
+  "cpu_affinity": [
+    0
+  ],
+  "peak_rss_bytes": 758595584,
+  "elapsed_seconds": 2.4428753760000745
+}

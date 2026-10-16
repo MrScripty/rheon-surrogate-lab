@@ -1,0 +1,62 @@
+{
+  "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+  "controller_python": "3.12.3",
+  "runtime_packages": {
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cu132"
+  },
+  "runtime_python": "3.14",
+  "cpu_model": "Intel(R) Core(TM) Ultra 9 275HX",
+  "logical_cpus": 24,
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "cpu_episode_workers": 2,
+  "cpu_episode_threads": 1,
+  "episode_cpus": [
+    1,
+    2
+  ],
+  "replay_cpus": [
+    4,
+    5
+  ],
+  "concurrency_scope": "Initially two replay workers overlapped two native-control workers; after replay, at most two episode workers. One CUDA optimizer; latency runs serial after competing task work.",
+  "memory_reserve_bytes": 8589934592,
+  "native_timeout_seconds": 120,
+  "maximum_network_calls": 32,
+  "neural_dtype": "float32",
+  "physical_dtype": "float64",
+  "amp": false,
+  "tf32": false,
+  "warmup_native_steps": 15,
+  "native_refinement": false,
+  "fallback": false,
+  "source_capture_commit": "3a6ec2d",
+  "methods": "Replay same saved inputs independently of autonomous trajectory comparisons. Per-state cosine signal/error coefficients are spatial, not temporal PSD. Same-RHS exact oracle uses separable eigenbasis and independently checks neighbor action. No spectral inverse or exact labels at inference.",
+  "latency_scope": "Current paired serial CPU timings; ordinary desktop apps remain; first AI step excluded. Distinct from concurrent correctness wall time.",
+  "archive_policy": "Git contains source/config/scalar receipts only; weights and raw states retained ignored under runs/. No final-scene data read before frozen eligibility."
+}

@@ -1,6 +1,6 @@
 # Recover pressure accuracy at lower correction counts
 
-Status: Active; acceptance pending. Admission: user's continuation of the five-step
+Status: Active; acceptance partial. Admission: user's continuation of the five-step
 sequence. Owner: this task on experiment/water-pressure-recovery-v1, base
 9fec0f2ae6d4de6963c056cc0a3003b35fbe94a4. Target is the existing experiment lineage;
 integrate serially with new commits. Retain for local experiment review and later
@@ -59,16 +59,16 @@ portability or model architecture changes. Composed-design review not applicable
 config-selected existing owners plus a bounded measurement coordinator.
 
 Milestones:
-- M1 Active: freeze protocol, qualify callback signal/error statistics, CUDA smoke
+- M1 Accepted: freeze protocol, qualify callback signal/error statistics, CUDA smoke
   and CPU restore; saved-input replay. Evidence: focused parity/statistics tests,
   independent neighbor oracle and exact captured source/model bindings.
-- M2 Pending: stricter-policy and matched-training consumed comparisons with timing,
+- M2 Active: stricter-policy and matched-training consumed comparisons with timing,
   memory and complete failures. Gate all declared measurements retained, not improvement.
 - M3 Pending: current serial timings, conditional seed replication/fresh evaluation,
   sealed records and Tuldok readback. Gate consumed selection respected, all task
   children reaped and Runs drained; conditional deferral explicit.
 
-Next slice: M1 source/protocol qualification. Replan on invalid lineage, changed
+Next slice: M2 matched CUDA and consumed CPU measurements. Replan on invalid lineage, changed
 physics/numerics, custody failure, resource breach or lifecycle failure. Claims:
 source/spectral semantics (automated CPU), CUDA training/CPU restore (real managed
 environment), consumed comparison (real CPU), retention (artifacts/UI readback).

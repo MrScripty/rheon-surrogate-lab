@@ -19,9 +19,9 @@ def main():
     parser.add_argument('--python', required=True)
     args = parser.parse_args()
     config = read(args.config)
-    root = LAB/'runs/water-pressure-recovery-v1/frontier'
+    root = LAB/config.get('output_root','runs/water-pressure-recovery-v1/frontier')
     root.mkdir(parents=True, exist_ok=False)
-    reports = LAB/'docs/plans/water-pressure-recovery-v1/reports/frontier'
+    reports = LAB/config.get('report_root','docs/plans/water-pressure-recovery-v1/reports/frontier')
     reports.mkdir(exist_ok=False)
     observer = Observer(LAB/'runs/live-project')
     started = time.perf_counter()
@@ -57,7 +57,7 @@ def main():
     finally:
         receipt.update(finished_at_utc=utc(),elapsed_seconds=time.perf_counter()-started)
         write(root/'execution.json',receipt)
-        write(reports.parent/'frontier-execution.json',receipt)
+        write(reports.parent/(reports.name+'-execution.json'),receipt)
 
 
 if __name__ == '__main__':

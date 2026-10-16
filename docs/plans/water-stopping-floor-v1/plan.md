@@ -61,15 +61,15 @@ Milestones:
 - M1 Accepted: optional floor, focused boundary/parity tests and one real fixture.
   Gate: same default decisions; correct floor/count/cap behavior; unchanged physical
   qualification; CPU-only restore; all children reaped.
-- M2 Active: consumed autonomous comparison plus independent sparse-state errors
+- M2 Accepted: consumed autonomous comparison plus independent sparse-state errors
   and serial timings. Gate: complete declared population, including failures,
   reproducible source/checkpoint bindings and machine-readable analysis.
-- M3 Planned: evidence-selected follow-up and, when eligible, fresh validation.
+- M3 Active: evidence-selected follow-up and, when eligible, fresh validation.
   Gate: freeze decisions before final evaluation; qualify setups first; no
   accuracy regression and record actual work/time. A negative scientific result
   completes measurement but does not authorize replacement of the reference.
 
-Acceptance partial. Current phase M2; next slice: complete consumed comparison and serial timing.
+Acceptance partial. Current phase M3; next slice: qualify the residual-to-pressure stopping bound.
 Replan on resource/lifecycle failure, numerical mismatch, invalid setup, changed
 experimental question, or evidence ruling out the planned conditional follow-up.
 Standards snapshot: snapshot:v1:12194777-eab9-47d9-b486-7ef0779f2ae7;

@@ -25,12 +25,22 @@ def validate_budget(proposals,width):
 
 def stopping_policy(value):
     expected={'schema','relative_residual','absolute_residual','predicted_divergence'}
-    if type(value) is not dict or set(value)!=expected or value['schema']!='rheon-learned-stopping-policy-v1':
+    if type(value) is not dict:
+        raise ValueError('closed learned stopping policy required')
+    if value.get('schema')=='rheon-learned-stopping-policy-v2':
+        expected=expected|{'mean_free_pressure_relative_error'}
+    elif value.get('schema')!='rheon-learned-stopping-policy-v1':
+        raise ValueError('closed learned stopping policy required')
+    if set(value)!=expected:
         raise ValueError('closed learned stopping policy required')
     for name,maximum in [('relative_residual',1e-6),('absolute_residual',1e-12),('predicted_divergence',1e-7)]:
         x=value[name]
         if type(x) not in (int,float) or not math.isfinite(x) or not 0<x<=maximum:
             raise ValueError('stopping policy cannot relax existing physical limits')
+    if 'mean_free_pressure_relative_error' in value:
+        target=value['mean_free_pressure_relative_error']
+        if type(target) not in (int,float) or not math.isfinite(target) or not 0<target<=1e-6:
+            raise ValueError('bounded positive mean-free pressure error target required')
     return value
 
 
@@ -40,10 +50,29 @@ def equation_quality(model,pressure,sample,rhs,policy):
     norm=float(torch.linalg.vector_norm(error));rhs_norm=float(torch.linalg.vector_norm(rhs))
     predicted=float(error.abs().amax()*sample['dt'][0]/sample['cell_size_m'][0]**3)
     finite=all(math.isfinite(x) for x in (norm,rhs_norm,predicted))
-    return {'residual_l2':norm,'rhs_l2':rhs_norm,'relative_residual':norm/max(rhs_norm,1e-30),
+    quality={'residual_l2':norm,'rhs_l2':rhs_norm,'relative_residual':norm/max(rhs_norm,1e-30),
         'predicted_divergence':predicted,'equation_passed':finite
         and norm<=max(policy['absolute_residual'],policy['relative_residual']*rhs_norm)
         and predicted<=policy['predicted_divergence']}
+    if policy['schema']=='rheon-learned-stopping-policy-v2':
+        if model.ARCHITECTURE.get('schema')!='rheon-physical-residual-pressure-v1':
+            raise ValueError('pressure bound requires the sealed cubic physical-residual operator')
+        axes=[n for n in pressure.shape[2:] if n>1]
+        if not axes or pressure.shape[0]!=1:
+            raise ValueError('pressure bound requires one nontrivial sealed cubic grid')
+        # For L=(h/rho)*graph-Laplacian, ||L^+ r|| <= ||r||/lambda_min.
+        # Triangle inequality turns this absolute bound into an exact-field
+        # relative bound without running an inverse solver or using labels.
+        eigen_min=4*math.sin(math.pi/(2*max(axes)))**2
+        bound=float(torch.linalg.vector_norm(error-error.mean()))*float(sample['rho'][0]/sample['cell_size_m'][0])/eigen_min
+        pressure_norm=float(torch.linalg.vector_norm(pressure-pressure.mean()))
+        denominator=pressure_norm-bound
+        relative=0. if bound==0 else bound/denominator if denominator>0 else None
+        passed=relative is not None and math.isfinite(relative) and relative<=policy['mean_free_pressure_relative_error']
+        quality.update(mean_free_pressure_error_bound_pa_l2=bound,
+            mean_free_pressure_relative_error_bound=relative, pressure_error_bound_passed=passed,
+            equation_passed=quality['equation_passed'] and passed)
+    return quality
 
 
 def proposal_width(model,single_evaluation):

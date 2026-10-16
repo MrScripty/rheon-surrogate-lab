@@ -101,9 +101,12 @@ def main():
             native = output/'native'
             if (native/'receipt.json').exists():
                 result.update(summarize(native))
+            callbacks=native/'callbacks.jsonl'
+            result['all_declared_stopping_checks_passed'] = model=='native' or callbacks.exists() and all(
+                json.loads(line)['trace'][-1]['equation_passed'] for line in callbacks.read_text().splitlines())
             result['qualified'] = (error is None and result.get('status') == 'completed'
                 and not result['result']['hard_stop'] and result['all_ai_steps_qualified']
-                and result['all_reference_steps_qualified'])
+                and result['all_reference_steps_qualified'] and result['all_declared_stopping_checks_passed'])
             return result
         finally:
             leased.put(cpu)

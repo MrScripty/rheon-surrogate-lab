@@ -57,7 +57,7 @@ def main():
             LAB/model['project'] if model else None, LAB/model['artifacts'] if model else None,
             control=model is None, timeout=config['native_timeout_seconds'],
             proposals=32 if model else 1,
-            stopping=read(LAB/config['profile']) if model else None,
+            stopping=read(LAB/model.get('stopping_profile',config['profile'])) if model else None,
             single_evaluation=model is not None, threads=1,
             minimum_network_evaluations=model['minimum_network_evaluations'] if model else 0)
     finally:
@@ -83,9 +83,18 @@ def main():
                 defect = audit.vector_norm(diagnose.independent_action(delta, sample)-compatible)/max(audit.vector_norm(compatible), 1e-30)
                 assert defect < 1e-9
                 exact = sample['base']+delta
-                measurements.append({'step': item['step'], 'sample_sha256': item['sha256'],
+                measurement={'step': item['step'], 'sample_sha256': item['sha256'],
                     'oracle_independent_relative_defect': defect,
-                    **diagnose.error_metrics(pressure, exact), **diagnose.mode_metrics(pressure, exact)})
+                    **diagnose.error_metrics(pressure, exact), **diagnose.mode_metrics(pressure, exact)}
+                policy=read(LAB/model.get('stopping_profile',config['profile']))
+                if policy['schema']=='rheon-learned-stopping-policy-v2':
+                    rhs=sample['native_input_residual']+audit.MODEL.full_operator(sample['base'],sample['cell_size_m'],sample['rho'])
+                    quality=diagnose.equation_quality(audit.MODEL,pressure,sample,rhs,policy)
+                    bound=quality['mean_free_pressure_relative_error_bound']
+                    covered=bound is not None and measurement['mean_free_pressure_relative_l2']<=bound*(1+1e-6)+1e-11
+                    assert covered, 'independent same-RHS pressure error exceeds declared bound'
+                    measurement.update(pressure_bound_relative_l2=bound,pressure_bound_covers_oracle=covered)
+                measurements.append(measurement)
         assert not torch.cuda.is_initialized()
     write(args.output/'diagnostics.json', {'model': args.model, 'scene_index': args.scene,
         'samples': measurements, 'source_sha256': digest(__file__), 'config_sha256': digest(args.config),

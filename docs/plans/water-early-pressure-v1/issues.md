@@ -14,3 +14,12 @@
   optimization to a separate portability/performance change. This run preserves
   attestation and custody checks. Revisit if setup dominates subsequent experiments;
   retained phase receipts separate setup from actual optimizer/inference time.
+
+- E1 resolved:temporal/spatial frequency, absolute/relative error and input
+  rounding are separated in results.md and source-bound scalar reports.
+- E2 resolved:real smoke and both full captures/restores succeeded with unrelated
+  untracked user files preserved; configuration and source identities retained.
+- E4, experiment outcome:comparative pressure accuracy regresses in some groups
+  despite all physical qualifications and lower peak work. Owner next model
+  protocol; defer refinement pending review. No replacement, final-informed fit
+  or threshold change. Revisit with a predeclared matched train-only experiment.

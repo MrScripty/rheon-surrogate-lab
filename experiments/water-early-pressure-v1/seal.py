@@ -67,7 +67,14 @@ def main():
         'fresh_validation':fresh,'fresh_scenes_consumed':8 if eligible else 0,
         'optimizer_updates':10001,'full_training_runs':2,'smoke_training_runs':1,
         'candidate_promoted':False,'deployment_changed':False,
-        'training':admission['trials'],'phase_wall_seconds':timings,
+        'training':{name:{k:trial[k] for k in ('weights_sha256','normalization_sha256',
+            'initial_weights_sha256','sample_order_sha256','source_commit','training_seconds',
+            'updates_per_second','managed_elapsed_seconds','train_recipe_elapsed_seconds',
+            'restore_recipe_elapsed_seconds','weights_file_bytes','cuda_peak_allocated_bytes',
+            'cuda_cpu_pressure_max_abs_difference','managed_stages')}
+            for name,trial in admission['trials'].items()},
+        'matched_initialization_sampling_and_cells':admission['matched_initialization_sampling_and_cells'],
+        'phase_wall_seconds':timings,
         'serial_timing':timing['summaries'],'serial_timing_all_qualified':timing['all_qualified'],
         'first_timed_preparation_to_last_measurement_seconds':elapsed,
         'elapsed_scope':'Qualified preparation command start through last scientific measurement, including source/analysis/managed setup gaps; excludes initial untimed failed homogeneity preparation and subsequent documentation.',
@@ -82,6 +89,7 @@ def main():
         'sources':{name:digest(reports/name) for name in ('regression-summary.json','serial-timing.json',
             'training-and-admission.json','amplitude-summary.json','fixed-call-summary.json','input-rounding.json')},
         'limitations':['Consumed and manufactured diagnostics are not independent CFD validation.',
+            'One matched training seed per loss; optimizer-seed repeatability is not established.',
             'Temporal frequency is distinct from spatial mode index;32-frame windows cannot resolve cycles below1.875Hz.',
             'Weak modes can be obscured by model leakage and input rounding in mixtures; quantization oracle is not an iterative precision lower bound.',
             'Same-RHS pressure bounds do not guarantee a universal autonomous trajectory error envelope.',
@@ -90,7 +98,10 @@ def main():
     write(reports/'summary.json',result)
     write(reports/'regression-episodes.json',read(LAB/config['root']/'development/report.json'))
     (reports/'current.json').write_text(json.dumps({'state':'completed','consumed_gates_passed':eligible,
-        'fresh_validation':fresh_state,'candidate_promoted':False,'summary':'summary.json'},indent=2)+'\n')
+        'fresh_validation':fresh_state,'candidate_promoted':False,'summary':'summary.json',
+        'summary_sha256':digest(reports/'summary.json'),'population_results':regression['groups'],
+        'optimizer_seconds':{name:t['training_seconds'] for name,t in admission['trials'].items()},
+        'scope':'Live project preview; immutable summary and source-bound receipts own the scientific record.'},indent=2)+'\n')
     print(json.dumps({k:result[k] for k in ('state','consumed_gates_passed','fresh_validation_state',
         'first_timed_preparation_to_last_measurement_seconds')},indent=2))
 

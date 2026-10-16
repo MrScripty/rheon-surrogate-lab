@@ -1,10 +1,15 @@
 # Earlier accurate pressure corrections
 
-Status: Active. Admission: start, authorized by the user's continuation of the
+Status: Accepted. Measurements and retention complete; no replacement. Admission: start, authorized by the user's continuation of the
 matched CUDA / harder training-side examples / CPU regression sequence.
 Canonical plan: docs/plans/water-early-pressure-v1/plan.md.
 Owner: this task, branch experiment/water-early-pressure-v1, based on bdf2238.
-Retain branch for review; no push, rewrite, deployment or deletion authorized here.
+Retain this branch under a continuing experiment/review contract. Target is the
+experiment/water-pressure-bound-regression-v1 lineage; this task integrates its
+serial changes. Synchronize with new commits, preserving source IDs. Consumers
+are local experiment review and subsequent training/evaluation. Retire after
+accepted integration or explicit user retirement; no push, rewrite, deployment
+or deletion authorized here.
 
 Objective: learn accurate pressure corrections earlier, reducing peak inference
 work without surrendering the pressure-aware model's accuracy. Also test the
@@ -72,17 +77,19 @@ Milestones:
 - M1 Accepted: qualify bank and training objective; gate independent labels,
   v8/weight0 loss+gradient parity, additive first-loss proof, real CUDA smoke and
   CPU checkpoint restore. Write set above; replan on lineage/resource/contract failure.
-- M2 Verifying: matched full fits, explanatory CPU amplitude diagnostics and all74
+- M2 Accepted: matched full fits, explanatory CPU amplitude diagnostics and all74
   trajectories. Gate complete records including failures, unchanged physical
   thresholds, custody drained and children reaped. Improvement is reported separately.
-- M3 Planned: current serial timing and conditional fresh validation; gate frozen
+- M3 Accepted (fresh validation Deferred): current serial timing and conditional fresh validation; gate frozen
   eligible selection or explicit fresh deferral; records sealed and reviewed.
 
-Acceptance: partial. Claims M1 source/numerics (automated CPU plus real CUDA/
+Acceptance: satisfied. Claims M1 source/numerics (automated CPU plus real CUDA/
 CPU restore), M2 full comparison (environment-qualified GPU/CPU), M3 retention and
-conditional validation (artifact/real CPU); M1 satisfied (reports/smoke-result.json and source-tests.json); M2/M3 pending.
-Current phase: full CPU regression. Exactly one next slice: complete all74
-consumed trajectories for both frozen fits and compare the three populations. Blockers: none.
+conditional validation (artifact/real CPU); M1 satisfied (reports/smoke-result.json and source-tests.json); M2 satisfied
+(reports/regression-summary.json); M3 satisfied (reports/summary.json, terminal-process-check.json and project-readback.json).
+Current phase: terminal. Exactly one next slice: none. Both fits qualify on all74
+scenes but fail comparative pressure-error gates; all measurements retained and
+independent8 deferred, unconsumed. No promotion or further tuning. Blockers: none.
 Replan on changed numerical semantics, invalid lineage, resource breach, unavailable
 custody, unreaped workers or evidence invalidating the admitted composition.
 Standards: snapshot:v1:10196c62-2edb-4466-a3c7-c3448f7bc2bc,16 policies,0 unresolved.

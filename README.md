@@ -502,3 +502,11 @@ Completed experiment: [matched early and late residual feedback](docs/plans/wate
 The frozen-model stopping experiment is complete on `experiment/water-stopping-floor-v1`: an eight-pass minimum improves consumed-scene accuracy, but fails fresh worst-pressure and maximum-work gates, so the reference remains retained. A residual-to-pressure bound is separately tested on consumed scenes. [Methods and timings](docs/plans/water-stopping-floor-v1/execution-ledger.md), [complete results](docs/plans/water-stopping-floor-v1/reports/summary.json), and [analysis CSV](docs/plans/water-stopping-floor-v1/reports/comparison.csv) retain all outcomes; zero new training updates or deployment changes.
 
 The [broader pressure-aware regression](docs/plans/water-pressure-bound-regression-v1/plan.md) retains 74 completed scenes, 233 independent bound checks and current serial timings. Worst pressure deviation improves about 2–2.4× per population and tested median AI-step latency improves 8–21%, but one population requires 17 maximum calls versus retained 11. No replacement or new holdout consumption occurs. [Results](docs/plans/water-pressure-bound-regression-v1/reports/summary.json), [population CSV](docs/plans/water-pressure-bound-regression-v1/reports/population-comparison.csv), [timing CSV](docs/plans/water-pressure-bound-regression-v1/reports/timing-comparison.csv), and [methods](docs/plans/water-pressure-bound-regression-v1/execution-ledger.md) preserve the complete accuracy/work tradeoff.
+
+The [earlier-pressure experiment](docs/plans/water-early-pressure-v1/results.md)
+completed two matched 5,000-update CUDA fits and 148 qualified trajectories. Harder
+training data reduced the recent peak from 17 network calls to 11, but neither
+fit preserved the best prior pressure accuracy across all populations; no model
+was promoted and eight independent scenes remain reserved. The records also
+separate weak-mode amplitude, cross-band leakage and float32 input rounding.
+[Sealed results and timings](docs/plans/water-early-pressure-v1/reports/summary.json).

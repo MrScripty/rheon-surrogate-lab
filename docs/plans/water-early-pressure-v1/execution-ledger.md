@@ -87,3 +87,40 @@ better at4 and12calls (first-pressure16.85% and9.69% worse respectively).
 On manufactured9x11x33 after8calls, first-pressure pure-low error -0.0003712Pa
 and high-only low leakage -0.0018948Pa; improved versus oldlate but worse than
 newcontrol. No selection inferred from these tradeoffs; full74-scene suite runs.
+
+Original58 population closed while remaining consumed scenes continued:all58
+qualify per model. Control mean7.7351calls/max12/worstpairedpressure4.6819e-6;
+first-pressure mean7.7404/max11/worst3.5943e-6. Both worsen priorlate worst
+3.1448e-6 despite lower mean work. Therefore no candidate can satisfy the
+frozen all-population replacement gate; independent8 stays reserved. No profile
+tuning, refit or final-informed reselection. Conditional final executor was
+prepared but not invoked or retained once this gate failed; existing native
+phase owners remain canonical. Full remaining trajectories and timing continue.
+
+M2 accepted:all74 native controls and148 model trajectories qualify,17,046 AI
+steps and466 independent pressure-bound coverage checks, no failed episodes.
+Development phase2270.99s (~37.85min). No replacement:control preserves all
+retained-reference group gates and reduces recent max17→11 (overall17→12),
+but worsens oldlate worst pressure in original58 and recent8; first-pressure
+also regresses pressure and peak work on some groups. Full CSV/JSON results
+retained. Freeze control for consumed timing only by predeclared max/pressure/
+mean ranking; this is not a promotion or final selection. Fresh8 remains unused.
+
+M3 accepted:all12 serial episodes qualified. Small-grid median7.64% lower, long
+rectangular0.71% higher,40³1.51% lower (limited14steady samples/model, within
+repetition variation). Timing307.85s. Scientific closure interval85.93min from
+qualified prep through last measurement, including gaps; initial untimed failure
+and later documentation excluded.237 native and261 recorded measurement command
+children reaped;6 managed Runs completed/drained. Max individual RSS866,668,544B;
+raw retention498,760,027B. Independent8 remains untouched; model weights and
+physics/runtime sources unchanged since admission. summary.json seals source
+bindings, all population gates, clocks, resources and lifecycle receipts.
+
+Terminal review:executed admit/compare/seal source hashes match current files;
+source bindings still match. Host task process scan empty. Existing Tuldok catalog
+serves completed status and preserves previous project5204e37e…; no application
+restart/catalog replacement. Explicit history range bdf2238 through02d4e35 plus
+reviewed final staged result receipt, no history rewrite/merges. Four unrelated
+user files remain untracked and untouched. Final commit retains full measured
+tradeoffs, clocks, source/Run bindings, failures, and conditional validation
+deferral; no binary weights, raw field arrays or credentials staged.

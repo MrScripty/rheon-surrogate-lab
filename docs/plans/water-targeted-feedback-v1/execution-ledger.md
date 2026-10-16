@@ -78,3 +78,12 @@ The label/timeline source and final audit retain 2 tested reconciliation fixture
 unknown/changed failures, unreaped children and unsuccessful recoveries reject.
 Completed preparation is committed separately from the model/sampler source;
 full paired qualification and final evaluation are still active.
+
+
+The targeted checkpoint's matched replay turns both diagnostic bounds green:
+16×23×25 requires 8 calls versus baseline 11 / old feedback 28; 10×7×25 requires
+6 versus baseline 10 / old feedback 20. Familiar 128/128 states qualify at mean
+6.4453125/max 10; fixed eight qualifies 119/128. Broad trajectories remain pending.
+Independent-seed confirmation parameters and separate final scene identities are
+prepared prospectively, before the primary final outcomes. The trigger remains
+full-policy improvement, not a favorable quick check; see replication-protocol.md.

@@ -27,6 +27,9 @@ Binding decisions:
   promotion; a single-seed winner remains provisional.
 - Version any sampler extension explicitly; old schemas retain numerical and
   RNG/evidence parity. Existing train/analytical/policy owners remain canonical.
+- Independent-seed confirmation configs/protocol may be prepared now, before
+  primary final outcomes. Execute only if the paired candidate wins full policy;
+  reserve a separate final population and preserve analytical corpus/order.
 - Existing Tuldok workflow/catalog owns CUDA, fresh CPU restore and validation.
   One optimizer, 600-second/32 MiB Run caps; bounded independent CPU pools may
   prepare labels or real CFD scenes on separate cores. No unmanaged training.

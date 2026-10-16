@@ -66,3 +66,26 @@ medium and one low finding: numerical acceptance, component cutover ordering,
 CUDA lifecycle evidence, persisted contract policy and acceptance metadata.
 The review recommends revisions before execution. The plan remains unchanged;
 no migration, new scientific tests, catalog writes or service changes occurred.
+
+## 2026-10-16 — revise the plan against the complete review
+
+User requested revision. The new plan supersedes the original M2–M4 sequencing
+and unbound comparison criteria at 58d37a1; the original commit and review remain
+unchanged historical evidence. M2-T/M2-R now qualify independent component paths,
+M3 is Tuldok-only cutover and M4 separately gates Rheon enablement and typed
+workflow adoption. No new implementation was admitted or started by this edit.
+
+R1–R5 are addressed in the [resolution](reports/standards-review-resolution.md):
+fixed 26b comparator and zero added error/call allowance; per-component prerequisite
+claims and post-switch smoke; real CUDA failure/custody evidence; explicit
+retained-read/new-write/new-execution/public-version policy; partial acceptance
+and fully owned procedures/status. The composition probe was updated for the
+explicit Projects projections. MCP snapshot 29a39beb-fa6b-469b-9dfa-453e02f37fa0
+returned 25 policies and zero unresolved routing fact categories.
+
+Read source/retained artifacts to bind 74 scenes, original 58/amended 8/recent 8 group
+metrics, first-frame capture, exact checkpoint/normalization, old native binary,
+runtime manifest and train/restore identities. No raw tensors or model weights
+were copied into Git, and no numerical/library/runtime change was made. Planned
+Q1–Q10 actions remain unexecuted. Current next slice is M1; deployment gates
+remain pending. Document/binding verification is retained with the resolution.

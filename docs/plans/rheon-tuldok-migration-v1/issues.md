@@ -17,3 +17,12 @@
 These findings describe migration work, not failed physical qualifications or
 permission denials. No auto-review rejection occurred. The original catalog and
 running service remain unchanged.
+
+## Standards review dispositions
+
+R1–R5 from the retained [review](reports/standards-review.md) are addressed in
+the revised specification; [resolution and evidence](reports/standards-review-resolution.md)
+map each finding to the current plan/protocol. Their original findings remain
+historical and are not replaced with runtime passes. E2/E3/E6/E9/E10/E11 remain
+implementation/qualification work. Current numerical/provenance gates are pending;
+no gate blocks beginning M1 source work and no service/solver switch is qualified.

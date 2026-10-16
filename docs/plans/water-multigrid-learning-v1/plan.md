@@ -69,8 +69,8 @@ Milestones and acceptance claims:
 5. C5 artifact/system: evidence, methods, limits, custody and next decisions are
    retained and linked in the user's existing Tuldok project. State: Planned.
 
-Current acceptance: pending. Current phase: managed multi-grid training and independent CPU diagnosis.
-Exactly one next slice: complete the managed multi-grid fit and fresh CPU restore, then compare its development accuracy and work counts.
+Current acceptance: pending. Current phase: 16-simulation CUDA fit and final CPU qualification.
+Exactly one next slice: complete the admitted cohort fit/CPU qualification, then run serial matched-resource timings.
 Blockers: none. Replan on nonfinite training, Run lifecycle failure, invalid
 native controls, exceeded budgets, or a regression that blocks broader training.
 No untouched final population is consumed for development decisions.

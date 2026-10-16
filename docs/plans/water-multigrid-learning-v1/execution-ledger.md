@@ -151,3 +151,19 @@ maximum19 evaluations, versus reference12.6015625/max26 and multi-grid one-pass
 13.46875/max23. Independently seeded low-frequency40-cubed mixtures improve from
 23 to12.5 evaluations, while broad-frequency mixtures regress; report both.
 Seven physical grid scenes and longer trajectories remain pending at this point.
+
+Second trial completes all managed and CPU stages: development128/128, seven
+physical grid settings and1,491/1,491 longer-window AI steps qualify, with20 native
+trajectory children reaped/exit0. Forty-cubed means11.75 (fixed spacing) and
+12.125 (fixed volume), versus reference22.875; small16-cubed needs11 versus10.
+Select two-evaluation training for the cohort experiment, retaining this tradeoff.
+Raw two-evaluation outputs remain physically unqualified; final inference iterates.
+
+Cohort qualification Run d25f7512a7294af9bfb0d7db4fc89a1f and CPU restore
+cd403fc646f14bb39cb8ba6fa5cd51b0 complete/drain, reopen and redownload identically.
+Ten CUDA updates, positive global real-train amplitude, all five bank grids and
+exact CPU weight/prediction parity. Admit the prepared5,000-update two-evaluation
+cohort fit at source capture c4e4a50:16 real simulations/32 states, uniform parent
+then frame sampling, same analytical grid schedule and train-only global units.
+Evaluate all32 real train states separately from128 development states. The
+mode-probe fixture remains the original common physical inputs for comparison.

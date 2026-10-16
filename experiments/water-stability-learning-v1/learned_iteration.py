@@ -61,15 +61,21 @@ def predict_proposal(model,network,sample,normalization,single_evaluation):
         {**model.CORRECTION,'steps':1})
 
 
-def correct(model,network,normalization,sample,budget,stopping=None,trace=None,single_evaluation=False):
-    validate_budget(budget,proposal_width(model,single_evaluation))
+def correct(model,network,normalization,sample,budget,stopping=None,trace=None,single_evaluation=False,
+            minimum_network_evaluations=0):
+    width=proposal_width(model,single_evaluation)
+    validate_budget(budget,width)
+    if (type(minimum_network_evaluations) is not int or minimum_network_evaluations<0
+            or minimum_network_evaluations>budget*width or minimum_network_evaluations%width
+            or minimum_network_evaluations and stopping is None):
+        raise ValueError('minimum network evaluations require adaptive stopping and a reachable whole-proposal floor within budget')
     initial=sample['base'];pressure=initial
     if stopping is not None:
         stopping_policy(stopping)
         if sample['base'].shape[0]!=1:raise ValueError('adaptive stopping requires one physical sample')
         rhs=sample['native_input_residual']+model.full_operator(initial,sample['cell_size_m'],sample['rho'])
         quality=equation_quality(model,pressure,sample,rhs,stopping)
-        if quality['equation_passed']:
+        if quality['equation_passed'] and minimum_network_evaluations==0:
             if trace is not None:trace.append({'proposals':0,**quality})
             return pressure
     for index in range(budget):
@@ -78,7 +84,7 @@ def correct(model,network,normalization,sample,budget,stopping=None,trace=None,s
         if stopping is not None:
             quality=equation_quality(model,pressure,sample,rhs,stopping)
             if trace is not None:trace.append({'proposals':index+1,**quality})
-            if quality['equation_passed']:break
+            if quality['equation_passed'] and (index+1)*width>=minimum_network_evaluations:break
         elif trace is not None:trace.append({'proposals':index+1})
     return pressure
 

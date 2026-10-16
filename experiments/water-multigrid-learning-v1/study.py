@@ -60,10 +60,14 @@ def main():
     if args.timing_study and (args.workers!=1 or config['repetitions']<2):raise ValueError('timing requires one worker and repeated observations')
     args.output.mkdir(parents=True,exist_ok=False);started=time.time();commands=[];models=[]
     for model in config['models']:
-        if set(model)!={'name','project','artifacts','single_evaluation'} or type(model['single_evaluation']) is not bool or not model['name'].replace('-','').isalnum():
+        fields={'name','project','artifacts','single_evaluation'}
+        if set(model) not in (fields,fields|{'minimum_network_evaluations'}) or type(model['single_evaluation']) is not bool or not model['name'].replace('-','').isalnum():
             raise ValueError('named explicit model and proposal policy required')
         project=LAB/model['project'];artifacts=LAB/model['artifacts']
         width=1 if model['single_evaluation'] else json.loads((project/'config.json').read_text())['correction']['steps']
+        minimum=model.get('minimum_network_evaluations',0)
+        if type(minimum) is not int or not 0<=minimum<=32//width*width or minimum%width:
+            raise ValueError('minimum network evaluations must fit whole proposals within budget')
         models.append({**model,'proposals':32//width,'weights_sha256':digest(artifacts/'weights.npz'),
             'normalization_sha256':digest(artifacts/'normalization.json'),'source_witness_sha256':digest(project/'source-witness.json')})
     if len({m['name'] for m in models})!=len(models):raise ValueError('unique model names required')
@@ -81,6 +85,8 @@ def main():
             command+=['--project',str(LAB/model['project']),'--artifacts',str(LAB/model['artifacts']),
                 '--proposals',str(model['proposals']),'--adaptive-profile',str(LAB/config['profile'])]
             if model['single_evaluation']:command+=['--single-evaluation']
+            if model.get('minimum_network_evaluations',0):
+                command+=['--minimum-network-evaluations',str(model['minimum_network_evaluations'])]
         # The controller alone writes the command ledger after futures finish;
         # each task owns its immutable command/log/output identities.
         (path.parent/f'{name}-{repetition}-command.json').write_text(json.dumps(command,indent=2)+'\n')

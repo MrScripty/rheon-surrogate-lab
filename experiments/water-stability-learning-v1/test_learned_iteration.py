@@ -81,6 +81,40 @@ class Iteration(unittest.TestCase):
         for model,budget in ((TwoCells,9),(SinglePass,33)):
             with self.assertRaisesRegex(ValueError,'at most 32'):correct(model,None,None,sample,budget)
 
+    def test_minimum_counts_actual_calls_and_retains_checks_beyond_floor(self):
+        class SinglePass(TwoCells):CORRECTION={'steps':1}
+        sample=self.sample();trace=[]
+        correct(SinglePass,None,None,sample,32,self.policy,trace,minimum_network_evaluations=8)
+        self.assertEqual(trace[-1]['proposals'],8)
+        self.assertTrue(trace[-1]['equation_passed'])
+        trace=[]
+        correct(TwoCells,None,None,sample,8,self.policy,trace,minimum_network_evaluations=28)
+        self.assertEqual(trace[-1]['proposals'],7)
+        trace=[]
+        correct(SinglePass,None,None,sample,32,self.policy,trace,minimum_network_evaluations=2)
+        self.assertEqual(trace[-1]['proposals'],6)
+        self.assertTrue(trace[-1]['equation_passed'])
+
+    def test_floor_overrides_zero_work_and_rejects_unreachable_policies(self):
+        sample=self.sample();sample['native_input_residual'].zero_();trace=[]
+        actual=correct(TwoCells,None,None,sample,8,self.policy,trace,minimum_network_evaluations=8)
+        self.assertTrue(torch.equal(actual,sample['base']))
+        self.assertEqual(trace[-1]['proposals'],2)
+        for floor in (-1,True,1,33):
+            with self.assertRaisesRegex(ValueError,'minimum network evaluations'):
+                correct(TwoCells,None,None,sample,8,self.policy,minimum_network_evaluations=floor)
+        with self.assertRaisesRegex(ValueError,'minimum network evaluations'):
+            correct(TwoCells,None,None,sample,1,self.policy,minimum_network_evaluations=8)
+        with self.assertRaisesRegex(ValueError,'minimum network evaluations'):
+            correct(TwoCells,None,None,sample,8,minimum_network_evaluations=8)
+
+    def test_explicit_zero_floor_preserves_default_decisions(self):
+        sample=self.sample();before=[];after=[]
+        actual=correct(TwoCells,None,None,sample,8,self.policy,before)
+        explicit=correct(TwoCells,None,None,sample,8,self.policy,after,minimum_network_evaluations=0)
+        self.assertTrue(torch.equal(actual,explicit))
+        self.assertEqual(before,after)
+
 
 class ActualRecurrence(unittest.TestCase):
     def test_four_uninterrupted_evaluations_preserve_pressure_and_count(self):

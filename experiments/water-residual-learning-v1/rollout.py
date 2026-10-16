@@ -38,7 +38,7 @@ def messages(child,deadline):
     raise TimeoutError('native trajectory deadline')
 
 
-def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None,single_evaluation=False,threads=1):
+def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=120,proposals=1,stopping=None,single_evaluation=False,threads=1,minimum_network_evaluations=0):
     affinity=sorted(os.sched_getaffinity(0))
     if type(threads) is not int or threads not in (1,4,8) or threads>len(affinity):
         raise ValueError('one, four or eight CPU threads within explicit affinity required')
@@ -47,12 +47,16 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
     if stopping is not None:
         stopping_policy(stopping)
         if control:raise ValueError('native control does not use learned stopping')
+    if type(minimum_network_evaluations) is not int or not 0<=minimum_network_evaluations<=32 or minimum_network_evaluations and (control or stopping is None):
+        raise ValueError('minimum network evaluations require learned adaptive inference within32 calls')
     if not control:
         audit.initialize(project,artifacts,sorted(os.sched_getaffinity(0)))
         os.sched_setaffinity(0,set(affinity))
         audit.TORCH.set_num_threads(threads)
         width=proposal_width(audit.MODEL,single_evaluation)
         validate_budget(proposals,width)
+        if minimum_network_evaluations>proposals*width or minimum_network_evaluations%width:
+            raise ValueError('minimum network evaluations must fit whole proposals within budget')
     output.mkdir(parents=True,exist_ok=False)
     (output/'scene.json').write_text(json.dumps(scene,indent=2)+'\n')
     environment={**os.environ,'OMP_NUM_THREADS':str(threads),'MKL_NUM_THREADS':str(threads),'RAYON_NUM_THREADS':str(threads),'CUDA_VISIBLE_DEVICES':'','TULDOK_TORCH_DEVICE':'cpu'}
@@ -68,7 +72,8 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                     sample={key:torch.tensor(value[source],dtype=torch.float64).reshape(shape) for key,source in [('base','base_pressure'),('native_input_residual','native_input_residual')]}
                     sample.update(cell_size_m=torch.tensor([value['cell_size_m']],dtype=torch.float64),rho=torch.tensor([value['density_kg_m3']],dtype=torch.float64),dt=torch.tensor([value['dt_s']],dtype=torch.float64))
                     trace=[];inference_start=time.perf_counter()
-                    with torch.no_grad():pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,proposals,stopping,trace,single_evaluation).flatten().tolist()
+                    with torch.no_grad():pressure=correct(audit.MODEL,audit.NETWORK,audit.NORM,sample,proposals,stopping,trace,single_evaluation,
+                        minimum_network_evaluations=minimum_network_evaluations).flatten().tolist()
                     elapsed=time.perf_counter()-inference_start
                     with (output/'callbacks.jsonl').open('a') as stream:
                         stream.write(json.dumps({'step':value['id'],'model_correction_seconds':elapsed,
@@ -90,7 +95,9 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                 terminated=True;os.killpg(child.pid,signal.SIGTERM)
                 try:child.wait(timeout=2)
                 except subprocess.TimeoutExpired:os.killpg(child.pid,signal.SIGKILL);child.wait(timeout=5)
-            if not child.stdin.closed:child.stdin.close()
+            if not child.stdin.closed:
+                try:child.stdin.close()
+                except BrokenPipeError:pass  # An exited child must still leave its original failure/reaping receipt.
             child.stdout.close()
             report={'schema':'rheon-residual-trajectory-v1','status':'failed' if error else 'completed','error':error,
                 'scene':scene,'result':complete,'frames':len(frames),'command':command,
@@ -102,6 +109,7 @@ def run(binary,scene,output,project=None,artifacts=None,control=False,timeout=12
                 'learned_proposals_per_pressure_solve':None if control else proposals,
                 'native_pressure_refinement':False,
                 'adaptive_stopping':stopping,'proposal_network_evaluations':None if control else width,
+                'minimum_network_evaluations':minimum_network_evaluations,
                 'qualified_native_frames':sum(bool((f.get('reference_quality') or {}).get('qualified')) for f in frames),
                 'worst_ai_relative_residual':max([f['ai_quality']['relative_residual'] or 0 for f in frames if f.get('ai_quality')] or [0]),
                 'worst_ai_actual_divergence':max([f['ai_quality']['actual_divergence'] for f in frames if f.get('ai_quality')] or [0])}
@@ -116,11 +124,13 @@ def main():
     parser.add_argument('--proposals',type=int,choices=range(1,33),default=1)
     parser.add_argument('--adaptive-profile',type=Path)
     parser.add_argument('--single-evaluation',action='store_true')
+    parser.add_argument('--minimum-network-evaluations',type=int,choices=range(33),default=0)
     parser.add_argument('--threads',type=int,choices=(1,4,8),default=1)
     args=parser.parse_args()
     if not args.reference_control and not (args.project and args.artifacts):parser.error('CPU restore project and artifacts required')
     stopping=stopping_policy(json.loads(args.adaptive_profile.read_text())) if args.adaptive_profile else None
-    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals,stopping=stopping,single_evaluation=args.single_evaluation,threads=args.threads)
+    result=run(args.binary.absolute(),json.loads(args.scene.read_text()),args.output.absolute(),args.project.absolute() if args.project else None,args.artifacts.absolute() if args.artifacts else None,args.reference_control,proposals=args.proposals,stopping=stopping,single_evaluation=args.single_evaluation,threads=args.threads,
+        minimum_network_evaluations=args.minimum_network_evaluations)
     print(json.dumps(result),flush=True)
 
 

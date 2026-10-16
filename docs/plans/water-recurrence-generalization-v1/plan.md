@@ -34,6 +34,8 @@ Binding decisions:
   Once inspected they cannot be reused as untouched final evidence in later work.
 - CPU correctness can overlap CUDA training on distinct cores, up to23 independent
   single-thread workers. No isolated latency claims under overlapping work.
+- A prepared eight-grid feedback config may be CPU-qualified from the fresh
+  reference failures; its optimizer is not yet admitted.
 - Extra objective/architecture changes follow this experiment's results as a
   separate experiment. CPU profiling/deployment remain independently owned.
 
@@ -49,7 +51,7 @@ an adjacent write-set extension.
 
 Acceptance claims (automated, required-real unless noted):
 - C1 contract/artifact: explicit configurations preserve controlled quantities;
-  different seeds and fresh setup identities are recorded. Pending.
+  different seeds and fresh setup identities are recorded. Satisfied; reports/configuration.json.
 - C2 system: every admitted CUDA fit completes or has an explicit failed outcome;
   successful Run artifacts reopen/redownload and fresh CPU restore matches. Pending.
 - C3 system: matched adaptive/fixed-eight development evaluation and native-
@@ -58,7 +60,7 @@ Acceptance claims (automated, required-real unless noted):
 - C4 artifact/system: results, methods, next decisions, lifecycle and existing-
   catalog Tuldok project references are retained; all own jobs drain. Pending.
 
-Current phase: configuration admission and baseline CPU qualification.
+Current phase: managed CUDA repeats and CPU qualification.
 Exactly one next slice: controlled recurrence/seed experiment and its evidence.
 Blockers: none. Replan on invalid native controls, exceeded budgets, nonfinite
 training, changed custody or source contracts. No further objective is admitted.

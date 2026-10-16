@@ -11,3 +11,9 @@
 - R4, deferred: retained native scene contract caps trajectories at512 steps.
   Owner: native capture/integration. A longer window needs a separate resource/
   lifecycle qualification; this experiment stays within the actual limit.
+
+- R5, measured learning limitation: reference passes6/8 new shapes;17×13×9
++  and33×17×9 fail unchanged equation gates after32 evaluations while native
++  controls qualify. Owner: learning feedback. Compare all new trials before
++  deciding on shape coverage; no threshold relaxation or native cleanup.
++  Evidence: reports/reference-fresh-development.json and ignored full traces.

@@ -64,15 +64,16 @@ Milestones and objective evidence:
   diagnosis-findings.md.
 - M2 versioned supplemental sampler and controlled configs, preserving legacy
   tensors/order/loss/RNG; memory/operator validation and clean source capture.
-  Active; contract/CPU evidence pending.
+  Accepted; claim satisfied by reports/unit-tests.json, configuration.json,
+  reference-bindings.json and capture.json.
 - M3 two managed CUDA fits, CPU qualification, frozen final comparison and
   independent CPU preparation. Required-real RTX5090/Tuldok/nativeCPU evidence:
   numerical outcomes, terminal/reaped custody, actual timing/source identity,
-  existing project visibility and complete retained record. Planned; pending.
+  existing project visibility and complete retained record. Active; pending.
 
-Current acceptance: partial. Current phase: M2.
-Exactly one next slice: implement/qualify versioned supplemental sampling with
-original-stream parity, fixed paired configurations and untouched final scenes.
+Current acceptance: partial. Current phase: M3.
+Exactly one next slice: complete paired managed fits and CPU qualification,
+with independent CPU label/CFD preparation; freeze selection before final.
 Blockers: none. Replan if controls fail, diagnosis contradicts the selected
 mechanism, resources/custody become unavailable, or legacy parity/physics changes.
 Improvement itself is not required for experiment acceptance. See execution-ledger.md,

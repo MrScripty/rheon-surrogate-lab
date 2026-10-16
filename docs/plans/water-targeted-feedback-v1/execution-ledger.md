@@ -31,3 +31,50 @@ file writes and failed before touching those files; it was corrected at the lab
 root. No training or scientific evaluation was replayed. An intermediate config
 generator's scene field names were corrected to the closed native contract before
 qualification/execution; no invalid scene was executed.
+
+
+Clean source projects were captured at a1c5d6f; assembly takes 2.615 s and 2.466 s.
+The task worktree was clean and removed with its full head protected/reachable.
+The existing catalog registered/read back project d43c3d13f46f4a7caa8d6367b981f494,
+with 64 evidence shortcuts; previous project/result/data records remain intact.
+The canonical registration route succeeded after an unsupported route returned
+404 before mutation. The scientific controller starts at 2026-10-16T07:44:08.732039Z.
+
+Supplement-control CUDA training completes 5,000 updates in 373.062 s. Actual
+history records 625 exposures per primary grid and 625 supplemental exposures
+per reused grid, with zero duplicate tensor bank residency. CPU restore follows.
+
+CPU future-data preparation first encounters a worker import failure before any
+label/native output. The pool shuts down; the failed command/source/log/timing is
+retained. A fresh command after fixing its dependency path completes in 104.540 s.
+All 32 independent late labels qualify (worst operator error 1.10620e-13); the
+removed constant fraction is at most 8.88830e-12 and float32 target error relative
+to the original RHS is at most 4.64334e-12. Source teacher defects remain separate.
+
+A one-solve native fixture qualifies before sixteen new larger water parents.
+All 1,024 parent steps and 784 post-warm-up teacher pressure states qualify via
+independent operator and native paired physics gates; no neural calls occur.
+Each parent retains its actual force/geometry/telemetry and pressure/base/residual
+arrays. Actual worker affinity is recorded, rather than claiming every allowed
+core processed a task. Eight workers execute parent simulations.
+
+All 16 pressure/base field timelines parse and import into the same Tuldok
+catalog, then reopen with exact hashes. An initial publication interpreter lacks
+psycopg and fails before authentication/mutation; the existing lab controller
+Python succeeds under a fresh command identity. Both recoveries are source/timing
+bound in reconciliations.json. There is no optimizer retry or data substitution.
+
+
+Supplement-control standard CPU qualification completes in 216.430 s; all 32
+fitting/128 familiar states and 18 standard trajectories qualify. Familiar mean/
+max calls are 6.390625/10; fixed eight calls pass 121/128. Matched captured hard
+solve remains red at 25 calls (baseline 11), so extra old-grid examples alone do
+not resolve it. A second actual solve, 10×7×25, reproduces old feedback 20 versus
+baseline 10 calls; that input/replay record is retained as another quick check.
+
+Targeted CUDA training completes 5,000 updates in 336.582 s, with primary grid
+exposures [625]*8 and supplemental [833,833,833,834,834,833]. CPU restore follows.
+The label/timeline source and final audit retain 2 tested reconciliation fixtures:
+unknown/changed failures, unreaped children and unsuccessful recoveries reject.
+Completed preparation is committed separately from the model/sampler source;
+full paired qualification and final evaluation are still active.

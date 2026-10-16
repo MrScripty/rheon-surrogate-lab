@@ -1,0 +1,101 @@
+{
+  "reviewed_commit": "58d37a1bdfef2805dbff2cdabf12bb8607eec40f",
+  "reviewed_path": "docs/plans/rheon-tuldok-migration-v1/plan.md",
+  "standards_snapshot": {
+    "kind": "snapshot-handle",
+    "id": "snapshot:v1:e1406d64-d247-449d-9410-3875bd1a6e67",
+    "schema_version": 5
+  },
+  "routing_facts": {
+    "routing.activities": [
+      "documentation",
+      "planning",
+      "verification"
+    ],
+    "routing.applications": [
+      "frontend",
+      "library"
+    ],
+    "routing.boundaries": [
+      "ipc",
+      "persistence"
+    ],
+    "routing.details": [
+      "topic.contracts.evolution",
+      "topic.contracts.protocols",
+      "topic.contracts.schemas",
+      "workflow.planning.discovery",
+      "workflow.verification.gui",
+      "workflow.verification.oracles"
+    ],
+    "routing.frameworks": [],
+    "routing.languages": [],
+    "routing.topics": [
+      "architecture",
+      "concurrency",
+      "contracts",
+      "dependencies",
+      "performance"
+    ],
+    "routing.workflow-profiles": []
+  },
+  "routed_policies": [
+    "core",
+    "router",
+    "workflow.implementation",
+    "workflow.verification",
+    "topic.accessibility",
+    "topic.security",
+    "workflow.development-proportionality",
+    "topic.contracts",
+    "topic.contracts.evolution",
+    "topic.contracts.protocols",
+    "workflow.planning",
+    "profile.application.library",
+    "topic.code-design",
+    "workflow.documentation",
+    "profile.application.frontend",
+    "topic.concurrency",
+    "topic.architecture",
+    "profile.boundary.persistence",
+    "profile.boundary.ipc",
+    "topic.contracts.schemas",
+    "topic.dependencies",
+    "topic.performance",
+    "workflow.planning.discovery",
+    "workflow.verification.gui",
+    "workflow.verification.oracles"
+  ],
+  "additionally_read_policy": "workflow.commit",
+  "routing_unresolved_fact_categories": 0,
+  "result": "revisions_needed_before_execution",
+  "findings": [
+    {
+      "id": "R1",
+      "priority": "high",
+      "topic": "Numerical acceptance and frozen baseline"
+    },
+    {
+      "id": "R2",
+      "priority": "high",
+      "topic": "Component-specific cutover prerequisites"
+    },
+    {
+      "id": "R3",
+      "priority": "medium",
+      "topic": "Tuldok managed CUDA failure lifecycle"
+    },
+    {
+      "id": "R4",
+      "priority": "medium",
+      "topic": "Persisted and public contract evolution policy"
+    },
+    {
+      "id": "R5",
+      "priority": "low",
+      "topic": "Acceptance state and claim metadata"
+    }
+  ],
+  "evidence_boundary": "Reviewer analysis of MCP-returned policies and committed plan; not automated Engine conformance attestation. No migration or new runtime/scientific tests performed.",
+  "plan_modified": false
+}

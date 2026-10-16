@@ -1,0 +1,54 @@
+{
+  "scope": "Inert syntax/registry compatibility only; no model import, child launch, database mutation or migration",
+  "target_commit": "300f12df6f48e028fd9379911703f7c89337952a",
+  "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "checks": [
+    {
+      "case": "live_project",
+      "input_sha256": "27c17b0ac155839c77cd077cb13f770cd3c4d37588de95dff207a4c6678dc3a5",
+      "elapsed_seconds": 7.287700282176957e-05,
+      "status": "rejected",
+      "exception": "WorkbenchError",
+      "code": "invalid",
+      "message": "Invalid project fields."
+    },
+    {
+      "case": "cuda_training_recipe",
+      "input_sha256": "46d9755cc073e7ae5d551516b0bee9e081464c9fd5e49474c70aaf32496a1693",
+      "elapsed_seconds": 9.860100544756278e-05,
+      "status": "rejected",
+      "exception": "WorkbenchError",
+      "code": "invalid",
+      "message": "Invalid project fields."
+    },
+    {
+      "case": "cpu_restore_recipe",
+      "input_sha256": "8625c9e21404eadfcded7e92eb98af4397001ae279e085971f46dc0cb70e0b69",
+      "elapsed_seconds": 9.652099834056571e-05,
+      "status": "rejected",
+      "exception": "WorkbenchError",
+      "code": "invalid",
+      "message": "Invalid project fields."
+    }
+  ],
+  "managed_profile_without_device": {
+    "status": "rejected",
+    "message": "Unsupported recipe runtime profile.",
+    "code": "unsupported"
+  },
+  "legacy_discovery_equal": true,
+  "old_digest": "cb070a69ebd35b48e4f95a57ca01647c75bd7567521429e49efc3a3a1daebae8",
+  "new_digest": "cb070a69ebd35b48e4f95a57ca01647c75bd7567521429e49efc3a3a1daebae8",
+  "method": {
+    "interpreter": "Primary Tuldok .venv Python3.12.3, -B; imported fetched Tuldok source with explicit sys.path",
+    "project_input": "git show experiment/water-pressure-recovery-v1:tuldok-project.json",
+    "recipe_inputs": "runs/water-pressure-recovery-v1/gentle-010/project/{train,restore}-recipe.json",
+    "calls": [
+      "projects.manifest(json.loads(project_bytes))",
+      "recipe_contract.decode_definition(recipe_bytes)",
+      "recipe_contract.decode_definition(train_recipe_with_runtime_device_removed)",
+      "agent_api.discovery() in separate old/new source processes"
+    ],
+    "effects": "Inert validation only. The additional missing-profile probe changes an in-memory copy, never saved recipes."
+  }
+}

@@ -1,8 +1,8 @@
 # Recover pressure accuracy at lower correction counts
 
-Status: Active; acceptance partial. Admission: user's continuation of the five-step
+Status: Accepted; acceptance satisfied. Admission: user's continuation of the five-step
 sequence. Owner: this task on experiment/water-pressure-recovery-v1, base
-9fec0f2ae6d4de6963c056cc0a3003b35fbe94a4. Target is the existing experiment lineage;
+9fec0f2ae6d4de6963c056cc0a3003b35fbe94a4. Target is experiment/water-early-pressure-v1, carrying the pressure-bound lineage;
 integrate serially with new commits. Retain for local experiment review and later
 training; retire after accepted integration or explicit retirement. No rewrite,
 push, deployment, or branch deletion in this task.
@@ -62,13 +62,27 @@ Milestones:
 - M1 Accepted: freeze protocol, qualify callback signal/error statistics, CUDA smoke
   and CPU restore; saved-input replay. Evidence: focused parity/statistics tests,
   independent neighbor oracle and exact captured source/model bindings.
-- M2 Active: stricter-policy and matched-training consumed comparisons with timing,
+- M2 Accepted: stricter-policy and matched-training consumed comparisons with timing,
   memory and complete failures. Gate all declared measurements retained, not improvement.
-- M3 Pending: current serial timings, conditional seed replication/fresh evaluation,
+- M3 Accepted (seed replication and fresh validation Deferred): current serial timings, conditional seed replication/fresh evaluation,
   sealed records and Tuldok readback. Gate consumed selection respected, all task
   children reaped and Runs drained; conditional deferral explicit.
 
-Next slice: M2 matched CUDA and consumed CPU measurements. Replan on invalid lineage, changed
+Current phase: terminal. Next slice: none. Seed replication and fresh validation
+are Deferred because the consumed comparative gates failed. No model replacement
+or deployment change.
+
+All named source/environment/measurement/retention claims are satisfied;
+comparative improvement is reported separately. Evidence:
+[source tests](reports/source-tests.json), [smoke](reports/smoke-result.json),
+[matched admission](reports/training/admission.json),
+[policy comparison](reports/policy/regression-summary.json),
+[training comparison](reports/training/regression-summary.json),
+[serial timing](reports/training/serial-timing.json), [seal](reports/summary.json),
+[Tuldok readback](reports/project-readback.json), and
+[host process check](reports/host-process-check.json).
+
+Replan on invalid lineage, changed
 physics/numerics, custody failure, resource breach or lifecycle failure. Claims:
 source/spectral semantics (automated CPU), CUDA training/CPU restore (real managed
 environment), consumed comparison (real CPU), retention (artifacts/UI readback).

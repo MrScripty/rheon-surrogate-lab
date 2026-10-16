@@ -1,0 +1,6348 @@
+{
+  "schema": "rheon-pressure-accuracy-replay-v1",
+  "sample": "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0512.npz",
+  "sample_sha256": "45662f8d3e3072702f455d5babdb6a7814c18b9f0eb35ad4c27cf18794237484",
+  "model": {
+    "project": "runs/water-pressure-recovery-v1/gentle-025/project",
+    "artifacts": "runs/water-pressure-recovery-v1/gentle-025/managed-full/stage-01/artifacts"
+  },
+  "weights_sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+  "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+  "source_witness_sha256": "0dfd283438f5893ff8416a1747094f5a986d7e9caa3177248bc56f27aea1be3d",
+  "counts_xyz": [
+    12,
+    8,
+    10
+  ],
+  "oracle_relative_error": 2.4750949860340965e-15,
+  "removed_constant_over_initial_residual": 1.2889527790032559e-17,
+  "rounded_full_pressure": {
+    "pressure_relative_l2": 2.5247577807235134e-08,
+    "mean_free_pressure_relative_l2": 2.7377492652882552e-08,
+    "gradient_relative_l2": 1.4401669962182505e-07,
+    "pressure_max_abs_pa": 1.8675264428225091e-06,
+    "mean_error_pa": -5.036366322481537e-09
+  },
+  "negative_zero_correction": {
+    "pressure_relative_l2": 0.13768044035161778,
+    "mean_free_pressure_relative_l2": 0.1377987154718232,
+    "gradient_relative_l2": 0.19921927882665885,
+    "pressure_max_abs_pa": 9.121332385261844,
+    "mean_error_pa": -0.9842674734643329
+  },
+  "selected": {
+    "pressure-bound": {
+      "calls": 7,
+      "correction_seconds_cumulative": 0.019448251005087513,
+      "pressure_relative_l2": 4.391206316467612e-07,
+      "mean_free_pressure_relative_l2": 4.283424277639748e-07,
+      "gradient_relative_l2": 3.140353775652387e-07,
+      "pressure_max_abs_pa": 1.886409045592785e-05,
+      "mean_error_pa": 3.5628916594061363e-06,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997499467807461,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8312342727426186
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.13148314845165796
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03603406425177353
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0009945040277193054
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00015467932630785022
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 8.893337760666348e-20,
+          "relative_rms": 2.0953377231118966e-09
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.299571284375262e-14,
+          "relative_rms": 3.867263186805405e-09
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.164617995344589e-08,
+          "relative_rms": 4.4226052948993053e-07
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 2.4277499100638657e-19,
+          "relative_rms": 1.0493424534809286e-06
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.4178802341453306e-13,
+          "relative_rms": 1.039161351689939e-07
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.2775748511397193e-11,
+          "relative_rms": 4.083318307555441e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.0110016754605694e-17,
+          "relative_rms": 5.288000141045e-11
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 3.3987212813824313e-09,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.5558115058090423e-07,
+          "predicted_divergence": 2.012914398126971e-09,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 0.00039897915767120144,
+          "mean_free_pressure_relative_error_bound": 7.519132130929526e-07,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 3.3987212813824313e-09,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.5558115058090423e-07,
+          "predicted_divergence": 2.012914398126971e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.00039897915767120144,
+          "mean_free_pressure_relative_error_bound": 7.519132130929526e-07,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 3.3987212813824313e-09,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.5558115058090423e-07,
+          "predicted_divergence": 2.012914398126971e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.00039897915767120144,
+          "mean_free_pressure_relative_error_bound": 7.519132130929526e-07,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    "tight-3e-7": {
+      "calls": 8,
+      "correction_seconds_cumulative": 0.02196819501114078,
+      "pressure_relative_l2": 8.089893280502612e-08,
+      "mean_free_pressure_relative_l2": 7.631209845523209e-08,
+      "gradient_relative_l2": 5.627804358660926e-08,
+      "pressure_max_abs_pa": 3.415533261552639e-06,
+      "mean_error_pa": 7.411257073501981e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997491112054777,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8607503079757737
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.10082504299658727
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03719153744382191
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0009812765452478953
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00015948510552581065
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.6363153743025557e-20,
+          "relative_rms": 1.1408283883759652e-09
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 6.940227406802169e-16,
+          "relative_rms": 3.3408664530953654e-10
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.6392418902489271e-09,
+          "relative_rms": 7.879172367399117e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 1.1506083780776777e-21,
+          "relative_rms": 7.224021605798431e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 3.083402321611955e-15,
+          "relative_rms": 1.5324217575816636e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.082873807731347e-13,
+          "relative_rms": 7.299666808581766e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.9983574727869422e-20,
+          "relative_rms": 2.3509971889084963e-12
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 6.120640237135333e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.8018074197539466e-08,
+          "predicted_divergence": 3.56023320084257e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.185078398742451e-05,
+          "mean_free_pressure_relative_error_bound": 1.354094095932229e-07,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 6.120640237135333e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.8018074197539466e-08,
+          "predicted_divergence": 3.56023320084257e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.185078398742451e-05,
+          "mean_free_pressure_relative_error_bound": 1.354094095932229e-07,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 6.120640237135333e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.8018074197539466e-08,
+          "predicted_divergence": 3.56023320084257e-10,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 7.185078398742451e-05,
+          "mean_free_pressure_relative_error_bound": 1.354094095932229e-07,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    "tight-1e-7": {
+      "calls": 9,
+      "correction_seconds_cumulative": 0.024494461009453516,
+      "pressure_relative_l2": 1.492486928866117e-08,
+      "mean_free_pressure_relative_l2": 1.3668108170276264e-08,
+      "gradient_relative_l2": 1.0122583576036672e-08,
+      "pressure_max_abs_pa": 6.191302013291988e-07,
+      "mean_error_pa": 1.4844416082141367e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997493361087905,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8821944582706412
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.07857939875914766
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03807454520218817
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0009006805172997109
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001630186673364937
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.6091001738577294e-22,
+          "relative_rms": 8.912779849292957e-11
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 5.21393098704067e-18,
+          "relative_rms": 2.895708922663898e-11
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.2586383519423725e-11,
+          "relative_rms": 1.4112232786497936e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.361935847869119e-23,
+          "relative_rms": 1.559466597732518e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 6.992611543128027e-17,
+          "relative_rms": 2.307718934499378e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.3114886941366166e-14,
+          "relative_rms": 1.3082849163446861e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 6.709058301942665e-22,
+          "relative_rms": 4.307708462186946e-13
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.1047550837285233e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.057168646870477e-09,
+          "predicted_divergence": 6.332455300868863e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2968826103907488e-05,
+          "mean_free_pressure_relative_error_bound": 2.4440943624166557e-08,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.1047550837285233e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.057168646870477e-09,
+          "predicted_divergence": 6.332455300868863e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2968826103907488e-05,
+          "mean_free_pressure_relative_error_bound": 2.4440943624166557e-08,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.1047550837285233e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.057168646870477e-09,
+          "predicted_divergence": 6.332455300868863e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2968826103907488e-05,
+          "mean_free_pressure_relative_error_bound": 2.4440943624166557e-08,
+          "pressure_error_bound_passed": true
+        }
+      }
+    }
+  },
+  "frontier": [
+    {
+      "calls": 0,
+      "correction_seconds_cumulative": 0.0,
+      "pressure_relative_l2": 0.13768044035161778,
+      "mean_free_pressure_relative_l2": 0.1377987154718232,
+      "gradient_relative_l2": 0.19921927882665885,
+      "pressure_max_abs_pa": 9.121332385261844,
+      "mean_error_pa": -0.9842674734643329,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.8109731011951706,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.2306843060154037
+        },
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.13158031439561318
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.11930321360234794
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0613508465107838
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.06100267430196429
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 32.20475503902041,
+          "relative_rms": 39.87325025765484
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 1764.1716324042904,
+          "relative_rms": 0.5326509210422751
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 2539.35328552714,
+          "relative_rms": 0.09806649251801776
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 4.740933113394644e-06,
+          "relative_rms": 4.637107716145203
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 0.7131254581118869,
+          "relative_rms": 0.2330484304614198
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 964.6790638638734,
+          "relative_rms": 0.35482277279482566
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 45.207951527412476,
+          "relative_rms": 0.11182088746784376
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 0.005181588961143771,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.23719437566947393,
+          "predicted_divergence": 0.008793771103257898,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 608.2717080803529,
+          "mean_free_pressure_relative_error_bound": null,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 0.005181588961143771,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.23719437566947393,
+          "predicted_divergence": 0.008793771103257898,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 608.2717080803529,
+          "mean_free_pressure_relative_error_bound": null,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 0.005181588961143771,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.23719437566947393,
+          "predicted_divergence": 0.008793771103257898,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 608.2717080803529,
+          "mean_free_pressure_relative_error_bound": null,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 1,
+      "correction_seconds_cumulative": 0.004153278001467697,
+      "pressure_relative_l2": 0.030807665105133046,
+      "mean_free_pressure_relative_l2": 0.020689621757126693,
+      "gradient_relative_l2": 0.01507236719859801,
+      "pressure_max_abs_pa": 1.0938470022977662,
+      "mean_error_pa": -0.44922498892433615,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9942686428423031,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.6787097405936907
+        },
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.2329255246709329
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.03578607634800985
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.027303946043714073
+        },
+        {
+          "mode": [
+            0,
+            2,
+            0
+          ],
+          "energy_fraction": 0.004210172334193404
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 0.0035796877010776606,
+          "relative_rms": 0.4203820931267947
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 5.395649119526297,
+          "relative_rms": 0.029457379847867594
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 114.43317018409368,
+          "relative_rms": 0.020817810178747544
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 9.900156302278736e-05,
+          "relative_rms": 21.190260506695743
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 0.0056841984749324516,
+          "relative_rms": 0.02080644241869313
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 0.6229129358067959,
+          "relative_rms": 0.009016411695499278
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 0.06206514142889744,
+          "relative_rms": 0.004143233362466131
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 0.0002249509808895953,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.010297441164952112,
+          "predicted_divergence": 0.00021549901980472269,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 26.407211842959683,
+          "mean_free_pressure_relative_error_bound": 0.052125699166891824,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 0.0002249509808895953,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.010297441164952112,
+          "predicted_divergence": 0.00021549901980472269,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 26.407211842959683,
+          "mean_free_pressure_relative_error_bound": 0.052125699166891824,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 0.0002249509808895953,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.010297441164952112,
+          "predicted_divergence": 0.00021549901980472269,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 26.407211842959683,
+          "mean_free_pressure_relative_error_bound": 0.052125699166891824,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 2,
+      "correction_seconds_cumulative": 0.0068398530056583695,
+      "pressure_relative_l2": 0.003385074235210434,
+      "mean_free_pressure_relative_l2": 0.0031818458053057873,
+      "gradient_relative_l2": 0.0021621324362353918,
+      "pressure_max_abs_pa": 0.12515134308543185,
+      "mean_error_pa": -0.03134991577886179,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9995567338109933,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.5831218563975168
+        },
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.38247925307239006
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.025969002396089444
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.004345921632190698
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.0014934232961245667
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.7919472181120693e-05,
+          "relative_rms": 0.029742963978337037
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 0.01793497481618199,
+          "relative_rms": 0.0016983322269988473
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 2.831300781180305,
+          "relative_rms": 0.0032745534508450322
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.595591661888071e-09,
+          "relative_rms": 0.1593082538368662
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 3.225529297882261e-05,
+          "relative_rms": 0.0015673417689787005
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 0.0012163364717850385,
+          "relative_rms": 0.00039842531382385394
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.4940541512983887e-05,
+          "relative_rms": 6.428337791688353e-05
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.3110612225045227e-05,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.0010579201243413364,
+          "predicted_divergence": 2.0011462028202144e-05,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 2.712976980290602,
+          "mean_free_pressure_relative_error_bound": 0.0051343353161344505,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.3110612225045227e-05,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.0010579201243413364,
+          "predicted_divergence": 2.0011462028202144e-05,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 2.712976980290602,
+          "mean_free_pressure_relative_error_bound": 0.0051343353161344505,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.3110612225045227e-05,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.0010579201243413364,
+          "predicted_divergence": 2.0011462028202144e-05,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 2.712976980290602,
+          "mean_free_pressure_relative_error_bound": 0.0051343353161344505,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 3,
+      "correction_seconds_cumulative": 0.009345062004285865,
+      "pressure_relative_l2": 0.00045752235841493627,
+      "mean_free_pressure_relative_l2": 0.0004896698636596774,
+      "gradient_relative_l2": 0.00034033114414154004,
+      "pressure_max_abs_pa": 0.017992738369187578,
+      "mean_error_pa": -0.0013685910107236784,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.999813714137449,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.5387480209902487
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.42982276420983917
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.029583031911158457
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.0008263721598651875
+        },
+        {
+          "mode": [
+            1,
+            0,
+            2
+          ],
+          "energy_fraction": 0.00020385389325149695
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.4926580928368245e-09,
+          "relative_rms": 0.00027145747706411056
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.2064344797223e-05,
+          "relative_rms": 0.00011488134680007738
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 0.06741598804919668,
+          "relative_rms": 0.0005052897999524168
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 3.995714791265203e-10,
+          "relative_rms": 0.042570868542891556
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 8.150485104812348e-07,
+          "relative_rms": 0.0002491465863082766
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.1661095880064661e-05,
+          "relative_rms": 3.9011238831837055e-05
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 9.973200918633437e-08,
+          "relative_rms": 5.252097800440321e-06
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 3.570703233318943e-06,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.0001634538614466063,
+          "predicted_divergence": 2.5568120419946125e-06,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.41916828429778036,
+          "mean_free_pressure_relative_error_bound": 0.0007904238343176344,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 3.570703233318943e-06,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.0001634538614466063,
+          "predicted_divergence": 2.5568120419946125e-06,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.41916828429778036,
+          "mean_free_pressure_relative_error_bound": 0.0007904238343176344,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 3.570703233318943e-06,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 0.0001634538614466063,
+          "predicted_divergence": 2.5568120419946125e-06,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.41916828429778036,
+          "mean_free_pressure_relative_error_bound": 0.0007904238343176344,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 4,
+      "correction_seconds_cumulative": 0.011874679999891669,
+      "pressure_relative_l2": 7.546866752162493e-05,
+      "mean_free_pressure_relative_l2": 8.168192371054621e-05,
+      "gradient_relative_l2": 5.771109561136859e-05,
+      "pressure_max_abs_pa": 0.003181114433307819,
+      "mean_error_pa": 8.707348982162031e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997775835784601,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.6440636702520469
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.3247970138136814
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03032263091444715
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.00029190714532378366
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.00012639576239948785
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 7.027381842308637e-11,
+          "relative_rms": 5.890042310864406e-05
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 4.126662236269512e-07,
+          "relative_rms": 8.146512476398836e-06
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 0.0018776959378072858,
+          "relative_rms": 8.432798301061718e-05
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 7.868377034974439e-13,
+          "relative_rms": 0.0018891126287396318
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.587259602625592e-08,
+          "relative_rms": 3.476859919511118e-05
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.017982040468375e-07,
+          "relative_rms": 7.24142528944542e-06
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.4355263986326703e-10,
+          "relative_rms": 1.9926045243895296e-07
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 6.071249583296611e-07,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.7791981672851886e-05,
+          "predicted_divergence": 3.8376596435870286e-07,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.07127098235516513,
+          "mean_free_pressure_relative_error_bound": 0.00013432940594892127,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 6.071249583296611e-07,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.7791981672851886e-05,
+          "predicted_divergence": 3.8376596435870286e-07,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.07127098235516513,
+          "mean_free_pressure_relative_error_bound": 0.00013432940594892127,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 6.071249583296611e-07,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.7791981672851886e-05,
+          "predicted_divergence": 3.8376596435870286e-07,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.07127098235516513,
+          "mean_free_pressure_relative_error_bound": 0.00013432940594892127,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 5,
+      "correction_seconds_cumulative": 0.014402560998860281,
+      "pressure_relative_l2": 1.3227816462857194e-05,
+      "mean_free_pressure_relative_l2": 1.3912230998705839e-05,
+      "gradient_relative_l2": 9.995994541208665e-06,
+      "pressure_max_abs_pa": 0.0005782478419078529,
+      "mean_error_pa": 5.9856952232784104e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997619701899182,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.7303669251297845
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.23604925847177557
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03262424689704777
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0006522323977373938
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00013511555277402173
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 5.999054384870074e-14,
+          "relative_rms": 1.7209293364030767e-06
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 2.2321999569372546e-09,
+          "relative_rms": 5.99154482560157e-07
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.448008634634974e-05,
+          "relative_rms": 1.4364085220368853e-05
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 3.987934249707658e-15,
+          "relative_rms": 0.0001344897743415979
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 3.341121076233835e-10,
+          "relative_rms": 5.044397699945285e-06
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.26370159642726e-08,
+          "relative_rms": 1.2842285655010902e-06
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 3.71495370698877e-13,
+          "relative_rms": 1.0136598001723323e-08
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.0643651227587314e-07,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 4.87227803421506e-06,
+          "predicted_divergence": 6.642424942397233e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.012494684470276804,
+          "mean_free_pressure_relative_error_bound": 2.3547755314976027e-05,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.0643651227587314e-07,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 4.87227803421506e-06,
+          "predicted_divergence": 6.642424942397233e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.012494684470276804,
+          "mean_free_pressure_relative_error_bound": 2.3547755314976027e-05,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.0643651227587314e-07,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 4.87227803421506e-06,
+          "predicted_divergence": 6.642424942397233e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.012494684470276804,
+          "mean_free_pressure_relative_error_bound": 2.3547755314976027e-05,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 6,
+      "correction_seconds_cumulative": 0.016947597003309056,
+      "pressure_relative_l2": 2.3930083773421988e-06,
+      "mean_free_pressure_relative_l2": 2.4253292536734484e-06,
+      "gradient_relative_l2": 1.7631212891883242e-06,
+      "pressure_max_abs_pa": 0.00010413777505835498,
+      "mean_error_pa": 1.5807493757392184e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997523059823639,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.7893332431954061
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.17503611182160775
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.034476177283831046
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0008915005648771273
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00014706175118069795
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 7.986926595484877e-16,
+          "relative_rms": 1.9856901658748753e-07
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 1.4193140022355123e-11,
+          "relative_rms": 4.777618951542724e-08
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.6557528475163691e-06,
+          "relative_rms": 2.504129789991946e-06
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 3.269644224268718e-17,
+          "relative_rms": 1.2177706974572484e-05
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 6.774414160284659e-12,
+          "relative_rms": 7.182887824225822e-07
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.034493040383498e-10,
+          "relative_rms": 2.2946399164250132e-07
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.4502005868300743e-15,
+          "relative_rms": 6.333292682296528e-10
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.894869438123285e-08,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 8.674025993208237e-07,
+          "predicted_divergence": 1.1419302113161815e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.002224405444661299,
+          "mean_free_pressure_relative_error_bound": 4.192107854716803e-06,
+          "pressure_error_bound_passed": false
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.894869438123285e-08,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 8.674025993208237e-07,
+          "predicted_divergence": 1.1419302113161815e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.002224405444661299,
+          "mean_free_pressure_relative_error_bound": 4.192107854716803e-06,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.894869438123285e-08,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 8.674025993208237e-07,
+          "predicted_divergence": 1.1419302113161815e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.002224405444661299,
+          "mean_free_pressure_relative_error_bound": 4.192107854716803e-06,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 7,
+      "correction_seconds_cumulative": 0.019448251005087513,
+      "pressure_relative_l2": 4.391206316467612e-07,
+      "mean_free_pressure_relative_l2": 4.283424277639748e-07,
+      "gradient_relative_l2": 3.140353775652387e-07,
+      "pressure_max_abs_pa": 1.886409045592785e-05,
+      "mean_error_pa": 3.5628916594061363e-06,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997499467807461,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8312342727426186
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.13148314845165796
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03603406425177353
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0009945040277193054
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00015467932630785022
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 8.893337760666348e-20,
+          "relative_rms": 2.0953377231118966e-09
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.299571284375262e-14,
+          "relative_rms": 3.867263186805405e-09
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.164617995344589e-08,
+          "relative_rms": 4.4226052948993053e-07
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 2.4277499100638657e-19,
+          "relative_rms": 1.0493424534809286e-06
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.4178802341453306e-13,
+          "relative_rms": 1.039161351689939e-07
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.2775748511397193e-11,
+          "relative_rms": 4.083318307555441e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.0110016754605694e-17,
+          "relative_rms": 5.288000141045e-11
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 3.3987212813824313e-09,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.5558115058090423e-07,
+          "predicted_divergence": 2.012914398126971e-09,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 0.00039897915767120144,
+          "mean_free_pressure_relative_error_bound": 7.519132130929526e-07,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 3.3987212813824313e-09,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.5558115058090423e-07,
+          "predicted_divergence": 2.012914398126971e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.00039897915767120144,
+          "mean_free_pressure_relative_error_bound": 7.519132130929526e-07,
+          "pressure_error_bound_passed": false
+        },
+        "tight-1e-7": {
+          "residual_l2": 3.3987212813824313e-09,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.5558115058090423e-07,
+          "predicted_divergence": 2.012914398126971e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.00039897915767120144,
+          "mean_free_pressure_relative_error_bound": 7.519132130929526e-07,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 8,
+      "correction_seconds_cumulative": 0.02196819501114078,
+      "pressure_relative_l2": 8.089893280502612e-08,
+      "mean_free_pressure_relative_l2": 7.631209845523209e-08,
+      "gradient_relative_l2": 5.627804358660926e-08,
+      "pressure_max_abs_pa": 3.415533261552639e-06,
+      "mean_error_pa": 7.411257073501981e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997491112054777,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8607503079757737
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.10082504299658727
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03719153744382191
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0009812765452478953
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00015948510552581065
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.6363153743025557e-20,
+          "relative_rms": 1.1408283883759652e-09
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 6.940227406802169e-16,
+          "relative_rms": 3.3408664530953654e-10
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.6392418902489271e-09,
+          "relative_rms": 7.879172367399117e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 1.1506083780776777e-21,
+          "relative_rms": 7.224021605798431e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 3.083402321611955e-15,
+          "relative_rms": 1.5324217575816636e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.082873807731347e-13,
+          "relative_rms": 7.299666808581766e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.9983574727869422e-20,
+          "relative_rms": 2.3509971889084963e-12
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 6.120640237135333e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.8018074197539466e-08,
+          "predicted_divergence": 3.56023320084257e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.185078398742451e-05,
+          "mean_free_pressure_relative_error_bound": 1.354094095932229e-07,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 6.120640237135333e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.8018074197539466e-08,
+          "predicted_divergence": 3.56023320084257e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.185078398742451e-05,
+          "mean_free_pressure_relative_error_bound": 1.354094095932229e-07,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 6.120640237135333e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.8018074197539466e-08,
+          "predicted_divergence": 3.56023320084257e-10,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 7.185078398742451e-05,
+          "mean_free_pressure_relative_error_bound": 1.354094095932229e-07,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 9,
+      "correction_seconds_cumulative": 0.024494461009453516,
+      "pressure_relative_l2": 1.492486928866117e-08,
+      "mean_free_pressure_relative_l2": 1.3668108170276264e-08,
+      "gradient_relative_l2": 1.0122583576036672e-08,
+      "pressure_max_abs_pa": 6.191302013291988e-07,
+      "mean_error_pa": 1.4844416082141367e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997493361087905,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8821944582706412
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.07857939875914766
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03807454520218817
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0009006805172997109
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001630186673364937
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.6091001738577294e-22,
+          "relative_rms": 8.912779849292957e-11
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 5.21393098704067e-18,
+          "relative_rms": 2.895708922663898e-11
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.2586383519423725e-11,
+          "relative_rms": 1.4112232786497936e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.361935847869119e-23,
+          "relative_rms": 1.559466597732518e-08
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 6.992611543128027e-17,
+          "relative_rms": 2.307718934499378e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.3114886941366166e-14,
+          "relative_rms": 1.3082849163446861e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 6.709058301942665e-22,
+          "relative_rms": 4.307708462186946e-13
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.1047550837285233e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.057168646870477e-09,
+          "predicted_divergence": 6.332455300868863e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2968826103907488e-05,
+          "mean_free_pressure_relative_error_bound": 2.4440943624166557e-08,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.1047550837285233e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.057168646870477e-09,
+          "predicted_divergence": 6.332455300868863e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2968826103907488e-05,
+          "mean_free_pressure_relative_error_bound": 2.4440943624166557e-08,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.1047550837285233e-10,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.057168646870477e-09,
+          "predicted_divergence": 6.332455300868863e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2968826103907488e-05,
+          "mean_free_pressure_relative_error_bound": 2.4440943624166557e-08,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 10,
+      "correction_seconds_cumulative": 0.027061804008553736,
+      "pressure_relative_l2": 2.7522334051119972e-09,
+      "mean_free_pressure_relative_l2": 2.4565840824119046e-09,
+      "gradient_relative_l2": 1.8249871550482107e-09,
+      "pressure_max_abs_pa": 1.1224886442562365e-07,
+      "mean_error_pa": 2.902762586744053e-08,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997498376378826,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8981705875149422
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.06204550229220589
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03874327339404716
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0007904113674826499
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00016563457981687253
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.267648853704977e-25,
+          "relative_rms": 3.3458736818373936e-12
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 4.345029251336155e-20,
+          "relative_rms": 2.6434348872189292e-12
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.698712986329092e-12,
+          "relative_rms": 2.5364078166270153e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 2.3379724347638716e-24,
+          "relative_rms": 3.256379135407187e-09
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.652650459947578e-18,
+          "relative_rms": 3.5477557811772973e-10
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.234077347967177e-16,
+          "relative_rms": 2.350712152401831e-10
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.0608301559417181e-23,
+          "relative_rms": 5.416745719574815e-14
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.996775946956798e-11,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.140517081572863e-10,
+          "predicted_divergence": 1.1288978085666201e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.344034474786036e-06,
+          "mean_free_pressure_relative_error_bound": 4.417548146909842e-09,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.996775946956798e-11,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.140517081572863e-10,
+          "predicted_divergence": 1.1288978085666201e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.344034474786036e-06,
+          "mean_free_pressure_relative_error_bound": 4.417548146909842e-09,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.996775946956798e-11,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.140517081572863e-10,
+          "predicted_divergence": 1.1288978085666201e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.344034474786036e-06,
+          "mean_free_pressure_relative_error_bound": 4.417548146909842e-09,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 11,
+      "correction_seconds_cumulative": 0.029599540008348413,
+      "pressure_relative_l2": 5.070933978571883e-10,
+      "mean_free_pressure_relative_l2": 4.425371026092819e-10,
+      "gradient_relative_l2": 3.2952780268990043e-10,
+      "pressure_max_abs_pa": 2.0355730434573616e-08,
+      "mean_error_pa": 5.590297213037074e-09,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997504560093872,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9103801743295211
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.04943403452229003
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.039262141759110726
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0006740888320291629
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00016770035642864946
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.5784659665990687e-25,
+          "relative_rms": 3.567815108039707e-12
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 3.225014288336825e-22,
+          "relative_rms": 2.2773935518802023e-13
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.512598890111375e-14,
+          "relative_rms": 4.569169573494754e-10
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 6.11093544025205e-26,
+          "relative_rms": 5.264645319854479e-10
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 4.04284879355318e-20,
+          "relative_rms": 5.5489008062497595e-11
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.3719364117441734e-17,
+          "relative_rms": 4.231428921226545e-11
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 3.4457598710941522e-25,
+          "relative_rms": 9.762432068604955e-15
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 3.612250110097124e-12,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.6535572698868547e-10,
+          "predicted_divergence": 2.0175359068582328e-12,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.240455120927248e-07,
+          "mean_free_pressure_relative_error_bound": 7.99152692518877e-10,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 3.612250110097124e-12,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.6535572698868547e-10,
+          "predicted_divergence": 2.0175359068582328e-12,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.240455120927248e-07,
+          "mean_free_pressure_relative_error_bound": 7.99152692518877e-10,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 3.612250110097124e-12,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.6535572698868547e-10,
+          "predicted_divergence": 2.0175359068582328e-12,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.240455120927248e-07,
+          "mean_free_pressure_relative_error_bound": 7.99152692518877e-10,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 12,
+      "correction_seconds_cumulative": 0.03212839800835354,
+      "pressure_relative_l2": 9.332775654202184e-11,
+      "mean_free_pressure_relative_l2": 7.984744554267186e-11,
+      "gradient_relative_l2": 5.956393936005233e-11,
+      "pressure_max_abs_pa": 3.691697614272016e-09,
+      "mean_error_pa": 1.0649908433831649e-09,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997510090209443,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9198893546131232
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.039667907687032995
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.03962915741666149
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0005645851218881194
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00016936899019457416
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 5.019998211779678e-28,
+          "relative_rms": 1.5742489767130985e-13
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 2.787266056120555e-24,
+          "relative_rms": 2.11719801465306e-14
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.794648139085224e-15,
+          "relative_rms": 8.244204118320603e-11
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 1.143629828561487e-27,
+          "relative_rms": 7.202081097481336e-11
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.013750179344755e-21,
+          "relative_rms": 8.78675837560202e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.459487218839066e-19,
+          "relative_rms": 7.628910511015705e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.4325662460678614e-26,
+          "relative_rms": 1.990549021519584e-15
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 6.538665651631762e-13,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.993164314229742e-11,
+          "predicted_divergence": 3.611481484237326e-13,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.675802450386656e-08,
+          "mean_free_pressure_relative_error_bound": 1.44657543070924e-10,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 6.538665651631762e-13,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.993164314229742e-11,
+          "predicted_divergence": 3.611481484237326e-13,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.675802450386656e-08,
+          "mean_free_pressure_relative_error_bound": 1.44657543070924e-10,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 6.538665651631762e-13,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 2.993164314229742e-11,
+          "predicted_divergence": 3.611481484237326e-13,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.675802450386656e-08,
+          "mean_free_pressure_relative_error_bound": 1.44657543070924e-10,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 13,
+      "correction_seconds_cumulative": 0.03467537301185075,
+      "pressure_relative_l2": 1.7157654387393207e-11,
+      "mean_free_pressure_relative_l2": 1.4423700470296854e-11,
+      "gradient_relative_l2": 1.0774812436286356e-11,
+      "pressure_max_abs_pa": 6.695799470435304e-10,
+      "mean_error_pa": 2.0128747769054474e-10,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997514894814303,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9274020361537582
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.039989562490135966
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.03189279348467665
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0004670959780083955
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00017068657567525857
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 4.664045105670236e-30,
+          "relative_rms": 1.5174102359919025e-14
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 2.5009331679565453e-26,
+          "relative_rms": 2.005502964433843e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.856132015110937e-17,
+          "relative_rms": 1.4892393695351237e-11
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 1.0369077659997635e-28,
+          "relative_rms": 2.1686293631145577e-11
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 2.5928205458904718e-23,
+          "relative_rms": 1.4052365646565148e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.4530793073891025e-20,
+          "relative_rms": 1.377097588853853e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.604390457478531e-28,
+          "relative_rms": 2.1065441005494897e-16
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.184131151657721e-13,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.420523536977544e-12,
+          "predicted_divergence": 6.471952603466964e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.390062939401805e-08,
+          "mean_free_pressure_relative_error_bound": 2.6197012079547382e-11,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.184131151657721e-13,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.420523536977544e-12,
+          "predicted_divergence": 6.471952603466964e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.390062939401805e-08,
+          "mean_free_pressure_relative_error_bound": 2.6197012079547382e-11,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.184131151657721e-13,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.420523536977544e-12,
+          "predicted_divergence": 6.471952603466964e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.390062939401805e-08,
+          "mean_free_pressure_relative_error_bound": 2.6197012079547382e-11,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 14,
+      "correction_seconds_cumulative": 0.03719394801009912,
+      "pressure_relative_l2": 3.150730890103007e-12,
+      "mean_free_pressure_relative_l2": 2.6076746051933906e-12,
+      "gradient_relative_l2": 1.950161958994294e-12,
+      "pressure_max_abs_pa": 1.2144241168243752e-10,
+      "mean_error_pa": 3.7808762157690254e-11,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997518182099272,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9333938520408711
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04024750015865093
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.025727124561886063
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0003833405854398308
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001718761294230765
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.4398777336871108e-30,
+          "relative_rms": 8.431103997810484e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.484039759237523e-28,
+          "relative_rms": 3.905430810090089e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.9140990445898606e-18,
+          "relative_rms": 2.6924105442381654e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 9.043583580241745e-30,
+          "relative_rms": 6.4045046977347e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 6.7436330107974025e-25,
+          "relative_rms": 2.2662623091104322e-13
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 4.744880750736411e-22,
+          "relative_rms": 2.488471721287456e-13
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 6.749166293715431e-30,
+          "relative_rms": 4.3205654145878934e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.1450852466012774e-14,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.819423339845116e-13,
+          "predicted_divergence": 1.1613395430506065e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.5181361869960766e-09,
+          "mean_free_pressure_relative_error_bound": 4.745658792701443e-12,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.1450852466012774e-14,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.819423339845116e-13,
+          "predicted_divergence": 1.1613395430506065e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.5181361869960766e-09,
+          "mean_free_pressure_relative_error_bound": 4.745658792701443e-12,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.1450852466012774e-14,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.819423339845116e-13,
+          "predicted_divergence": 1.1613395430506065e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.5181361869960766e-09,
+          "mean_free_pressure_relative_error_bound": 4.745658792701443e-12,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 15,
+      "correction_seconds_cumulative": 0.039743167006236035,
+      "pressure_relative_l2": 5.77966563096274e-13,
+      "mean_free_pressure_relative_l2": 4.717017001496545e-13,
+      "gradient_relative_l2": 3.530824084132541e-13,
+      "pressure_max_abs_pa": 2.2026824808563106e-11,
+      "mean_error_pa": 7.067862470057825e-12,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997510427890283,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9381913099771275
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04045933382188074
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.02078748973322527
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0003128929001642346
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00017353858465161915
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.4480906463846097e-31,
+          "relative_rms": 2.6737420890822463e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.16994946795213e-28,
+          "relative_rms": 3.840216739208097e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 6.263140457826743e-20,
+          "relative_rms": 4.870293736744652e-13
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.5965569473031464e-30,
+          "relative_rms": 5.03820383139441e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 2.000796614924459e-26,
+          "relative_rms": 3.903594379183458e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.5576406589370526e-23,
+          "relative_rms": 4.508724470722784e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 2.7212716848273217e-30,
+          "relative_rms": 2.7434779360167633e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 3.886777582118177e-15,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.7792260035869876e-13,
+          "predicted_divergence": 2.089994843856857e-15,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.5627255585604774e-10,
+          "mean_free_pressure_relative_error_bound": 8.598875143224338e-13,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 3.886777582118177e-15,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.7792260035869876e-13,
+          "predicted_divergence": 2.089994843856857e-15,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.5627255585604774e-10,
+          "mean_free_pressure_relative_error_bound": 8.598875143224338e-13,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 3.886777582118177e-15,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.7792260035869876e-13,
+          "predicted_divergence": 2.089994843856857e-15,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.5627255585604774e-10,
+          "mean_free_pressure_relative_error_bound": 8.598875143224338e-13,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 16,
+      "correction_seconds_cumulative": 0.04227291400457034,
+      "pressure_relative_l2": 1.0587659483566202e-13,
+      "mean_free_pressure_relative_l2": 8.532215464212503e-14,
+      "gradient_relative_l2": 6.391787406356213e-14,
+      "pressure_max_abs_pa": 3.9968028886505635e-12,
+      "mean_error_pa": 1.315739907072529e-12,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9997463484594176,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.941975784100963
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04067202912239792
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.016844665247300154
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0002533072776829226
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00017732931461458064
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.5953138919969786e-32,
+          "relative_rms": 1.1319222168993913e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.548798636903866e-28,
+          "relative_rms": 3.918741649047497e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 2.0491731713487124e-21,
+          "relative_rms": 8.809442193127567e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 4.557913775575618e-30,
+          "relative_rms": 4.54672118148101e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 2.053453533130099e-27,
+          "relative_rms": 1.2505632208748109e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 5.178481753590831e-25,
+          "relative_rms": 8.220936316290802e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.862718432528093e-30,
+          "relative_rms": 2.269808021506514e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 7.046691813513341e-16,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 3.225720291160535e-14,
+          "predicted_divergence": 3.827956470322154e-16,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 8.272179244283493e-11,
+          "mean_free_pressure_relative_error_bound": 1.558968111734877e-13,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 7.046691813513341e-16,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 3.225720291160535e-14,
+          "predicted_divergence": 3.827956470322154e-16,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 8.272179244283493e-11,
+          "mean_free_pressure_relative_error_bound": 1.558968111734877e-13,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 7.046691813513341e-16,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 3.225720291160535e-14,
+          "predicted_divergence": 3.827956470322154e-16,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 8.272179244283493e-11,
+          "mean_free_pressure_relative_error_bound": 1.558968111734877e-13,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 17,
+      "correction_seconds_cumulative": 0.04480442000931362,
+      "pressure_relative_l2": 1.9330242943505592e-14,
+      "mean_free_pressure_relative_l2": 1.538903447111659e-14,
+      "gradient_relative_l2": 1.1545978957881634e-14,
+      "pressure_max_abs_pa": 7.247535904753022e-13,
+      "mean_error_pa": 2.437566460888422e-13,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9996802414760089,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9446171442451062
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04096967969430475
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.013876797724434
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000207246990562417
+        },
+        {
+          "mode": [
+            0,
+            0,
+            2
+          ],
+          "energy_fraction": 0.0001990027526482179
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 5.339936459263075e-32,
+          "relative_rms": 1.6236397796446765e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.780847750823448e-28,
+          "relative_rms": 3.757859068463198e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 6.665665881624654e-23,
+          "relative_rms": 1.588842505743126e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.5555529311746636e-30,
+          "relative_rms": 5.019713321728086e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.132885976887703e-27,
+          "relative_rms": 9.288729429185843e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 2.0171623618860753e-26,
+          "relative_rms": 1.6225215989161606e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.1068094846237325e-29,
+          "relative_rms": 5.53288898602993e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 1.2925247829561686e-16,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.916710322443968e-15,
+          "predicted_divergence": 7.401486830834377e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.5173053609693316e-11,
+          "mean_free_pressure_relative_error_bound": 2.8595012313714256e-14,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 1.2925247829561686e-16,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.916710322443968e-15,
+          "predicted_divergence": 7.401486830834377e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.5173053609693316e-11,
+          "mean_free_pressure_relative_error_bound": 2.8595012313714256e-14,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 1.2925247829561686e-16,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 5.916710322443968e-15,
+          "predicted_divergence": 7.401486830834377e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.5173053609693316e-11,
+          "mean_free_pressure_relative_error_bound": 2.8595012313714256e-14,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 18,
+      "correction_seconds_cumulative": 0.047399403010786045,
+      "pressure_relative_l2": 3.510376340665048e-15,
+      "mean_free_pressure_relative_l2": 2.7322035458749456e-15,
+      "gradient_relative_l2": 2.1008551981840454e-15,
+      "pressure_max_abs_pa": 1.3145040611561853e-13,
+      "mean_error_pa": 4.5395244999367017e-14,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9984379471787392,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9433230537189536
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04206361967009883
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.012421815147679554
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.00038427609072671414
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00036343803377193333
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 3.3334116875658268e-31,
+          "relative_rms": 4.056636699994947e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.351098595613489e-28,
+          "relative_rms": 3.8779623040112517e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 2.0975820252469005e-24,
+          "relative_rms": 2.8185033532743973e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 1.1606363897953181e-29,
+          "relative_rms": 7.255433429881322e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.2872021993112866e-27,
+          "relative_rms": 9.901171853379341e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.981897148113684e-27,
+          "relative_rms": 5.085815664777443e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 2.4178331259355127e-30,
+          "relative_rms": 2.5860009620349027e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 3.0923672986203e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.4155737482021933e-15,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 3.6301533405585364e-12,
+          "mean_free_pressure_relative_error_bound": 6.841357194416394e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 3.0923672986203e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.4155737482021933e-15,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 3.6301533405585364e-12,
+          "mean_free_pressure_relative_error_bound": 6.841357194416394e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 3.0923672986203e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 1.4155737482021933e-15,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 3.6301533405585364e-12,
+          "mean_free_pressure_relative_error_bound": 6.841357194416394e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 19,
+      "correction_seconds_cumulative": 0.049963812009082176,
+      "pressure_relative_l2": 6.063933695375039e-16,
+      "mean_free_pressure_relative_l2": 4.51211406558639e-16,
+      "gradient_relative_l2": 5.65660711391415e-16,
+      "pressure_max_abs_pa": 2.4868995751603507e-14,
+      "mean_error_pa": 8.192246071329438e-15,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9573906738373598,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8747658845579093
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04432957020583779
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.018416657292996443
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.013942527692375565
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.003080215162717465
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 9.803822269996237e-31,
+          "relative_rms": 6.956957546967061e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.17722726121451e-28,
+          "relative_rms": 3.8417403441345544e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 5.396137760146285e-26,
+          "relative_rms": 4.520646976138847e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.106787441005952e-30,
+          "relative_rms": 4.812704103550504e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3075720327765617e-27,
+          "relative_rms": 9.979206820194135e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.1258604415950447e-27,
+          "relative_rms": 3.833207584211474e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 3.9362319413813655e-30,
+          "relative_rms": 3.299558715371823e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.120435996731022e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.706588001543685e-16,
+          "predicted_divergence": 3.053113317719181e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.489195070396562e-12,
+          "mean_free_pressure_relative_error_bound": 4.69111660185219e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.120435996731022e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.706588001543685e-16,
+          "predicted_divergence": 3.053113317719181e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.489195070396562e-12,
+          "mean_free_pressure_relative_error_bound": 4.69111660185219e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.120435996731022e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.706588001543685e-16,
+          "predicted_divergence": 3.053113317719181e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.489195070396562e-12,
+          "mean_free_pressure_relative_error_bound": 4.69111660185219e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 20,
+      "correction_seconds_cumulative": 0.05255916601163335,
+      "pressure_relative_l2": 1.2948003075437093e-16,
+      "mean_free_pressure_relative_l2": 1.161990952148755e-16,
+      "gradient_relative_l2": 4.732686958272388e-16,
+      "pressure_max_abs_pa": 7.105427357601002e-15,
+      "mean_error_pa": 1.3498967568748022e-15,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.3750942057911088,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.2103706830977979
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.04583519653443103
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.0340509016248864
+        },
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.030412250698806063
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.020502215070114446
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.128341897523867e-31,
+          "relative_rms": 2.3601629895508766e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.267964733384946e-28,
+          "relative_rms": 3.86068573925154e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 4.990635435983994e-28,
+          "relative_rms": 4.347474090727427e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.309369383822435e-30,
+          "relative_rms": 4.907233696210591e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.359821842035404e-27,
+          "relative_rms": 1.0176635472880004e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.0029846734425188e-27,
+          "relative_rms": 3.6179887082379185e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 7.550503197231285e-30,
+          "relative_rms": 4.5698660279574144e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.164615810591053e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.908827188100283e-16,
+          "predicted_divergence": 3.14563190310461e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.5410627930910217e-12,
+          "mean_free_pressure_relative_error_bound": 4.7888660863847475e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.164615810591053e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.908827188100283e-16,
+          "predicted_divergence": 3.14563190310461e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.5410627930910217e-12,
+          "mean_free_pressure_relative_error_bound": 4.7888660863847475e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.164615810591053e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.908827188100283e-16,
+          "predicted_divergence": 3.14563190310461e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.5410627930910217e-12,
+          "mean_free_pressure_relative_error_bound": 4.7888660863847475e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 21,
+      "correction_seconds_cumulative": 0.05508078500861302,
+      "pressure_relative_l2": 1.1757514773178581e-16,
+      "mean_free_pressure_relative_l2": 1.2682105460749093e-16,
+      "gradient_relative_l2": 4.600665025456766e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -2.252502293483468e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.49200878393527564,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.22515040241546777
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.1681008526415719
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.037486494875437676
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.019199647294049885
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.016770143723142096
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 6.836499613408585e-31,
+          "relative_rms": 5.809497046418871e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.96028649421353e-28,
+          "relative_rms": 3.7960612662807986e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.3313174522328163e-27,
+          "relative_rms": 7.100679197882012e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.1873722345418705e-30,
+          "relative_rms": 4.850527562852722e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.282258338397948e-27,
+          "relative_rms": 9.882139447828612e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.010424253181644e-27,
+          "relative_rms": 3.6313820271556157e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 2.535191351633812e-30,
+          "relative_rms": 2.6480177550400258e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.1146211032885074e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.679969525434817e-16,
+          "predicted_divergence": 3.14563190310461e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4823704437534752e-12,
+          "mean_free_pressure_relative_error_bound": 4.678254966487579e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.1146211032885074e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.679969525434817e-16,
+          "predicted_divergence": 3.14563190310461e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4823704437534752e-12,
+          "mean_free_pressure_relative_error_bound": 4.678254966487579e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.1146211032885074e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.679969525434817e-16,
+          "predicted_divergence": 3.14563190310461e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4823704437534752e-12,
+          "mean_free_pressure_relative_error_bound": 4.678254966487579e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 22,
+      "correction_seconds_cumulative": 0.057608696006354876,
+      "pressure_relative_l2": 1.270332566512854e-16,
+      "mean_free_pressure_relative_l2": 1.3559991955852643e-16,
+      "gradient_relative_l2": 4.592247398167561e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -4.1594332145233893e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5554615586801497,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.3204771214006967
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.1477364496758919
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.032059470596549254
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.01504152150758935
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.013926116804066236
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 3.3803010489010183e-31,
+          "relative_rms": 4.085068360756449e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 9.09112755304037e-28,
+          "relative_rms": 3.823676489337186e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.966214144665365e-27,
+          "relative_rms": 8.629278537990259e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 4.357742990352881e-30,
+          "relative_rms": 4.445760641521428e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.2626683296775726e-27,
+          "relative_rms": 9.806360525644242e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 1.033150345252661e-27,
+          "relative_rms": 3.6719928032235067e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.231457740325915e-30,
+          "relative_rms": 1.845547710100281e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.058741177694547e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.424171464972871e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4167697510697863e-12,
+          "mean_free_pressure_relative_error_bound": 4.554624439414251e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.058741177694547e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.424171464972871e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4167697510697863e-12,
+          "mean_free_pressure_relative_error_bound": 4.554624439414251e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.058741177694547e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.424171464972871e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4167697510697863e-12,
+          "mean_free_pressure_relative_error_bound": 4.554624439414251e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 23,
+      "correction_seconds_cumulative": 0.06015736200060928,
+      "pressure_relative_l2": 1.2646914526288289e-16,
+      "mean_free_pressure_relative_l2": 1.3552324800589705e-16,
+      "gradient_relative_l2": 4.629103868681611e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.602550838662418e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5544795924667916,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.33330331195194374
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.13983209822416526
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.030680008143655166
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014673194153062678
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.013283870799676242
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 4.94760486777176e-32,
+          "relative_rms": 1.562856640995718e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.670718012109747e-28,
+          "relative_rms": 3.7342191029315157e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 2.000214664552956e-27,
+          "relative_rms": 8.703569126128624e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 4.5307256208508694e-30,
+          "relative_rms": 4.533140203200188e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3169559944348622e-27,
+          "relative_rms": 1.0014951344794537e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.815308080799333e-28,
+          "relative_rms": 3.5790851154367906e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 8.665005763337065e-31,
+          "relative_rms": 1.5481033426263906e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0891472274234923e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.563359347997082e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4524699823504957e-12,
+          "mean_free_pressure_relative_error_bound": 4.621904802308517e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0891472274234923e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.563359347997082e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4524699823504957e-12,
+          "mean_free_pressure_relative_error_bound": 4.621904802308517e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0891472274234923e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.563359347997082e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4524699823504957e-12,
+          "mean_free_pressure_relative_error_bound": 4.621904802308517e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 24,
+      "correction_seconds_cumulative": 0.0626796810029191,
+      "pressure_relative_l2": 1.2499768147165742e-16,
+      "mean_free_pressure_relative_l2": 1.3420775360674934e-16,
+      "gradient_relative_l2": 4.612424654354578e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.259292430853507e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.55567997288319,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.3371465397178502
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.14067139153046093
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.028809029631413727
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014181705549733086
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.013788568098502568
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 4.493037991713985e-32,
+          "relative_rms": 1.4893325588717946e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.514990451878979e-28,
+          "relative_rms": 3.700533565207335e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.9664844386067685e-27,
+          "relative_rms": 8.629871647738656e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 4.295911728061403e-30,
+          "relative_rms": 4.4141078967955585e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3170723434369049e-27,
+          "relative_rms": 1.0015393730061936e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.303390234430834e-28,
+          "relative_rms": 3.484501676179831e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.5797256101113797e-30,
+          "relative_rms": 2.0902890708551274e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.1038334456562702e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.630587535929233e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4697094790974045e-12,
+          "mean_free_pressure_relative_error_bound": 4.6543942164001645e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.1038334456562702e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.630587535929233e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4697094790974045e-12,
+          "mean_free_pressure_relative_error_bound": 4.6543942164001645e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.1038334456562702e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.630587535929233e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4697094790974045e-12,
+          "mean_free_pressure_relative_error_bound": 4.6543942164001645e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 25,
+      "correction_seconds_cumulative": 0.06519045900495257,
+      "pressure_relative_l2": 1.2462920471028633e-16,
+      "mean_free_pressure_relative_l2": 1.3410928367224758e-16,
+      "gradient_relative_l2": 4.65595915483002e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -2.868003866803489e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5433388231591005,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.32959110486072385
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.13768891518295276
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.025804944789695496
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.014685643009464835
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014466843006516732
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.068038977614321e-31,
+          "relative_rms": 2.2962289583209806e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.345835489336192e-28,
+          "relative_rms": 3.663592615858795e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.916710275377061e-27,
+          "relative_rms": 8.519955275764536e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 5.963200578650676e-30,
+          "relative_rms": 5.20061828970648e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3613470036683084e-27,
+          "relative_rms": 1.0182340876295259e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.432921398434843e-28,
+          "relative_rms": 3.5086751950066463e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.8733990068628e-30,
+          "relative_rms": 2.2763061053940162e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0859426500290888e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.54868995333745e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4487081123409807e-12,
+          "mean_free_pressure_relative_error_bound": 4.614815212960731e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0859426500290888e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.54868995333745e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4487081123409807e-12,
+          "mean_free_pressure_relative_error_bound": 4.614815212960731e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0859426500290888e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.54868995333745e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4487081123409807e-12,
+          "mean_free_pressure_relative_error_bound": 4.614815212960731e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 26,
+      "correction_seconds_cumulative": 0.06776553100644378,
+      "pressure_relative_l2": 1.248925601732309e-16,
+      "mean_free_pressure_relative_l2": 1.3359319563059047e-16,
+      "gradient_relative_l2": 4.58472243798383e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.8136450016453457e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5550324872323935,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.3297689868038055
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.14474715189354134
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.026415236893671448
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.018036239518417815
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014153783321471831
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.7382566480825446e-32,
+          "relative_rms": 9.263574274129167e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.60289037029788e-28,
+          "relative_rms": 3.7195847579800317e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.928719111919814e-27,
+          "relative_rms": 8.54660379759501e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 2.948264760479581e-30,
+          "relative_rms": 3.6567772884512534e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.2987444653081821e-27,
+          "relative_rms": 9.945464394055528e-15
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.335901931748069e-28,
+          "relative_rms": 3.490584849090421e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 6.686333803553979e-31,
+          "relative_rms": 1.35990805907858e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0912802072775245e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.573123357234146e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4549739276618743e-12,
+          "mean_free_pressure_relative_error_bound": 4.6266237170934755e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0912802072775245e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.573123357234146e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4549739276618743e-12,
+          "mean_free_pressure_relative_error_bound": 4.6266237170934755e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0912802072775245e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.573123357234146e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4549739276618743e-12,
+          "mean_free_pressure_relative_error_bound": 4.6266237170934755e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 27,
+      "correction_seconds_cumulative": 0.07033835601032479,
+      "pressure_relative_l2": 1.2402591568937459e-16,
+      "mean_free_pressure_relative_l2": 1.3355189439324887e-16,
+      "gradient_relative_l2": 4.673664996836424e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -2.72528672083198e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5361176109388062,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.32882496616245444
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.1334098270247322
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.023041685738389564
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.01896257052367226
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.013307378709762722
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 4.0010222590871937e-32,
+          "relative_rms": 1.4054232124430408e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 7.961805792138124e-28,
+          "relative_rms": 3.578310765677805e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.896092656192114e-27,
+          "relative_rms": 8.47400776339417e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 3.758221090781691e-30,
+          "relative_rms": 4.128634458218008e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3854234837821112e-27,
+          "relative_rms": 1.0271987552927174e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.381928682651462e-28,
+          "relative_rms": 3.4991787026950675e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 2.1827385426024547e-30,
+          "relative_rms": 2.457063491829998e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.087774561162527e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.557075779014404e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4508521731749385e-12,
+          "mean_free_pressure_relative_error_bound": 4.618855892412968e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.087774561162527e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.557075779014404e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4508521731749385e-12,
+          "mean_free_pressure_relative_error_bound": 4.618855892412968e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.087774561162527e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.557075779014404e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4508521731749385e-12,
+          "mean_free_pressure_relative_error_bound": 4.618855892412968e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 28,
+      "correction_seconds_cumulative": 0.07292517601308646,
+      "pressure_relative_l2": 1.25376941105616e-16,
+      "mean_free_pressure_relative_l2": 1.342329022816755e-16,
+      "gradient_relative_l2": 4.614984574203025e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.7013577966482637e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5501850530330958,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.32054826886873544
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.1468015427169525
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.027895259761974104
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.018847362199326853
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014680613591690655
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.2590737944203555e-32,
+          "relative_rms": 1.0560557543089153e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.836064920219853e-28,
+          "relative_rms": 3.7696559451418464e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.9075786330652922e-27,
+          "relative_rms": 8.499635545623063e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 2.8040825486352016e-30,
+          "relative_rms": 3.5662408262588086e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3239379231225972e-27,
+          "relative_rms": 1.004146371309272e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.537563180763378e-28,
+          "relative_rms": 3.5280828305811443e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.5101454865278203e-30,
+          "relative_rms": 2.0437365641605697e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0878047472059878e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.557213959788417e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4508924898059623e-12,
+          "mean_free_pressure_relative_error_bound": 4.618931872804933e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0878047472059878e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.557213959788417e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4508924898059623e-12,
+          "mean_free_pressure_relative_error_bound": 4.618931872804933e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0878047472059878e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.557213959788417e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4508924898059623e-12,
+          "mean_free_pressure_relative_error_bound": 4.618931872804933e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 29,
+      "correction_seconds_cumulative": 0.07557244301278843,
+      "pressure_relative_l2": 1.261875711994903e-16,
+      "mean_free_pressure_relative_l2": 1.3524780954167073e-16,
+      "gradient_relative_l2": 4.624078344644729e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.5653988442185813e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5573845058389081,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.33645328639566696
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.14523906680693374
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.027252680570847898
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014180400657047875
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.013651721018779109
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 3.329824666284e-32,
+          "relative_rms": 1.2821307656042886e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.833900654819166e-28,
+          "relative_rms": 3.7691942557106314e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.9872301787087756e-27,
+          "relative_rms": 8.675273320066948e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 3.502079764473793e-30,
+          "relative_rms": 3.985458460662424e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3203111118409906e-27,
+          "relative_rms": 1.0027700428282831e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.541477702305806e-28,
+          "relative_rms": 3.5288067754284057e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.6067745129421608e-30,
+          "relative_rms": 2.1081086366855442e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0981529089376827e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.604584096240426e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.463040965056717e-12,
+          "mean_free_pressure_relative_error_bound": 4.641826789564882e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0981529089376827e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.604584096240426e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.463040965056717e-12,
+          "mean_free_pressure_relative_error_bound": 4.641826789564882e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0981529089376827e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.604584096240426e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.463040965056717e-12,
+          "mean_free_pressure_relative_error_bound": 4.641826789564882e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 30,
+      "correction_seconds_cumulative": 0.07817054101178655,
+      "pressure_relative_l2": 1.2495713985230548e-16,
+      "mean_free_pressure_relative_l2": 1.3429059515761345e-16,
+      "gradient_relative_l2": 4.647329272619967e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.1017939952637797e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.548059221875652,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.33286842163932595
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.13901300109851228
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.026333040745626483
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.016291512745708295
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.013822410515245104
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 7.824708584958622e-33,
+          "relative_rms": 6.21520881669449e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.4150504921414e-28,
+          "relative_rms": 3.6787529910015547e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.941300588394326e-27,
+          "relative_rms": 8.574434212268529e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 4.190984258623831e-30,
+          "relative_rms": 4.359867441033895e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3565547319170858e-27,
+          "relative_rms": 1.016440292069561e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.310690286478855e-28,
+          "relative_rms": 3.4858684927391145e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 2.9498195428242512e-30,
+          "relative_rms": 2.8563619863578133e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0929557497998828e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.580793384044043e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4569394118824946e-12,
+          "mean_free_pressure_relative_error_bound": 4.630327852525722e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0929557497998828e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.580793384044043e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4569394118824946e-12,
+          "mean_free_pressure_relative_error_bound": 4.630327852525722e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0929557497998828e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.580793384044043e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4569394118824946e-12,
+          "mean_free_pressure_relative_error_bound": 4.630327852525722e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 31,
+      "correction_seconds_cumulative": 0.08078211701649707,
+      "pressure_relative_l2": 1.2434137635863464e-16,
+      "mean_free_pressure_relative_l2": 1.3323507727568128e-16,
+      "gradient_relative_l2": 4.602649769220835e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.5508343950348593e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5486737669488733,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.325295842174051
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.14249460872747405
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.02749097287669721
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.018386204678036786
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.01435258667011083
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 1.8824501719315399e-32,
+          "relative_rms": 9.640140934210043e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.466320227831334e-28,
+          "relative_rms": 3.6899426021080866e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.8956605042062827e-27,
+          "relative_rms": 8.47304202262295e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 2.894720558231716e-30,
+          "relative_rms": 3.623419297526531e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.3163570696511695e-27,
+          "relative_rms": 1.0012673787794359e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.353657901094167e-28,
+          "relative_rms": 3.4939026472348433e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 1.1437238974407944e-30,
+          "relative_rms": 1.778591113827764e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0869140478746176e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.55313666084792e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.449847680726434e-12,
+          "mean_free_pressure_relative_error_bound": 4.61696283418798e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0869140478746176e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.55313666084792e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.449847680726434e-12,
+          "mean_free_pressure_relative_error_bound": 4.61696283418798e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0869140478746176e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.55313666084792e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.449847680726434e-12,
+          "mean_free_pressure_relative_error_bound": 4.61696283418798e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 32,
+      "correction_seconds_cumulative": 0.08336004601733293,
+      "pressure_relative_l2": 1.2443707842077735e-16,
+      "mean_free_pressure_relative_l2": 1.3366570339802266e-16,
+      "gradient_relative_l2": 4.638514033275263e-16,
+      "pressure_max_abs_pa": 1.0658141036401503e-14,
+      "mean_error_pa": -3.1715443350270135e-16,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.5459537841727983,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.33095328664385104
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.13955151998623486
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.02334565824026285
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.018068283416194098
+        },
+        {
+          "mode": [
+            1,
+            1,
+            1
+          ],
+          "energy_fraction": 0.014289656643229955
+        }
+      ],
+      "spectral_signal_error": [
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 0,
+          "signal_energy_pa2": 0.0,
+          "error_energy_pa2": 0.0,
+          "relative_rms": null
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 1,
+          "signal_energy_pa2": 0.020256141544858056,
+          "error_energy_pa2": 2.740523290959221e-32,
+          "relative_rms": 1.1631571298504005e-15
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 16,
+          "signal_energy_pa2": 6218.068037788113,
+          "error_energy_pa2": 8.342996592693774e-28,
+          "relative_rms": 3.6629694640247637e-16
+        },
+        {
+          "band": "low-modes-0-to-2",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 9,
+          "signal_energy_pa2": 264047.36692451773,
+          "error_energy_pa2": 1.912056969187336e-27,
+          "relative_rms": 8.509606801853118e-17
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.0,
+            1e-06
+          ],
+          "modes": 5,
+          "signal_energy_pa2": 2.2048013166301011e-07,
+          "error_energy_pa2": 3.0928408603207273e-30,
+          "relative_rms": 3.745364220591405e-12
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            1e-06,
+            0.001
+          ],
+          "modes": 660,
+          "signal_energy_pa2": 13.13026756108248,
+          "error_energy_pa2": 1.359451104909774e-27,
+          "relative_rms": 1.0175248116957019e-14
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.001,
+            0.1
+          ],
+          "modes": 266,
+          "signal_energy_pa2": 7662.312891146914,
+          "error_energy_pa2": 9.188234765548015e-28,
+          "relative_rms": 3.4628693015490636e-16
+        },
+        {
+          "band": "remaining-modes",
+          "amplitude_relative_to_peak": [
+            0.1,
+            1.0000001
+          ],
+          "modes": 2,
+          "signal_energy_pa2": 3615.504939424023,
+          "error_energy_pa2": 2.6817295541203054e-30,
+          "relative_rms": 2.7234725947612014e-17
+        }
+      ],
+      "quality": {
+        "pressure-bound": {
+          "residual_l2": 2.0882346722544732e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.559182000947699e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4513979334615066e-12,
+          "mean_free_pressure_relative_error_bound": 4.619884427770201e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-3e-7": {
+          "residual_l2": 2.0882346722544732e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.559182000947699e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4513979334615066e-12,
+          "mean_free_pressure_relative_error_bound": 4.619884427770201e-15,
+          "pressure_error_bound_passed": true
+        },
+        "tight-1e-7": {
+          "residual_l2": 2.0882346722544732e-17,
+          "rhs_l2": 0.02184532810493037,
+          "relative_residual": 9.559182000947699e-16,
+          "predicted_divergence": 2.960594732333751e-17,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.4513979334615066e-12,
+          "mean_free_pressure_relative_error_bound": 4.619884427770201e-15,
+          "pressure_error_bound_passed": true
+        }
+      }
+    }
+  ],
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "cpu_affinity": [
+    5
+  ],
+  "cpu_threads": 1,
+  "elapsed_seconds": 1.7006308850031928,
+  "source_sha256": "86ce0de19cd5f61f3071d6998e4a1b53b5d698111623698ede8ef0838d510f20",
+  "scope": "same supplied RHS exact sealed-Neumann solve; not native reference-state pressure or autonomous trajectory accuracy",
+  "peak_rss_bytes": 745193472,
+  "diagnostic_source_sha256": "80ca214e0cffb6beb7591e3ef02759130b5c677bfd97b49a606da838ca8cc047"
+}

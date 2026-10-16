@@ -1,0 +1,1024 @@
+{
+  "gentle-010": {
+    "configuration": {
+      "analytical_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              16,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              24,
+              24
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              32,
+              32,
+              32
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              40,
+              40,
+              40
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              16,
+              12
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              17,
+              13,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              33,
+              17,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              9,
+              25,
+              13
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101507,
+        "weight": 0.1
+      },
+      "conditioning": "physical-residual",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "direction_feedback": {
+        "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+        "seed": 2026102701,
+        "stage": "late",
+        "weight": 0.1
+      },
+      "execution": {
+        "batch_mode": "serial",
+        "finite_checks": "combined",
+        "prepared_fields": false,
+        "profile_updates": 0,
+        "resident_inputs": true
+      },
+      "first_pressure_weight": 0.1,
+      "id": "water-pressure-recovery-gentle-010",
+      "normalization": "none",
+      "objective": "canonical-intermediate-contraction",
+      "output_scale": "previous-pressure-rms",
+      "resources": {
+        "max_output_bytes": 33554432,
+        "wall_seconds": 600
+      },
+      "schema": "rheon-water-residual-experiment-v9",
+      "supplemental_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              23,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              23,
+              25,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              16,
+              23
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              10,
+              7,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              7,
+              25,
+              10
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              10,
+              7
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101607,
+        "source": "grids",
+        "weight": 0.1
+      },
+      "training": {
+        "batch_size": 1,
+        "checkpoints": [
+          0,
+          100,
+          500,
+          1000,
+          2000,
+          4000,
+          5000
+        ],
+        "learning_rate": 0.001,
+        "model": "cubic-groupnorm-v3",
+        "sampling_seed": 2026102501,
+        "schedule": [
+          {
+            "learning_rate": 0.0001,
+            "update": 3000
+          },
+          {
+            "learning_rate": 1e-05,
+            "update": 4500
+          }
+        ],
+        "seed": 20261015,
+        "updates": 5000
+      }
+    },
+    "weights_sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+    "source_commit": "3a6ec2d30a72f6a9d572f0dd94d40e22159d0736",
+    "optimizer_seconds": 562.0486013889313,
+    "peak_cuda_allocated_bytes": 770565632,
+    "matched_control_initialization_sampling_and_feedback": true,
+    "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+    "initial_weights_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+    "sample_order_sha256": "3ff66d55f76da2af4cf7f39bf2ee510f2216dea9ee18b16645cd99e2e3d37423",
+    "managed_elapsed_seconds": 1256.7296820399933,
+    "train_recipe_elapsed_seconds": 567.8473105529993,
+    "restore_recipe_elapsed_seconds": 3.1479038370016497,
+    "weights_file_bytes": 1485452,
+    "execution": {
+      "amp": false,
+      "batches_cuda": true,
+      "cuda_cpu_pressure_max_abs_difference": 6.284138004275519e-05,
+      "deterministic_algorithms": true,
+      "device": "cuda:0",
+      "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+      "model_dtype": "float32",
+      "parameters_gradients_adam_moments_cuda": true,
+      "peak_allocated_bytes": 770565632,
+      "peak_reserved_bytes": 822083584,
+      "tf32": false
+    },
+    "stages": [
+      {
+        "artifacts": [
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-5000.npz",
+            "role": "checkpoint",
+            "sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-5000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-000.npz",
+            "role": "checkpoint",
+            "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-000.npz"
+          },
+          {
+            "bytes": 189,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "profile.json",
+            "role": "training_diagnostics",
+            "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/profile.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-1000.npz",
+            "role": "checkpoint",
+            "sha256": "3e2a4c0122e1a69588832f5c12287f3905134dc97045413212a9161df9b05366",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-1000.npz"
+          },
+          {
+            "bytes": 261606,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "predictions.npz",
+            "role": "predictions",
+            "sha256": "28640871c2d88d475d8ce78b5a0f7905ee5a99cb0286d64e5b51c53bdd07451f",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/predictions.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-2000.npz",
+            "role": "checkpoint",
+            "sha256": "3f640b03015df54728627dbb5523844090dbbb112591794f09eb78d884e87bb5",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-2000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "weights.npz",
+            "role": "checkpoint",
+            "sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/weights.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-100.npz",
+            "role": "checkpoint",
+            "sha256": "59fca19144c83267b34d5b1076774bce4e28ed778c5f074f8e0cb20febb21967",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-100.npz"
+          },
+          {
+            "bytes": 230272,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "history.json",
+            "role": "training_diagnostics",
+            "sha256": "a45cc3e878e1d2289fa2f8bf177d1d777da3ffd4335d3176337a9b17ab5732aa",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/history.json"
+          },
+          {
+            "bytes": 411192,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "splits.json",
+            "role": "training_splits",
+            "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/splits.json"
+          },
+          {
+            "bytes": 6752,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "normalization.json",
+            "role": "preprocessing",
+            "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/normalization.json"
+          },
+          {
+            "bytes": 14482,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "receipt.json",
+            "role": "training_result",
+            "sha256": "306a13a5408dbc76e291e8c399ac3b006f70da31ec38702b17ccfd729636e8ae",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/receipt.json"
+          },
+          {
+            "bytes": 982,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "summary.json",
+            "role": "result_summary",
+            "sha256": "f61f5cbc4114bc1e9bc4b42c766f46095055899e18cf0c08a642276cf66f4b3a",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/summary.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-4000.npz",
+            "role": "checkpoint",
+            "sha256": "c4f58307edba6f349a1d0054d4c91ee2da923140ad43d12ae88e6c7df1ceb064",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-4000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-500.npz",
+            "role": "checkpoint",
+            "sha256": "0a2e0c9fc2f42f4007bf82669b1b9f683d936eb38c849e59174acf3796466790",
+            "url": "/api/workspace/runs/836fc1d5741443bba6de416197950579/artifacts/checkpoint-500.npz"
+          }
+        ],
+        "custody_phase": "drained",
+        "material_sha256": "0b001c11df44458fe3f6c933eb4e4e662327b721d2af5a57f4bc2afde3cec512",
+        "name": "train",
+        "run_id": "836fc1d5741443bba6de416197950579",
+        "state": "completed"
+      },
+      {
+        "artifacts": [
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-5000.npz",
+            "role": "checkpoint",
+            "sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-5000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-000.npz",
+            "role": "checkpoint",
+            "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-000.npz"
+          },
+          {
+            "bytes": 189,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "profile.json",
+            "role": "training_diagnostics",
+            "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/profile.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-1000.npz",
+            "role": "checkpoint",
+            "sha256": "3e2a4c0122e1a69588832f5c12287f3905134dc97045413212a9161df9b05366",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-1000.npz"
+          },
+          {
+            "bytes": 261606,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "predictions.npz",
+            "role": "predictions",
+            "sha256": "28640871c2d88d475d8ce78b5a0f7905ee5a99cb0286d64e5b51c53bdd07451f",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/predictions.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-2000.npz",
+            "role": "checkpoint",
+            "sha256": "3f640b03015df54728627dbb5523844090dbbb112591794f09eb78d884e87bb5",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-2000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "weights.npz",
+            "role": "checkpoint",
+            "sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/weights.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-100.npz",
+            "role": "checkpoint",
+            "sha256": "59fca19144c83267b34d5b1076774bce4e28ed778c5f074f8e0cb20febb21967",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-100.npz"
+          },
+          {
+            "bytes": 230272,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "history.json",
+            "role": "training_diagnostics",
+            "sha256": "a45cc3e878e1d2289fa2f8bf177d1d777da3ffd4335d3176337a9b17ab5732aa",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/history.json"
+          },
+          {
+            "bytes": 411192,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "splits.json",
+            "role": "training_splits",
+            "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/splits.json"
+          },
+          {
+            "bytes": 6752,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "normalization.json",
+            "role": "preprocessing",
+            "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/normalization.json"
+          },
+          {
+            "bytes": 15861,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "receipt.json",
+            "role": "evaluation_result",
+            "sha256": "72ddf30cbac523e9e03a7623f888884adb940d8a31aef8078c9a33c096eac1e1",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/receipt.json"
+          },
+          {
+            "bytes": 981,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "summary.json",
+            "role": "result_summary",
+            "sha256": "5d1e3177b1f4311bf754c12c847e5fa70e90aedc37a2bb1f34f2b273e6be485c",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/summary.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-4000.npz",
+            "role": "checkpoint",
+            "sha256": "c4f58307edba6f349a1d0054d4c91ee2da923140ad43d12ae88e6c7df1ceb064",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-4000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-500.npz",
+            "role": "checkpoint",
+            "sha256": "0a2e0c9fc2f42f4007bf82669b1b9f683d936eb38c849e59174acf3796466790",
+            "url": "/api/workspace/runs/6f09e0db918b4e10bf21959edf76b932/artifacts/checkpoint-500.npz"
+          }
+        ],
+        "custody_phase": "drained",
+        "material_sha256": "e2165e48278b57be063fdaf62635d8c798582a43be66e37201c8533d174f0c88",
+        "name": "restore",
+        "run_id": "6f09e0db918b4e10bf21959edf76b932",
+        "state": "completed"
+      }
+    ],
+    "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "project_id": "470bd91362c34154a3edeaa45675ddb8"
+  },
+  "gentle-025": {
+    "configuration": {
+      "analytical_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              16,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              24,
+              24
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              32,
+              32,
+              32
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              40,
+              40,
+              40
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              16,
+              12
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              17,
+              13,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              33,
+              17,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              9,
+              25,
+              13
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101507,
+        "weight": 0.1
+      },
+      "conditioning": "physical-residual",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "direction_feedback": {
+        "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+        "seed": 2026102701,
+        "stage": "late",
+        "weight": 0.1
+      },
+      "execution": {
+        "batch_mode": "serial",
+        "finite_checks": "combined",
+        "prepared_fields": false,
+        "profile_updates": 0,
+        "resident_inputs": true
+      },
+      "first_pressure_weight": 0.25,
+      "id": "water-pressure-recovery-gentle-025",
+      "normalization": "none",
+      "objective": "canonical-intermediate-contraction",
+      "output_scale": "previous-pressure-rms",
+      "resources": {
+        "max_output_bytes": 33554432,
+        "wall_seconds": 600
+      },
+      "schema": "rheon-water-residual-experiment-v9",
+      "supplemental_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              23,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              23,
+              25,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              16,
+              23
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              10,
+              7,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              7,
+              25,
+              10
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              10,
+              7
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101607,
+        "source": "grids",
+        "weight": 0.1
+      },
+      "training": {
+        "batch_size": 1,
+        "checkpoints": [
+          0,
+          100,
+          500,
+          1000,
+          2000,
+          4000,
+          5000
+        ],
+        "learning_rate": 0.001,
+        "model": "cubic-groupnorm-v3",
+        "sampling_seed": 2026102501,
+        "schedule": [
+          {
+            "learning_rate": 0.0001,
+            "update": 3000
+          },
+          {
+            "learning_rate": 1e-05,
+            "update": 4500
+          }
+        ],
+        "seed": 20261015,
+        "updates": 5000
+      }
+    },
+    "weights_sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+    "source_commit": "3a6ec2d30a72f6a9d572f0dd94d40e22159d0736",
+    "optimizer_seconds": 492.95816135406494,
+    "peak_cuda_allocated_bytes": 770565632,
+    "matched_control_initialization_sampling_and_feedback": true,
+    "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+    "initial_weights_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+    "sample_order_sha256": "3ff66d55f76da2af4cf7f39bf2ee510f2216dea9ee18b16645cd99e2e3d37423",
+    "managed_elapsed_seconds": 1080.379606030001,
+    "train_recipe_elapsed_seconds": 498.4793953920016,
+    "restore_recipe_elapsed_seconds": 2.4865744460039423,
+    "weights_file_bytes": 1485452,
+    "execution": {
+      "amp": false,
+      "batches_cuda": true,
+      "cuda_cpu_pressure_max_abs_difference": 4.132774142817652e-05,
+      "deterministic_algorithms": true,
+      "device": "cuda:0",
+      "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+      "model_dtype": "float32",
+      "parameters_gradients_adam_moments_cuda": true,
+      "peak_allocated_bytes": 770565632,
+      "peak_reserved_bytes": 822083584,
+      "tf32": false
+    },
+    "stages": [
+      {
+        "artifacts": [
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-5000.npz",
+            "role": "checkpoint",
+            "sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-5000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-000.npz",
+            "role": "checkpoint",
+            "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-000.npz"
+          },
+          {
+            "bytes": 189,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "profile.json",
+            "role": "training_diagnostics",
+            "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/profile.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-1000.npz",
+            "role": "checkpoint",
+            "sha256": "bd6c1c39129723c365bbd338c755686cdab0c0e3e1d6f3570b8b4c574550cde6",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-1000.npz"
+          },
+          {
+            "bytes": 261606,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "predictions.npz",
+            "role": "predictions",
+            "sha256": "829b464903103ea9fc2eeb23258772b42d6170c0947f56ebeb9fac476ba1342a",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/predictions.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-2000.npz",
+            "role": "checkpoint",
+            "sha256": "9605cbdf61d41563679d68bd97aea5b07d848991dadcafc5a37f218e1d7a3948",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-2000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "weights.npz",
+            "role": "checkpoint",
+            "sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/weights.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-100.npz",
+            "role": "checkpoint",
+            "sha256": "56ac42e4248729fb0c432316cf5d18af4ea1ef346419c9dcbcca874f294de336",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-100.npz"
+          },
+          {
+            "bytes": 230286,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "history.json",
+            "role": "training_diagnostics",
+            "sha256": "664f383b2948325442e7a15df3f8e1856a188a9326315296d0c9aac0bf2611e2",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/history.json"
+          },
+          {
+            "bytes": 411192,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "splits.json",
+            "role": "training_splits",
+            "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/splits.json"
+          },
+          {
+            "bytes": 6752,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "normalization.json",
+            "role": "preprocessing",
+            "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/normalization.json"
+          },
+          {
+            "bytes": 14486,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "receipt.json",
+            "role": "training_result",
+            "sha256": "11d7d582ab336beb120fb879a030d4870ac8d05f92b37b5b8e873a12a13d9f32",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/receipt.json"
+          },
+          {
+            "bytes": 982,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "summary.json",
+            "role": "result_summary",
+            "sha256": "61ae805edae72c05f2e46d752cb62a6370cff33573333f3211117b7aa5e86ae4",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/summary.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-4000.npz",
+            "role": "checkpoint",
+            "sha256": "ca06869c73e8b2b518135f94203d0e8dd7b038498fc3b3278535eda18d97ad45",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-4000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-500.npz",
+            "role": "checkpoint",
+            "sha256": "fb46f71864cbfddd8adf83c313cf876ff403d03e640037bf983106dcb8250477",
+            "url": "/api/workspace/runs/5e270feb1e8648998b733158bc165c4b/artifacts/checkpoint-500.npz"
+          }
+        ],
+        "custody_phase": "drained",
+        "material_sha256": "a323896b86b4d2cdc09a651928e7fb24a3c8a1cb1cdc03888ec0875178e1f4a3",
+        "name": "train",
+        "run_id": "5e270feb1e8648998b733158bc165c4b",
+        "state": "completed"
+      },
+      {
+        "artifacts": [
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-5000.npz",
+            "role": "checkpoint",
+            "sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-5000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-000.npz",
+            "role": "checkpoint",
+            "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-000.npz"
+          },
+          {
+            "bytes": 189,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "profile.json",
+            "role": "training_diagnostics",
+            "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/profile.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-1000.npz",
+            "role": "checkpoint",
+            "sha256": "bd6c1c39129723c365bbd338c755686cdab0c0e3e1d6f3570b8b4c574550cde6",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-1000.npz"
+          },
+          {
+            "bytes": 261606,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "predictions.npz",
+            "role": "predictions",
+            "sha256": "829b464903103ea9fc2eeb23258772b42d6170c0947f56ebeb9fac476ba1342a",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/predictions.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-2000.npz",
+            "role": "checkpoint",
+            "sha256": "9605cbdf61d41563679d68bd97aea5b07d848991dadcafc5a37f218e1d7a3948",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-2000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "weights.npz",
+            "role": "checkpoint",
+            "sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/weights.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-100.npz",
+            "role": "checkpoint",
+            "sha256": "56ac42e4248729fb0c432316cf5d18af4ea1ef346419c9dcbcca874f294de336",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-100.npz"
+          },
+          {
+            "bytes": 230286,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "history.json",
+            "role": "training_diagnostics",
+            "sha256": "664f383b2948325442e7a15df3f8e1856a188a9326315296d0c9aac0bf2611e2",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/history.json"
+          },
+          {
+            "bytes": 411192,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "splits.json",
+            "role": "training_splits",
+            "sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/splits.json"
+          },
+          {
+            "bytes": 6752,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "normalization.json",
+            "role": "preprocessing",
+            "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/normalization.json"
+          },
+          {
+            "bytes": 15866,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "receipt.json",
+            "role": "evaluation_result",
+            "sha256": "fdf1b3ca70c18ba3eafe60368f045dff11d4217009078740b50d22f1d98d0ebd",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/receipt.json"
+          },
+          {
+            "bytes": 981,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "summary.json",
+            "role": "result_summary",
+            "sha256": "b07431b7aece5e20cbb3ad9ac64d537af783f57745a412fd74f6c54b88bfa77d",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/summary.json"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-4000.npz",
+            "role": "checkpoint",
+            "sha256": "ca06869c73e8b2b518135f94203d0e8dd7b038498fc3b3278535eda18d97ad45",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-4000.npz"
+          },
+          {
+            "bytes": 1485452,
+            "locked": false,
+            "media_type": "application/octet-stream",
+            "name": "checkpoint-500.npz",
+            "role": "checkpoint",
+            "sha256": "fb46f71864cbfddd8adf83c313cf876ff403d03e640037bf983106dcb8250477",
+            "url": "/api/workspace/runs/ed44dd63db164f65ac25e3b456721c33/artifacts/checkpoint-500.npz"
+          }
+        ],
+        "custody_phase": "drained",
+        "material_sha256": "8a756d8010cd3d942fca7f0b76022f20457b339726c721bd059fa02494ad9bee",
+        "name": "restore",
+        "run_id": "ed44dd63db164f65ac25e3b456721c33",
+        "state": "completed"
+      }
+    ],
+    "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "project_id": "33770658fadd4b1fb5103b1aaa0068fb"
+  }
+}

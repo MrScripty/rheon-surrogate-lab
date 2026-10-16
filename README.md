@@ -510,3 +510,10 @@ fit preserved the best prior pressure accuracy across all populations; no model
 was promoted and eight independent scenes remain reserved. The records also
 separate weak-mode amplitude, cross-band leakage and float32 input rounding.
 [Sealed results and timings](docs/plans/water-early-pressure-v1/reports/summary.json).
+
+The [pressure accuracy recovery sequence](docs/plans/water-pressure-recovery-v1/results.md)
+retains two matched CUDA fits and 296 qualified AI trajectories across 74 consumed
+scenes. Weight 0.1 reduces recent maximum calls 17→10, but does not preserve the best
+prior pressure accuracy everywhere; no replacement or independent-scene use.
+[Methods, timings and receipts](docs/plans/water-pressure-recovery-v1/reports/summary.json)
+include stricter stopping tests, frequency/amplitude diagnostics and current CPU latency.

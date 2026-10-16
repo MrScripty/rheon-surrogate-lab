@@ -1,0 +1,474 @@
+{
+  "frozen_at_utc": "2026-10-16T21:06:19.133077+00:00",
+  "config_sha256": "2fb077a0ef463e31215d3fa9c510173f0d55740d8e5797a064d364e513367fa3",
+  "models": [
+    {
+      "name": "gentle-010",
+      "project": "runs/water-pressure-recovery-v1/gentle-010/project",
+      "artifacts": "runs/water-pressure-recovery-v1/gentle-010/managed-full/stage-01/artifacts",
+      "single_evaluation": true,
+      "minimum_network_evaluations": 0,
+      "stopping_profile": "experiments/water-stopping-floor-v1/configs/pressure-bound.json",
+      "weights_sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    {
+      "name": "gentle-025",
+      "project": "runs/water-pressure-recovery-v1/gentle-025/project",
+      "artifacts": "runs/water-pressure-recovery-v1/gentle-025/managed-full/stage-01/artifacts",
+      "single_evaluation": true,
+      "minimum_network_evaluations": 0,
+      "stopping_profile": "experiments/water-stopping-floor-v1/configs/pressure-bound.json",
+      "weights_sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    }
+  ],
+  "trials": {
+    "gentle-010": {
+      "configuration": {
+        "analytical_feedback": {
+          "amplitude_reference": "train-correction-cell-rms",
+          "cache_max_bytes": 805306368,
+          "grid_capacity": 16,
+          "grids": [
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                16,
+                16,
+                16
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                24,
+                24,
+                24
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                32,
+                32,
+                32
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                40,
+                40,
+                40
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                24,
+                16,
+                12
+              ]
+            },
+            {
+              "cells_per_metre": 8,
+              "counts_xyz": [
+                17,
+                13,
+                9
+              ]
+            },
+            {
+              "cells_per_metre": 8,
+              "counts_xyz": [
+                33,
+                17,
+                9
+              ]
+            },
+            {
+              "cells_per_metre": 8,
+              "counts_xyz": [
+                9,
+                25,
+                13
+              ]
+            }
+          ],
+          "patterns": 32,
+          "sampling": "uniform-balanced-grid",
+          "seed": 2026101507,
+          "weight": 0.1
+        },
+        "conditioning": "physical-residual",
+        "correction": {
+          "activation": "linear",
+          "steps": 2
+        },
+        "direction_feedback": {
+          "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+          "seed": 2026102701,
+          "stage": "late",
+          "weight": 0.1
+        },
+        "execution": {
+          "batch_mode": "serial",
+          "finite_checks": "combined",
+          "prepared_fields": false,
+          "profile_updates": 0,
+          "resident_inputs": true
+        },
+        "first_pressure_weight": 0.1,
+        "id": "water-pressure-recovery-gentle-010",
+        "normalization": "none",
+        "objective": "canonical-intermediate-contraction",
+        "output_scale": "previous-pressure-rms",
+        "resources": {
+          "max_output_bytes": 33554432,
+          "wall_seconds": 600
+        },
+        "schema": "rheon-water-residual-experiment-v9",
+        "supplemental_feedback": {
+          "amplitude_reference": "train-correction-cell-rms",
+          "cache_max_bytes": 805306368,
+          "grid_capacity": 16,
+          "grids": [
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                16,
+                23,
+                25
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                23,
+                25,
+                16
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                25,
+                16,
+                23
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                10,
+                7,
+                25
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                7,
+                25,
+                10
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                25,
+                10,
+                7
+              ]
+            }
+          ],
+          "patterns": 32,
+          "sampling": "uniform-balanced-grid",
+          "seed": 2026101607,
+          "source": "grids",
+          "weight": 0.1
+        },
+        "training": {
+          "batch_size": 1,
+          "checkpoints": [
+            0,
+            100,
+            500,
+            1000,
+            2000,
+            4000,
+            5000
+          ],
+          "learning_rate": 0.001,
+          "model": "cubic-groupnorm-v3",
+          "sampling_seed": 2026102501,
+          "schedule": [
+            {
+              "learning_rate": 0.0001,
+              "update": 3000
+            },
+            {
+              "learning_rate": 1e-05,
+              "update": 4500
+            }
+          ],
+          "seed": 20261015,
+          "updates": 5000
+        }
+      },
+      "weights_sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3",
+      "source_commit": "3a6ec2d30a72f6a9d572f0dd94d40e22159d0736",
+      "optimizer_seconds": 562.0486013889313,
+      "peak_cuda_allocated_bytes": 770565632,
+      "matched_control_initialization_sampling_and_feedback": true
+    },
+    "gentle-025": {
+      "configuration": {
+        "analytical_feedback": {
+          "amplitude_reference": "train-correction-cell-rms",
+          "cache_max_bytes": 805306368,
+          "grid_capacity": 16,
+          "grids": [
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                16,
+                16,
+                16
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                24,
+                24,
+                24
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                32,
+                32,
+                32
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                40,
+                40,
+                40
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                24,
+                16,
+                12
+              ]
+            },
+            {
+              "cells_per_metre": 8,
+              "counts_xyz": [
+                17,
+                13,
+                9
+              ]
+            },
+            {
+              "cells_per_metre": 8,
+              "counts_xyz": [
+                33,
+                17,
+                9
+              ]
+            },
+            {
+              "cells_per_metre": 8,
+              "counts_xyz": [
+                9,
+                25,
+                13
+              ]
+            }
+          ],
+          "patterns": 32,
+          "sampling": "uniform-balanced-grid",
+          "seed": 2026101507,
+          "weight": 0.1
+        },
+        "conditioning": "physical-residual",
+        "correction": {
+          "activation": "linear",
+          "steps": 2
+        },
+        "direction_feedback": {
+          "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+          "seed": 2026102701,
+          "stage": "late",
+          "weight": 0.1
+        },
+        "execution": {
+          "batch_mode": "serial",
+          "finite_checks": "combined",
+          "prepared_fields": false,
+          "profile_updates": 0,
+          "resident_inputs": true
+        },
+        "first_pressure_weight": 0.25,
+        "id": "water-pressure-recovery-gentle-025",
+        "normalization": "none",
+        "objective": "canonical-intermediate-contraction",
+        "output_scale": "previous-pressure-rms",
+        "resources": {
+          "max_output_bytes": 33554432,
+          "wall_seconds": 600
+        },
+        "schema": "rheon-water-residual-experiment-v9",
+        "supplemental_feedback": {
+          "amplitude_reference": "train-correction-cell-rms",
+          "cache_max_bytes": 805306368,
+          "grid_capacity": 16,
+          "grids": [
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                16,
+                23,
+                25
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                23,
+                25,
+                16
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                25,
+                16,
+                23
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                10,
+                7,
+                25
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                7,
+                25,
+                10
+              ]
+            },
+            {
+              "cells_per_metre": 16,
+              "counts_xyz": [
+                25,
+                10,
+                7
+              ]
+            }
+          ],
+          "patterns": 32,
+          "sampling": "uniform-balanced-grid",
+          "seed": 2026101607,
+          "source": "grids",
+          "weight": 0.1
+        },
+        "training": {
+          "batch_size": 1,
+          "checkpoints": [
+            0,
+            100,
+            500,
+            1000,
+            2000,
+            4000,
+            5000
+          ],
+          "learning_rate": 0.001,
+          "model": "cubic-groupnorm-v3",
+          "sampling_seed": 2026102501,
+          "schedule": [
+            {
+              "learning_rate": 0.0001,
+              "update": 3000
+            },
+            {
+              "learning_rate": 1e-05,
+              "update": 4500
+            }
+          ],
+          "seed": 20261015,
+          "updates": 5000
+        }
+      },
+      "weights_sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84",
+      "source_commit": "3a6ec2d30a72f6a9d572f0dd94d40e22159d0736",
+      "optimizer_seconds": 492.95816135406494,
+      "peak_cuda_allocated_bytes": 770565632,
+      "matched_control_initialization_sampling_and_feedback": true
+    }
+  },
+  "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+  "baseline_summary": "docs/plans/water-pressure-bound-regression-v1/reports/regression-summary.json",
+  "sources": [
+    {
+      "path": "experiments/water-residual-learning-v1/rollout.py",
+      "sha256": "18250feaa36e7dfa31c8597337be1a9d06eca9570ea7639738a6d93cff89d849"
+    },
+    {
+      "path": "experiments/water-stability-learning-v1/learned_iteration.py",
+      "sha256": "a14273b0a07e9885f01182695be6d3a82fab84583963b1119681cefc454e4cd5"
+    },
+    {
+      "path": "experiments/water-stopping-floor-v1/configs/pressure-bound.json",
+      "sha256": "6830947fd667b032c793b77259d8a3e8aeb577390fa9ad302fdbcf71d62f84cd"
+    },
+    {
+      "path": "experiments/water-stopping-floor-v1/episode.py",
+      "sha256": "39397a3cd5b1387ff471d3df30d6bb2b0b4132a6972ff0dd5ea6ea5c51bb19c6"
+    },
+    {
+      "path": "experiments/water-stopping-floor-v1/run.py",
+      "sha256": "2117b4d8db64214a304c6b69039813cd4035576c0aac9d052c4e75f70efa6b38"
+    },
+    {
+      "path": "runs/water-pressure-recovery-v1/gentle-010/managed-full/stage-01/artifacts/normalization.json",
+      "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    {
+      "path": "runs/water-pressure-recovery-v1/gentle-010/managed-full/stage-01/artifacts/weights.npz",
+      "sha256": "66df7bc5df5aeb1bc9b914054a4ffd4148002248ea319afc14364f0015aa48f3"
+    },
+    {
+      "path": "runs/water-pressure-recovery-v1/gentle-010/project/source-witness.json",
+      "sha256": "98f5055916436f4d297d40d44a852e2dfcd3745cd88484d2d7cb3f219d95be2c"
+    },
+    {
+      "path": "runs/water-pressure-recovery-v1/gentle-025/managed-full/stage-01/artifacts/normalization.json",
+      "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    {
+      "path": "runs/water-pressure-recovery-v1/gentle-025/managed-full/stage-01/artifacts/weights.npz",
+      "sha256": "5e3f0f5c15c45b6dac414bb8567504a7bc2700ffb8d740b3bb75c9aa45babe84"
+    },
+    {
+      "path": "runs/water-pressure-recovery-v1/gentle-025/project/source-witness.json",
+      "sha256": "0dfd283438f5893ff8416a1747094f5a986d7e9caa3177248bc56f27aea1be3d"
+    }
+  ]
+}

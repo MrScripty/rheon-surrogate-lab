@@ -1,0 +1,37 @@
+{
+  "schema": "rheon-recurrence-sequence-v1",
+  "training_packet": "runs/water-residual-learning-v1/views/cohort-16",
+  "validation_packet": "runs/water-learning-sequence-v1/views/validation",
+  "reserved_packet": "runs/water-learning-sequence-v1/views/reserved-test",
+  "runtime_manifest": "runs/cuda-pressure-runtime-1/manifest.json",
+  "tuldok": "runs/live-integration/Tuldok",
+  "reference": {
+    "name": "cohort-two-reference",
+    "project": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/project",
+    "artifacts": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "trials": [
+    {
+      "name": "cohort-two-seed2",
+      "config": "experiments/water-recurrence-generalization-v1/configs/cohort-two-seed2.json",
+      "admission": "admitted"
+    },
+    {
+      "name": "cohort-two-seed3",
+      "config": "experiments/water-recurrence-generalization-v1/configs/cohort-two-seed3.json",
+      "admission": "admitted"
+    },
+    {
+      "name": "cohort-one-control",
+      "config": "experiments/water-recurrence-generalization-v1/configs/cohort-one-control.json",
+      "admission": "admitted"
+    },
+    {
+      "name": "cohort-four-control",
+      "config": "experiments/water-recurrence-generalization-v1/configs/cohort-four-control.json",
+      "admission": "conditional on two-evaluation development comparison"
+    }
+  ],
+  "selection": "all adaptive development states pass; minimize mean evaluations, then worst fixed-eight residual; final holdout stays unread until selection is frozen"
+}

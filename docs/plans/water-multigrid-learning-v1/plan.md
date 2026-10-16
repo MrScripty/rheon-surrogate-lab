@@ -1,6 +1,6 @@
 # Multi-grid pressure learning
 
-Status: Active. Admission: start, authorized by the user's request to continue
+Status: Accepted. Admission: start, authorized by the user's request to continue
 and record the next steps proposed after the accepted inference-budget tranche.
 Canonical plan: docs/plans/water-multigrid-learning-v1/plan.md. Owner: this task.
 
@@ -26,7 +26,8 @@ Binding decisions:
 - New analytical-feedback schema explicitly declares grid counts, scalar cubic
   spacing, uniform grid sampling and bounded resident cache. Labels come from
   independent Neumann eigenvalues. These are operator examples, not new CFD
-  simulations. Train-only normalization stays fitted to the real fitting frame.
+  simulations. One-frame controls retain exact normalization; the cohort fits scales only to
+  its real training states, with explicitly versioned amplitude authority.
 - Start with an exact single-grid control and a controlled 5,000-update multi-grid
   one-evaluation fit. A two-evaluation trial is conditional on the first result;
   record exposure and neural work separately. One optimizer at a time, 600 s and
@@ -36,8 +37,8 @@ Binding decisions:
   Do not assume using more threads minimizes latency.
 - Broader 16-simulation training follows credible known-case fitting at a named
   inference budget and retained physical acceptance on prior development/grids.
-  Per-grid work regressions remain explicit and do not authorize default promotion. Otherwise retain
-  the failed scientific hypothesis and prepare a concrete follow-up. Larger-grid
+  Per-grid work regressions remain explicit and do not authorize default promotion.
+  Otherwise retain the failed scientific hypothesis and prepare a concrete follow-up. Larger-grid
   capture contract, architecture replacement and deployment remain separate.
 
 Composed-design review: not-applicable. Existing managed execution, source
@@ -60,17 +61,19 @@ Milestones and acceptance claims:
    uninterrupted evaluations and counts actual work. State: Accepted.
 2. C2 required-real CUDA+Tuldok: smoke then full fit complete/drain, CPU restore
    preserves weights, managed artifacts reopen/redownload. Failed attempts are
-   retained and do not masquerade as completed fits. State: Active.
+   retained and do not masquerade as completed fits. State: Accepted.
 3. C3 required-real CPU: matched stopping checkpoint comparison, development
    native gates and larger-grid trajectories retain accuracy/work counts. Native
-   controls must qualify before interpreting candidate failures. State: Planned.
+   controls must qualify before interpreting candidate failures. State: Accepted.
 4. C4 performance/required-real CPU: repeated isolated timings and bounded profile
-   separate convolution, operator work and whole-track overhead. State: Planned.
+   separate convolution, operator work and whole-track overhead. State: Accepted.
 5. C5 artifact/system: evidence, methods, limits, custody and next decisions are
-   retained and linked in the user's existing Tuldok project. State: Planned.
+   retained and linked in the user's existing Tuldok project. State: Accepted.
 
-Current acceptance: pending. Current phase: 16-simulation CUDA fit and final CPU qualification.
-Exactly one next slice: complete the admitted cohort fit/CPU qualification, then run serial matched-resource timings.
+Current acceptance: C1-C5 satisfied; measurements and result custody retained.
+Current phase: complete. Exactly one next slice: none within this completed tranche.
+Prepared subsequent experiments are unexecuted; no task Run, native child, CPU
+controller or live observer remains active. The branch remains retained for review.
 Blockers: none. Replan on nonfinite training, Run lifecycle failure, invalid
 native controls, exceeded budgets, or a regression that blocks broader training.
 No untouched final population is consumed for development decisions.

@@ -87,7 +87,7 @@ claim. Readiness of the broader cohort remains conditional on new fit results.
 The optional four-thread trajectory fixture qualifies native and learned tracks
 with one AI step after 15 native steps, explicit CPUs1–4 and observed four-thread
 budgets. All children reaped. Retained separate-seed 120-mixture CPU baseline
-uses up to all23 independent worker cores while CUDA fitting proceeds; low modes
+uses up to all 23 independent worker cores while CUDA fitting proceeds; low modes
 and arbitrary-frequency mixtures are distinguished rather than averaged away.
 
 Full one-evaluation fit completed 5,000 CUDA updates at 44.3782 updates/s.
@@ -112,23 +112,23 @@ current trials' actual iterative fit/development/grid evidence; no Run starts
 merely because these configurations exist.
 
 One-pass multi-grid development completes 128/128 physical passes, averaging
-13.46875 evaluations (worst23), versus current reference12.6015625 (worst26).
+13.46875 evaluations (worst 23), versus current reference 12.6015625 (worst 26).
 This is a mean-work regression on small saved states despite a better tail;
 retain it rather than presenting every new training run as an improvement.
 Larger grids and two-evaluation weights still need their full comparison.
-Two-evaluation optimizer completed5,000 updates at23.5147 updates/s; fitted
+Two-evaluation optimizer completed 5,000 updates at 23.5147 updates/s; fitted
 post-update ratio .00309170 is diagnostic, not final CPU physical acceptance.
 
-Prepared cohort bank independently qualifies all640 entries, worst relative
-operator mismatch6.44257e-14, global real-train correction RMS2.853573464078259Pa.
+Prepared cohort bank independently qualifies all 640 entries, worst relative
+operator mismatch6.44257e-14, global real-train correction RMS2.853573464078259 Pa.
 Legacy bank remains bit-identical and model RNG unchanged. No cohort Run has
-been admitted yet. Corrected the mode-probe description to60 distinct mixtures
+been admitted yet. Corrected the mode-probe description to 60 distinct mixtures
 at two signed amplitudes (120 cases); generated inputs are unchanged.
 
 Broader-cohort admission review: one-pass multi-grid weights pass known fit1/1,
 development128/128 and all seven supported short grid scenes under the original
 32-evaluation cap and unchanged physical gates. They improve40-cubed work from
-22.875 to13.625 evaluations but regress16-cubed from10 to12.75. Preserve the
+22.875 to 13.625 evaluations but regress16-cubed from 10 to 12.75. Preserve the
 current reference and report this Pareto tradeoff; this is not default promotion.
 Those physical fitting/generalization checks satisfy the evidence prerequisite
 for a bounded cohort qualification. Admit only the prepared10-update cohort
@@ -139,23 +139,23 @@ work regressions explicitly rather than hiding them in an aggregate.
 
 First full trial record sealed after all three managed Runs reopened/drained,
 whole artifacts redownloaded identically, raw native checks, adaptive fit128-state
-checks, 120 analytical signed cases, seven grid settings and three512-step
+checks, 120 analytical signed cases, seven grid settings and three 512-step
 trajectories. All20 native trajectory children are reaped/exit0. Raw output
 remains0/128; iterative policy retains full physical acceptance. Three control
 parities (initial parameters, normalization, real sampling) are exact. Forward
-voxel-evaluation proxy139,776,000 is3.4125 times the prior single-grid fit despite
+voxel-evaluation proxy139,776,000 is 3.4125 times the prior single-grid fit despite
 equal forward/example counts; do not call the training compute equal.
 
-Second fit's CPU development evidence passes128/128 at mean12.4140625 and
-maximum19 evaluations, versus reference12.6015625/max26 and multi-grid one-pass
+Second fit's CPU development evidence passes 128/128 at mean 12.4140625 and
+maximum 19 evaluations, versus reference 12.6015625/max26 and multi-grid one-pass
 13.46875/max23. Independently seeded low-frequency40-cubed mixtures improve from
-23 to12.5 evaluations, while broad-frequency mixtures regress; report both.
+23 to 12.5 evaluations, while broad-frequency mixtures regress; report both.
 Seven physical grid scenes and longer trajectories remain pending at this point.
 
 Second trial completes all managed and CPU stages: development128/128, seven
-physical grid settings and1,491/1,491 longer-window AI steps qualify, with20 native
+physical grid settings and 1,491/1,491 longer-window AI steps qualify, with 20 native
 trajectory children reaped/exit0. Forty-cubed means11.75 (fixed spacing) and
-12.125 (fixed volume), versus reference22.875; small16-cubed needs11 versus10.
+12.125 (fixed volume), versus reference 22.875; small16-cubed needs11 versus10.
 Select two-evaluation training for the cohort experiment, retaining this tradeoff.
 Raw two-evaluation outputs remain physically unqualified; final inference iterates.
 
@@ -165,11 +165,11 @@ Ten CUDA updates, positive global real-train amplitude, all five bank grids and
 exact CPU weight/prediction parity. Admit the prepared5,000-update two-evaluation
 cohort fit at source capture c4e4a50:16 real simulations/32 states, uniform parent
 then frame sampling, same analytical grid schedule and train-only global units.
-Evaluate all32 real train states separately from128 development states. The
+Evaluate all 32 real train states separately from 128 development states. The
 mode-probe fixture remains the original common physical inputs for comparison.
 
 CPU preparation during cohort CUDA fitting: eight channels-last3D mechanism
-probes cover16/24/32/40-cubed at1/4 threads. All parameter values remain bit-exact
+probes cover16/24/32/40-cubed at 1/4 threads. All parameter values remain bit-exact
 and sampled equation gates pass. Timings are mixed across sizes/threads and the
 GPU fit overlaps, so no uniform gain or whole-track speed claim is supported.
 Retain the profiles and optional diagnostic flag, without adding a rollout or
@@ -184,3 +184,67 @@ Every completed episode now updates retained reports and live activity. This
 also extends exclusive core leases to native controls with uneven durations.
 Independent event-driven scheduling/failure tests cover progress, exclusion and
 failure cleanup; existing native child lifecycle ownership remains unchanged.
+
+Cohort completes all managed stages and CPU checks: fit32/32 at mean 9.125/max11,
+development128/128 at mean 8.8828125/max12, seven grid settings and all 1,491 longer
+AI steps. The early32-state and final32-state CPU predictions reproduce identical
+numeric inventories. Relative to the preceding latest checkpoint, development
+mean work falls29.51%, maximum work53.85%, and 40-cubed work56.28% (22.875 to 10).
+Retain this as the development reference, with no application deployment implied.
+Raw managed outputs remain unqualified; success uses explicit adaptive iteration.
+
+All13 managed stages complete/drain and repeat-download identically: three 5,000-
+update fits plus two 10-update smokes total 15,020 CUDA updates. All task training,
+CPU qualification controllers and native children drained before the final timing
+sequence began. The serial one/four-thread studies each use five physical scenes,
+four restored checkpoints and three alternating repetitions. Per-episode reports
+and live activity stream as completed; no concurrent numerical work is launched.
+
+Prepared a final equal-budget CPU diagnostic to distinguish improved equation
+accuracy from merely stopping at the same acceptance target. It compares the
+preceding latest and cohort checkpoints after a fixed eight-evaluation policy
+on the same128 development states, using independent native gates. It starts
+only after both isolated timing studies drain. The reusable evaluator now accepts
+an explicit1–32 network budget and fixed/adaptive policy; defaults preserve the
+qualified32-cap adaptive path. No training, labels during inference or relaxed
+physical targets are introduced. Fixed-policy receipts name a declared budget;
+adaptive receipts retain observed per-case counts.
+
+Both isolated timing studies complete with all 960 AI steps qualified and all 130
+native trajectory children reaped/exit0. Four threads improve cohort latency on
+all five measured scenes. At40-cubed, prior/new AI times are 1442.14/701.78 ms with
+four threads, paired native 419.11 ms; one-thread prior/new3221.29/1470.35 ms.
+Native still wins and scaling is not monotonic. Source/per-repetition timings,
+resource budgets, whole-track scope and distinct equation targets are retained.
+
+The subsequent fixed-eight CPU comparison uses identical128-case identities:
+median relative residual 6.92990e-6 to 1.21265e-6 (5.71x improvement), worst
+1.67301e-3 to 4.53286e-5 (36.91x); physical passes 11 to 46. Both policies still
+fail some cases at eight evaluations. Adaptive32-cap acceptance remains128/128.
+The experiment therefore separates equal-work accuracy from stopping policy.
+
+Pressure-drift synthesis checks12 common-scene trajectories and retains60 actual
+samples plus worst/final values. Drift is mixed at the same equation target;
+cohort cube maximum 3.95e-6 exceeds the reference 5.70e-7, while rectangular and
+compact maxima improve. These field differences are not equation residuals.
+All finite-window physical checks remain passed. New datasets/weights, altered
+physics targets, application deployment and final-test claims are absent.
+
+Final project1fd1f315ecf8431abc10d16f9de546ce ('Rheon Surrogate Lab · multi-grid
+results') is registered/reopened in the same cataloga7da4a8de53541a2a0e2aad08005bb71.
+Its exact manifest hash and 64 evidence references are retained. Eight old source/
+workflow shortcuts were retired from the index to respect the UI limit; their
+files and all historical scientific results remain intact. The renewed observer
+PID1482974 was argv-verified, interrupted, waited and reaped; final root activity
+is completed 13/13. The original observer1444821 was likewise drained on renewal.
+
+Lifecycle audit opens221 native trajectory receipts (all exit0/reaped) and 19
+native diagnostic populations/1362 cases (all owned groups drained). New local
+retention375,005,265 bytes stays below2 GiB plus the declared reserve. Source tests,
+independent label/recurrence/scheduling fixtures, real CPU/CUDA integration,
+whole-artifact custody, explicit timing conditions and fixed-budget checks are
+retained. Reviewed the full linear branch range from 5bf5c2d; the profiler-name
+mistake has an explicit corrective rename and no history rewrite. No merges,
+publication, Rheon/Tuldok source edits, model weights or datasets enter Git.
+Acceptance C1-C5 is satisfied for this finite development experiment. The
+next-steps document prepares subsequent work and admits no additional jobs.

@@ -86,6 +86,21 @@ checkpoints; a prepared cohort entry must be removed if its fit is not admitted
 or completed. Two serial studies use `--threads 1` and `--threads 4`, one worker,
 and `--timing-study`, after GPU training and task CPU qualifications drain. All
 tracks get the same core/thread allocation within each study. Existing distinct
-native1e-8/AI1e-6 residual profiles remain stated; do not present them as a
+native 1e-8/AI1e-6 residual profiles remain stated; do not present them as a
 matched-tolerance pressure-kernel benchmark. Exclude first AI timing step and
 retain seven samples/repetition and all physical outcomes.
+
+Equal-budget comparison: evaluate.py accepts `--network-budget 8 --fixed-budget`
+with the same managed CPU restores and 128-state validation packet. It omits
+adaptive early stopping and retains a distinct fixed-budget result schema. Both
+predictions use identical case/population identities, are checked by the same
+native oracle/profile, and contribute no native refinement to AI success.
+The default remains32-cap adaptive inference. Retained raw/fixed/adaptive cases
+are separate evidence; no budget failure is erased by another policy's success.
+
+summarize.py derives the 13-stage/15020-update inventory and comparison CSV from
+sealed trial/smoke records and completed timing reports. trajectory_summary.py
+checks common scenes/native binary and original receipt hashes, then retains
+60 pressure-drift samples from 12 paired trajectories. No hard-coded pass totals
+replace the retained per-episode observations. Final source/witness/checkpoint
+and model-interface details are in model-contract.md.

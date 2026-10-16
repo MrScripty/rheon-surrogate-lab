@@ -167,3 +167,11 @@ cohort fit at source capture c4e4a50:16 real simulations/32 states, uniform pare
 then frame sampling, same analytical grid schedule and train-only global units.
 Evaluate all32 real train states separately from128 development states. The
 mode-probe fixture remains the original common physical inputs for comparison.
+
+CPU preparation during cohort CUDA fitting: eight channels-last3D mechanism
+probes cover16/24/32/40-cubed at1/4 threads. All parameter values remain bit-exact
+and sampled equation gates pass. Timings are mixed across sizes/threads and the
+GPU fit overlaps, so no uniform gain or whole-track speed claim is supported.
+Retain the profiles and optional diagnostic flag, without adding a rollout or
+checkpoint-adapter layout migration. Isolated final timings retain the qualified
+contiguous execution path and compare1/4 threads. No model/training change here.

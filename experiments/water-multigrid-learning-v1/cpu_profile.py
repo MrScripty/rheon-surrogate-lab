@@ -20,12 +20,20 @@ def main():
     for name in ('project','artifacts','packet','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--axis-count',type=int,choices=(16,24,32,40),required=True)
     p.add_argument('--threads',type=int,choices=(1,4,8),required=True)
+    p.add_argument('--layout',choices=('contiguous','channels-last-3d'),default='contiguous')
     args=p.parse_args();cpus=sorted(os.sched_getaffinity(0))
     if len(cpus)<args.threads:raise ValueError('explicit affinity must include requested thread count')
     audit.initialize(args.project.absolute(),args.artifacts.absolute(),cpus)
     # The ordinary checkpoint loader deliberately pins one core. Mechanism
     # profiling borrows an explicitly supplied core partition for this process.
     os.sched_setaffinity(0,set(cpus));torch=audit.TORCH;torch.set_num_threads(args.threads)
+    before={name:value.detach().contiguous().numpy().tobytes() for name,value in audit.NETWORK.state_dict().items()}
+    layout_hook=None
+    if args.layout=='channels-last-3d':
+        audit.NETWORK.to(memory_format=torch.channels_last_3d)
+        layout_hook=audit.NETWORK.register_forward_pre_hook(lambda _module,inputs:(inputs[0].to(memory_format=torch.channels_last_3d),))
+    if any(value.detach().contiguous().numpy().tobytes()!=before[name] for name,value in audit.NETWORK.state_dict().items()):
+        raise ValueError('layout changed learned tensor values')
     _,parents=audit.DATA.read_view(args.packet);parent=next(p for p in parents if p['entry']['split']=='train')
     template=audit.DATA.sample(parent,0);n=args.axis_count
     import analytical
@@ -59,8 +67,9 @@ def main():
     finally:
         audit.MODEL.full_operator=original
         for hook in hooks:hook.remove()
+        if layout_hook is not None:layout_hook.remove()
     result={'schema':'rheon-pressure-cpu-mechanism-profile-v1','counts_xyz':[n]*3,'cell_size_m':1/16,
-        'threads':args.threads,'affinity':cpus,'cuda_initialized':torch.cuda.is_initialized(),
+        'threads':args.threads,'layout':args.layout,'parameter_values_preserved':True,'affinity':cpus,'cuda_initialized':torch.cuda.is_initialized(),
         'weights_sha256':hashlib.sha256((args.artifacts/'weights.npz').read_bytes()).hexdigest(),
         'python':sys.executable,'torch':torch.__version__,'timings':timings,
         'median_seconds':statistics.median(r['seconds'] for r in timings),

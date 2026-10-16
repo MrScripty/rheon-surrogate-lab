@@ -1,0 +1,1190 @@
+{
+  "schema": "rheon-pressure-layout-probe-summary-v1",
+  "records": [
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 1,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.06434867798816413,
+          "network_evaluations": 10,
+          "relative_residual": 9.67231362984195e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.06265566201182082,
+          "network_evaluations": 10,
+          "relative_residual": 9.67231362984195e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.06010947999311611,
+          "network_evaluations": 10,
+          "relative_residual": 9.67231362984195e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.06265566201182082,
+      "network_forward_seconds_including_profile": 0.22834328396129422,
+      "operator_seconds_including_profile": 0.014029262092662975,
+      "top_self_cpu": [
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 39040.02600000003,
+          "calls": 190
+        },
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 10811.28699999995,
+          "calls": 2309
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 2142.7319999998904,
+          "calls": 662
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 2042.5019999999697,
+          "calls": 180
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 908.3340000000126,
+          "calls": 40
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 831.6859999998796,
+          "calls": 1424
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 484.5619999999881,
+          "calls": 40
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 423.1049999999426,
+          "calls": 489
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 415.59300000003054,
+          "calls": 225
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 382.1579999999967,
+          "calls": 153
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 370.49900000002356,
+          "calls": 308
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 337.29500000000314,
+          "calls": 165
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 274.0570000000253,
+          "calls": 153
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 224.47599999994418,
+          "calls": 370
+        },
+        {
+          "name": "aten::as_strided",
+          "self_cpu_us": 197.32499999998953,
+          "calls": 779
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 193.38200000001598,
+          "calls": 40
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 191.21100000003253,
+          "calls": 190
+        },
+        {
+          "name": "aten::slice",
+          "self_cpu_us": 177.37400000004078,
+          "calls": 282
+        },
+        {
+          "name": "aten::select",
+          "self_cpu_us": 176.31100000001157,
+          "calls": 281
+        },
+        {
+          "name": "aten::isfinite",
+          "self_cpu_us": 165.17100000000534,
+          "calls": 143
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 4,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.03452115898835473,
+          "network_evaluations": 10,
+          "relative_residual": 9.67254366081328e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.03519046900328249,
+          "network_evaluations": 10,
+          "relative_residual": 9.67254366081328e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.03734939399873838,
+          "network_evaluations": 10,
+          "relative_residual": 9.67254366081328e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.03519046900328249,
+      "network_forward_seconds_including_profile": 0.11924473915132694,
+      "operator_seconds_including_profile": 0.015609433787176386,
+      "top_self_cpu": [
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 15238.295000000026,
+          "calls": 190
+        },
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 7098.7050000000845,
+          "calls": 2309
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 2042.2249999999437,
+          "calls": 180
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 1813.4470000000392,
+          "calls": 662
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 945.3899999999644,
+          "calls": 1424
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 825.172999999993,
+          "calls": 40
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 481.43200000000036,
+          "calls": 489
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 478.25199999997955,
+          "calls": 225
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 436.36200000003873,
+          "calls": 153
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 406.08399999994094,
+          "calls": 308
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 371.16400000001704,
+          "calls": 40
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 365.94499999998806,
+          "calls": 165
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 309.29599999999135,
+          "calls": 153
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 296.9460000000081,
+          "calls": 40
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 245.57599999998024,
+          "calls": 370
+        },
+        {
+          "name": "aten::as_strided",
+          "self_cpu_us": 223.7600000000291,
+          "calls": 799
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 219.85300000000666,
+          "calls": 190
+        },
+        {
+          "name": "aten::slice",
+          "self_cpu_us": 204.56199999998262,
+          "calls": 302
+        },
+        {
+          "name": "aten::select",
+          "self_cpu_us": 195.28499999999082,
+          "calls": 281
+        },
+        {
+          "name": "aten::isfinite",
+          "self_cpu_us": 183.6310000000467,
+          "calls": 143
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        24,
+        24,
+        24
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 1,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.37064266300876625,
+          "network_evaluations": 11,
+          "relative_residual": 8.305896819627958e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.4109652529878076,
+          "network_evaluations": 11,
+          "relative_residual": 8.305896819627958e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.36564229300711304,
+          "network_evaluations": 11,
+          "relative_residual": 8.305896819627958e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.37064266300876625,
+      "network_forward_seconds_including_profile": 1.478650124015985,
+      "operator_seconds_including_profile": 0.02279558192822151,
+      "top_self_cpu": [
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 174877.2029999995,
+          "calls": 2625
+        },
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 171066.70099999994,
+          "calls": 209
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 5323.22999999984,
+          "calls": 198
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 3299.635999999816,
+          "calls": 705
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 2360.163999999566,
+          "calls": 44
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 1627.461000000043,
+          "calls": 44
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 1313.9920000010977,
+          "calls": 1620
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 979.9350000000472,
+          "calls": 181
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 930.143999999688,
+          "calls": 168
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 889.5049999999815,
+          "calls": 247
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 751.4870000003951,
+          "calls": 168
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 750.1739999999463,
+          "calls": 44
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 718.3100000001662,
+          "calls": 536
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 580.0280000003386,
+          "calls": 338
+        },
+        {
+          "name": "aten::add",
+          "self_cpu_us": 384.3540000002016,
+          "calls": 92
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 353.840000000351,
+          "calls": 407
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 290.4970000001306,
+          "calls": 209
+        },
+        {
+          "name": "aten::slice",
+          "self_cpu_us": 227.19299999979455,
+          "calls": 309
+        },
+        {
+          "name": "aten::select",
+          "self_cpu_us": 222.0509999997388,
+          "calls": 308
+        },
+        {
+          "name": "aten::as_strided",
+          "self_cpu_us": 221.35999999998103,
+          "calls": 865
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        24,
+        24,
+        24
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 4,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.1538898159924429,
+          "network_evaluations": 11,
+          "relative_residual": 8.305881414710273e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.1542987630236894,
+          "network_evaluations": 11,
+          "relative_residual": 8.305881414710273e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.1525733080052305,
+          "network_evaluations": 11,
+          "relative_residual": 8.305881414710273e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.1538898159924429,
+      "network_forward_seconds_including_profile": 0.5806073670682963,
+      "operator_seconds_including_profile": 0.026507320842938498,
+      "top_self_cpu": [
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 70722.91599999959,
+          "calls": 209
+        },
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 67307.76099999995,
+          "calls": 2625
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 5422.893999999714,
+          "calls": 198
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 3044.531000000131,
+          "calls": 705
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 1561.900000000274,
+          "calls": 1620
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 1526.110000000107,
+          "calls": 44
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 1227.136999999922,
+          "calls": 168
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 1088.5490000000896,
+          "calls": 181
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 1031.8520000000046,
+          "calls": 247
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 873.0219999999817,
+          "calls": 44
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 861.9440000000731,
+          "calls": 168
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 827.3979999999381,
+          "calls": 536
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 745.0639999997956,
+          "calls": 338
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 612.7269999999253,
+          "calls": 44
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 433.1369999999515,
+          "calls": 407
+        },
+        {
+          "name": "aten::add",
+          "self_cpu_us": 421.9539999999842,
+          "calls": 92
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 323.23800000014535,
+          "calls": 209
+        },
+        {
+          "name": "aten::as_strided",
+          "self_cpu_us": 275.87899999993294,
+          "calls": 909
+        },
+        {
+          "name": "aten::slice",
+          "self_cpu_us": 275.5490000001282,
+          "calls": 353
+        },
+        {
+          "name": "aten::select",
+          "self_cpu_us": 243.36600000000226,
+          "calls": 308
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 1,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.4859109380049631,
+          "network_evaluations": 11,
+          "relative_residual": 9.249627316240627e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.4963525190250948,
+          "network_evaluations": 11,
+          "relative_residual": 9.249627316240627e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.4999815470073372,
+          "network_evaluations": 11,
+          "relative_residual": 9.249627316240627e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.4963525190250948,
+      "network_forward_seconds_including_profile": 1.7809397359960712,
+      "operator_seconds_including_profile": 0.04129443384590559,
+      "top_self_cpu": [
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 210924.53500000038,
+          "calls": 198
+        },
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 74122.17999999986,
+          "calls": 2648
+        },
+        {
+          "name": "aten::mkldnn_convolution",
+          "self_cpu_us": 37373.88999999995,
+          "calls": 11
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 11161.689999999788,
+          "calls": 198
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 9057.763999999384,
+          "calls": 716
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 4764.245999999748,
+          "calls": 44
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 3874.38300000002,
+          "calls": 44
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 2658.8489999999683,
+          "calls": 181
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 2345.7129999999343,
+          "calls": 44
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 1982.0719999996854,
+          "calls": 168
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 1783.0279999998008,
+          "calls": 247
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 1656.4729999997132,
+          "calls": 168
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 1286.6620000000419,
+          "calls": 1620
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 1223.9650000000097,
+          "calls": 536
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 953.1419999994635,
+          "calls": 338
+        },
+        {
+          "name": "aten::add",
+          "self_cpu_us": 808.5629999999857,
+          "calls": 92
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 490.4050000009547,
+          "calls": 407
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 422.27999999955273,
+          "calls": 209
+        },
+        {
+          "name": "aten::any",
+          "self_cpu_us": 295.2889999999793,
+          "calls": 11
+        },
+        {
+          "name": "aten::index_select",
+          "self_cpu_us": 281.91899999970383,
+          "calls": 22
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 4,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.2529292620019987,
+          "network_evaluations": 11,
+          "relative_residual": 9.249740415044132e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.18470924798748456,
+          "network_evaluations": 11,
+          "relative_residual": 9.249740415044132e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.1740790079929866,
+          "network_evaluations": 11,
+          "relative_residual": 9.249740415044132e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.18470924798748456,
+      "network_forward_seconds_including_profile": 0.6984064929711167,
+      "operator_seconds_including_profile": 0.047762444912223145,
+      "top_self_cpu": [
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 71749.73899999991,
+          "calls": 198
+        },
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 39527.344000000696,
+          "calls": 2749
+        },
+        {
+          "name": "aten::mkldnn_convolution",
+          "self_cpu_us": 12699.323999999997,
+          "calls": 11
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 11606.535999999815,
+          "calls": 198
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 6319.868999999829,
+          "calls": 817
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 3655.2319999999027,
+          "calls": 44
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 2860.249999999932,
+          "calls": 181
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 2544.1719999999314,
+          "calls": 44
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 2387.3420000006236,
+          "calls": 247
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 2382.5110000000736,
+          "calls": 168
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 1979.9750000000104,
+          "calls": 168
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 1632.630999999477,
+          "calls": 1721
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 1501.2019999998288,
+          "calls": 536
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 1281.6579999998248,
+          "calls": 338
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 1094.2189999999246,
+          "calls": 44
+        },
+        {
+          "name": "aten::add",
+          "self_cpu_us": 948.9909999998288,
+          "calls": 92
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 619.5690000000336,
+          "calls": 407
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 511.5140000000283,
+          "calls": 209
+        },
+        {
+          "name": "aten::as_strided",
+          "self_cpu_us": 405.5640000002965,
+          "calls": 1111
+        },
+        {
+          "name": "aten::any",
+          "self_cpu_us": 378.59400000003734,
+          "calls": 11
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        40,
+        40,
+        40
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 1,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 1.7592011689848732,
+          "network_evaluations": 13,
+          "relative_residual": 7.401307842658299e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 1.7239084080210887,
+          "network_evaluations": 13,
+          "relative_residual": 7.401307842658299e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 1.6754802189825568,
+          "network_evaluations": 13,
+          "relative_residual": 7.401307842658299e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 1.7239084080210887,
+      "network_forward_seconds_including_profile": 6.7130353890534025,
+      "operator_seconds_including_profile": 0.08434598898747936,
+      "top_self_cpu": [
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 862291.2039999958,
+          "calls": 3124
+        },
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 649732.6780000015,
+          "calls": 234
+        },
+        {
+          "name": "aten::mkldnn_convolution",
+          "self_cpu_us": 92502.5850000004,
+          "calls": 13
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 26125.92799999813,
+          "calls": 234
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 20267.970999998823,
+          "calls": 844
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 10062.789999999652,
+          "calls": 52
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 9656.005999999848,
+          "calls": 52
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 6456.354999999508,
+          "calls": 52
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 6123.448000000069,
+          "calls": 213
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 4460.1379999993605,
+          "calls": 198
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 3899.678000003415,
+          "calls": 291
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 3786.0579999994115,
+          "calls": 198
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 2538.0809999982316,
+          "calls": 630
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 2474.7639999978383,
+          "calls": 1912
+        },
+        {
+          "name": "aten::add",
+          "self_cpu_us": 2085.1610000002756,
+          "calls": 108
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 1746.142000001981,
+          "calls": 398
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 814.2360000014573,
+          "calls": 481
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 719.3379999972135,
+          "calls": 247
+        },
+        {
+          "name": "aten::any",
+          "self_cpu_us": 652.9750000008526,
+          "calls": 13
+        },
+        {
+          "name": "aten::index_select",
+          "self_cpu_us": 574.2100000002374,
+          "calls": 26
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    },
+    {
+      "schema": "rheon-pressure-cpu-mechanism-profile-v1",
+      "counts_xyz": [
+        40,
+        40,
+        40
+      ],
+      "cell_size_m": 0.0625,
+      "threads": 4,
+      "layout": "channels-last-3d",
+      "parameter_values_preserved": true,
+      "affinity": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cuda_initialized": false,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "torch": "2.14.0+cu132",
+      "timings": [
+        {
+          "seconds": 0.7008662929874845,
+          "network_evaluations": 13,
+          "relative_residual": 7.401306309381805e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.7223686770012137,
+          "network_evaluations": 13,
+          "relative_residual": 7.401306309381805e-07,
+          "equation_passed": true
+        },
+        {
+          "seconds": 0.7159783499955665,
+          "network_evaluations": 13,
+          "relative_residual": 7.401306309381805e-07,
+          "equation_passed": true
+        }
+      ],
+      "median_seconds": 0.7159783499955665,
+      "network_forward_seconds_including_profile": 2.6943603928375524,
+      "operator_seconds_including_profile": 0.0728330590063706,
+      "top_self_cpu": [
+        {
+          "name": "aten::slow_conv3d_forward",
+          "self_cpu_us": 300487.6169999983,
+          "calls": 234
+        },
+        {
+          "name": "aten::fill_",
+          "self_cpu_us": 285995.32000000036,
+          "calls": 3243
+        },
+        {
+          "name": "aten::mkldnn_convolution",
+          "self_cpu_us": 30103.829999999878,
+          "calls": 13
+        },
+        {
+          "name": "aten::replication_pad3d",
+          "self_cpu_us": 17816.824999999968,
+          "calls": 234
+        },
+        {
+          "name": "aten::copy_",
+          "self_cpu_us": 10858.974999999635,
+          "calls": 963
+        },
+        {
+          "name": "aten::avg_pool3d",
+          "self_cpu_us": 5668.381999999998,
+          "calls": 52
+        },
+        {
+          "name": "aten::upsample_nearest3d",
+          "self_cpu_us": 4535.086999999985,
+          "calls": 52
+        },
+        {
+          "name": "aten::sub",
+          "self_cpu_us": 3905.5720000005476,
+          "calls": 213
+        },
+        {
+          "name": "aten::ne",
+          "self_cpu_us": 3500.830999999879,
+          "calls": 198
+        },
+        {
+          "name": "aten::all",
+          "self_cpu_us": 3227.1840000018183,
+          "calls": 291
+        },
+        {
+          "name": "aten::empty",
+          "self_cpu_us": 2807.5880000009993,
+          "calls": 2031
+        },
+        {
+          "name": "aten::mul",
+          "self_cpu_us": 2598.543000000215,
+          "calls": 630
+        },
+        {
+          "name": "aten::eq",
+          "self_cpu_us": 2569.3069999997174,
+          "calls": 198
+        },
+        {
+          "name": "aten::abs",
+          "self_cpu_us": 2522.475999999947,
+          "calls": 398
+        },
+        {
+          "name": "aten::cat",
+          "self_cpu_us": 2476.3059999999205,
+          "calls": 52
+        },
+        {
+          "name": "aten::add",
+          "self_cpu_us": 1501.7879999999195,
+          "calls": 108
+        },
+        {
+          "name": "aten::resize_",
+          "self_cpu_us": 921.8430000006156,
+          "calls": 481
+        },
+        {
+          "name": "aten::_convolution",
+          "self_cpu_us": 895.6410000000733,
+          "calls": 247
+        },
+        {
+          "name": "aten::convolution",
+          "self_cpu_us": 615.690000000167,
+          "calls": 247
+        },
+        {
+          "name": "aten::index_copy",
+          "self_cpu_us": 613.8029999999417,
+          "calls": 13
+        }
+      ],
+      "scope": "manufactured Neumann mixture; 1 warm-up, 3 unprofiled repeats, 1 instrumented pass; no IPC/native physics or CFD speedup claim"
+    }
+  ],
+  "decision": "diagnostic only; mixed observations under CUDA overlap, no uniform latency win established; no rollout execution change admitted"
+}

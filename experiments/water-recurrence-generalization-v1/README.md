@@ -19,7 +19,7 @@ validation with `--network-budget 8 --fixed-budget`. Use `mode_probe.py` and
 `study.py` from that same experiment for signed operator probes and physical
 trajectories. Record unsuccessful physical outcomes as results, not missing data.
 
-Fresh development, final holdout and512-step studies declare cubic spacing and
+Fresh development, final holdout and 512-step studies declare cubic spacing and
 force parameters explicitly. Final holdouts run only after the development-based
 selection is frozen. Native controls must qualify before judging the AI track.
 Different recurrence depths have different compute cost at equal update counts.

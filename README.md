@@ -1,6 +1,15 @@
 # Rheon Surrogate Lab
 
-The latest [pressure conditioning experiments](docs/plans/water-conditioning-v1/results.md)
+The latest [recurrence and generalization experiments](docs/plans/water-recurrence-generalization-v1/results.md)
+complete five CUDA fits and 25,000 updates. The selected shape-feedback checkpoint
+passes all 16 untouched simulations and 1,808 AI steps, versus 11/16 simulations
+for the preceding reference. It uses fewer evaluations on the unseen population
+but costs more on familiar grids. Inference remains iterative on CPU; Rheon's
+deployed adapter is unchanged. See the [checkpoint contract](docs/plans/water-recurrence-generalization-v1/model-contract.md),
+[retained comparisons](docs/plans/water-recurrence-generalization-v1/reports/summary.json)
+and [prepared follow-ups](docs/plans/water-recurrence-generalization-v1/next-steps.md).
+
+The earlier [pressure conditioning experiments](docs/plans/water-conditioning-v1/results.md)
 completed 25 managed CUDA/CPU stages. In the 500-update controls, preparing
 immutable training tensors makes training about 67% faster with identical
 retained checkpoints. Removing GroupNorm

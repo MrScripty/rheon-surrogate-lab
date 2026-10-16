@@ -1,0 +1,593 @@
+{
+  "schema": "rheon-shape-feedback-interim-results-v1",
+  "cuda_updates": 5000,
+  "training_passed": 32,
+  "development": {
+    "schema": "rheon-multigrid-development-evaluation-v1",
+    "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+    "native": {
+      "all_native_children_drained": true,
+      "candidate_policy": {
+        "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+        "name": "adaptive-learned-correction",
+        "native_pressure_refinement": false,
+        "nn_passes_per_pressure_solve": 32,
+        "proposal_network_evaluations": 1,
+        "proposals": 32,
+        "scope": "equation/predicted-divergence stopping only; actual native physical checks remain required",
+        "stopping": {
+          "absolute_residual": 1e-12,
+          "predicted_divergence": 1e-07,
+          "relative_residual": 1e-06,
+          "schema": "rheon-learned-stopping-policy-v1"
+        }
+      },
+      "cases": 128,
+      "cuda_initialized": false,
+      "elapsed_s": 6.648189544677734,
+      "float32_qualified": 128,
+      "methods": {
+        "learned_jacobi": {
+          "completed_iterations": 12188,
+          "fallbacks": 95,
+          "qualified": 128,
+          "wasted_warm_iterations": 3040
+        },
+        "temporal_full_budget": {
+          "completed_iterations": 11867,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        },
+        "temporal_jacobi": {
+          "completed_iterations": 15963,
+          "fallbacks": 128,
+          "qualified": 128,
+          "wasted_warm_iterations": 4096
+        },
+        "zero_jacobi": {
+          "completed_iterations": 12670,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        }
+      },
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 9.940252206053185e-07,
+        "median": 5.680337947033762e-07,
+        "minimum": 1.9363014358219537e-07
+      },
+      "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+      "status": "complete_native_diagnostic",
+      "used_cpus": [
+        1,
+        3,
+        4,
+        7,
+        9,
+        11,
+        13,
+        14,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+      "workers": 23
+    },
+    "network_evaluations": {
+      "mean": 9.4140625,
+      "minimum": 7,
+      "maximum": 12,
+      "cases": [
+        10,
+        10,
+        9,
+        9,
+        9,
+        10,
+        10,
+        9,
+        10,
+        9,
+        10,
+        10,
+        9,
+        8,
+        9,
+        9,
+        8,
+        8,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9,
+        7,
+        7,
+        9,
+        9,
+        10,
+        9,
+        8,
+        8,
+        11,
+        11,
+        8,
+        9,
+        8,
+        8,
+        9,
+        9,
+        10,
+        11,
+        11,
+        11,
+        10,
+        9,
+        9,
+        9,
+        8,
+        9,
+        11,
+        10,
+        10,
+        10,
+        8,
+        8,
+        11,
+        10,
+        9,
+        10,
+        10,
+        10,
+        10,
+        10,
+        11,
+        11,
+        8,
+        8,
+        8,
+        8,
+        10,
+        10,
+        9,
+        9,
+        10,
+        9,
+        9,
+        10,
+        10,
+        10,
+        9,
+        9,
+        12,
+        11,
+        9,
+        9,
+        9,
+        10,
+        10,
+        10,
+        10,
+        11,
+        7,
+        9,
+        11,
+        11,
+        11,
+        11,
+        8,
+        8,
+        11,
+        12,
+        9,
+        10,
+        10,
+        9,
+        10,
+        9,
+        11,
+        11,
+        9,
+        9,
+        10,
+        9,
+        9,
+        10,
+        9,
+        9,
+        8,
+        7,
+        10,
+        10,
+        10,
+        10,
+        10,
+        11,
+        8,
+        9
+      ]
+    },
+    "inference_receipt_sha256": "5b03513f586ca3c498ab5e6f15c5f80d16999fde748f8cb723f2fa6d649d6584",
+    "scope": "adaptive per-evaluation policy, maximum 32; CPU inference, independent native gates, no refinement"
+  },
+  "fixed_eight": {
+    "schema": "rheon-fixed-budget-development-evaluation-v1",
+    "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+    "native": {
+      "all_native_children_drained": true,
+      "candidate_policy": {
+        "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+        "name": "fixed-repeated-learned-correction",
+        "native_pressure_refinement": false,
+        "nn_passes_per_pressure_solve": 8,
+        "proposal_network_evaluations": 1,
+        "proposals": 8
+      },
+      "cases": 128,
+      "cuda_initialized": false,
+      "elapsed_s": 6.491128921508789,
+      "float32_qualified": 26,
+      "methods": {
+        "learned_jacobi": {
+          "completed_iterations": 14862,
+          "fallbacks": 117,
+          "qualified": 128,
+          "wasted_warm_iterations": 3744
+        },
+        "temporal_full_budget": {
+          "completed_iterations": 11867,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        },
+        "temporal_jacobi": {
+          "completed_iterations": 15963,
+          "fallbacks": 128,
+          "qualified": 128,
+          "wasted_warm_iterations": 4096
+        },
+        "zero_jacobi": {
+          "completed_iterations": 12670,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        }
+      },
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 3.22709106396515e-05,
+        "median": 2.5861662978295967e-06,
+        "minimum": 2.00155546748921e-07
+      },
+      "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+      "status": "complete_native_diagnostic",
+      "used_cpus": [
+        2,
+        4,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        21
+      ],
+      "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+      "workers": 23
+    },
+    "network_evaluations": {
+      "declared_fixed_budget": 8
+    },
+    "inference_receipt_sha256": "e5a81982a06e59af6b4cab9e13fd653faf6ca28ebc782944c3a8bfe09c2bff7d",
+    "scope": "fixed policy, maximum 8; CPU inference, independent native gates, no refinement"
+  },
+  "fresh_scenes": [
+    {
+      "seed": 2026101600,
+      "counts": [
+        17,
+        13,
+        9
+      ],
+      "cells_per_metre": 8,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.670838,
+        0.527599,
+        0.340666
+      ],
+      "acceleration": 0.290603,
+      "radius": 0.240762,
+      "swirl": -0.301758,
+      "fluctuation": 0.267506,
+      "frequency": 1.401369,
+      "sgs": false
+    },
+    {
+      "seed": 2026101601,
+      "counts": [
+        31,
+        11,
+        7
+      ],
+      "cells_per_metre": 16,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.511609,
+        0.67983,
+        0.642051
+      ],
+      "acceleration": 0.392755,
+      "radius": 0.271963,
+      "swirl": 0.472078,
+      "fluctuation": 0.100978,
+      "frequency": 2.21065,
+      "sgs": false
+    },
+    {
+      "seed": 2026101602,
+      "counts": [
+        9,
+        25,
+        13
+      ],
+      "cells_per_metre": 8,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.411249,
+        0.62215,
+        0.361752
+      ],
+      "acceleration": 0.14026,
+      "radius": 0.288219,
+      "swirl": -0.223939,
+      "fluctuation": 0.100506,
+      "frequency": 2.626975,
+      "sgs": false
+    },
+    {
+      "seed": 2026101603,
+      "counts": [
+        15,
+        15,
+        15
+      ],
+      "cells_per_metre": 16,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.447188,
+        0.424557,
+        0.284444
+      ],
+      "acceleration": 0.282917,
+      "radius": 0.327526,
+      "swirl": -0.191266,
+      "fluctuation": 0.270493,
+      "frequency": 0.84827,
+      "sgs": false
+    },
+    {
+      "seed": 2026101604,
+      "counts": [
+        33,
+        17,
+        9
+      ],
+      "cells_per_metre": 8,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.501536,
+        0.724186,
+        0.277365
+      ],
+      "acceleration": 0.367454,
+      "radius": 0.297374,
+      "swirl": 0.390229,
+      "fluctuation": 0.430204,
+      "frequency": 0.528508,
+      "sgs": false
+    },
+    {
+      "seed": 2026101605,
+      "counts": [
+        40,
+        10,
+        10
+      ],
+      "cells_per_metre": 16,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.259476,
+        0.686027,
+        0.466825
+      ],
+      "acceleration": 0.161344,
+      "radius": 0.303679,
+      "swirl": 0.578733,
+      "fluctuation": 0.336926,
+      "frequency": 1.856994,
+      "sgs": false
+    },
+    {
+      "seed": 2026101606,
+      "counts": [
+        12,
+        36,
+        8
+      ],
+      "cells_per_metre": 8,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.331922,
+        0.47542,
+        0.252369
+      ],
+      "acceleration": 0.150519,
+      "radius": 0.32065,
+      "swirl": 0.683717,
+      "fluctuation": 0.118475,
+      "frequency": 2.496654,
+      "sgs": false
+    },
+    {
+      "seed": 2026101607,
+      "counts": [
+        7,
+        9,
+        29
+      ],
+      "cells_per_metre": 16,
+      "steps": 96,
+      "warmup_steps": 15,
+      "center": [
+        0.610941,
+        0.446718,
+        0.329034
+      ],
+      "acceleration": 0.36432,
+      "radius": 0.276488,
+      "swirl": -0.409926,
+      "fluctuation": 0.443405,
+      "frequency": 1.301007,
+      "sgs": false
+    }
+  ],
+  "fresh_aggregate": [
+    {
+      "scene": 0,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 8.925925925925926,
+      "maximum_network_evaluations": 10,
+      "worst_relative_residual": 9.89030217727604e-07,
+      "ai_median_seconds": 0.0735734145,
+      "native_median_seconds": 0.0123877085,
+      "per_repetition_ai_median_seconds": [
+        0.0735734145
+      ]
+    },
+    {
+      "scene": 1,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 9.197530864197532,
+      "maximum_network_evaluations": 10,
+      "worst_relative_residual": 9.883388028386053e-07,
+      "ai_median_seconds": 0.074634465,
+      "native_median_seconds": 0.015241127,
+      "per_repetition_ai_median_seconds": [
+        0.074634465
+      ]
+    },
+    {
+      "scene": 2,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 10.234567901234568,
+      "maximum_network_evaluations": 11,
+      "worst_relative_residual": 9.810032654661693e-07,
+      "ai_median_seconds": 0.1166825815,
+      "native_median_seconds": 0.019415132,
+      "per_repetition_ai_median_seconds": [
+        0.1166825815
+      ]
+    },
+    {
+      "scene": 3,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 8.716049382716049,
+      "maximum_network_evaluations": 9,
+      "worst_relative_residual": 9.932509863428664e-07,
+      "ai_median_seconds": 0.1032552655,
+      "native_median_seconds": 0.019709749999999998,
+      "per_repetition_ai_median_seconds": [
+        0.1032552655
+      ]
+    },
+    {
+      "scene": 4,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 9.17283950617284,
+      "maximum_network_evaluations": 10,
+      "worst_relative_residual": 9.97696677211302e-07,
+      "ai_median_seconds": 0.13709497999999998,
+      "native_median_seconds": 0.033016331499999996,
+      "per_repetition_ai_median_seconds": [
+        0.13709497999999998
+      ]
+    },
+    {
+      "scene": 5,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 10.382716049382717,
+      "maximum_network_evaluations": 11,
+      "worst_relative_residual": 9.507200985874199e-07,
+      "ai_median_seconds": 0.122306051,
+      "native_median_seconds": 0.0273038055,
+      "per_repetition_ai_median_seconds": [
+        0.122306051
+      ]
+    },
+    {
+      "scene": 6,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 9.851851851851851,
+      "maximum_network_evaluations": 10,
+      "worst_relative_residual": 9.35483106438228e-07,
+      "ai_median_seconds": 0.11207225,
+      "native_median_seconds": 0.023781811,
+      "per_repetition_ai_median_seconds": [
+        0.11207225
+      ]
+    },
+    {
+      "scene": 7,
+      "model": "cohort-two-shape-feedback",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 9.25925925925926,
+      "maximum_network_evaluations": 10,
+      "worst_relative_residual": 9.982099054793784e-07,
+      "ai_median_seconds": 0.114632675,
+      "native_median_seconds": 0.012258631499999999,
+      "per_repetition_ai_median_seconds": [
+        0.114632675
+      ]
+    }
+  ],
+  "fresh_ai_steps": 648,
+  "fresh_qualified_steps": 648,
+  "custody_status": "awaiting final managed validation/reopened-download receipt",
+  "scope": "interim CPU scientific evidence; final prior-grid and untouched-population qualification still pending"
+}

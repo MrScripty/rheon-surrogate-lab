@@ -1,0 +1,45 @@
+{
+  "schema": "rheon-final-population-selection-v1",
+  "frozen_at_utc": "2026-10-16T02:15:26.526989+00:00",
+  "candidate": {
+    "name": "cohort-two-shape-feedback",
+    "project": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+    "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "reference": {
+    "name": "cohort-two-reference",
+    "project": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/project",
+    "artifacts": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "candidate_weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+  "development_eligibility": {
+    "teacher_cases_passed": 128,
+    "fresh_scenes_passed": 8,
+    "prior_grid_scenes_passed": 7,
+    "managed_completed_drained": true
+  },
+  "selection_policy": "All128 teacher states and all8 fresh physical trajectories and all7 prior-grid regressions must pass for promotion eligibility; among eligible candidates minimize teacher-state mean evaluations, then fixed-eight worst residual. If none qualify, retain the prior development reference and compare the best non-reference teacher-state candidate diagnostically on final holdout; do not promote an unqualified model.",
+  "configs": [
+    {
+      "original": "experiments/water-recurrence-generalization-v1/configs/final-holdout-0.json",
+      "original_sha256": "3ab7f499ce6cc9de55373fcd0a0a27d09e6bbf1ed752ce7ee62918a8c86634f8",
+      "runtime": "runs/water-recurrence-generalization-v1/final-holdout-0.study.json",
+      "runtime_sha256": "a334f0eb69b1051be4b3c6168c4f8e834f59aa5c7dc8ced166e9b47023a8d0a9",
+      "scenes": 8
+    },
+    {
+      "original": "experiments/water-recurrence-generalization-v1/configs/final-holdout-1.json",
+      "original_sha256": "91e92d935ef9677f4bbbfe411212ffd6e85baff8e20f663d03fe5f8bd97ff700",
+      "runtime": "runs/water-recurrence-generalization-v1/final-holdout-1.study.json",
+      "runtime_sha256": "dd73515927c80845c6d2055fe198353da7f88061461f338304b6dfaeb3b2a1fa",
+      "scenes": 8
+    }
+  ],
+  "final_simulations": 16,
+  "final_outputs_absent_before_selection": true,
+  "deployment_changed": false,
+  "final_results_used_for_training": false,
+  "scope": "candidate frozen from development before executing either final population; no post-test retraining or test-informed candidate reselection"
+}

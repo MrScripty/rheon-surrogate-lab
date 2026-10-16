@@ -1,6 +1,6 @@
 # Recurrence and generalization experiments
 
-Status: Active. Admission: start, authorized by the user to continue the retained
+Status: Accepted. Admission: start, authorized by the user to continue the retained
 next steps and record methods/results. Owner and serial integrator: this task.
 Canonical plan: docs/plans/water-recurrence-generalization-v1/plan.md.
 
@@ -22,19 +22,19 @@ Binding decisions:
 - Reuse the 370,016-parameter one-channel network, fixed train-only normalization,
   16 training simulations/32 states, analytical bank, 5,000-update schedule and
   float32 neural values. Vary declared recurrence or model/sampling seeds in the controlled trials.
-  The separately admitted shape-feedback trial adds3 declared grids, preserving
+  The separately admitted shape-feedback trial adds 3 declared grids, preserving
   all real data, scales, initial seed, recurrence and objective.
-- One optimizer at a time; each Run retains the existing 600-second and32MiB
-  limits. New local retention:2GiB plus1GiB reserve. No datasets/weights in Git.
+- One optimizer at a time; each Run retains the existing 600-second and 32 MiB
+  limits. New local retention: 2 GiB plus 1 GiB reserve. No datasets/weights in Git.
 - Preserve cubic cells, water density/viscosity, sealed walls, native history,
-  independent physical gates and model1e-6/native1e-8 equation profiles.
-- Report raw and fixed-eight results separately from adaptive32-cap results.
+  independent physical gates and model 1e-6/native 1e-8 equation profiles.
+- Report raw and fixed-eight results separately from adaptive 32-cap results.
   Record actual evaluations/cell exposures and elapsed compute; updates are not
   equal compute across recurrence depths. No native refinement counts as AI success.
-- Fresh development has8 elongated/odd grids. Final16 whole simulations have
+- Fresh development has 8 elongated/odd grids. Final 16 whole simulations have
   separate predeclared setups; execute only after freezing candidate selection.
   Once inspected they cannot be reused as untouched final evidence in later work.
-- CPU correctness can overlap CUDA training on distinct cores, up to23 independent
+- CPU correctness can overlap CUDA training on distinct cores, up to 23 independent
   single-thread workers. No isolated latency claims under overlapping work.
 - Admit the CPU-qualified eight-grid feedback trial after the seed repeats reveal
   persistent shape failures and a genuine hard stop. This is a separate coverage
@@ -59,19 +59,21 @@ an adjacent write-set extension.
 
 Acceptance claims (automated, required-real unless noted):
 - C1 contract/artifact: explicit configurations preserve controlled quantities;
-  different seeds and fresh setup identities are recorded. Satisfied; reports/configuration.json.
+  different seeds and fresh setup identities are recorded. Satisfied; reports/configuration.json, prepared-shape-bank.json and checkpoint-interface.json.
 - C2 system: every admitted CUDA fit completes or has an explicit failed outcome;
-  successful Run artifacts reopen/redownload and fresh CPU restore matches. Pending.
+  successful Run artifacts reopen/redownload and fresh CPU restore matches. Satisfied; five sealed trial records and the explicit CPU-only recovery.
 - C3 system: matched adaptive/fixed-eight development evaluation and native-
   controlled fresh-grid/long-window trajectories retain errors, work and failures.
-  The selected reference/candidate face the frozen final population. Pending.
+  The selected reference/candidate face the frozen final population. Satisfied; reports/summary.json and final-selection.json.
 - C4 artifact/system: results, methods, next decisions, lifecycle and existing-
-  catalog Tuldok project references are retained; all own jobs drain. Pending.
+  catalog Tuldok project references are retained; all own jobs drain. Satisfied; reports/project-registration.json and lifecycle-retention.json.
 
-Current phase: recurrence comparison and admitted shape-coverage feedback.
-Exactly one next slice: complete the recurrence/coverage comparison and its evidence.
-Blockers: none. Replan on invalid native controls, exceeded budgets, nonfinite
-training, changed custody or source contracts. No architecture, objective replacement or deployment is admitted.
+Current acceptance: C1–C4 satisfied. Current phase: complete.
+Exactly one next slice: none within this completed tranche.
+Subsequent unexecuted work is recorded in next-steps.md. All task jobs and
+observers are stopped; the existing Tuldok server remains untouched.
+Blockers: none. No architecture, objective replacement or deployment is admitted.
+Branch consumers are experiment review and subsequent learning/integration work.
 
 Standards snapshot: snapshot:v1:84ef7125-33ed-4377-b8f7-5bed6fecf00c.
 See execution-ledger.md, issues.md and reports/.

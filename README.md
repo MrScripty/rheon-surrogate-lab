@@ -1,6 +1,15 @@
 # Rheon Surrogate Lab
 
-The latest [targeted supplemental-feedback study](docs/plans/water-targeted-feedback-v1/results.md)
+The latest [pressure accuracy diagnostic](docs/plans/water-pressure-accuracy-v1/results.md)
+finds smooth remaining pressure error on identical inputs. Stricter CPU stopping
+reduces the targeted checkpoint's worst paired pressure difference by 23.3× on
+three consumed scenes, with 45.9% more network calls. All 18 model/policy
+simulations and 4,146 AI steps qualify; this is a diagnostic tradeoff, so the
+retained model stays selected. Methods, timings, failures and a
+[controlled late-residual training protocol](docs/plans/water-pressure-accuracy-v1/next-training-protocol.md)
+are recorded. No new training or fresh-final evaluation occurred.
+
+The preceding [targeted supplemental-feedback study](docs/plans/water-targeted-feedback-v1/results.md)
 fixes the two prior slow-domain cases and passes all 50 development plus eight
 fresh final simulations. It uses 19.5% fewer final network calls than the retained
 learned control, with 3.4× higher worst pressure difference, so control remains

@@ -39,6 +39,14 @@ weak-signal degradation. Pooled windows/scenes are correlated; associations do
 not identify a causal noise floor. These short windows cannot resolve slower
 cycles. Temporal frequency and spatial cosine mode index are distinct.
 
+A separate input-only quantization test (no neural computation) induces about
+5.16e-8Pa of low error for the high-only long-grid field. That is much smaller
+than the model leakage above. But a mixed1e-8Pa low signal is indeed overwhelmed
+by this input-rounding contribution. Weak modes can be obscured by limited
+dynamic range; the measured learning gap remains much larger on this case.
+This single-input test is not a floor for iterative correction, which recomputes
+physical residuals between calls. [Input rounding](reports/input-rounding.json).
+
 No fitting examples or loss weights were selected from these observations.
 The already admitted first-correction ablation remains unchanged.
 

@@ -41,6 +41,13 @@ def main():
             row=observed.get(i)
             directory=LAB/row['output'] if row else None
             receipt=read(directory/'native/receipt.json') if directory and (directory/'native/receipt.json').exists() else None
+            if receipt is not None:
+                declared=next(m for m in config['models'] if m['name']==model)
+                assert receipt['scene']==expected and receipt['binary_sha256']==admission['binary_sha256']
+                assert not receipt['cuda_initialized'] and not receipt['native_pressure_refinement']
+                assert receipt['proposal_network_evaluations']==1
+                assert receipt['adaptive_stopping']==read(LAB/declared['stopping_profile'])
+                assert Path(receipt['cpu_restore']).resolve()==(LAB/declared['artifacts']).resolve()
             frames=[json.loads(s) for s in (directory/'native/frames.jsonl').read_text().splitlines()] if receipt else []
             frames=[f for f in frames if f.get('ai_quality')]
             callbacks=[json.loads(s) for s in (directory/'native/callbacks.jsonl').read_text().splitlines()] if receipt else []

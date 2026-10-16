@@ -1,0 +1,6 @@
+{
+  "status": "failed_before_results",
+  "error": "TypeError: normalization scale is a metadata object; numeric value must be selected",
+  "log": "Traceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-early-pressure-v1/input_rounding.py\", line 65, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-early-pressure-v1/input_rounding.py\", line 48, in main\n    quantized=(q/scale).float().double()*scale\n               ~^~~~~~\nTypeError: unsupported operand type(s) for /: 'Tensor' and 'dict'\n",
+  "disposition": "Corrected scale.value access; independent unquantized cosine oracle then qualified; original failure/timing retained. No network evaluations or training."
+}

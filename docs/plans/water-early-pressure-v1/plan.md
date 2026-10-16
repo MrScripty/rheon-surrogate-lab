@@ -72,7 +72,7 @@ Milestones:
 - M1 Accepted: qualify bank and training objective; gate independent labels,
   v8/weight0 loss+gradient parity, additive first-loss proof, real CUDA smoke and
   CPU checkpoint restore. Write set above; replan on lineage/resource/contract failure.
-- M2 Active: matched full fits, explanatory CPU amplitude diagnostics and all74
+- M2 Verifying: matched full fits, explanatory CPU amplitude diagnostics and all74
   trajectories. Gate complete records including failures, unchanged physical
   thresholds, custody drained and children reaped. Improvement is reported separately.
 - M3 Planned: current serial timing and conditional fresh validation; gate frozen
@@ -81,8 +81,8 @@ Milestones:
 Acceptance: partial. Claims M1 source/numerics (automated CPU plus real CUDA/
 CPU restore), M2 full comparison (environment-qualified GPU/CPU), M3 retention and
 conditional validation (artifact/real CPU); M1 satisfied (reports/smoke-result.json and source-tests.json); M2/M3 pending.
-Current phase: matched CUDA fitting. Exactly one next slice: complete both frozen
-5000-update fits, CPU amplitude diagnostics and74-scene regression. Blockers: none.
+Current phase: full CPU regression. Exactly one next slice: complete all74
+consumed trajectories for both frozen fits and compare the three populations. Blockers: none.
 Replan on changed numerical semantics, invalid lineage, resource breach, unavailable
 custody, unreaped workers or evidence invalidating the admitted composition.
 Standards: snapshot:v1:10196c62-2edb-4466-a3c7-c3448f7bc2bc,16 policies,0 unresolved.

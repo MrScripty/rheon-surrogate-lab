@@ -60,3 +60,30 @@ manufactured9x11x33 pure-low8-call coefficient error39.66x and high-only leakage
 24.2%/28.4%/92.2% at4/8/12calls. Those distinct probes show a tradeoff, not
 replacement qualification. CPU control amplitude69.89s; common-input replay2.98s.
 New first-pressure feedback fit proceeding unchanged.
+
+Input-rounding diagnostic:analytical q uses exact current train normalization,
+one float32 input cast, then existing exact physical oracle (no neural pass).
+All unquantized references agree with closed-form modes below1e-10. On9x11x33,
+high-only input rounding induces5.16e-8Pa low coefficient error; mixed low0.001Pa
+gives -2.37e-7Pa, whereas learned8-call high-only error is -0.01825Pa (oldlate)
+or -0.0001268Pa (newcontrol). Thus this quantization contribution is much smaller
+than observed model leakage here. At low1e-8Pa, input quantization can overwhelm
+the low mode (4.16e-8Pa coefficient error):amplitude/dynamic range does matter.
+This is not an iterative inference floor:physical residuals are recomputed in
+float64 between float32 neural calls. Initial diagnostic attempt incorrectly
+read scale metadata as a number; TypeError and0.9s attempt retained, corrected
+to scale.value; qualified actual numeric work0.012s. No model/fit changes.
+
+Both full fits and fresh CPU restores completed/drained. First-pressure optimizer
+453.7712s,11.0188updates/s (8.82% slower than control); full managed969.4033s.
+Both peak CUDA allocated770,565,632B and weights1,485,452B; initialization,
+normalization, sampling/cell-work streams proven identical. Frozen weights are
+in training-and-admission.json; no files switched into deployment. Real
+native/control/first-pressure warm-up-plus-one fixture all qualified.
+
+First-pressure common-input8-call worst mean-free relative error3.848e-7,
+47.37% below control and32.43% below oldlate. This is not uniform:oldlate is
+better at4 and12calls (first-pressure16.85% and9.69% worse respectively).
+On manufactured9x11x33 after8calls, first-pressure pure-low error -0.0003712Pa
+and high-only low leakage -0.0018948Pa; improved versus oldlate but worse than
+newcontrol. No selection inferred from these tradeoffs; full74-scene suite runs.

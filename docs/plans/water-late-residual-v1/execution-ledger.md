@@ -133,3 +133,11 @@
   and50.0%→67.683%. Description0.140s, no optimizer/CUDA; this characterizes the
   extra direction effect, not a newly trained model result. Matched full fits and
   their measured CPU/native outcomes remain pending.
+- Expand the fixed-call comparison before new-checkpoint outcomes to all15
+  unique existing captured inputs, including historical peak frames and both
+  reference/targeted trajectories. Exact-byte deduplication removes the three
+  shared first states. Preserve the six-input fixtures and verify their numerical
+  results are exactly unchanged in the expanded reports. Targeted passes15/15
+  at8 calls; retained2/15. Both pass15/15 at12 calls. Commands and source identity
+  are in fixed-all-retained.json and fixed-all-targeted.json. These reused
+  consumed inputs do not become training examples or candidate-selection labels.

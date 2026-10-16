@@ -19,12 +19,27 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+
+def common_samples(study, all_captures):
+    seen = set()
+    for witness in study['witnesses']:
+        for trajectory in (('retained', 'targeted') if all_captures else ('targeted',)):
+            capture = diagnose.read(LAB/study['root']/(witness['name']+'-'+trajectory+'-original')/'capture.json')
+            items = capture['samples'] if all_captures else (capture['samples'][0], capture['samples'][-1])
+            for item in items:
+                if all_captures and item['sha256'] in seen:
+                    continue
+                seen.add(item['sha256'])
+                yield item
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--sequence', type=Path, required=True)
     parser.add_argument('--study', type=Path, required=True)
     parser.add_argument('--trial', required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--all-captures', action='store_true', help='Include both trajectories and peak frames; deduplicate exact input bytes')
     args = parser.parse_args()
     assert not args.output.exists(), 'retain previous attempts'
     started = time.perf_counter()
@@ -45,36 +60,34 @@ def main():
     torch = audit.TORCH
     cases = []
     with torch.no_grad():
-        for witness in study['witnesses']:
-            capture = diagnose.read(LAB/study['root']/(witness['name']+'-targeted-original')/'capture.json')
-            for item in (capture['samples'][0], capture['samples'][-1]):
-                path = LAB/item['path']
-                assert digest(path) == item['sha256']
-                with np.load(path, allow_pickle=False) as arrays:
-                    sample = {k: torch.from_numpy(arrays[k].copy()) for k in arrays.files}
-                initial = sample['native_input_residual']
-                base = sample['base']
-                delta = audit.spectral_correction(initial, sample)
-                compatible = initial-initial.mean()
-                defect = audit.vector_norm(diagnose.independent_action(delta, sample)-compatible)/max(audit.vector_norm(compatible), 1e-30)
-                assert defect < 1e-9
-                exact = base+delta
-                rhs = initial+audit.MODEL.full_operator(base, sample['cell_size_m'], sample['rho'])
-                pressure = base.clone()
-                frontier = []
-                inference_s = 0.
-                for calls in range(1, 13):
-                    state = {**sample, 'base': pressure, 'native_input_residual': initial-audit.MODEL.full_operator(
-                        pressure-base, sample['cell_size_m'], sample['rho'])}
-                    tick = time.perf_counter()
-                    pressure = predict_proposal(audit.MODEL, audit.NETWORK, state, audit.NORM, True)
-                    inference_s += time.perf_counter()-tick
-                    if calls in (4, 8, 12):
-                        frontier.append({'calls': calls, 'cumulative_cpu_correction_seconds': inference_s,
-                            **diagnose.error_metrics(pressure, exact), **diagnose.mode_metrics(pressure, exact),
-                            'quality': equation_quality(audit.MODEL, pressure, sample, rhs, study['policies']['original'])})
-                cases.append({'sample': item, 'counts_xyz': list(base.shape[2:][::-1]),
-                    'oracle_independent_relative_defect': defect, 'frontier': frontier})
+        for item in common_samples(study, args.all_captures):
+            path = LAB/item['path']
+            assert digest(path) == item['sha256']
+            with np.load(path, allow_pickle=False) as arrays:
+                sample = {k: torch.from_numpy(arrays[k].copy()) for k in arrays.files}
+            initial = sample['native_input_residual']
+            base = sample['base']
+            delta = audit.spectral_correction(initial, sample)
+            compatible = initial-initial.mean()
+            defect = audit.vector_norm(diagnose.independent_action(delta, sample)-compatible)/max(audit.vector_norm(compatible), 1e-30)
+            assert defect < 1e-9
+            exact = base+delta
+            rhs = initial+audit.MODEL.full_operator(base, sample['cell_size_m'], sample['rho'])
+            pressure = base.clone()
+            frontier = []
+            inference_s = 0.
+            for calls in range(1, 13):
+                state = {**sample, 'base': pressure, 'native_input_residual': initial-audit.MODEL.full_operator(
+                    pressure-base, sample['cell_size_m'], sample['rho'])}
+                tick = time.perf_counter()
+                pressure = predict_proposal(audit.MODEL, audit.NETWORK, state, audit.NORM, True)
+                inference_s += time.perf_counter()-tick
+                if calls in (4, 8, 12):
+                    frontier.append({'calls': calls, 'cumulative_cpu_correction_seconds': inference_s,
+                        **diagnose.error_metrics(pressure, exact), **diagnose.mode_metrics(pressure, exact),
+                        'quality': equation_quality(audit.MODEL, pressure, sample, rhs, study['policies']['original'])})
+            cases.append({'sample': item, 'counts_xyz': list(base.shape[2:][::-1]),
+                'oracle_independent_relative_defect': defect, 'frontier': frontier})
     summary = {}
     for calls in (4, 8, 12):
         rows = [next(r for r in c['frontier'] if r['calls'] == calls) for c in cases]

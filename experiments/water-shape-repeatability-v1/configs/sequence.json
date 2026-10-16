@@ -1,0 +1,43 @@
+{
+  "training_packet": "runs/water-residual-learning-v1/views/cohort-16",
+  "validation_packet": "runs/water-learning-sequence-v1/views/validation",
+  "reserved_packet": "runs/water-learning-sequence-v1/views/reserved-test",
+  "runtime_manifest": "runs/cuda-pressure-runtime-1/manifest.json",
+  "tuldok": "runs/live-integration/Tuldok",
+  "schema": "rheon-shape-repeatability-sequence-v1",
+  "reference": {
+    "name": "shape-two-reference",
+    "project": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+    "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "trials": [
+    {
+      "name": "shape-two-seed2",
+      "config": "experiments/water-shape-repeatability-v1/configs/shape-two-seed2.json"
+    },
+    {
+      "name": "shape-two-seed3",
+      "config": "experiments/water-shape-repeatability-v1/configs/shape-two-seed3.json"
+    },
+    {
+      "name": "shape-one-control",
+      "config": "experiments/water-shape-repeatability-v1/configs/shape-one-control.json"
+    },
+    {
+      "name": "shape-one-longer",
+      "config": "experiments/water-shape-repeatability-v1/configs/shape-one-longer.json"
+    }
+  ],
+  "root": "runs/water-shape-repeatability-v1",
+  "native_binary": "runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation",
+  "probe_packet": "runs/water-learning-sequence-v1/views/fit-one",
+  "fresh-development": "experiments/water-shape-repeatability-v1/configs/fresh-development.json",
+  "prior-grids": "experiments/water-shape-repeatability-v1/configs/prior-grids.json",
+  "long-study": "experiments/water-shape-repeatability-v1/configs/long-study.json",
+  "final_configs": [
+    "experiments/water-shape-repeatability-v1/configs/final-holdout-0.json",
+    "experiments/water-shape-repeatability-v1/configs/final-holdout-1.json"
+  ],
+  "selection": "Eligibility requires every train/validation state and fresh/prior/long autonomous trajectory to pass; among eligible checkpoints minimize familiar mean network evaluations, then fixed-eight worst residual. Include current reference; freeze before final population. No final-informed refit/reselection."
+}

@@ -1,6 +1,16 @@
 # Rheon Surrogate Lab
 
-The latest [coverage and intermediate-feedback experiments](docs/plans/water-coverage-feedback-v1/results.md)
+The latest [targeted supplemental-feedback study](docs/plans/water-targeted-feedback-v1/results.md)
+fixes the two prior slow-domain cases and passes all 50 development plus eight
+fresh final simulations. It uses 19.5% fewer final network calls than the retained
+learned control, with 3.4× higher worst pressure difference, so control remains
+selected. Two CUDA fits, methods/timings and setup recoveries are recorded.
+[Future preparation](docs/plans/water-targeted-feedback-v1/reports/future-collection.json)
+adds 16 larger water pressure timelines to the existing Tuldok catalog; 32 late
+labels are independently qualified. [Next steps](docs/plans/water-targeted-feedback-v1/next-steps.md)
+target the remaining accuracy/work tradeoff.
+
+The preceding [coverage and intermediate-feedback experiments](docs/plans/water-coverage-feedback-v1/results.md)
 complete two CUDA fits and 10,000 updates. Intermediate feedback reduces familiar
 mean calls by 30%, but regresses worst-shape work and pressure error. Coverage
 passes eight fresh final simulations with 3.4× lower worst pressure error, while

@@ -87,3 +87,60 @@ The targeted checkpoint's matched replay turns both diagnostic bounds green:
 Independent-seed confirmation parameters and separate final scene identities are
 prepared prospectively, before the primary final outcomes. The trigger remains
 full-policy improvement, not a favorable quick check; see replication-protocol.md.
+
+
+## Frozen final comparison and closure
+
+All six managed stages complete/drain, checkpoints restore identically on CPU,
+and both new models qualify all 50 required development simulations. At
+2026-10-16T08:34:22Z selection freezes: control remains overall choice; targeted
+is new challenger. Development ranks [max calls, worst pressure relative L2,
+weighted mean calls] are control [13, 6.13957e-6, 9.75856], supplemental
+[25, 8.33166e-5, 9.60816], target [14, 2.58927e-5, 8.02340].
+
+Both control and target then qualify all eight fresh final simulations and
+904/904 AI steps each. Target mean/max calls are 7.29204/10 versus 9.05863/11,
+a 19.5% mean reduction. Worst pressure difference is 1.72146e-5 versus 5.05648e-6
+(3.40× higher). The complete promotion criterion fails, so control stays selected.
+No independent-seed fit is started to search for a favorable outcome. Its exact
+recipe and separate unused final scenes remain prospectively prepared.
+
+Captured pressure witnesses are non-monotonic: 31×11×7 peaks at step 88 then
+falls by 96; fresh 31×15×23 peaks at 107 then falls by 128; the 512-step case
+peaks at 282 then falls by 512. Every witness frame qualifies. This does not
+establish a linear/exponential error-growth law or remove the accuracy gap.
+
+New optimizer intervals total 709.644 s. Managed sequence with overlapping CPU
+qualification takes 2400.516 s; controller 3157.813 s; capture-to-final 3238.154 s.
+Final study takes 144.105 s. Full timing index preserves 63 delegated commands,
+including two exactly reconciled failures; both later recoveries complete/reap.
+The 29 trainer tests and two lifecycle-index tests pass. Actual complete bank,
+managed/native, label, parser and catalog observations substantiate the claims.
+
+Final audit verifies six completed/drained unique Runs, disjoint optimizer
+intervals, 240 study trajectory children exited/reaped, 17 CPU-teacher children
+exited/reaped, 10 drained diagnostic populations/856 cases, all 1,808 matching
+final frames/callbacks, frozen selection before final, verified source/input/data
+hashes, 16 reopened collection records and no surviving owned controllers.
+Local retained size is 456,248,576 bytes, within 2 GiB. All historical results,
+unchanged application deployment and unrelated user cohort-progress files remain.
+
+The task capture worktree is removed with its exact head retained/reachable.
+Branch stays protected for review/continuation under plan.md's contract. Source
+commit a1c5d6f owns sampler/training changes; c8858ef owns completed CPU preparation
+and recovery audit; 01428b1 freezes conditional confirmation. Final closure adds
+numerical results, time/source/lifecycle records and prepared follow-ups. No
+weights/raw datasets are staged; no history rewrite, hook bypass or push.
+
+
+Closure review covers the full branch range from
+77ad2e23ac5e0b6b6ad803c5d6b6c4eed30113fe through source, independent data
+preparation, prospective confirmation and final evidence. These boundaries are
+intentional; no regression/revert, fixup or unexpected merge topology appears.
+The 55-file closure is restricted to this plan/README, contains text only and
+passes scoped sensitive-pattern/whitespace review. All 60 JSON files parse,
+12 current Markdown links resolve, eight executed-source hashes and the timing
+index hash match. No broader test rerun is needed after documentation-only edits;
+29 trainer tests, two lifecycle tests and actual complete system evidence remain
+valid. Only the user's two unrelated cohort-progress files remain outside the
+committed write set.

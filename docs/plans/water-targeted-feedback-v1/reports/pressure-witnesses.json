@@ -1,0 +1,160 @@
+{
+  "method": "Read completed native paired JSONL frames; select max relative_pressure_difference and retain first/peak/last. No inference, fitting or checkpoint selection.",
+  "elapsed_seconds": 0.009448219992918894,
+  "cases": [
+    {
+      "population": "fresh",
+      "scene": {
+        "seed": 2026101601,
+        "counts": [
+          31,
+          11,
+          7
+        ],
+        "cells_per_metre": 16,
+        "steps": 96,
+        "warmup_steps": 15,
+        "center": [
+          0.511609,
+          0.67983,
+          0.642051
+        ],
+        "acceleration": 0.392755,
+        "radius": 0.271963,
+        "swirl": 0.472078,
+        "fluctuation": 0.100978,
+        "frequency": 2.21065,
+        "sgs": false
+      },
+      "source": "runs/water-targeted-feedback-v1/targeted-feedback/grid-study/scene-01/targeted-feedback-0/frames.jsonl",
+      "source_sha256": "3305871104235143181687af9c3dff16766d438966edd1015f5c1d09857aad1c",
+      "first": {
+        "step": 16,
+        "time_s": 0.26666666666666666,
+        "pressure_relative_l2": 1.1411130158196275e-05,
+        "equation_relative_residual": 7.197360817624221e-07,
+        "actual_divergence": 2.2351741790771484e-08,
+        "qualified": true
+      },
+      "peak": {
+        "step": 88,
+        "time_s": 1.4666666666666666,
+        "pressure_relative_l2": 2.589273519117403e-05,
+        "equation_relative_residual": 6.024218605491098e-07,
+        "actual_divergence": 1.7881393432617188e-07,
+        "qualified": true
+      },
+      "last": {
+        "step": 96,
+        "time_s": 1.6,
+        "pressure_relative_l2": 1.0126498458474953e-06,
+        "equation_relative_residual": 8.772528651899369e-07,
+        "actual_divergence": 1.3969838619232178e-07,
+        "qualified": true
+      }
+    },
+    {
+      "population": "long",
+      "scene": {
+        "seed": 20261032,
+        "counts": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16,
+        "steps": 512,
+        "warmup_steps": 15,
+        "center": [
+          0.65,
+          0.35,
+          0.55
+        ],
+        "acceleration": 0.1875,
+        "radius": 0.25,
+        "swirl": -0.5,
+        "fluctuation": 0.6,
+        "frequency": 2.0,
+        "sgs": false
+      },
+      "source": "runs/water-targeted-feedback-v1/targeted-feedback/long-study/scene-01/targeted-feedback-0/frames.jsonl",
+      "source_sha256": "2068fe3e60d7fc15eda96b0f82aeb6a89db2670f7316fc5e82eb9737609e7a04",
+      "first": {
+        "step": 16,
+        "time_s": 0.26666666666666666,
+        "pressure_relative_l2": 3.257727479781098e-06,
+        "equation_relative_residual": 8.175558873054696e-07,
+        "actual_divergence": 2.60770320892334e-08,
+        "qualified": true
+      },
+      "peak": {
+        "step": 282,
+        "time_s": 4.7,
+        "pressure_relative_l2": 1.1891199708520309e-05,
+        "equation_relative_residual": 4.685165539981312e-07,
+        "actual_divergence": 2.384185791015625e-07,
+        "qualified": true
+      },
+      "last": {
+        "step": 512,
+        "time_s": 8.533333333333333,
+        "pressure_relative_l2": 4.181699782200045e-06,
+        "equation_relative_residual": 9.456454636747608e-07,
+        "actual_divergence": 2.980232238769531e-07,
+        "qualified": true
+      }
+    },
+    {
+      "population": "final",
+      "scene": {
+        "seed": 2026102106,
+        "counts": [
+          31,
+          15,
+          23
+        ],
+        "cells_per_metre": 8,
+        "steps": 128,
+        "warmup_steps": 15,
+        "center": [
+          0.28,
+          0.39,
+          0.28
+        ],
+        "acceleration": 0.248,
+        "radius": 0.194,
+        "swirl": 0.92,
+        "fluctuation": 0.265,
+        "frequency": 1.6800000000000002,
+        "sgs": false
+      },
+      "source": "runs/water-targeted-feedback-v1/final-holdout/scene-06/targeted-feedback-0/frames.jsonl",
+      "source_sha256": "998e481c4ab8f104002f9e9975455ef6de26e9138a2835915a990cdc53a16297",
+      "first": {
+        "step": 16,
+        "time_s": 0.26666666666666666,
+        "pressure_relative_l2": 3.5114861832792428e-06,
+        "equation_relative_residual": 3.3733671128504555e-07,
+        "actual_divergence": 2.2351741790771484e-08,
+        "qualified": true
+      },
+      "peak": {
+        "step": 107,
+        "time_s": 1.7833333333333332,
+        "pressure_relative_l2": 1.7214637955323806e-05,
+        "equation_relative_residual": 9.359916620198508e-07,
+        "actual_divergence": 9.685754776000977e-08,
+        "qualified": true
+      },
+      "last": {
+        "step": 128,
+        "time_s": 2.1333333333333333,
+        "pressure_relative_l2": 2.4523007372745863e-06,
+        "equation_relative_residual": 5.444549427060092e-07,
+        "actual_divergence": 1.2665987014770508e-07,
+        "qualified": true
+      }
+    }
+  ],
+  "scope": "post-test witnesses on consumed cases; differences are against native paired pressure fields, not absolute Pa or a global error-growth law"
+}

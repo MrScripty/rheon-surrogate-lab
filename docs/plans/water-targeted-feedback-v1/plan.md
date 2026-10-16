@@ -1,6 +1,6 @@
 # Targeted coverage with intermediate feedback
 
-Status: Active. Admission: start, user-authorized next sequence. Canonical path:
+Status: Accepted. Admission: start, user-authorized next sequence. Canonical path:
 docs/plans/water-targeted-feedback-v1/plan.md. Owner/integrator: this task.
 Objective: diagnose the hard-shape slowdown and test targeted coverage without
 diluting the original grid stream; retain methods, times, failures and decisions.
@@ -59,7 +59,7 @@ Clean capture may use /tmp/rheon-targeted-feedback-capture. Before removing only
 that clean task worktree, record its exact head, retained-ref reachability,
 retained disposition and protected-OID check; verify path/registration removal.
 
-Milestones and objective evidence:
+Milestones and objective evidence (automated recorded CLI/managed/native runs):
 - M1 deterministic real-input differential repro and bounded mode diagnosis.
   Focused/system CPU evidence: actual model code, same inputs, red-capable
   call-count signal, minimized solve, hypothesis predictions/observations.
@@ -72,11 +72,15 @@ Milestones and objective evidence:
 - M3 two managed CUDA fits, CPU qualification, frozen final comparison and
   independent CPU preparation. Required-real RTX5090/Tuldok/nativeCPU evidence:
   numerical outcomes, terminal/reaped custody, actual timing/source identity,
-  existing project visibility and complete retained record. Active; pending.
+  existing project visibility and complete retained record. Accepted; satisfied
+  by reports/summary.json, timings.json, decision.json, cpu-preparation.json,
+  future-collection.json and reconciliations.json.
 
-Current acceptance: partial. Current phase: M3.
-Exactly one next slice: complete paired managed fits and CPU qualification,
-with independent CPU label/CFD preparation; freeze selection before final.
+Current acceptance: satisfied. Current phase: terminal.
+Next slice: none. The paired study and independent preparation are complete.
+Conditional seed confirmation is prepared, not executed because the complete
+improvement criterion failed; reports/replication-disposition.json owns that
+outcome. Prepared follow-ups are in next-steps.md and require a new admission.
 Blockers: none. Replan if controls fail, diagnosis contradicts the selected
 mechanism, resources/custody become unavailable, or legacy parity/physics changes.
 Improvement itself is not required for experiment acceptance. See execution-ledger.md,

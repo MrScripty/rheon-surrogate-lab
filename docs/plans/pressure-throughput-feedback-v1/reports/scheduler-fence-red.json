@@ -1,0 +1,27 @@
+{
+  "schema": "scheduler-fence-regression-v1",
+  "source_commit": "5e18837e1b580b5b831118adb0b0dc8b1dbba4e7",
+  "source_runs_sha256": "c5b186929be4544dd64c0e098b670eb21b51277f185fc7ea8421f6e1f9eb5324",
+  "test_source_sha256": "9aa59e7bf39fcf942be63ad915f3d5231e39fea63a9ebfc1e41edae774b2f7b9",
+  "command": [
+    "../app-env/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_runs.py",
+    "-k",
+    "sibling_unknown",
+    "-v"
+  ],
+  "environment": "dedicated isolated UTF8 PostgreSQL fixture; DSN omitted",
+  "observed_failure": "AssertionError: True is not false : a worker started after unknown sibling custody",
+  "tests_run": 1,
+  "elapsed_test_seconds": 0.838,
+  "exit_code": 1,
+  "cleanup": "owner.close drained the actual sleeping worker in finally",
+  "fix": "common fence rechecked under catalog transaction at attempt entry and both worker paths; queued work stays queued if sibling custody is unknown"
+}

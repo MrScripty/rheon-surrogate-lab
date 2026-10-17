@@ -1,0 +1,83 @@
+{
+  "schema": "pressure-throughput-test-receipt-v1",
+  "started_at_utc": "2026-10-17T04:27:05.177121+00:00",
+  "source": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+  "source_sha256": {
+    "runs.py": "e9734287dfb011006a7b89841e0044c57913593e0b2c25d484431622a6026c1b",
+    "run_capacity.py": "839cd4cab9fca4700e809fe9369b2298ea468a37c888ff2d500b58c4b9c19d23"
+  },
+  "database": "explicit isolated fixture; DSN omitted",
+  "tests": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_run_capacity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03360000200336799,
+      "output": "test_classification_uses_captured_recipe_device_not_job_name (test_run_capacity.CapacityTests.test_classification_uses_captured_recipe_device_not_job_name) ... ok\ntest_configuration_is_explicit_and_invalid_settings_fail (test_run_capacity.CapacityTests.test_configuration_is_explicit_and_invalid_settings_fail) ... ok\ntest_cpu_and_cuda_are_independent_and_cuda_is_exclusive (test_run_capacity.CapacityTests.test_cpu_and_cuda_are_independent_and_cuda_is_exclusive) ... ok\ntest_host_memory_observation_is_positive (test_run_capacity.CapacityTests.test_host_memory_observation_is_positive) ... ok\ntest_reserves_memory_for_all_active_attempts_and_host (test_run_capacity.CapacityTests.test_reserves_memory_for_all_active_attempts_and_host) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_run_concurrency.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 9.636515915000928,
+      "output": "test_two_cpu_custodians_overlap_and_cancel_independently (test_run_concurrency.ConcurrentRuns.test_two_cpu_custodians_overlap_and_cancel_independently) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 9.350s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_runs.py",
+        "-v"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 10.791798581005423,
+      "output": "test_real_cpu_results_holdout_exposure_correction_restart_and_tamper (test_runs.RealCPURunTests.test_real_cpu_results_holdout_exposure_correction_restart_and_tamper) ... FAIL\ntest_ambiguous_spawn_reconciles_only_after_matching_process_ceases (test_runs.RunTests.test_ambiguous_spawn_reconciles_only_after_matching_process_ceases) ... ok\ntest_current_exposure_refreshes_without_mutating_admission_evidence (test_runs.RunTests.test_current_exposure_refreshes_without_mutating_admission_evidence) ... ok\ntest_database_disconnect_still_drains_child_before_shutdown_returns (test_runs.RunTests.test_database_disconnect_still_drains_child_before_shutdown_returns) ... ok\ntest_lost_ack_repeated_key_returns_receipt_before_new_graph_validation (test_runs.RunTests.test_lost_ack_repeated_key_returns_receipt_before_new_graph_validation) ... ok\ntest_lost_commit_ack_reconciliation_wakes_exact_committed_queue (test_runs.RunTests.test_lost_commit_ack_reconciliation_wakes_exact_committed_queue) ... ok\ntest_queued_cancel_and_peer_supervisor_are_honest (test_runs.RunTests.test_queued_cancel_and_peer_supervisor_are_honest) ... ok\ntest_recovery_keeps_observed_live_prior_process_unknown (test_runs.RunTests.test_recovery_keeps_observed_live_prior_process_unknown) ... ok\ntest_restart_does_not_replay_queue_or_signal_reused_pid (test_runs.RunTests.test_restart_does_not_replay_queue_or_signal_reused_pid) ... ok\ntest_restart_during_proven_pre_spawn_validation_is_interrupted (test_runs.RunTests.test_restart_during_proven_pre_spawn_validation_is_interrupted) ... ok\ntest_running_cancel_confirms_real_process_group_drain (test_runs.RunTests.test_running_cancel_confirms_real_process_group_drain) ... ok\ntest_unknown_attempt_fences_already_queued_work (test_runs.RunTests.test_unknown_attempt_fences_already_queued_work) ... ok\ntest_worker_failure_retry_preserves_frozen_parent_and_reuses_no_checkpoint (test_runs.RunTests.test_worker_failure_retry_preserves_frozen_parent_and_reuses_no_checkpoint) ... ok\n\n======================================================================\nFAIL: test_real_cpu_results_holdout_exposure_correction_restart_and_tamper (test_runs.RealCPURunTests.test_real_cpu_results_holdout_exposure_correction_restart_and_tamper)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/tests/test_runs.py\", line 269, in test_real_cpu_results_holdout_exposure_correction_restart_and_tamper\n    self.assertTrue(validation['valid'], validation['errors'])\nAssertionError: False is not true : [{'path': 'nodes/train/runtime', 'message': 'Install the qualified local CPU training environment and set TULDOK_TRAINING_PYTHON.', 'code': 'unavailable'}]\n\n----------------------------------------------------------------------\nRan 13 tests in 10.488s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_external_runs.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 71.3647376220033,
+      "output": "test_consumption_and_run_rollback_together (test_external_runs.ExternalAdmissionTests.test_consumption_and_run_rollback_together) ... ok\ntest_lost_ack_is_not_dispatched_by_an_already_running_queue (test_external_runs.ExternalAdmissionTests.test_lost_ack_is_not_dispatched_by_an_already_running_queue) ... ok\ntest_lost_commit_ack_reconciles_without_new_approval (test_external_runs.ExternalAdmissionTests.test_lost_commit_ack_reconciles_without_new_approval) ... ok\ntest_revocation_and_source_drift_leave_no_run_or_consumption (test_external_runs.ExternalAdmissionTests.test_revocation_and_source_drift_leave_no_run_or_consumption) ... ok\ntest_same_boot_missing_drain_receipt_fences_after_go_intent (test_external_runs.ExternalAdmissionTests.test_same_boot_missing_drain_receipt_fences_after_go_intent) ... ok\ntest_same_key_actor_and_digest_reconcile_exact_consumption (test_external_runs.ExternalAdmissionTests.test_same_key_actor_and_digest_reconcile_exact_consumption) ... ok\ntest_same_key_reconciles_after_approval_expiry_and_graph_drift (test_external_runs.ExternalAdmissionTests.test_same_key_reconciles_after_approval_expiry_and_graph_drift) ... ok\ntest_real_running_cancel_retains_consumed_approval (test_external_runs.ExternalExecutionTests.test_real_running_cancel_retains_consumed_approval) ... ok\ntest_real_unicode_parameter_descendant_output_cold_download_and_restart (test_external_runs.ExternalExecutionTests.test_real_unicode_parameter_descendant_output_cold_download_and_restart) ... ok\ntest_unknown_go_commit_ack_never_sends_go_to_real_helper (test_external_runs.ExternalExecutionTests.test_unknown_go_commit_ack_never_sends_go_to_real_helper) ... ok\ntest_stopped_real_helper_deadline_is_unknown_until_actual_drain (test_external_runs.ExternalStoppedHelperTests.test_stopped_real_helper_deadline_is_unknown_until_actual_drain) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 71.096s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 91.8268273069989,
+  "passed": false
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "concurrent-runs-two-axis-review-v1",
+  "fixed_base": "8af5a6a1e288e5b2f86a75b53cab93ca71222a04",
+  "first_reviewed_head": "5e18837e1b580b5b831118adb0b0dc8b1dbba4e7",
+  "correction_head": "7fbc82d9abe80182cfb3186a6691649298e98eb7",
+  "final_source_evidence": "scheduler-tests-10.json and actual-device-overlap-03.json source hashes",
+  "standards": {
+    "reviewer": "scheduler_standards_review",
+    "findings": [
+      "Dispatch could cross an unknown-custody fence after capacity check.",
+      "One builtin final-drain fence writer was outside the catalog lock."
+    ],
+    "resolution": "Provisional executor submission; dispatch and every fence writer coordinate at entry/transition under catalog lock. Lock/persistence failure sets stop.",
+    "remaining_findings": 0
+  },
+  "spec": {
+    "reviewer": "scheduler_spec_review",
+    "findings": [
+      "Same dispatch/fence race.",
+      "Retained06/07 lacked explicit built-in lifecycle-class receipt."
+    ],
+    "resolution": "Real red startup regression and13 passing builtin lifecycle cases retained; sibling fence admission fixed.",
+    "remaining_findings": 0
+  },
+  "scope": "read-only independent source/spec reviews; execution evidence owned by root; legacy TinyCNN numerical preflight remains unavailable, not claimed passing",
+  "actual_hardware": "real CUDA pressure update1, managed CPU computation0updates, fresh CPUrestore0updates; exact artifacts; all completed/drained"
+}

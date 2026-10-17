@@ -1,0 +1,49 @@
+{
+  "schema": "pressure-throughput-test-receipt-v1",
+  "started_at_utc": "2026-10-17T04:39:07.703427+00:00",
+  "source": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+  "source_sha256": {
+    "runs.py": "c5b186929be4544dd64c0e098b670eb21b51277f185fc7ea8421f6e1f9eb5324",
+    "run_capacity.py": "6811c5b2255b2a57c92147bab448a82c89876072d260ef217eb7284c511e8cfa"
+  },
+  "database": "explicit isolated fixture; DSN omitted",
+  "tests": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_run_capacity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03962383900943678,
+      "output": "test_classification_uses_captured_recipe_device_not_job_name (test_run_capacity.CapacityTests.test_classification_uses_captured_recipe_device_not_job_name) ... ok\ntest_configuration_is_explicit_and_invalid_settings_fail (test_run_capacity.CapacityTests.test_configuration_is_explicit_and_invalid_settings_fail) ... ok\ntest_cpu_and_cuda_are_independent_and_cuda_is_exclusive (test_run_capacity.CapacityTests.test_cpu_and_cuda_are_independent_and_cuda_is_exclusive) ... ok\ntest_explicit_recipe_resources_cannot_lower_operator_memory_floor (test_run_capacity.CapacityTests.test_explicit_recipe_resources_cannot_lower_operator_memory_floor) ... ok\ntest_host_memory_observation_is_positive (test_run_capacity.CapacityTests.test_host_memory_observation_is_positive) ... ok\ntest_reserves_memory_for_all_active_attempts_and_host (test_run_capacity.CapacityTests.test_reserves_memory_for_all_active_attempts_and_host) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_run_concurrency.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 22.845117789009237,
+      "output": "test_busy_cuda_slot_does_not_block_cpu_and_next_cuda_waits (test_run_concurrency.ConcurrentRuns.test_busy_cuda_slot_does_not_block_cpu_and_next_cuda_waits) ... ok\ntest_memory_shortage_preserves_queue_and_queued_cancel_creates_no_child (test_run_concurrency.ConcurrentRuns.test_memory_shortage_preserves_queue_and_queued_cancel_creates_no_child) ... ok\ntest_two_cpu_custodians_overlap_and_cancel_independently (test_run_concurrency.ConcurrentRuns.test_two_cpu_custodians_overlap_and_cancel_independently) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 22.520s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 22.884824883993133,
+  "passed": true
+}

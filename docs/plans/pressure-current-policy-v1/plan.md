@@ -86,3 +86,10 @@ Preserve failed Run/Study; no unpublished weights reused. Early CUDA/CPUrestore
 are completed/drained, may collect read-only; no redo. Once no active Runs and
 reviewed deployment qualify, close failed Study and one fresh late Study03 from
 identical frozen source/initialization. No numerical/model/optimizer budget change.
+
+Bounded subsequent-step CPU preparation while managed execution completes may
+probe the existing parameterfreeglobal-average shortcut on already consumed
+analytic grids. Twelvefloat32forwards,onecore21,no saved weight/package change;
+float64 metric subtraction only. This does not alter the matched arms, gates or
+selection. Any shortcut removal/global spatial-path change requires a later
+controlled proposal and fresh physical qualification; no automatic deployment.

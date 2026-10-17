@@ -37,3 +37,11 @@ not a simulation or optimizer. Its concurrent clocks are not inference latency.
 LATE_STUDY --output NEW_REPORT` verifies actual CUDA/CPU artifacts and the allowed
 bank-stage difference. It binds inspected configuration/source to the actual
 Run closure and keeps numerical parity separate from accuracy qualification.
+
+`global_pool_probe.py --root ROOT --project CAPTURED_PROJECT --artifacts
+CPU_RESTORE --output NEW_REPORT --core CORE` is bounded subsequent-step
+preparation: six analytic fields on three consumed shapes,12float32forwards,
+no optimizer or simulation. It compares the existing constant global-average
+shortcut with its in-memory removal and restores the original module. Metrics
+use float64 subtraction of float32 outputs. This diagnoses gauge/rounding effects,
+not a deployed architecture change or an accuracy qualification.

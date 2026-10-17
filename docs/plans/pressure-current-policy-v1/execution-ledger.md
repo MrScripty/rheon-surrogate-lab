@@ -91,3 +91,21 @@ reuse. IndependentlyreproducedTuldokmonitorrenamefaultandqualified39tests/
 all20priorRunstatesandowner/catalog/settingspreserved. ClosedfailedStudyfrom
 acknowledgedjournal; erroneouspostconditionclassifiedwithoutreplay. Fresh
 lateStudy03fromidenticalcapture02whileearly16workerCPUqualificationruns.
+
+EarlyS3complete:74/74physicalepisodes,8523AIsteps/233independentoracles,
+742.813526498s,16workersallreaped,peakRSSsum11,657,609,216B,minimumavailable
+49,396,080,640B. Original58worstpressure2.940419958e-6improvesprioraccurate
+3.144794672e-6, butmean/maxcallsregressselectedpopulationsandminimum8pressure
+1.904523157e-6exceedsprioraccurate1.415166875e-6. Overall8.211193242mean/16max
+calls; preliminaryearlypopulationgatesreject. No holdoutconsumed. Stoponly
+obsoleteoldqualifierafterallchildrenreaped; late03qualifierremainswaiting.
+
+WhilelateCPUrestorewasbeingadmitted, subsequent-stepCPUpreparationchecked
+parameterfreeglobal-averagebranchon6analyticfields/3consumedgrids,12float32
+forwards,1core21,2.018460799s,844,697,600BpeakRSS. Globalmeanrawoutputshifts
+~0.3..2.2butspatialdifferenceonly6.2e-6..1.62e-5; gaugerelativedifference
+2.253e-7..3.748e-6. Inexactlinearreplicate-convolutionarithmeticthisshortcut
+contributesaconstantremovedbygauge; measuredremaindersareconsistentwith
+float32rounding. Encoder/decoderstillcommunicatespatialinformation. Doesnot
+proveoveralllow-frequencycause; noarchitecture/packagechange,optimizer,
+simulation,selectionorholdout. Retainfornextcontrolledablationproposal.

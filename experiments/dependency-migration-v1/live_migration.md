@@ -19,7 +19,12 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
   --root "$PWD" --interval 2
 ```
 
-`--once` publishes one observation and exits. `--cohort` selects a directory
+`--once` publishes one observation, prints one JSON summary and exits. A summary
+transport failure exits nonzero without relabelling a valid durable observation.
+Continuous watch writes no per-poll stdout: atomic activity/frame publications
+provide its bounded current status and heartbeat, so a regular-file log cannot
+grow indefinitely or turn a full log into a receipt-refresh failure.
+`--cohort` selects a directory
 inside `runs/dependency-migration-v1/numerical-qualification-v1`; the default is
 `new-cohort-01`. `--live-root` must name the dedicated migration observation root.
 One advisory lock prevents competing publishers. SIGINT/SIGTERM stops the loop

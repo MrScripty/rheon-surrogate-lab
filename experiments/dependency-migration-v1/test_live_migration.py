@@ -196,6 +196,71 @@ class LiveMigrationTests(unittest.TestCase):
                 child.kill()
                 child.communicate(timeout=5)
 
+    def publisher_with_full_stdout(self, once=False):
+        import resource
+        def limits():
+            resource.setrlimit(resource.RLIMIT_FSIZE, (2 * 1024 * 1024,) * 2)
+            resource.setrlimit(resource.RLIMIT_AS, (512 * 1024 * 1024,) * 2)
+            resource.setrlimit(resource.RLIMIT_NOFILE, (64, 64))
+        log = self.root / 'full-publisher.log'
+        log.write_bytes(b'x' * (2 * 1024 * 1024))
+        command = [sys.executable, '-B', str(Path(live.__file__).resolve()),
+                   '--root', str(self.root), '--interval', '1']
+        if once:
+            command.append('--once')
+        environment = {**os.environ, 'OPENBLAS_NUM_THREADS': '1',
+                       'OMP_NUM_THREADS': '1', 'MKL_NUM_THREADS': '1'}
+        with log.open('ab') as output:
+            child = subprocess.Popen(command, stdout=output, stderr=output,
+                                     env=environment, preexec_fn=limits)
+        def reap():
+            if child.poll() is None:
+                child.terminate()
+            child.wait(timeout=5)
+        self.addCleanup(reap)
+        return child, log
+
+    def test_full_stdout_watch_keeps_actual_progress_and_refreshes_changed_receipts(self):
+        child, log = self.publisher_with_full_stdout()
+        activity_path = self.output / 'activity.json'
+        deadline = time.monotonic() + 5
+        while time.monotonic() < deadline:
+            if activity_path.exists() and json.loads(activity_path.read_text())['sequence'] >= 3:
+                break
+            self.assertIsNone(child.poll())
+            time.sleep(0.02)
+        time.sleep(0.1)
+        activity = json.loads(activity_path.read_text())
+        self.assertEqual(activity['state'], 'running')
+        self.assertEqual(activity['progress'], {'completed': 1, 'total': 74})
+        before = json.loads((self.output / 'frame.json').read_text())
+        write(self.migration / 'ops/m3-complete.json', {
+            'schema': 'rheon-tuldok-migration-completion-v1', 'status': 'complete_fixture',
+            'm3_service_switched': True, 'm3_complete': True, 'ordinary_admissions_open': False})
+        deadline = time.monotonic() + 3
+        while time.monotonic() < deadline:
+            activity = json.loads(activity_path.read_text())
+            if 'Final M3 completion: status=complete_fixture' in activity['message']:
+                break
+            self.assertIsNone(child.poll())
+            time.sleep(0.02)
+        self.assertIn('Final M3 completion: status=complete_fixture', activity['message'])
+        self.assertEqual(activity['progress'], {'completed': 1, 'total': 74})
+        after = json.loads((self.output / 'frame.json').read_text())
+        self.assertEqual(after['pressure'], before['pressure'])
+        self.assertEqual(after['source'], before['source'])
+        self.assertEqual(log.stat().st_size, 2 * 1024 * 1024)
+        self.assertIsNone(child.poll())
+
+    def test_full_stdout_once_fails_transport_without_relabelling_valid_observation(self):
+        child, log = self.publisher_with_full_stdout(once=True)
+        self.assertNotEqual(child.wait(timeout=5), 0)
+        activity = json.loads((self.output / 'activity.json').read_text())
+        self.assertEqual(activity['state'], 'running')
+        self.assertEqual(activity['progress'], {'completed': 1, 'total': 74})
+        self.assertNotIn('Observation unavailable', activity['phase'])
+        self.assertEqual(log.stat().st_size, 2 * 1024 * 1024)
+
     def test_private_ops_never_read_and_historical_output_root_refused(self):
         private = self.migration / 'ops/live-selection.private.json'
         write(private, {'secret': 'must not publish'})

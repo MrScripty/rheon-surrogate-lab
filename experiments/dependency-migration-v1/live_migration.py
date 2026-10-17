@@ -385,12 +385,14 @@ def main():
         started = time.monotonic()
         try:
             result = publisher.poll()
-            print(json.dumps({'authority': 'external_observation', **result,
-                              'poll_elapsed_s': time.monotonic() - started}), flush=True)
         except (OSError, ValueError, KeyError, TypeError) as error:
             publisher.observer.publish('Observation unavailable',
                 'External observation could not refresh receipts; no migration result is inferred (' + type(error).__name__ + ').',
                 state='failed')
+        else:
+            if args.once:
+                print(json.dumps({'authority': 'external_observation', **result,
+                                  'poll_elapsed_s': time.monotonic() - started}), flush=True)
         if args.once:
             break
         stop.wait(args.interval)

@@ -21,6 +21,16 @@ The selected Pumas interpreter performs an inert architecture/configuration prob
 The captured trainer owns optimization; current Tuldok SDK owns final checkpoint
 and pressure-field evidence. No closed migration gate or converter is reopened.
 
+`run_study.py --project-alias` selects an already configured Tuldok project-root
+alias; it does not create an alias. Use the alias verified for the running host.
+`compare_training.py --root <artifact-root> --reference <completed-control-study>
+--candidate <label>=<completed-study> --output <new-report>` checks actual downloaded
+hashes, five CUDA/CPU artifact pairs, initialization, input/normalization/runtime
+identities and sample order. Repeat `--candidate` for matched runs. Relative
+historical download paths resolve against the explicit artifact root regardless
+of the working directory. Reports separate optimizer/trainer/complete-command
+clocks and never infer accuracy or promotion from training parity or loss.
+
 `configs/control.json` and `configs/lowband.json` use identical data, seeds,
 sampling, learning-rate schedule, two training corrections and5000updates. Only
 band-feedback weight differs scientifically. Both request1800s CUDA execution;
@@ -66,6 +76,14 @@ frequency is not temporal Hz, and autonomous-state correlations do not establish
 a causal noise floor. Pure-low and high-only manufactured fields separate scaling
 from cross-band leakage. Same-RHS pressure error and paired trajectory drift must
 be reported separately.
+
+`trace_response.py --campaign <label>=<completed-development-campaign> --scene
+<consumed-scene> --step <recorded-step> --output <new-report>` reads existing
+per-pass residual traces and binds episode/callback/source hashes. Repeat
+`--campaign` to compare recorded call counts and contraction ratios. Each model
+has its own autonomous input: selecting a difficult recorded step is post hoc
+analysis, not a matched-RHS causal comparison or evidence of a general noise
+floor. The report advances no simulation, optimizer or holdout.
 
 `equivalence.py` can reuse this turn's complete control campaign only if a freshly
 restored package has exactly the same numerical/executable/runtime bytes and

@@ -97,3 +97,38 @@ fixed required explicit artifact root, root containment and regression. Actual
 ROOT/LAB invocations now generate byte-exact same report; old helper/report are
 archived under the artifact root. Both independent reviews closed P2; zero
 remaining findings for this report slice. See reports/report-verification.json.
+
+
+## Second matched fit and first complete candidate
+
+Weight003CUDA5000updates and fresh CPU restore completed, exact five-artifact
+parity. Training Run42b18c5da68c4382b7e5ff511c28998d; restore
+21b9fee4399f46748cf7c5a6af051b34. Optimizer389.519591331s,
+trainer393.140902328s, complete Study command1852.909096350s,
+CUDApeak837691904B. The complete command includes preparation, queue, restore
+and readback; it is not GPU execution time. First frame passed6calls,
+pairedpressure6.2513932234e-7, episode8.605s / outercommand9.126s.
+Matched-training.json verifies both actual fits against the retained control.
+Weight003 manufactured84rows retained; full74campaign active.
+
+Weight001 full74campaign physically passed74/74 with233independent checks,
+8523AIsteps, all workers/native children drained. Campaign752.907388968s;
+conservative observed RSSpeak11261349888B, minimum available47556329472B.
+It fails unchanged population promotion gates: original58worstpressure
+3.8487645981e-6 exceeds the prior accurate3.1447946719e-6; harder8maximum18calls
+exceeds the retained control11. Additional failures remain in the complete
+population-check report. This is a scientific rejection, not an infrastructure
+failure. No untouched scene is consumed.
+
+## CPU preparation from retained hard-case traces
+
+Pure report trace_response.py records scene73step27 from already consumed
+control/prior0.1/weight0.01 development trajectories. Each autonomous input differs;
+no additional simulation or optimizer update. Calls11/10/18; median residual
+L2 contraction ratios from proposal4 onward0.29864/0.29358/0.49273 respectively.
+On this selected step, every additional proposal still reduces the residual;
+this is slow geometric convergence, not evidence of a noise plateau. The model
+is trained through two corrections but can require many more at inference:
+late-correction-state feedback is a subsequent experiment hypothesis, not a
+change admitted to these matched runs. Both independent review axes recomputed
+the recorded traces and reported no findings for this analysis module.

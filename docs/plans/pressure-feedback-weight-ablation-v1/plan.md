@@ -47,13 +47,16 @@ and fresh CPU parity (current catalog, environment-qualified); first-frame and
 all74trajectories/oracles with child drainage (CPU executable evidence); unchanged
 population decision/conditional holdout disposition (independent analysis);
 recorded clocks/memory/failures and original Project/Rheon source observation.
-Frozen-material, weight001CUDA/CPU parity and its first-frame claims satisfied.
-Weight003restore and both full campaigns remain pending. Current phase: S2;
-S1weight003readback continues as an independent prerequisite.
+Frozen-material, both CUDA/CPU parity and both first-frame claims satisfied.
+Weight001 completed all74physical trajectories but failed population promotion
+gates. Weight003 full campaign remains active. Current phase: S2; serial timing
+and the final independent population analysis follow complete child drainage.
 
 Write set: this plan directory; two new config files in the existing experiment;
 existing observer only to select the two actual Study labels; compare_training.py
-and its focused test for reusable exact artifact/matching evidence. Reuse all other
+and its focused test for reusable exact artifact/matching evidence; trace_response.py
+for post hoc analysis of already recorded consumed-case corrections. The latter
+advances no simulation, optimizer or holdout and changes no scientific inputs. Reuse all other
 experiment owners; adjust generic reporting only if measurement requires it.
 Raw artifacts live under runs/pressure-feedback-weight-ablation-v1, outside Git.
 No weights, datasets, credentials, previous plans/results, Tuldok/Rheon source

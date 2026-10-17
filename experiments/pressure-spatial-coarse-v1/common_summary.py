@@ -2,23 +2,71 @@
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import statistics
 
 
+def qualified_sources():
+    experiments = Path(__file__).resolve().parent.parent
+    paths = [experiments/'pressure-current-policy-v1/common_rhs.py',
+             experiments/'pressure-current-policy-v1/prepare.py',
+             experiments/'water-residual-learning-v1/audit.py',
+             experiments/'global-pressure-v1/verify_capture.py',
+             experiments/'water-stability-learning-v1/learned_iteration.py']
+    return {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+
+
+def cohort(value):
+    if (value.get('format') != 'pressure_current_common_rhs_v1' or
+            value.get('optimizer_updates') != 0 or value.get('simulations_advanced') != 0 or
+            value.get('sources') != qualified_sources()):
+        raise ValueError('qualified common-RHS producer and zero execution counters required')
+    intervals = ((0.,1e-6),(1e-6,1e-4),(1e-4,1e-2),(1e-2,2.))
+    expected = [(band,interval) for band in ('low','high') for interval in intervals]
+    identities = []
+    result = []
+    for index,case in enumerate(value['cases']):
+        identity = json.dumps(case['identity'],sort_keys=True)
+        if (case['case'] != index or identity in identities or case['cuda_initialized'] or
+                [row['stage'] for row in case['rows']] != ['early','late']):
+            raise ValueError('unique ordered cases with one early and late CPU row required')
+        identities.append(identity)
+        row_inputs = []
+        for row in case['rows']:
+            bands = row['frequency_amplitude']
+            keys = [(b['band'],tuple(b['coefficient_over_full_l2_interval'])) for b in bands]
+            if keys != expected:
+                raise ValueError('canonical eight spectral bins required')
+            for band in bands:
+                if (type(band['modes']) is not int or band['modes'] < 0 or
+                        any(not math.isfinite(band[key]) or band[key] < 0
+                            for key in ('signal_energy_pa2','error_energy_pa2'))):
+                    raise ValueError('finite nonnegative spectral energies required')
+            row_inputs.append({'stage':row['stage'],'signal':[
+                {key:band[key] for key in ('band','coefficient_over_full_l2_interval','modes','signal_energy_pa2')}
+                for band in bands]})
+        result.append({'case':index,'identity':case['identity'],'pair_sha256':case['pair_sha256'],'rows':row_inputs})
+    return result
+
+
 def summarize(paths):
     sources, models = {}, {}
-    pair_hashes = preparation = None
+    pair_hashes = preparation = observation_inputs = None
     for name,path in paths.items():
         value = json.loads(path.read_text())
         if (value['status'] != 'passed' or not value['all_workers_reaped'] or
                 value['network_calls'] != 1152 or len(value['cases']) != 144):
             raise ValueError('complete drained 144-pair diagnostic required')
         current = [row['pair_sha256'] for row in value['cases']]
+        inputs = cohort(value)
         if pair_hashes is None:
             pair_hashes, preparation = current,value['preparation_sha256']
+            observation_inputs = inputs
         elif current != pair_hashes or value['preparation_sha256'] != preparation:
             raise ValueError('different common RHS pairs or preparation')
+        elif inputs != observation_inputs:
+            raise ValueError('different common case identities or spectral signal membership')
         sources[name] = {'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
                          'weights_sha256':value['weights_sha256'],'elapsed_s':value['elapsed_s'],
                          'workers':value['workers'],'network_calls':value['network_calls']}

@@ -60,3 +60,12 @@ The revised raw timer calibrated in9.030596seconds; preliminary calibration is
 preserved. Stopped only the idle completion waiter before any child work, then
 replaced it to pass the explicit prototype identity. CUDA/Study/CPU-qualification
 owners were unchanged, and no scientific phase or mutation was replayed.
+
+Shared-RHS report review required binding the actual producer/source closure,
+zero execution counters, one early/late row per unique ordered case, canonical
+spectral bins and identical input signal energies. Added these checks before
+new-model summary use. Actual retained-data self-comparison remains exact;
+six isolated malformed pair/source/stage/bin/signal/counter fixtures reach the
+intended errors in0.166020seconds, with zero network calls. Earlier calibration
+remains immutable and is not evidence for the revised source. Calibration
+helper is retained locally under command-sources/coarse-common-calibration.py.

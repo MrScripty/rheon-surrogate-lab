@@ -119,3 +119,5 @@ spectral reductions, not an increased update budget. All40 affected trainer
 tests pass in1.107s. Current Tuldok SDK owns checkpoint and field evidence;
 finite final-update clocks replace the one-update migration-only glue. Each
 API mutation retains dispatch intent before sending and never auto-replays.
+
+Assembly01 failed before Project publication or execution because a relative runtime path was not normalized before making its rooted reference. Preserved partial material; fixed path normalization and use fresh attempt02. Zero optimizer updates.

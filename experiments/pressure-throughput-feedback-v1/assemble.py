@@ -25,6 +25,7 @@ def write(path, value):
 
 def assemble(root, template, declarations, probe_path, tuldok, runtime, configuration, output):
     root, template, tuldok = [x.resolve(strict=True) for x in (root, template, tuldok)]
+    runtime=runtime.resolve(strict=True)
     output = output.absolute()
     require(output.is_relative_to(root) and not output.exists(), 'fresh rooted destination required')
     require(not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=HERE.parents[1]),

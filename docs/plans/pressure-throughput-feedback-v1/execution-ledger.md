@@ -280,3 +280,22 @@ CPU qualification budget is explicit1500s per native child and1800s per complete
 worker for the candidate, allowing up to32calls over long512step scenes. This
 does not relax any physical/model criterion; a time failure remains an execution
 failure. Ordinary managed CPU restore still has its separate600s limit.
+
+## Completed CUDA challenger and initial CPU qualification
+
+Challenger4f5bfea59ebd474d934ca967ff01927c completed5000updates, then CPU
+restore210a52fd86524ebf9411fed3aae2dd4b completed with exact artifacts.
+Weights2a6be6b42a4a3b0baf63e0b58a878e3138cc4af490c3fdb53b0a602ecd6b9788;
+optimizer397.049598455s, trainer400.858344044s, CUDA peak837691904B. Complete
+Study command1161.684300094s includes waiting behind control. Both actual
+initial checkpoints, inputs, normalization, runtime and sample-order hashes match;
+only feedback weight differs scientifically. No native/model physical gate changed.
+
+The new package first-frame fixture passed in7.652s,760406016B RSS,6network
+calls and3.1803889258e-7 paired trajectory pressure error after15native warm-up
+steps. Full74qualification follows this gate. Fixed-call manufactured analysis
+finished3.920s. At8calls on33x11x9, pure-low1Pa coefficient error fell from
+3.85696e-5Pa to6.91840e-7Pa (55.75x); high-only leakage fell8.83150e-6Pa to
+4.46795e-6Pa (1.98x); mixed low0.001Pa/high1Pa low coefficient error fell
+8.87867e-6Pa to4.46870e-6Pa. These are matched stationary diagnostics, not yet
+autonomous trajectory acceptance or a universal spectral improvement claim.

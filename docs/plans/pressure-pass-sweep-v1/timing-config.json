@@ -1,0 +1,10 @@
+{
+  "schema": "rheon-pressure-pass-sweep-isolated-timing-v1",
+  "cpu": 23,
+  "repetitions_per_case": 1,
+  "population": "The identical 128 validation inputs and pass prefixes used by the primary campaign",
+  "owner": "One managed CPU checkpoint process at a time, after the parallel experiment workers have drained",
+  "warmup": "Two excluded neural passes on the first case, plus one excluded pass for every case to warm each grid shape before timing",
+  "comparison": "Median latency over all 128 cases at each pass count; retain the three-repetition parallel measurements separately",
+  "worker_deadline_seconds": 180
+}

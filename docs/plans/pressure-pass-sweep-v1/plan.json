@@ -1,0 +1,59 @@
+{
+  "status": "completed",
+  "objective": "Connect each selected model's measured error/runtime at multiple neural pass counts, and compare independently advanced simulation drift for the same fixed counts.",
+  "authorization": "User requested the existing accuracy-speed frontier plus the ten most accurate and ten fastest models, evaluated at multiple inference pass counts with both charts.",
+  "selection": "Use exactly the dashboard's matched 128-state population and Pareto criterion; rank accuracy by worst equation error and speed by median inference time; deduplicate by checkpoint weights. Freeze membership before new measurements.",
+  "measurements": [
+    "Fresh CPU inference on the identical 128 validation inputs at 1,2,4,8,12,16,24,32 neural evaluations",
+    "Independent 512-step sealed-water trajectory per checkpoint and pass count after 15 native warm-up steps",
+    "Equation residual, pressure-field drift, absolute RMS Pa estimates, elapsed correction/step time, actual network calls and peak RSS"
+  ],
+  "invariants": [
+    "Original weights, normalizations, captured numerical owners and historical results remain unchanged",
+    "One pass means one neural forward call, independent of original training recurrence",
+    "Fixed-pass research adapter is separate from the deployed adaptive adapter",
+    "Rejected trajectories retain their first failed step and stop; missing future samples remain missing",
+    "Connected error/time points share identical input bytes; drift traces share one complete physical setup",
+    "Each process owns one checkpoint's flat numerical module namespace"
+  ],
+  "execution": "First qualify representative one-channel and seven-channel loaders and fixed-call counts; then bounded independent CPU workers, one Torch thread each, across available cores. Parent owns cancellation and drains workers; existing rollout owner reaps native children.",
+  "resource_policy": "21 workers maximum; 1.5 GiB admission estimate each plus 12 GiB reserve. Reduce admission if available RAM requires it. No training or CUDA initialization.",
+  "verification": "verification.json",
+  "write_set": [
+    "experiments/pressure-pass-sweep-v1",
+    "docs/plans/pressure-pass-sweep-v1",
+    "docs/plans/cohort-progress.html",
+    "docs/plans/refresh-cohort-progress.py",
+    "docs/plans/refresh-current-cohorts.py",
+    "runs/pressure-pass-sweep-v1",
+    "runs/dependency-migration-v1/live-migration/activity.json"
+  ],
+  "limits": "Validation snapshots are previously consumed development data. Drift covers the configured scene, not all possible domains or untouched holdouts. Timing is fresh CPU measurement and does not replace historical timing records. No promotion or deployment change.",
+  "timing_policy": "Run independent checkpoint trajectories concurrently for throughput, then drain all workers and time each checkpoint serially on CPU 23. One Torch thread, two global warm-up calls and one excluded warm-up call per input shape/case, one measured 32-pass prefix per validation input. Keep the parallel three-repetition measurements separately.",
+  "scientific_completion": "Native equation/divergence/flux/CFL gates remain enforced. This fixed-pass research policy does not apply the deployed adaptive pressure-bound certificate; completing a trajectory here does not qualify deployment.",
+  "branch": {
+    "name": "experiment/pressure-pass-sweep-20261017",
+    "base": "8a9e0833754d2f83d4991a9975453356e22c4529",
+    "purpose": "Retain the selected-checkpoint fixed-pass measurements and connected dashboard for review",
+    "owner": "Jeremy; implementation by Codex",
+    "sharing": "Local proposal; no push or pull request requested",
+    "disposition": "Retain for user review; integrate or retire only through a subsequent authorized repository action"
+  },
+  "dashboard_foundation": "The existing untracked cohort dashboard and its refresh/pressure-magnitude helpers are included as the required dashboard foundation. All existing historical data keys are preserved; only the new pass_sweep field and refresh timestamp change. Unrelated spectrogram builders, migration receipts and raw generated data remain outside this commit.",
+  "acceptance": {
+    "settings": 168,
+    "unique_models": 21,
+    "static_validation_rows": 21504,
+    "full_window_trajectories": 67,
+    "pressure_rejections": 101,
+    "isolated_timing_models": 21,
+    "focused_unit_tests": 8,
+    "fresh_configurable_material_cli": "passed",
+    "cpu_checkpoint_fixtures": 3,
+    "browser_checks": 12,
+    "historical_measurement_fields": "preserved",
+    "all_owned_children_reaped": true
+  },
+  "results": "results.json",
+  "report": "results.html"
+}

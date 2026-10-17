@@ -10,8 +10,9 @@ retained for review/subsequent integration; no merge, rewrite or cleanup.
 Objective: measure whether smaller low-frequency feedback weights preserve the
 call improvements without the rejected0.1candidate's worst-pressure regressions.
 Reuse the established trainer, current catalog and lifecycle owners. The matched
-control and0.1candidate remain immutable historical evidence; control evidence
-reuse is explicitly labelled and hash-bound, not another execution.
+control and0.1candidate remain immutable historical evidence. Refresh one
+control frame/all-array equivalence before explicitly labelled reuse of its
+74-case campaign; no full control campaign is repeated.
 
 Current slice S1: freeze two5000-update CUDA Studies with weights0.01/0.03,
 identical actual initialization/input/normalization/runtime/sample order, schedule
@@ -32,8 +33,12 @@ S3 depends on complete campaigns: fixed-call manufactured diagnostics and
 per-population gates against reference-current, prior accurate late model and
 harder-data control. A candidate must meet every unchanged accuracy and mean/max
 call criterion in all three populations before eligibility. Freeze an eligible
-package before consuming the unused eight whole scenes once; otherwise leave
-those scenes untouched. No automatic promotion. Serial CPU timing follows broad
+package before consuming the unused eight whole scenes once. If both qualify,
+select the smallest worst normalized pressure ratio across the three populations
+(candidate worst error / smallest retained comparator worst error per population);
+then smaller overall maximum calls, then mean calls, then lower weight. This rule
+is fixed before candidate CPU regression results. Otherwise leave those scenes
+untouched. No automatic promotion. Serial CPU timing follows broad
 qualification drainage, same consumed grids and exact repeated physics/calls.
 
 Acceptance is completion and honest measurement, not guaranteed improvement.

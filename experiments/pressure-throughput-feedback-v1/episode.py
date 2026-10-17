@@ -14,6 +14,7 @@ import sys
 import time
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'dependency-migration-v1'))
 import qualify
+from failure import classify
 
 
 def main():
@@ -55,7 +56,7 @@ def main():
         receipt['native_source_identity_scope']='exact complete compiled input bytes; commit metadata may advance without a byte change'
         active_sources={str(path):qualify.digest(path) for path in (Path(rollout.__file__),Path(model_adapter.__file__),Path(__file__),Path(qualify.__file__),
             lab/'experiments/water-residual-learning-v1/audit.py',lab/'experiments/water-pressure-accuracy-v1/diagnose.py',
-            lab/'experiments/global-pressure-v1/verify_capture.py')}
+            lab/'experiments/global-pressure-v1/verify_capture.py',Path(__file__).with_name('failure.py'))}
         receipt.update(build_receipt_sha256=qualify.digest(a.binary.parent/'build-receipt.json'),native_source=native_source,active_sources=active_sources)
         import numpy as np
         native=rollout.run(a.binary,scene,a.output/'native-control',control=True,timeout=300,threads=1)
@@ -76,7 +77,7 @@ def main():
         state=state_holder[0];torch=state.torch;import audit
         sys.path.insert(0,str(lab/'experiments/water-pressure-accuracy-v1'));import diagnose
         audit.TORCH=torch
-        spec=importlib.util.spec_from_file_location('candidate_neighbor_oracle',lab/'experiments/global-pressure-v1/verify_capture.py')
+        spec=importlib.util.spec_from_file_location('candidate_neighbor_oracle',lab/'experiments/global-pressure-v1/verify_capture.py',Path(__file__).with_name('failure.py'))
         oracle=importlib.util.module_from_spec(spec);spec.loader.exec_module(oracle)
         samples=[]
         with torch.no_grad():
@@ -113,7 +114,7 @@ def main():
                        captures=captures,source_sha256s={str(Path(rollout.__file__).relative_to(lab)):qualify.digest(rollout.__file__),
                                                      str(Path(model_adapter.__file__).relative_to(lab)):qualify.digest(model_adapter.__file__)})
     except BaseException as exc:
-        receipt.update(status='failed',error=type(exc).__name__+': '+str(exc));raise
+        receipt.update(status='failed',error=type(exc).__name__+': '+str(exc),**classify(exc,a.output));raise
     finally:
         receipt.update(elapsed_seconds=time.perf_counter()-started,peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,
                        peak_child_rss_bytes=resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss*1024)

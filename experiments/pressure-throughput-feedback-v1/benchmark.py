@@ -168,6 +168,8 @@ def benchmark(args):
                         # A failed independent physical case remains a result.
                         # Memory/deadline/custody failures still stop the pool.
                         evidence=read(failed)
+                        if evidence.get('failure_class')!='scientific_rejection' or evidence.get('native_children_drained') is not True:
+                            raise RuntimeError('Infrastructure failure stops CPU pool; inspect '+str(failed))
                         return {'scene':scene,'slot':slot,'cpu':cpu,'status':'failed',
                             'episode':evidence,'worker_reaped':True,
                             'complete_child_elapsed_seconds':time.perf_counter()-started}

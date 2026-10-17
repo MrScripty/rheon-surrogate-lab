@@ -100,6 +100,19 @@ def execute(args):
     collect(args,assembly,owner,training,restored,published,study,trial,evidence,started)
 
 
+def collect_artifact(reader, run, row, target):
+    """Readback recovery reuses only exact verified bytes; never replaces files."""
+    import project_cli
+    destination=target/row['name']
+    if destination.exists() or destination.is_symlink():
+        require(destination.is_file() and not destination.is_symlink()
+                and destination.stat().st_size==row['bytes'] and digest(destination)==row['sha256'],
+                'existing artifact differs; preserve it and inspect: '+row['name'])
+        return dict(run_id=run['id'],name=row['name'],output=str(destination),sha256=row['sha256'],
+                    bytes=row['bytes'],verification='existing_whole_sha256_verified')
+    return project_cli.download(reader,run['id'],row['name'],row['sha256'],destination)
+
+
 def collect(args, assembly, owner, training, restored, published, study, trial, evidence, started):
     import project_cli
     class OwnerArtifactReader:
@@ -117,7 +130,7 @@ def collect(args, assembly, owner, training, restored, published, study, trial, 
         for row in run['artifacts']:
             # Host already decoded the declared safe inventory; download every
             # published result with its full hash, never a private Run directory.
-            download_receipts.append(project_cli.download(reader,run['id'],row['name'],row['sha256'],target/row['name']))
+            download_receipts.append(collect_artifact(reader,run,row,target))
     trained=decode((args.output/'train/receipt.json').read_bytes());cpu=decode((args.output/'restore/receipt.json').read_bytes())
     require(trained['mode']=='train' and trained['optimizer_updates']==assembly['updates'] and trained['execution']['device'].startswith('cuda')
         and cpu['mode']=='restore' and cpu['optimizer_updates']==0 and cpu['execution']['device']=='cpu'

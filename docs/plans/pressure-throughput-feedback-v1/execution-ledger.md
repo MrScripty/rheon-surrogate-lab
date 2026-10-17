@@ -154,3 +154,34 @@ passed7.527s,760549376B RSS. Historical build receipt remains unchanged.
 This verifies input bytes without asserting that advanced Git metadata matches
 the original base. Full74 case failures will be retained independently; memory,
 deadline or custody failures still stop the pool.
+
+## Concurrent complete development baseline
+
+All74 current26b cases passed,8523 AI steps and233 sparse independent checks.
+Sixteen one-thread workers completed in737.499358296s, including startup, native
+controls and independent oracles. Peak conservative summed RSS11227897856B;
+minimum available RAM46977703936B. Every call sequence and worst paired pressure
+metric is exact to the independently reproduced historical74case result. All
+worker/native children reaped. CUDA control admission/startup and optimizer work
+overlapped this CPU phase. Retained migration workers previously took1708.119
+and2462.151s for two fixed shards; this historical maximum versus737.499s is
+3.3385x faster, but is observational, not the matched repeated short-workload
+benchmark. New episodes additionally retain gradient and low-mode diagnostics.
+
+Both independent lab reviews found the same infrastructure-failure classification
+issue; Standards also found partial readback could not resume after one completed
+download. Waited for the running74pool to drain before changing its source.
+Only an explicit drained native numerical rejection may now be retained; memory,
+timeout, source, protocol, orphan and all unclassified failures stop the pool.
+Readback reuses only regular nonsymlink files with exact published size/hash and
+refuses to overwrite mismatches. Tests cover interruption after first download,
+corruption, and scientific versus infrastructure rejection. Four targeted tests
+pass. No original baseline failed or changed; all74passed before this correction.
+
+Replaced only the verified old observation publisher PID536521/start6106702 with
+a source-only current-experiment publisher, preserving previous files in the
+artifact root. Existing main Tuldok Project and already-open Rheon preview paths
+stay usable. Pressure frames are actual completed sparse captures, cubic and
+hash-bound; no velocity/tracer field is fabricated. No catalog/Run authority is
+assigned to this observer. The isolated scheduler-test PostgreSQL fixture was
+stopped after completed qualifications; original live database untouched.

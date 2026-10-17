@@ -25,12 +25,8 @@ def experiment(value):
                 and type(spec['signal_floor_fraction']) in (int,float)
                 and math.isfinite(spec['signal_floor_fraction']) and 0<spec['signal_floor_fraction']<=1
                 and spec['stages']=='first-and-final','band_feedback','bounded mode, weight, floor and training stages')
-        resources=value.get('resources')
-        require(type(resources) is dict and type(resources.get('wall_seconds')) is int
-                and 30<=resources['wall_seconds']<=1800, 'resources', 'bounded spectral-training deadline')
         experiment({**{k:v for k,v in value.items() if k!='band_feedback'},
-                    'schema':'rheon-water-residual-experiment-v9',
-                    'resources':{**resources,'wall_seconds':min(600,resources['wall_seconds'])}})
+                    'schema':'rheon-water-residual-experiment-v9'})
         return decode(canonical(value))
     if value.get('schema') == 'rheon-water-residual-experiment-v9':
         weight = value.get('first_pressure_weight')

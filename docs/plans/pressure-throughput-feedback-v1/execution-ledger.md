@@ -127,3 +127,11 @@ Assembly02 reached current extension validation and rejected contribution IDs be
 Prepared the reusable full-development episode owner using the current rollout, existing independent neighbor-stencil oracle and existing physical/pressure gate verifier. Full episodes retain sparse spatial-band/gradient diagnostics and paired trajectory metrics. Worker count, reserved/excluded cores and deadline are explicit configuration; shortened benchmark defaults remain unchanged. One comparison-signature regression passes. The first new-weight fixture compares exact initial inputs while deliberately allowing predictions to differ.
 
 Full control assembly01 rejected the restore recipe deadline before any execution: current ordinary CPU recipes cap600s while bound training recipes permit2400s. Corrected only restore custody to600s; full CUDA training remains explicitly1800s. Partial material retained, no Run admitted.
+
+Assembly02 also rejected the CUDA deadline: inspection showed the2400s exception
+is exclusively the captured-CPU large-output profile, not bound CUDA recipes.
+Earlier expectation of a longer bound CUDA deadline was incorrect. Preserve the
+existing600s contract for both fits; remove the unused v10 deadline extension.
+The prior control needed417s of optimizer time, leaving measured room for the
+bounded projection cost. If this limit proves insufficient, retain the failure
+and extend execution policy deliberately in a separate change. No full fit yet.

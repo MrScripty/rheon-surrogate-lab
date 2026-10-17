@@ -234,3 +234,26 @@ weak-mode error does not dominate total pressure error. The aggregate is
 descriptive over autonomous states, not evidence of a causal noise floor.
 Raw finite per-state bins remain in the artifact root; small retained summary
 is reports/current-233-spatial-amplitude.json.
+
+Prepared both fresh matched Studies through the live catalog. Control Run
+9c9777fcb4b541e98dc03e66c1df4f73 and challenger4f5bfea59ebd474d934ca967ff01927c
+use separate captured Models/Trials; one CUDA slot orders execution. This allows
+control CPU restore to overlap the following GPU fit. No second GPU execution
+is permitted by the active capacity policy. Current observer follows the latest
+explicit attempt; completed/failed prior attempts stay retained.
+
+CPU preparation profiled complete installed-runtime validation without importing
+Torch or changing any runtime file. cProfile24.665s included13.631s cumulative
+manifest validation, millions of Path operations and only1.762s direct hashing.
+A separate unpromoted prototype caches canonical path components while retaining
+all content hashes, topology, links and owner checks. Verified26818containment
+pairs and both full inventories; manifests byte-identical. One illustrative
+reference/prototype pair took9.875s/6.747s. Order/cache/load are uncontrolled;
+no isolated benchmark or deployed speedup is claimed. This is prepared subsequent
+infrastructure work, not a change to either running numerical experiment.
+
+A completed new control may reuse this turn's74case campaign only after exact
+weights, executable/numerical/runtime bytes and physical/stopping contract match,
+plus a new current-package first-frame all-array check. Any numerical difference
+requires a fresh74campaign. Evidence reuse will be labelled explicitly, not
+counted as additional simulations or an accuracy gain.

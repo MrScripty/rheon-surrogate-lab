@@ -44,3 +44,27 @@ weights reused; failed Study stop acknowledged. Fresh lateStudy03 samecapture02.
 I8: One-time close-failed-Study client postcondition read open at response root
 instead of nested status.study.open, after successful acknowledged stop. Read
 the durable acknowledgment and verified nested false; no mutation replay.
+
+I9: Temporary decision-report helper had a lexical error (`else1`) before any
+execution/output. All scientific runs and prior matched/summary reports were
+complete and unaffected. Retained exact helper/log under raw reporting-failures/
+decision01, corrected spacing, compiled allseven remaining helpers, then explicit
+report02success. No training, simulation, admission or valid-summary replay.
+
+I10: Final Spec review found the AI-side diagnostic timer starts before an extra
+same-request native reference solve (engine.rs402/454/473/568). Initial timing
+prose omitted that work and could imply standalone AI speed. Retained exact
+original summary, summary source and prose under raw reporting-failures/
+timing-scope01. Corrected reusable timing-summary scope and current prose/
+environment, regenerated the report, and verified all24numericrows/source
+records unchanged. No timings rerun and no estimated native time subtracted.
+Older records produced through this same engine path require the same scope
+qualification; their historical data is preserved. Accuracy/call gates unaffected.
+
+I11: Final observer helper was launched with system Python, which lacks NumPy.
+It had already stopped the exact owned publisher and backed up its two outputs
+before the import failed. No application or scientific job was stopped. Preserve
+that source and failure; explicit continuation checked the publisher was already
+stopped, used the qualified Pumas interpreter/environment, acquired the same
+publication lock and published completion. No termination or scientific work was
+replayed. Exact Tuldok/Rheon PID/start identities remain live.

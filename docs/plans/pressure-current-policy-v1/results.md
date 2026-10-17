@@ -1,66 +1,60 @@
 # Current-policy feedback results
 
-Active experiment; the matched late-state arm and serial timing are pending.
-The early-state arm completed measurement and is ineligible under unchanged
-population gates. No model promoted; eight unused scenes remain untouched.
+Measurement complete. Neither candidate meets every unchanged population accuracy/work gate; no model promoted and eight unused scenes remain untouched.
 
-The frozen retained0.03 network generated early/prefix8 paired correction states
-on32recorded training frames from16parents plus112manufactured states across14
-admitted grids. These are144pressure examples, not144newCFDsimulations. Independent
-labels/neighbor-stencil identities qualified all144pairs. Native late correction
-RMS median9.37004e-8Pa; directions differ from the older scaled bank. Rescaling
-the same RHS changes predictions by median4.2754e-7relative, so small absolute
-amplitude alone does not explain the observed late error. This is spatial
-analysis and does not establish temporal aliasing or a causal noise floor.
+The frozen retained 0.03 network generated native-amplitude early/prefix-8 pairs from 32 recorded training frames belonging to 16 simulation parents, plus 112 manufactured states across 14 admitted grids. These 144 pressure examples are not new CFD simulations. Independent labels and stencil identities qualified every pair in 31.263 seconds and 4,500 network calls. Maximum worker RSS was 0.880 GB and minimum available host memory was 46.762 GB; all workers were reaped. Median late correction RMS was 9.37004e-8 Pa. Directions differ from the older scaled bank, with median unit-direction difference 1.14065. Rescaling the same RHS changes predictions by median 4.2754e-7 relative, which argues against small absolute amplitude alone explaining late error. This does not establish temporal aliasing or a causal noise floor.
 
-The two configurations add the same train-only0.1-weight stream, vary only selected
-early/late payload, and retain lowband0.03, all original streams, initialization,
-seeds and5000-update schedule. Actual early optimizer work:50,000networkforwards,
-425,703,026forwardcells. The old0.03 fit did not record this new counter; equal
-updates alone is not equal compute. Inference architecture remains370,016parameters,
-1,485,452weightbytes; the train-only stream adds no inference input or layer.
+Both v11 configurations add the same current-policy stream at weight 0.1 and retain the original low-band weight 0.03, streams, initialization, seeds and 5,000-update schedule. Only the selected early/late payload differs. Actual source, inputs, teacher, normalization, runtime, initial checkpoint, sample order and work budgets match. Each arm executes 50,000 optimizer network forwards over 425,703,026 cells. The historical 0.03 fit lacks this new work counter; equal updates do not mean equal compute. Inference stays at 370,016 parameters and 1,485,452 weight bytes, with no added input or layer.
 
-Early CUDA optimizer504.952s, complete trainer508.683s, complete managed Study
-including admission/queue/CPUrestore/readback1480.719s. Five CPU artifact pairs
-match exactly. First-frame physical qualification passed before all74episodes.
-The16worker campaign took742.814s, peak summed worker/child RSS11.66GB and
-minimum available host memory49.40GB; all children reaped. Concurrent campaign
-clocks are not isolated inference latency. All8523AIsteps and233independent
-pressure checks passed, with all pressure-error bounds covering their oracles.
-Maximum independent oracle defect1.667e-13; maximum same-RHS mean-free pressure
-relative error7.0881e-7. These quantities differ from paired trajectory drift.
-
-| Population | Prior accurate worst trajectory pressure | Retained0.03 | New early | New early mean/max calls |
+| Arm | Optimizer s | Trainer s | Complete managed Study s | Peak CUDA allocation GB |
 |---|---:|---:|---:|---:|
-| Original58 | 3.14479e-6 | 3.61038e-6 | 2.94042e-6 | 7.913 /11 |
-| Late-amended8 | 1.34895e-6 | 1.08574e-6 | 1.22632e-6 | 9.721 /15 |
-| Minimum8-failed8 | 1.41517e-6 | 1.68747e-6 | 1.90452e-6 | 8.919 /16 |
+| early | 504.952 | 508.683 | 1480.719 | 0.870 |
+| late | 631.954 | 643.475 | 1368.268 | 0.870 |
 
-Early overall mean/max calls8.211/16 versus retained0.03's7.501/11. It improves
-original58pressure but fails call-work gates and minimum-population pressure.
-[Preliminary population report](reports/early-population-check.json) retains every
-case and gate against all three historical comparators. Retained0.03's campaign
-is explicitly reused with current-package equivalence and a fresh fixture; it
-was not reexecuted. Both fresh candidates still receive their own74episodes.
+Complete Study clocks include admission, queueing, verification, fresh CPU restore and artifact readback. The fits overlapped different CPU activity windows, so their wall-time difference cannot be attributed to the selected feedback stage. The network stays float32 with AMP and TF32 disabled; physical assembly and accumulation stay float64. All five artifact pairs match exactly after each fresh CPU restore. Each candidate passed its first-frame check before the full campaign.
 
-During CUDA work, common-RHS CPU preparation compared retained checkpoints and
-then the completed early model on identical144paired inputs. Early2call median
-error0.007003 versus retained0.03's0.009085; late2call median0.022164 versus0.022931.
-This local improvement coexists with greater autonomous call work. Frequency/
-amplitude energies and84fixed manufactured rows remain recorded separately from
-trajectory metrics. No validation member or training choice was changed in response.
+| Model | Physical scenes | AI steps | Mean/max calls | Independent checks | CPU campaign s |
+|---|---:|---:|---:|---:|---:|
+| reference003 | 74/74 | 8523 | 7.500997 / 11 | 233 | 710.910 |
+| current-early | 74/74 | 8523 | 8.211193 / 16 | 233 | 742.814 |
+| current-late | 74/74 | 8523 | 7.371817 / 15 | 233 | 694.736 |
 
-Late Study02 reached5000updates but drained with output_limit before successful
-publication. Retained files were below32MiB, stderr empty. A real profile.json
-rename between live listing/lstat reproduces a Tuldok monitor failure compatible
-with this receipt; the old exact observation exception was not retained. No
-unpublished weights reused. Narrow fix709d0dd passed39tests and both reviews,
-then deployed separately as current-06 in27.722s with zero active Runs, all20prior
-Run states, owner/catalog and scheduler settings preserved. A fresh lateStudy03
-uses identical capture02and initialization. The failed Study was explicitly closed;
-a postcondition shape error was resolved from its acknowledgment without replay.
+The retained 0.03 campaign is explicitly reused, supported by exact package equivalence and a fresh fixture; it was not reexecuted. Each fresh candidate ran 74 episodes with 16 single-thread workers, and all children were reaped. Sealed water, cubic cells, valid previous-pressure history, 15 native warm-up steps, physical limits, stopping criteria, the 32-call ceiling and model-only inference stay fixed. Concurrent campaign clocks include startup, native controls and oracles; they are not isolated inference latency.
 
-Original Tuldok Models/Studies/Runs remain in the existing catalog. Rheon continues
-to show recorded pressure previews through the existing project paths; this is
-not live tracer or velocity flow. Managed run state belongs to Tuldok. See the
-[execution ledger](execution-ledger.md), [issues](issues.md) and [plan](plan.md).
+| Population | Prior accurate worst paired pressure | Retained0.03 | Early | Late |
+|---|---:|---:|---:|---:|
+| original58 | 3.14479467e-06 | 3.61037514e-06 | 2.94041996e-06 | 3.31635714e-06 |
+| late-amended8 | 1.34895491e-06 | 1.08573912e-06 | 1.22631536e-06 | 1.08971751e-06 |
+| minimum8-failed8 | 1.41516687e-06 | 1.6874652e-06 | 1.90452316e-06 | 1.65788544e-06 |
+
+Each population is tested separately against all three historical comparators. The [decision](reports/qualification-decision.json) records every failed pressure, mean-call and maximum-call gate. Physical qualification alone does not select a model. The [full summary](reports/regression-summary.json) and [CSV](reports/regression-summary.csv) retain every scene. Paired trajectory drift and same-RHS pressure error are distinct measurements.
+
+current-early: max same-RHS mean-free pressure relative error 7.08803947e-07, independent operator defect1.66634313e-13; every recorded pressure bound covers its oracle = true. Peak summed worker/child RSS 11.658 GB, minimum available host memory 49.396 GB.
+
+current-late: max same-RHS mean-free pressure relative error 6.95180734e-07, independent operator defect1.63870128e-13; every recorded pressure bound covers its oracle = true. Peak summed worker/child RSS 11.270 GB, minimum available host memory 49.900 GB.
+
+Bounded CPU preparation compared five checkpoints on exactly 144 paired RHS inputs. Each model uses 1,152 calls across native and rescaled two-call early/late probes. Independently qualified labels and pair hashes match. These training-only diagnostics do not select a model or consume held-out scenes.
+
+| Model | Early median/max two-call pressure error | Late median/max two-call pressure error | CPU diagnostic s |
+|---|---:|---:|---:|
+| control | 0.01314725 / 0.1086961 | 0.0254078 / 0.3018384 | 12.705 |
+| previous01 | 0.008364216 / 0.1704104 | 0.02515178 / 0.2986909 | 12.409 |
+| weight003 | 0.009085401 / 0.1757488 | 0.02293114 / 0.2526953 | 11.939 |
+| current-early | 0.007003463 / 0.07395667 | 0.02216356 / 0.2107506 | 11.933 |
+| current-late | 0.01070911 / 0.1963598 | 0.02048052 / 0.1694017 | 11.309 |
+
+[Common-RHS frequency/amplitude bins](reports/trained-common-rhs-summary.json) retain absolute signal/error energies in Pa² and coefficient/full-L2 intervals. Low spatial modes have indices 0–3 in each axis, excluding DC. Aggregate energies are weighted by grid and case. These are spatial modes, not temporal Hz or evidence of a causal noise floor. The [manufactured diagnostics](reports/diagnostic-summary.json) retain 84 fixed spatial/amplitude rows per model, separately from trajectory errors.
+
+[Serial timing](timing.md) covers two repetitions per model in reversed order on core 22 after broad CPU work drains. Each uses a fixed one-metre cube at 16³, 24³, 32³ or 40³ resolution, 15 native warm-up steps and eight AI steps. The AI-side diagnostic timer includes an additional same-request native reference solve, request capture, learned correction, IPC and protocol logging. Startup is separate. External sparse capture and spectral-oracle work are absent from timed episodes. These branch ratios do not measure standalone model or solver speed; no native-time estimate is subtracted. Repeated physical frames and call sequences match exactly. The [24 raw rows](reports/serial-timing.json) retain clocks, memory, hashes and scope. Two repetitions under desktop/cache variability do not establish a scaling law.
+
+Preparation for a subsequent experiment checked the parameter-free global-average shortcut on six analytical fields across three consumed shapes: 12 float32 forwards in 2.018 seconds, with 0.845 GB peak RSS and no optimizer or simulation. Removing the pressure gauge leaves relative differences of 2.253e-7 to 3.748e-6, consistent with rounding. In exact arithmetic, the selected linear decoder with replicated boundaries carries this shortcut as a constant removed by the gauge. The spatial encoder/decoder still communicates information. This does not prove the overall low-frequency cause, and no saved checkpoint or inference package changed. See the [probe](reports/global-mean-gauge-probe.json).
+
+Late Study 02 reached 5,000 updates but drained with output_limit before publication. Stderr was empty and retained files were below 32 MiB. A real profile.json rename between listing and lstat reproduces a monitor failure compatible with the receipt; the exact historical exception was not retained. No unpublished weights were reused. Separate Tuldok fix 709d0dd passed 39 tests and both reviews, then deployed as current-06 in 27.722 seconds with zero active Runs and all 20 prior states, owner, catalog and capacity settings preserved. The failed Study was explicitly closed. A client postcondition shape error was resolved from its acknowledgment without replay. Fresh late Study 03 uses identical capture 02 and initialization. The failed attempt remains separate from the two successful fits.
+
+The original Tuldok catalog owns the actual Models, Studies and Runs. Existing Rheon project paths show recorded pressure previews, not live tracer or velocity flow. See the [ledger](execution-ledger.md), [issues](issues.md), [environment and commands](reports/command-environment.json), [matched training](reports/matched-training.json), and [next proposal](next-proposal.md).
+
+The timing scope correction also limits interpretations of older timing records
+produced by this comparison-engine path. Their raw measurements and historical
+reports remain preserved. The [scope review](reports/timing-scope-review.json)
+records the current engine source and proves the corrected summary retains every
+numeric timing row and source record. No standalone speedup or slowdown is inferred.

@@ -109,3 +109,42 @@ contributesaconstantremovedbygauge; measuredremaindersareconsistentwith
 float32rounding. Encoder/decoderstillcommunicatespatialinformation. Doesnot
 proveoveralllow-frequencycause; noarchitecture/packagechange,optimizer,
 simulation,selectionorholdout. Retainfornextcontrolledablationproposal.
+
+LateStudy03completed5000CUDAupdateswithsuccessfulpublication/freshCPUexact
+5artifactparity,1368.267733674scompleteStudy. Optimizer631.954154968s/trainer
+643.474801721s; actual50,000forwards/425,703,026cellsidenticaltoearlyarm.
+Actualpairedsource/config/input/teacher/init/order/runtime/oldstreamverification
+passedbeforefinalcampaignfinishes; repeatidentitycheckatfinalacceptance.
+GPUfitsranunder differentoverlappingCPUactivitywindows; equalworkdoesnotmake
+walltimeadifferencecausedbyselectedamplitude/stage. Latefirstframepassed
+9.144905678souter,84manufacturedrows4.166179222s,then16worker74campaign.
+
+LateS3complete:74/74physical/8523AIsteps/233oracles,694.735943596s, allworkers
+reaped,peakRSSsum11,270,156,288B,minimumavailable49,900,498,944B. Overallmean
+7.371817435/max15; original58andminimum8pressureandhardcallgatesreject.
+Neitherarmeligible; unused8unconsumed. Commonlate144pairedstates/1152calls
+completedafterbothbroadpoolsdrained, then6serialtimingbatchesbegan.
+
+Matchedactualarm/summaryreportsverified; temporarydecisionhelperlexicalerror
+stoppedreportingbeforedecisionexecution, retainedsource/log. Corrected,compile
+checkedsevenhelpers,explicitreport02completeddecision/diagnostics/common
+summary; no scientificexecutionormutationreplayed. Finaltimingreportpending.
+
+Sixserialbatchescomplete:72.335/72.381/71.233/71.280/72.387/71.686s,24rows,
+all3repeatedphysicalframes/callsequencesexact,allchildrenreaped. Final review
+identifiednative diagnostic solve inside ai_seconds. Scope corrected in the
+summaryowner/currentJSON/prose/environment;24numericrows/sourceidentities
+provedunchanged, oldreport/source/proseretained. These ratios measure the
+paired diagnostic AI branch, not standalone AI inference or solver speed.
+No estimated subtraction or scientific reexecution. Finalcatalogreadonly
+confirms4successfulRunscompleted/drainedandretainedlate02failed/drained.
+
+Terminal: both review axes passed; the Spec timing-scope finding and source-line
+metadata typo closed. Historical timer interpretations qualified without changing
+raw measurements. Original catalog readback confirms four successful drained
+Runs plus the preserved failed late attempt. Final observer import error in
+system Python was classified after exact publisher stop; explicit Pumas-based
+publication continuation completed without repeat termination. Both original
+applications' exact PID/start identities remain live; completed148/148status
+published and owned publisher stopped. No further fit, holdout, promotion, push
+or merge. Raw command sources, failure artifacts, clocks and memory retained.

@@ -1,6 +1,6 @@
 # Full coarse fit with qualified clipping, CPU restore and pressure accuracy
 
-Status: CUDA5000 completed; managed CPU restore/qualification in progress. Owner root. Base3a0580901cdfa041ec4b766ea3da3f1d8acc8116.
+Status: completed experiment. CUDA5000 and exact fresh CPU restore passed; pressure qualification failed and the full74 campaign remains incomplete. Candidate not promoted. Owner root. Base3a0580901cdfa041ec4b766ea3da3f1d8acc8116.
 User explicitly authorized the completed clipping-stability experiment's next
 proposal: full5000 CUDA fit, then CPU restore and pressure-accuracy qualification.
 
@@ -47,19 +47,19 @@ weights/normalization/predictions/artifact parity). Reuse verified deployment
 package mapping including nonzero coarse matrix. No CPU restore if fitting fails;
 retain failed/drained outcome and close the Study through its journal.
 
-Package the actual restored candidate. First qualify fixed scene0 for16steps:
+Package the actual restored candidate. First qualify fixed scene 0 for16 steps:
 15 native warm-up steps then one AI pressure request with previous-pressure
 history; compare exact first-frame input fields and independent same-RHS oracle.
 A scientific rejection is retained as a qualification result and stops broader
 campaign admission until diagnosed; do not weaken gates or label missing context
-as model failure. If it passes, run all74 declared consumed development windows,
+as model failure. If it passes, run all 74 declared consumed development windows,
 233 scheduled independent pressure checks, unchanged physics/population/call/
 warm-up/fallback gates. Use16 independent one-thread CPU workers on cores5–20,
-2GiB per worker plus8GiB available reserve; broad pools sequential, owned children
+2 GiB per worker plus8 GiB available reserve; broad pools sequential, owned children
 terminated/reaped on failure. Keep the original worker deadlines unless an actual
 bounded runtime observation supports a recorded change.
 
-Alongside the pressure qualification, retain fixed-call transfer and144 shared-RHS
+Alongside the pressure qualification, retain fixed-call transfer and 144 shared-RHS
 frequency/amplitude diagnostics when the final package is valid. CPU campaigns
 and diagnostics do not optimize, consume unused scenes or invent causal noise-floor
 claims. Keep raw forward timing separate from paired worker timing; fixed sample
@@ -79,11 +79,11 @@ hypothesis is being tested alongside the clipping-only full fit.
 
 CPU admission source review passed both axes after actual four-case process qualification02 (6.2054s), including leader-only orphan reproduction and cancellation during normal drainage. Local subreaper ownership reaches kernel ECHILD before advancing phases; cancellation is deferred until drainage completes. Actual managed restore/download parity is remeasured before any CPU package/physics launch.
 
-Recovery slice: the first CPU prefix passed (exact CPU restore, scene0 first AI
-frame, transfer and common144); the first full campaign stopped after27.6941s.
-Its16workers and all native descendants drained. Retained scene1 shows a completed
+Recovery slice: the first CPU prefix passed (exact CPU restore, scene 0 first AI
+frame, transfer and common144); the first full campaign stopped after 27.6941s.
+Its16 workers and all native descendants drained. Retained scene 1 shows a completed
 native control and a completed/reaped exit-zero candidate which rejected its first
-AI pressure request after15native warm-up steps and32network passes. The existing
+AI pressure request after 15 native warm-up steps and 32 network passes. The existing
 classifier read obsolete top-level `outcome`, while current Rheon records
 `diagnostic_attempt.attempt.outcome`; this mislabeled scientific rejection as
 infrastructure and stopped the pool. Keep this failed attempt unchanged.
@@ -100,7 +100,9 @@ both review axes pass, freeze this measurement repair and admit one fresh full74
 campaign with unchanged scenes/gates, reusing only the completed qualified prefix.
 No training repeats, selected-scene retries, native fallback or relaxed thresholds.
 
-Continuation timing policy: fixed paired timing scenes8/10/12/14 must complete
+Continuation timing policy: fixed paired timing scenes 8/10/12/14 must complete
 their development windows before serial paired timing admission. Do not substitute
 easier scenes when the candidate rejects. Raw forward timings remain valid as
 separate network-only measurements and run after all broad workers drain.
+
+Final decision: stop at the failed independent conjunctive gate on scene 7. Read-only replay02 confirms valid independent operator/coverage but pressure certificates above1e-6 at steps 64/96 after 32 calls, with smaller measured pressure errors. Preserve raw failed/infrastructure classification; do not rewrite it. Retain9 complete passes,3 native rejections,1bound failure,15 pool cancellations and 46 unstarted cases separately. No complete-population pass rate, serial/raw timing, holdouts or promotion. See results.md and pressure-qualification receipts for actual methods/outcomes/clocks.

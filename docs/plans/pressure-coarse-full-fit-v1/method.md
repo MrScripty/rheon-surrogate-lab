@@ -58,8 +58,10 @@ unchanged, preserving comparison identities.
 4. Only after first-frame acceptance, run the 74 consumed development windows
    and 233 scheduled independent pressure checks with unchanged thresholds,
    warm-up/history, fallback, call and population gates.
-5. After the broad pool drains, run two paired serial timing repetitions and two
-   raw forward timing repetitions on fixed single cores. Paired diagnostic branch
+5. Only after all 74 cases complete without an infrastructure failure and the
+   pool drains, run two raw forward timing repetitions. Admit two paired serial
+   repetitions only if all four fixed timing scenes qualified. Use fixed single
+   cores. Paired diagnostic branch
    times include IPC/logging and an additional native reference solve. Raw network
    timing excludes those costs. Neither is mislabeled standalone solver speed.
 
@@ -90,3 +92,21 @@ publish actual managed Run/CPU progress. A recorded control preview is explicitl
 labeled until a hash-bound passed candidate first-frame/case is available. There
 is no separate catalog or detached monitoring service. Final records include
 controller/worker cessation and unchanged original application identities.
+
+## Actual stopping decision
+
+Classification-only continuation was frozen at `da7df62`, with successful prefix
+reuse after eleven fail-closed negatives and exact first-frame numerical replay.
+The fresh campaign then encountered the independent conjunctive stopping gate on
+scene 7. Its native branch completed, but callbacks at steps 64/96 exhausted32 calls
+without passing the conservative pressure-error certificate. The read-only replay
+confirms independent operator and oracle coverage validity. Actual measured
+pressure error remained below the target at those captures; the certificate did
+not. This is distinct from the explicit native pressure rejections on scenes 1/5/6.
+
+The raw scene 7 receipt remains labeled infrastructure by the unchanged episode
+classifier. Its diagnostic interpretation is recorded separately; it was not
+rewritten into a passed or native-rejection receipt. Stop at the failed independent
+gate. Retain the failed/incomplete74 campaign, identify cancelled/unstarted cases,
+and do not admit serial or raw timing afterward. No complete-population comparison
+or pass rate follows from these partial results.

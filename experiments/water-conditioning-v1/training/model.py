@@ -30,6 +30,11 @@ def select(config):
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
+    if config['schema'] == 'rheon-water-residual-experiment-v11':
+        select({**{k:v for k,v in config.items()if k!='current_feedback'},
+                'schema':'rheon-water-residual-experiment-v10'})
+        ARCHITECTURE['current_policy_training_feedback']=copy.deepcopy(config['current_feedback'])
+        return
     if config['schema'] == 'rheon-water-residual-experiment-v10':
         select({**{k: v for k, v in config.items() if k != 'band_feedback'},
                 'schema': 'rheon-water-residual-experiment-v9'})

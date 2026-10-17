@@ -39,8 +39,10 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     relative_configuration = configuration.resolve().relative_to(LAB)
     require(subprocess.check_output(['git', 'show', 'HEAD:'+relative_configuration.as_posix()], cwd=LAB)
             == configuration.read_bytes(), 'source_commit', 'configuration must match committed source')
-    packet_config, parents = data.read_view(packet)
     config = experiment(decode(read(configuration, MIB)))
+    require(config['schema']!='rheon-water-residual-experiment-v11','current_policy_project',
+            'current-policy Projects require the explicit current-bank assembler')
+    packet_config, parents = data.read_view(packet)
     model.select(config)
     if execution(config)['batch_mode']=='stacked':
         require(len({tuple(p['counts_xyz']) for p in parents if p['entry']['split']=='train'})==1,

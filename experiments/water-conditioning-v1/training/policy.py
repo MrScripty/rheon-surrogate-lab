@@ -16,6 +16,12 @@ dimensions=portable.dimensions
 
 def experiment(value):
     require(type(value) is dict,'conditioning_configuration','object required')
+    if value.get('schema') == 'rheon-water-residual-experiment-v11':
+        import direction_feedback
+        direction_feedback.specification(value.get('current_feedback'))
+        experiment({**{k:v for k,v in value.items()if k!='current_feedback'},
+                    'schema':'rheon-water-residual-experiment-v10'})
+        return decode(canonical(value))
     if value.get('schema') == 'rheon-water-residual-experiment-v10':
         spec=value.get('band_feedback')
         require(type(spec) is dict and set(spec)=={'weight','max_mode','signal_floor_fraction','stages'},
@@ -145,6 +151,8 @@ def experiment(value):
 
 
 def execution(config):
+    if config['schema']=='rheon-water-residual-experiment-v11':
+        return execution({**config,'schema':'rheon-water-residual-experiment-v10'})
     if config['schema'] == 'rheon-water-residual-experiment-v10':
         return execution({**config, 'schema': 'rheon-water-residual-experiment-v9'})
     if config['schema'] == 'rheon-water-residual-experiment-v9':

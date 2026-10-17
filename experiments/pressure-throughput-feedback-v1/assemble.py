@@ -23,7 +23,7 @@ def write(path, value):
     path.write_bytes(canonical(value))
 
 
-def assemble(root, template, declarations, probe_path, tuldok, runtime, configuration, output):
+def assemble(root, template, declarations, probe_path, tuldok, runtime, configuration, output, current_bank=None):
     root, template, tuldok = [x.resolve(strict=True) for x in (root, template, tuldok)]
     runtime=runtime.resolve(strict=True)
     output = output.absolute()
@@ -31,7 +31,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     require(not subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=HERE.parents[1]),
             'commit qualified trainer source before capture')
     config = decode(configuration.read_bytes())
-    require(config['schema']=='rheon-water-residual-experiment-v10', 'explicit band-feedback configuration required')
+    require(config['schema']in('rheon-water-residual-experiment-v10','rheon-water-residual-experiment-v11'), 'explicit band-feedback configuration required')
     bundle = decode(declarations.read_bytes())
     probe = decode(probe_path.read_bytes())
     require(digest(Path(probe['path']))==probe['sha256'] and probe['consumption'].startswith('already consumed'),
@@ -55,6 +55,25 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     shutil.copyfile(HERE/'training_diagnostic.py',output/'training_diagnostic.py')
     shutil.copyfile(HERE/'evidence.py',output/'evidence.py')
     shutil.copyfile(runtime,output/'runtime-manifest.json')
+    current_rows=[]
+    if config['schema']=='rheon-water-residual-experiment-v11':
+        require(current_bank is not None,'explicit current-policy bank required')
+        current_bank=current_bank.resolve(strict=True)
+        bank=decode((current_bank/'manifest.json').read_bytes())
+        require(digest(current_bank/'manifest.json')==config['current_feedback']['manifest_sha256'],
+                'selected current-policy manifest differs')
+        for slot,path in [('current_manifest',current_bank/'manifest.json'),
+                          ('current_dataset',current_bank/(config['current_feedback']['stage']+'.npz'))]:
+            path=path.resolve(strict=True)
+            require(path.is_relative_to(root),'current input outside artifact root')
+            if slot=='current_dataset':
+                selected=bank['stages'][config['current_feedback']['stage']]
+                require(path.stat().st_size==selected['bytes']and digest(path)==selected['sha256'],
+                        'current payload differs from qualified bank')
+            witness['inputs'][slot]={'sha256':digest(path),'bytes':path.stat().st_size}
+            current_rows.append(dict(id=slot,label='Current-policy '+slot,path=path.relative_to(root).as_posix(),sha256=digest(path)))
+    else:
+        require(current_bank is None,'no unselected current-policy input')
     write(output/'config.json',config)
     # Use the selected Pumas interpreter; no optimizer is constructed by this probe.
     runtime_doc=decode(runtime.read_bytes())
@@ -96,6 +115,10 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
             entrypoint=prefix+'evidence.py',sources=sources,resources={**config['resources'],'cpu_cores':2 if mode=='train' else 1,
             'memory_bytes':8*1024**3 if mode=='train' else 4*1024**3})
         if mode=='restore':recipe['resources']['wall_seconds']=600
+        if current_rows:
+            for slot in ('current_dataset','current_manifest'):
+                recipe['inputs'][slot]={'max_bytes':32*1024**2 if slot=='current_dataset'else 4*1024**2}
+                recipe['arguments'] += [{'literal':'--'+slot.replace('_','-')},{'input':slot}]
         recipe['inputs']['runtime_manifest']={'max_bytes':32*1024**2}
         recipe['outputs']=[r for r in recipe['outputs'] if not r['path'].startswith('checkpoint-') or r['path']=='checkpoint-000.npz']
         recipe['outputs'].append(dict(path=f'checkpoint-{updates:03d}.npz',role='checkpoint',max_bytes=2*1024**2,required=True))
@@ -136,7 +159,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         'resources':{'wall_seconds':config['resources']['wall_seconds'],'source_bytes':8*1024**2,'output_bytes':config['resources']['max_output_bytes']},'contributions':refs}
     write(output/'provider.json',provider)
     project=copy.deepcopy(original_project);project.update(id=uuid.uuid4().hex,name=config['id'])
-    project['data'] += [dict(id='runtime_manifest',label='Pumas runtime',path=runtime.relative_to(root).as_posix(),sha256=digest(runtime)),
+    project['data'] += current_rows+[dict(id='runtime_manifest',label='Pumas runtime',path=runtime.relative_to(root).as_posix(),sha256=digest(runtime)),
         dict(id='pressure_probe',label='Consumed development probe',path=Path(probe['path']).relative_to(root).as_posix(),sha256=probe['sha256'])]
     project['recipes']=[dict(id=mode,label=mode,path=prefix+mode+'-recipe.json',sha256=digest(output/(mode+'-recipe.json'))) for mode in recipes]
     project['extensions']=[dict(id='pressure',label=config['id'],path=prefix+'provider.json',sha256=digest(output/'provider.json'))]
@@ -157,7 +180,8 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('root','template','declarations','probe','tuldok','runtime','configuration','output'):p.add_argument('--'+name,type=Path,required=True)
-    a=p.parse_args();r=assemble(a.root,a.template,a.declarations,a.probe,a.tuldok,a.runtime,a.configuration,a.output)
+    p.add_argument('--current-bank',type=Path)
+    a=p.parse_args();r=assemble(a.root,a.template,a.declarations,a.probe,a.tuldok,a.runtime,a.configuration,a.output,a.current_bank)
     print(json.dumps({'project':r['project'],'updates':r['updates']}))
 
 if __name__=='__main__':main()

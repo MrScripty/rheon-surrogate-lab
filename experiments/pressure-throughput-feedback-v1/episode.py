@@ -77,7 +77,7 @@ def main():
         state=state_holder[0];torch=state.torch;import audit
         sys.path.insert(0,str(lab/'experiments/water-pressure-accuracy-v1'));import diagnose
         audit.TORCH=torch
-        spec=importlib.util.spec_from_file_location('candidate_neighbor_oracle',lab/'experiments/global-pressure-v1/verify_capture.py',Path(__file__).with_name('failure.py'))
+        spec=importlib.util.spec_from_file_location('candidate_neighbor_oracle',lab/'experiments/global-pressure-v1/verify_capture.py')
         oracle=importlib.util.module_from_spec(spec);spec.loader.exec_module(oracle)
         samples=[]
         with torch.no_grad():

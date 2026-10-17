@@ -185,3 +185,18 @@ stay usable. Pressure frames are actual completed sparse captures, cubic and
 hash-bound; no velocity/tracer field is fabricated. No catalog/Run authority is
 assigned to this observer. The isolated scheduler-test PostgreSQL fixture was
 stopped after completed qualifications; original live database untouched.
+
+Review of the failure-classification patch caught an accidental extra positional
+argument in the oracle module loader, introduced after the full74baseline had
+finished. Corrected before running another case; a new real first-frame fixture
+passed8.216s,760303616B RSS, including sparse independent oracle validation.
+No candidate result was produced using the invalid loader. Both original
+review findings and this introduced source error are corrected.
+
+Prepared a finite233state spatial frequency/amplitude audit to use independent
+CPU capacity while CUDA continues. The audit bins mode amplitudes and errors
+rather than retaining a large state-by-mode tensor. Separable two-input DCT
+contractions retain the previous OOM fix. A known cosine has0.5Pa² signal energy,
+0.005Pa² error energy and exactly10percent relative error; analytic test passes.
+This is descriptive analysis of consumed autonomous states, not a causal noise
+floor experiment or a temporal-frequency intervention.

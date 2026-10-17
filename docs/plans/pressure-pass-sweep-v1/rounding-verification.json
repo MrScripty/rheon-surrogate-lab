@@ -1,0 +1,198 @@
+{
+  "status": "passed",
+  "tests": {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/pressure-pass-sweep-v1",
+      "-p",
+      "test_rounding_analysis.py",
+      "-v"
+    ],
+    "returncode": 0,
+    "output": "test_exactly_solenoidal_velocity_can_gain_divergence_on_float32_storage (test_rounding_analysis.RoundingTests.test_exactly_solenoidal_velocity_can_gain_divergence_on_float32_storage) ... ok\ntest_half_smallest_subnormal_requires_an_absolute_rounding_term (test_rounding_analysis.RoundingTests.test_half_smallest_subnormal_requires_an_absolute_rounding_term) ... ok\ntest_representable_flow_has_zero_rounding_error_not_a_fixed_floor (test_rounding_analysis.RoundingTests.test_representable_flow_has_zero_rounding_error_not_a_fixed_floor) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n"
+  },
+  "controls": {
+    "fixture-oracle": {
+      "kind": "analytic-f64-spectral-control-no-network",
+      "neural_network_calls": 0,
+      "weights_loaded": false,
+      "source_sha256": "e978ea49556f24a0274d55ae3d4f6475e9e33a06777bd066d75685a4d5447fad",
+      "total_elapsed_s": 0.9964724380115513,
+      "cpu": 0,
+      "peak_rss_bytes": 577060864,
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/probe-build-current-03/rheon-residual-rollout",
+        "--adapter-inputs",
+        "{\"base\":\"previous_pressure\",\"dt\":\"dt\",\"residual\":\"initial_residual\",\"rho\":\"density\"}",
+        "--adapter-output-role",
+        "full_pressure"
+      ],
+      "material_sha256": "3b1977e4fb5c9117c437a546f78d442a0d8a3984315bf86f1b3ad340744584f5",
+      "native_process": {
+        "pid": 6,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "steps": 1,
+      "source": "runs/pressure-rounding-attribution-v1/fixture-oracle/control-receipt.json",
+      "sha256": "34c7dc4625e51452a348a83337bfe24df23852102b99a8c15021337778ef1f4a"
+    },
+    "fixture-native": {
+      "kind": "native-cg-control-no-network",
+      "neural_network_calls": 0,
+      "weights_loaded": false,
+      "source_sha256": "e978ea49556f24a0274d55ae3d4f6475e9e33a06777bd066d75685a4d5447fad",
+      "total_elapsed_s": 0.24271729099564254,
+      "cpu": 1,
+      "peak_rss_bytes": 36839424,
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/probe-build-current-03/rheon-residual-rollout",
+        "--reference-control"
+      ],
+      "material_sha256": "3b1977e4fb5c9117c437a546f78d442a0d8a3984315bf86f1b3ad340744584f5",
+      "native_process": {
+        "pid": 8,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "steps": 1,
+      "source": "runs/pressure-rounding-attribution-v1/fixture-native/control-receipt.json",
+      "sha256": "7399ccd9df356488a8c34c98addc5d9d3f2d5311dd2da65cd8dd0ca9867cd159"
+    },
+    "full-oracle": {
+      "kind": "analytic-f64-spectral-control-no-network",
+      "neural_network_calls": 0,
+      "weights_loaded": false,
+      "source_sha256": "e978ea49556f24a0274d55ae3d4f6475e9e33a06777bd066d75685a4d5447fad",
+      "total_elapsed_s": 21.665125142986653,
+      "cpu": 0,
+      "peak_rss_bytes": 581632000,
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/probe-build-current-03/rheon-residual-rollout",
+        "--adapter-inputs",
+        "{\"base\":\"previous_pressure\",\"dt\":\"dt\",\"residual\":\"initial_residual\",\"rho\":\"density\"}",
+        "--adapter-output-role",
+        "full_pressure"
+      ],
+      "material_sha256": "3b1977e4fb5c9117c437a546f78d442a0d8a3984315bf86f1b3ad340744584f5",
+      "native_process": {
+        "pid": 6,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "steps": 497,
+      "source": "runs/pressure-rounding-attribution-v1/full-oracle/control-receipt.json",
+      "sha256": "9e7465f40238b64d5acbfbd750884f216c1a571a49059f096fcffaf79e212827"
+    },
+    "full-native": {
+      "kind": "native-cg-control-no-network",
+      "neural_network_calls": 0,
+      "weights_loaded": false,
+      "source_sha256": "e978ea49556f24a0274d55ae3d4f6475e9e33a06777bd066d75685a4d5447fad",
+      "total_elapsed_s": 20.385841779003385,
+      "cpu": 1,
+      "peak_rss_bytes": 36810752,
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/probe-build-current-03/rheon-residual-rollout",
+        "--reference-control"
+      ],
+      "material_sha256": "3b1977e4fb5c9117c437a546f78d442a0d8a3984315bf86f1b3ad340744584f5",
+      "native_process": {
+        "pid": 5,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "steps": 497,
+      "source": "runs/pressure-rounding-attribution-v1/full-native/control-receipt.json",
+      "sha256": "f1feffa66915a7a28a12cb3378525f09af1fd07682adbe94faf291f905f22838"
+    }
+  },
+  "analysis_command": [
+    "python3",
+    "experiments/pressure-pass-sweep-v1/rounding_analysis.py",
+    "--material",
+    "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+    "--model",
+    "C53",
+    "--control-root",
+    "runs/pressure-rounding-attribution-v1",
+    "--output",
+    "docs/plans/pressure-pass-sweep-v1/rounding-analysis.json"
+  ],
+  "runtime_source": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "runtime_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "",
+    "TULDOK_TORCH_DEVICE": "cpu",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "RAYON_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "source_sha256": {
+    "experiments/pressure-pass-sweep-v1/rounding_analysis.py": "91636c575ab6415b435e9d63571bab7a43eef218ffe6545b9bd9b0f585cfce4a",
+    "experiments/pressure-pass-sweep-v1/oracle_control.py": "e978ea49556f24a0274d55ae3d4f6475e9e33a06777bd066d75685a4d5447fad",
+    "experiments/pressure-pass-sweep-v1/test_rounding_analysis.py": "722fe39592367f9bf3a8fbf64a47122b6a6295b5524b43037d57427cbfb925fe"
+  },
+  "limits": "Local bounds and controlled no-learning solver comparison; no separately certified accumulated float32-only pressure drift.",
+  "python_control_commands": {
+    "fixture-oracle": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "experiments/pressure-pass-sweep-v1/oracle_control.py",
+      "--material",
+      "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+      "--output",
+      "runs/pressure-rounding-attribution-v1/fixture-oracle",
+      "--cpu",
+      "0",
+      "--fixture"
+    ],
+    "fixture-native": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "experiments/pressure-pass-sweep-v1/oracle_control.py",
+      "--material",
+      "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+      "--output",
+      "runs/pressure-rounding-attribution-v1/fixture-native",
+      "--cpu",
+      "1",
+      "--fixture",
+      "--native-control"
+    ],
+    "full-oracle": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "experiments/pressure-pass-sweep-v1/oracle_control.py",
+      "--material",
+      "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+      "--output",
+      "runs/pressure-rounding-attribution-v1/full-oracle",
+      "--cpu",
+      "0"
+    ],
+    "full-native": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "experiments/pressure-pass-sweep-v1/oracle_control.py",
+      "--material",
+      "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+      "--output",
+      "runs/pressure-rounding-attribution-v1/full-native",
+      "--cpu",
+      "1",
+      "--native-control"
+    ]
+  },
+  "report_sha256": {
+    "rounding-analysis.json": "6354e05c1658ca11c9613dc60b9fdc0a385fc2bebfe72102f6ca01ed3af3e691",
+    "rounding-analysis.html": "ec465b52e909a7c6832513126a001eeb74c08fd27efc26059b5580c9698ba60c"
+  },
+  "standards_snapshot": "snapshot:v1:ffcfc3f8-b52a-434e-b57f-d259a0355711"
+}

@@ -1,0 +1,386 @@
+{
+  "schema": "rheon-local-rounding-error-analysis-v1",
+  "status": "completed",
+  "recorded_utc": "2026-10-17T23:43:15.153461+00:00",
+  "model": "C53",
+  "scene": {
+    "seed": 20261031,
+    "counts": [
+      16,
+      16,
+      16
+    ],
+    "cells_per_metre": 16,
+    "steps": 512,
+    "warmup_steps": 15,
+    "center": [
+      0.4,
+      0.55,
+      0.6
+    ],
+    "acceleration": 0.125,
+    "radius": 0.25,
+    "swirl": 0.7,
+    "fluctuation": 0.4,
+    "frequency": 1.2,
+    "sgs": false
+  },
+  "dt_s": 0.016666666666666666,
+  "spacing_m": 0.0625,
+  "unit_roundoff": 5.960464477539063e-08,
+  "formulas": {
+    "face_cast": "q = RN32(v); |q-v| <= (u32*|q| + 2^-150)/(1-u32)",
+    "divergence_cast": "||D(q-v)||inf <= 2*u32*C/((1-u32)*dt) + 6*2^-150/(h*(1-u32))",
+    "scalar_remainder": "If ideal divergence d_ideal has norm P and stored divergence has norm A, ||d_stored-d_ideal||inf lies in [max(0,A-P), A+P]. Here P is estimated by the recorded pressure-residual prediction; float64 stencil/arithmetic mismatch is not independently bounded.",
+    "accumulated": "E[n+1] <= L[n]*E[n] + eta[n]; local error cannot be summed into actual trajectory drift without its propagation and correlations."
+  },
+  "binary32_reference": "https://docs.oracle.com/cd/E19422-01/819-3693/ncg_goldberg.html",
+  "measurements": [
+    {
+      "passes": 1,
+      "accepted_steps": 0,
+      "termination": "pressure_rejection"
+    },
+    {
+      "passes": 2,
+      "accepted_steps": 0,
+      "termination": "pressure_rejection"
+    },
+    {
+      "passes": 4,
+      "accepted_steps": 0,
+      "termination": "pressure_rejection"
+    },
+    {
+      "passes": 8,
+      "accepted_steps": 497,
+      "termination": "complete",
+      "worst_equation_residual": 9.627334567303476e-09,
+      "worst_reference_equation_residual": 9.994089697663316e-09,
+      "worst_independent_pressure_relative_l2": 8.057134468895494e-07,
+      "worst_actual_divergence_step": {
+        "step": 489,
+        "actual_divergence_s_inverse": 4.172325134277344e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 3.2797257733715077e-11,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          4.1719971617000066e-07,
+          4.172653106854681e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.0919742206293653e-06
+      },
+      "last_step": {
+        "step": 512,
+        "actual_divergence_s_inverse": 3.5762786865234375e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 7.491326771876434e-12,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          3.5762037732557187e-07,
+          3.5763535997911563e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.1021979648682154e-06
+      },
+      "cast_bound_exceedances": 0
+    },
+    {
+      "passes": 12,
+      "accepted_steps": 497,
+      "termination": "complete",
+      "worst_equation_residual": 2.1970664585730586e-12,
+      "worst_reference_equation_residual": 9.994089697663316e-09,
+      "worst_independent_pressure_relative_l2": 7.367862704630597e-07,
+      "worst_actual_divergence_step": {
+        "step": 438,
+        "actual_divergence_s_inverse": 4.246830940246582e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 4.87989278615449e-15,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          4.246830891447654e-07,
+          4.24683098904551e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.0342925568542315e-06
+      },
+      "last_step": {
+        "step": 512,
+        "actual_divergence_s_inverse": 2.980232238769531e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 1.2498682644412895e-15,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          2.9802322262708486e-07,
+          2.980232251268214e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.1021979648682154e-06
+      },
+      "cast_bound_exceedances": 0
+    },
+    {
+      "passes": 16,
+      "accepted_steps": 497,
+      "termination": "complete",
+      "worst_equation_residual": 9.617484170803921e-15,
+      "worst_reference_equation_residual": 9.994089697663316e-09,
+      "worst_independent_pressure_relative_l2": 7.21771178178722e-07,
+      "worst_actual_divergence_step": {
+        "step": 420,
+        "actual_divergence_s_inverse": 4.246830940246582e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 5.921189464667501e-17,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          4.246830939654463e-07,
+          4.246830940838701e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 9.896159575468766e-07
+      },
+      "last_step": {
+        "step": 512,
+        "actual_divergence_s_inverse": 2.980232238769531e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 6.29126380620922e-17,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          2.980232238140405e-07,
+          2.9802322393986576e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.1021979932899263e-06
+      },
+      "cast_bound_exceedances": 0
+    },
+    {
+      "passes": 24,
+      "accepted_steps": 497,
+      "termination": "complete",
+      "worst_equation_residual": 9.95121879765301e-15,
+      "worst_reference_equation_residual": 9.994089697663316e-09,
+      "worst_independent_pressure_relative_l2": 7.217711780871591e-07,
+      "worst_actual_divergence_step": {
+        "step": 420,
+        "actual_divergence_s_inverse": 4.246830940246582e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 6.29126380620922e-17,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          4.2468309396174557e-07,
+          4.2468309408757083e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 9.896159575468766e-07
+      },
+      "last_step": {
+        "step": 512,
+        "actual_divergence_s_inverse": 2.980232238769531e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 6.661338147750939e-17,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          2.9802322381033975e-07,
+          2.980232239435665e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.1021979932899263e-06
+      },
+      "cast_bound_exceedances": 0
+    },
+    {
+      "passes": 32,
+      "accepted_steps": 497,
+      "termination": "complete",
+      "worst_equation_residual": 9.892301767767363e-15,
+      "worst_reference_equation_residual": 9.994089697663316e-09,
+      "worst_independent_pressure_relative_l2": 7.217711780912161e-07,
+      "worst_actual_divergence_step": {
+        "step": 420,
+        "actual_divergence_s_inverse": 4.246830940246582e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 6.29126380620922e-17,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          4.2468309396174557e-07,
+          4.2468309408757083e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 9.896159575468766e-07
+      },
+      "last_step": {
+        "step": 512,
+        "actual_divergence_s_inverse": 2.980232238769531e-07,
+        "pressure_residual_predicted_divergence_s_inverse": 6.661338147750939e-17,
+        "residual_based_remainder_interval_estimate_s_inverse": [
+          2.9802322381033975e-07,
+          2.980232239435665e-07
+        ],
+        "float32_cast_divergence_upper_bound_s_inverse": 1.1021979932899263e-06
+      },
+      "cast_bound_exceedances": 0
+    }
+  ],
+  "agreement_baseline_passes": 16,
+  "diagnostic_agreement": {
+    "8": {
+      "steps": 497,
+      "matching_step_identities": true,
+      "identical_actual_divergence": 124,
+      "identical_courant": 75
+    },
+    "12": {
+      "steps": 497,
+      "matching_step_identities": true,
+      "identical_actual_divergence": 176,
+      "identical_courant": 164
+    },
+    "16": {
+      "steps": 497,
+      "matching_step_identities": true,
+      "identical_actual_divergence": 497,
+      "identical_courant": 497
+    },
+    "24": {
+      "steps": 497,
+      "matching_step_identities": true,
+      "identical_actual_divergence": 497,
+      "identical_courant": 497
+    },
+    "32": {
+      "steps": 497,
+      "matching_step_identities": true,
+      "identical_actual_divergence": 497,
+      "identical_courant": 497
+    }
+  },
+  "exact_rational_example": {
+    "ideal_faces": [
+      [
+        0.25,
+        0.2500000074505806
+      ],
+      [
+        0.25,
+        0.2500000074505806
+      ],
+      [
+        0.25,
+        0.2499999850988388
+      ]
+    ],
+    "stored_faces": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.25,
+        0.2499999850988388
+      ]
+    ],
+    "ideal_divergence_s_inverse": 0.0,
+    "rounded_divergence_s_inverse": -2.384185791015625e-07,
+    "cast_divergence_bound_s_inverse": 1.4305115456636528e-06
+  },
+  "source_hashes": {
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-01/native/frames.jsonl": "a52b8e7e44cc34c183b26caf3e2e1d710654087c56d400cb72d8b71094ade323",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-02/native/frames.jsonl": "b5f00dd26d6866074e750b2c31cf7d3022b40aad0f97ae47b72d9fcd7323c70b",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-04/native/frames.jsonl": "ad2d2c85f4027c2b3273f6ba73efce28a6bf6f951573b02a46f2694efd5ee994",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-08/native/frames.jsonl": "952014dff3bc81f711099c23c9d3f07c67b570a4b7466eea1ec250dc36ea5e42",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-12/native/frames.jsonl": "e6feea831a67f35d1707571ac873901e8511900877efa490f572a6cfc0644ade",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-16/native/frames.jsonl": "89173d80c6a4f498f5bb16c9570c694f5ee505e6b5d697d93b579869a67c6037",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-24/native/frames.jsonl": "6d2641301ab5d951865f6518834fca1a5fc83fd886117c595eb82a4ea904e4cc",
+    "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-32/native/frames.jsonl": "cafd2771cf48a889f599d8867319baec592668fda0ddfea6b722bd0e58a6dc00",
+    "runs/pressure-rounding-attribution-v1/full-oracle/native/frames.jsonl": "41e92b5c0f0c0179e91c9bda1fef9f55c4e30dea66166934d4e9ca76cf525127",
+    "runs/pressure-rounding-attribution-v1/full-oracle/control-receipt.json": "9e7465f40238b64d5acbfbd750884f216c1a571a49059f096fcffaf79e212827",
+    "runs/pressure-rounding-attribution-v1/full-native/native/frames.jsonl": "8f1880c05b8ae73dce96635e03bc4185ca61f542a4dd8faae397e0931efec129",
+    "runs/pressure-rounding-attribution-v1/full-native/control-receipt.json": "f1feffa66915a7a28a12cb3378525f09af1fd07682adbe94faf291f905f22838"
+  },
+  "no_learning_controls": {
+    "full-oracle": {
+      "kind": "analytic-f64-spectral-control-no-network",
+      "accepted_steps": 497,
+      "neural_network_calls": 0,
+      "weights_loaded": false,
+      "worst_relative_pressure_drift": 7.217711780841961e-07,
+      "worst_equation_residual": 1.0670294407162366e-14,
+      "elapsed_s": 21.665125142986653,
+      "peak_rss_bytes": 581632000,
+      "native_reaped": true,
+      "comparisons_to_model_passes": {
+        "8": {
+          "max_absolute_difference_in_recorded_relative_drift": 2.7307009555799536e-07,
+          "identical_actual_divergence_steps": 124,
+          "identical_courant_steps": 75,
+          "identical_reference_quality_steps": 497
+        },
+        "12": {
+          "max_absolute_difference_in_recorded_relative_drift": 1.841647512130272e-07,
+          "identical_actual_divergence_steps": 176,
+          "identical_courant_steps": 164,
+          "identical_reference_quality_steps": 497
+        },
+        "16": {
+          "max_absolute_difference_in_recorded_relative_drift": 2.3609804619028263e-16,
+          "identical_actual_divergence_steps": 497,
+          "identical_courant_steps": 497,
+          "identical_reference_quality_steps": 497
+        },
+        "24": {
+          "max_absolute_difference_in_recorded_relative_drift": 7.552084877226258e-17,
+          "identical_actual_divergence_steps": 497,
+          "identical_courant_steps": 497,
+          "identical_reference_quality_steps": 497
+        },
+        "32": {
+          "max_absolute_difference_in_recorded_relative_drift": 7.643402969874152e-17,
+          "identical_actual_divergence_steps": 497,
+          "identical_courant_steps": 497,
+          "identical_reference_quality_steps": 497
+        }
+      }
+    },
+    "full-native": {
+      "kind": "native-cg-control-no-network",
+      "accepted_steps": 497,
+      "neural_network_calls": 0,
+      "weights_loaded": false,
+      "worst_relative_pressure_drift": 2.3298659370577284e-15,
+      "worst_equation_residual": 9.994089697663316e-09,
+      "elapsed_s": 20.385841779003385,
+      "peak_rss_bytes": 36810752,
+      "native_reaped": true,
+      "comparisons_to_model_passes": {
+        "8": {
+          "max_absolute_difference_in_recorded_relative_drift": 8.057134468895494e-07,
+          "identical_actual_divergence_steps": 120,
+          "identical_courant_steps": 111,
+          "identical_reference_quality_steps": 497
+        },
+        "12": {
+          "max_absolute_difference_in_recorded_relative_drift": 7.367862704630597e-07,
+          "identical_actual_divergence_steps": 120,
+          "identical_courant_steps": 113,
+          "identical_reference_quality_steps": 497
+        },
+        "16": {
+          "max_absolute_difference_in_recorded_relative_drift": 7.21771178178722e-07,
+          "identical_actual_divergence_steps": 115,
+          "identical_courant_steps": 68,
+          "identical_reference_quality_steps": 497
+        },
+        "24": {
+          "max_absolute_difference_in_recorded_relative_drift": 7.217711780871591e-07,
+          "identical_actual_divergence_steps": 115,
+          "identical_courant_steps": 68,
+          "identical_reference_quality_steps": 497
+        },
+        "32": {
+          "max_absolute_difference_in_recorded_relative_drift": 7.217711780912161e-07,
+          "identical_actual_divergence_steps": 115,
+          "identical_courant_steps": 68,
+          "identical_reference_quality_steps": 497
+        }
+      }
+    }
+  },
+  "interpretation": "For high-pass settings the recorded pressure-residual contribution is negligible next to stored-velocity divergence. This is evidence for numerical error after the solve, not a measurement of the cumulative pressure drift caused solely by float32 rounding.",
+  "limits": [
+    "These are one-step divergence bounds, in inverse seconds, not pressure drift in Pa or relative pressure error.",
+    "RN32 means round-to-nearest binary32 with gradual underflow and finite representable results. No universal nonzero minimum rounding error exists.",
+    "Numeric bound evaluations use float64 and recorded rounded Courant diagnostics, not interval-certified exact face values.",
+    "The residual-based remainder includes float64 correction and operator arithmetic as well as float32 storage; full per-face arrays were not retained.",
+    "Matching scalar diagnostics does not prove complete velocity fields are bit-identical.",
+    "Native solver tolerance is an adjustable algorithm setting, not a fundamental float32 limit.",
+    "No causal percentage of accumulated pressure drift can be recovered from these aggregate records alone."
+  ],
+  "control_conclusion": "The analytic no-learning solver reproduces the high-pass drift curve, whereas the matched native solver control has nearly zero drift. Thus the plotted plateau does not require training error and is not evidence of a universal float32 limit. Reference stopping tolerance, differing solver arithmetic and subsequent float32 trajectory propagation are not separately attributed by these controls.",
+  "controlled_measurements_needed": [
+    "On identical pre-projection states, solve with a qualified oracle and measure model pressure-gradient/velocity error separately from the native solver stopping error.",
+    "Record each corrected velocity before and after float32 storage, and compute the cast perturbation and its divergence directly.",
+    "Advance paired controlled trajectories that differ only in the rounding operation under study, with corresponding higher-precision numerical operators; changing just the pressure solver does not isolate all simulation rounding.",
+    "Report model approximation, solver stopping tolerance, local arithmetic/storage error, and accumulated trajectory sensitivity separately; their effects interact rather than forming independent scalar percentages."
+  ],
+  "elapsed_s": 0.06416343999444507
+}

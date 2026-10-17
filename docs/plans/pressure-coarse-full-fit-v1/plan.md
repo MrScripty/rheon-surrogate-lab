@@ -1,11 +1,13 @@
 # Full coarse fit with qualified clipping, CPU restore and pressure accuracy
 
-Status: implementing. Owner root. Base3a0580901cdfa041ec4b766ea3da3f1d8acc8116.
+Status: CUDA5000 completed; managed CPU restore/qualification in progress. Owner root. Base3a0580901cdfa041ec4b766ea3da3f1d8acc8116.
 User explicitly authorized the completed clipping-stability experiment's next
 proposal: full5000 CUDA fit, then CPU restore and pressure-accuracy qualification.
 
 Write set: experiments/pressure-coarse-full-fit-v1 and this plan/reports, plus
 explicit full-fit observation/source selection in the shared throughput assembler.
+CPU phase ownership helper remains inside the new experiment; no shared
+benchmark or scientific worker source changes.
 Reuse the already qualified clipping/trainer/model without numerical changes.
 Ignored execution artifacts: workspace-root runs/pressure-coarse-full-fit-v1.
 No Tuldok/Rheon source edits, historical result rewrites, weights/data in Git,
@@ -75,5 +77,4 @@ zero unresolved categories; exact text unchanged from accepted preceding route.
 Independent Spec/Standards code-review axes use fixed base above. No new numerical
 hypothesis is being tested alongside the clipping-only full fit.
 
-Next slice: qualify full-fit entry and retained-control comparability, freeze
-source/capture, then admit one full CUDA fit with CPU restore on success.
+CPU admission source review passed both axes after actual four-case process qualification02 (6.2054s), including leader-only orphan reproduction and cancellation during normal drainage. Local subreaper ownership reaches kernel ECHILD before advancing phases; cancellation is deferred until drainage completes. Actual managed restore/download parity is remeasured before any CPU package/physics launch.

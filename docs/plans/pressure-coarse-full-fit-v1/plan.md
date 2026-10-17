@@ -78,3 +78,29 @@ Independent Spec/Standards code-review axes use fixed base above. No new numeric
 hypothesis is being tested alongside the clipping-only full fit.
 
 CPU admission source review passed both axes after actual four-case process qualification02 (6.2054s), including leader-only orphan reproduction and cancellation during normal drainage. Local subreaper ownership reaches kernel ECHILD before advancing phases; cancellation is deferred until drainage completes. Actual managed restore/download parity is remeasured before any CPU package/physics launch.
+
+Recovery slice: the first CPU prefix passed (exact CPU restore, scene0 first AI
+frame, transfer and common144); the first full campaign stopped after27.6941s.
+Its16workers and all native descendants drained. Retained scene1 shows a completed
+native control and a completed/reaped exit-zero candidate which rejected its first
+AI pressure request after15native warm-up steps and32network passes. The existing
+classifier read obsolete top-level `outcome`, while current Rheon records
+`diagnostic_attempt.attempt.outcome`; this mislabeled scientific rejection as
+infrastructure and stopped the pool. Keep this failed attempt unchanged.
+
+Use a local current-schema classifier/worker entry only; canonical benchmark,
+episode, fallback/stopping/oracle/rollout and model sources remain unchanged.
+Qualify the actual retained trace, infrastructure/malformed/timeout/memory/fallback
+negatives, and exact successful first-frame physical output. The first qualifier
+included fresh process-receipt SHA in the physical metric comparison and failed
+only on that identity; retain it, compare all physical fields and sparse outputs
+exactly, and retain the corrected qualification. Bind successful prefix receipts,
+package/runtime/weights/source inventories and prior failed phase ECHILD. After
+both review axes pass, freeze this measurement repair and admit one fresh full74
+campaign with unchanged scenes/gates, reusing only the completed qualified prefix.
+No training repeats, selected-scene retries, native fallback or relaxed thresholds.
+
+Continuation timing policy: fixed paired timing scenes8/10/12/14 must complete
+their development windows before serial paired timing admission. Do not substitute
+easier scenes when the candidate rejects. Raw forward timings remain valid as
+separate network-only measurements and run after all broad workers drain.

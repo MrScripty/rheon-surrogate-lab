@@ -19,9 +19,12 @@ from live_migration import observer_type, read_json, preview_from_receipt
 def once(root, work, observer):
     paths=list(work.glob('*regression-*/case-*/episode.json'))
     if len(paths)>256:raise ValueError('observation exceeds finite development scope')
-    records=[]
+    records=[];unreadable=0
     for path in paths:
-        value,digest=read_json(path);records.append((path,value,digest))
+        try:value,digest=read_json(path)
+        except (OSError,ValueError):
+            unreadable+=1;continue
+        records.append((path,value,digest))
     passed=[row for row in records if row[1]['status']=='passed']
     failed=len(records)-len(passed)
     studies=[]
@@ -43,7 +46,7 @@ def once(root, work, observer):
         preview['source']['experiment']=path.parents[1].name
         preview['source']['qualification']='Completed development case only; model comparison and promotion not asserted'
     observer.publish('Pressure band-feedback experiment',
-        '; '.join(studies)+f'. CPU case receipts: {len(passed)} passed, {failed} failed. '
+        '; '.join(studies)+f'. CPU case receipts: {len(passed)} passed, {failed} failed; unreadable: {unreadable}. '
         'Actual Model/Study/Run state belongs to Tuldok; this is external observation. '
         'Preview is a completed sparse pressure frame, not live velocity or tracer flow.',
         completed=len(records),total=None,state='running',preview=preview)
@@ -62,7 +65,9 @@ def main():
         signal.signal(signal.SIGTERM,lambda *_:stop.set());signal.signal(signal.SIGINT,lambda *_:stop.set())
         observer=observer_type()(output)
         while not stop.is_set():
-            once(root,work,observer)
+            try:once(root,work,observer)
+            except (OSError,ValueError,KeyError,TypeError):
+                observer.publish('Observation unavailable','External source preview could not refresh; no result inferred.',state='failed')
             if a.once:break
             stop.wait(2)
 

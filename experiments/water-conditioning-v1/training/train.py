@@ -308,6 +308,13 @@ def run(args):
             schedule=torch.profiler.schedule(wait=10,warmup=1,active=strategy['profile_updates'],repeat=1),
             on_trace_ready=capture_profile) if strategy['profile_updates'] else nullcontext()
         optimizer = torch.optim.Adam(network.parameters(), lr=config['training']['learning_rate'], betas=(.9, .999), eps=1e-8, weight_decay=0)
+        optimizer_work={'enabled':False,'network_forwards':0,'forward_cells':0}
+        def count_forward(_network,arguments):
+            if optimizer_work['enabled']:
+                value=arguments[0]
+                optimizer_work['network_forwards']+=1
+                optimizer_work['forward_cells']+=value.shape[0]*math.prod(value.shape[2:])
+        work_hook=network.register_forward_pre_hook(count_forward)if current is not None else None
         with profiler:
             for update, indices in enumerate(sample_order, 1):
                 require(time.perf_counter()-start < config['resources']['wall_seconds']-10, 'deadline', 'publication reserve')
@@ -318,12 +325,14 @@ def run(args):
                 extra=analytical_samples[int(analytical_order[update-1])] if analytical_samples is not None else None
                 second=supplemental_samples[int(supplemental_order[update-1])] if supplemental_samples is not None else None
                 third = direction_samples[int(direction_order[update-1])] if direction_samples is not None else None
+                optimizer_work['enabled']=True
                 loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared,
                     analytical_sample=extra,analytical_weight=feedback['weight'] if extra is not None else 0.,
                     supplemental_sample=second,supplemental_weight=supplemental['weight'] if second is not None else 0.,
                     direction_sample=third,direction_weight=direction['weight'] if third is not None else 0.,
                     current_sample=current_samples[int(current_order[update-1])]if current_samples is not None else None,
                     current_weight=current['weight']if current_samples is not None else 0.)
+                optimizer_work['enabled']=False
                 verify_cuda_update(network, optimizer, combined=strategy['finite_checks']=='combined')
                 if update % 100 == 0:
                     with torch.no_grad():
@@ -340,6 +349,9 @@ def run(args):
                     checkpoint(update); history.append({'update': update, 'loss': loss, 'gradient_norm_before_clip': gradient})
                     helpers.progress('variable-grid-training', update, config['training']['updates'], loss=loss)
                 if strategy['profile_updates']: profiler.step()
+        if work_hook is not None:work_hook.remove()
+        optimizer_work.pop('enabled')
+        optimizer_work['scope']='Actual optimizer-loss network forwards/cells only; diagnostics and prediction publication excluded.'
         training_finished_unix = time.time()
         write(output/'profile.json',profile_report)
         validation = {'initial': initial_loss, 'final': evaluate(network, parents, normalization)}
@@ -348,7 +360,7 @@ def run(args):
                                      'analytical_feedback':analytical_evidence,
                                      **({'supplemental_feedback':supplemental_evidence} if supplemental_evidence is not None else {}),
                                      **({'direction_feedback':direction_evidence} if direction_evidence is not None else {}),
-                                     **({'current_feedback':current_evidence}if current_evidence is not None else {}),
+                                     **({'current_feedback':current_evidence,'optimizer_work':optimizer_work}if current_evidence is not None else {}),
                                      'trace': trace, 'scope': 'final update candidate; no optimizer resume; loss before update, physical ratio after update',
                                      'training_started_unix':training_started_unix,'training_finished_unix':training_finished_unix,
                                      'execution_strategy':strategy,'optimizer_updates_per_s':config['training']['updates']/(training_finished_unix-training_started_unix)})

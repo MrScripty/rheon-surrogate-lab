@@ -39,3 +39,14 @@ change inference architecture/preprocessing/stopping. Assembler explicitly takes
 --current-bank, measures both new data slots and updates witness/recipes/Project
 atomically. Review caught missing CLIargument/execution(v11) routing before any
 admission; fixed with direct regressions. No CUDA work had started.
+
+
+Capture01drafts decoded current Tuldok Project/recipe/extension contracts in
+1.235/1.341s, not imported or admitted. Fresh retained0.03firstframe physically
+passed in8.468episode/8.981commands, priorpressurevalid; newstream unit checks
+prove unchanged seeded inference. This qualifies the existing inference path,
+not a future candidate. Each candidate still requires its own fresh firstframe.
+
+Before admission add actual optimizer-forward/cell counters, excluding diagnostic
+and publication forwards. Initial capture01drafts retained; fresh capture02
+will include this identical telemetry in both arms. No optimizer or Run started.

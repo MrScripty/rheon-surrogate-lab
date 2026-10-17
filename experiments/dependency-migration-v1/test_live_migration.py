@@ -261,6 +261,47 @@ class LiveMigrationTests(unittest.TestCase):
         self.assertNotIn('Observation unavailable', activity['phase'])
         self.assertEqual(log.stat().st_size, 2 * 1024 * 1024)
 
+    @unittest.skipUnless(os.environ.get('RHEON_ACTIVITY_CONSUMER_ROOT'),
+                         'requires the selected deployed activity decoder and public status root')
+    def test_all_current_migration_statuses_pass_actual_deployed_activity_decoder(self):
+        consumer = Path(os.environ['RHEON_ACTIVITY_CONSUMER_ROOT']).resolve()
+        actual = live.status_summary(Path(os.environ['RHEON_ACTIVITY_STATUS_ROOT']))
+        self.assertGreaterEqual(len(actual['m3_steps']), 9)
+        self.assertEqual(len(actual['smoke_journal']), 14)
+        self.assertEqual(actual['typed_pressure_live']['status'], 'machine_qualified_browser_pending')
+        # Only scene zero supplies the small numerical preview. The other
+        # bounded receipt fixtures exercise the full declared74-case count.
+        for scene in range(1, 74):
+            path = self.cohort / f'worker-b/scene-{scene:02}/receipt.json'
+            write(path, {'status': 'passed', 'metrics': {'scene': scene}})
+            os.utime(path, ns=(0, 0))
+        with patch.object(live, 'status_summary', return_value=actual):
+            result = live.Publisher(self.root, self.cohort, self.output).poll()
+        self.assertEqual(result['passed_scene_receipts'], 74)
+        publication = self.output / 'activity.json'
+        activity = json.loads(publication.read_text())
+        self.assertLessEqual(len(activity['message']), 1000)
+        self.assertIn('74/74', activity['message'])
+        self.assertIn('0 failed, 0 unreadable', activity['message'])
+        self.assertIn('machine_qualified_browser_pending', activity['message'])
+        code = ('import sys,json;sys.path.insert(0,sys.argv[1]);'
+                'import project_activity;'
+                'value=project_activity.activity(json.load(open(sys.argv[2])));'
+                'print(json.dumps({k:value[k] for k in ("available","authority","progress")}))')
+        decoded = subprocess.run([sys.executable, '-B', '-c', code, str(consumer), str(publication)],
+                                 capture_output=True, text=True, timeout=5)
+        self.assertEqual(decoded.returncode, 0, decoded.stderr)
+        projection = json.loads(decoded.stdout)
+        self.assertTrue(projection['available'])
+        self.assertEqual(projection['authority'], 'external_observation')
+        self.assertEqual(projection['progress'], {'completed': 74, 'total': 74})
+        print(json.dumps({'activity_consumer': str(consumer / 'project_activity.py'),
+                          'consumer_sha256': hashlib.sha256((consumer / 'project_activity.py').read_bytes()).hexdigest(),
+                          'message_characters': len(activity['message']),
+                          'actual_m3_receipts': len(actual['m3_steps']),
+                          'actual_smoke_journals': len(actual['smoke_journal']),
+                          'available': projection['available']}))
+
     def test_private_ops_never_read_and_historical_output_root_refused(self):
         private = self.migration / 'ops/live-selection.private.json'
         write(private, {'secret': 'must not publish'})
@@ -287,8 +328,9 @@ class LiveMigrationTests(unittest.TestCase):
         result = live.Publisher(self.root, self.cohort, self.output).poll()
         self.assertEqual(result['catalog_rehearsal']['prepare04'], 'running_read_only_historical_row_evidence')
         message = json.loads((self.output / 'activity.json').read_text())['message']
-        self.assertIn('publication=corrected04_pending_independent_review', message)
-        self.assertIn('cold_read=pending', message)
+        self.assertEqual(result['catalog_rehearsal']['publication'], 'corrected04_pending_independent_review')
+        self.assertEqual(result['catalog_rehearsal']['cold_read'], 'pending')
+        self.assertIn('Current catalog rehearsal: recorded', message)
         self.assertNotIn('schema rehearsal: passed', message)
         self.assertNotIn('passed_superseded', message)
 
@@ -315,7 +357,8 @@ class LiveMigrationTests(unittest.TestCase):
         self.assertFalse(result['m3_cutover']['m3_complete'])
         message = json.loads((self.output / 'activity.json').read_text())['message']
         self.assertIn('machine_qualified_browser_pending', message)
-        self.assertIn('09-admit-training: status=acknowledged', message)
+        self.assertEqual(result['smoke_journal']['09-admit-training']['status'], 'acknowledged')
+        self.assertIn('smoke journal: 1/14 recorded', message)
         self.assertIn('m3_complete=false', message)
         self.assertIn('Migration acceptance is not asserted', message)
         self.assertNotIn('must-not-publish', json.dumps(result) + message)

@@ -66,6 +66,14 @@ credentials and arbitrary sibling files are excluded. The actual live receipt's
 visible. Acknowledged mutation journals report dispatch progress, not Run drainage
 or final acceptance. Status refreshes reuse the same captured pressure/frame source.
 
+The public activity message is at most 1,000 characters, matching the current
+Project activity decoder. It retains the 74-case counts, GPU status, catalog
+observation state, recorded M3/journal counts, separate cutover and final
+completion states, and the exact machine-smoke status. Detailed per-step and
+journal statuses remain in their public source receipts and the structured
+`--once` projection; they are not concatenated into the message. Oversized
+summaries are refused before publication; the consumer contract is unchanged.
+
 The latest completed passing scene receipt selects its latest sparse capture by
 generation. The publisher requires a completed reaped native process, matches
 the NPZ SHA-256 in the scene receipt, checks the scene's actual XYZ counts, and
@@ -128,3 +136,11 @@ Status fixtures cover stale prior passes, absent/malformed/current catalog progr
 M3 and smoke phase separation, unchanged frame reuse, private/unknown-file exclusion,
 and oversized/symlinked status refusal. Publisher restart remains a separate root
 operation; these source changes do not restart the existing owned publisher.
+
+The optional deployed-consumer integration check uses
+`RHEON_ACTIVITY_CONSUMER_ROOT` for the selected current application source and
+`RHEON_ACTIVITY_STATUS_ROOT` for the public migration-receipt directory. It reads
+all current M3/journal status projections, publishes 74 small disposable receipt
+fixtures, then calls that application's actual `project_activity.activity`
+decoder without constructing a catalog. With those explicit selections, the
+test must execute and pass; portable unit runs skip it when no consumer is selected.

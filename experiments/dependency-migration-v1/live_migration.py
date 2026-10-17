@@ -339,19 +339,34 @@ class Publisher:
                     self.preview_error = type(error).__name__
                     # Never replace real fields with invented values on failure.
         statuses = status_summary(self.migration)
-        steps = '; '.join(f'{name}: {status_text(value)}' for name, value in statuses['m3_steps'].items()) or 'absent'
-        journals = '; '.join(f'{name}: {status_text(value)}' for name, value in statuses['smoke_journal'].items()) or 'absent'
+        # The current Project reader bounds activity messages to 1,000 characters.
+        # Full per-receipt status remains in the returned projection and source receipts.
+        steps = sum(value['observation'] == 'recorded' for value in statuses['m3_steps'].values())
+        journals = sum(value['observation'] == 'recorded' for value in statuses['smoke_journal'].values())
+        cutover = statuses['m3_cutover']
+        completion = statuses['m3_completion']
+        cutover_summary = status_text({'observation': cutover['observation'],
+            'm3_complete': cutover.get('m3_complete', 'not_recorded')})
+        completion_summary = status_text({'observation': completion['observation'],
+            'status': completion.get('status', 'not_recorded'),
+            'm3_complete': completion.get('m3_complete', 'not_recorded'),
+            'ordinary_admissions_open': completion.get('ordinary_admissions_open', 'not_recorded')})
+        machine = statuses['typed_pressure_live']
+        machine_summary = ('status=' + machine['status'] if machine['observation'] == 'recorded'
+                           else machine['observation'])
         message = (f'External observation: {passed}/74 current regression case receipts passed; '
                    f'{states["failed"]} failed, {errors} unreadable. GPU lifecycle: {statuses["gpu_lifecycle"]}; '
-                   f'Current catalog rehearsal: {status_text(statuses["catalog_rehearsal"])}. '
-                   f'M3 steps: {steps}; cutover: {status_text(statuses["m3_cutover"])}. '
-                   f'Final M3 completion: {status_text(statuses["m3_completion"])}. '
-                   f'Live smoke launcher: {status_text(statuses["smoke_launcher"])}; journal: {journals}; '
-                   f'typed-pressure-live-01: {status_text(statuses["typed_pressure_live"])}; '
-                   f'smoke failure receipt: {status_text(statuses["typed_pressure_failure"])}. '
+                   f'Current catalog rehearsal: {statuses["catalog_rehearsal"]["observation"]}. '
+                   f'M3 receipts: {steps}/{len(M3_STEPS)} recorded; '
+                   f'smoke journal: {journals}/{len(SMOKE_PHASES)} recorded. '
+                   f'Cutover: {cutover_summary}. Final M3 completion: {completion_summary}. '
+                   f'typed-pressure-live-01: {machine_summary}. '
+                   'Full status details remain in the source receipts. '
                    'Migration acceptance is not asserted; this publisher creates no Tuldok Run.')
         if self.preview_error:
             message += ' New field preview unavailable; previous preview is retained.'
+        if len(message) > 1000:
+            raise ValueError('Observation summary exceeds current Project activity limit')
         self.observer.publish('Dependency migration observation', message, passed, 74, state='running', preview=preview)
         return {'passed_scene_receipts': passed, 'failed_scene_receipts': states['failed'],
                 'unreadable_receipts': errors, 'preview_error': self.preview_error,

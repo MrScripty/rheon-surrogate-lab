@@ -46,15 +46,18 @@ fits and fresh CPU parity; first-frame/full74 qualification, unchanged populatio
 decision, clocks/memory and exact original catalog/preview observation. Current
 acceptance: S1 passed144states/4500calls in31.263s; three preparation tests
 and independent source/data/label review close provenance/memory/path findings.
-Exactly one next slice S2: freeze/capture/qualify the explicit extra-early/late
-CUDA pair, then actual5000-update Studies and fresh CPU restores. Scientific failure is a retained result. Infrastructure
+S2 early5000CUDAupdates/freshCPUparity complete; S3 early74CPUqualification active.
+LateStudy02retainedinfrastructurefailure; freshStudy03samefrozencaptureactive.
+Next slice: finishlateCUDA/CPUparityandsequential74qualification,thenunchanged
+populationdecisionandserialtiming. Scientific failure is a retained result. Infrastructure
 failure halts its phase; retain evidence, classify before new explicit attempts.
 
 Write set: experiments/pressure-current-policy-v1, this plan directory; existing
 training policy/model/train and the affected generic project builder only for an explicitly selected current-feedback
 contract if S1 supports S2; existing assembler only to capture that source/input
 contract. Reuse current managed Study/custody, adapter, CPU episode/benchmark,
-oracles, spatial/timing owners. No Tuldok/Rheon changes, runtime prototype,
+oracles, spatial/timing owners. No Rheon changes or runtime prototype; the independently planned Tuldok output-monitor
+rename fix is an infrastructure exception after actual Run failure. No
 architecture change, new CFD parents or weights/datasets in Git.
 
 Design: train-only generation owns residual/label provenance, not admission;
@@ -72,3 +75,14 @@ zero unresolved facts. Existing authority for this explicit next experiment
 satisfies plan admission; no redundant confirmation. Replan on invalid labels,
 changed numerical/inference/runtime semantics or unbounded resources. Preserve
 original applications and root user-owned untracked files.
+
+
+Infrastructure replan: late Study02 reached5000updates but custody drained with
+reasonoutput_limit before publication. Retained files below32MiB; real rename
+between monitor listing/lstat reproduces false failure. Exact old exception was
+not recorded. Separate Tuldok branchfix/output-inventory-rename-20261017 and
+docs/plans/output-inventory-rename own narrow monitoring fix/tests/deployment.
+Preserve failed Run/Study; no unpublished weights reused. Early CUDA/CPUrestore
+are completed/drained, may collect read-only; no redo. Once no active Runs and
+reviewed deployment qualify, close failed Study and one fresh late Study03 from
+identical frozen source/initialization. No numerical/model/optimizer budget change.

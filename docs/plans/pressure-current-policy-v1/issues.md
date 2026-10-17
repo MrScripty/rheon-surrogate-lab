@@ -33,3 +33,14 @@ I6: New arm-comparison report initially trusted a self-consistent local witness
 without binding it to actual trainingclosure. Added actualassemblysourceinventory,
 witness/configclosurehashchecks and a rewritten-capture negative regression.
 Corrected before any report claim; no scientific/data/execution change.
+
+I7: LateCUDAStudy02 reached5000updates then failed/drained before publication,
+reasonoutput_limit, no stderr, leaderSIGTERM. Fileswellbelow32MiB. Reproduced
+live-monitor race on profile.json rename; oldreceipt lacks exactexception so
+historical causation qualified. Separate Tuldok fix709d0dd,39tests+2reviews,
+current-06deployedafterzeroactiveRuns/all20statespreserved. No unpublished
+weights reused; failed Study stop acknowledged. Fresh lateStudy03 samecapture02.
+
+I8: One-time close-failed-Study client postcondition read open at response root
+instead of nested status.study.open, after successful acknowledged stop. Read
+the durable acknowledgment and verified nested false; no mutation replay.

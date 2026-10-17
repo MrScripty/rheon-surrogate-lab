@@ -79,3 +79,15 @@ initialization/scales/runtime/sampleorder/oldstreams, currentteacher and actual
 NNwork. Review found sourcewitness needed binding to actualRunclosure; corrected
 with assemblysources+closurehashes and a negative self-consistent rewritten-source
 regression. No production or scientific inputs changed by reporting fixes.
+
+EarlyCUDAcompleted5000updates,508.683181276strainer; freshCPUrestoreexactallfive
+artifacts,1480.719487470scompleteStudy/admission/readback. Firstframephysically
+passed8.993souter; manufacturedcheck4.399s; full74CPUcampaignrunning.
+
+LateStudy02reached5000updatesbutcustodyfailed/drainedoutput_limitbefore
+publication. Retainallrawdiagnostics; no modelaccuracyclaim/unpublishedweights
+reuse. IndependentlyreproducedTuldokmonitorrenamefaultandqualified39tests/
+2reviewsinseparatebranch. Deployed709d0ddascurrent-06,27.722s,zeroactiveRuns,
+all20priorRunstatesandowner/catalog/settingspreserved. ClosedfailedStudyfrom
+acknowledgedjournal; erroneouspostconditionclassifiedwithoutreplay. Fresh
+lateStudy03fromidenticalcapture02whileearly16workerCPUqualificationruns.

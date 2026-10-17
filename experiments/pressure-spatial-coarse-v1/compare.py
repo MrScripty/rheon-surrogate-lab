@@ -22,9 +22,22 @@ def inventory(path):
                 for name in arrays.files}
 
 
+def architecture_contract(witness, qualification, tensor):
+    if qualification['status'] != 'passed' or qualification['device'] != 'cpu':
+        raise ValueError('qualified CPU prototype required')
+    for name in ('model.py','coarse.py'):
+        identities = [value for path,value in qualification['sources'].items()
+                      if Path(path).name == name and Path(path).parent.name == 'overlay']
+        if len(identities) != 1 or witness['sources'][name] != identities[0]:
+            raise ValueError('candidate source differs from qualified overlay: '+name)
+    if (tensor['shape'] != [64,64] or tensor['dtype'] != '<f4' or
+            tensor['bytes'] != 16384 or tensor['nonzero'] != 0):
+        raise ValueError('exact zero float32 64-by-64 coarse tensor required')
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    for name in ('root','control','candidate','output'):
+    for name in ('root','control','candidate','prototype','output'):
         p.add_argument('--'+name,type=Path,required=True)
     a = p.parse_args()
     root = a.root.resolve(strict=True)
@@ -65,12 +78,12 @@ def main():
     left,right = initial['control'],initial['candidate']
     if set(right) != set(left)|{'spatial_coarse.weight'} or any(left[k]!=right[k] for k in left):
         raise ValueError('surviving seeded parameters differ')
-    if right['spatial_coarse.weight']['nonzero'] != 0:
-        raise ValueError('coarse initialization is not zero')
+    architecture_contract(witnesses['candidate'],json.loads(a.prototype.read_text()),right['spatial_coarse.weight'])
     result = {'format':'pressure-spatial-coarse-matched-training-v1','status':'passed',
         'models':rows,'actual_optimizer_work':histories['control']['optimizer_work'],
         'all_shared_sources_inputs_streams_exact':True,'all_surviving_initial_tensors_exact':True,
         'new_initial_tensor':right['spatial_coarse.weight'],
+        'prototype_sha256':hashlib.sha256(a.prototype.read_bytes()).hexdigest(),
         'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'scientific_accuracy_asserted':False,'optimizer_updates_executed_by_report':0,
         'scope':'Two fresh managed CUDA fits and exact CPU restores; same update, network-call and forward-cell budgets. Candidate adds coarse arithmetic, so FLOP budgets differ. Independent trajectories own accuracy and selection.'}

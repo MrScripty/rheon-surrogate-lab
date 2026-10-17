@@ -25,8 +25,17 @@ def main():
                          if x.startswith('MemAvailable:'))) * 1024
     if available < 10*1024**3 or len(os.sched_getaffinity(0)) != 1:
         raise ValueError('one CPU core and 2 GiB accounting plus 8 GiB reserve required')
+    paths = [a.project/'source-witness.json',a.project/'config.json',
+             *(a.artifacts/name for name in ('weights.npz','normalization.json','history.json','receipt.json')),
+             Path(__file__),Path(audit.__file__)]
+    identities = {str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+    def unchanged():
+        if any(hashlib.sha256(Path(path).read_bytes()).hexdigest() != identity
+               for path,identity in identities.items()):
+            raise ValueError('timing source or loaded artifact identity changed')
     started = time.perf_counter()
     audit.initialize(a.project.resolve(strict=True),a.artifacts.resolve(strict=True),sorted(os.sched_getaffinity(0)))
+    unchanged()
     initialized = time.perf_counter()
     vm = int(next(x.split()[1] for x in Path('/proc/self/status').read_text().splitlines()
                   if x.startswith('VmSize:'))) * 1024
@@ -41,7 +50,6 @@ def main():
                 raise MemoryError('eight GiB available reserve lost')
             x = torch.arange(n,dtype=torch.float32)+.5
             values = torch.cos(torch.pi*x/n)[None,None,None,None,:].expand(1,1,n,n,n).contiguous()
-            before_weights = hashlib.sha256((a.artifacts/'weights.npz').read_bytes()).hexdigest()
             for _ in range(3):
                 audit.NETWORK(values)
             times = []
@@ -52,13 +60,14 @@ def main():
                 times.append(time.perf_counter()-before)
                 if not torch.equal(output,first):
                     raise ValueError('repeated forward changed physical input response')
-            if hashlib.sha256((a.artifacts/'weights.npz').read_bytes()).hexdigest() != before_weights:
-                raise ValueError('weights changed during timing')
+            unchanged()
             rows.append({'counts_xyz':[n]*3,'input_sha256':hashlib.sha256(values.numpy().tobytes()).hexdigest(),
                 'output_sha256':hashlib.sha256(first.numpy().tobytes()).hexdigest(),
                 'forward_seconds':times,'median_s':statistics.median(times),
                 'mean_s':statistics.mean(times),'minimum_s':min(times),'maximum_s':max(times)})
+    unchanged()
     result = {'format':'pressure-spatial-coarse-raw-forward-timing-v1','status':'passed','rows':rows,
+        'loaded_source_and_artifact_identities':identities,
         'parameters':sum(p.numel() for p in audit.NETWORK.parameters()),'weights_bytes':(a.artifacts/'weights.npz').stat().st_size,
         'weights_sha256':hashlib.sha256((a.artifacts/'weights.npz').read_bytes()).hexdigest(),
         'source_witness_sha256':hashlib.sha256((a.project/'source-witness.json').read_bytes()).hexdigest(),

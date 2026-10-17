@@ -51,3 +51,12 @@ The timer calibrated on a retained model with four consumed cubes and31samples
 per grid; only its execution/calibration is accepted here, not final latency.
 After broad pools drain, final raw forwards and paired worker timings run in
 reversed order twice, with their different measurement scopes retained.
+
+Report review found two provenance gaps before final diagnostics: explicitly bind
+new overlay bytes to the qualified CPU prototype and exact64x64float32zero tensor;
+bind timer artifact/source hashes before loading and recheck through completion.
+Four focused comparison fixtures pass, including changed source/shape/precision.
+The revised raw timer calibrated in9.030596seconds; preliminary calibration is
+preserved. Stopped only the idle completion waiter before any child work, then
+replaced it to pass the explicit prototype identity. CUDA/Study/CPU-qualification
+owners were unchanged, and no scientific phase or mutation was replayed.

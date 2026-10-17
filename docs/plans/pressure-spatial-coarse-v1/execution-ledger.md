@@ -90,3 +90,20 @@ failure classification and the common-report corrections. The independent contro
 CUDA Run completed and remains on its original restore/CPU qualification path.
 Finish its physical/diagnostic/timing evidence; all eight unused holdouts remain
 untouched and no candidate can be promoted.
+
+Fresh control completed5000CUDAupdates in498.237518optimizer seconds and
+502.045229trainer seconds; full Study1542.295358seconds and fresh CPU restore
+2.905135seconds. Actual50000forwards/425703026cells, all five exact artifact pairs,
+shared data/source/sampling and both initial/final checkpoint identities match the
+retained current0.1 control (qualified custody monitor change remains separate).
+First-frame fixture passed9.023094seconds, transfer diagnostic8.973660seconds;
+full74scene campaign follows. New control is qualified independently, not reused.
+
+Prepared next diagnostic by testing a finite3-4vector in installed float32 Torch.
+Both CPU and CUDA ordinary norms overflow, while a scaled float32 calculation
+returns the independent expected5e20norm and0.6/0.8unit direction. Probes take
+0.951540/1.590016seconds internally, with no network/optimizer/simulation calls.
+This demonstrates a possible norm-reduction mechanism, not the actual candidate
+cause: its failing gradient components were not captured. No clipping algorithm,
+model precision or finite/physical guard was changed. Probe sources stay local
+under command-sources; small receipts retain the exact identities.

@@ -1,0 +1,69 @@
+{
+  "format": "pressure-spatial-coarse-control-reproducibility-v1",
+  "status": "passed",
+  "fresh_control": {
+    "study": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-study-01",
+    "receipt_sha256": "32eb5cab453a837ed0f6579a8c0b82a6978ab67ea748fd91933c024886d49cac",
+    "training_run_id": "ab4a6325b4e94631be46567530bb563c",
+    "restore_run_id": "54a0a37abbbf47aa8e5bd5a4aedc3e7f",
+    "weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+    "initial_checkpoint_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+    "optimizer_updates": 5000,
+    "band_feedback": {
+      "max_mode": 3,
+      "signal_floor_fraction": 0.1,
+      "stages": "first-and-final",
+      "weight": 0.03
+    },
+    "optimizer_s": 498.23751759529114,
+    "trainer_s": 502.04522853699746,
+    "complete_study_command_s": 1542.2953580009926,
+    "peak_cuda_bytes": 870009344,
+    "artifact_parity": {
+      "checkpoint-5000.npz": true,
+      "history.json": true,
+      "normalization.json": true,
+      "predictions.npz": true,
+      "weights.npz": true
+    }
+  },
+  "retained_control_context": {
+    "study": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/current-late-study-03",
+    "receipt_sha256": "7781c2ed0152634c83d8b868af39ba64729569e63a94dd2d0e6905ac4f9e79f5",
+    "training_run_id": "bc971e81be5f40b7bfa8e585ef47bd2f",
+    "restore_run_id": "8bc0a9c839aa42a0a01064c20d70af86",
+    "weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+    "initial_checkpoint_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+    "optimizer_updates": 5000,
+    "band_feedback": {
+      "max_mode": 3,
+      "signal_floor_fraction": 0.1,
+      "stages": "first-and-final",
+      "weight": 0.03
+    },
+    "optimizer_s": 631.9541549682617,
+    "trainer_s": 643.4748017210077,
+    "complete_study_command_s": 1368.2677336740016,
+    "peak_cuda_bytes": 870009344,
+    "artifact_parity": {
+      "checkpoint-5000.npz": true,
+      "history.json": true,
+      "normalization.json": true,
+      "predictions.npz": true,
+      "weights.npz": true
+    }
+  },
+  "configuration_and_shared_source_identity": true,
+  "qualified_custody_monitor_cutover_only": true,
+  "all_inputs_normalization_streams_and_actual_work_exact": true,
+  "initial_and_final_weights_exact": true,
+  "actual_optimizer_work": {
+    "forward_cells": 425703026,
+    "network_forwards": 50000,
+    "scope": "Actual optimizer-loss network forwards/cells only; diagnostics and prediction publication excluded."
+  },
+  "fresh_cpu_restore_s": 2.9051347359927604,
+  "candidate_matched_completed_fit_available": false,
+  "candidate_disposition": "failed finite-gradient guard; no completed checkpoint or accuracy result",
+  "scope": "Fresh control fit reproduces retained current0.1 numerically. Does not reuse its full physical campaign: new control qualification runs independently. No scientific acceptance/promotion assertion."
+}

@@ -24,6 +24,10 @@ At the first problematic clipping operation, record:
   sizes at each of the two training corrections.
 
 The retained error proves a nonfinite total norm, not which tensor caused it.
+Independent CPU and CUDA 3–4-vector probes now demonstrate that the installed
+float32 reduction can overflow with finite values and a representable true norm;
+see reports/norm-reduction-probe*.json. They do not prove the candidate had this
+cause. Verify that any capped replay preserves the original sampling prefix.
 If all components are finite and only the reduction overflows, qualify a stable
 norm calculation at the optimizer owner. An independent scaled 3–4 vector can
 exercise a finite known norm where squaring overflows float32. Keep rejection of

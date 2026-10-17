@@ -1,0 +1,3516 @@
+{
+  "schema": "rheon-pressure-spike-extra-pass-results-v1",
+  "status": "completed",
+  "recorded_utc": "2026-10-17T22:10:59.087927+00:00",
+  "configuration": {
+    "schema": "rheon-pressure-spike-replay-v1",
+    "analysis": "runs/cohort-pattern-analysis-20261017-01/spike-analysis.json",
+    "source_lab": "runs/dependency-migration-v1/lab",
+    "cohorts": [
+      "C45",
+      "C53",
+      "C55"
+    ],
+    "peaks_by_excursion": 3,
+    "peaks_by_absolute_error": 3,
+    "neighbor_offsets": [
+      -1,
+      1
+    ],
+    "include_worst_error_step": true,
+    "timing_repetitions": 3,
+    "native_timeout_seconds": 600,
+    "worker_timeout_seconds": 1200,
+    "minimum_available_memory_bytes": 8589934592
+  },
+  "experiment_source_sha256": "ce8ec5a1f13f26d25b6e1f87a49411798ecd37d42617abd678c14e69b7422a7e",
+  "report_source_sha256": "0ab752b98651747ef654a58153ab9db11b7cd11ad50a0fa1381dadf75bc951e7",
+  "plan_sha256": "2230b7df86df0789137eb1a6c9e092d9c3ff6d6b55b27ffc5f42b78c8eb1b8e0",
+  "source_receipts": {
+    "C45": {
+      "path": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spike-replay-v1/cpu-01/C45/receipt.json",
+      "sha256": "44e88ad3bfa055036fce9de8643e4753013c132d94e87dce01b562ae97bf47bd"
+    },
+    "C53": {
+      "path": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spike-replay-v1/cpu-01/C53/receipt.json",
+      "sha256": "322815af614dd0a156adca2e2ea6a5834ae175f214eefdc00cc9f617873ea200"
+    },
+    "C55": {
+      "path": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spike-replay-v1/cpu-01/C55/receipt.json",
+      "sha256": "9a88835a149c16dfd965f1e27458f23f2c88c21e876de6c20add9c3f9102651b"
+    }
+  },
+  "models": [
+    {
+      "id": "C45",
+      "groups": {
+        "all": {
+          "cases": 18,
+          "absolute_improved": 18,
+          "median_absolute_error_ratio": 0.14888665949777546,
+          "median_mean_free_error_ratio": 0.14639669234540204,
+          "worst_absolute_error_ratio": 0.16903091900597625,
+          "baseline_median_rms_pa": 1.6132708504627932e-06,
+          "extra_median_rms_pa": 2.4077742042001106e-07
+        },
+        "peaks": {
+          "cases": 6,
+          "absolute_improved": 6,
+          "median_absolute_error_ratio": 0.152970700007183,
+          "median_mean_free_error_ratio": 0.15030210689563023,
+          "worst_absolute_error_ratio": 0.16333772987337972,
+          "baseline_median_rms_pa": 3.0264912533430095e-06,
+          "extra_median_rms_pa": 3.50951889930922e-07
+        },
+        "neighbors": {
+          "cases": 12,
+          "absolute_improved": 12,
+          "median_absolute_error_ratio": 0.1437836768760407,
+          "median_mean_free_error_ratio": 0.14453497547196698,
+          "worst_absolute_error_ratio": 0.16903091900597625,
+          "baseline_median_rms_pa": 1.6132708504627932e-06,
+          "extra_median_rms_pa": 2.4019451701471726e-07
+        }
+      },
+      "elapsed_s": 69.88816571900679,
+      "baseline_median_s": 0.0670282840001164,
+      "extra_pass_median_s": 0.010414865995699074,
+      "peak_rss_bytes": 748580864,
+      "native_reaped": true,
+      "weights_sha256": "26b66232928ce81d428dbdb1c8cc750a0cf5c0bc5f678977efc111a0a56d2d9a",
+      "original_trajectory_exact": true,
+      "cuda_initialized": false,
+      "torch_threads": 1,
+      "peak_child_rss_bytes": 730312704,
+      "cpu": 20,
+      "peak_to_adjacent_error_ratio": {
+        "baseline": 1.3648725432677355,
+        "extra": 1.3883099421529046
+      },
+      "rows": [
+        {
+          "step": 23,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.1265773755687944e-06,
+            "mean_free_rms_pa": 7.001122894715114e-07,
+            "mean_free_relative_l2": 1.5444916927882635e-07,
+            "gauge_offset_pa": 8.82620736938823e-07,
+            "quality": {
+              "residual_l2": 1.3710614723858273e-10,
+              "rhs_l2": 0.0012598113728260604,
+              "relative_residual": 1.0883069497223272e-07,
+              "predicted_divergence": 4.584617044796809e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.708379830289418e-05,
+              "mean_free_pressure_relative_error_bound": 1.96766379322795e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.6165735845157609e-07,
+            "mean_free_rms_pa": 1.0113550767458272e-07,
+            "mean_free_relative_l2": 2.2311128343030296e-08,
+            "gauge_offset_pa": 1.2611387960468814e-07,
+            "quality": {
+              "residual_l2": 2.0060084836329136e-11,
+              "rhs_l2": 0.0012598113728260604,
+              "relative_residual": 1.592308600241442e-08,
+              "predicted_divergence": 6.752203102200482e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.351965683517636e-06,
+              "mean_free_pressure_relative_error_bound": 2.878900279609804e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1434942348011892,
+          "mean_free_error_ratio": 0.14445612396109506,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06731543299974874,
+              "extra_pass_s": 0.009879242003080435,
+              "total_s": 0.07719467500282917
+            },
+            {
+              "baseline_s": 0.07129264400282409,
+              "extra_pass_s": 0.009865650994470343,
+              "total_s": 0.08115829499729443
+            },
+            {
+              "baseline_s": 0.06851544200617354,
+              "extra_pass_s": 0.00970799700007774,
+              "total_s": 0.07822343900625128
+            }
+          ],
+          "oracle_independent_relative_defect": 1.8600397585228534e-14
+        },
+        {
+          "step": 24,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 5.162435511940421e-06,
+            "mean_free_rms_pa": 3.5187768126371312e-06,
+            "mean_free_relative_l2": 7.218660741744911e-07,
+            "gauge_offset_pa": 3.777426393431225e-06,
+            "quality": {
+              "residual_l2": 7.346093098438475e-10,
+              "rhs_l2": 0.0013380456981106625,
+              "relative_residual": 5.490166074904057e-07,
+              "predicted_divergence": 2.482985579875067e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0003058527317639766,
+              "mean_free_pressure_relative_error_bound": 9.803878321041432e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.41116109383245e-07,
+            "mean_free_rms_pa": 5.44136907298173e-07,
+            "mean_free_relative_l2": 1.1162798722389088e-07,
+            "gauge_offset_pa": 6.413979541439047e-07,
+            "quality": {
+              "residual_l2": 1.0796310959881252e-10,
+              "rhs_l2": 0.0013380456981106625,
+              "relative_residual": 8.068716169504361e-08,
+              "predicted_divergence": 3.5978478090300156e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.495016814794992e-05,
+              "mean_free_pressure_relative_error_bound": 1.4408419654169684e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.16293009519204474,
+          "mean_free_error_ratio": 0.15463808484357155,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.057990896006231196,
+              "extra_pass_s": 0.01044322999950964,
+              "total_s": 0.06843412600574084
+            },
+            {
+              "baseline_s": 0.061577678003231995,
+              "extra_pass_s": 0.01041775599878747,
+              "total_s": 0.07199543400201946
+            },
+            {
+              "baseline_s": 0.061353322002105415,
+              "extra_pass_s": 0.009857292010565288,
+              "total_s": 0.0712106140126707
+            }
+          ],
+          "oracle_independent_relative_defect": 1.6730013050293404e-14
+        },
+        {
+          "step": 25,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.0625678617798835e-06,
+            "mean_free_rms_pa": 2.458271190567485e-06,
+            "mean_free_relative_l2": 4.7419478989495537e-07,
+            "gauge_offset_pa": 1.8265335095839141e-06,
+            "quality": {
+              "residual_l2": 5.378472219798728e-10,
+              "rhs_l2": 0.0014097698971480314,
+              "relative_residual": 3.8151419112291966e-07,
+              "predicted_divergence": 1.7680589196415278e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0002239313331724279,
+              "mean_free_pressure_relative_error_bound": 6.749354843101276e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.149883990019989e-07,
+            "mean_free_rms_pa": 3.7098566352272834e-07,
+            "mean_free_relative_l2": 7.156227085246451e-08,
+            "gauge_offset_pa": 3.57187189814029e-07,
+            "quality": {
+              "residual_l2": 7.58832857899273e-11,
+              "rhs_l2": 0.0014097698971480314,
+              "relative_residual": 5.382671735539212e-08,
+              "predicted_divergence": 2.4508871436975294e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.159381448488483e-05,
+              "mean_free_pressure_relative_error_bound": 9.522459475108085e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.16815575107050892,
+          "mean_free_error_ratio": 0.15091323729709713,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.062194684011046775,
+              "extra_pass_s": 0.010727742002927698,
+              "total_s": 0.07292242601397447
+            },
+            {
+              "baseline_s": 0.061593127000378445,
+              "extra_pass_s": 0.010148369998205453,
+              "total_s": 0.0717414969985839
+            },
+            {
+              "baseline_s": 0.062320966011611745,
+              "extra_pass_s": 0.01079971098806709,
+              "total_s": 0.07312067699967884
+            }
+          ],
+          "oracle_independent_relative_defect": 1.616437765612131e-14
+        },
+        {
+          "step": 73,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.132492752699169e-06,
+            "mean_free_rms_pa": 7.020433977748314e-07,
+            "mean_free_relative_l2": 1.5572206311918208e-07,
+            "gauge_offset_pa": 8.886365413131011e-07,
+            "quality": {
+              "residual_l2": 1.373195412348315e-10,
+              "rhs_l2": 0.0012098746554927151,
+              "relative_residual": 1.1349898157748319e-07,
+              "predicted_divergence": 4.5702706804225576e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.717264435455748e-05,
+              "mean_free_pressure_relative_error_bound": 1.981502506309205e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.624258839365908e-07,
+            "mean_free_rms_pa": 1.0142210236864105e-07,
+            "mean_free_relative_l2": 2.2496699031411184e-08,
+            "gauge_offset_pa": 1.2686892812547814e-07,
+            "quality": {
+              "residual_l2": 2.0102943248201733e-11,
+              "rhs_l2": 0.0012098746554927151,
+              "relative_residual": 1.6615723915643902e-08,
+              "predicted_divergence": 6.739232875456006e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.369809675112412e-06,
+              "mean_free_pressure_relative_error_bound": 2.9008269206248185e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14342333189282402,
+          "mean_free_error_ratio": 0.14446699832247475,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07033286499790847,
+              "extra_pass_s": 0.01033214500057511,
+              "total_s": 0.08066500999848358
+            },
+            {
+              "baseline_s": 0.0714107780077029,
+              "extra_pass_s": 0.01067571499152109,
+              "total_s": 0.08208649299922399
+            },
+            {
+              "baseline_s": 0.07281344899092801,
+              "extra_pass_s": 0.010326277988497168,
+              "total_s": 0.08313972697942518
+            }
+          ],
+          "oracle_independent_relative_defect": 1.8367084256796808e-14
+        },
+        {
+          "step": 74,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 5.183472101483811e-06,
+            "mean_free_rms_pa": 3.52099714744669e-06,
+            "mean_free_relative_l2": 7.260364652590796e-07,
+            "gauge_offset_pa": 3.8040717809385848e-06,
+            "quality": {
+              "residual_l2": 7.34044340424927e-10,
+              "rhs_l2": 0.0012876492215088435,
+              "relative_residual": 5.700654558426925e-07,
+              "predicted_divergence": 2.467674455978545e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0003056175081725729,
+              "mean_free_pressure_relative_error_bound": 9.846721003783852e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.466565659183625e-07,
+            "mean_free_rms_pa": 5.456127865110403e-07,
+            "mean_free_relative_l2": 1.1250641858823891e-07,
+            "gauge_offset_pa": 6.474056130497573e-07,
+            "quality": {
+              "residual_l2": 1.0807765823278058e-10,
+              "rhs_l2": 0.0012876492215088435,
+              "relative_residual": 8.39340842423973e-08,
+              "predicted_divergence": 3.5834177708471416e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.499786018254505e-05,
+              "mean_free_pressure_relative_error_bound": 1.4497888036648713e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.16333772987337972,
+          "mean_free_error_ratio": 0.15495973545638925,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0628379190020496,
+              "extra_pass_s": 0.010137631004909053,
+              "total_s": 0.07297555000695866
+            },
+            {
+              "baseline_s": 0.06107613199856132,
+              "extra_pass_s": 0.010230304003925994,
+              "total_s": 0.07130643600248732
+            },
+            {
+              "baseline_s": 0.061889735006843694,
+              "extra_pass_s": 0.010065594004117884,
+              "total_s": 0.07195532901096158
+            }
+          ],
+          "oracle_independent_relative_defect": 1.7989898857559242e-14
+        },
+        {
+          "step": 75,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.0746102105339723e-06,
+            "mean_free_rms_pa": 2.453163197807543e-06,
+            "mean_free_relative_l2": 4.7553596306024755e-07,
+            "gauge_offset_pa": 1.8534341832507655e-06,
+            "quality": {
+              "residual_l2": 5.358059212086499e-10,
+              "rhs_l2": 0.0013581449369320835,
+              "relative_residual": 3.9451306457688015e-07,
+              "predicted_divergence": 1.7492127582045361e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00022308144274922717,
+              "mean_free_pressure_relative_error_bound": 6.756795592492305e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.197041894717154e-07,
+            "mean_free_rms_pa": 3.7157162068220503e-07,
+            "mean_free_relative_l2": 7.202768598717239e-08,
+            "gauge_offset_pa": 3.6335516407236057e-07,
+            "quality": {
+              "residual_l2": 7.582201221174231e-11,
+              "rhs_l2": 0.0013581449369320835,
+              "relative_residual": 5.582762940089209e-08,
+              "predicted_divergence": 2.433450991638312e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.1568303385281686e-05,
+              "mean_free_pressure_relative_error_bound": 9.56154890903284e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.16903091900597625,
+          "mean_free_error_ratio": 0.15146632764354548,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06681894100620411,
+              "extra_pass_s": 0.010907465999480337,
+              "total_s": 0.07772640700568445
+            },
+            {
+              "baseline_s": 0.06601468799635768,
+              "extra_pass_s": 0.011182494999957271,
+              "total_s": 0.07719718299631495
+            },
+            {
+              "baseline_s": 0.06759474299906287,
+              "extra_pass_s": 0.011191318990313448,
+              "total_s": 0.07878606198937632
+            }
+          ],
+          "oracle_independent_relative_defect": 1.747268531059065e-14
+        },
+        {
+          "step": 81,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.1690755725642684e-06,
+            "mean_free_rms_pa": 8.104501701009592e-07,
+            "mean_free_relative_l2": 1.2329185788511491e-07,
+            "gauge_offset_pa": -8.425605118623814e-07,
+            "quality": {
+              "residual_l2": 1.725182379546958e-10,
+              "rhs_l2": 0.001720360324429107,
+              "relative_residual": 1.0028029332282184e-07,
+              "predicted_divergence": 6.536978005196777e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 7.18275328810732e-05,
+              "mean_free_pressure_relative_error_bound": 1.707336419091405e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.956230047435522e-07,
+            "mean_free_rms_pa": 1.1325663797505037e-07,
+            "mean_free_relative_l2": 1.7229463116808706e-08,
+            "gauge_offset_pa": -1.595032725039966e-07,
+            "quality": {
+              "residual_l2": 2.3900537782311353e-11,
+              "rhs_l2": 0.001720360324429107,
+              "relative_residual": 1.3892751095758167e-08,
+              "predicted_divergence": 8.612908765822287e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 9.950928573042339e-06,
+              "mean_free_pressure_relative_error_bound": 2.3653298897840153e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.16733135935298835,
+          "mean_free_error_ratio": 0.1397453441967219,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07118919800268486,
+              "extra_pass_s": 0.011671084997942671,
+              "total_s": 0.08286028300062753
+            },
+            {
+              "baseline_s": 0.06977549400471617,
+              "extra_pass_s": 0.011696953006321564,
+              "total_s": 0.08147244701103773
+            },
+            {
+              "baseline_s": 0.07141057300032116,
+              "extra_pass_s": 0.011628972992184572,
+              "total_s": 0.08303954599250574
+            }
+          ],
+          "oracle_independent_relative_defect": 1.3781959332136107e-14
+        },
+        {
+          "step": 82,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 4.449452285538814e-06,
+            "mean_free_rms_pa": 3.273615963654339e-06,
+            "mean_free_relative_l2": 4.795049532483722e-07,
+            "gauge_offset_pa": 3.0134804070698787e-06,
+            "quality": {
+              "residual_l2": 9.715239159121396e-10,
+              "rhs_l2": 0.0017794749064352399,
+              "relative_residual": 5.45961009283553e-07,
+              "predicted_divergence": 3.1755440697139867e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0004044915299520588,
+              "mean_free_pressure_relative_error_bound": 9.257534245278053e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.614537373206141e-07,
+            "mean_free_rms_pa": 4.2875412957431684e-07,
+            "mean_free_relative_l2": 6.28020302745223e-08,
+            "gauge_offset_pa": 1.7061491159957872e-07,
+            "quality": {
+              "residual_l2": 1.2138753546299978e-10,
+              "rhs_l2": 0.0017794749064352399,
+              "relative_residual": 6.821536792905454e-08,
+              "predicted_divergence": 3.894764253007758e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.05393939689478e-05,
+              "mean_free_pressure_relative_error_bound": 1.1566859875882059e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.10371023391359586,
+          "mean_free_error_ratio": 0.13097264136496278,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06247226499544922,
+              "extra_pass_s": 0.011837571990326978,
+              "total_s": 0.0743098369857762
+            },
+            {
+              "baseline_s": 0.05983488098718226,
+              "extra_pass_s": 0.012162582002929412,
+              "total_s": 0.07199746299011167
+            },
+            {
+              "baseline_s": 0.05918860800738912,
+              "extra_pass_s": 0.011495975006255321,
+              "total_s": 0.07068458301364444
+            }
+          ],
+          "oracle_independent_relative_defect": 1.284807064480691e-14
+        },
+        {
+          "step": 83,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.1304327979355156e-06,
+            "mean_free_rms_pa": 6.668194067526176e-07,
+            "mean_free_relative_l2": 9.398542421420849e-08,
+            "gauge_offset_pa": 9.128144331825639e-07,
+            "quality": {
+              "residual_l2": 1.8160649952684646e-10,
+              "rhs_l2": 0.0018357571945936619,
+              "relative_residual": 9.892729826236329e-08,
+              "predicted_divergence": 6.747472518220387e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 7.561140764495103e-05,
+              "mean_free_pressure_relative_error_bound": 1.6651743372468596e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.1826540522398534e-07,
+            "mean_free_rms_pa": 8.027737534426245e-08,
+            "mean_free_relative_l2": 1.1314762438119653e-08,
+            "gauge_offset_pa": 8.684612300287126e-08,
+            "quality": {
+              "residual_l2": 2.3296786815607802e-11,
+              "rhs_l2": 0.0018357571945936619,
+              "relative_residual": 1.2690559995743044e-08,
+              "predicted_divergence": 8.418204148809746e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 9.699558382116401e-06,
+              "mean_free_pressure_relative_error_bound": 2.1361132445747354e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.10461958060662326,
+          "mean_free_error_ratio": 0.12038848079603726,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07528254399949219,
+              "extra_pass_s": 0.01259749500604812,
+              "total_s": 0.08788003900554031
+            },
+            {
+              "baseline_s": 0.07492905799881555,
+              "extra_pass_s": 0.012283971009310335,
+              "total_s": 0.08721302900812589
+            },
+            {
+              "baseline_s": 0.07487870199838653,
+              "extra_pass_s": 0.012236598995514214,
+              "total_s": 0.08711530099390075
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2132603448222607e-14
+        },
+        {
+          "step": 190,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.0216975738693078e-05,
+            "mean_free_rms_pa": 6.362647085525595e-06,
+            "mean_free_relative_l2": 8.044713120824842e-07,
+            "gauge_offset_pa": -7.993954922946186e-06,
+            "quality": {
+              "residual_l2": 1.2076121803489004e-09,
+              "rhs_l2": 0.0023129990395015306,
+              "relative_residual": 5.220980033822886e-07,
+              "predicted_divergence": 4.095432526209549e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0005027862828878039,
+              "mean_free_pressure_relative_error_bound": 9.932906002317275e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.393333887571461e-06,
+            "mean_free_rms_pa": 9.087491009373347e-07,
+            "mean_free_relative_l2": 1.148991248073356e-07,
+            "gauge_offset_pa": -1.0561980845469215e-06,
+            "quality": {
+              "residual_l2": 1.7750522973417544e-10,
+              "rhs_l2": 0.0023129990395015306,
+              "relative_residual": 7.674245717474626e-08,
+              "predicted_divergence": 5.916723846977057e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 7.39038543196928e-05,
+              "mean_free_pressure_relative_error_bound": 1.4600235697940258e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13637439524248998,
+          "mean_free_error_ratio": 0.1428256335330386,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07525680500839371,
+              "extra_pass_s": 0.01275255999644287,
+              "total_s": 0.08800936500483658
+            },
+            {
+              "baseline_s": 0.07661319899489172,
+              "extra_pass_s": 0.012614332998055033,
+              "total_s": 0.08922753199294675
+            },
+            {
+              "baseline_s": 0.07643586400081404,
+              "extra_pass_s": 0.011364413003320806,
+              "total_s": 0.08780027700413484
+            }
+          ],
+          "oracle_independent_relative_defect": 9.251486458223104e-15
+        },
+        {
+          "step": 191,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 1.5718213329102796e-06,
+            "mean_free_rms_pa": 1.0014840649976069e-06,
+            "mean_free_relative_l2": 1.305275039055137e-07,
+            "gauge_offset_pa": -1.2114668671274983e-06,
+            "quality": {
+              "residual_l2": 1.959107350820937e-10,
+              "rhs_l2": 0.002353197379188239,
+              "relative_residual": 8.325299731112026e-08,
+              "predicted_divergence": 6.549701848009477e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.156694000989986e-05,
+              "mean_free_pressure_relative_error_bound": 1.6610863729614128e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.404500425412299e-07,
+            "mean_free_rms_pa": 1.5056107799454742e-07,
+            "mean_free_relative_l2": 1.9623239533021032e-08,
+            "gauge_offset_pa": -1.874768912458253e-07,
+            "quality": {
+              "residual_l2": 2.926383968828136e-11,
+              "rhs_l2": 0.002353197379188239,
+              "relative_residual": 1.2435777783492279e-08,
+              "predicted_divergence": 9.580195780197383e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.218392578289877e-05,
+              "mean_free_pressure_relative_error_bound": 2.4812199533421753e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.15297542889052704,
+          "mean_free_error_ratio": 0.15033796668038568,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.08306428200739902,
+              "extra_pass_s": 0.011674612003844231,
+              "total_s": 0.09473889401124325
+            },
+            {
+              "baseline_s": 0.0826483729906613,
+              "extra_pass_s": 0.011587169006816112,
+              "total_s": 0.09423554199747741
+            },
+            {
+              "baseline_s": 0.07704283700149972,
+              "extra_pass_s": 0.01172065299761016,
+              "total_s": 0.08876348999910988
+            }
+          ],
+          "oracle_independent_relative_defect": 1.0207347159049954e-14
+        },
+        {
+          "step": 192,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.6193683797835795e-06,
+            "mean_free_rms_pa": 1.0161847263914357e-06,
+            "mean_free_relative_l2": 1.3867946546954307e-07,
+            "gauge_offset_pa": -1.2608420009230567e-06,
+            "quality": {
+              "residual_l2": 1.9962413853488239e-10,
+              "rhs_l2": 0.002361770593762506,
+              "relative_residual": 8.452308579931286e-08,
+              "predicted_divergence": 6.647687764843591e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.31130061636471e-05,
+              "mean_free_pressure_relative_error_bound": 1.772264531265563e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.4110479829879214e-07,
+            "mean_free_rms_pa": 1.5040507063756124e-07,
+            "mean_free_relative_l2": 2.0525888904072442e-08,
+            "gauge_offset_pa": -1.8844054364496897e-07,
+            "quality": {
+              "residual_l2": 2.9481322189440696e-11,
+              "rhs_l2": 0.002361770593762506,
+              "relative_residual": 1.2482720492541311e-08,
+              "predicted_divergence": 9.621414035857849e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.2274474073260875e-05,
+              "mean_free_pressure_relative_error_bound": 2.6173537254110147e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1488881722706075,
+          "mean_free_error_ratio": 0.14800957614435253,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.08063324600516353,
+              "extra_pass_s": 0.011036634998163208,
+              "total_s": 0.09166988100332674
+            },
+            {
+              "baseline_s": 0.07776938400638755,
+              "extra_pass_s": 0.011236607999308035,
+              "total_s": 0.08900599200569559
+            },
+            {
+              "baseline_s": 0.07431643499876373,
+              "extra_pass_s": 0.010857206012587994,
+              "total_s": 0.08517364101135172
+            }
+          ],
+          "oracle_independent_relative_defect": 1.191220312861869e-14
+        },
+        {
+          "step": 390,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.0246757499327332e-05,
+            "mean_free_rms_pa": 6.376235567700251e-06,
+            "mean_free_relative_l2": 7.431487437346394e-07,
+            "gauge_offset_pa": -8.02120061058288e-06,
+            "quality": {
+              "residual_l2": 1.213049539119382e-09,
+              "rhs_l2": 0.004273247541983904,
+              "relative_residual": 2.8387064573287273e-07,
+              "predicted_divergence": 4.135490130896535e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0005050501134862565,
+              "mean_free_pressure_relative_error_bound": 9.197420694154597e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.3904438320610927e-06,
+            "mean_free_rms_pa": 9.077290776999145e-07,
+            "mean_free_relative_l2": 1.0579560880110297e-07,
+            "gauge_offset_pa": -1.0532625368894492e-06,
+            "quality": {
+              "residual_l2": 1.778736529150182e-10,
+              "rhs_l2": 0.004273247541983904,
+              "relative_residual": 4.1624935407425124e-08,
+              "predicted_divergence": 5.945094796085589e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 7.405724638101841e-05,
+              "mean_free_pressure_relative_error_bound": 1.348649222628718e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13569598306121433,
+          "mean_free_error_ratio": 0.14236128324652061,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06801940100558568,
+              "extra_pass_s": 0.011107595011708327,
+              "total_s": 0.079126996017294
+            },
+            {
+              "baseline_s": 0.061655112003791146,
+              "extra_pass_s": 0.010411975992610678,
+              "total_s": 0.07206708799640182
+            },
+            {
+              "baseline_s": 0.0625952900008997,
+              "extra_pass_s": 0.009947323997039348,
+              "total_s": 0.07254261399793904
+            }
+          ],
+          "oracle_independent_relative_defect": 9.632150532493588e-15
+        },
+        {
+          "step": 391,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 1.5647586333369288e-06,
+            "mean_free_rms_pa": 9.978673634581606e-07,
+            "mean_free_relative_l2": 1.1837946297475585e-07,
+            "gauge_offset_pa": -1.205292622373303e-06,
+            "quality": {
+              "residual_l2": 1.9580297750412462e-10,
+              "rhs_l2": 0.004408899426631046,
+              "relative_residual": 4.4410851452273376e-08,
+              "predicted_divergence": 6.570779545467254e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.152207541432714e-05,
+              "mean_free_pressure_relative_error_bound": 1.511119572270865e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.3935482392279433e-07,
+            "mean_free_rms_pa": 1.4994578382128102e-07,
+            "mean_free_relative_l2": 1.778843763621731e-08,
+            "gauge_offset_pa": -1.8656632506787907e-07,
+            "quality": {
+              "residual_l2": 2.9209957014180095e-11,
+              "rhs_l2": 0.004408899426631046,
+              "relative_residual": 6.625226431282009e-09,
+              "predicted_divergence": 9.592442072140865e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.2161491867553856e-05,
+              "mean_free_pressure_relative_error_bound": 2.254293356350964e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.15296597112383895,
+          "mean_free_error_ratio": 0.15026624711087475,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0686344419955276,
+              "extra_pass_s": 0.00940490499488078,
+              "total_s": 0.07803934699040838
+            },
+            {
+              "baseline_s": 0.06723762699402869,
+              "extra_pass_s": 0.009938529998180456,
+              "total_s": 0.07717615699220914
+            },
+            {
+              "baseline_s": 0.06578713899943978,
+              "extra_pass_s": 0.00940362800611183,
+              "total_s": 0.0751907670055516
+            }
+          ],
+          "oracle_independent_relative_defect": 1.0880162852887225e-14
+        },
+        {
+          "step": 392,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.607173321142007e-06,
+            "mean_free_rms_pa": 1.009520142973337e-06,
+            "mean_free_relative_l2": 1.234151621421862e-07,
+            "gauge_offset_pa": -1.2505499450728562e-06,
+            "quality": {
+              "residual_l2": 1.9893947553894058e-10,
+              "rhs_l2": 0.004509159945488615,
+              "relative_residual": 4.411896626953281e-08,
+              "predicted_divergence": 6.653157788583108e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.282794845359576e-05,
+              "mean_free_pressure_relative_error_bound": 1.5821603379590313e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.392842357306424e-07,
+            "mean_free_rms_pa": 1.4935302544945756e-07,
+            "mean_free_relative_l2": 1.8258603337999664e-08,
+            "gauge_offset_pa": -1.8695084717190054e-07,
+            "quality": {
+              "residual_l2": 2.9339568831584336e-11,
+              "rhs_l2": 0.004509159945488615,
+              "relative_residual": 6.5066595965260414e-09,
+              "predicted_divergence": 9.611809820286864e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.2215455420548323e-05,
+              "mean_free_pressure_relative_error_bound": 2.3333679235928354e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14888514672494346,
+          "mean_free_error_ratio": 0.1479445719721535,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06863780099956784,
+              "extra_pass_s": 0.009776676000910811,
+              "total_s": 0.07841447700047866
+            },
+            {
+              "baseline_s": 0.0688229959923774,
+              "extra_pass_s": 0.00976293400162831,
+              "total_s": 0.07858592999400571
+            },
+            {
+              "baseline_s": 0.064483043999644,
+              "extra_pass_s": 0.009344491001684219,
+              "total_s": 0.07382753500132822
+            }
+          ],
+          "oracle_independent_relative_defect": 1.175332823645302e-14
+        },
+        {
+          "step": 441,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.1237235780311893e-05,
+            "mean_free_rms_pa": 6.885847950086341e-06,
+            "mean_free_relative_l2": 7.90317975541001e-07,
+            "gauge_offset_pa": -8.88034717736945e-06,
+            "quality": {
+              "residual_l2": 1.3294545829955115e-09,
+              "rhs_l2": 0.005025195823123121,
+              "relative_residual": 2.645577664611815e-07,
+              "predicted_divergence": 4.433532771232669e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0005535150596604174,
+              "mean_free_pressure_relative_error_bound": 9.926452942279914e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.5618089704560912e-06,
+            "mean_free_rms_pa": 9.957139448849072e-07,
+            "mean_free_relative_l2": 1.1428231277304292e-07,
+            "gauge_offset_pa": -1.203246026446317e-06,
+            "quality": {
+              "residual_l2": 1.9545116389906565e-10,
+              "rhs_l2": 0.005025195823123121,
+              "relative_residual": 3.889423831001957e-08,
+              "predicted_divergence": 6.565111417463262e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.137559870795119e-05,
+              "mean_free_pressure_relative_error_bound": 1.4593473852405578e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13898515622431326,
+          "mean_free_error_ratio": 0.1446029526214592,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0557628009992186,
+              "extra_pass_s": 0.008968391004600562,
+              "total_s": 0.06473119200381916
+            },
+            {
+              "baseline_s": 0.05434524700103793,
+              "extra_pass_s": 0.008925133006414399,
+              "total_s": 0.06327038000745233
+            },
+            {
+              "baseline_s": 0.05490611599816475,
+              "extra_pass_s": 0.00893539200478699,
+              "total_s": 0.06384150800295174
+            }
+          ],
+          "oracle_independent_relative_defect": 1.0493500749825588e-14
+        },
+        {
+          "step": 442,
+          "roles": [
+            "selected_peak",
+            "worst_error_step"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 1.6035302211472055e-06,
+            "mean_free_rms_pa": 1.0069773914477557e-06,
+            "mean_free_relative_l2": 1.1870963052620563e-07,
+            "gauge_offset_pa": -1.2479205516560256e-06,
+            "quality": {
+              "residual_l2": 1.9852190134642038e-10,
+              "rhs_l2": 0.005130088839651708,
+              "relative_residual": 3.8697556231774424e-08,
+              "predicted_divergence": 6.649371863306127e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.265409249263113e-05,
+              "mean_free_pressure_relative_error_bound": 1.5224766981393036e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.387600682095136e-07,
+            "mean_free_rms_pa": 1.4898226662070375e-07,
+            "mean_free_relative_l2": 1.756308530430196e-08,
+            "gauge_offset_pa": -1.865761356764822e-07,
+            "quality": {
+              "residual_l2": 2.9274277512187114e-11,
+              "rhs_l2": 0.005130088839651708,
+              "relative_residual": 5.706388023131117e-09,
+              "predicted_divergence": 9.584568879302443e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.2188271544533515e-05,
+              "mean_free_pressure_relative_error_bound": 2.245062241083516e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14889651910563848,
+          "mean_free_error_ratio": 0.14794996182238843,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06341951200738549,
+              "extra_pass_s": 0.008971283008577302,
+              "total_s": 0.0723907950159628
+            },
+            {
+              "baseline_s": 0.06205846299417317,
+              "extra_pass_s": 0.008670815004734322,
+              "total_s": 0.07072927799890749
+            },
+            {
+              "baseline_s": 0.061131166003178805,
+              "extra_pass_s": 0.009153909006272443,
+              "total_s": 0.07028507500945125
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2117797759158417e-14
+        },
+        {
+          "step": 443,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.5014612330933551e-06,
+            "mean_free_rms_pa": 9.337909070009703e-07,
+            "mean_free_relative_l2": 1.142913110568066e-07,
+            "gauge_offset_pa": -1.1757637417800071e-06,
+            "quality": {
+              "residual_l2": 1.8557312337566065e-10,
+              "rhs_l2": 0.005194806978789528,
+              "relative_residual": 3.572281398199363e-08,
+              "predicted_divergence": 6.161506157139247e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 7.726290147137401e-05,
+              "mean_free_pressure_relative_error_bound": 1.4775923967076765e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.1632020283561223e-07,
+            "mean_free_rms_pa": 1.3525850420656244e-07,
+            "mean_free_relative_l2": 1.6554960710636422e-08,
+            "gauge_offset_pa": -1.6881814829763918e-07,
+            "quality": {
+              "residual_l2": 2.6967009074417572e-11,
+              "rhs_l2": 0.005194806978789528,
+              "relative_residual": 5.191147464097176e-09,
+              "predicted_divergence": 8.774054515344372e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.1227646154753716e-05,
+              "mean_free_pressure_relative_error_bound": 2.1471991286703116e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1440731189508922,
+          "mean_free_error_ratio": 0.1448488127186506,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06191504999878816,
+              "extra_pass_s": 0.008764834012254141,
+              "total_s": 0.0706798840110423
+            },
+            {
+              "baseline_s": 0.06224401500367094,
+              "extra_pass_s": 0.009160681991488673,
+              "total_s": 0.07140469699515961
+            },
+            {
+              "baseline_s": 0.06164899899158627,
+              "extra_pass_s": 0.008749842992983758,
+              "total_s": 0.07039884198457003
+            }
+          ],
+          "oracle_independent_relative_defect": 1.3439183248250112e-14
+        }
+      ]
+    },
+    {
+      "id": "C53",
+      "groups": {
+        "all": {
+          "cases": 15,
+          "absolute_improved": 15,
+          "median_absolute_error_ratio": 0.1389770670195667,
+          "median_mean_free_error_ratio": 0.13604146564162023,
+          "worst_absolute_error_ratio": 0.2879288172349965,
+          "baseline_median_rms_pa": 3.5278577921690927e-06,
+          "extra_median_rms_pa": 5.421865364072034e-07
+        },
+        "peaks": {
+          "cases": 5,
+          "absolute_improved": 5,
+          "median_absolute_error_ratio": 0.12371289977447371,
+          "median_mean_free_error_ratio": 0.11936512117876821,
+          "worst_absolute_error_ratio": 0.19285579270050277,
+          "baseline_median_rms_pa": 3.5278577921690927e-06,
+          "extra_median_rms_pa": 5.421865364072034e-07
+        },
+        "neighbors": {
+          "cases": 10,
+          "absolute_improved": 10,
+          "median_absolute_error_ratio": 0.14546094048616903,
+          "median_mean_free_error_ratio": 0.14196955642003542,
+          "worst_absolute_error_ratio": 0.2879288172349965,
+          "baseline_median_rms_pa": 3.5796120345327962e-06,
+          "extra_median_rms_pa": 6.50642508710274e-07
+        }
+      },
+      "elapsed_s": 68.25829626999621,
+      "baseline_median_s": 0.06136972000240348,
+      "extra_pass_median_s": 0.010719883008277975,
+      "peak_rss_bytes": 749641728,
+      "native_reaped": true,
+      "weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+      "original_trajectory_exact": true,
+      "cuda_initialized": false,
+      "torch_threads": 1,
+      "peak_child_rss_bytes": 731623424,
+      "cpu": 21,
+      "peak_to_adjacent_error_ratio": {
+        "baseline": 0.9983353057519186,
+        "extra": 1.0252728481834488
+      },
+      "rows": [
+        {
+          "step": 39,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.5750581396433067e-06,
+            "mean_free_rms_pa": 1.043684829095999e-06,
+            "mean_free_relative_l2": 1.2976457181568392e-07,
+            "gauge_offset_pa": 1.1796313495204717e-06,
+            "quality": {
+              "residual_l2": 3.1727723701876856e-10,
+              "rhs_l2": 0.0020192928379661928,
+              "relative_residual": 1.571229447524443e-07,
+              "predicted_divergence": 1.7285268919901379e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00013209757672325768,
+              "mean_free_pressure_relative_error_bound": 2.566266679743966e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.535046272238513e-07,
+            "mean_free_rms_pa": 2.3083367922067068e-07,
+            "mean_free_relative_l2": 2.8700267273841978e-08,
+            "gauge_offset_pa": 3.90361703360989e-07,
+            "quality": {
+              "residual_l2": 4.723299935667075e-11,
+              "rhs_l2": 0.0020192928379661928,
+              "relative_residual": 2.3390861626708514e-08,
+              "predicted_divergence": 2.3742621433712565e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.9665340050910433e-05,
+              "mean_free_pressure_relative_error_bound": 3.82039510977873e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.2879288172349965,
+          "mean_free_error_ratio": 0.22117182580933958,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.056546877007349394,
+              "extra_pass_s": 0.010108280999702401,
+              "total_s": 0.0666551580070518
+            },
+            {
+              "baseline_s": 0.05284218599263113,
+              "extra_pass_s": 0.009035513998242095,
+              "total_s": 0.061877699990873225
+            },
+            {
+              "baseline_s": 0.05849383301392663,
+              "extra_pass_s": 0.008597412990638986,
+              "total_s": 0.06709124600456562
+            }
+          ],
+          "oracle_independent_relative_defect": 9.335872431620549e-15
+        },
+        {
+          "step": 40,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 3.5278577921690927e-06,
+            "mean_free_rms_pa": 2.0104221963314477e-06,
+            "mean_free_relative_l2": 2.548651475031905e-07,
+            "gauge_offset_pa": 2.8989624340901717e-06,
+            "quality": {
+              "residual_l2": 4.0297027929481484e-10,
+              "rhs_l2": 0.0019684080611722388,
+              "relative_residual": 2.0471887269900503e-07,
+              "predicted_divergence": 2.2641041445605378e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00016777565855816647,
+              "mean_free_pressure_relative_error_bound": 3.323321824395615e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 6.803678110434159e-07,
+            "mean_free_rms_pa": 3.5257551749371e-07,
+            "mean_free_relative_l2": 4.469668681335704e-08,
+            "gauge_offset_pa": 5.818856096932216e-07,
+            "quality": {
+              "residual_l2": 6.205888616253752e-11,
+              "rhs_l2": 0.0019684080611722388,
+              "relative_residual": 3.152744971262708e-08,
+              "predicted_divergence": 2.877815403803015e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.5838060597239665e-05,
+              "mean_free_pressure_relative_error_bound": 5.118033897827753e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.19285579270050277,
+          "mean_free_error_ratio": 0.17537386830342314,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.053750293009215966,
+              "extra_pass_s": 0.009079823998035863,
+              "total_s": 0.06283011700725183
+            },
+            {
+              "baseline_s": 0.0575543140002992,
+              "extra_pass_s": 0.009346143997390755,
+              "total_s": 0.06690045799768995
+            },
+            {
+              "baseline_s": 0.0582915410050191,
+              "extra_pass_s": 0.009704463998787105,
+              "total_s": 0.0679960050038062
+            }
+          ],
+          "oracle_independent_relative_defect": 9.37811465066163e-15
+        },
+        {
+          "step": 41,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 5.492422639296005e-06,
+            "mean_free_rms_pa": 3.087415138728929e-06,
+            "mean_free_relative_l2": 4.053989316422428e-07,
+            "gauge_offset_pa": 4.54252949465369e-06,
+            "quality": {
+              "residual_l2": 5.581140213587247e-10,
+              "rhs_l2": 0.001891765210256995,
+              "relative_residual": 2.9502288039375943e-07,
+              "predicted_divergence": 2.7319664846342517e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00023236936393391112,
+              "mean_free_pressure_relative_error_bound": 4.7674575925366683e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.733560667063476e-07,
+            "mean_free_rms_pa": 4.6194429744090324e-07,
+            "mean_free_relative_l2": 6.065647677618996e-08,
+            "gauge_offset_pa": 7.411870784860005e-07,
+            "quality": {
+              "residual_l2": 8.244144172769605e-11,
+              "rhs_l2": 0.001891765210256995,
+              "relative_residual": 4.3579108697371825e-08,
+              "predicted_divergence": 3.181805973787958e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.432428615468586e-05,
+              "mean_free_pressure_relative_error_bound": 7.042213147042617e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.15901108200557026,
+          "mean_free_error_ratio": 0.14962169863268956,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0603500970028108,
+              "extra_pass_s": 0.009800530999200419,
+              "total_s": 0.07015062800201122
+            },
+            {
+              "baseline_s": 0.058719201013445854,
+              "extra_pass_s": 0.01020657799381297,
+              "total_s": 0.06892577900725883
+            },
+            {
+              "baseline_s": 0.0594453399971826,
+              "extra_pass_s": 0.010101909007062204,
+              "total_s": 0.0695472490042448
+            }
+          ],
+          "oracle_independent_relative_defect": 1.0746304621944466e-14
+        },
+        {
+          "step": 89,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.6668014297695873e-06,
+            "mean_free_rms_pa": 1.0919012520545216e-06,
+            "mean_free_relative_l2": 1.3604111795930515e-07,
+            "gauge_offset_pa": 1.2593564475730087e-06,
+            "quality": {
+              "residual_l2": 3.2506322683807096e-10,
+              "rhs_l2": 0.0020127665065983965,
+              "relative_residual": 1.6150071345703796e-07,
+              "predicted_divergence": 1.774905028159579e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0001353392539301887,
+              "mean_free_pressure_relative_error_bound": 2.634697616012971e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.7045735322674275e-07,
+            "mean_free_rms_pa": 2.3944603147614125e-07,
+            "mean_free_relative_l2": 2.9832831267150786e-08,
+            "gauge_offset_pa": 4.049638492698317e-07,
+            "quality": {
+              "residual_l2": 4.8519981157716136e-11,
+              "rhs_l2": 0.0020127665065983965,
+              "relative_residual": 2.41061151398607e-08,
+              "predicted_divergence": 2.4374912771056115e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.0201171675020847e-05,
+              "mean_free_pressure_relative_error_bound": 3.932633197773118e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.28225158967602826,
+          "mean_free_error_ratio": 0.21929275291662095,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06183530300040729,
+              "extra_pass_s": 0.01016800400975626,
+              "total_s": 0.07200330701016355
+            },
+            {
+              "baseline_s": 0.05962588399415836,
+              "extra_pass_s": 0.010689773000194691,
+              "total_s": 0.07031565699435305
+            },
+            {
+              "baseline_s": 0.062837469013175,
+              "extra_pass_s": 0.010270129991113208,
+              "total_s": 0.0731075990042882
+            }
+          ],
+          "oracle_independent_relative_defect": 8.790952397016105e-15
+        },
+        {
+          "step": 90,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 3.632635269209884e-06,
+            "mean_free_rms_pa": 2.0687539863087703e-06,
+            "mean_free_relative_l2": 2.6261438228271065e-07,
+            "gauge_offset_pa": 2.9860167352577146e-06,
+            "quality": {
+              "residual_l2": 4.133380753478138e-10,
+              "rhs_l2": 0.0019871366386096418,
+              "relative_residual": 2.0800687145349898e-07,
+              "predicted_divergence": 2.3107290112595048e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00017209226427319007,
+              "mean_free_pressure_relative_error_bound": 3.4134322055087e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 6.981367877897387e-07,
+            "mean_free_rms_pa": 3.617552773865259e-07,
+            "mean_free_relative_l2": 4.59223954791663e-08,
+            "gauge_offset_pa": 5.970997351769401e-07,
+            "quality": {
+              "residual_l2": 6.364647630647921e-11,
+              "rhs_l2": 0.0019871366386096418,
+              "relative_residual": 3.2029239997814806e-08,
+              "predicted_divergence": 2.9432814426429607e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.6499049746083075e-05,
+              "mean_free_pressure_relative_error_bound": 5.256056513434035e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.19218466376383195,
+          "mean_free_error_ratio": 0.1748662623882105,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06192218398791738,
+              "extra_pass_s": 0.009936201997334138,
+              "total_s": 0.07185838598525152
+            },
+            {
+              "baseline_s": 0.061818542002583854,
+              "extra_pass_s": 0.010297240994987078,
+              "total_s": 0.07211578299757093
+            },
+            {
+              "baseline_s": 0.06136972000240348,
+              "extra_pass_s": 0.010344223992433399,
+              "total_s": 0.07171394399483688
+            }
+          ],
+          "oracle_independent_relative_defect": 9.401181743464597e-15
+        },
+        {
+          "step": 91,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 5.602520559910186e-06,
+            "mean_free_rms_pa": 3.147593030014107e-06,
+            "mean_free_relative_l2": 4.1352953980179217e-07,
+            "gauge_offset_pa": 4.634748616874809e-06,
+            "quality": {
+              "residual_l2": 5.689090931109477e-10,
+              "rhs_l2": 0.0019363635859251597,
+              "relative_residual": 2.9380282569150523e-07,
+              "predicted_divergence": 2.78688607954769e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00023686386480772578,
+              "mean_free_pressure_relative_error_bound": 4.862360782679377e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.913982523843469e-07,
+            "mean_free_rms_pa": 4.7122361484444567e-07,
+            "mean_free_relative_l2": 6.190917400445738e-08,
+            "gauge_offset_pa": 7.566631675764331e-07,
+            "quality": {
+              "residual_l2": 8.409377433960016e-11,
+              "rhs_l2": 0.0019363635859251597,
+              "relative_residual": 4.342871088407793e-08,
+              "predicted_divergence": 3.246099368470201e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.501223066663468e-05,
+              "mean_free_pressure_relative_error_bound": 7.187333987544844e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1591066454557798,
+          "mean_free_error_ratio": 0.14970919377157654,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06148644399945624,
+              "extra_pass_s": 0.010719883008277975,
+              "total_s": 0.07220632700773422
+            },
+            {
+              "baseline_s": 0.06207644900132436,
+              "extra_pass_s": 0.010153009003261104,
+              "total_s": 0.07222945800458547
+            },
+            {
+              "baseline_s": 0.06007499399129301,
+              "extra_pass_s": 0.010286390999681316,
+              "total_s": 0.07036138499097433
+            }
+          ],
+          "oracle_independent_relative_defect": 1.1150202776313363e-14
+        },
+        {
+          "step": 456,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 7.71101918562113e-06,
+            "mean_free_rms_pa": 3.939173560662364e-06,
+            "mean_free_relative_l2": 7.549551361147508e-07,
+            "gauge_offset_pa": 6.6289311762904685e-06,
+            "quality": {
+              "residual_l2": 7.967861935785828e-10,
+              "rhs_l2": 0.004712764888852006,
+              "relative_residual": 1.6906979498666946e-07,
+              "predicted_divergence": 3.731345468253414e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0003317399203525369,
+              "mean_free_pressure_relative_error_bound": 9.934232610416527e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.1716493755454532e-06,
+            "mean_free_rms_pa": 5.825945015283067e-07,
+            "mean_free_relative_l2": 1.1165608837175766e-07,
+            "gauge_offset_pa": 1.016536229558511e-06,
+            "quality": {
+              "residual_l2": 1.0455679479005415e-10,
+              "rhs_l2": 0.004712764888852006,
+              "relative_residual": 2.218587119365579e-08,
+              "predicted_divergence": 4.227124372757629e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.353195757595447e-05,
+              "mean_free_pressure_relative_error_bound": 1.303599920476962e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.15194481395277137,
+          "mean_free_error_ratio": 0.1478976471984506,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.05022432700206991,
+              "extra_pass_s": 0.010310976998880506,
+              "total_s": 0.06053530400095042
+            },
+            {
+              "baseline_s": 0.05255778500577435,
+              "extra_pass_s": 0.00990422599716112,
+              "total_s": 0.06246201100293547
+            },
+            {
+              "baseline_s": 0.0520647580124205,
+              "extra_pass_s": 0.01053678200696595,
+              "total_s": 0.06260154001938645
+            }
+          ],
+          "oracle_independent_relative_defect": 1.5776138621130218e-14
+        },
+        {
+          "step": 457,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 1.4016896550494652e-06,
+            "mean_free_rms_pa": 7.361582024365315e-07,
+            "mean_free_relative_l2": 1.4300685924733677e-07,
+            "gauge_offset_pa": 1.1928138958186662e-06,
+            "quality": {
+              "residual_l2": 1.287411551957745e-10,
+              "rhs_l2": 0.004724715235935073,
+              "relative_residual": 2.724844752898536e-08,
+              "predicted_divergence": 4.931395319873744e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.360105498179381e-05,
+              "mean_free_pressure_relative_error_bound": 1.6269686064089947e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.7340709181005112e-07,
+            "mean_free_rms_pa": 8.787161304058076e-08,
+            "mean_free_relative_l2": 1.70700310834534e-08,
+            "gauge_offset_pa": 1.494944785323723e-07,
+            "quality": {
+              "residual_l2": 1.6647278675780108e-11,
+              "rhs_l2": 0.004724715235935073,
+              "relative_residual": 3.5234459315483867e-09,
+              "predicted_divergence": 5.3412566383692627e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 6.931052453590388e-06,
+              "mean_free_pressure_relative_error_bound": 2.1038023553685897e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.12371289977447371,
+          "mean_free_error_ratio": 0.11936512117876821,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0656669449963374,
+              "extra_pass_s": 0.010645337999449112,
+              "total_s": 0.07631228299578652
+            },
+            {
+              "baseline_s": 0.0687585280102212,
+              "extra_pass_s": 0.011655264999717474,
+              "total_s": 0.08041379300993867
+            },
+            {
+              "baseline_s": 0.06835045698971953,
+              "extra_pass_s": 0.011321430996758863,
+              "total_s": 0.0796718879864784
+            }
+          ],
+          "oracle_independent_relative_defect": 1.7377489587220278e-14
+        },
+        {
+          "step": 458,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.4925876114947426e-06,
+            "mean_free_rms_pa": 8.134394146886603e-07,
+            "mean_free_relative_l2": 1.6017018170866938e-07,
+            "gauge_offset_pa": 1.2514527944027897e-06,
+            "quality": {
+              "residual_l2": 1.435134249252028e-10,
+              "rhs_l2": 0.004734638766853681,
+              "relative_residual": 3.0311377909105424e-08,
+              "predicted_divergence": 5.113211150783078e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.975145219369458e-05,
+              "mean_free_pressure_relative_error_bound": 1.8383366958622281e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.782457931952799e-07,
+            "mean_free_rms_pa": 9.267716362196283e-08,
+            "mean_free_relative_l2": 1.8248584798728227e-08,
+            "gauge_offset_pa": 1.522580248617538e-07,
+            "quality": {
+              "residual_l2": 1.852736271193897e-11,
+              "rhs_l2": 0.004734638766853681,
+              "relative_residual": 3.913152327828169e-09,
+              "predicted_divergence": 5.774637111081541e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 7.713820696110016e-06,
+              "mean_free_pressure_relative_error_bound": 2.3732639135118155e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.11942065700034638,
+          "mean_free_error_ratio": 0.11393247234944294,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07244206200994086,
+              "extra_pass_s": 0.010874836007133126,
+              "total_s": 0.08331689801707398
+            },
+            {
+              "baseline_s": 0.07344483899942134,
+              "extra_pass_s": 0.012067621006281115,
+              "total_s": 0.08551246000570245
+            },
+            {
+              "baseline_s": 0.069793293994735,
+              "extra_pass_s": 0.011782813002355397,
+              "total_s": 0.08157610699709039
+            }
+          ],
+          "oracle_independent_relative_defect": 1.6945008756759302e-14
+        },
+        {
+          "step": 480,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 8.664436574183951e-06,
+            "mean_free_rms_pa": 4.713651049815168e-06,
+            "mean_free_relative_l2": 6.435855101960595e-07,
+            "gauge_offset_pa": -7.270072553189056e-06,
+            "quality": {
+              "residual_l2": 1.1096128391033032e-09,
+              "rhs_l2": 0.004488204874575355,
+              "relative_residual": 2.4722865156824815e-07,
+              "predicted_divergence": 4.693243840780958e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00046198450454196786,
+              "mean_free_pressure_relative_error_bound": 9.855905898121303e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.2041579824571478e-06,
+            "mean_free_rms_pa": 6.412519973400173e-07,
+            "mean_free_relative_l2": 8.755431607278186e-08,
+            "gauge_offset_pa": -1.0192116181749044e-06,
+            "quality": {
+              "residual_l2": 1.3773800520764695e-10,
+              "rhs_l2": 0.004488204874575355,
+              "relative_residual": 3.0688885435667384e-08,
+              "predicted_divergence": 5.319713789845674e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.734687077330193e-05,
+              "mean_free_pressure_relative_error_bound": 1.2234285475971028e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1389770670195667,
+          "mean_free_error_ratio": 0.13604146564162023,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.061267897006473504,
+              "extra_pass_s": 0.011916952003957704,
+              "total_s": 0.07318484901043121
+            },
+            {
+              "baseline_s": 0.06213406199822202,
+              "extra_pass_s": 0.011763472008169629,
+              "total_s": 0.07389753400639165
+            },
+            {
+              "baseline_s": 0.05769147499813698,
+              "extra_pass_s": 0.012213598005473614,
+              "total_s": 0.0699050730036106
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2399281341672279e-14
+        },
+        {
+          "step": 481,
+          "roles": [
+            "selected_peak",
+            "worst_error_step"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 1.0737947488474158e-06,
+            "mean_free_rms_pa": 6.768105397340552e-07,
+            "mean_free_relative_l2": 9.011769212026662e-08,
+            "gauge_offset_pa": -8.33644202257283e-07,
+            "quality": {
+              "residual_l2": 1.4489630204990583e-10,
+              "rhs_l2": 0.004483751339160183,
+              "relative_residual": 3.231586479482273e-08,
+              "predicted_divergence": 5.127210304471201e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 6.032720959373927e-05,
+              "mean_free_pressure_relative_error_bound": 1.255093965223806e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.0871781149861485e-07,
+            "mean_free_rms_pa": 6.719129415000329e-08,
+            "mean_free_relative_l2": 8.946557424699028e-09,
+            "gauge_offset_pa": -8.546866400907456e-08,
+            "quality": {
+              "residual_l2": 1.594230269888617e-11,
+              "rhs_l2": 0.004483751339160183,
+              "relative_residual": 3.5555724421310572e-09,
+              "predicted_divergence": 5.3175032895443524e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 6.637537485196063e-06,
+              "mean_free_pressure_relative_error_bound": 1.380924592731435e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.10124636166763695,
+          "mean_free_error_ratio": 0.0992763708679911,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07609066901204642,
+              "extra_pass_s": 0.012406555993948132,
+              "total_s": 0.08849722500599455
+            },
+            {
+              "baseline_s": 0.07504057300684508,
+              "extra_pass_s": 0.011947926992434077,
+              "total_s": 0.08698849999927916
+            },
+            {
+              "baseline_s": 0.07368076400598511,
+              "extra_pass_s": 0.012754125986248255,
+              "total_s": 0.08643488999223337
+            }
+          ],
+          "oracle_independent_relative_defect": 1.3224272401322852e-14
+        },
+        {
+          "step": 482,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.3198893535012303e-06,
+            "mean_free_rms_pa": 9.338146766233649e-07,
+            "mean_free_relative_l2": 1.2095304714163905e-07,
+            "gauge_offset_pa": -9.327904669370804e-07,
+            "quality": {
+              "residual_l2": 1.9299883573492096e-10,
+              "rhs_l2": 0.00449492487239695,
+              "relative_residual": 4.2937054837137465e-08,
+              "predicted_divergence": 7.506642455782734e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.035457806727238e-05,
+              "mean_free_pressure_relative_error_bound": 1.6262481036627959e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.2339895866450662e-07,
+            "mean_free_rms_pa": 9.12858621116822e-08,
+            "mean_free_relative_l2": 1.1823869831736156e-08,
+            "gauge_offset_pa": -8.303128553751014e-08,
+            "quality": {
+              "residual_l2": 2.1217355793899692e-11,
+              "rhs_l2": 0.00449492487239695,
+              "relative_residual": 4.7202915279394625e-09,
+              "predicted_divergence": 7.151593391559648e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 8.83379252537906e-06,
+              "mean_free_pressure_relative_error_bound": 1.7878181567944228e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.09349189637538174,
+          "mean_free_error_ratio": 0.0977558656946452,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07420201700006146,
+              "extra_pass_s": 0.012175044001196511,
+              "total_s": 0.08637706100125797
+            },
+            {
+              "baseline_s": 0.07683810500020627,
+              "extra_pass_s": 0.013363107005716302,
+              "total_s": 0.09020121200592257
+            },
+            {
+              "baseline_s": 0.07022066100034863,
+              "extra_pass_s": 0.012764291997882538,
+              "total_s": 0.08298495299823117
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2689139822217254e-14
+        },
+        {
+          "step": 503,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 4.452227498561903e-07,
+            "mean_free_rms_pa": 3.689455725097316e-07,
+            "mean_free_relative_l2": 6.294253370219204e-08,
+            "gauge_offset_pa": 2.492036546982691e-07,
+            "quality": {
+              "residual_l2": 1.0055875562286838e-10,
+              "rhs_l2": 0.005330364833785808,
+              "relative_residual": 1.8865266967373432e-08,
+              "predicted_divergence": 4.526379400922783e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.1867384061029836e-05,
+              "mean_free_pressure_relative_error_bound": 1.1160349817785908e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.155396417959104e-08,
+            "mean_free_rms_pa": 4.548538779858705e-08,
+            "mean_free_relative_l2": 7.759858818726776e-09,
+            "gauge_offset_pa": -2.4267070681124714e-08,
+            "quality": {
+              "residual_l2": 1.1839037888451607e-11,
+              "rhs_l2": 0.005330364833785808,
+              "relative_residual": 2.2210558296894504e-09,
+              "predicted_divergence": 6.072266023338102e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.929153539328057e-06,
+              "mean_free_pressure_relative_error_bound": 1.3139362510697592e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.11579364306123908,
+          "mean_free_error_ratio": 0.12328481810792645,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07040460099233314,
+              "extra_pass_s": 0.011687110003549606,
+              "total_s": 0.08209171099588275
+            },
+            {
+              "baseline_s": 0.06992492300923914,
+              "extra_pass_s": 0.011116709996713325,
+              "total_s": 0.08104163300595246
+            },
+            {
+              "baseline_s": 0.06590990099357441,
+              "extra_pass_s": 0.011950531014008448,
+              "total_s": 0.07786043200758286
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2453794642569334e-14
+        },
+        {
+          "step": 504,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 6.134903698972096e-06,
+            "mean_free_rms_pa": 3.4349579330352517e-06,
+            "mean_free_relative_l2": 5.932846336790918e-07,
+            "gauge_offset_pa": 5.083119848472953e-06,
+            "quality": {
+              "residual_l2": 7.889324898439557e-10,
+              "rhs_l2": 0.005322024262828149,
+              "relative_residual": 1.4823917571257243e-07,
+              "predicted_divergence": 2.5951807059813405e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00032847005062789216,
+              "mean_free_pressure_relative_error_bound": 8.864572743072625e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.421865364072034e-07,
+            "mean_free_rms_pa": 2.8765817286140626e-07,
+            "mean_free_relative_l2": 4.968421070591458e-08,
+            "gauge_offset_pa": 4.595857002206193e-07,
+            "quality": {
+              "residual_l2": 8.001532681811042e-11,
+              "rhs_l2": 0.005322024262828149,
+              "relative_residual": 1.5034754233831677e-08,
+              "predicted_divergence": 3.041987631698569e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.331417933637204e-05,
+              "mean_free_pressure_relative_error_bound": 8.990645164842421e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.08837735081286555,
+          "mean_free_error_ratio": 0.08374430734504548,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.057314399993629195,
+              "extra_pass_s": 0.011598962999414653,
+              "total_s": 0.06891336299304385
+            },
+            {
+              "baseline_s": 0.0563133760006167,
+              "extra_pass_s": 0.0109613769891439,
+              "total_s": 0.0672747529897606
+            },
+            {
+              "baseline_s": 0.056773917996906675,
+              "extra_pass_s": 0.010847402998479083,
+              "total_s": 0.06762132099538576
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2417314732204153e-14
+        },
+        {
+          "step": 505,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 6.394179650701772e-06,
+            "mean_free_rms_pa": 3.076174178384458e-06,
+            "mean_free_relative_l2": 5.375258385512266e-07,
+            "gauge_offset_pa": 5.605594154921433e-06,
+            "quality": {
+              "residual_l2": 6.932309279942001e-10,
+              "rhs_l2": 0.005324809281388276,
+              "relative_residual": 1.3018887463579955e-07,
+              "predicted_divergence": 2.6465172130174517e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0002886249469331829,
+              "mean_free_pressure_relative_error_bound": 7.880298532007101e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.308276641938051e-07,
+            "mean_free_rms_pa": 3.8181566386482276e-07,
+            "mean_free_relative_l2": 6.671786868671969e-08,
+            "gauge_offset_pa": 7.378966095715569e-07,
+            "quality": {
+              "residual_l2": 7.991120401807752e-11,
+              "rhs_l2": 0.005324809281388276,
+              "relative_residual": 1.5007336374917675e-08,
+              "predicted_divergence": 2.8875090790636547e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.327082807141769e-05,
+              "mean_free_pressure_relative_error_bound": 9.08389496671838e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.12993498925270583,
+          "mean_free_error_ratio": 0.12412030064739192,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.053391661000205204,
+              "extra_pass_s": 0.010820569994393736,
+              "total_s": 0.06421223099459894
+            },
+            {
+              "baseline_s": 0.05524437699932605,
+              "extra_pass_s": 0.011004075000528246,
+              "total_s": 0.0662484519998543
+            },
+            {
+              "baseline_s": 0.05552335700485855,
+              "extra_pass_s": 0.010398452010122128,
+              "total_s": 0.06592180901498068
+            }
+          ],
+          "oracle_independent_relative_defect": 1.3586965472775482e-14
+        }
+      ]
+    },
+    {
+      "id": "C55",
+      "groups": {
+        "all": {
+          "cases": 21,
+          "absolute_improved": 21,
+          "median_absolute_error_ratio": 0.13945200898709703,
+          "median_mean_free_error_ratio": 0.13945031268133842,
+          "worst_absolute_error_ratio": 0.1481371784513251,
+          "baseline_median_rms_pa": 2.95100535560428e-06,
+          "extra_median_rms_pa": 4.060765329743064e-07
+        },
+        "peaks": {
+          "cases": 6,
+          "absolute_improved": 6,
+          "median_absolute_error_ratio": 0.1410236638388804,
+          "median_mean_free_error_ratio": 0.1410151883485714,
+          "worst_absolute_error_ratio": 0.1474214261594276,
+          "baseline_median_rms_pa": 3.543435508683089e-06,
+          "extra_median_rms_pa": 4.86402971540648e-07
+        },
+        "neighbors": {
+          "cases": 15,
+          "absolute_improved": 15,
+          "median_absolute_error_ratio": 0.1393415474205177,
+          "median_mean_free_error_ratio": 0.1392860190505411,
+          "worst_absolute_error_ratio": 0.1481371784513251,
+          "baseline_median_rms_pa": 2.170855711875764e-06,
+          "extra_median_rms_pa": 2.8377091117439644e-07
+        }
+      },
+      "elapsed_s": 70.82067207200453,
+      "baseline_median_s": 0.06606743599695619,
+      "extra_pass_median_s": 0.010505956000997685,
+      "peak_rss_bytes": 748236800,
+      "native_reaped": true,
+      "weights_sha256": "632b0d5171e562c1f7f9582a747c3268105d65f677bf3364dd8e2aeaf5c2199b",
+      "original_trajectory_exact": true,
+      "cuda_initialized": false,
+      "torch_threads": 1,
+      "peak_child_rss_bytes": 730501120,
+      "cpu": 22,
+      "peak_to_adjacent_error_ratio": {
+        "baseline": 1.5088787778625918,
+        "extra": 1.5158785657629177
+      },
+      "rows": [
+        {
+          "step": 21,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 6.074094612213528e-07,
+            "mean_free_rms_pa": 4.0133448005810276e-07,
+            "mean_free_relative_l2": 1.058350276926489e-07,
+            "gauge_offset_pa": 4.5593518036855455e-07,
+            "quality": {
+              "residual_l2": 8.865487748439828e-11,
+              "rhs_l2": 0.0010853440148029313,
+              "relative_residual": 8.168366552470055e-08,
+              "predicted_divergence": 3.1019243724543045e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.6911234447284163e-05,
+              "mean_free_pressure_relative_error_bound": 1.520903485559224e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.771886677715556e-08,
+            "mean_free_rms_pa": 5.770317126593997e-08,
+            "mean_free_relative_l2": 1.5216775613199948e-08,
+            "gauge_offset_pa": 6.60677199131464e-08,
+            "quality": {
+              "residual_l2": 1.2706650439019686e-11,
+              "rhs_l2": 0.0010853440148029313,
+              "relative_residual": 1.1707486534881629e-08,
+              "predicted_divergence": 4.3893768018425184e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.2903818346247285e-06,
+              "mean_free_pressure_relative_error_bound": 2.1798670866018912e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14441471919251017,
+          "mean_free_error_ratio": 0.1437782551292031,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07296935199701693,
+              "extra_pass_s": 0.01053453900385648,
+              "total_s": 0.08350389100087341
+            },
+            {
+              "baseline_s": 0.07211321899376344,
+              "extra_pass_s": 0.010263677992043085,
+              "total_s": 0.08237689698580652
+            },
+            {
+              "baseline_s": 0.07346139899163973,
+              "extra_pass_s": 0.010372964010457508,
+              "total_s": 0.08383436300209723
+            }
+          ],
+          "oracle_independent_relative_defect": 1.959751490139703e-14
+        },
+        {
+          "step": 22,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 4.047748394641739e-06,
+            "mean_free_rms_pa": 2.651573704871283e-06,
+            "mean_free_relative_l2": 6.36218347053951e-07,
+            "gauge_offset_pa": 3.0583367953775062e-06,
+            "quality": {
+              "residual_l2": 5.943576221906197e-10,
+              "rhs_l2": 0.001175098571655268,
+              "relative_residual": 5.057938427696285e-07,
+              "predicted_divergence": 2.1019938227506698e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00024745929564979767,
+              "mean_free_pressure_relative_error_bound": 9.277413525888574e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.706528467167568e-07,
+            "mean_free_rms_pa": 3.73685721825516e-07,
+            "mean_free_relative_l2": 8.966211718751124e-08,
+            "gauge_offset_pa": 4.312814078646115e-07,
+            "quality": {
+              "residual_l2": 8.336662550082843e-11,
+              "rhs_l2": 0.001175098571655268,
+              "relative_residual": 7.094436799748339e-08,
+              "predicted_divergence": 2.898354975004273e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.470948408316895e-05,
+              "mean_free_pressure_relative_error_bound": 1.3012800097561526e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14098031574100953,
+          "mean_free_error_ratio": 0.14092978865305802,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06444930100406054,
+              "extra_pass_s": 0.010820466006407514,
+              "total_s": 0.07526976701046806
+            },
+            {
+              "baseline_s": 0.06475826899986714,
+              "extra_pass_s": 0.011089756997535005,
+              "total_s": 0.07584802599740215
+            },
+            {
+              "baseline_s": 0.06569466799555812,
+              "extra_pass_s": 0.00966289298958145,
+              "total_s": 0.07535756098513957
+            }
+          ],
+          "oracle_independent_relative_defect": 1.8979125915213603e-14
+        },
+        {
+          "step": 23,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.465496444707591e-06,
+            "mean_free_rms_pa": 2.267502950390035e-06,
+            "mean_free_relative_l2": 5.002252128022804e-07,
+            "gauge_offset_pa": 2.620705244443456e-06,
+            "quality": {
+              "residual_l2": 5.205489819605923e-10,
+              "rhs_l2": 0.0012598115096490677,
+              "relative_residual": 4.1319592492498825e-07,
+              "predicted_divergence": 1.8325823992563587e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00021672925460670644,
+              "mean_free_pressure_relative_error_bound": 7.470605014913732e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.825043875171505e-07,
+            "mean_free_rms_pa": 3.1538315287431313e-07,
+            "mean_free_relative_l2": 6.957547937640853e-08,
+            "gauge_offset_pa": 3.6516291002285283e-07,
+            "quality": {
+              "residual_l2": 7.14293893309369e-11,
+              "rhs_l2": 0.0012598115096490677,
+              "relative_residual": 5.669847336990454e-08,
+              "predicted_divergence": 2.5018290772393923e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.9739445937247352e-05,
+              "mean_free_pressure_relative_error_bound": 1.0251105051825575e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1392309573002211,
+          "mean_free_error_ratio": 0.13908830981678053,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.06606743599695619,
+              "extra_pass_s": 0.010681045998353511,
+              "total_s": 0.0767484819953097
+            },
+            {
+              "baseline_s": 0.0645412860030774,
+              "extra_pass_s": 0.010864447001949884,
+              "total_s": 0.07540573300502729
+            },
+            {
+              "baseline_s": 0.06261683200136758,
+              "extra_pass_s": 0.010455204988829792,
+              "total_s": 0.07307203699019738
+            }
+          ],
+          "oracle_independent_relative_defect": 1.883553128969601e-14
+        },
+        {
+          "step": 71,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 6.058985832818972e-07,
+            "mean_free_rms_pa": 3.998639176947461e-07,
+            "mean_free_relative_l2": 1.0611866586781883e-07,
+            "gauge_offset_pa": 4.55216366740937e-07,
+            "quality": {
+              "residual_l2": 8.833327887530051e-11,
+              "rhs_l2": 0.0010360894791414384,
+              "relative_residual": 8.525641911594199e-08,
+              "predicted_divergence": 3.08622566160451e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.677733767820433e-05,
+              "mean_free_pressure_relative_error_bound": 1.525035604511618e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.74853514375881e-08,
+            "mean_free_rms_pa": 5.751621439677179e-08,
+            "mean_free_relative_l2": 1.526405276260077e-08,
+            "gauge_offset_pa": 6.592095112802057e-08,
+            "quality": {
+              "residual_l2": 1.266522137180433e-11,
+              "rhs_l2": 0.0010360894791414384,
+              "relative_residual": 1.222406136417816e-08,
+              "predicted_divergence": 4.3732605731205966e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.273132947069869e-06,
+              "mean_free_pressure_relative_error_bound": 2.1865948789955174e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14438943059367598,
+          "mean_free_error_ratio": 0.14383947100893296,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07574267899326514,
+              "extra_pass_s": 0.010436839002068155,
+              "total_s": 0.0861795179953333
+            },
+            {
+              "baseline_s": 0.07363058600458317,
+              "extra_pass_s": 0.010618627988151275,
+              "total_s": 0.08424921399273444
+            },
+            {
+              "baseline_s": 0.07492234000528697,
+              "extra_pass_s": 0.010695535995182581,
+              "total_s": 0.08561787600046955
+            }
+          ],
+          "oracle_independent_relative_defect": 1.88864614057268e-14
+        },
+        {
+          "step": 72,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 4.0308877097511785e-06,
+            "mean_free_rms_pa": 2.6357581848074826e-06,
+            "mean_free_relative_l2": 6.361443714920207e-07,
+            "gauge_offset_pa": 3.0497269582445337e-06,
+            "quality": {
+              "residual_l2": 5.912417623263524e-10,
+              "rhs_l2": 0.0011253651707605597,
+              "relative_residual": 5.253776975581813e-07,
+              "predicted_divergence": 2.0840218516171573e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00024616201526073974,
+              "mean_free_pressure_relative_error_bound": 9.28307420269148e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.686252846671735e-07,
+            "mean_free_rms_pa": 3.719070298183454e-07,
+            "mean_free_relative_l2": 8.976034489845887e-08,
+            "gauge_offset_pa": 4.3013936757116336e-07,
+            "quality": {
+              "residual_l2": 8.299262346897275e-11,
+              "rhs_l2": 0.0011253651707605597,
+              "relative_residual": 7.374728277123019e-08,
+              "predicted_divergence": 2.8794778089702434e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.4553769281306916e-05,
+              "mean_free_pressure_relative_error_bound": 1.303063766589749e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14106701193675128,
+          "mean_free_error_ratio": 0.14110058804408482,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0635424670035718,
+              "extra_pass_s": 0.010304199997335672,
+              "total_s": 0.07384666700090747
+            },
+            {
+              "baseline_s": 0.06453070900170133,
+              "extra_pass_s": 0.011692583007970825,
+              "total_s": 0.07622329200967215
+            },
+            {
+              "baseline_s": 0.06930125899089035,
+              "extra_pass_s": 0.011313584007439204,
+              "total_s": 0.08061484299832955
+            }
+          ],
+          "oracle_independent_relative_defect": 1.8984681756105565e-14
+        },
+        {
+          "step": 73,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.4466682259240136e-06,
+            "mean_free_rms_pa": 2.250494765443982e-06,
+            "mean_free_relative_l2": 4.991878769282164e-07,
+            "gauge_offset_pa": 2.610516265090762e-06,
+            "quality": {
+              "residual_l2": 5.171779141145282e-10,
+              "rhs_l2": 0.0012098747732948547,
+              "relative_residual": 4.2746400332498574e-07,
+              "predicted_divergence": 1.8166223442195316e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.000215325719018654,
+              "mean_free_pressure_relative_error_bound": 7.462811104537967e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.802640840453825e-07,
+            "mean_free_rms_pa": 3.134624567727735e-07,
+            "mean_free_relative_l2": 6.952989213562271e-08,
+            "gauge_offset_pa": 3.638610704897231e-07,
+            "quality": {
+              "residual_l2": 7.102004813331175e-11,
+              "rhs_l2": 0.0012098747732948547,
+              "relative_residual": 5.870032973735182e-08,
+              "predicted_divergence": 2.495793296567831e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.956901776292459e-05,
+              "mean_free_pressure_relative_error_bound": 1.0248091986311535e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1393415474205177,
+          "mean_free_error_ratio": 0.1392860190505411,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07054326900106389,
+              "extra_pass_s": 0.012094707009964623,
+              "total_s": 0.08263797601102851
+            },
+            {
+              "baseline_s": 0.0739642809930956,
+              "extra_pass_s": 0.012347666008281521,
+              "total_s": 0.08631194700137712
+            },
+            {
+              "baseline_s": 0.07373173000814859,
+              "extra_pass_s": 0.011859553997055627,
+              "total_s": 0.08559128400520422
+            }
+          ],
+          "oracle_independent_relative_defect": 1.8801966454799288e-14
+        },
+        {
+          "step": 121,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 6.043607526132007e-07,
+            "mean_free_rms_pa": 3.983977617620422e-07,
+            "mean_free_relative_l2": 1.0667195552277228e-07,
+            "gauge_offset_pa": 4.544569756557706e-07,
+            "quality": {
+              "residual_l2": 8.802467237841968e-11,
+              "rhs_l2": 0.0010024801005553228,
+              "relative_residual": 8.780690243093953e-08,
+              "predicted_divergence": 3.071727555185403e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.664885014224978e-05,
+              "mean_free_pressure_relative_error_bound": 1.5332531019806975e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.72494549443008e-08,
+            "mean_free_rms_pa": 5.7327407446599685e-08,
+            "mean_free_relative_l2": 1.5349550736261595e-08,
+            "gauge_offset_pa": 6.577260633066867e-08,
+            "quality": {
+              "residual_l2": 1.2624287501491916e-11,
+              "rhs_l2": 0.0010024801005553228,
+              "relative_residual": 1.2593055457658168e-08,
+              "predicted_divergence": 4.351609258120466e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.256090233495514e-06,
+              "mean_free_pressure_relative_error_bound": 2.1989543842709877e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14436651381983712,
+          "mean_free_error_ratio": 0.14389490340771693,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.085410829007742,
+              "extra_pass_s": 0.012096653008484282,
+              "total_s": 0.09750748201622628
+            },
+            {
+              "baseline_s": 0.08835809500305913,
+              "extra_pass_s": 0.012657793005928397,
+              "total_s": 0.10101588800898753
+            },
+            {
+              "baseline_s": 0.08753009300562553,
+              "extra_pass_s": 0.01212576100078877,
+              "total_s": 0.0996558540064143
+            }
+          ],
+          "oracle_independent_relative_defect": 1.8234422880877712e-14
+        },
+        {
+          "step": 122,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 4.014667428894241e-06,
+            "mean_free_rms_pa": 2.620896562573069e-06,
+            "mean_free_relative_l2": 6.379803540039036e-07,
+            "gauge_offset_pa": 3.0411273851841468e-06,
+            "quality": {
+              "residual_l2": 5.883737013050373e-10,
+              "rhs_l2": 0.0010867914503393875,
+              "relative_residual": 5.413860231613873e-07,
+              "predicted_divergence": 2.0684906681019597e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.000244967905294421,
+              "mean_free_pressure_relative_error_bound": 9.317239819552195e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.667294101069895e-07,
+            "mean_free_rms_pa": 3.702157737647311e-07,
+            "mean_free_relative_l2": 9.01181655839069e-08,
+            "gauge_offset_pa": 4.2909498381593515e-07,
+            "quality": {
+              "residual_l2": 8.263949475709398e-11,
+              "rhs_l2": 0.0010867914503393875,
+              "relative_residual": 7.603988302565962e-08,
+              "predicted_divergence": 2.861899393395243e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.440674503352633e-05,
+              "mean_free_pressure_relative_error_bound": 1.3086428248402982e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1411647216474625,
+          "mean_free_error_ratio": 0.14125539292602654,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07514051700127311,
+              "extra_pass_s": 0.012735276002786122,
+              "total_s": 0.08787579300405923
+            },
+            {
+              "baseline_s": 0.07609669498924632,
+              "extra_pass_s": 0.012156495999079198,
+              "total_s": 0.08825319098832551
+            },
+            {
+              "baseline_s": 0.07765795200248249,
+              "extra_pass_s": 0.012670733995037153,
+              "total_s": 0.09032868599751964
+            }
+          ],
+          "oracle_independent_relative_defect": 1.9856184364053744e-14
+        },
+        {
+          "step": 123,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.4273683662843907e-06,
+            "mean_free_rms_pa": 2.233883116495446e-06,
+            "mean_free_relative_l2": 4.995403720971309e-07,
+            "gauge_offset_pa": 2.599349945667864e-06,
+            "quality": {
+              "residual_l2": 5.139505296500715e-10,
+              "rhs_l2": 0.00116841565956616,
+              "relative_residual": 4.3986960072146287e-07,
+              "predicted_divergence": 1.8116180622769946e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00021398200564383098,
+              "mean_free_pressure_relative_error_bound": 7.476665013703755e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.779534042171829e-07,
+            "mean_free_rms_pa": 3.115156990888527e-07,
+            "mean_free_relative_l2": 6.966106108589704e-08,
+            "gauge_offset_pa": 3.6248782851838927e-07,
+            "quality": {
+              "residual_l2": 7.061502802644602e-11,
+              "rhs_l2": 0.00116841565956616,
+              "relative_residual": 6.043656420409995e-08,
+              "predicted_divergence": 2.4914383311055074e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.9400388663831672e-05,
+              "mean_free_pressure_relative_error_bound": 1.0272669440220443e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13945200898709703,
+          "mean_free_error_ratio": 0.13945031268133842,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07943206900381483,
+              "extra_pass_s": 0.012807177001377568,
+              "total_s": 0.0922392460051924
+            },
+            {
+              "baseline_s": 0.07859446200018283,
+              "extra_pass_s": 0.013149428996257484,
+              "total_s": 0.09174389099644031
+            },
+            {
+              "baseline_s": 0.07707908100564964,
+              "extra_pass_s": 0.01216138199379202,
+              "total_s": 0.08924046299944166
+            }
+          ],
+          "oracle_independent_relative_defect": 1.9034741127525266e-14
+        },
+        {
+          "step": 255,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 1.0973290209250308e-06,
+            "mean_free_rms_pa": 6.620519965063393e-07,
+            "mean_free_relative_l2": 1.897429743769865e-07,
+            "gauge_offset_pa": 8.7511035537597e-07,
+            "quality": {
+              "residual_l2": 1.3936010098030064e-10,
+              "rhs_l2": 0.0021127387317066673,
+              "relative_residual": 6.596182428469315e-08,
+              "predicted_divergence": 4.2985257517798767e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.8022226253556303e-05,
+              "mean_free_pressure_relative_error_bound": 2.5982930357013997e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 1.242287471150737e-07,
+            "mean_free_rms_pa": 7.307606415721025e-08,
+            "mean_free_relative_l2": 2.0943475500598087e-08,
+            "gauge_offset_pa": 1.004622837540149e-07,
+            "quality": {
+              "residual_l2": 1.6390766449324073e-11,
+              "rhs_l2": 0.0021127387317066673,
+              "relative_residual": 7.758065965915074e-09,
+              "predicted_divergence": 5.5110119419332635e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 6.824254235624546e-06,
+              "mean_free_pressure_relative_error_bound": 3.055968283001892e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.11321011724482676,
+          "mean_free_error_ratio": 0.11037813425959593,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07564138699672185,
+              "extra_pass_s": 0.012832259992137551,
+              "total_s": 0.0884736469888594
+            },
+            {
+              "baseline_s": 0.07253615600347985,
+              "extra_pass_s": 0.012745786007144488,
+              "total_s": 0.08528194201062433
+            },
+            {
+              "baseline_s": 0.07102254500205163,
+              "extra_pass_s": 0.011592833994654939,
+              "total_s": 0.08261537899670657
+            }
+          ],
+          "oracle_independent_relative_defect": 1.4538296466271502e-14
+        },
+        {
+          "step": 256,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 6.427778528743932e-07,
+            "mean_free_rms_pa": 4.925923504943238e-07,
+            "mean_free_relative_l2": 1.454758998058594e-07,
+            "gauge_offset_pa": 4.129360051875982e-07,
+            "quality": {
+              "residual_l2": 1.1176618688516586e-10,
+              "rhs_l2": 0.0021212041537298594,
+              "relative_residual": 5.2689971726031026e-08,
+              "predicted_divergence": 3.3656009108123943e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.653356977593629e-05,
+              "mean_free_pressure_relative_error_bound": 2.1472858203562812e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 6.501898851104206e-08,
+            "mean_free_rms_pa": 5.105003860607687e-08,
+            "mean_free_relative_l2": 1.5076462908711918e-08,
+            "gauge_offset_pa": 4.0266144902598697e-08,
+            "quality": {
+              "residual_l2": 1.2828607255054715e-11,
+              "rhs_l2": 0.0021212041537298594,
+              "relative_residual": 6.0477947077829785e-09,
+              "predicted_divergence": 4.1085987563527217e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.341158247122798e-06,
+              "mean_free_pressure_relative_error_bound": 2.46467050813666e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.10115312501867979,
+          "mean_free_error_ratio": 0.10363546765362351,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0710831420001341,
+              "extra_pass_s": 0.011830678005935624,
+              "total_s": 0.08291382000606973
+            },
+            {
+              "baseline_s": 0.07050162900122814,
+              "extra_pass_s": 0.011476742991362698,
+              "total_s": 0.08197837199259084
+            },
+            {
+              "baseline_s": 0.06771653299801983,
+              "extra_pass_s": 0.010921758992481045,
+              "total_s": 0.07863829199050087
+            }
+          ],
+          "oracle_independent_relative_defect": 1.5925269274353944e-14
+        },
+        {
+          "step": 257,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 4.352302523736985e-07,
+            "mean_free_rms_pa": 4.341635202588006e-07,
+            "mean_free_relative_l2": 1.3250880637501086e-07,
+            "gauge_offset_pa": 3.04534112663772e-08,
+            "quality": {
+              "residual_l2": 1.0791041452804437e-10,
+              "rhs_l2": 0.0021304268735775835,
+              "relative_residual": 5.065201526811036e-08,
+              "predicted_divergence": 4.0025384262741083e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.4928228688254864e-05,
+              "mean_free_pressure_relative_error_bound": 2.1425491400056866e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.224418555305458e-08,
+            "mean_free_rms_pa": 5.1510189492710833e-08,
+            "mean_free_relative_l2": 1.572115898120849e-08,
+            "gauge_offset_pa": -8.726700552156925e-09,
+            "quality": {
+              "residual_l2": 1.360335905151084e-11,
+              "rhs_l2": 0.0021304268735775835,
+              "relative_residual": 6.385273871741483e-09,
+              "predicted_divergence": 5.278033450110501e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.663724201855281e-06,
+              "mean_free_pressure_relative_error_bound": 2.7009313264548335e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.12003803795375084,
+          "mean_free_error_ratio": 0.11864237110940623,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0682165730104316,
+              "extra_pass_s": 0.011016829012078233,
+              "total_s": 0.07923340202250984
+            },
+            {
+              "baseline_s": 0.06892087499727495,
+              "extra_pass_s": 0.010872576996916905,
+              "total_s": 0.07979345199419186
+            },
+            {
+              "baseline_s": 0.06449189699196722,
+              "extra_pass_s": 0.010916533006820828,
+              "total_s": 0.07540842999878805
+            }
+          ],
+          "oracle_independent_relative_defect": 1.648897550263654e-14
+        },
+        {
+          "step": 268,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 2.95100535560428e-06,
+            "mean_free_rms_pa": 2.1159852237680632e-06,
+            "mean_free_relative_l2": 6.602754721776097e-07,
+            "gauge_offset_pa": 2.0569489885751587e-06,
+            "quality": {
+              "residual_l2": 4.593857118318625e-10,
+              "rhs_l2": 0.001981339055446941,
+              "relative_residual": 2.3185618360923923e-07,
+              "predicted_divergence": 1.7272178261714307e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0001912640814843204,
+              "mean_free_pressure_relative_error_bound": 9.325381526981589e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.3715360697396726e-07,
+            "mean_free_rms_pa": 3.02587396841305e-07,
+            "mean_free_relative_l2": 9.441986365509982e-08,
+            "gauge_offset_pa": 3.155061700872938e-07,
+            "quality": {
+              "residual_l2": 6.63936186132357e-11,
+              "rhs_l2": 0.001981339055446941,
+              "relative_residual": 3.350946847320836e-08,
+              "predicted_divergence": 2.450084975180733e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.7642815510832845e-05,
+              "mean_free_pressure_relative_error_bound": 1.34776733065672e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1481371784513251,
+          "mean_free_error_ratio": 0.1430007135411226,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.062174325008527376,
+              "extra_pass_s": 0.009955422996426933,
+              "total_s": 0.07212974800495431
+            },
+            {
+              "baseline_s": 0.060857152988319285,
+              "extra_pass_s": 0.010133593998034485,
+              "total_s": 0.07099074698635377
+            },
+            {
+              "baseline_s": 0.06059144900063984,
+              "extra_pass_s": 0.010132170005817898,
+              "total_s": 0.07072361900645774
+            }
+          ],
+          "oracle_independent_relative_defect": 1.644362119001223e-14
+        },
+        {
+          "step": 269,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 5.258667740899142e-07,
+            "mean_free_rms_pa": 3.562533006674684e-07,
+            "mean_free_relative_l2": 1.0369825512084842e-07,
+            "gauge_offset_pa": 3.8680673450092265e-07,
+            "quality": {
+              "residual_l2": 7.808684721122112e-11,
+              "rhs_l2": 0.00197304428463767,
+              "relative_residual": 3.957683454913481e-08,
+              "predicted_divergence": 2.8193204194837396e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.251126172014473e-05,
+              "mean_free_pressure_relative_error_bound": 1.47865379293014e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 7.752402980619268e-08,
+            "mean_free_rms_pa": 5.159900806162845e-08,
+            "mean_free_relative_l2": 1.501944569196259e-08,
+            "gauge_offset_pa": 5.785773556273568e-08,
+            "quality": {
+              "residual_l2": 1.132362773953087e-11,
+              "rhs_l2": 0.00197304428463767,
+              "relative_residual": 5.7391655259326035e-09,
+              "predicted_divergence": 4.017403342863416e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.714563824885435e-06,
+              "mean_free_pressure_relative_error_bound": 2.1442435473885358e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1474214261594276,
+          "mean_free_error_ratio": 0.1448379789463106,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.07273103600891773,
+              "extra_pass_s": 0.01063785600126721,
+              "total_s": 0.08336889201018494
+            },
+            {
+              "baseline_s": 0.07196032299543731,
+              "extra_pass_s": 0.010122204999788664,
+              "total_s": 0.08208252799522597
+            },
+            {
+              "baseline_s": 0.07193923500017263,
+              "extra_pass_s": 0.009971573992515914,
+              "total_s": 0.08191080899268854
+            }
+          ],
+          "oracle_independent_relative_defect": 1.7425322400404724e-14
+        },
+        {
+          "step": 270,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 5.84100318949119e-07,
+            "mean_free_rms_pa": 3.8889556887490876e-07,
+            "mean_free_relative_l2": 1.0474031324002512e-07,
+            "gauge_offset_pa": 4.358135141387008e-07,
+            "quality": {
+              "residual_l2": 8.549347814370665e-11,
+              "rhs_l2": 0.0019764272002375407,
+              "relative_residual": 4.325657840239775e-08,
+              "predicted_divergence": 3.014686629961479e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 3.55949938121731e-05,
+              "mean_free_pressure_relative_error_bound": 1.497924493666995e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.518330092026124e-08,
+            "mean_free_rms_pa": 5.621547479800312e-08,
+            "mean_free_relative_l2": 1.514037934737568e-08,
+            "gauge_offset_pa": 6.400011835072532e-08,
+            "quality": {
+              "residual_l2": 1.2348095967925058e-11,
+              "rhs_l2": 0.0019764272002375407,
+              "relative_residual": 6.247685706025994e-09,
+              "predicted_divergence": 4.295572323768463e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 5.141098585690967e-06,
+              "mean_free_pressure_relative_error_bound": 2.1634997336910704e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.14583676494736098,
+          "mean_free_error_ratio": 0.1445515950738057,
+          "baseline_network_passes": 7,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.0660564479912864,
+              "extra_pass_s": 0.009497791004832834,
+              "total_s": 0.07555423899611924
+            },
+            {
+              "baseline_s": 0.06594154899357818,
+              "extra_pass_s": 0.00941068900283426,
+              "total_s": 0.07535223799641244
+            },
+            {
+              "baseline_s": 0.06852744000207167,
+              "extra_pass_s": 0.009959539005649276,
+              "total_s": 0.07848697900772095
+            }
+          ],
+          "oracle_independent_relative_defect": 1.845154660096963e-14
+        },
+        {
+          "step": 293,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.7939444784185753e-06,
+            "mean_free_rms_pa": 2.1557932588889082e-06,
+            "mean_free_relative_l2": 2.968616645474031e-07,
+            "gauge_offset_pa": -3.1219497321789058e-06,
+            "quality": {
+              "residual_l2": 5.338491192679835e-10,
+              "rhs_l2": 0.0033576286333149214,
+              "relative_residual": 1.5899588000026217e-07,
+              "predicted_divergence": 2.0748601400657114e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00022226673320082624,
+              "mean_free_pressure_relative_error_bound": 4.782352771773606e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.045355838623666e-07,
+            "mean_free_rms_pa": 2.9722167941141434e-07,
+            "mean_free_relative_l2": 4.092865683007218e-08,
+            "gauge_offset_pa": -4.0769526446991964e-07,
+            "quality": {
+              "residual_l2": 7.164019309800485e-11,
+              "rhs_l2": 0.0033576286333149214,
+              "relative_residual": 2.133654460388488e-08,
+              "predicted_divergence": 2.726180356691736e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.9827213553529743e-05,
+              "mean_free_pressure_relative_error_bound": 6.417704739478558e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13298444052947012,
+          "mean_free_error_ratio": 0.13787114241400023,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.05664413499471266,
+              "extra_pass_s": 0.009626352999475785,
+              "total_s": 0.06627048799418844
+            },
+            {
+              "baseline_s": 0.05697431600128766,
+              "extra_pass_s": 0.009005393003462814,
+              "total_s": 0.06597970900475048
+            },
+            {
+              "baseline_s": 0.05589480600610841,
+              "extra_pass_s": 0.009205234004184604,
+              "total_s": 0.06510004001029301
+            }
+          ],
+          "oracle_independent_relative_defect": 1.4560842781232232e-14
+        },
+        {
+          "step": 294,
+          "roles": [
+            "selected_peak"
+          ],
+          "detected_peak": true,
+          "baseline": {
+            "absolute_rms_pa": 3.0722035884719374e-06,
+            "mean_free_rms_pa": 1.788026777861081e-06,
+            "mean_free_relative_l2": 2.625303219599482e-07,
+            "gauge_offset_pa": -2.4982784333759855e-06,
+            "quality": {
+              "residual_l2": 4.657433527275919e-10,
+              "rhs_l2": 0.0033504180988387358,
+              "relative_residual": 1.3901051719157672e-07,
+              "predicted_divergence": 1.821004699288642e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00019391106922253263,
+              "mean_free_pressure_relative_error_bound": 4.448649602543196e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.060765329743064e-07,
+            "mean_free_rms_pa": 2.437474166215159e-07,
+            "mean_free_relative_l2": 3.5788662985853755e-08,
+            "gauge_offset_pa": -3.247850789718797e-07,
+            "quality": {
+              "residual_l2": 6.087103397913342e-11,
+              "rhs_l2": 0.0033504180988387358,
+              "relative_residual": 1.816819041188665e-08,
+              "predicted_divergence": 2.382540218356007e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 2.5343501339199245e-05,
+              "mean_free_pressure_relative_error_bound": 5.814228672021563e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13217761169801967,
+          "mean_free_error_ratio": 0.13632201689568524,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.05602685600752011,
+              "extra_pass_s": 0.009296528995037079,
+              "total_s": 0.06532338500255719
+            },
+            {
+              "baseline_s": 0.05641041700437199,
+              "extra_pass_s": 0.009118244997807778,
+              "total_s": 0.06552866200217977
+            },
+            {
+              "baseline_s": 0.05618598900036886,
+              "extra_pass_s": 0.008968262001872063,
+              "total_s": 0.06515425100224093
+            }
+          ],
+          "oracle_independent_relative_defect": 1.5619419604209483e-14
+        },
+        {
+          "step": 295,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 2.170855711875764e-06,
+            "mean_free_rms_pa": 1.3962453183513157e-06,
+            "mean_free_relative_l2": 2.2074115210375688e-07,
+            "gauge_offset_pa": -1.6622615717045446e-06,
+            "quality": {
+              "residual_l2": 3.8070912712856143e-10,
+              "rhs_l2": 0.0033070773832890913,
+              "relative_residual": 1.1511950976784306e-07,
+              "predicted_divergence": 1.424452253720454e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0001585072840480347,
+              "mean_free_pressure_relative_error_bound": 3.915533609394577e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 2.8377091117439644e-07,
+            "mean_free_rms_pa": 1.8439867750192444e-07,
+            "mean_free_relative_l2": 2.9152739839620432e-08,
+            "gauge_offset_pa": -2.1569204381313738e-07,
+            "quality": {
+              "residual_l2": 4.770596476077983e-11,
+              "rhs_l2": 0.0033070773832890913,
+              "relative_residual": 1.4425415323464044e-08,
+              "predicted_divergence": 1.8440301392345462e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 1.986225800299488e-05,
+              "mean_free_pressure_relative_error_bound": 4.906482288571788e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13071845798963738,
+          "mean_free_error_ratio": 0.1320675350372255,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.056137111998395994,
+              "extra_pass_s": 0.008816705012577586,
+              "total_s": 0.06495381701097358
+            },
+            {
+              "baseline_s": 0.05248263699468225,
+              "extra_pass_s": 0.009348996012704447,
+              "total_s": 0.0618316330073867
+            },
+            {
+              "baseline_s": 0.05412065800919663,
+              "extra_pass_s": 0.00877344400214497,
+              "total_s": 0.0628941020113416
+            }
+          ],
+          "oracle_independent_relative_defect": 1.7228600413384435e-14
+        },
+        {
+          "step": 510,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 6.135365324544243e-07,
+            "mean_free_rms_pa": 4.2123662536881394e-07,
+            "mean_free_relative_l2": 7.793975831937503e-08,
+            "gauge_offset_pa": -4.4607934507673884e-07,
+            "quality": {
+              "residual_l2": 1.1408478867829557e-10,
+              "rhs_l2": 0.00535460342398786,
+              "relative_residual": 2.130592681564651e-08,
+              "predicted_divergence": 3.8321615510502245e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.7498913779611296e-05,
+              "mean_free_pressure_relative_error_bound": 1.373209123936698e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 8.835106959473769e-08,
+            "mean_free_rms_pa": 6.16842695096555e-08,
+            "mean_free_relative_l2": 1.1413198112771882e-08,
+            "gauge_offset_pa": -6.325316113519045e-08,
+            "quality": {
+              "residual_l2": 1.5985055318431813e-11,
+              "rhs_l2": 0.00535460342398786,
+              "relative_residual": 2.9852921033929505e-09,
+              "predicted_divergence": 5.332876316469874e-11,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 6.6553374304225696e-06,
+              "mean_free_pressure_relative_error_bound": 1.9240796293298715e-08,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.1440029483514101,
+          "mean_free_error_ratio": 0.14643614964783228,
+          "baseline_network_passes": 6,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.05644771599327214,
+              "extra_pass_s": 0.009376424990477972,
+              "total_s": 0.06582414098375011
+            },
+            {
+              "baseline_s": 0.05360161600401625,
+              "extra_pass_s": 0.009168292002868839,
+              "total_s": 0.06276990800688509
+            },
+            {
+              "baseline_s": 0.05407681099313777,
+              "extra_pass_s": 0.009417152003152296,
+              "total_s": 0.06349396299629007
+            }
+          ],
+          "oracle_independent_relative_defect": 1.4552457924619725e-14
+        },
+        {
+          "step": 511,
+          "roles": [
+            "worst_error_step"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 4.1623908449336704e-06,
+            "mean_free_rms_pa": 2.7101570248277065e-06,
+            "mean_free_relative_l2": 5.062274688521896e-07,
+            "gauge_offset_pa": -3.1592002859528623e-06,
+            "quality": {
+              "residual_l2": 7.982187857708371e-10,
+              "rhs_l2": 0.005345750347995133,
+              "relative_residual": 1.4931838073399753e-07,
+              "predicted_divergence": 2.7274466722163973e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.00033233637649545983,
+              "mean_free_pressure_relative_error_bound": 9.69950396264985e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 5.73714019273262e-07,
+            "mean_free_rms_pa": 3.7183158845251084e-07,
+            "mean_free_relative_l2": 6.945404348796731e-08,
+            "gauge_offset_pa": -4.3690850957558997e-07,
+            "quality": {
+              "residual_l2": 1.0577740925533584e-10,
+              "rhs_l2": 0.005345750347995133,
+              "relative_residual": 1.978719587887349e-08,
+              "predicted_divergence": 3.6592930028704153e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.404015732735211e-05,
+              "mean_free_pressure_relative_error_bound": 1.2853464043066e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.13783280826969155,
+          "mean_free_error_ratio": 0.137199278509019,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.04320595599710941,
+              "extra_pass_s": 0.010505956000997685,
+              "total_s": 0.0537119119981071
+            },
+            {
+              "baseline_s": 0.04898680000042077,
+              "extra_pass_s": 0.008863544004270807,
+              "total_s": 0.05785034400469158
+            },
+            {
+              "baseline_s": 0.04292993100534659,
+              "extra_pass_s": 0.008493781002471223,
+              "total_s": 0.05142371200781781
+            }
+          ],
+          "oracle_independent_relative_defect": 1.2111296929857955e-14
+        },
+        {
+          "step": 512,
+          "roles": [
+            "neighbor"
+          ],
+          "detected_peak": false,
+          "baseline": {
+            "absolute_rms_pa": 3.7662401199086906e-06,
+            "mean_free_rms_pa": 2.6916524340942536e-06,
+            "mean_free_relative_l2": 5.068403694859795e-07,
+            "gauge_offset_pa": -2.6343067047791345e-06,
+            "quality": {
+              "residual_l2": 7.918283337172656e-10,
+              "rhs_l2": 0.005330094184645364,
+              "relative_residual": 1.485580378670081e-07,
+              "predicted_divergence": 2.8420546208107743e-09,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 0.0003296757279145058,
+              "mean_free_pressure_relative_error_bound": 9.699729634239198e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "extra": {
+            "absolute_rms_pa": 4.7306114903791697e-07,
+            "mean_free_rms_pa": 3.2347054585129134e-07,
+            "mean_free_relative_l2": 6.090977011014751e-08,
+            "gauge_offset_pa": -3.451864086196643e-07,
+            "quality": {
+              "residual_l2": 9.799279863805827e-11,
+              "rhs_l2": 0.005330094184645364,
+              "relative_residual": 1.8384815585501363e-08,
+              "predicted_divergence": 3.524485120420806e-10,
+              "equation_passed": true,
+              "mean_free_pressure_error_bound_pa_l2": 4.079905434770254e-05,
+              "mean_free_pressure_relative_error_bound": 1.2003900601926222e-07,
+              "pressure_error_bound_passed": true
+            }
+          },
+          "absolute_error_ratio": 0.12560567939820735,
+          "mean_free_error_ratio": 0.12017545124102913,
+          "baseline_network_passes": 5,
+          "extra_network_passes": 1,
+          "timing_samples": [
+            {
+              "baseline_s": 0.04179298199596815,
+              "extra_pass_s": 0.00821511700632982,
+              "total_s": 0.05000809900229797
+            },
+            {
+              "baseline_s": 0.040852726000593975,
+              "extra_pass_s": 0.008028312993701547,
+              "total_s": 0.04888103899429552
+            },
+            {
+              "baseline_s": 0.04179852799279615,
+              "extra_pass_s": 0.00860749500861857,
+              "total_s": 0.050406023001414724
+            }
+          ],
+          "oracle_independent_relative_defect": 9.530400805845161e-15
+        }
+      ]
+    }
+  ],
+  "cases": 54,
+  "absolute_improved": 54,
+  "mean_free_improved": 54,
+  "selected_drift_peak_cases": 17,
+  "median_measured_incremental_cost_fraction": 0.16374894388035577,
+  "longest_concurrent_worker_s": 70.82067207200453,
+  "sum_worker_peak_rss_bytes": 2246459392,
+  "baseline_physical_steps": 1536,
+  "counterfactual_simulation_steps": 0,
+  "optimizer_updates": 0,
+  "method": {
+    "selection": "Highest 3 local excursions and highest 3 absolute errors among detected peaks; union with worst-error step and immediate neighbors, per cohort. Selection frozen before execution.",
+    "inputs": "3 CPU episodes of 512 steps, 15 native warm-up steps each. Original physical frames reproduced exactly, ignoring clocks and request UUID hashes. Selected input tensors and baseline predictions retained as NPZ.",
+    "counterfactual": "Recompute remaining residual from the original input and baseline pressure; execute exactly one learned pass, using the existing corrector. Do not advance the simulation with that pressure.",
+    "oracle": "Existing separable spectral pseudoinverse for the sealed Neumann operator, checked against the independent explicit-neighbor action at relative defect < 1e-9. Reference is the solution for this exact AI request, not the independently evolving reference trajectory in the drift plot.",
+    "precision": "Original float32 neural weights and forward pass; unchanged existing float64 physical residual/reconstruction/oracle arithmetic. CPU only.",
+    "timing": "One discarded warm-up repetition plus 3 measured pairs per capture. Baseline is model correction and stopping checks; incremental extra includes residual reconstruction, one neural pass and final stopping-quality calculation. Excludes IPC and simulator advancement. Independent workers pinned to CPUs [20, 21, 22], each one Torch thread.",
+    "resource_policy": "Immutable model packages in separate processes; 8589934592 bytes available-memory reserve; native deadline 600 s and worker deadline 1200 s. Existing rollout owns native termination/reaping; worker cancellation raises through that owner."
+  },
+  "findings": [
+    "54/54 tested inputs improved in absolute error; 54/54 improved in mean-free same-request error. Selected drift-peak steps: 17.",
+    "Median same-request pressure error reduction at selected peak steps: C45: 84.7%, C53: 87.6%, C55: 85.9%.",
+    "Median reduction in neighboring/context inputs: C45: 85.6%, C53: 85.5%, C55: 86.1%. The comparison shrinks current-solve errors but does not establish disappearance of the phase-dependent drift pattern.",
+    "Some peaks in independently evolved trajectory error are not peaks in same-request pressure error. Accumulated state differences and pressure-gauge effects remain distinct from current-solve error.",
+    "The model can still contract these small residuals after the existing stopping rule accepts them; this is not an irreducible current-solve error floor in these cases.",
+    "This paired test does not establish improved full-trajectory drift, deployment readiness, or a general model ranking. No weights, training, acceptance thresholds or deployed solver changed."
+  ],
+  "next_step": "Run a separately labelled closed-loop comparison using adaptive stop plus exactly one extra pass, with unchanged scene inputs and physical limits. Measure drift, worst-step accuracy and complete step runtime before adopting the policy or selecting new training feedback."
+}

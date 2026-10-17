@@ -1,0 +1,122 @@
+{
+  "status": "passed",
+  "branch": "experiment/pressure-spike-extra-pass-20261017",
+  "scope": "Controlled CPU same-request replay; unchanged historical trajectories and weights; no model training or deployed policy change.",
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s experiments/pressure-spike-replay-v1 -p test_replay.py -v",
+    "python3 experiments/pressure-spike-replay-v1/replay.py prepare --root . --config docs/plans/pressure-spike-replay-v1/config.json --output runs/pressure-spike-replay-v1/cpu-01",
+    "For each cohort, use the manifest-bound managed Python with its site_packages, CPU-only environment, and: experiments/pressure-spike-replay-v1/replay.py worker --plan runs/pressure-spike-replay-v1/cpu-01/plan.json --id COHORT --cpu CPU",
+    "python3 experiments/pressure-spike-replay-v1/replay.py summarize --plan runs/pressure-spike-replay-v1/cpu-01/plan.json",
+    "python3 experiments/pressure-spike-replay-v1/report.py --run runs/pressure-spike-replay-v1/cpu-01 --output docs/plans/pressure-spike-replay-v1"
+  ],
+  "focused_tests_passed": 2,
+  "pairs": 54,
+  "native_children_reaped": true,
+  "all_original_physical_frames_exact": true,
+  "all_baseline_candidates_exact": true,
+  "all_extra_pass_counts_exactly_one": true,
+  "all_original_equation_checks_passed": true,
+  "all_extra_equation_checks_passed": true,
+  "cuda_initialized": false,
+  "longest_worker_seconds": 70.82067207200453,
+  "source_runtime_record": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "external_activity": "runs/dependency-migration-v1/live-migration/activity.json",
+  "previous_activity_preserved": "runs/pressure-spike-replay-v1/cpu-01/previous-activity.json",
+  "browser": {
+    "engine": "chromium_headless_shell-1246",
+    "rendered_local_report": true,
+    "screenshot": "runs/pressure-spike-replay-v1/cpu-01/report-desktop.png"
+  },
+  "sources": {
+    "experiments/pressure-spike-replay-v1/replay.py": "ce8ec5a1f13f26d25b6e1f87a49411798ecd37d42617abd678c14e69b7422a7e",
+    "experiments/pressure-spike-replay-v1/report.py": "0ab752b98651747ef654a58153ab9db11b7cd11ad50a0fa1381dadf75bc951e7",
+    "experiments/pressure-spike-replay-v1/test_replay.py": "5af8a36e73ee8c7985cfa705f01788e18a581e634e5b87a02652d1cb9b82d278",
+    "docs/plans/pressure-spike-replay-v1/results.html": "f96d91b5a6fbe29985bbbe4644ebcefde3e8103ec790c903d5095011b0ef5b7b",
+    "docs/plans/pressure-spike-replay-v1/config.json": "f2b0ae31f991164b2254a81ca13ee89c6d1fc91a28b7d3fd7b706f61d3b6ab83",
+    "docs/plans/pressure-spike-replay-v1/results.json": "ff0d05f9336f968c31d712c09fd3aab54abc7886ca93fa5a89fea37f15ad3f14"
+  },
+  "worker_commands": [
+    {
+      "executable": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "argv": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-spike-replay-v1/replay.py",
+        "worker",
+        "--plan",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spike-replay-v1/cpu-01/plan.json",
+        "--id",
+        "C45",
+        "--cpu",
+        "20"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "environment": {
+        "PYTHONPATH": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages",
+        "CUDA_VISIBLE_DEVICES": "",
+        "TULDOK_TORCH_DEVICE": "cpu",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "RAYON_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "cpu": 20
+    },
+    {
+      "executable": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "argv": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-spike-replay-v1/replay.py",
+        "worker",
+        "--plan",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spike-replay-v1/cpu-01/plan.json",
+        "--id",
+        "C53",
+        "--cpu",
+        "21"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "environment": {
+        "PYTHONPATH": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages",
+        "CUDA_VISIBLE_DEVICES": "",
+        "TULDOK_TORCH_DEVICE": "cpu",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "RAYON_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "cpu": 21
+    },
+    {
+      "executable": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "argv": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-spike-replay-v1/replay.py",
+        "worker",
+        "--plan",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spike-replay-v1/cpu-01/plan.json",
+        "--id",
+        "C55",
+        "--cpu",
+        "22"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "environment": {
+        "PYTHONPATH": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages",
+        "CUDA_VISIBLE_DEVICES": "",
+        "TULDOK_TORCH_DEVICE": "cpu",
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "RAYON_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "cpu": 22
+    }
+  ],
+  "python_packages": {
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cu132"
+  },
+  "source_lab_commit": "f329826ea4184d4f71fd6edba9fc25f275b63ad5",
+  "branch_base": "6795ac21bce7e00c759d0b6a1eb51b1fee7c8045",
+  "branch_purpose": "Private pressure-spike experiment and retained results for Jeremy to review; preserve for subsequent model comparisons, integrate through ordinary review, retire after results/code are integrated."
+}

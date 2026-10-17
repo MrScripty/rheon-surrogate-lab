@@ -49,7 +49,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     prefix=output.relative_to(root).as_posix()+'/'
     for name in witness['sources']:
         shutil.copyfile(template/name,output/name)
-    for name in ('model.py','policy.py','train.py','band_feedback.py'):
+    for name in ('model.py','policy.py','train.py','band_feedback.py','gradient_clipping.py'):
         shutil.copyfile(HERE.parent/'water-conditioning-v1/training'/name,output/name)
     if model_overlay is not None:
         overlay = model_overlay.resolve(strict=True)
@@ -65,7 +65,10 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     training_entry = 'evidence.py'
     if gradient_diagnostic is not None:
         diagnostic = gradient_diagnostic.resolve(strict=True)
-        names = {'gradient_screen.py', 'gradient-reference.json'}
+        names = {p.name for p in diagnostic.iterdir()}
+        historical = {'gradient_screen.py', 'gradient-reference.json'}
+        repaired = historical | {'stability_screen.py', 'capture_policy.py', 'baseline_train.py'}
+        require(names in (historical, repaired), 'explicit diagnostic or repaired stability sources required')
         require(diagnostic.is_dir() and {p.name for p in diagnostic.iterdir()} == names
                 and all(p.is_file() and not p.is_symlink() and p.stat().st_size <= 1024**2
                         for p in diagnostic.iterdir())
@@ -73,7 +76,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
                 'bounded explicit gradient diagnostic sources and cap required')
         for name in names:
             shutil.copyfile(diagnostic/name, output/name)
-        training_entry = 'gradient_screen.py'
+        training_entry = 'stability_screen.py' if names == repaired else 'gradient_screen.py'
     shutil.copyfile(tuldok/'recipe_process.py',output/'custody-validator.py')
     witness['custody_validator_sha256']=digest(output/'custody-validator.py')
     shutil.copyfile(HERE/'training_diagnostic.py',output/'training_diagnostic.py')
@@ -189,7 +192,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     write(output/'provider.json',provider)
     project=copy.deepcopy(original_project);project.update(id=uuid.uuid4().hex,name=config['id'])
     if gradient_diagnostic is not None:
-        project['name'] += ' gradient diagnostic (cap '+str(diagnostic_updates)+')'
+        project['name'] += (' clipping stability (cap ' if training_entry == 'stability_screen.py' else ' gradient diagnostic (cap ')+str(diagnostic_updates)+')'
     project['data'] += current_rows+[dict(id='runtime_manifest',label='Pumas runtime',path=runtime.relative_to(root).as_posix(),sha256=digest(runtime)),
         dict(id='pressure_probe',label='Consumed development probe',path=Path(probe['path']).relative_to(root).as_posix(),sha256=probe['sha256'])]
     project['recipes']=[dict(id=mode,label=mode,path=prefix+mode+'-recipe.json',sha256=digest(output/(mode+'-recipe.json'))) for mode in recipes]

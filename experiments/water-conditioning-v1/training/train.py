@@ -15,6 +15,7 @@ from policy import HERE, MIB, canonical, decode, execution, experiment, load_mod
 import data
 import model
 from prepared import PreparedSample
+from gradient_clipping import clip_l2_
 
 DATA = data.DATA
 
@@ -98,7 +99,7 @@ def one_update(network, optimizer, parents, indices, normalization, cache=None, 
         require(bool(torch.isfinite(extra)), 'training_nonfinite', label)
         (weight*extra).backward()
         extra_value+=float(extra.detach())*weight
-    gradient = torch.nn.utils.clip_grad_norm_(network.parameters(), 1.0, error_if_nonfinite=True)
+    gradient = clip_l2_(network.parameters(), 1.0)
     optimizer.step()
     finite=finite_tensors(network.parameters()) if strategy['finite_checks']=='combined' else all(bool(torch.isfinite(p).all()) for p in network.parameters())
     require(finite, 'training_nonfinite', 'weights')

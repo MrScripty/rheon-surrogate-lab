@@ -33,6 +33,18 @@ def definition(config, sources, snapshot, mode, prefix):
         'environment': {}, 'resources': config['resources']}
 
 
+def training_sources(config):
+    sources = {name: read(HERE/name, 2*MIB) for name in ('policy.py','support.py','scenes.py','model.py','data.py','train.py','gradient_clipping.py','prepared.py','physical_residual.py','analytical.py','test_inference.py')}
+    if config['schema'] in ('rheon-water-residual-experiment-v8', 'rheon-water-residual-experiment-v9', 'rheon-water-residual-experiment-v10'):
+        sources['direction_feedback.py'] = read(HERE/'direction_feedback.py', MIB)
+    if config['schema'] == 'rheon-water-residual-experiment-v10':
+        sources['band_feedback.py'] = read(HERE/'band_feedback.py', MIB)
+    for name,path in [('portable_model.py','experiments/cuda-pressure-v1/model.py'),('portable_policy.py','experiments/cuda-pressure-v1/policy.py'),
+        ('frozen_gn.py','experiments/global-pressure-v1/groupnorm-v1/model.py'),('historical-reservation.json','docs/plans/global-pressure-correction-v1/reservation.json')]: sources[name] = read(LAB/path, MIB)
+    for name in ('model','train','data'): sources['original_'+name+'.py'] = read(LAB/'experiments/global-pressure-v1/training'/(name+'.py'), MIB)
+    return sources
+
+
 def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, configuration, direction_bank=None):
     require(not subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=no'], cwd=LAB), 'source_commit', 'commit qualified tracked experiment source before material capture')
     # Unrelated untracked user documents do not participate in source custody.
@@ -98,14 +110,7 @@ def assemble(packet, validation, reserved, runtime_manifest, tuldok, output, con
     require(state_bytes <= 2*MIB and projection <= config['resources']['max_output_bytes'], 'output_projection', 'bounded declared complete states')
     qualification = {'status':'passed','optimizer_constructed':False,'optimizer_updates':0,'normalization_sha256':sha(canonical(normalization)),
         'grid_shapes_xyz':checked,'zero_residual_exact':True,'physical_cells':'cubic','train_parents':len(train_ids),'validation_parents':len(val_ids),'reserved_test_parents':len(test_ids),'output_projection_bytes':projection}
-    sources = {name: read(HERE/name, 2*MIB) for name in ('policy.py','support.py','scenes.py','model.py','data.py','train.py','prepared.py','physical_residual.py','analytical.py','test_inference.py')}
-    if config['schema'] in ('rheon-water-residual-experiment-v8', 'rheon-water-residual-experiment-v9', 'rheon-water-residual-experiment-v10'):
-        sources['direction_feedback.py'] = read(HERE/'direction_feedback.py', MIB)
-    if config['schema'] == 'rheon-water-residual-experiment-v10':
-        sources['band_feedback.py'] = read(HERE/'band_feedback.py', MIB)
-    for name,path in [('portable_model.py','experiments/cuda-pressure-v1/model.py'),('portable_policy.py','experiments/cuda-pressure-v1/policy.py'),
-        ('frozen_gn.py','experiments/global-pressure-v1/groupnorm-v1/model.py'),('historical-reservation.json','docs/plans/global-pressure-correction-v1/reservation.json')]: sources[name] = read(LAB/path, MIB)
-    for name in ('model','train','data'): sources['original_'+name+'.py'] = read(LAB/'experiments/global-pressure-v1/training'/(name+'.py'), MIB)
+    sources = training_sources(config)
     sources['custody-validator.py'] = read(tuldok/'recipe_process.py', MIB)
     sources.update({'config.json':canonical(config),'runtime-manifest.json':canonical(summary),'qualification.json':canonical(qualification)})
     witness = {'schema':'rheon-water-learning-source-v1','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=LAB,text=True).strip(),

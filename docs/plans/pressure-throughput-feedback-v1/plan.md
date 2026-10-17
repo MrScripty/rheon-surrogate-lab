@@ -1,6 +1,6 @@
 # Concurrent execution and pressure feedback
 
-Status: Active. Operation: start, authorized by the user's “yes. do that. continue
+Status: Complete. Operation: close, authorized by the user's “yes. do that. continue
 with the sequence”. Owner: root. Branch: experiment/pressure-throughput-feedback-20261017,
 base 376fd7444dd64b9684a30f4f1a2077d1d9f9f29b. Tuldok changes use
 performance/concurrent-cpu-cuda-20261017, base 8af5a6a1e288e5b2f86a75b53cab93ca71222a04;
@@ -53,15 +53,28 @@ unrelated diagnostics, historical receipts or previous plans are overwritten.
 Acceptance: real process concurrency and complete drainage, bounded scheduling,
 numerically unchanged CPU scheduling results, measured complete pipeline times,
 matched training and per-case scientific records. Measurement completion does not
-require a model improvement. Current phase: M1 accepted; M2 repeated throughput measurement complete.
-Exactly one next slice: execute the frozen matched CUDA fits for M3 and qualify
-their fresh CPU artifacts. The first full control attempt hit its600s custody
-deadline after reporting4500updates; it is retained as infrastructure failure.
-A separate tested/reviewed/deployed CUDA-only1800s bound now supports a fresh
-from-initialization attempt; data/seeds/update budgets and all physics gates
-remain fixed. No prior mutation is replayed. The 16-worker setting
-is measured on shortened development episodes; full-regression throughput remains
-to be measured. Spectral feedback source has five passing unit checks, but no
-full scientific CUDA fit has started.
+require a model improvement. Current phase: M1/M2/M3 accepted; M4 scientific
+measurement and repeated serial timing complete. Both matched5000-update CUDA fits
+and CPU restores passed. Control reproduction is exact. Challenger74/74physical
+qualification and233independent checks passed in723.304s, all children reaped.
+Population promotion gates reject it: worst pressure regresses versus the prior
+accurate model, and one population maximum rises11to12calls versus control.
+No candidate promoted and no unused holdouts consumed. Control evidence reuse is
+explicitly bound to current-package equivalence; it is not another74executions.
+The initial600s control custody timeout remains retained; both fresh fits used
+the qualified1800s CUDA bound. Physics, data, seeds and update budgets stayed fixed.
 Replan on lifecycle/authority interference, unavailable memory accounting, changed
 numerical semantics or evidence that resource admission cannot meet its contract.
+
+
+## Terminal decision
+
+M1–M4 measurement sequence complete. Scheduling accepted and deployed; model
+challenger rejected for promotion by unchanged population gates. Serial CPU timing
+completed four drained batches with exact repeated physics/calls, all sixteen
+records independently reviewed. No unused holdouts consumed. Final observed state
+published to the same Tuldok/Rheon paths and exact owned observer stopped; original
+applications/catalog remain available. Isolated fixture PostgreSQL is stopped.
+No further training, promotion, push, merge or runtime-prototype deployment.
+See results.md, reports/qualification-decision.json and reports/serial-timing.json.
+Subsequent smaller-feedback ablation is a proposed new slice, not active work.

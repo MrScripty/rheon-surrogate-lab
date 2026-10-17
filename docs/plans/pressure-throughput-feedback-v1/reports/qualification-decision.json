@@ -1,0 +1,80 @@
+{
+  "format": "pressure-band-qualification-decision-v1",
+  "status": "completed",
+  "candidate": "lowband",
+  "decision": "rejected_for_promotion",
+  "candidate_promoted": false,
+  "unused_eight_consumed": 0,
+  "eligible_for_unused_eight": [],
+  "source": {
+    "path": "docs/plans/pressure-throughput-feedback-v1/reports/regression-summary.json",
+    "sha256": "7ca4370a8da28ff947d1c262656e2ca05d07cef77dacd7d5f72ee940137d7e25"
+  },
+  "failing_population_comparisons": [
+    {
+      "group": "original58",
+      "comparator": "late-pressure",
+      "checks": [
+        "worst_pressure_not_regressed"
+      ]
+    },
+    {
+      "group": "late-amended8",
+      "comparator": "late-pressure",
+      "checks": [
+        "worst_pressure_not_regressed"
+      ]
+    },
+    {
+      "group": "late-amended8",
+      "comparator": "control",
+      "checks": [
+        "worst_pressure_not_regressed"
+      ]
+    },
+    {
+      "group": "minimum8-failed8",
+      "comparator": "reference-current",
+      "checks": [
+        "maximum_calls_not_regressed"
+      ]
+    },
+    {
+      "group": "minimum8-failed8",
+      "comparator": "late-pressure",
+      "checks": [
+        "worst_pressure_not_regressed"
+      ]
+    },
+    {
+      "group": "minimum8-failed8",
+      "comparator": "control",
+      "checks": [
+        "maximum_calls_not_regressed"
+      ]
+    }
+  ],
+  "sparse_checks": {
+    "cuda-control": {
+      "checks": 233,
+      "all_pressure_bounds_cover_independent_oracle": true,
+      "maximum_independent_oracle_defect": 1.6340798117390936e-13,
+      "median_same_rhs_mean_free_pressure_relative_l2": 2.3645873923639138e-07,
+      "maximum_same_rhs_mean_free_pressure_relative_l2": 7.445168421823353e-07,
+      "median_same_rhs_gradient_relative_l2": 1.5130507374166376e-07,
+      "maximum_same_rhs_gradient_relative_l2": 5.660811423785701e-07,
+      "median_low_mode_error_energy_fraction": 0.9967361891780137
+    },
+    "lowband": {
+      "checks": 233,
+      "all_pressure_bounds_cover_independent_oracle": true,
+      "maximum_independent_oracle_defect": 1.6451734154301525e-13,
+      "median_same_rhs_mean_free_pressure_relative_l2": 1.4880467939084712e-07,
+      "maximum_same_rhs_mean_free_pressure_relative_l2": 7.532887231521173e-07,
+      "median_same_rhs_gradient_relative_l2": 1.1637971993688749e-07,
+      "maximum_same_rhs_gradient_relative_l2": 6.815103865522601e-07,
+      "median_low_mode_error_energy_fraction": 0.9917159287685335
+    }
+  },
+  "scope": "All74trajectories physically qualified. Autonomous candidate/control states differ; same-RHS oracle statistics describe each model on its own trajectory. Manufactured fixed-input tests are separately retained. No criteria weakened and no holdout consumed."
+}

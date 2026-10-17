@@ -1,5 +1,6 @@
 """Summarize serial current-adapter timing episodes, retaining scope and startup."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import statistics
@@ -7,10 +8,15 @@ import statistics
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--campaign',action='append',required=True,help='LABEL=benchmark receipt.json');p.add_argument('--output',type=Path,required=True)
-    a=p.parse_args();assert not a.output.exists();rows=[]
+    a=p.parse_args();assert not a.output.exists();rows=[];sources={}
     for item in a.campaign:
-        label,separator,value=item.partition('=');assert separator
+        label,separator,value=item.partition('=');assert separator and label not in sources
         path=Path(value);report=json.loads(path.read_text());assert report['status']=='passed' and report['workers']==1
+        assert report['all_worker_children_reaped'] is True
+        sources[label]=dict(path=str(path),sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+            config_sha256=report['config_sha256'],source_sha256=report['source_sha256'],
+            complete_elapsed_s=report['elapsed_seconds'],memory=report['memory'],
+            exact_to_baseline=report.get('exact_to_baseline'),all_worker_children_reaped=True)
         for case in report['records']:
             folder=path.parent/f"case-{case['slot']:02d}-scene-{case['scene']:02d}"/'native'
             frames=[json.loads(line) for line in (folder/'frames.jsonl').read_text().splitlines()]
@@ -24,8 +30,10 @@ def main():
                 mean_network_calls=statistics.mean(r['network_passes'] for r in callbacks),
                 maximum_network_calls=max(r['network_passes'] for r in callbacks),
                 adapter_loading_s=case['adapter_loading_seconds'],complete_child_s=case['complete_child_elapsed_seconds'],
-                cpu_affinity=case['cpu_affinity'],source=str(path)))
-    result=dict(format='rheon_pressure_serial_timing_v1',rows=rows,
+                cpu_affinity=case['cpu_affinity'],source=str(path),
+                frames_sha256=hashlib.sha256((folder/'frames.jsonl').read_bytes()).hexdigest(),
+                callbacks_sha256=hashlib.sha256((folder/'callbacks.jsonl').read_bytes()).hexdigest()))
+    result=dict(format='rheon_pressure_serial_timing_v1',sources=sources,rows=rows,
         scope='One core and one episode at a time after broad work drains; full paired simulation steps through current adapter, iterative correction and protocol trace logging included. No sparse capture or independent oracle in timed episodes. Startup retained separately. Not a pure neural-forward benchmark.')
     a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(rows,indent=2))
 

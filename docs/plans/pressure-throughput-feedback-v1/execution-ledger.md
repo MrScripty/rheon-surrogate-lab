@@ -299,3 +299,92 @@ finished3.920s. At8calls on33x11x9, pure-low1Pa coefficient error fell from
 4.46795e-6Pa (1.98x); mixed low0.001Pa/high1Pa low coefficient error fell
 8.87867e-6Pa to4.46870e-6Pa. These are matched stationary diagnostics, not yet
 autonomous trajectory acceptance or a universal spectral improvement claim.
+
+
+## Live observation recovery during M4
+
+An episode receipt may be observed between file creation and completed JSON.
+The read-only observer now counts that source as unreadable and retries; preview
+refresh errors publish unavailable without inferring scientific results. One
+meaningful partial-to-complete receipt regression passes in the existing lab
+venv. System Python lacks NumPy and is not the observer environment. Independent
+standards/spec reviews report no findings. Restarted only the exact owned observer
+PID/start identity; original catalog, Project and Rheon paths retained. Public
+receipt: reports/observer-refresh.json. Scientific worker source closure unchanged.
+
+All84matched manufactured rows remain external artifacts. Retained complete
+cross-sample summary reports/spatial-comparison.json: among21samples, low-mode
+absolute error improved/worsened15/6 at1call,10/11 at4,18/3 at8 and14/7 at12.
+The favorable33x11x9example is not a universal improvement claim. Full autonomous
+population gates, rather than selected manufactured examples, decide eligibility.
+
+Serial timing configuration selects consumed scenes8,10,12,14:16³,24³,32³,40³
+cells in a fixed1m cube, each at its corresponding16/24/32/40cells per metre.
+This measures resolution refinement, not growing volume at fixed spacing. Every
+cell remains cubic. Eight AI steps after15native warm-up steps; complete paired
+step/adapter/protocol cost, with startup separate. Broad work must drain first.
+
+
+## Full M4 development result
+
+Completed74candidate trajectories,8523AI steps,233independent sparse checks in
+723.304438136s with16one-thread workers. All physical gates passed; all parent
+workers/native children drained. Peak conservative summed RSS11783892992B,
+minimum host available47515836416B. The control737.499s campaign is reused only
+through the exact numerical/package and fresh-frame equivalence proof, not
+counted again. Uncontrolled wall difference is not isolated inference speedup.
+
+Each population independently compares against reference-current, late-pressure
+and harder-data control. No model is eligible for the unused eight. Original58
+calls7.7351->7.7245 mean and12->10max versus control; worst trajectorypressure
+4.68189e-6->4.48189e-6 improves, but remains above prior accurate3.14479e-6.
+Late-amended8worst1.262996e-6->1.536552e-6 regresses; minimum8-failed8max11->12
+regresses although worstpressure2.385126e-6->1.573261e-6 improves. Preserve the
+challenger as a rejected experiment; no thresholds relaxed, deployment promotion
+or unused scene consumption. See reports/regression-summary.json,csv and
+qualification-decision.json. Independent standards/spec read-only review applies.
+
+All233candidate oracle defects<=1.646e-13; every pressure bound covers its
+independent oracle. Median same-RHS meanfree pressure error2.36459e-7->1.48805e-7,
+median gradient1.51305e-7->1.16380e-7, but maxima regress. These compare each
+model's autonomous trajectory states; they are not matched-RHS causal effects.
+The separately retained manufactured fixed-input diagnostics provide that control.
+
+
+## Serial timing and terminal closure
+
+After full candidate pool drainage, ran one core22, one episode at a time:
+control rep1, lowband rep1, lowband rep2, control rep2. Each command used
+`taskset -c 22 python3 -B experiments/pressure-throughput-feedback-v1/benchmark.py
+--config <artifact-root>/<model>-timing-config.json --workers 1
+--output <artifact-root>/<model>-timing-rep<N>`, with the exact rep1 receipt
+passed as `--baseline` for rep2. Retained configs select consumed scenes8/10/12/14;
+15native warm-up+8AI steps, fixed1m³ volume,16/24/32/40cells per metre. Benchmark
+selects the Pumas interpreter/site-packages from the captured runtime manifest,
+sets OMP/OPENBLAS/MKL/RAYON threads1 and hides CUDA for inference. Source remains
+unchanged across repetitions; second repetitions prove exact physical outputs and
+call sequences. No sparse capture/oracle runs in timing. Full paired-step costs
+include iterative adapter, IPC and logging; startup is separate.
+
+Complete measured batch times73.038174058,73.593580000,72.585434462,
+73.632448845s. All child processes drained. Serial report binds each complete
+campaign/config/source hash and every raw frame/callback hash; includes memory,
+startup, step means/medians, calls, affinity and complete child times. AI remains
+slower than native full steps across this tested range; ratios are not monotonic
+with resolution. Full table and timing limits in results.md. Independent reviewers
+recomputed all16rows and table aggregates without simulations; no remaining
+findings. Corrected a malformed documentation SHA before final commit.
+
+Read-only final original-catalog lookup confirms both CUDA fits and both CPU
+restores completed/drained. Final qualification observation published to existing
+Project/Rheon paths, candidate rejected/no holdout used; exact owned observer
+stopped after publication. Original applications stay open with recorded pressure
+preview, honestly marked completed. All scientific/serial jobs complete; isolated
+fixture database stopped. No model weights, simulation arrays, credentials or
+runtime packages added to Git. No promotion, push, merge or additional fit.
+
+Next proposed science: smaller feedback weights0.01/0.03 with matched controls,
+then independent late-correction-state or mixed-amplitude training ablations only
+if necessary. Prepared runtime path prototype remains unpromoted infrastructure.
+Keep scheduling/portability changes separate from scientific objectives and retain
+all failures and unchanged population criteria in subsequent work.

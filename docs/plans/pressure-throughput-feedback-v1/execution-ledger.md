@@ -135,3 +135,22 @@ existing600s contract for both fits; remove the unused v10 deadline extension.
 The prior control needed417s of optimizer time, leaving measured room for the
 bounded projection cost. If this limit proves insufficient, retain the failure
 and extend execution policy deliberately in a separate change. No full fit yet.
+
+Low-band CUDA qualification completed one optimizer update and fresh CPU restore
+in the original live catalog. Runs20c3de2d9be14873a5fa0fc9ae391323 /
+2d79680874d343c7978c6249667b2df9 completed/drained. Initial readback attempted
+to use an owner token through agent-only bootstrap; no numerical failure.
+Corrected with an owner-operation adapter to the same existing artifact chunk
+verifier and performed read-only collection of the acknowledged terminal Runs.
+No training or admission was repeated. Full artifact parity passes. Complete
+command interval including inspected readback recovery337.833s; numerical
+timing remains separately retained in receipts.
+
+Regression fixture01 failed before simulation because the retained build's
+dependency selection bound the pre-commit base, while Rheon subsequently committed
+the identical source. Fixture02 independently measured every complete compiled
+input and license byte against the build receipt, with current commit recorded;
+passed7.527s,760549376B RSS. Historical build receipt remains unchanged.
+This verifies input bytes without asserting that advanced Git metadata matches
+the original base. Full74 case failures will be retained independently; memory,
+deadline or custody failures still stop the pool.

@@ -1,0 +1,1256 @@
+{
+  "artifact_parity": {
+    "checkpoint-001.npz": true,
+    "history.json": true,
+    "normalization.json": true,
+    "predictions.npz": true,
+    "weights.npz": true
+  },
+  "assembly_sha256": "d345008c2932f1aa804bcb7fb217b333691dfce18714f3205bee7f3c1b2230cc",
+  "band_feedback": {
+    "max_mode": 3,
+    "signal_floor_fraction": 0.1,
+    "stages": "first-and-final",
+    "weight": 0.1
+  },
+  "elapsed_s": 337.83316638071847,
+  "format": "rheon_pressure_training_study_v1",
+  "model": {
+    "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "id": "cc9a3cbdf47c4ac2a42350b671f220e7",
+    "kind": "model",
+    "revision": 1,
+    "sha256": "37b36b5a89a8d95a8af26245b736cbcaae9249b973368e3145d567fbd204cc61"
+  },
+  "model_promotion": false,
+  "optimizer_updates": 1,
+  "project_id": "c5cd4b4d2eb047ebaa611f0ff65e8438",
+  "restore_receipt": {
+    "architecture": {
+      "activation": "silu",
+      "analytical_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              16,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              24,
+              24
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              32,
+              32,
+              32
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              40,
+              40,
+              40
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              16,
+              12
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              17,
+              13,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              33,
+              17,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              9,
+              25,
+              13
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101507,
+        "weight": 0.1
+      },
+      "block_normalization": {
+        "name": "Identity"
+      },
+      "bottleneck_width": 48,
+      "channels": [
+        "dimensionless_laplacian_rhs"
+      ],
+      "conditioning": "physical-residual",
+      "convolutions_per_block": 2,
+      "coordinates": "implicit grid indices; no coordinate feature maps",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "counts_supported": "positive per-axis integers within cell budget",
+      "decoder_widths": [
+        32,
+        24,
+        16,
+        8
+      ],
+      "direction_training_feedback": {
+        "manifest_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+        "seed": 2026102701,
+        "stage": "late",
+        "weight": 0.1
+      },
+      "dtype": "float32",
+      "encoder_widths": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "first_correction_pressure_feedback_weight": 0.0,
+      "gauge": "subtract_first_correction_cell",
+      "global_path": "add_spatial_mean_broadcast",
+      "head": "linear_1x1x1",
+      "initialization": "retain original first-convolution residual column and all surviving seeded tensors",
+      "input_channels": 1,
+      "intermediate_feedback": {
+        "relative_equation_weight": 0.1,
+        "stages": "all nonfinal corrections; real and analytical train samples"
+      },
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "max_cells": 65536,
+      "output_scale": "previous-pressure-rms",
+      "padding": "replicate",
+      "physical_cells": "one scalar h per sample; no cell-size network channels",
+      "pool": "per-axis average, kernel=min(2,count), ceil, exclude padding",
+      "preprocessing": "q=(rho/h)*residual; q / train-only q RMS",
+      "pressure_dtype": "float64",
+      "reconstruction": "float32 raw times selected train-only RMS, cell-zero gauge, add supplied base",
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "schema": "rheon-physical-residual-pressure-v1",
+      "supplemental_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              23,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              23,
+              25,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              16,
+              23
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              10,
+              7,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              7,
+              25,
+              10
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              10,
+              7
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101607,
+        "source": "grids",
+        "weight": 0.1
+      },
+      "training_band_feedback": {
+        "max_mode": 3,
+        "signal_floor_fraction": 0.1,
+        "stages": "first-and-final",
+        "weight": 0.1
+      },
+      "training_objective": "canonical-intermediate-contraction",
+      "upsampling": "nearest_to_skip_shape"
+    },
+    "cases": [
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 0,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0000"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          16,
+          10,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 1,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0001"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          7,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 2,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0002"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          15,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 4,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0004"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          11,
+          10,
+          6
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 5,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0005"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          8,
+          5,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 6,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0006"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          8,
+          9
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 8,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0008"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          6,
+          14,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 9,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0009"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 10,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0010"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          6,
+          13,
+          12
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 12,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0012"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          15,
+          15
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 13,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0013"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          14,
+          15,
+          7
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 15,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0015"
+      }
+    ],
+    "closure": {
+      "experiment_sha256": "9f99bf7657baf28d616cb46de8471105ec9275804b27fad241ed3364bf6f700f",
+      "inputs": {
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+      "sample_order_sha256": "f137c1b9244c69befd532cde2486d4fe8b6f681deda0487b8e5757e0d09619ec",
+      "source_witness_sha256": "bb986728ef92008ca41abfe81d9f8f7338249f2b4efa7da9a2293355909972a9"
+    },
+    "elapsed_s": 2.9422458650078624,
+    "execution": {
+      "cuda_initialized": false,
+      "device": "cpu",
+      "optimizer_updates": 0
+    },
+    "mode": "restore",
+    "optimizer_updates": 0,
+    "originating_training_run": {
+      "attempt_id": "20c3de2d9be14873a5fa0fc9ae391323",
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+      "custody_identity": {
+        "attempt_id": "20c3de2d9be14873a5fa0fc9ae391323",
+        "helper": {
+          "boot_id": "271ff446-e03d-49d2-b635-5deff9912e70",
+          "pid": 606555,
+          "start_ticks": "6885683"
+        },
+        "request_sha256": "32c8c37958c181721f52b468fff3f80d4352d96f7133632dbece18aba0e525d7",
+        "spec_sha256": "dd7bbd46a4675752feaf06c35819478d539e225e90d2c28b4307ecd772c57e48"
+      },
+      "custody_receipt_base64": "eyJhdHRlbXB0X2lkIjoiMjBjM2RlMmQ5YmUxNDg3M2E1ZmEwZmM5YWUzOTEzMjMiLCJkcmFpbmVkIjp0cnVlLCJlY2hpbGQiOnRydWUsImdvX3JlY2VpdmVkIjp0cnVlLCJoZWxwZXIiOnsiYm9vdF9pZCI6IjI3MWZmNDQ2LWUwM2QtNDlkMi1iNjM1LTVkZWZmOTkxMmU3MCIsInBpZCI6NjA2NTU1LCJzdGFydF90aWNrcyI6IjY4ODU2ODMifSwibGVhZGVyX3JldHVybmNvZGUiOjAsIm91dGNvbWUiOiJjb21wbGV0ZWQiLCJyZWFzb24iOiJleGl0ZWQiLCJyZXF1ZXN0X3NoYTI1NiI6IjMyYzhjMzc5NThjMTgxNzIxZjUyYjQ2OGZmZjNmODBkNDM1MmQ5NmY3MTMzNjMyZGJlY2UxOGFiYTBlNTI1ZDciLCJzY2hlbWFfdmVyc2lvbiI6MSwic3Bhd25fY2xvc2VkIjp0cnVlLCJzcGVjX3NoYTI1NiI6ImRkN2JiZDQ2YTQ2NzU3NTJmZWFmMDZjMzU4MTk0NzhkNTM5ZTIyNWU5MGQyYzI4YjQzMDdlY2Q3NzJjNTdlNDgiLCJzdHJlYW1zIjp7InN0ZGVyciI6eyJieXRlcyI6MCwic2hhMjU2IjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9LCJzdGRvdXQiOnsiYnl0ZXMiOjU1ODksInNoYTI1NiI6IjEzOThmYWM5Nzg0NmM4NjMxZGE2YTE4NzQ4ZjMzN2ExMzA5NGIxZmQwMWFlYmRiNDQ0NTY5MWZjYjY5MjUxMWIifX19",
+      "custody_receipt_sha256": "8e939d01f4e8da10c40d6fb0e4436f7ec737bb374e092b9e770dc367b1cc9b1a",
+      "material_sha256": "07723f2b8ee08e8e3cbf10a09c306f18d653fba10628b8a736fde462760e5a65",
+      "request_sha256": "32c8c37958c181721f52b468fff3f80d4352d96f7133632dbece18aba0e525d7",
+      "run_id": "20c3de2d9be14873a5fa0fc9ae391323"
+    },
+    "outputs": {
+      "checkpoint-000.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713"
+      },
+      "checkpoint-001.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "09d9925bb6226c07f92beae2eb5f22fa06a836ebf3202548b220d9905b8b107f"
+      },
+      "history.json": {
+        "bytes": 204432,
+        "role": "training_diagnostics",
+        "sha256": "1a9cc1210ab624014414169446b3b6199f6a697652a82517003a6d291c869d53"
+      },
+      "normalization.json": {
+        "bytes": 6752,
+        "role": "preprocessing",
+        "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+      },
+      "predictions.npz": {
+        "bytes": 129230,
+        "role": "predictions",
+        "sha256": "8ebd5d8b489b4661e23ec44fe1dc064c9415c418d8f12cd952999799798526eb"
+      },
+      "profile.json": {
+        "bytes": 189,
+        "role": "training_diagnostics",
+        "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"
+      },
+      "splits.json": {
+        "bytes": 256361,
+        "role": "training_splits",
+        "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+      },
+      "summary.json": {
+        "bytes": 356,
+        "role": "result_summary",
+        "sha256": "29ece33a00a56b7f75679d3d5d846aee5a11944b7b9988362640d6272798d00e"
+      },
+      "weights.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "09d9925bb6226c07f92beae2eb5f22fa06a836ebf3202548b220d9905b8b107f"
+      }
+    },
+    "per_case_inference_s": [
+      0.023149576998548582,
+      0.004660100996261463,
+      0.005872750989510678,
+      0.004606062997481786,
+      0.004193412998574786,
+      0.00377871299860999,
+      0.004824697010917589,
+      0.005006453997339122,
+      0.010344934999011457,
+      0.005671418999554589,
+      0.006946410998352803,
+      0.006204553006682545
+    ],
+    "prediction_inventory": {
+      "case_000": {
+        "bytes": 32768,
+        "dtype": "<f8",
+        "sha256": "b1966830c53698e4d124fb681591ffd790f086bfcea848ea00010d925e7d3e30",
+        "shape": [
+          16,
+          16,
+          16
+        ]
+      },
+      "case_001": {
+        "bytes": 7680,
+        "dtype": "<f8",
+        "sha256": "05e1580f6515bedc7412a9bfd8c7e1b86522e57ae81a4e0236d5e2a6b428343a",
+        "shape": [
+          6,
+          10,
+          16
+        ]
+      },
+      "case_002": {
+        "bytes": 8736,
+        "dtype": "<f8",
+        "sha256": "1c6086debd4a9ce9c7793ef0e8575bdab74052a50e0a76e2e1c6149a01b32a4f",
+        "shape": [
+          13,
+          7,
+          12
+        ]
+      },
+      "case_003": {
+        "bytes": 7200,
+        "dtype": "<f8",
+        "sha256": "26ed1cd631825fce30fa40cd749d02348c06d574745076957e4d7c09d47e1880",
+        "shape": [
+          6,
+          15,
+          10
+        ]
+      },
+      "case_004": {
+        "bytes": 5280,
+        "dtype": "<f8",
+        "sha256": "1c711545088a4583a8f311fa18557f1cad3a21d06f6c66f54683b39bd716f513",
+        "shape": [
+          6,
+          10,
+          11
+        ]
+      },
+      "case_005": {
+        "bytes": 2880,
+        "dtype": "<f8",
+        "sha256": "cdef65c8e7a55018916fbfbd67127d329e7997b2349bacbd6172efdb822566bb",
+        "shape": [
+          9,
+          5,
+          8
+        ]
+      },
+      "case_006": {
+        "bytes": 6912,
+        "dtype": "<f8",
+        "sha256": "59799f11a898b660f67ffd44a8093edc72baf98e1ac73953adcf5ab3d8659af3",
+        "shape": [
+          9,
+          8,
+          12
+        ]
+      },
+      "case_007": {
+        "bytes": 6048,
+        "dtype": "<f8",
+        "sha256": "5dfc68b1c63d583347928f82eb4c983a01fd8fb1b2d69b9f74ac47fb11ea4e54",
+        "shape": [
+          9,
+          14,
+          6
+        ]
+      },
+      "case_008": {
+        "bytes": 20480,
+        "dtype": "<f8",
+        "sha256": "6dd4c1c67d8e835221a29bf134fa1bdf2e4b7e6812be064bfef8dd9c192e2723",
+        "shape": [
+          16,
+          16,
+          10
+        ]
+      },
+      "case_009": {
+        "bytes": 7488,
+        "dtype": "<f8",
+        "sha256": "43ec0a301cdf6d449acf661780bb0384dc2276d15f88c00dcf008830f12f19c6",
+        "shape": [
+          12,
+          13,
+          6
+        ]
+      },
+      "case_010": {
+        "bytes": 9000,
+        "dtype": "<f8",
+        "sha256": "9039c97b331e8167615f55e078db70c7822de615ea6dd3abcb0feb847e1bef3f",
+        "shape": [
+          15,
+          15,
+          5
+        ]
+      },
+      "case_011": {
+        "bytes": 11760,
+        "dtype": "<f8",
+        "sha256": "07d3a23435a5898b02d9a50b54c2d7fc7ddfb0d3c9222a8f32aa6c400c802b51",
+        "shape": [
+          7,
+          15,
+          14
+        ]
+      }
+    },
+    "runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 842027008,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "schema": "rheon-water-learning-training-v1",
+    "status": "complete"
+  },
+  "restore_run_id": "2d79680874d343c7978c6249667b2df9",
+  "status": "completed",
+  "study_id": "5e873110c38847b28319fcf9c1039222",
+  "training_receipt": {
+    "architecture": {
+      "activation": "silu",
+      "analytical_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              16,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              24,
+              24
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              32,
+              32,
+              32
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              40,
+              40,
+              40
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              24,
+              16,
+              12
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              17,
+              13,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              33,
+              17,
+              9
+            ]
+          },
+          {
+            "cells_per_metre": 8,
+            "counts_xyz": [
+              9,
+              25,
+              13
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101507,
+        "weight": 0.1
+      },
+      "block_normalization": {
+        "name": "Identity"
+      },
+      "bottleneck_width": 48,
+      "channels": [
+        "dimensionless_laplacian_rhs"
+      ],
+      "conditioning": "physical-residual",
+      "convolutions_per_block": 2,
+      "coordinates": "implicit grid indices; no coordinate feature maps",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "counts_supported": "positive per-axis integers within cell budget",
+      "decoder_widths": [
+        32,
+        24,
+        16,
+        8
+      ],
+      "direction_training_feedback": {
+        "manifest_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+        "seed": 2026102701,
+        "stage": "late",
+        "weight": 0.1
+      },
+      "dtype": "float32",
+      "encoder_widths": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "first_correction_pressure_feedback_weight": 0.0,
+      "gauge": "subtract_first_correction_cell",
+      "global_path": "add_spatial_mean_broadcast",
+      "head": "linear_1x1x1",
+      "initialization": "retain original first-convolution residual column and all surviving seeded tensors",
+      "input_channels": 1,
+      "intermediate_feedback": {
+        "relative_equation_weight": 0.1,
+        "stages": "all nonfinal corrections; real and analytical train samples"
+      },
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "max_cells": 65536,
+      "output_scale": "previous-pressure-rms",
+      "padding": "replicate",
+      "physical_cells": "one scalar h per sample; no cell-size network channels",
+      "pool": "per-axis average, kernel=min(2,count), ceil, exclude padding",
+      "preprocessing": "q=(rho/h)*residual; q / train-only q RMS",
+      "pressure_dtype": "float64",
+      "reconstruction": "float32 raw times selected train-only RMS, cell-zero gauge, add supplied base",
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "schema": "rheon-physical-residual-pressure-v1",
+      "supplemental_training_feedback": {
+        "amplitude_reference": "train-correction-cell-rms",
+        "cache_max_bytes": 805306368,
+        "grid_capacity": 16,
+        "grids": [
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              16,
+              23,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              23,
+              25,
+              16
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              16,
+              23
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              10,
+              7,
+              25
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              7,
+              25,
+              10
+            ]
+          },
+          {
+            "cells_per_metre": 16,
+            "counts_xyz": [
+              25,
+              10,
+              7
+            ]
+          }
+        ],
+        "patterns": 32,
+        "sampling": "uniform-balanced-grid",
+        "seed": 2026101607,
+        "source": "grids",
+        "weight": 0.1
+      },
+      "training_band_feedback": {
+        "max_mode": 3,
+        "signal_floor_fraction": 0.1,
+        "stages": "first-and-final",
+        "weight": 0.1
+      },
+      "training_objective": "canonical-intermediate-contraction",
+      "upsampling": "nearest_to_skip_shape"
+    },
+    "cases": [
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 0,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0000"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          16,
+          10,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 1,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0001"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          7,
+          13
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 2,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0002"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          15,
+          6
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 4,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0004"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          11,
+          10,
+          6
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 5,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0005"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          8,
+          5,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 6,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0006"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          12,
+          8,
+          9
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 8,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0008"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          6,
+          14,
+          9
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 9,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0009"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          10,
+          16,
+          16
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 10,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0010"
+      },
+      {
+        "cell_size_m": 0.125,
+        "counts_xyz": [
+          6,
+          13,
+          12
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 12,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0012"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          5,
+          15,
+          15
+        ],
+        "frame": 0,
+        "native_frame": 15,
+        "parent": 13,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0013"
+      },
+      {
+        "cell_size_m": 0.0625,
+        "counts_xyz": [
+          14,
+          15,
+          7
+        ],
+        "frame": 1,
+        "native_frame": 63,
+        "parent": 15,
+        "split": "train",
+        "trajectory_id": "baseline--water-train-0015"
+      }
+    ],
+    "closure": {
+      "experiment_sha256": "9f99bf7657baf28d616cb46de8471105ec9275804b27fad241ed3364bf6f700f",
+      "inputs": {
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+      "sample_order_sha256": "f137c1b9244c69befd532cde2486d4fe8b6f681deda0487b8e5757e0d09619ec",
+      "source_witness_sha256": "bb986728ef92008ca41abfe81d9f8f7338249f2b4efa7da9a2293355909972a9"
+    },
+    "diagnostic_population": "train_only",
+    "elapsed_s": 5.010233111999696,
+    "execution": {
+      "amp": false,
+      "batches_cuda": true,
+      "cuda_cpu_pressure_max_abs_difference": 7.103853235435054e-06,
+      "deterministic_algorithms": true,
+      "device": "cuda:0",
+      "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+      "model_dtype": "float32",
+      "parameters_gradients_adam_moments_cuda": true,
+      "peak_allocated_bytes": 834512896,
+      "peak_reserved_bytes": 857735168,
+      "tf32": false
+    },
+    "heldout_evaluations": 0,
+    "mode": "train",
+    "optimizer_updates": 1,
+    "originating_training_run": null,
+    "outputs": {
+      "checkpoint-000.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713"
+      },
+      "checkpoint-001.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "09d9925bb6226c07f92beae2eb5f22fa06a836ebf3202548b220d9905b8b107f"
+      },
+      "history.json": {
+        "bytes": 204432,
+        "role": "training_diagnostics",
+        "sha256": "1a9cc1210ab624014414169446b3b6199f6a697652a82517003a6d291c869d53"
+      },
+      "normalization.json": {
+        "bytes": 6752,
+        "role": "preprocessing",
+        "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+      },
+      "predictions.npz": {
+        "bytes": 129230,
+        "role": "predictions",
+        "sha256": "8ebd5d8b489b4661e23ec44fe1dc064c9415c418d8f12cd952999799798526eb"
+      },
+      "profile.json": {
+        "bytes": 189,
+        "role": "training_diagnostics",
+        "sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"
+      },
+      "splits.json": {
+        "bytes": 256361,
+        "role": "training_splits",
+        "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+      },
+      "summary.json": {
+        "bytes": 464,
+        "role": "result_summary",
+        "sha256": "7078ca2cf34f8a7e9d2bdc43016dafb8ae9f31d3cceffc4eca35fff73a94d94d"
+      },
+      "weights.npz": {
+        "bytes": 1485452,
+        "role": "checkpoint",
+        "sha256": "09d9925bb6226c07f92beae2eb5f22fa06a836ebf3202548b220d9905b8b107f"
+      }
+    },
+    "per_case_inference_s": [
+      0.020271086992579512,
+      0.003927856989321299,
+      0.004986560990801081,
+      0.003999263994046487,
+      0.00347000100009609,
+      0.003271359993959777,
+      0.004188797000097111,
+      0.004323230008594692,
+      0.008804028999293223,
+      0.004855705992667936,
+      0.005870008986676112,
+      0.005295287002809346
+    ],
+    "prediction_inventory": {
+      "case_000": {
+        "bytes": 32768,
+        "dtype": "<f8",
+        "sha256": "b1966830c53698e4d124fb681591ffd790f086bfcea848ea00010d925e7d3e30",
+        "shape": [
+          16,
+          16,
+          16
+        ]
+      },
+      "case_001": {
+        "bytes": 7680,
+        "dtype": "<f8",
+        "sha256": "05e1580f6515bedc7412a9bfd8c7e1b86522e57ae81a4e0236d5e2a6b428343a",
+        "shape": [
+          6,
+          10,
+          16
+        ]
+      },
+      "case_002": {
+        "bytes": 8736,
+        "dtype": "<f8",
+        "sha256": "1c6086debd4a9ce9c7793ef0e8575bdab74052a50e0a76e2e1c6149a01b32a4f",
+        "shape": [
+          13,
+          7,
+          12
+        ]
+      },
+      "case_003": {
+        "bytes": 7200,
+        "dtype": "<f8",
+        "sha256": "26ed1cd631825fce30fa40cd749d02348c06d574745076957e4d7c09d47e1880",
+        "shape": [
+          6,
+          15,
+          10
+        ]
+      },
+      "case_004": {
+        "bytes": 5280,
+        "dtype": "<f8",
+        "sha256": "1c711545088a4583a8f311fa18557f1cad3a21d06f6c66f54683b39bd716f513",
+        "shape": [
+          6,
+          10,
+          11
+        ]
+      },
+      "case_005": {
+        "bytes": 2880,
+        "dtype": "<f8",
+        "sha256": "cdef65c8e7a55018916fbfbd67127d329e7997b2349bacbd6172efdb822566bb",
+        "shape": [
+          9,
+          5,
+          8
+        ]
+      },
+      "case_006": {
+        "bytes": 6912,
+        "dtype": "<f8",
+        "sha256": "59799f11a898b660f67ffd44a8093edc72baf98e1ac73953adcf5ab3d8659af3",
+        "shape": [
+          9,
+          8,
+          12
+        ]
+      },
+      "case_007": {
+        "bytes": 6048,
+        "dtype": "<f8",
+        "sha256": "5dfc68b1c63d583347928f82eb4c983a01fd8fb1b2d69b9f74ac47fb11ea4e54",
+        "shape": [
+          9,
+          14,
+          6
+        ]
+      },
+      "case_008": {
+        "bytes": 20480,
+        "dtype": "<f8",
+        "sha256": "6dd4c1c67d8e835221a29bf134fa1bdf2e4b7e6812be064bfef8dd9c192e2723",
+        "shape": [
+          16,
+          16,
+          10
+        ]
+      },
+      "case_009": {
+        "bytes": 7488,
+        "dtype": "<f8",
+        "sha256": "43ec0a301cdf6d449acf661780bb0384dc2276d15f88c00dcf008830f12f19c6",
+        "shape": [
+          12,
+          13,
+          6
+        ]
+      },
+      "case_010": {
+        "bytes": 9000,
+        "dtype": "<f8",
+        "sha256": "9039c97b331e8167615f55e078db70c7822de615ea6dd3abcb0feb847e1bef3f",
+        "shape": [
+          15,
+          15,
+          5
+        ]
+      },
+      "case_011": {
+        "bytes": 11760,
+        "dtype": "<f8",
+        "sha256": "07d3a23435a5898b02d9a50b54c2d7fc7ddfb0d3c9222a8f32aa6c400c802b51",
+        "shape": [
+          7,
+          15,
+          14
+        ]
+      }
+    },
+    "runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 2528960512,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "schema": "rheon-water-learning-training-v1",
+    "scientific_acceptance_or_model_promotion": false,
+    "status": "complete"
+  },
+  "training_run_id": "20c3de2d9be14873a5fa0fc9ae391323",
+  "trial_id": "c4fbaaa595344df4ae61029632160ce2",
+  "untouched_scenes_consumed": 0,
+  "weights_sha256": "09d9925bb6226c07f92beae2eb5f22fa06a836ebf3202548b220d9905b8b107f"
+}

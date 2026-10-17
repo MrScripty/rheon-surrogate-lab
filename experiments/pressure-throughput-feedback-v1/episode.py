@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import resource
+import subprocess
 import sys
 import time
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'dependency-migration-v1'))
@@ -41,9 +42,20 @@ def main():
             qualify.require(qualify.digest(path)==expected,'candidate build input changed before comparison')
         sys.path.insert(0,str(lab/'experiments/local-pressure-v1'));import dependency
         selected=dependency.selection(build['dependency_config'])
-        native_source=dependency.verify(selected.source_root('rheon'),selected)
-        qualify.require(native_source==build['native_receipt'],'candidate Rheon source changed before comparison')
-        active_sources={str(path):qualify.digest(path) for path in (Path(rollout.__file__),Path(model_adapter.__file__),Path(__file__))}
+        source_root=selected.resolve(selected.value['sources']['rheon']['root'])
+        native_source=build['native_receipt']
+        def verify_native():
+            paths=[source_root/name for name in ('Cargo.toml','Cargo.lock','rust-toolchain.toml')]
+            if (source_root/'build.rs').exists():paths.append(source_root/'build.rs')
+            paths += sorted(p for p in (source_root/'src').rglob('*') if p.is_file() and not p.is_relative_to(source_root/'src/bin'))
+            actual=[dict(path=p.relative_to(source_root).as_posix(),sha256=qualify.digest(p)) for p in paths]
+            return actual==native_source['build_inputs'] and qualify.digest(source_root/'LICENSE')==native_source['license_sha256']
+        qualify.require(verify_native(),'exact compiled Rheon input closure changed')
+        receipt['rheon_current_commit']=subprocess.check_output(['git','-C',str(source_root),'rev-parse','HEAD'],text=True).strip()
+        receipt['native_source_identity_scope']='exact complete compiled input bytes; commit metadata may advance without a byte change'
+        active_sources={str(path):qualify.digest(path) for path in (Path(rollout.__file__),Path(model_adapter.__file__),Path(__file__),Path(qualify.__file__),
+            lab/'experiments/water-residual-learning-v1/audit.py',lab/'experiments/water-pressure-accuracy-v1/diagnose.py',
+            lab/'experiments/global-pressure-v1/verify_capture.py')}
         receipt.update(build_receipt_sha256=qualify.digest(a.binary.parent/'build-receipt.json'),native_source=native_source,active_sources=active_sources)
         import numpy as np
         native=rollout.run(a.binary,scene,a.output/'native-control',control=True,timeout=300,threads=1)
@@ -96,7 +108,7 @@ def main():
             receipt['native_first_frame_inputs_exact']=True
         qualify.require(qualify.digest(a.binary)==receipt['binary_sha256'] and qualify.digest(a.manifest)==receipt['manifest_sha256'],'candidate binary/package drift during comparison')
         qualify.require(all(qualify.digest(path)==expected for path,expected in active_sources.items())
-                        and dependency.verify(selected.source_root('rheon'),selected)==native_source,'candidate source drift during comparison')
+                        and verify_native(),'candidate source drift during comparison')
         receipt.update(status='passed',metrics=metrics,sparse=samples,cuda_initialized=torch.cuda.is_initialized(),torch_threads=torch.get_num_threads(),
                        captures=captures,source_sha256s={str(Path(rollout.__file__).relative_to(lab)):qualify.digest(rollout.__file__),
                                                      str(Path(model_adapter.__file__).relative_to(lab)):qualify.digest(model_adapter.__file__)})

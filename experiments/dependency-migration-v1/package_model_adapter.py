@@ -59,7 +59,7 @@ def iteration_functions(path):
             'import math\nMAX_NETWORK_EVALUATIONS=32\n\n'+'\n\n\n'.join(parts.values())+'\n')
 
 
-def package(kind, sources, artifacts, inventory, runtime, output, archive, originals, provenance, iteration=None, runtime_owner=None):
+def package(kind, sources, artifacts, inventory, runtime, output, archive, originals, provenance, iteration=None, runtime_owner=None, package_id=None, package_version=None, role=None):
     require(not output.exists() and not archive.exists(), 'Fresh package and archive destinations required')
     require(runtime_owner is not None and runtime_owner.is_file(), 'Explicit current runtime owner required')
     owner_spec = importlib.util.spec_from_file_location('rheon_packaging_torch_runtime', runtime_owner)
@@ -97,7 +97,7 @@ def package(kind, sources, artifacts, inventory, runtime, output, archive, origi
                               if kind == 'physical_residual' else {'max_network_calls': 1}}
     write(output / 'numerical.json', numerical)
     write(output / 'provenance.json', {'schema': 'rheon-model-package-provenance-v1',
-        'role': 'unchanged migration comparator; no training or promotion', 'original': provenance,
+        'role': role or 'unchanged migration comparator; no training or promotion', 'original': provenance,
         'archive_inventory': str(archive / 'archive-inventory.json'),
         'archive_inventory_identity': measure(archive / 'archive-inventory.json'),
         'numerical_sources': source_mapping, 'weights': measure(output / 'weights.npz'),
@@ -105,8 +105,8 @@ def package(kind, sources, artifacts, inventory, runtime, output, archive, origi
         'runtime_owner': {'source': str(runtime_owner), **measure(runtime_owner)}})
     python = Path(runtime_value['python'])
     manifest = {'schema': 'rheon-pressure-adapter-v1',
-        'id': 'rheon-water-control-26b' if kind == 'physical_residual' else 'rheon-water-aa82',
-        'version': 'migration-20261016', 'stage': STAGE,
+        'id': package_id or ('rheon-water-control-26b' if kind == 'physical_residual' else 'rheon-water-aa82'),
+        'version': package_version or 'migration-20261016', 'stage': STAGE,
         'python': {'executable': str(python), **measure(python)}, 'entrypoint': 'model_adapter.py',
         'files': {p.name: measure(p) for p in sorted(output.iterdir())},
         'support': {'density_kg_m3': 1000., 'dynamic_viscosity_pa_s': .001, 'dt_s': 1/60,

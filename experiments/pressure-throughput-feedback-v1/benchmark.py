@@ -163,6 +163,14 @@ def benchmark(args):
                         raise TimeoutError('CPU benchmark cancelled or timed out')
                     time.sleep(.05)
                 if child.returncode:
+                    failed=output/'episode.json'
+                    if config.get('retain_case_failures') and failed.exists():
+                        # A failed independent physical case remains a result.
+                        # Memory/deadline/custody failures still stop the pool.
+                        evidence=read(failed)
+                        return {'scene':scene,'slot':slot,'cpu':cpu,'status':'failed',
+                            'episode':evidence,'worker_reaped':True,
+                            'complete_child_elapsed_seconds':time.perf_counter()-started}
                     raise RuntimeError(f'CPU benchmark worker exited {child.returncode}; inspect case-{slot:02d}.log')
             result = read(output / 'receipt.json')
             return {**result, 'slot': slot, 'cpu': cpu, 'complete_child_elapsed_seconds': time.perf_counter() - started,
@@ -204,7 +212,8 @@ def benchmark(args):
                 recorded = args.baseline.parent / f"case-{before['slot']:02d}-scene-{before['scene']:02d}/native/frames.jsonl"
                 assert (before['scene'], numerical_signature(recorded), before['network_calls']) == (after['scene'], after['signature'], after['network_calls'])
             report['exact_to_baseline'] = True
-        report['status'] = 'passed'
+        report['failed_cases']=[r['scene'] for r in report['records'] if r.get('status')=='failed']
+        report['status'] = 'failed_cases_retained' if report['failed_cases'] else 'passed'
     except BaseException as error:
         stop.set()
         report.update(status='failed', error_type=type(error).__name__, error=str(error))

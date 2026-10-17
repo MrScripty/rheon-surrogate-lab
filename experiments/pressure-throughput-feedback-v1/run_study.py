@@ -17,7 +17,7 @@ from qualify_typed_pressure import Journal, OwnerHTTP, artifact, await_drained, 
 
 def execute(args):
     started=time.monotonic()
-    require(not args.output.exists(),'fresh command directory required; never replay unknown writes')
+    require(args.collect_existing or not args.output.exists(),'fresh command directory required; never replay unknown writes')
     assembly=decode(args.assembly.read_bytes());root=args.root.resolve(strict=True)
     project_file=root/assembly['project']['path'];require(digest(project_file)==assembly['project']['sha256'],'Project identity changed')
     document=decode(project_file.read_bytes());definitions={}
@@ -29,6 +29,25 @@ def execute(args):
     require(assembly['optimizer_updates_executed']==0 and 1<=assembly['updates']<=5000,'bounded frozen assembly required')
     sys.path.insert(0,str(args.tuldok.resolve(strict=True)));import agent_api,project_cli
     owner=OwnerHTTP(agent_api,args.endpoint,args.catalog_id,args.session_file)
+    if args.collect_existing:
+        intent=decode((args.output/'intent.json').read_bytes())
+        require(intent['assembly_sha256']==digest(args.assembly) and intent['catalog_id']==args.catalog_id
+                and intent['endpoint']==args.endpoint and not (args.output/'receipt.json').exists(),
+                'exact unresolved readback target required')
+        def acknowledged(name):
+            row=decode((args.output/'mutations'/name).read_bytes())
+            require(row['status']=='acknowledged','cannot recover an unknown mutation')
+            return row['result']
+        fit=acknowledged('09-admit-training.json')['run']['id']
+        restored_id=acknowledged('13-admit-restore.json')['id']
+        acknowledged('10-close-study.json')
+        training=await_drained(owner,fit);restored=await_drained(owner,restored_id)
+        evidence=owner.call('runs.model_evidence',dict(run_id=fit,split='validation'))
+        require(evidence['state']=='verified','completed evidence required')
+        collect(args,assembly,owner,training,restored,acknowledged('03-publish-model.json'),
+                acknowledged('05-create-study.json'),acknowledged('06-prepare-trial.json'),evidence,
+                time.monotonic()-(time.time()-intent['started_unix']))
+        return
     args.output.mkdir(parents=True);(args.output/'mutations').mkdir();journal=Journal(args.output/'mutations')
     write(args.output/'intent.json',dict(assembly=str(args.assembly.resolve()),assembly_sha256=digest(args.assembly),
         endpoint=args.endpoint,catalog_id=args.catalog_id,optimizer_updates=assembly['updates'],started_unix=time.time(),automatic_retry=False))
@@ -78,13 +97,27 @@ def execute(args):
     restored_admit=mutate('admit-restore','runs.submit_external',dict(request_key=key+'-restore',graph_id=restore_graph['id'],graph_revision=restore_graph['revision'],expected_digest=preflight['material_sha256'],approval_id=approval['id']))
     print(json.dumps(dict(phase='CPU restore',run_id=restored_admit['id'])),flush=True)
     restored=await_drained(owner,restored_admit['id'],timeout=2100)
+    collect(args,assembly,owner,training,restored,published,study,trial,evidence,started)
+
+
+def collect(args, assembly, owner, training, restored, published, study, trial, evidence, started):
+    import project_cli
+    class OwnerArtifactReader:
+        # OwnerHTTP already negotiates and validates the same current operation.
+        # Bridge its checked-result shape to the existing streaming hash verifier;
+        # an HTTP error raises before provisional bytes can be published.
+        def call(self, operation, arguments):
+            require(operation=='runs.artifact_chunk','artifact readback only')
+            return {'status':200,'result':owner.call(operation,arguments)}
+    reader=OwnerArtifactReader()
+    run_id=training['id'];checkpoint=f"checkpoint-{assembly['updates']:03d}.npz"
     download_receipts=[]
     for label,run in (('train',training),('restore',restored)):
-        target=args.output/label;target.mkdir()
+        target=args.output/label;target.mkdir(exist_ok=True)
         for row in run['artifacts']:
             # Host already decoded the declared safe inventory; download every
             # published result with its full hash, never a private Run directory.
-            download_receipts.append(project_cli.download(owner.transport,run['id'],row['name'],row['sha256'],target/row['name']))
+            download_receipts.append(project_cli.download(reader,run['id'],row['name'],row['sha256'],target/row['name']))
     trained=decode((args.output/'train/receipt.json').read_bytes());cpu=decode((args.output/'restore/receipt.json').read_bytes())
     require(trained['mode']=='train' and trained['optimizer_updates']==assembly['updates'] and trained['execution']['device'].startswith('cuda')
         and cpu['mode']=='restore' and cpu['optimizer_updates']==0 and cpu['execution']['device']=='cpu'
@@ -95,7 +128,7 @@ def execute(args):
         parity[name]=digest(args.output/'train'/name)==digest(args.output/'restore'/name)
     require(all(parity.values()),'exact CPU artifact parity required')
     result=dict(format='rheon_pressure_training_study_v1',status='completed',elapsed_s=time.monotonic()-started,
-        assembly_sha256=digest(args.assembly),project_id=project['id'],study_id=study['id'],trial_id=trial['id'],model=published['ref'],
+        assembly_sha256=digest(args.assembly),project_id=assembly['project']['id'],study_id=study['id'],trial_id=trial['id'],model=published['ref'],
         training_run_id=run_id,restore_run_id=restored['id'],optimizer_updates=assembly['updates'],band_feedback=assembly['band_feedback'],
         weights_sha256=artifact(training,'weights.npz')['sha256'],artifact_parity=parity,training_receipt=trained,restore_receipt=cpu,
         downloads=download_receipts,model_evidence=evidence,model_promotion=False,untouched_scenes_consumed=0)
@@ -106,6 +139,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('root','tuldok','assembly','session-file','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--endpoint',required=True);p.add_argument('--catalog-id',required=True);p.add_argument('--project-alias',required=True)
+    p.add_argument('--collect-existing',action='store_true',help='Read terminal acknowledged Runs only; never repeat mutations')
     execute(p.parse_args())
 
 if __name__=='__main__':main()

@@ -132,3 +132,77 @@ is trained through two corrections but can require many more at inference:
 late-correction-state feedback is a subsequent experiment hypothesis, not a
 change admitted to these matched runs. Both independent review axes recomputed
 the recorded traces and reported no findings for this analysis module.
+
+
+## Complete regression and independent decision
+
+Weight003 physically passed74/74,8523AIsteps,233independent checks;
+710.909668429s campaign /710.993159127s outer command. All children reaped,
+RSSpeak11253071872B, minimumavailable47800639488B. Its overall mean7.500997calls
+is5.036% below control7.898745, maximum11versus12. It passes every unchanged
+population gate except worst trajectory pressure versus the prior accurate
+model in original58andminimum8-failed8. Both candidates are rejected; noeligible
+selection, promotion, holdout consumption, or automatic subsequent training.
+Full regression-summary.json/csv, diagnostic-summary.json and decision retained.
+The fixed hard-case comparison adds0.03:11calls, medianratio0.317107 fromproposal4.
+
+Read-only exact final catalog check confirms both CUDA and both fresh CPUrestore
+Runs completed/drained. System Python discovery lacked NumPy/Torch and was
+unqualified; repeated the focused suite with selected Pumas Python/site-packages,
+CUDAhidden and numerical threads1:8tests passed. No numerical source changed.
+Serial timing starts only after both16-worker campaigns drained: core22,
+oneworker, control/0.01/0.03/0.03/0.01/control, repeatedphysicaloutputs/calls checked.
+
+
+## Retained method and review boundary
+
+reports/cpu-phase-clocks.json retains exact package, one-frame, manufactured and
+74case commands plus outer clocks. reports/command-environment.json binds selected
+Pumas runtime/packages and CPU environment and the immutable archived execution
+wrappers under the raw artifact root. Reusable comparison/trace/report owners are
+committed; no private credential bytes or model assets are included.
+
+Both independent reviewers reproduced444case aggregates,699sparse records across
+control and the new candidates,252manufactured rows, unchanged gates, all four
+recorded hard-case traces and actual matched training artifacts. No material
+standards findings. Spec review narrowed the prose from complete artifact-set
+parity to the actual five CUDA/CPU numerical artifacts, now corrected. Final
+serial timing, observation completion and terminal plan remain to be reviewed.
+
+The next proposal is diagnostic-first and distinct from the existing older
+reference's rescaled late-direction bank: current-policy/native-amplitude late
+states, training parents only, bounded memory, matched extra early/late compute.
+It admits no new Run or dataset and consumes no development/holdout labels.
+
+
+## Serial timing completed
+
+All six one-core batches passed, repeated physical outputs and network calls
+exact. Complete batch seconds73.481589463,74.285096433,71.882614725,
+71.887237096,73.741200605,73.636404444 in preregistered order. Allchildrenreaped.
+The serial-timing.json records24rows (three models,two repetitions,four grids),
+rawtrace/callback/source/config/campaignhashes, memory and separate startup.
+The results table averages the two per-model means for each equal8stepgrid.
+0.03 fullAIstepmeans72.723/384.593/591.921/1526.754ms on16³/24³/32³/40³;
+native14.754/65.561/185.509/434.345ms. AI remains slower. Two uncontrolled
+repetitions do not establish a scaling law, isolated solver speedup or monotonic
+resolution improvement. No sparseoracle/capture in these timed episodes.
+
+
+## Observation closure
+
+Stopped only experiment publisherPID647514 after matching startticks7398579 and
+exactcommand; acquired publisherlock and atomically published completed148/148,
+466independentchecks, bothcandidatesrejected/noholdout. Finalactivity/framehashes
+retained in reports/completed-observation.json. The existing real pressure preview
+is preserved, not represented as livevelocity/tracerflow. Exact post-publication
+identity check confirms original TuldokPID619646/start7043224 and RheonUI
+PID557155/start6319392 still alive. No service/UI restart or source change.
+Original catalogfinalreadback confirms allfournewRunscompleted/drained.
+
+Independent final review covers both scientific reports and all24serialtiming
+rows/rawhashes, exact repeatedphysics/calls, finalpreviewclosure and proposed
+followup. Acceptance is completed measurement; scientific promotion remains
+rejected. Historicalexperiment/failedsetup/ROOTuntrackedfiles preserved. No
+weights/datasets/runtimepackages/privatecredentials included. Branch retained
+locally; no push/merge/rewrite/cleanup. Nextproposal is prepared, not admitted.

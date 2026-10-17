@@ -1,6 +1,6 @@
 # Smaller pressure-feedback weights
 
-Status: Active. Operation: start. User authority: “continue with the next proposal”,
+Status: Accepted. Operation: complete. User authority: “continue with the next proposal”,
 referring to weights0.01and0.03 in the completed preceding results. Canonical
 plan: docs/plans/pressure-feedback-weight-ablation-v1/plan.md. Owner/integration
 owner: root. Branch experiment/pressure-feedback-weight-ablation-20261017, based
@@ -48,9 +48,12 @@ all74trajectories/oracles with child drainage (CPU executable evidence); unchang
 population decision/conditional holdout disposition (independent analysis);
 recorded clocks/memory/failures and original Project/Rheon source observation.
 Frozen-material, both CUDA/CPU parity and both first-frame claims satisfied.
-Weight001 completed all74physical trajectories but failed population promotion
-gates. Weight003 full campaign remains active. Current phase: S2; serial timing
-and the final independent population analysis follow complete child drainage.
+Both candidates completed all74physical trajectories and233independent checks
+each, with all child processes drained, but failed unchanged population promotion
+gates. All six serial timing batches completed, with exact repeated physical outputs
+and call sequences. Measurement claims satisfied; independent final review and
+record closure complete this slice. Both candidates are ineligible; the eight
+unused whole scenes remain untouched. No promotion or subsequent fit.
 
 Write set: this plan directory; two new config files in the existing experiment;
 existing observer only to select the two actual Study labels; compare_training.py

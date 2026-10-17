@@ -1,0 +1,74 @@
+{
+  "format": "pressure-weight-qualification-decision-v1",
+  "decision": "rejected_for_promotion",
+  "regression_summary_sha256": "80a0cce4c13c5f1269a2a0a419d5fb1b3693a0a995c2ce1149f2476956c6dd91",
+  "candidate_decisions": {
+    "weight001": "rejected",
+    "weight003": "rejected"
+  },
+  "physical_qualification": {
+    "weight001": {
+      "scenes": 74,
+      "passed": 74,
+      "independent_checks": 233
+    },
+    "weight003": {
+      "scenes": 74,
+      "passed": 74,
+      "independent_checks": 233
+    }
+  },
+  "failed_gates": {
+    "weight001": {
+      "original58": {
+        "late-pressure": [
+          "worst_pressure_not_regressed"
+        ],
+        "control": [
+          "mean_calls_not_regressed"
+        ]
+      },
+      "late-amended8": {
+        "control": [
+          "worst_pressure_not_regressed",
+          "mean_calls_not_regressed"
+        ]
+      },
+      "minimum8-failed8": {
+        "reference-current": [
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ],
+        "late-pressure": [
+          "worst_pressure_not_regressed",
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ],
+        "control": [
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ]
+      }
+    },
+    "weight003": {
+      "original58": {
+        "late-pressure": [
+          "worst_pressure_not_regressed"
+        ]
+      },
+      "late-amended8": {},
+      "minimum8-failed8": {
+        "late-pressure": [
+          "worst_pressure_not_regressed"
+        ]
+      }
+    }
+  },
+  "eligible_candidates": [],
+  "selected_candidate": null,
+  "candidate_promoted": false,
+  "unused_holdouts_consumed": 0,
+  "holdout_disposition": "Eight unused whole scenes remain untouched; neither candidate met all unchanged population gates.",
+  "selection_rule": "Preregistered before regression: among eligible minimize worst normalized pressure across populations, then max calls, mean calls, lower feedback weight. No candidate eligible.",
+  "next_experiment_hypothesis": "Train on late-correction states as a separate controlled distribution experiment; do not change physics, stopping gates or frozen validation membership. No further fit started."
+}

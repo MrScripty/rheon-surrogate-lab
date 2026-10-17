@@ -1,0 +1,66 @@
+{
+  "schema": "pressure-throughput-test-receipt-v1",
+  "started_at_utc": "2026-10-17T05:27:47.005083+00:00",
+  "source": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+  "source_sha256": {
+    "runs.py": "fc7a83397404ac77a18a653d5eaaff63773f0818328e7df44e5f00ad64784b5b",
+    "run_capacity.py": "6811c5b2255b2a57c92147bab448a82c89876072d260ef217eb7284c511e8cfa"
+  },
+  "database": "explicit isolated fixture; DSN omitted",
+  "tests": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_recipe_contract.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.30771823800751,
+      "output": "test_cold_runtime_sitecustomize_matches_verified_python_version (test_recipe_contract.ContractTests.test_cold_runtime_sitecustomize_matches_verified_python_version) ... ok\ntest_execution_reservations_are_bounded_and_captured (test_recipe_contract.ContractTests.test_execution_reservations_are_bounded_and_captured) ... ok\ntest_output_inventory_refuses_extra_links_and_missing (test_recipe_contract.ContractTests.test_output_inventory_refuses_extra_links_and_missing) ... ok\ntest_parameters_and_closed_tokens (test_recipe_contract.ContractTests.test_parameters_and_closed_tokens) ... ok\ntest_real_runtime_closure_without_launch (test_recipe_contract.ContractTests.test_real_runtime_closure_without_launch) ... ok\ntest_strict_native_elf_rejects_headers_paths_and_loader_extensions (test_recipe_contract.ContractTests.test_strict_native_elf_rejects_headers_paths_and_loader_extensions) ... ok\ntest_capture_and_clone_preserve_exact_material_without_execution (test_recipe_contract.RecipePipelineTests.test_capture_and_clone_preserve_exact_material_without_execution) ... ok\ntest_native_policy_is_captured_and_cold_bound_without_execution (test_recipe_contract.RecipePipelineTests.test_native_policy_is_captured_and_cold_bound_without_execution) ... ok\ntest_source_and_input_drift_refuse_capture (test_recipe_contract.RecipePipelineTests.test_source_and_input_drift_refuse_capture) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 7.964s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_bound_torch_recipe_contract.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 5.536225854011718,
+      "output": "test_bound_managed_cpu_keeps_current_profile_without_snapshot_relabel (test_bound_torch_recipe_contract.BoundTorchRecipeContractTests.test_bound_managed_cpu_keeps_current_profile_without_snapshot_relabel) ... ok\ntest_bound_managed_device_capture_and_exact_pre_admission_revalidation (test_bound_torch_recipe_contract.BoundTorchRecipeContractTests.test_bound_managed_device_capture_and_exact_pre_admission_revalidation) ... ok\ntest_cuda_training_deadline_is_finite_and_cpu_remains_bounded (test_bound_torch_recipe_contract.BoundTorchRecipeContractTests.test_cuda_training_deadline_is_finite_and_cpu_remains_bounded) ... ok\ntest_managed_evidence_requires_current_bound_variant_and_no_native_sources (test_bound_torch_recipe_contract.BoundTorchRecipeContractTests.test_managed_evidence_requires_current_bound_variant_and_no_native_sources) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 5.207s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_torch_runtime_lifecycle.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.9686342519999016,
+      "output": "test_cancel_during_inventory_drains_without_fork_and_retains_cold_identity (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_cancel_during_inventory_drains_without_fork_and_retains_cold_identity) ... ok\ntest_captured_bootstrap_drift_after_ready_refuses_recipe_entry (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_captured_bootstrap_drift_after_ready_refuses_recipe_entry) ... ok\ntest_controller_loss_during_inventory_drains_without_fork (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_controller_loss_during_inventory_drains_without_fork) ... ok\ntest_exact_managed_spec_requires_one_profile_device_and_captured_identity (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_exact_managed_spec_requires_one_profile_device_and_captured_identity) ... ok\ntest_finite_cuda_deadline_keeps_cpu_deadline_unchanged (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_finite_cuda_deadline_keeps_cpu_deadline_unchanged) ... ok\ntest_inventory_deadline_fails_and_drains_before_child_wall_clock (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_inventory_deadline_fails_and_drains_before_child_wall_clock) ... ok\ntest_managed_context_drift_after_ready_drains_without_recipe_entry (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_managed_context_drift_after_ready_drains_without_recipe_entry) ... ok\ntest_managed_context_is_reverified_after_child_exit_before_completion (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_managed_context_is_reverified_after_child_exit_before_completion) ... ok\ntest_managed_context_keeps_one_exact_bounded_captured_argument (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_managed_context_keeps_one_exact_bounded_captured_argument) ... ok\ntest_missing_or_changed_inventory_refused_after_go_without_child_or_cpu_retry (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_missing_or_changed_inventory_refused_after_go_without_child_or_cpu_retry) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.894s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 14.812711909005884,
+  "passed": true
+}

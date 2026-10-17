@@ -26,8 +26,11 @@ def once(root, work, observer):
     failed=len(records)-len(passed)
     studies=[]
     for name in ('control','lowband'):
-        study=work/(name+'-study-01')
+        attempts=[p for p in work.glob(name+'-study-*') if (p/'intent.json').is_file()]
+        if len(attempts)>8:raise ValueError('too many finite study attempts')
+        study=max(attempts,key=lambda p:(p/'intent.json').stat().st_mtime_ns) if attempts else work/(name+'-study-01')
         if (study/'receipt.json').exists():state='training and CPU restore verified'
+        elif (study/'failed-run.json').exists():state='execution attempt failed and retained'
         elif (study/'active.json').exists():state='Run submitted; current state is in Tuldok'
         elif (study/'intent.json').exists():state='preparing admission'
         else:state='not submitted'

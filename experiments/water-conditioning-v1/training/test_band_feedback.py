@@ -90,3 +90,12 @@ class BandFeedback(unittest.TestCase):
             config['band_feedback'][key] = value
             with self.subTest(key=key, value=value), self.assertRaisesRegex(ValueError, 'band_feedback'):
                 policy.experiment(config)
+
+    def test_longer_finite_spectral_deadline_preserves_historical_cpu_policy(self):
+        config=self.configuration(.1);config['resources']['wall_seconds']=1800
+        self.assertEqual(policy.experiment(config)['resources']['wall_seconds'],1800)
+        prior=copy.deepcopy(self.old);prior['resources']['wall_seconds']=1800
+        with self.assertRaisesRegex(ValueError,'resources'):policy.experiment(prior)
+        for seconds in (True,29,1801):
+            config['resources']['wall_seconds']=seconds
+            with self.assertRaisesRegex(ValueError,'resources'):policy.experiment(config)

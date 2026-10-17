@@ -200,3 +200,37 @@ contractions retain the previous OOM fix. A known cosine has0.5Pa² signal energ
 0.005Pa² error energy and exactly10percent relative error; analytic test passes.
 This is descriptive analysis of consumed autonomous states, not a causal noise
 floor experiment or a temporal-frequency intervention.
+
+## Evidence-driven CUDA deadline replan
+
+The full control reported updates through4500, with losses matching archived
+control values (including exact2700loss0.007556987421906473), then its neutral
+custodian returned reason=wall_timeout, drained=true/echild=true, leader=-15.
+No completed checkpoint/accuracy result is claimed. Retain original failed
+Run f8e6bd15f5ba4e6bbd5571071ecb2798 and explicitly stopped its Study via a new
+journaled mutation; no existing mutation is replayed.
+
+The measured600s execution bound is insufficient for the current complete
+worker. Replan one infrastructure slice: shared managed-CUDA maximum1800s in
+recipe admission and neutral custody; keep ordinary CPU600s and captured-CPU
+large2400s. Both fresh matched fits retain5000updates/data/seeds/LR schedule.
+No resume, no accuracy gate change, one CUDA slot. Isolated recipe9, bound-Torch4
+and custody10 tests pass, with both1801CUDA and601CPU rejected. Trainer40tests
+pass; v10 alone admits an explicit bounded1800s resource request. Captures use
+the current custody validator and material-derived extension namespaces, preserving
+previous immutable provider/Study identities rather than replacing them.
+
+The reviewed CUDA-only deadline change1688f7d9fc6f941d8a23d8b077df6af4213f683a
+is deployed as current-05 after zero active Runs;15.765s switch, all nine Run
+states preserved. The next control attempt is a new Study/Run with fresh
+initialization; previous failure is retained. Source-only observation selects
+the latest explicitly materialized attempt, not an assumed success.
+
+The16-worker spatial audit completed233consumed states in2.786784348s, no
+simulation or optimization. Weak low modes (coefficient/RMS1e-6–1e-4) have
+relative RMS error3.31833e-4 versus3.49097e-6 for coefficients/RMS>=1e-2.
+Their absolute error energies are6.9499e-14Pa² versus6.57076e-9Pa²: high relative
+weak-mode error does not dominate total pressure error. The aggregate is
+descriptive over autonomous states, not evidence of a causal noise floor.
+Raw finite per-state bins remain in the artifact root; small retained summary
+is reports/current-233-spatial-amplitude.json.

@@ -54,8 +54,12 @@ Acceptance: real process concurrency and complete drainage, bounded scheduling,
 numerically unchanged CPU scheduling results, measured complete pipeline times,
 matched training and per-case scientific records. Measurement completion does not
 require a model improvement. Current phase: M1 accepted; M2 repeated throughput measurement complete.
-Exactly one next slice: deploy the qualified scheduler into the existing live
-catalog, then freeze matched CUDA training material for M3. The 16-worker setting
+Exactly one next slice: execute the frozen matched CUDA fits for M3 and qualify
+their fresh CPU artifacts. The first full control attempt hit its600s custody
+deadline after reporting4500updates; it is retained as infrastructure failure.
+A separate tested/reviewed/deployed CUDA-only1800s bound now supports a fresh
+from-initialization attempt; data/seeds/update budgets and all physics gates
+remain fixed. No prior mutation is replayed. The 16-worker setting
 is measured on shortened development episodes; full-regression throughput remains
 to be measured. Spectral feedback source has five passing unit checks, but no
 full scientific CUDA fit has started.

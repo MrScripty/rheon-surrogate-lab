@@ -50,6 +50,8 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         shutil.copyfile(template/name,output/name)
     for name in ('model.py','policy.py','train.py','band_feedback.py'):
         shutil.copyfile(HERE.parent/'water-conditioning-v1/training'/name,output/name)
+    shutil.copyfile(tuldok/'recipe_process.py',output/'custody-validator.py')
+    witness['custody_validator_sha256']=digest(output/'custody-validator.py')
     shutil.copyfile(HERE/'training_diagnostic.py',output/'training_diagnostic.py')
     shutil.copyfile(HERE/'evidence.py',output/'evidence.py')
     shutil.copyfile(runtime,output/'runtime-manifest.json')
@@ -71,7 +73,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     sources=[{'path':prefix+p.relative_to(output).as_posix(),'sha256':digest(p)}
         for p in sorted(output.rglob('*')) if p.is_file() and p.name!='runtime-manifest.json' and '__pycache__' not in p.parts]
     # Independent provider namespaces avoid replacing a captured historical extension.
-    namespace='rheon.pressure.'+config['id']
+    namespace='rheon.pressure.'+config['id'][:24]+'.'+hashlib.sha256(canonical(sources)).hexdigest()[:12]
     definitions=copy.deepcopy(bundle['definitions']);refs=[]
     old_ids={v['id']:namespace+':'+role for role,v in definitions.items()}
     for role,value in definitions.items():

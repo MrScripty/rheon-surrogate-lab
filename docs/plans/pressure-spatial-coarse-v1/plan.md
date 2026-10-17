@@ -1,6 +1,6 @@
 # Spatial coarse correction
 
-Status: candidate rejected after numerical training failure; finish successful control qualification. Owner/integration owner: root.
+Status: completed negative experiment; candidate failed numerical training, fresh control qualified. Owner/integration owner: root.
 Authority: user's “continue with the next recommendation,” adopting the preceding
 next-proposal.md. Fixed base fe00afb79f8cc3cef09d5a552ca700526037f0e5. New local
 branch experiment/spatial-coarse-correction-20261017; no push or integration.

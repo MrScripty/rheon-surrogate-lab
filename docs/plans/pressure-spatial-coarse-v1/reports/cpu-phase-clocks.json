@@ -1,0 +1,114 @@
+[
+  {
+    "name": "control",
+    "phase": "package",
+    "command": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python3.12",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/package.py",
+      "--project",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-project-01",
+      "--study",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-study-01",
+      "--runtime",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+      "--runtime-owner",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/torch_runtime.py",
+      "--iteration",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/water-stability-learning-v1/learned_iteration.py",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-package",
+      "--archive",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-package-originals"
+    ],
+    "elapsed_s": 1.7583270509931026,
+    "returncode": 0
+  },
+  {
+    "name": "control",
+    "phase": "first-frame",
+    "command": [
+      "taskset",
+      "-c",
+      "23",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/episode.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--bindings",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/docs/plans/rheon-tuldok-migration-v1/reports/baseline-bindings.json",
+      "--binary",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/probe-build-current-03/rheon-residual-rollout",
+      "--manifest",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-package/manifest.json",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-fixture-01",
+      "--scene",
+      "0",
+      "--fixture"
+    ],
+    "elapsed_s": 9.023093901007087,
+    "returncode": 0
+  },
+  {
+    "name": "control",
+    "phase": "transfer",
+    "command": [
+      "taskset",
+      "-c",
+      "23",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-feedback-weight-v1/transfer.py",
+      "--project",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-project-01",
+      "--artifacts",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-study-01/restore",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-transfer-01.json"
+    ],
+    "elapsed_s": 8.973659703013254,
+    "returncode": 0
+  },
+  {
+    "name": "control",
+    "phase": "regression",
+    "command": [
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-regression-config.json",
+      "--workers",
+      "16",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-regression-01"
+    ],
+    "elapsed_s": 691.9044155839947,
+    "returncode": 0
+  },
+  {
+    "name": "control",
+    "phase": "common-rhs",
+    "command": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/common_rhs.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/configs/preparation.json",
+      "--preparation",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/preparation-02",
+      "--project",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-project-01",
+      "--artifacts",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-study-01/restore",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-spatial-coarse-v1/control-common-rhs-01"
+    ],
+    "elapsed_s": 11.571429806994274,
+    "returncode": 0
+  }
+]

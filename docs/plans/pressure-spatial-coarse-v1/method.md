@@ -39,11 +39,13 @@ can accept positive dimensions within its declared cell budget; the deployment
 has stricter supported limits. Shape acceptance alone does not qualify physics.
 
 The existing v11 configurations, bank02 and all streams/loss weights stay fixed.
-Each arm runs 5,000 CUDA optimizer updates, 50,000 network forwards and
-425,703,026 forward cells. This matches network-call/cell work, not FLOPs: the
-candidate adds coarse arithmetic and 4,096 parameters. Actual downloaded history,
-checkpoint tensors, stream histories, closure and five exact CUDA-to-CPU artifact
-pairs are checked after execution. No optimizer runs on CPU.
+The preregistered budget per arm is 5,000 CUDA optimizer updates, 50,000 network
+forwards and 425,703,026 forward cells. The fresh control completed this budget;
+the candidate failed after last logged update 1300 and has no completed work total.
+The intended match is network-call/cell work, not FLOPs: the candidate adds coarse
+arithmetic and 4,096 parameters. For completed fits, downloaded history, checkpoint
+tensors, stream histories, closure and five exact CUDA-to-CPU artifact pairs are
+checked after execution. No optimizer runs on CPU.
 
 The assembler captures an explicit two-file variant plus the original model as
 base_model.py. Source witness and current Tuldok declarations own those bytes.
@@ -77,7 +79,9 @@ retained. Unsigned high-band error energy cannot establish amplification.
 Broad pools use 16 one-thread workers on cores 5–20, 2 GiB accounting each plus
 8 GiB available reserve, sequentially; they may overlap the next CUDA fit.
 Standalone raw CPU timings and paired worker timings run serially after pools
-drain, two reversed-order repetitions on core 22. Raw timings exclude physical
+drain, with two repetitions on core 22. The failed candidate has no final timing;
+the completion sequence is control paired then raw, repeated twice. The original
+reversed-arm order is inapplicable once only the control remains. Raw timings exclude physical
 input/reconstruction, residual/stopping, IPC and native work. Paired worker
 timings include an additional same-request native diagnostic solve, capture,
 correction, IPC and logging. Neither scope is standalone end-to-end AI solver

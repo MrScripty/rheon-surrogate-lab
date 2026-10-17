@@ -107,3 +107,40 @@ This demonstrates a possible norm-reduction mechanism, not the actual candidate
 cause: its failing gradient components were not captured. No clipping algorithm,
 model precision or finite/physical guard was changed. Probe sources stay local
 under command-sources; small receipts retain the exact identities.
+
+The independent fresh control completed all74development trajectories and233
+independent sparse pressure checks; all sparse pressure bounds cover the oracle.
+Full campaign691.829977seconds,16one-thread workers, all children reaped. Maximum
+observed worker RSS sum10,843,820,032bytes; minimum available49,732,513,792bytes.
+Original58/late8/hard8 worst paired pressure relative L2 is respectively
+3.316357140e-6/1.089717514e-6/1.657885439e-6; maximum calls11/8/15.
+Its144shared-RHS pair summaries exactly reproduce retained current0.1. The
+control is not eligible under every unchanged historical population gate.
+
+The sequential qualification controller then stopped at the known failed
+candidate marker (exit1), after both successful control phases had drained.
+This is the intended refusal to start candidate CPU qualification, not a control
+physics failure. The separate control-only completion owner runs the summaries
+and two serial paired/raw timing repetitions. No candidate package, learned
+accuracy result, replacement fit or untouched-scene evaluation was produced.
+
+Both serial timing repetitions completed: paired campaigns71.033801/71.642340s,
+raw timer commands8.911138/8.911818s. Repeated paired physical fields/calls are
+exact; raw timing samples and source/weight bindings are retained separately.
+Measured interval from first managed intent through timing-summary completion
+is2426.879656s, excluding earlier preparation and final review/closure.
+
+Final original owner SDK readback verifies completed/drained control CUDA and
+CPU restore, failed/drained candidate CUDA with zero published artifacts, and
+both owned Studies closed. Stopped only identified preview publisher975750,
+released its lock and published the completed74/74control plus failed-candidate
+record to the existing project paths. Verified original Tuldok855603 and
+Rheon557155 process identities remain alive. No candidate retry, holdout use,
+promotion, remote push or unrelated source edit.
+
+Final review requested persistent host termination evidence beyond the earlier
+monitor stop request. A read-only host check confirms monitor976269, publisher
+975750 and both idle waiters absent; exact-argument scan finds no remaining owned
+Study/qualification/completion/monitor controllers. The source/command and
+observation time are retained in reports/host-process-closure.json. No additional
+process action was needed.

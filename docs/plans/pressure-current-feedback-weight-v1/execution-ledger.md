@@ -6,4 +6,32 @@ Fresh Standards MCP route selected22policies, zero unresolved facts; exact guida
 matches the previous accepted snapshot. Freeze only new stream weights0.01/0.03.
 Model/trainer/physics remain unchanged. Added actual-arm report using existing
 artifact/closure verification and a narrow custody-monitor source disposition.
-Two focused negative regressions passed; no optimizer or simulation has started.
+Two focused negative regressions passed before admission.
+
+Original catalog preflight found22existing Runs and none active, with56.48GB
+available RAM. Both immutable captures passed exact source/configuration review;
+only the declared new stream weights differ. Independent Spec and Standards
+reviews found no admission issues. Study controllers started through the existing
+Tuldok owner; one CUDA slot serializes the fits. The CPU qualification owner waits
+for exact managed CPU restore artifacts, then runs fixture/spatial/74scene phases
+in order. Original applications and external observation paths remain open.
+
+Added a separate CPU spatial-transfer diagnostic on three already consumed grids,
+low modes1/2/3 and high mode7, amplitudes1/.001/1e-8Pa, and1/4/8/12actual NN calls.
+It measures mean-free pressure, internal pressure gradient, equation residual,
+absolute DCT energies and high-only leakage. Independent cosine eigenvalue and
+Parseval checks calibrate every field; no inverse solver is used for prediction.
+The final reference calibration has252rows/756forwards,9.056735seconds measured
+inside the diagnostic, peakRSS783233024bytes, one CPU thread and CUDA hidden.
+These clocks are concurrent diagnostics, not production inference latency.
+
+Diagnostic review identified one initial resource mismatch:1GiB accounting rather
+than2GiB. Corrected before final measurement, including8GiB reserve checks after
+initialization and before each case. Preliminary01is retained; final02uses the
+reviewed source. Both review axes report no remaining source findings.
+
+Fresh current0.1 and no-current0.03 first-frame fixtures match all retained arrays
+exactly. Complete historical74scene campaigns are reused only with explicit
+equivalence receipts; neither reference is retrained or counted as new episodes.
+Two focused configuration/custody tests pass again after diagnostic preparation.
+Actual training, trajectory accuracy and final selection remain pending.

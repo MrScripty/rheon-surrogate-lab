@@ -17,6 +17,16 @@ diagnostic latency bound are retained locally. The command deliberately returned
 nonzero for the observed latency; this is a performance reproduction, not a
 model/physics failure. No credential or returned payload is retained in the report.
 
+After both managed Study controllers completed, the identical one-byte read still
+took27.535seconds, including27.499seconds in transport and0.039646seconds client
+CPU. The original Tuldok process used27.15seconds aggregate CPU and made
+4352053375logical read bytes/55591read calls during that interval, with zero
+physical read_bytes. Linux clock ticks were independently checked at100/s.
+These process-wide counters can include UI/background work; they are not a
+function-level server profile. They weaken a purely concurrent-Study or physical
+disk-wait explanation and support profiling repeated cached validation first.
+No request-local reuse or other optimization was implemented.
+
 Ranked hypotheses for a later isolated performance change:
 
 1. Repeated server-side Run/context/lineage validation. Actual restore material

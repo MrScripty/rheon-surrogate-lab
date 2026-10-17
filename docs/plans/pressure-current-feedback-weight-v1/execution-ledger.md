@@ -61,3 +61,24 @@ while waiting for artifacts. One-byte read took33.214seconds with0.016745seconds
 client CPU; actual restore material reloaded one parent nine times through the
 production lineage authorization function. Cause/optimization remain unproven;
 see handoff-performance-preparation.md. No Tuldok/model changes or request replay.
+
+Study001completed after2691.722seconds, including its queued CUDA period. Its
+trainer took516.627seconds, optimizer512.601seconds, fresh CPU restore2.952seconds;
+five exact artifact pairs and50,000forwards/425703026cells verified. Both Studies
+are completed and drained. Actual matched-source/input/initialization/stream
+comparison passed before the second broad campaign; final report will recheck
+artifact stability after all CPU measurements.
+
+Campaign003passed all74physical scenes/8523AIsteps/233independent checks in
+789.264seconds, all workers reaped. Mean calls7.720404, maximum16. Peak summed
+workerRSS10932510720bytes, minimum available RAM49679126528bytes. Its completed
+interim population analysis rejects selection: original/late-amended pressure
+regressions and minimum-population call regressions. No holdout consumed.
+Campaign001fixture passed in9.104seconds and spatial diagnostic in4.344seconds;
+its broad74scene campaign follows003sequentially. Final paired results pending.
+
+Quiet repeat of the minimal read-only artifact probe still took27.535seconds;
+service process counters show27.15CPU seconds and4.352GBlogical reads, zero
+physical read_bytes, during the request. Retain this as a separate performance
+lead, not a model result or established function-level cause. The resource
+sampler stopped itself after both managed Study receipts completed.

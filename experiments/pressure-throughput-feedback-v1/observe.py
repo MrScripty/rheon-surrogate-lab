@@ -39,6 +39,8 @@ def once(root, work, observer):
     if passed:
         path,value,digest=max(passed,key=lambda row:row[0].stat().st_mtime_ns)
         preview=preview_from_receipt(root,path,value,digest)
+        preview['label']=path.parents[1].name+': '+preview['label']
+        preview['source']['experiment']=path.parents[1].name
         preview['source']['qualification']='Completed development case only; model comparison and promotion not asserted'
     observer.publish('Pressure band-feedback experiment',
         '; '.join(studies)+f'. CPU case receipts: {len(passed)} passed, {failed} failed. '

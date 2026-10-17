@@ -257,3 +257,26 @@ weights, executable/numerical/runtime bytes and physical/stopping contract match
 plus a new current-package first-frame all-array check. Any numerical difference
 requires a fresh74campaign. Evidence reuse will be labelled explicitly, not
 counted as additional simulations or an accuracy gain.
+
+## Completed matched control and reuse proof
+
+Control Run9c9777fcb4b541e98dc03e66c1df4f73 completed5000updates; fresh CPU
+restore5c5b54957b1544ba87240263aba9a8e6 completed with exact artifact parity.
+Complete Study command1015.366106756s; optimizer362.149376154s, trainer
+365.771807598s, CUDA peak770565632B. Weights exactly reproduce26b6623...
+and normalizationf73b6cf... . These are observed timings, not an isolated
+training speed comparison.
+
+Packaged the restored result and ran a new current-package first-frame fixture:
+8.200s,760426496B RSS. All numerical/executable/runtime package files, physical
+contracts and stopping policy match the just-qualified control, and every fresh
+first-frame input/output array is byte-exact. Only id/version/provenance metadata
+differ. Reuse the already executed74cases/233oracles, explicitly labelled with
+reports/control-equivalence.json; do not count another74executions. The complete
+control fixed-call manufactured amplitude diagnostic finished3.976s;370016
+parameters,1485452B weights. Challenger still requires fresh qualification.
+
+CPU qualification budget is explicit1500s per native child and1800s per complete
+worker for the candidate, allowing up to32calls over long512step scenes. This
+does not relax any physical/model criterion; a time failure remains an execution
+failure. Ordinary managed CPU restore still has its separate600s limit.

@@ -87,7 +87,8 @@ def worker(args):
     if config.get('qualify_full_episode'):
         import episode
         sys.argv=[sys.argv[0],'--root',config['root'],'--bindings',config['bindings'],'--binary',config['binary'],
-            '--manifest',config['manifest'],'--output',str(args.output),'--scene',str(args.scene)]
+            '--manifest',config['manifest'],'--output',str(args.output),'--scene',str(args.scene),
+            '--native-timeout-seconds',str(config.get('native_timeout_seconds',300))]
         episode.main()
         result=read(args.output/'episode.json')
         assert result['status']=='passed'

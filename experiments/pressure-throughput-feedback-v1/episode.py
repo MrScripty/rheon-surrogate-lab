@@ -21,10 +21,12 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for n in ('root','bindings','binary','manifest','output'):p.add_argument('--'+n,type=Path,required=True)
     p.add_argument('--scene',type=int,required=True);p.add_argument('--fixture',action='store_true')
-    a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False);started=time.perf_counter()
+    p.add_argument('--native-timeout-seconds',type=int,default=300)
+    a=p.parse_args();qualify.require(30<=a.native_timeout_seconds<=1800,'finite native qualification deadline required');a.output.mkdir(parents=True,exist_ok=False);started=time.perf_counter()
     receipt={'command':sys.argv,'source_sha256':qualify.digest(__file__),'bindings_sha256':qualify.digest(a.bindings),
              'binary_sha256':qualify.digest(a.binary),'manifest_sha256':qualify.digest(a.manifest),
-             'cpu_affinity':sorted(os.sched_getaffinity(0)),'optimizer_updates':0,'fixture':a.fixture}
+             'cpu_affinity':sorted(os.sched_getaffinity(0)),'optimizer_updates':0,'fixture':a.fixture,
+             'native_timeout_seconds':a.native_timeout_seconds}
     try:
         b=qualify.read(a.bindings);qualify.require(0<=a.scene<74,'bound consumed scene required')
         scene=json.loads(qualify.bound_bytes(a.root,b['regression']['membership_source']))['scenes'][a.scene]
@@ -59,7 +61,7 @@ def main():
             lab/'experiments/global-pressure-v1/verify_capture.py',Path(__file__).with_name('failure.py'))}
         receipt.update(build_receipt_sha256=qualify.digest(a.binary.parent/'build-receipt.json'),native_source=native_source,active_sources=active_sources)
         import numpy as np
-        native=rollout.run(a.binary,scene,a.output/'native-control',control=True,timeout=300,threads=1)
+        native=rollout.run(a.binary,scene,a.output/'native-control',control=True,timeout=a.native_timeout_seconds,threads=1)
         qualify.native_metrics(a.output/'native-control',scene,receipt['binary_sha256'])
         captures=[];wanted=sorted({16,scene['steps'],*range(64,scene['steps']+1,64)})
         state_holder=[]
@@ -71,7 +73,7 @@ def main():
             step=request['context']['generation'];path=a.output/f'state-{step:04d}.npz'
             with path.open('xb') as stream:np.savez(stream,**{k:v.numpy() for k,v in sample.items()},prediction=pressure)
             captures.append({'step':step,'path':str(path),'sha256':qualify.digest(path),'request_sha256':qualify.sha(qualify.canonical(request))})
-        learned=rollout.run(a.binary,scene,a.output/'native',adapter_manifest=a.manifest,control=False,timeout=300,threads=1,observe=observe)
+        learned=rollout.run(a.binary,scene,a.output/'native',adapter_manifest=a.manifest,control=False,timeout=a.native_timeout_seconds,threads=1,observe=observe)
         qualify.require(learned['native_process']['reaped'],'native child must be reaped before oracle')
         qualify.require([r['step'] for r in captures]==wanted,'sparse capture schedule mismatch')
         state=state_holder[0];torch=state.torch;import audit

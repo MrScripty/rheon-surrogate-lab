@@ -43,7 +43,11 @@ excludes2,3,4 and reserves the first two affinity cores for the desktop. This is
 standalone phase accounting, not an OS memory sandbox or a cross-process global
 lease. Managed Runs independently use Tuldok's tested reservations/affinity.
 Whole-scene tasks are dispatched dynamically rather than fixed serial shards.
-A memory/deadline/custody/source failure stops the pool. Only an explicitly
+Full candidate qualification explicitly permits1500s per native child and1800s
+per complete worker, so the allowed32calls across long512step scenes have a
+finite evaluation budget. This is standalone qualification, separate from
+ordinary managed CPU restore deadlines. A memory/deadline/custody/source failure
+stops the pool. Only an explicitly
 recognized drained native numerical rejection may remain a scientific case failure.
 Every parent owns and reaps its worker; rollout owns and drains its native child.
 

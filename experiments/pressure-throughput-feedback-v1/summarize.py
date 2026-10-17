@@ -10,7 +10,8 @@ spec=importlib.util.spec_from_file_location('pressure_population_summary',HERE.p
 owner=importlib.util.module_from_spec(spec);spec.loader.exec_module(owner)
 
 
-def summarize(baseline, campaigns, destination):
+def summarize(baseline, campaigns, destination, equivalences=None):
+    equivalences=equivalences or {}
     historical=owner.read(baseline)
     cases=[r for r in historical['cases'] if r['model'] in ('reference-current','late-pressure','control')]
     sources={'historical_summary':{'path':str(baseline),'sha256':owner.digest(baseline)},'campaigns':{}}
@@ -21,7 +22,12 @@ def summarize(baseline, campaigns, destination):
             raise ValueError('complete74 development records required')
         if sorted(r['scene'] for r in report['records'])!=list(range(74)):raise ValueError('exact unique scene membership required')
         sources['campaigns'][name]={'path':str(path),'sha256':owner.digest(path)}
+        if name in equivalences:
+            proof=owner.read(equivalences[name])
+            if proof['status']!='passed' or proof['source_campaign_sha256']!=owner.digest(path):raise ValueError('exact control equivalence proof differs')
+            sources['campaigns'][name]['equivalence']={'path':str(equivalences[name]),'sha256':owner.digest(equivalences[name]),'weights_sha256':proof['weights_sha256']}
         times[name]={'complete_elapsed_s':report['elapsed_seconds'],'workers':report['workers'],'memory':report['memory'],
+            'evidence_reused':name in equivalences,
             'scope':'complete concurrent CPU development episodes with fresh startup, native controls and sparse independent oracles; not inference latency'}
         for record in report['records']:
             if record.get('status')=='failed':
@@ -49,11 +55,16 @@ def summarize(baseline, campaigns, destination):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--baseline',type=Path,required=True);p.add_argument('--campaign',action='append',required=True,help='NAME=complete report path');p.add_argument('--output',type=Path,required=True)
-    a=p.parse_args();campaigns={}
+    p.add_argument('--equivalence',action='append',default=[],help='LABEL=exact control equivalence receipt')
+    a=p.parse_args();campaigns={};equivalences={}
     for item in a.campaign:
         name,separator,path=item.partition('=')
         if not separator or name in campaigns or name in ('control','reference-current','late-pressure'):raise ValueError('unique fresh model label required')
         campaigns[name]=Path(path)
-    summarize(a.baseline,campaigns,a.output)
+    for item in a.equivalence:
+        name,separator,path=item.partition('=')
+        if not separator or name not in campaigns or name in equivalences:raise ValueError('exact named campaign reuse required')
+        equivalences[name]=Path(path)
+    summarize(a.baseline,campaigns,a.output,equivalences)
 
 if __name__=='__main__':main()

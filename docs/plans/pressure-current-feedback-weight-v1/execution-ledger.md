@@ -35,3 +35,16 @@ exactly. Complete historical74scene campaigns are reused only with explicit
 equivalence receipts; neither reference is retrained or counted as new episodes.
 Two focused configuration/custody tests pass again after diagnostic preparation.
 Actual training, trajectory accuracy and final selection remain pending.
+
+Tuldok admitted003first and001second. Explicitly stopped/drained only the idle
+qualification waiter before any child phase, then started a fresh sequential
+owner in actual order003then001 to allow CPU/GPU overlap. Both actual managed
+Run identities are retained locally; no Study mutation was repeated. Bounded
+read-only catalog/GPU/memory samples run once per minute.
+
+Added a separate completed-transfer report with explicit reference identity,
+matched source/method/field/call checks, amplitude/kind summaries and all tails
+in CSV. Spec and Standards reviews found no material issues. Actual reference
+self-comparison retained504rows with exact groups and zero false improvements.
+This is report calibration, not another checkpoint or measurement. See method.md
+for distinctions between independent pressure error, paired drift and timing.

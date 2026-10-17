@@ -89,14 +89,83 @@ def status_at(path):
         return 'unreadable'
 
 
+def status_fields(path, fields, schema=None):
+    """Project named public scalars only, never journal arguments or results."""
+    try:
+        if path.is_symlink():
+            raise ValueError('Observation receipt must not be a symlink')
+        value, digest = read_json(path)
+        if schema and value.get('schema', value.get('format')) != schema:
+            raise ValueError('Unrecognized observation receipt')
+        if not any(field in value for field in fields):
+            raise ValueError('No observed status fields')
+        result = {'observation': 'recorded', 'sha256': digest}
+        for field in fields:
+            token = value.get(field, 'not_recorded')
+            if field in value and field in ('m3_service_switched', 'm3_complete', 'ordinary_admissions_open'):
+                if type(token) is not bool:
+                    raise ValueError('Invalid observation status boolean')
+            elif not (
+                    type(token) is str and 0 < len(token) <= 160
+                    and all(c.isascii() and (c.isalnum() or c in '_-/.') for c in token)):
+                raise ValueError('Invalid observation status scalar')
+            result[field] = token
+        return result
+    except FileNotFoundError:
+        return {'observation': 'absent'}
+    except (OSError, ValueError):
+        return {'observation': 'unreadable'}
+
+
+M3_STEPS = ('m3-preflight-01', 'm3-preflight', 'm3-quiesce', 'm3-fresh-bookend',
+            'm3-schema-upgrade', 'm3-domain-prepare', 'm3-domain-publish',
+            'm3-domain-reconcile', 'm3-verify-current', 'm3-app-launch')
+SMOKE_PHASES = ('open-project', 'create-model', 'publish-model', 'train-graph',
+                'create-study', 'prepare-trial', 'approve-trial', 'open-admission',
+                'admit-training', 'close-study', 'restore-graph', 'approve-restore',
+                'admit-restore', 'issue-read-agent')
+
+
+def status_text(value):
+    if value['observation'] != 'recorded':
+        return value['observation']
+    return ', '.join(f'{key}={str(token).lower() if type(token) is bool else token}' for key, token in value.items()
+                     if key not in ('observation', 'sha256'))
+
+
 def status_summary(migration):
     paths = sorted(itertools.islice((migration / 'qualification').glob('torch-lifecycle-*/qualification.json'), 65))
     if len(paths) > 64:
         raise ValueError('Too many lifecycle receipts')
     latest = max(paths, key=lambda p: p.stat().st_mtime_ns, default=None)
+    ops = migration / 'ops'
+    steps = {name: status_fields(ops / (name + '.json'), ('status',),
+                'rheon-fresh-stopped-original-bookend-v1' if name == 'm3-fresh-bookend'
+                else 'rheon-m3-orchestrator-v1')
+             for name in M3_STEPS}
+    journals = {}
+    for index, phase in enumerate(SMOKE_PHASES, 1):
+        name = f'{index:02d}-{phase}'
+        value = status_fields(migration / 'typed-pressure-live-01/mutations' / (name + '.json'), ('status',))
+        if value['observation'] != 'absent':
+            journals[name] = value
     return {'gpu_lifecycle': status_at(latest) if latest else 'pending',
-            'schema_rehearsal': status_at(migration / 'ops/schema-rehearsal-receipt.json'),
-            'migration_authority': status_at(migration / 'ops/migration-authority-receipt.json')}
+            'catalog_rehearsal': status_fields(ops / 'rehearsal-status.json',
+                ('current_stage', 'prepare04', 'publication', 'cold_read', 'completed_roundtrip', 'browser'),
+                'rheon-migration-rehearsal-progress-v1'),
+            'm3_steps': {name: value for name, value in steps.items() if value['observation'] != 'absent'},
+            'm3_cutover': status_fields(ops / 'm3-cutover.json',
+                ('m3_service_switched', 'm3_complete', 'ordinary_admissions_open'),
+                'rheon-tuldok-migration-cutover-v1'),
+            'm3_completion': status_fields(ops / 'm3-complete.json',
+                ('status', 'm3_service_switched', 'm3_complete', 'ordinary_admissions_open'),
+                'rheon-tuldok-migration-completion-v1'),
+            'smoke_launcher': status_fields(ops / 'typed-pressure-smoke-launcher.json', ('status',),
+                'rheon_typed_pressure_smoke_launcher_v1'),
+            'smoke_journal': journals,
+            'typed_pressure_live': status_fields(migration / 'typed-pressure-live-01/receipt.json',
+                ('status', 'scientific_acceptance'), 'rheon_typed_pressure_qualification_v1'),
+            'typed_pressure_failure': status_fields(migration / 'typed-pressure-live-01/failure.json', ('status',))}
 
 
 def finite_positive(value, name):
@@ -270,9 +339,16 @@ class Publisher:
                     self.preview_error = type(error).__name__
                     # Never replace real fields with invented values on failure.
         statuses = status_summary(self.migration)
+        steps = '; '.join(f'{name}: {status_text(value)}' for name, value in statuses['m3_steps'].items()) or 'absent'
+        journals = '; '.join(f'{name}: {status_text(value)}' for name, value in statuses['smoke_journal'].items()) or 'absent'
         message = (f'External observation: {passed}/74 current regression case receipts passed; '
                    f'{states["failed"]} failed, {errors} unreadable. GPU lifecycle: {statuses["gpu_lifecycle"]}; '
-                   f'schema rehearsal: {statuses["schema_rehearsal"]}; authority receipt: {statuses["migration_authority"]}. '
+                   f'Current catalog rehearsal: {status_text(statuses["catalog_rehearsal"])}. '
+                   f'M3 steps: {steps}; cutover: {status_text(statuses["m3_cutover"])}. '
+                   f'Final M3 completion: {status_text(statuses["m3_completion"])}. '
+                   f'Live smoke launcher: {status_text(statuses["smoke_launcher"])}; journal: {journals}; '
+                   f'typed-pressure-live-01: {status_text(statuses["typed_pressure_live"])}; '
+                   f'smoke failure receipt: {status_text(statuses["typed_pressure_failure"])}. '
                    'Migration acceptance is not asserted; this publisher creates no Tuldok Run.')
         if self.preview_error:
             message += ' New field preview unavailable; previous preview is retained.'

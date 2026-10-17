@@ -27,11 +27,39 @@ and publishes `idle`; it never signals, starts or changes a scientific worker.
 
 Progress counts passed completed scene receipts out of the declared 74-scene
 already-consumed cohort. Failed and unreadable counts remain visible. GPU
-lifecycle and schema rehearsal statuses report their own receipts separately.
+lifecycle and current catalog rehearsal statuses report their own receipts separately.
 Even 74/74 is external progress; the publisher does not infer full migration
 acceptance. Named operations status reads exclude private selections, catalogs,
 credentials and source inventories. No database, HTTP service, GPU, solver,
 trainer, model or producer module is opened.
+
+Catalog progress comes from the exact public `ops/rehearsal-status.json`, with
+its current stage, corrected `prepare04`, publication, cold-read, completed-current
+roundtrip and browser fields projected separately. The first schema-only rehearsal
+and superseded prepare03 passes never substitute for an absent or pending current
+catalog field. A missing current file is `absent`; a malformed, oversized, symlinked
+or wrong-format file is `unreadable`. Neither state retains a previous pass.
+
+M3 observation selects only the named preflight, quiesce, fresh-bookend, schema-upgrade,
+domain-prepare/publish/reconcile, verify-current and app-launch receipts, plus
+`ops/m3-cutover.json`. Service-switched, M3-complete and ordinary-admission booleans
+are displayed as recorded, without inferring one from another. The fresh bookend
+uses `rheon-fresh-stopped-original-bookend-v1`; the other named steps use
+`rheon-m3-orchestrator-v1`. Final completion is a separate `ops/m3-complete.json`
+with schema `rheon-tuldok-migration-completion-v1`. Its explicit `status`,
+`m3_service_switched`, `m3_complete` and `ordinary_admissions_open` fields are
+projected independently. Missing fields are `not_recorded`; they are never inferred
+from another flag or a successful smoke. The immutable consumed cutover authorization
+continues to show its original `m3_complete:false` even if the separate final
+completion later reports true. The smoke has
+separate observations for `ops/typed-pressure-smoke-launcher.json`, the fourteen
+exact numbered phase journals under `typed-pressure-live-01/mutations`, and
+`typed-pressure-live-01/{receipt,failure}.json`. Only whitelisted bounded status
+scalars and receipt hashes are retained; commands, arguments, results, private
+credentials and arbitrary sibling files are excluded. The actual live receipt's
+`machine_qualified_browser_pending` and `scientific_acceptance=not_asserted` remain
+visible. Acknowledged mutation journals report dispatch progress, not Run drainage
+or final acceptance. Status refreshes reuse the same captured pressure/frame source.
 
 The latest completed passing scene receipt selects its latest sparse capture by
 generation. The publisher requires a completed reaped native process, matches
@@ -61,7 +89,8 @@ hide the current scene's recorded nominal parameters.
 The loop holds at most one latest frame, releasing its previous in-memory
 preview before opening another capture. It retains only small receipt metadata
 and scalar summaries between polls. The limits are 128 scene receipts, 16 sparse
-captures per selected case, 64 lifecycle receipts, 2 MiB per JSON read/publication,
+captures per selected case, 64 lifecycle receipts, 30 exact operational status
+paths, 160 characters per projected status scalar, 2 MiB per JSON read/publication,
 4 MiB compressed NPZ, 8 MiB expanded archive and 65,536 cells. Headers are checked
 before array loading to reject object arrays, oversized shapes, truncated payloads,
 Fortran order and unexpected floating storage. Poll interval is 1–60 seconds,
@@ -90,3 +119,7 @@ retention on failure, private-file exclusion, historical-root refusal, exact cur
 metadata/units and unchanged source hashes, and rejection of a scene that changes
 during projection. Their
 small explicit arrays are contract fixtures; no simulation is executed.
+Status fixtures cover stale prior passes, absent/malformed/current catalog progress,
+M3 and smoke phase separation, unchanged frame reuse, private/unknown-file exclusion,
+and oversized/symlinked status refusal. Publisher restart remains a separate root
+operation; these source changes do not restart the existing owned publisher.

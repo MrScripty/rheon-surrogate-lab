@@ -205,9 +205,128 @@ class LiveMigrationTests(unittest.TestCase):
             return original(path)
         with patch.object(live, 'read_json', side_effect=safe):
             result = live.Publisher(self.root, self.cohort, self.output).poll()
-        self.assertEqual(result['migration_authority'], 'pending')
+        self.assertEqual(result['m3_cutover'], {'observation': 'absent'})
         with self.assertRaisesRegex(ValueError, 'dedicated'):
             live.Publisher(self.root, self.cohort, self.root / 'runs/live-project')
+
+    def test_old_schema_pass_cannot_stand_in_for_absent_or_current_catalog_progress(self):
+        ops = self.migration / 'ops'
+        write(ops / 'schema-rehearsal-receipt.json', {'status': 'passed'})
+        self.assertEqual(live.status_summary(self.migration)['catalog_rehearsal'], {'observation': 'absent'})
+        write(ops / 'rehearsal-status.json', {'schema': 'rheon-migration-rehearsal-progress-v1',
+              'schema_only_restore02': 'passed', 'prepare03': 'passed_superseded',
+              'current_stage': 'runs/dependency-migration-v1/domain-stage-04',
+              'prepare04': 'running_read_only_historical_row_evidence',
+              'publication': 'corrected04_pending_independent_review', 'cold_read': 'pending',
+              'completed_roundtrip': 'pending', 'browser': 'pending'})
+        result = live.Publisher(self.root, self.cohort, self.output).poll()
+        self.assertEqual(result['catalog_rehearsal']['prepare04'], 'running_read_only_historical_row_evidence')
+        message = json.loads((self.output / 'activity.json').read_text())['message']
+        self.assertIn('publication=corrected04_pending_independent_review', message)
+        self.assertIn('cold_read=pending', message)
+        self.assertNotIn('schema rehearsal: passed', message)
+        self.assertNotIn('passed_superseded', message)
+
+    def test_current_m3_and_smoke_journals_are_projected_without_sensitive_payloads(self):
+        ops = self.migration / 'ops'
+        smoke = self.migration / 'typed-pressure-live-01'
+        write(ops / 'm3-app-launch.json', {'schema': 'rheon-m3-orchestrator-v1',
+              'status': 'current_service_launched_smoke_pending', 'command': ['must-not-publish']})
+        write(ops / 'm3-cutover.json', {'schema': 'rheon-tuldok-migration-cutover-v1',
+              'm3_service_switched': True, 'm3_complete': False, 'ordinary_admissions_open': False})
+        write(ops / 'typed-pressure-smoke-launcher.json', {'format': 'rheon_typed_pressure_smoke_launcher_v1',
+              'status': 'qualified_client_dispatch', 'commands': ['must-not-publish']})
+        write(smoke / 'mutations/09-admit-training.json', {'phase': 'admit-training',
+              'status': 'acknowledged', 'arguments': {'token': 'must-not-publish'},
+              'result': {'token': 'must-not-publish'}})
+        result = live.status_summary(self.migration)
+        self.assertEqual(result['smoke_journal']['09-admit-training']['status'], 'acknowledged')
+        self.assertEqual(result['typed_pressure_live'], {'observation': 'absent'})
+        self.assertEqual(result['m3_completion'], {'observation': 'absent'})
+        write(smoke / 'receipt.json', {'format': 'rheon_typed_pressure_qualification_v1',
+              'status': 'machine_qualified_browser_pending', 'scientific_acceptance': 'not_asserted'})
+        result = live.Publisher(self.root, self.cohort, self.output).poll()
+        self.assertEqual(result['typed_pressure_live']['status'], 'machine_qualified_browser_pending')
+        self.assertFalse(result['m3_cutover']['m3_complete'])
+        message = json.loads((self.output / 'activity.json').read_text())['message']
+        self.assertIn('machine_qualified_browser_pending', message)
+        self.assertIn('09-admit-training: status=acknowledged', message)
+        self.assertIn('m3_complete=false', message)
+        self.assertIn('Migration acceptance is not asserted', message)
+        self.assertNotIn('must-not-publish', json.dumps(result) + message)
+
+    def test_final_completion_and_bookend_reconcile_keep_their_own_receipt_schemas(self):
+        ops = self.migration / 'ops'
+        cutover = {'schema': 'rheon-tuldok-migration-cutover-v1',
+                   'm3_service_switched': True, 'm3_complete': False, 'ordinary_admissions_open': False}
+        write(ops / 'm3-cutover.json', cutover)
+        write(ops / 'm3-fresh-bookend.json', {'schema': 'rheon-fresh-stopped-original-bookend-v1',
+              'status': 'exact_backup_revalidated'})
+        write(ops / 'm3-domain-reconcile.json', {'schema': 'rheon-m3-orchestrator-v1',
+              'status': 'verified-completed'})
+        completion = {'schema': 'rheon-tuldok-migration-completion-v1', 'status': 'completed',
+                      'm3_service_switched': True, 'm3_complete': True, 'ordinary_admissions_open': True}
+        write(ops / 'm3-complete.json', completion)
+        result = live.Publisher(self.root, self.cohort, self.output).poll()
+        self.assertEqual(result['m3_steps']['m3-fresh-bookend']['status'], 'exact_backup_revalidated')
+        self.assertEqual(result['m3_steps']['m3-domain-reconcile']['status'], 'verified-completed')
+        self.assertFalse(result['m3_cutover']['m3_complete'])
+        self.assertTrue(result['m3_completion']['m3_complete'])
+        self.assertTrue(result['m3_completion']['ordinary_admissions_open'])
+        self.assertEqual(json.loads((ops / 'm3-cutover.json').read_text()), cutover)
+        message = json.loads((self.output / 'activity.json').read_text())['message']
+        self.assertIn('Final M3 completion: status=completed', message)
+        self.assertIn('m3_complete=false', message)
+        self.assertIn('m3_complete=true', message)
+        write(ops / 'm3-complete.json', {'schema': 'rheon-tuldok-migration-cutover-v1', 'status': 'completed'})
+        self.assertEqual(live.status_summary(self.migration)['m3_completion'], {'observation': 'unreadable'})
+        write(ops / 'm3-complete.json', {'schema': 'rheon-tuldok-migration-completion-v1', 'status': 'completed'})
+        self.assertEqual(live.status_summary(self.migration)['m3_completion']['m3_complete'], 'not_recorded')
+
+    def test_malformed_missing_and_changed_status_do_not_reuse_an_old_pass(self):
+        path = self.migration / 'ops/rehearsal-status.json'
+        write(path, {'schema': 'rheon-migration-rehearsal-progress-v1', 'publication': 'passed'})
+        publisher = live.Publisher(self.root, self.cohort, self.output)
+        publisher.poll()
+        before = json.loads((self.output / 'frame.json').read_text())
+        with patch.object(live, 'preview_from_receipt', side_effect=AssertionError('unchanged capture must be reused')):
+            for raw in ('{', '{"schema":"wrong","publication":"passed"}',
+                        '{"schema":"rheon-migration-rehearsal-progress-v1","publication":true}',
+                        '{"schema":"rheon-migration-rehearsal-progress-v1","publication":"' + 'x'*161 + '"}'):
+                with self.subTest(raw=raw):
+                    path.write_text(raw)
+                    self.assertEqual(publisher.poll()['catalog_rehearsal'], {'observation': 'unreadable'})
+                    message = json.loads((self.output / 'activity.json').read_text())['message']
+                    self.assertIn('Current catalog rehearsal: unreadable', message)
+                    self.assertNotIn('publication=passed', message)
+            path.unlink()
+            self.assertEqual(publisher.poll()['catalog_rehearsal'], {'observation': 'absent'})
+        after = json.loads((self.output / 'frame.json').read_text())
+        self.assertEqual(after['source'], before['source'])
+        self.assertEqual(after['pressure'], before['pressure'])
+
+    def test_status_reads_have_exact_paths_and_existing_json_bound(self):
+        smoke = self.migration / 'typed-pressure-live-01'
+        write(smoke / 'mutations/99-unknown.json', {'status': 'must-not-read'})
+        write(smoke / 'private/read-agent.json', {'token': 'must-not-read'})
+        original = live.read_json
+        paths = []
+        def selected(path):
+            paths.append(path)
+            self.assertNotIn('private', str(path))
+            self.assertNotIn('99-unknown', str(path))
+            return original(path)
+        with patch.object(live, 'read_json', side_effect=selected):
+            summary = live.status_summary(self.migration)
+        self.assertFalse(summary['smoke_journal'])
+        self.assertEqual(len(paths), 30)
+        path = self.migration / 'ops/rehearsal-status.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b' ' * (live.JSON_LIMIT + 1))
+        self.assertEqual(live.status_summary(self.migration)['catalog_rehearsal'], {'observation': 'unreadable'})
+        path.unlink()
+        path.symlink_to(smoke / 'private/read-agent.json')
+        self.assertEqual(live.status_summary(self.migration)['catalog_rehearsal'], {'observation': 'unreadable'})
 
     def test_nonfinite_pressure_geometry_mismatch_and_duplicate_receipts_refused(self):
         changed = self.pressure.copy()

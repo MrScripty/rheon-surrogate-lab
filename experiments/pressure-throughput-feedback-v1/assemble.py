@@ -73,9 +73,9 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     # Independent provider namespaces avoid replacing a captured historical extension.
     namespace='rheon.pressure.'+config['id']
     definitions=copy.deepcopy(bundle['definitions']);refs=[]
-    old_ids={v['id']:namespace+'.'+role for role,v in definitions.items()}
+    old_ids={v['id']:namespace+':'+role for role,v in definitions.items()}
     for role,value in definitions.items():
-        value['id']=namespace+'.'+role
+        value['id']=namespace+':'+role
         if 'implementation' in value:
             value['implementation']['source']=prefix+Path(value['implementation']['source']).name
         if role in ('trainer','evaluator'):value['implementation']['source']=prefix+'evidence.py'

@@ -121,3 +121,5 @@ finite final-update clocks replace the one-update migration-only glue. Each
 API mutation retains dispatch intent before sending and never auto-replays.
 
 Assembly01 failed before Project publication or execution because a relative runtime path was not normalized before making its rooted reference. Preserved partial material; fixed path normalization and use fresh attempt02. Zero optimizer updates.
+
+Assembly02 reached current extension validation and rejected contribution IDs because they require namespace:role rather than namespace.role. No catalog write or optimizer update. Corrected identity syntax before a fresh03 assembly; provider and recipe schemas remain current Tuldok owned.

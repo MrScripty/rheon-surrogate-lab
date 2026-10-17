@@ -69,3 +69,24 @@ six isolated malformed pair/source/stage/bin/signal/counter fixtures reach the
 intended errors in0.166020seconds, with zero network calls. Earlier calibration
 remains immutable and is not evidence for the revised source. Calibration
 helper is retained locally under command-sources/coarse-common-calibration.py.
+
+Candidate Run d0b98276805b40a2942e2b123fe35330 failed/drained after last logged
+completion1300/5000. Custody confirms exit1/nonzero_exit, ECHILD and closed spawn;
+stdout/stderr hashes match. Existing clip_grad_norm_ error_if_nonfinite=True
+reported a nonfinite total gradient norm. This does not identify the individual
+gradient cause or exact failing update. No final artifacts were published; no
+candidate CPU restore, trajectory accuracy or matched completed-fit result exists.
+Run wall207.358649seconds includes runtime startup; optimizer-only time unavailable.
+Study command wall962.555611seconds includes admission/queue/readback. Guards and
+thresholds remain unchanged; no numerical retry or replacement training was made.
+
+Stopped only the idle paired-completion waiter before any child phase. Retained
+failed marker and closed the owned candidate Study through its original journal.
+The first closure helper attempted to read an internal custody_identity field
+from the public SDK projection and stopped before any mutation; the remaining
+closure verified the retained internal identity against that public terminal Run
+and the custody receipt, then journaled one Study stop. Both review axes verify
+failure classification and the common-report corrections. The independent control
+CUDA Run completed and remains on its original restore/CPU qualification path.
+Finish its physical/diagnostic/timing evidence; all eight unused holdouts remain
+untouched and no candidate can be promoted.

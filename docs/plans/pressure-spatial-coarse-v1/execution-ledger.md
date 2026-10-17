@@ -1,0 +1,24 @@
+# Execution ledger
+
+Created local branch from fe00afb. Original root untracked user assets preserved.
+Fresh Standards MCP selected 22 policies without unresolved facts. The bounded
+prototype uses the existing captured current-0.1 checkpoint and selected Pumas
+runtime. Inspection of the constructed model proves no active GroupNorm/SiLU or
+bias tensors, correcting the inherited-source reading in the prior proposal.
+One initial read-only inspection used nonexistent project-03 instead of actual
+project-02 and failed before model import; no mutation or result was produced.
+
+Four focused tests pass: volume/constant identities, zero initialization and RNG,
+nonconstant far-field response/linearity, and input/parameter autodiff. CPU
+prototype passed in 12.353403 seconds; CUDA deterministic forward/backward passed
+in 3.194819 seconds, no optimizer or simulation advancement. The zero branch
+reproduces the retained checkpoint outputs exactly on all seven tested shapes.
+Parameter count 370016 -> 374112. Median standalone raw-network CPU overhead on
+16/24/32/40 cubes is 5.14/1.48/0.63/0.80 percent. Rectangular grids 33x11x9 and
+25x16x23 cost 10.07/1.56 percent; degenerate 1x3x7 costs 28.15 percent and is
+outside the preregistered four-cube cost gate. These short timings are
+architecture admission evidence, not production solver latency.
+
+Freeze control/candidate configs from the exact current-0.1 recipe. Candidate
+alone uses an explicit captured model overlay; all physical/loss/data/stream
+owners stay unchanged. No training has started at this source-freeze boundary.

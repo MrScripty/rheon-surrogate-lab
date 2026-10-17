@@ -23,7 +23,8 @@ def write(path, value):
     path.write_bytes(canonical(value))
 
 
-def assemble(root, template, declarations, probe_path, tuldok, runtime, configuration, output, current_bank=None):
+def assemble(root, template, declarations, probe_path, tuldok, runtime, configuration, output, current_bank=None,
+             model_overlay=None):
     root, template, tuldok = [x.resolve(strict=True) for x in (root, template, tuldok)]
     runtime=runtime.resolve(strict=True)
     output = output.absolute()
@@ -50,6 +51,15 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         shutil.copyfile(template/name,output/name)
     for name in ('model.py','policy.py','train.py','band_feedback.py'):
         shutil.copyfile(HERE.parent/'water-conditioning-v1/training'/name,output/name)
+    if model_overlay is not None:
+        overlay = model_overlay.resolve(strict=True)
+        require(overlay.is_dir() and {p.name for p in overlay.iterdir()} == {'model.py', 'coarse.py'},
+                'explicit two-file model overlay required')
+        require(all(p.is_file() and not p.is_symlink() and p.stat().st_size <= 1024**2
+                    for p in overlay.iterdir()), 'bounded regular model overlay sources required')
+        (output/'model.py').rename(output/'base_model.py')
+        for name in ('model.py', 'coarse.py'):
+            shutil.copyfile(overlay/name, output/name)
     shutil.copyfile(tuldok/'recipe_process.py',output/'custody-validator.py')
     witness['custody_validator_sha256']=digest(output/'custody-validator.py')
     shutil.copyfile(HERE/'training_diagnostic.py',output/'training_diagnostic.py')
@@ -181,7 +191,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('root','template','declarations','probe','tuldok','runtime','configuration','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--current-bank',type=Path)
-    a=p.parse_args();r=assemble(a.root,a.template,a.declarations,a.probe,a.tuldok,a.runtime,a.configuration,a.output,a.current_bank)
+    p.add_argument('--model-overlay',type=Path)
+    a=p.parse_args();r=assemble(a.root,a.template,a.declarations,a.probe,a.tuldok,a.runtime,a.configuration,a.output,a.current_bank,a.model_overlay)
     print(json.dumps({'project':r['project'],'updates':r['updates']}))
 
 if __name__=='__main__':main()

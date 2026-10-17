@@ -34,7 +34,7 @@ def main():
                 frames_sha256=hashlib.sha256((folder/'frames.jsonl').read_bytes()).hexdigest(),
                 callbacks_sha256=hashlib.sha256((folder/'callbacks.jsonl').read_bytes()).hexdigest()))
     result=dict(format='rheon_pressure_serial_timing_v1',sources=sources,rows=rows,
-        scope='One core and one episode at a time after broad work drains; full paired simulation steps through current adapter, iterative correction and protocol trace logging included. No sparse capture or independent oracle in timed episodes. Startup retained separately. Not a pure neural-forward benchmark.')
+        scope='One core and one episode at a time after broad work drains. ai_seconds is the current Rheon paired diagnostic AI-branch time, including its additional same-request native reference solve, request capture, learned correction, IPC and protocol logging. External sparse capture and spectral-oracle work are absent from timed episodes. Startup is separate. These branch ratios do not measure standalone AI versus native solver or model inference speed; do not subtract the independently evolving reference_seconds as an estimate of the diagnostic solve.')
     a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(rows,indent=2))
 
 if __name__=='__main__':main()

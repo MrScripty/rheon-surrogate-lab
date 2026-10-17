@@ -1,0 +1,107 @@
+{
+  "schema": "rheon-live-browser-preparation-v1",
+  "status": "prepared_after_prebrowser_failure_not_rerun",
+  "commands": [
+    {
+      "command": [
+        "runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runs/dependency-migration-v1/ops",
+        "-p",
+        "test_live_browser.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.954734926999663,
+      "stdout": "",
+      "stderr": "test_complete_local_preparation_uses_real_current_artifact_contracts_only (test_live_browser.Gates.test_complete_local_preparation_uses_real_current_artifact_contracts_only) ... ok\ntest_current_selected_docs_are_bounded_unpinned_external_references (test_live_browser.Gates.test_current_selected_docs_are_bounded_unpinned_external_references) ... ok\ntest_detached_descendant_reaped_on_interruption_wait_failure_and_nonzero (test_live_browser.Gates.test_detached_descendant_reaped_on_interruption_wait_failure_and_nonzero) ... ok\ntest_each_uncompleted_or_mismatched_authority_fails_locally (test_live_browser.Gates.test_each_uncompleted_or_mismatched_authority_fails_locally) ... ok\ntest_gate_bytes_and_nonordinary_paths_rejected (test_live_browser.Gates.test_gate_bytes_and_nonordinary_paths_rejected) ... ok\ntest_interrupt_and_failed_wait_kill_and_reap_real_inert_owned_child (test_live_browser.Gates.test_interrupt_and_failed_wait_kill_and_reap_real_inert_owned_child) ... ok\ntest_launch_failure_keeps_bounded_receipt_without_possible_import (test_live_browser.Gates.test_launch_failure_keeps_bounded_receipt_without_possible_import) ... ok\ntest_local_positive_never_opens_network (test_live_browser.Gates.test_local_positive_never_opens_network) ... ok\ntest_partial_launch_before_handle_assignment_cleans_new_owned_child (test_live_browser.Gates.test_partial_launch_before_handle_assignment_cleans_new_owned_child) ... ok\ntest_selected_node_imports_actual_playwright_under_launcher_environment (test_live_browser.Gates.test_selected_node_imports_actual_playwright_under_launcher_environment) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.891s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/home/jeremy/.nvm/versions/node/v24.12.0/bin/node",
+        "runs/dependency-migration-v1/ops/test_live_readback.cjs"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.02459720199840376,
+      "stdout": "PASS local live readback gates, exact one-import policy, disk-witness drift; no browser/network/authority access\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/jeremy/.nvm/versions/node/v24.12.0/bin/node",
+        "--check",
+        "runs/dependency-migration-v1/ops/live_readback.cjs"
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.01478227399638854,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "files": {
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/live_browser.py": "0e7884170a8bdc7f6db8cb16e48de9cda8b1052960b8cb00c8cbdb375d6390f5",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/live_readback.cjs": "f1d1c3e427512cf0fa6cc139652673f8a6dcb2566085319cb883434443f42f90",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/test_live_browser.py": "676b8325270252701fb8c72b98598c3671909942f5b51cabbf4ab26bf975b959",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/test_live_readback.cjs": "2c5da1152b1883cba62e867c5141576682281b48abd88255e6b5914bcaed5738",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/live-browser.md": "45453d027a15f821eef61c48c121d831444d29d0d484abeb90b68f4a41324347"
+  },
+  "selected_project_provenance": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/current-project-04/provenance.json",
+  "selected_project_id": "97eae52ac8074b4baccee2c12101ead6",
+  "required_evidence": [
+    "dependency-migration-plan",
+    "dependency-migration-results",
+    "dependency-migration-scientific-parity"
+  ],
+  "original_endpoint_accessed": false,
+  "private_authority_read": false,
+  "browser_launched": false,
+  "catalog_connected": false,
+  "tuldok_source_or_deployment_changed": false,
+  "execution_pending": [
+    "root trigger",
+    "actual cutover receipt",
+    "actual current launch receipt",
+    "completed CUDA-training/CPU-restore machine receipt",
+    "root registration of selected current Project"
+  ],
+  "effects_on_execution": {
+    "reads": "same-origin GET/HEAD plus exact pinned current model-evidence/2 POST reads",
+    "collection_writes": "at most one A5 import if explicitly selected, durable pre-dispatch claim; otherwise existing-record GET reuse",
+    "approval_admission_training_promotion": false
+  },
+  "limits": {
+    "launcher_timeout_s": 240,
+    "gate_bytes": 8388608,
+    "evidence_text_bytes": 65536,
+    "api_response_bytes": 8388608,
+    "artifact_receipt_bytes": 4194304,
+    "owned_child_cleanup_timeout_s": 15
+  },
+  "scientific_acceptance": "not_asserted",
+  "lifecycle": {
+    "owned_child_and_detached_descendants": "Linux subreaper before launch, kill and reap under bounded cleanup on every leader exit",
+    "uncertainty": "conservative possible import commit, no automatic retry",
+    "negative_fixtures": [
+      "KeyboardInterrupt",
+      "TimeoutExpired",
+      "RuntimeError",
+      "NonzeroExit with real inert detached descendant"
+    ],
+    "signal_handlers_and_subreaper_restored": true,
+    "real_browser_executed": false,
+    "partial_launch": "New task children cleaned even if constructor raises before handle assignment; KeyboardInterrupt, actual self-SIGTERM and RuntimeError inert fixtures PASS"
+  },
+  "supersedes": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/receipts/live-browser-preparation-before-explicit-node.json",
+  "restore_view_fence": "Wait for actual restored Run aria-current plus field canvas absence before inspecting completed state; stale training DOM cannot satisfy restore proof",
+  "node_executable": {
+    "path": "/home/jeremy/.nvm/versions/node/v24.12.0/bin/node",
+    "sha256": "16143bdaa79716e871d3d9b2f50ce680bca293eba7f0c3fc1d004ed2258fc839",
+    "version": "24.12.0",
+    "sanitized_environment_playwright_import": "passed",
+    "selection": "required --node-executable input; version>=20 and SHA measured before gate/config/authority reads, absolute invocation and immediate prelaunch SHA recheck"
+  }
+}

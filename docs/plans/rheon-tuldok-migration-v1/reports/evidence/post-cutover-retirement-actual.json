@@ -1,0 +1,212 @@
+{
+  "kind": "post-cutover-offline-fixture-retirement",
+  "started_utc": "2026-10-17T03:20:30.967718+00:00",
+  "base_revision": "824665aefdc68a458b5510a0b33d6cae1eb4887d",
+  "m3_completion": {
+    "path": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/m3-complete.json",
+    "sha256": "007143855647efbbb2a38436a8a96bc63ec9be878835d28f6b433c70d7046ca1"
+  },
+  "applied_patch": {
+    "path": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/post-cutover-test-retirement.patch",
+    "sha256": "e538550f0c5398340f0e3a397593a0c66afa0b208b5b1efaa5a95eaeb0d28ee5"
+  },
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "postgresql": {
+      "host": "/tmp/rheon-migration-pg-20261016/socket",
+      "port": "5432",
+      "dbname": "tuldok",
+      "user": "tuldok"
+    },
+    "credentials": "Private configured task-owned DSN/passfile; not retained"
+  },
+  "results": [
+    {
+      "label": "permanent-runtime-alias-regression",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_installed_runtime_alias.py",
+        "-v"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "elapsed_seconds": 0.03949989899410866,
+      "exit_code": 0,
+      "output": "test_retargeting_measured_file_alias_is_not_the_same_runtime (test_installed_runtime_alias.InstalledAliasCustody.test_retargeting_measured_file_alias_is_not_the_same_runtime) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n"
+    },
+    {
+      "label": "offline-migration-and-scientific-inspection",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/migrations/rheon-lab-once/fixtures",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "elapsed_seconds": 40.03618888799974,
+      "exit_code": 0,
+      "output": "test_conflicting_activity_ref_refuses (test_rheon_lab_migration.ConversionContracts.test_conflicting_activity_ref_refuses) ... ok\ntest_current_app_rejects_old_activity_and_converter_emits_current (test_rheon_lab_migration.ConversionContracts.test_current_app_rejects_old_activity_and_converter_emits_current) ... ok\ntest_current_recipe_closure_missing_or_changed_is_historical (test_rheon_lab_migration.ConversionContracts.test_current_recipe_closure_missing_or_changed_is_historical) ... ok\ntest_duplicate_missing_unknown_dispositions_refuse (test_rheon_lab_migration.ConversionContracts.test_duplicate_missing_unknown_dispositions_refuse) ... ok\ntest_no_application_imports_or_startup_hooks (test_rheon_lab_migration.ConversionContracts.test_no_application_imports_or_startup_hooks) ... ok\ntest_pre_go_interruption_is_historical_without_claiming_drainage (test_rheon_lab_migration.ConversionContracts.test_pre_go_interruption_is_historical_without_claiming_drainage) ... ok\ntest_active_or_unknown_custody_refuses_instead_of_relabeling (test_rheon_lab_migration.PostgreSQLConversion.test_active_or_unknown_custody_refuses_instead_of_relabeling) ... ok\ntest_archive_corruption_missing_input_and_identity_mismatch_refuse (test_rheon_lab_migration.PostgreSQLConversion.test_archive_corruption_missing_input_and_identity_mismatch_refuse) ... ok\ntest_bounded_selection_allows_nested_stage_and_ignores_unreferenced_symlink (test_rheon_lab_migration.PostgreSQLConversion.test_bounded_selection_allows_nested_stage_and_ignores_unreferenced_symlink) ... ok\ntest_exact_stage_reentry_refuses_rebuild (test_rheon_lab_migration.PostgreSQLConversion.test_exact_stage_reentry_refuses_rebuild) ... ok\ntest_failure_before_commit_rolls_back_and_exact_retry_succeeds (test_rheon_lab_migration.PostgreSQLConversion.test_failure_before_commit_rolls_back_and_exact_retry_succeeds) ... ok\ntest_independent_source_recount_catches_omission_even_with_new_prepared_hash (test_rheon_lab_migration.PostgreSQLConversion.test_independent_source_recount_catches_omission_even_with_new_prepared_hash) ... ok\ntest_lost_ack_reopens_and_verifies_original_receipt_without_duplicates (test_rheon_lab_migration.PostgreSQLConversion.test_lost_ack_reopens_and_verifies_original_receipt_without_duplicates) ... ok\ntest_original_facts_archive_accounting_and_current_cold_read (test_rheon_lab_migration.PostgreSQLConversion.test_original_facts_archive_accounting_and_current_cold_read) ... ok\ntest_stage_tamper_and_changed_target_block_publication (test_rheon_lab_migration.PostgreSQLConversion.test_stage_tamper_and_changed_target_block_publication) ... ok\ntest_large_archived_run_keeps_its_scientific_result_inspectable (test_scientific_result_inspection.HistoricalResultInspection.test_large_archived_run_keeps_its_scientific_result_inspectable) ... ok\n\n----------------------------------------------------------------------\nRan 16 tests in 39.803s\n\nOK\n"
+    },
+    {
+      "label": "default-CI-import-scan",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "/tmp/check_rheon_retirement_default_ci.py"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "elapsed_seconds": 0.6505081770010293,
+      "exit_code": 1,
+      "output": "{\n  \"kind\": \"default-CI-import-only\",\n  \"selector\": \"python -m unittest discover -s tests\",\n  \"tests_discovered\": 1495,\n  \"test_methods_executed\": 0,\n  \"blocked_offline_imports\": [],\n  \"loaded_offline_modules\": [],\n  \"loader_errors\": [\n    \"Failed to import test module: test_extension_canonical_release\\nTraceback (most recent call last):\\n  File \\\"/usr/lib/python3.12/unittest/loader.py\\\", line 394, in _find_test_path\\n    module = self._get_module_from_name(name)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"/usr/lib/python3.12/unittest/loader.py\\\", line 337, in _get_module_from_name\\n    __import__(name)\\n  File \\\"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/tests/test_extension_canonical_release.py\\\", line 13, in <module>\\n    import numpy as np\\nModuleNotFoundError: No module named 'numpy'\\n\"\n  ]\n}\n"
+    },
+    {
+      "label": "default-CI-import-scan-existing-complete-test-env",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/.venv/bin/python",
+        "-B",
+        "/tmp/check_rheon_retirement_default_ci.py"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "elapsed_seconds": 0.7252801299982821,
+      "exit_code": 0,
+      "output": "{\n  \"kind\": \"default-CI-import-only\",\n  \"selector\": \"python -m unittest discover -s tests\",\n  \"tests_discovered\": 1503,\n  \"test_methods_executed\": 0,\n  \"blocked_offline_imports\": [],\n  \"loaded_offline_modules\": [],\n  \"loader_errors\": []\n}\n"
+    }
+  ],
+  "app_source_files": 80,
+  "app_source_files_sha256": {
+    "access.py": "50681dd5b2aaba01a311a7465b15161ca264fa4ca9812b95f15914adb5d808f4",
+    "agent_api.py": "e580b31c121847b84eecdbd5c382df228b59bd5ab972f61513531b322bcf928a",
+    "ai.py": "a3b04a3015496ff3c66c3eb450ccf887bd5726229669ac0515d95a2761ad3a9a",
+    "ai_codex.py": "debd26342e73a87635d772e3ee59d30bb822877008d667b47997f52e22f94f16",
+    "ai_http.py": "73ca648fe00e8f5a4022b14b72c80dd695228706a0f2b79aee605a524b8f2585",
+    "ai_openrouter.py": "70930124fac7ef08941f571c1d4492f72b29aa94807cfd5d66bc32555432b160",
+    "app.py": "b9dffde9398c162fbda4854ff4c963759294dd8b0fb2917c8b8da61095272717",
+    "audio_assets.py": "d69bfa94037ea132be4adebba26c4389d58925a408f2fc27c6984a71fc8dc1cd",
+    "audio_classification_export.py": "0f0643470cfa3b015c2d56c0e8e1dc2ad4944bc825127b9131fbbdd36349052d",
+    "audio_export.py": "bc20d32089b3a004504c6cb072e18db9e285c9195db84679670fe460ef51cfc9",
+    "audio_training.py": "396500bb2a63054c88b2720b8c168617641fe2ff9fd2285860a6dd894523f949",
+    "backup_metadata.py": "4d050ed173b686c249157f513506eea9485f4cd6bbd05cb919a0f10113ba4a7d",
+    "bulk_import.py": "b8f7c55947cb82689850716b5a8f6f95422efde2e87c4fa3c640af004b8a2fdb",
+    "candidate_packages.py": "5dd9cfc71323bccfb6e7186cc042efc3afa0d7058e8a81c3219da26f57fb3547",
+    "canonical_release.py": "1f92e2d822602211475a5e7c13198388cc0a36aa36e0872f66d9fd353dcc2061",
+    "caption_import.py": "86496e5ccaa5dbbf32d9731e7acfb76cc5c0b6a147e333e9a53aa8e9629ca406",
+    "caption_proposals.py": "a74ca7993b6f3b7dc7fb867a871148f04c743c048a1e988ab517554a35ae901c",
+    "curation.py": "b25576749afd01f9e699133c5db7e6113f9a5f0ad8961dafc4084292896b0049",
+    "dataset_recipes.py": "78ae918228f15f9d5924985075cb96535b8953b4ad5faa821d0cacd0a50e3c88",
+    "dataset_releases.py": "cabba1d75aa42fe4988a5fabea590f397c8fb1d148af42174bb4a0ed77a065cf",
+    "experiment_lineage.py": "5cdac7aec893bff832406b44ae04af587118990b1b803ec11cea1458d8ed3234",
+    "experiments.py": "05c88fa658408c7750aecda37461abfec54537c8b9dbe6143ea90313b72420df",
+    "extension_bindings.py": "cc31bb10c43855f2b8f02421f2ade002c9a1831a68a7ffa041e864ac71bfdd25",
+    "extension_canonical.py": "fc82f6631e911f8f5459ebe73e6c70effeebe3e6c1414edd242d03406a46ef26",
+    "extension_contract.py": "890bb254d67bd79c9da9f4e8bf77f5b00e7bb850d696b9eb1ac6b632189e49df",
+    "extension_evidence.py": "d1fa2be0131a833d68254b96119ac1e1811be41d1e00a8a525d5eb2ad81e8f3c",
+    "field_evidence.py": "da5db2e2a6cea72b687d2e85d53f6a509a26f6ad0384669230ac2d2ba0be9adf",
+    "frozen_classification.py": "a6a9fc244bcb7de7da5217fb36d5e73bb03ca1756c9c63770c23a78336606649",
+    "gateway_discovery.py": "8a02e2ef9038859c1accce9ea3e31ea489423f19799a279f4be6f9afd61297d0",
+    "grounded_candidates.py": "55bf111d7dfe951fea960f347ed4bfb498d15dcc604bf46fb1ae2505cc1354cc",
+    "image_classification_export.py": "995edefa24fc039505337fd8d2915e45d173c18a03af513d9f5d8eb234225b96",
+    "image_generation.py": "c3a62b3cf0bf1d6f6d453a63f7f2a7d08de63864d880959bd0eab237d9856858",
+    "image_training.py": "35150740f898c33149a6c52289a9296b9e6f611a201fb5da03c7fd7b1f3e4fa0",
+    "immutable_assets.py": "672c08d949f964fcd8cebd9a888092ab0163f022542df337e02bcb17f3c477c8",
+    "mcp_observer.py": "f138c2bb20cb2677e46ce1a96637971efbc5a7c6975113c1177e104c766512ab",
+    "mcp_stdio.py": "e3b45393186149a3be060d95d98b73121700408b93a893034088a30741e67980",
+    "mesh_release.py": "09d29a60bc37826b906097debaf7eb8577a425d3d791ff5df8d3b03607b10de1",
+    "meshes.py": "abeca65f8a39af57352828169f90f767b6bc770fb5407fb3f18af53be8ff84e2",
+    "metadata.py": "abab939baac63b33c05854923242fc3ea391adb9f40cc977c8b7065b98987312",
+    "migrate_sqlite.py": "be1a79a1b6f5e2c8e4c99862043a5afcd4f30d6539388c1600908f4a4f3f92da",
+    "model_definitions.py": "58295609c32cb3d8d3c380f418f4e6a1503e23a15a320886d54478cdcf04a989",
+    "model_evidence.py": "04012022740f45fc03ad11351a7efe4946e574890bb814fcdf5871b873a5701b",
+    "native_detection_import.py": "80466232bd51f58bca9a00ef68e278da087b012e7f1b3b1171e6e51db3b8c572",
+    "native_text_import.py": "3fc35bc1f04e056a588e8e05f3f7b41ff894c90dae6cee2f1baaf37a7098d167",
+    "one_fit_evidence.py": "3a76d1790a1f8f450bbe38e9587f61d56d95034144f65c790493203e2f7d51db",
+    "pipeline.py": "9b4dc089d6ece6f4641a8d574414c4dd327a91600e40967088bf4b08d55c72c7",
+    "pointclouds.py": "02d9eef31661dd5a9f0855f8e59d7b839b0ad1590f53a657123a5d9da789dd9a",
+    "preferences.py": "d6279b18375fa8695584a02cfe962b56e77cf4f3521c5e33cc4baf09f8e4dab7",
+    "project_activity.py": "8b6cabcb3f84b35b7b8f6cc2bedd4df43a1eb285eaec9090975d5ae30cfc49d0",
+    "project_cli.py": "da4d676ab7633bee2e51573c43377a6f1cf9856a77c0b8a16a6d790ec93c31e9",
+    "projects.py": "72f3d12398df75746bbdfde83184f6fa7e7e616732da0fb7909ce1555f47426e",
+    "pumas_gateway_descriptor.py": "b9c4259bda856fd19d1d82b3a2c000a74ab3979832248fd3f1f1d3d6309c0752",
+    "pumas_operations.py": "e8b8acee54a027633ae39f00a23b3d4845ae474d031690134cafb1c75bf73511",
+    "pumas_vision.py": "5659c7731b5011ff39a0a9b7c27712382983f16286540f47f6b1337941bbda7d",
+    "recipe_contract.py": "f75aab2c37b2b247ebed1b9e9e48d87d1b394f4230f465ee7f68f617555611d3",
+    "recipe_process.py": "91d392b1c3c88dd43062457e01176551757b835cc5f8cad61e5e9b77795e421d",
+    "release_validation.py": "a04e0f3c941256422b0c3a8c28665b6fba025df9d3cfa6cd5d5686e2bb8de95b",
+    "rheon_sequence_contract.py": "063d17a3bbc92a27c26c0f5dd4588a9478091ebbf53ce0ccb818cee6a9393b98",
+    "rheon_sequences.py": "25193c926bd17ef8bf89456eabb3fe77b4eccddbe2b50bae1c0dc5362c79bfb8",
+    "runs.py": "3fe39311f495334ad05e9ec6ee9f4b36aa5a9dba0069823758621db532ec1c99",
+    "runtime_snapshots.py": "dad9e4ddf9c11c0e1f2d5b9a7afd6877e7be375fe02030c65b684bca2b0ef45e",
+    "saved_searches.py": "fcd4021fc20702568f1e44a165473aa752b9a9794a958ff31b33c42aba7114d5",
+    "saved_selections.py": "4e89ee272fc8a685ec76b3737879d6560661a73e03fca264c2057785905418a3",
+    "scientific_fields.py": "19b63cf1c65335b55a907c84312f0f9be70de1aa79522d96ec38d4862fa55338",
+    "scientific_release.py": "b419730e7cc00212632b3adcdf63997343b6fb9aecd07a6ad2cb6f5c1728fb60",
+    "sequence_assets.py": "e6200cea4053a3cddabed94048789074605f2191e6a550a60fb53a44c7e07f71",
+    "sequence_batch_import.py": "b04b814531f73b0af99f5e99aadeab581c4d626030c37cd7eb9cf28e60eb569f",
+    "sequence_release.py": "07a3129e3cc0091a3f21fea00d245e90af0062d076cb1951ebad59d9179aa65f",
+    "spatial_assets.py": "fdd3715025426024a4c8fa1704645d98940cab7e6002846b9e72a54352fe6ef8",
+    "spatial_release.py": "4d6ec06fceb72257a9d25da09ab24bcf13fc38f66ae50e8b39d5a5796f9b357c",
+    "synthetic.py": "dc55737b0f55ff4ec8df56a3d6b4f4596f5067bfd75672ba6326453047cab5e9",
+    "text_classification_export.py": "2510ad278a95892d4453ffb5b146ae47c11f8e31f3dc4cf9fb005eec79270bdf",
+    "text_classification_proposals.py": "6a29dfe752be4ae2c69d7b2e4ca3e68e87dc511cfee2429093748b4ccc56c86d",
+    "text_corpus_export.py": "3af4883df1b714519fb4e9be872f39de20dc3013deca720e32a89789cbdbff69",
+    "text_training.py": "1eeaa53ba21885e6e0afc933f7161dbf20a2681dbfebedaee4e1eb7ec1c59914",
+    "torch_runtime.py": "84a66b6a195c30db01ffc574f94e0139f4df7d7c7872452a3f50ce82e9db3ad0",
+    "torch_runtimes.py": "f569990cf23443afedd27683bdbe61a21192e785e84cc006e8689cbbcde10187",
+    "upgrade_metadata.py": "f78f6113b3687d808536f873153c83893ed91bf1e247986b29ac00d4c226af8f",
+    "volume_assets.py": "1e057fcec996969e0a9b44ae7561fb7b6ea95b6201a23617fdbbc3a046b610c1",
+    "workbench.py": "e2735b9242040b471f67ff3663316397a58fba19338cc79058796106e7ef5562"
+  },
+  "source_files_sha256": {
+    "tools/migrations/rheon-lab-once/convert.py": "e4ab924f575cbb0aa68a3fa8e2eb3c96a1e3562118e8433beffbe61224f0c181",
+    "tools/migrations/rheon-lab-once/README.md": "adb6e5bd79e1805ee711e9bedd721ffadfac3ea8b8c38293bc63653afe12df66",
+    "tools/migrations/rheon-lab-once/fixtures/test_rheon_lab_migration.py": "ab72e0bb12563be5563d11952b15a5308b4dd3eb8f7fd05c19398e98d9ebd16a",
+    "tools/migrations/rheon-lab-once/fixtures/test_scientific_result_inspection.py": "982021488824f9204bdfd575345b815b2444e2a3bcfef413568f16b80ab87f02",
+    "tests/test_installed_runtime_alias.py": "2e52eea034faff48dcc5f5aba7fdc64eead6b0815d7fd411f27e91f6d4cd6fef"
+  },
+  "limits": [
+    "Only task-owned isolated PostgreSQL and fresh fixture schemas; no original catalog/service access",
+    "Default CI validation imports/discovers tests without executing their methods",
+    "Retirement changes test placement/imports and docs only; existing deployed app witness remains actual824"
+  ],
+  "status": "passed",
+  "elapsed_seconds": 40.72691162100091,
+  "test_import_environment": {
+    "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+    "numpy": "2.3.5",
+    "psycopg": "3.3.6"
+  },
+  "initial_import_scan_limitation": "Application environment intentionally lacks optional NumPy needed by test_extension_canonical_release; zero offline imports. Clean import-only recheck used pre-existing lab .venv with NumPy; no environment was changed.",
+  "elapsed_check_seconds": 41.45147709399316,
+  "converter_unchanged": true,
+  "application_sources_unchanged": true,
+  "application_sources_match_HEAD": true,
+  "ongoing_CI_reference_scan": {
+    "command": [
+      "rg",
+      "-n",
+      "test_rheon_lab_migration|rheon-lab-once|rheon_lab_once|test_migration_independent_review",
+      "tests",
+      ".github",
+      "scripts"
+    ],
+    "matching_references": 0
+  },
+  "preserved_class_ast_sha256": {
+    "InstalledAliasCustody": "84e7a27df332d7f76c9c751cf512474811a470223c1f768c616bc03e3ff17e1d",
+    "HistoricalResultInspection": "b583f479a0e11dfd3ff5ab28810283ab9d0f8d90d756bc23e1e2bce7d3d4e6a1"
+  },
+  "retirement_applied": true,
+  "commit_created": false
+}

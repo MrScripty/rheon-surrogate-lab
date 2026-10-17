@@ -47,7 +47,7 @@ def main():
         weights_sha256=candidate['files']['weights.npz']['sha256'],numerical_files_exact=sorted(numerical(candidate)['files']),
         metadata_only_differences=['id','version','files.provenance.json'],fresh_first_frame_all_arrays_exact=True,
         reused_qualified_cases=74,additional_full_trajectories_executed=0,additional_first_frame_fixture=True,
-        scope='Same numerical executable bytes, weights, runtime, physical and stopping contracts; reuse this turn\'s complete74 control after a fresh current-package fixture. No accuracy or timing improvement attributed to metadata.')
+        scope='Same numerical executable bytes, weights, runtime, physical and stopping contracts; reuse the explicitly selected retained complete74 campaign after a fresh current-package fixture. No accuracy or timing improvement attributed to metadata.')
     a.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
 
 if __name__=='__main__':main()

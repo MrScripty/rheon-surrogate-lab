@@ -21,3 +21,15 @@ analysis/source retained; repeat under corrected source before bank acceptance.
 I4: Initial S2assembler CLI referenced an undeclared current_bank argument and
 policy.execution lacked v11routing. Fixed before capture/admission, direct CLI
 and actual execution(config) regressions added. No failed Run or model result.
+
+I5: Both first Study clients stopped401 at OwnerHTTP identity lookup before
+intent/journal creation or admission. Stored session expired (8h) and was neither
+revoked nor consumed. Read-only credential-status check then supported deployed
+access.py login and one-use same-origin exchange renewed the same original owner
+catalog. Replacement stored only in mode0600under0700private directory. New
+explicit study02attempts, no mutation replay. No optimizer/model failure.
+
+I6: New arm-comparison report initially trusted a self-consistent local witness
+without binding it to actual trainingclosure. Added actualassemblysourceinventory,
+witness/configclosurehashchecks and a rewritten-capture negative regression.
+Corrected before any report claim; no scientific/data/execution change.

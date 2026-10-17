@@ -50,3 +50,32 @@ not a future candidate. Each candidate still requires its own fresh firstframe.
 Before admission add actual optimizer-forward/cell counters, excluding diagnostic
 and publication forwards. Initial capture01drafts retained; fresh capture02
 will include this identical telemetry in both arms. No optimizer or Run started.
+
+
+Fresh capture02s from source250d751 took1.186/1.328s. Actual source/config/input
+comparison passed: allsharedinputsandsourcebytesexact; onlyid/stage/selected
+current_datasetdiffer. Both newconfigs bind bank02,5000updates, originalruntime.
+OriginalGPUpreflight: RTX5090Laptop24,463MiB,608MiBused,3%utilization beforefits.
+
+First clients failed401beforeintent/admission because old8howner sessionexpired.
+Verifiednotrevoked/notconsumed and renewed sameowner/catalog by supported local
+loginCLI+sameoriginoneuseexchange; no oldcredential overwrite or emittedsecret.
+Originalexpiredsession kept. Fresh explicit study02clients started using private
+replacement, genericdurablemutationjournals; qualifierwaits foractualCUDA+CPU
+paritybeforefirstframe and then sequential16worker74scene campaigns.
+
+
+During CUDAfitting, bounded16workerCPU common-RHS preparation completed all144
+identical paired states for retainedcontrol/prior0.1/0.03. Eachmodel288probes,
+1152networkcalls,12.705/12.409/11.939s, allworkersreaped, independently qualified
+labels and matching pairhashes. Same2calllateRHS medians0.025408/0.025152/
+0.022931; maxima0.301838/0.298691/0.252695. Concurrent diagnostics are not isolated
+latency or autonomous drift. Statistical spectral/amplitude bins retain absolute
+Pa² energies; no temporal/noise-floor causalclaim. OriginalCUDAarmsunchanged.
+
+New compare_arms.py reuses fullhash/fivenumericalartifact validation, explicitly
+allows only current_datasetstage while binding originalfiveinputs/configuration,
+initialization/scales/runtime/sampleorder/oldstreams, currentteacher and actual
+NNwork. Review found sourcewitness needed binding to actualRunclosure; corrected
+with assemblysources+closurehashes and a negative self-consistent rewritten-source
+regression. No production or scientific inputs changed by reporting fixes.

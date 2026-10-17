@@ -29,3 +29,11 @@ Use the existing run_study.py with configured root alias current-lab and the
 original Tuldok catalog. Never replay uncertain mutations. Qualify fresh CPU
 restores/first frames and all74development scenes before any untouched validation.
 See docs/plans/pressure-current-policy-v1 for decisions, clocks and results.
+
+`common_rhs.py` measures retained checkpoints on the exact qualified native pairs
+from preparation, with independent labels and matched RHS. It is CPU preparation,
+not a simulation or optimizer. Its concurrent clocks are not inference latency.
+`compare_arms.py --root ROOT --reference RETAINED_STUDY --early EARLY_STUDY --late
+LATE_STUDY --output NEW_REPORT` verifies actual CUDA/CPU artifacts and the allowed
+bank-stage difference. It binds inspected configuration/source to the actual
+Run closure and keeps numerical parity separate from accuracy qualification.

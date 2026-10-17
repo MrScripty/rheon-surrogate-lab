@@ -35,3 +35,19 @@ shared source/input/normalization identities, original seeded tensors and RNG;
 the only candidate tensor starts at zero. SDK preflight initially used system
 Python lacking jsonschema; corrected to the existing application environment for
 that read-only check, without admission/mutation replay.
+
+Both review axes accept source/capture/conversion admission at b492c84. Original
+owner identity/catalog/capability negotiation passed, but runs.list exceeded the
+300-second HTTP limit. A separate bounded read-only transaction in the same
+catalog found26Runs, none active, in0.431seconds; no broad read or mutation was
+replayed. All actual admission/custody checks remain with the original HTTP/SDK.
+Submitted finite control and candidate Study controllers with their own durable
+journals. Existing one-slot CUDA scheduling orders training. Sequential CPU
+qualification waits for exact managed restore and first-frame success. Started
+only a bounded external preview publisher on the existing project paths.
+
+Prepared matched actual-training comparison and a separate raw CPU-forward timer.
+The timer calibrated on a retained model with four consumed cubes and31samples
+per grid; only its execution/calibration is accepted here, not final latency.
+After broad pools drain, final raw forwards and paired worker timings run in
+reversed order twice, with their different measurement scopes retained.

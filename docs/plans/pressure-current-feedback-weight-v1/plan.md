@@ -1,9 +1,18 @@
 # Smaller current-policy feedback weights
 
-Status: Active. Owner/integration owner: root. Canonical plan: this file.
+Status: Completed measurement; neither candidate eligible for promotion. Owner/integration owner: root. Canonical plan: this file.
 User authority: “continue with the next proposal9”, adopting the completed
 current-policy experiment's next-proposal.md. Base82d745a65fd4b8c6022d62c64b53f675985fe8d1;
 branch experiment/current-feedback-weight-20261017. Preserve history; no push/merge.
+
+Branch disposition: retain this local branch as the review and continuation
+contract, owned by root for the user. It is based on the prior current-policy
+experiment and has no automatic integration target or synchronization. Consumers
+are local experiment review and the next controlled model proposal; preserve
+commit identities and integrate or retire only under a later user-directed
+review. This task reused the existing migration lab worktree and created no new
+worktree registration. Scientific candidates are rejected for promotion; source
+and evidence remain retained for review.
 
 Test current_feedback weights 0.01 and 0.03 on the same frozen native late bank02.
 Keep original band_feedback.weight at0.03, all other streams, seeds, initialization,

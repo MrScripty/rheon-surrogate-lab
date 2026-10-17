@@ -1,0 +1,260 @@
+[
+  {
+    "label": "matched-training-report",
+    "command": [
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-feedback-weight-v1/compare.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--reference",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/current-late-study-03",
+      "--candidate",
+      "0.01=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-study-01",
+      "--candidate",
+      "0.03=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-study-01",
+      "--custody-validator",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/recipe_process.py",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/docs/plans/pressure-current-feedback-weight-v1/reports/matched-training.json"
+    ],
+    "elapsed_s": 0.12916623600176536,
+    "returncode": 0
+  },
+  {
+    "label": "current001-final-transfer",
+    "command": [
+      "python3",
+      "/tmp/weight-diagnostics.py",
+      "current001",
+      "01"
+    ],
+    "elapsed_s": 8.956700256007025,
+    "returncode": 0
+  },
+  {
+    "label": "current001-common-rhs",
+    "command": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/common_rhs.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/configs/preparation.json",
+      "--preparation",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/preparation-02",
+      "--project",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-project-01",
+      "--artifacts",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-study-01/restore",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-common-rhs-01"
+    ],
+    "elapsed_s": 11.685005324005033,
+    "returncode": 0
+  },
+  {
+    "label": "current003-final-transfer",
+    "command": [
+      "python3",
+      "/tmp/weight-diagnostics.py",
+      "current003",
+      "01"
+    ],
+    "elapsed_s": 9.193135317997076,
+    "returncode": 0
+  },
+  {
+    "label": "current003-common-rhs",
+    "command": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/common_rhs.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/configs/preparation.json",
+      "--preparation",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/preparation-02",
+      "--project",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-project-01",
+      "--artifacts",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-study-01/restore",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-common-rhs-01"
+    ],
+    "elapsed_s": 11.3995230950095,
+    "returncode": 0
+  },
+  {
+    "label": "reference01-serial-timing-1",
+    "command": [
+      "taskset",
+      "-c",
+      "22",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-config.json",
+      "--workers",
+      "1",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-rep1"
+    ],
+    "elapsed_s": 71.59158798099088,
+    "returncode": 0
+  },
+  {
+    "label": "current001-serial-timing-1",
+    "command": [
+      "taskset",
+      "-c",
+      "22",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-config.json",
+      "--workers",
+      "1",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-rep1"
+    ],
+    "elapsed_s": 73.44672597700264,
+    "returncode": 0
+  },
+  {
+    "label": "current003-serial-timing-1",
+    "command": [
+      "taskset",
+      "-c",
+      "22",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-config.json",
+      "--workers",
+      "1",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-rep1"
+    ],
+    "elapsed_s": 73.14596809000068,
+    "returncode": 0
+  },
+  {
+    "label": "current003-serial-timing-2",
+    "command": [
+      "taskset",
+      "-c",
+      "22",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-config.json",
+      "--workers",
+      "1",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-rep2",
+      "--baseline",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-rep1/receipt.json"
+    ],
+    "elapsed_s": 73.458855416,
+    "returncode": 0
+  },
+  {
+    "label": "current001-serial-timing-2",
+    "command": [
+      "taskset",
+      "-c",
+      "22",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-config.json",
+      "--workers",
+      "1",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-rep2",
+      "--baseline",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-rep1/receipt.json"
+    ],
+    "elapsed_s": 72.89310905800085,
+    "returncode": 0
+  },
+  {
+    "label": "reference01-serial-timing-2",
+    "command": [
+      "taskset",
+      "-c",
+      "22",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/benchmark.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-config.json",
+      "--workers",
+      "1",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-rep2",
+      "--baseline",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-rep1/receipt.json"
+    ],
+    "elapsed_s": 72.54948013399553,
+    "returncode": 0
+  },
+  {
+    "label": "regression-summary",
+    "command": [
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/summarize.py",
+      "--baseline",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/docs/plans/water-early-pressure-v1/reports/regression-summary.json",
+      "--campaign",
+      "reference01=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/current-late-regression-01/receipt.json",
+      "--equivalence",
+      "reference01=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-equivalence.json",
+      "--campaign",
+      "reference-band003=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-feedback-weight-ablation-v1/weight003-regression-01/receipt.json",
+      "--equivalence",
+      "reference-band003=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference-band003-equivalence.json",
+      "--campaign",
+      "current001=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-regression-01/receipt.json",
+      "--campaign",
+      "current003=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-regression-01/receipt.json",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/docs/plans/pressure-current-feedback-weight-v1/reports/regression-summary.json"
+    ],
+    "elapsed_s": 0.0899595280061476,
+    "returncode": 0
+  },
+  {
+    "label": "serial-timing-summary",
+    "command": [
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-throughput-feedback-v1/timing.py",
+      "--campaign",
+      "reference01-rep1=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-rep1/receipt.json",
+      "--campaign",
+      "current001-rep1=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-rep1/receipt.json",
+      "--campaign",
+      "current003-rep1=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-rep1/receipt.json",
+      "--campaign",
+      "current003-rep2=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current003-timing-rep2/receipt.json",
+      "--campaign",
+      "current001-rep2=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/current001-timing-rep2/receipt.json",
+      "--campaign",
+      "reference01-rep2=/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-feedback-weight-v1/reference01-timing-rep2/receipt.json",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/docs/plans/pressure-current-feedback-weight-v1/reports/serial-timing.json"
+    ],
+    "elapsed_s": 0.037759839004138485,
+    "returncode": 0
+  }
+]

@@ -82,3 +82,27 @@ service process counters show27.15CPU seconds and4.352GBlogical reads, zero
 physical read_bytes, during the request. Retain this as a separate performance
 lead, not a model result or established function-level cause. The resource
 sampler stopped itself after both managed Study receipts completed.
+
+
+Final paired measurement completed. Campaign001passed74/74physical scenes,
+8523AIsteps and233independent checks in735.340502seconds, mean8.082013calls,
+maximum15. All children reaped; peak summedRSS10849009664bytes and minimum
+available RAM49426640896bytes. Together the new campaigns comprise148trajectories,
+17046AIsteps and466independent checks. Both candidates fail unchanged population
+accuracy/work gates; no promotion and all eight unused scenes remain untouched.
+Final matched-training report is byte-identical to its earlier checkpoint.
+
+Completed both new shared-RHS diagnostics (144matched train pairs,1152forwards
+each) and four-model transfer analysis (1008rows). All source/input identities,
+independent checks and child drainage pass. Completed six sequential timing
+batches after broad pools drained; all second repetitions reproduce exact fields
+and calls. Timing includes the additional native diagnostic solve on the AI
+branch, so it does not measure standalone AI solver latency. Full command clocks,
+environment, scoped resource measurements and scientific tails are retained.
+See results.md, timing.md and next-proposal.md for interpretation and follow-up.
+
+Final original-catalog SDK readback confirms all four CUDA/restore Runs completed
+and drained with the expected weights. Stopped only the owned preview publisher
+and published completed148/148progress; original Tuldok and Rheon app identities
+remain alive. The bounded publication recovery is recorded in issues.md and
+reports/observation-recovery.json. No scientific jobs remain running.

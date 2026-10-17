@@ -24,4 +24,3 @@ episodes. These values do not establish standalone AI inference or solver speed;
 the independently evolving native branch is not a valid subtraction estimate for
 the extra same-request solve. Two repetitions under uncontrolled desktop
 and cache conditions do not establish a scaling law or isolated solver speedup.
-

@@ -16,42 +16,48 @@ but evolve separate velocity, tracer and previous-pressure histories. AI pressur
 failures stay visible as raw diagnostics; hard bounds stop the paired run. No
 native fallback is substituted into the AI track after handoff.
 
-## Export and verify a deployment
+## Package and verify the current adapter
 
-Use a fresh output directory. Paths below describe the completed local baseline;
-all exporter inputs are arguments. Historical source, artifacts and deployments
-remain immutable.
+The active process reads only `rheon-pressure-adapter-v1`. The explicitly invoked
+one-time converter archives the original v2 bundle and emits a fresh descriptor
+with unchanged weights, normalization and numerical sources. It is separate from
+normal model startup. The aa82 seven-channel model and 26b residual comparator
+remain separate packages; neither is promoted by migration.
 
 ```bash
-.venv/bin/python experiments/live-water-comparison-v1/deployment.py \
-  --project runs/sealed-water-v1-3/project \
-  --artifacts runs/sealed-water-v1-3/managed/stage-00/artifacts \
-  --run runs/sealed-water-v1-3/managed/stage-00/run.json \
-  --runtime runs/cuda-pressure-runtime-1/manifest.json \
-  --output runs/live-ai-comparison/deployment-NEW
+python3 -B experiments/live-water-comparison-v1/deployment.py aa82 \
+  --bundle runs/live-ai-comparison/deployment-2 \
+  --runtime runs/dependency-migration-v1/runtime/current-manifest-v2.json \
+  --runtime-owner runs/dependency-migration-v1/Tuldok/torch_runtime.py \
+  --output runs/dependency-migration-v1/packages/aa82-NEW \
+  --archive runs/dependency-migration-v1/archive/models/aa82-NEW
 ```
 
-The exporter checks completed/drained training custody, whole artifact hashes,
-source witness, final declared checkpoint and registered runtime identity. It
-copies measured source, normalization, weights, runtime inventory and bridge into
-one deployment. The bridge measures installed runtime files at startup, checks the
-CPU device and float32 weights, and enforces shape, cubic spacing, water material,
-gauge, finite fields, bounded records and the native-prefix policy.
+The complete conversion contract and the residual control command are documented
+in [model_adapter.md](../dependency-migration-v1/model_adapter.md). The package
+uses the current measured managed Torch manifest, checks all inventoried files
+before importing Torch, and returns full float64 pressure. Neural computation
+remains CPU float32, with no optimizer or CUDA initialization. Prior pressure is
+already included by the lab numerical owner and must not be added by the host.
+
+The independent Q4 tool converts the exact historical capture to a current saved
+request and retains the original numerical witnesses. Verify a current request
+against the independently retained little-endian float64 pressure bytes:
 
 ```bash
-.venv/bin/python experiments/live-water-comparison-v1/verify_deployment.py \
-  --deployment runs/live-ai-comparison/deployment-NEW/deployment.json \
-  --packet runs/sealed-water-v1-3/packets/train_validation \
-  --inference runs/sealed-water-v1-3/managed/stage-01/artifacts \
-  --output runs/live-ai-comparison/deployment-verification-NEW.json
+python3 -B experiments/live-water-comparison-v1/verify_deployment.py \
+  --deployment runs/dependency-migration-v1/packages/aa82-NEW/manifest.json \
+  --request PATH/TO/current-request.json \
+  --expected PATH/TO/expected-pressure.f64le \
+  --output runs/dependency-migration-v1/receipts/aa82-saved-input-NEW.json
 ```
 
-Verification requires byte-exact prediction parity with the existing CPU witness,
-exact zero-residual bypass, no CUDA initialization or optimizer updates, and a
-cold-start rejection before inference. Boundary regressions:
+This command checks exactly one saved pressure result. Q4 separately owns exact
+preprocessing, raw neural output, reconstruction, zero bypass and independent
+operator checks. Run the boundary tests after the fixed saved-input gate passes:
 
 ```bash
-.venv/bin/python -m unittest discover -s experiments/live-water-comparison-v1 -p 'test_*.py'
+python3 -B -m unittest discover -s experiments/dependency-migration-v1 -p test_model_adapter.py -v
 ```
 
 ## Open fresh simulations
@@ -62,7 +68,7 @@ not model hashes compiled into application code.
 
 ```bash
 runs/live-integration/native-target/debug/rheon-ai-compare \
-  --deployment "$PWD/runs/live-ai-comparison/deployment-2/deployment.json" \
+  --deployment "$PWD/runs/dependency-migration-v1/packages/aa82-runtime-current/manifest.json" \
   --project-dir "$PWD/runs/live-ai-comparison/project" --auto-run
 ```
 

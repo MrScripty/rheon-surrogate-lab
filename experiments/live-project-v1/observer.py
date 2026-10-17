@@ -59,10 +59,17 @@ class Observer:
         cells = int(np.prod(counts))
         if tracer.shape != (cells,) or pressure.shape != (cells,) or not np.isfinite(tracer).all() or not np.isfinite(pressure).all():
             raise ValueError('Incomplete/nonfinite external frame')
-        return {'label': trajectory['trajectory_id'], 'frame': index,
+        value = {'label': trajectory['trajectory_id'], 'frame': index,
                 'time_s': (index+1)*trajectory['dt_s'], 'counts_xyz': counts,
                 'extents_m': trajectory['extents_m'], 'tracer': tracer.tolist(), 'pressure': pressure.tolist(),
                 'pressure_label': pressure_label or 'Native reference pressure (Pa); independent verification pending'}
+        if 'forcing_regime' in trajectory and 'amplitude_m_s2' in trajectory:
+            regime, amplitude = trajectory['forcing_regime'], trajectory['amplitude_m_s2']
+            if (not isinstance(regime, str) or not regime or len(regime) > 160
+                    or type(amplitude) not in (int, float) or not np.isfinite(amplitude)):
+                raise ValueError('Invalid declared forcing parameters')
+            value['forcing'] = {'regime': regime, 'amplitude_m_s2': amplitude}
+        return value
 
 
 class Watch:

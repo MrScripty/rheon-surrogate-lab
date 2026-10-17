@@ -99,7 +99,7 @@ experiments below retain their original grids and results.
 
 Author: Puma.
 
-Live work is visible through the repo's [Tuldok project](tuldok-project.json) and
+Live work is visible through the [current Tuldok project producer](experiments/dependency-migration-v1/README.md) and
 [Rheon egui observation workflow](experiments/live-project-v1/README.md).
 
 Fresh local GroupNorm CPU experiments use the separate

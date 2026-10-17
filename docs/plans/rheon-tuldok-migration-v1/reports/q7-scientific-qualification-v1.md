@@ -1,0 +1,5 @@
+The scientific migration gate passed all 74 fixed cases, with 74 matched native controls, 8,523 AI steps and 233 independent sparse same-RHS oracle samples. Every actual network-call sequence and every per-case worst paired trajectory pressure error exactly reproduces old74; all three group checks pass with zero regression allowance.
+
+Exact Q4 checks cover the fixed control and original desktop models, float32 preprocessing and raw output, float64 reconstruction and zero-residual bypass. The final build03 native fixture reproduces the fixed first-frame arrays exactly after 15 actual native steps. Physical limits, stopping policy and the 32-call budget remain unchanged. No fallback, refinement, heldout scene, optimizer update or GPU execution occurred.
+
+The completion runtime owner verified all 25,765 files (5,744,383,179 bytes) and 1,047 aliases against the unchanged current manifest. Raw commands, sources, hashes, per-case calls, clocks and memory receipts are linked in [the scientific receipt](q7-scientific-qualification-v1.json). Advisory timing and desktop lifecycle qualification remain separate.

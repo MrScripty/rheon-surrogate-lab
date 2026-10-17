@@ -5,11 +5,31 @@ import threading
 import unittest
 import subprocess
 import sys
+import numpy as np
 
 from observer import Observer, Watch, atomic
 
 
 class ObserverTests(unittest.TestCase):
+    def test_actual_force_parameters_are_metadata_and_absence_stays_absent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root/'actual').mkdir()
+            (root/'actual/frame-000-tracer.bin').write_bytes(np.asarray([0., 1.], dtype='<f4').tobytes())
+            (root/'actual/frame-000-pressure.bin').write_bytes(np.asarray([0., 2.], dtype='<f8').tobytes())
+            trajectory = {'trajectory_id': 'actual', 'dt_s': 1/60,
+                          'counts_xyz': [2, 1, 1], 'extents_m': [.2, .1, .1]}
+            observer = Observer(root/'live')
+            without = observer.frame(root, trajectory, 0)
+            self.assertNotIn('forcing', without)
+            known = observer.frame(root, {**trajectory, 'forcing_regime': 'constant_x', 'amplitude_m_s2': 1.25}, 0)
+            self.assertEqual(known['forcing'], {'regime': 'constant_x', 'amplitude_m_s2': 1.25})
+            self.assertEqual(known['pressure'], without['pressure'])
+            self.assertEqual(known['tracer'], without['tracer'])
+            self.assertNotIn('position', known['forcing'])
+            self.assertNotIn('field', known['forcing'])
+            self.assertNotIn('forcing', observer.frame(root, {**trajectory, 'forcing_regime': 'constant_x'}, 0))
+
     def test_atomic_failure_preserves_previous_publication(self):
         with tempfile.TemporaryDirectory() as root:
             path=Path(root)/'activity.json'; atomic(path,{'sequence':1})

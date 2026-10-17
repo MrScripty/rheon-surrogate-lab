@@ -13,6 +13,8 @@ import numpy as np
 from observer import Observer, Watch, atomic
 
 LAB = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(LAB/'experiments/dependency-migration-v1'))
+import dependency_config
 PROFILE = LAB/'experiments/local-pressure-v1'
 sys.path.insert(0, str(PROFILE))
 import capture
@@ -133,7 +135,8 @@ def watch_run(args, observer):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--live',type=Path,default=LAB/'runs/live-project')
+    parser.add_argument('--dependency-config',type=Path)
+    parser.add_argument('--live',type=Path)
     sub = parser.add_subparsers(dest='command',required=True)
     generate_parser = sub.add_parser('capture')
     for name in ('config','binary','output'):
@@ -142,11 +145,14 @@ def main():
     for name in ('workspace','output'):
         evaluation_parser.add_argument('--'+name,type=Path,required=True)
     training_parser = sub.add_parser('watch-run')
-    training_parser.add_argument('--tuldok-source',type=Path,required=True)
     training_parser.add_argument('--agent-config',type=Path,required=True)
     training_parser.add_argument('--run-id',required=True)
     training_parser.add_argument('--seconds',type=int,default=600)
     args = parser.parse_args()
+    selection = dependency_config.load(args.dependency_config)
+    args.live = args.live or selection.path_for('live')
+    if args.command == 'watch-run':
+        args.tuldok_source = selection.source('tuldok')
     if args.command=='watch-run' and not 1 <= args.seconds <= 3600:
         parser.error("--seconds must be between 1 and 3600")
     observer = Observer(args.live)

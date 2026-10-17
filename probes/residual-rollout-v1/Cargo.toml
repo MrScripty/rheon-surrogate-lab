@@ -4,18 +4,11 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.92"
 publish = false
-build = "build.rs"
 
 [dependencies]
 anyhow = "=1.0.100"
-rheon = { git = "https://github.com/MrScripty/Rheon.git", rev = "43ed26b645dd42de906d0fac7d1ec7d5ab6e351a", default-features = false }
-serde_json = { version = "=1.0.145", features = ["float_roundtrip"] }
-serde = { version = "=1.0.228", features = ["derive"] }
-sha2 = "=0.10.9"
-
-[build-dependencies]
-serde_json = { version = "=1.0.145", features = ["float_roundtrip"] }
-sha2 = "=0.10.9"
+rheon = { git = "https://github.com/MrScripty/Rheon.git", rev = "bc2f472787060d9a69cb619ed2c2fea10fd754b6", default-features = false, features = ["diagnostic"] }
+serde_json = { version = "=1.0.154", features = ["float_roundtrip"] }
 
 [lints.rust]
 unsafe_code = "forbid"

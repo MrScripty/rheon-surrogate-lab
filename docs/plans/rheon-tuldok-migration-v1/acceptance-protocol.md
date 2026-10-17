@@ -2,7 +2,8 @@
 
 This protocol is the binding evidence procedure delegated by [plan.md](plan.md).
 The plan owns scope, one-time conversion policy, gates and lifecycle. All procedures
-below are **planned, not executed**. Updating this document cannot make a pending
+below define the acceptance contract. Execution status is recorded in the plan
+and retained attempt receipts. Updating this document cannot make a pending
 claim pass. Owners T/R are defined in the plan. Save command, executable/source
 and input hashes, environment qualification, elapsed time, exit status and small
 receipts under a new attempt in `runs/dependency-migration-v1/`; retain scalar
@@ -67,8 +68,10 @@ an ambient default. Raw backups/model files remain private and outside Git.
 3. Require first upgrade to recognize exact8→9→10 and second to report verified
    `already_current`. At this schema-only stage compare every source domain row, managed file
    hash, sequence state and identity against the stopped bookend. New schema 9/10
-   tables start empty. Complete schema 10 backup/restore into another absent
-   destination must reproduce the upgraded state. No refreshed signature, row
+   tables start empty. Q2's completed-current schema 10 backup/restore into an
+   absent destination must reproduce the upgraded and converted state; an extra
+   full backup of the intermediate, unconverted schema 10 copy is unnecessary.
+   No refreshed signature, row
    rewrite or mutable cached source is acceptable evidence.
 4. Use existing `tests/test_workspace_metadata.py` and
    `tests/test_experiment_lineage.py` for transactional failure, re-entry and
@@ -78,7 +81,12 @@ an ambient default. Raw backups/model files remain private and outside Git.
    verifying upgrade command. Never repeat Run admission as recovery.
 
 After the rehearsal backup the old service may resume against its unchanged
-schema 8 store. A new source bookend/backup is required for Q8. If new writes add
+schema 8 store. Q8 requires a fresh stopped source bookend. A previously verified
+complete immutable backup can satisfy its backup requirement only if that new
+bookend proves exact equality of catalog identity, schema, all tables and
+sequences, and every managed file's bytes and permissions against that backup.
+Retain the fresh equality receipt. Any difference requires a new complete backup;
+never refresh only part of an old backup. If new writes add
 an unhandled source representation, extend and requalify the converter before
 cutover; do not add that representation to normal app readers.
 
@@ -301,8 +309,9 @@ eight-scene data, training update or checkpoint selection is allowed in Q7.
 ## Q8 — Tuldok-only cutover and post-switch smoke (T; A5 live/A10)
 
 Admission requires satisfied A1/A2/A5-rehearsal/A8/A9 for the candidate composition.
-Stop writers again, capture the current source bookend and new complete verified
-backup, and check its source states against the qualified conversion inventory.
+Stop writers again, capture the current source bookend and verify a complete
+backup under Q1's exact-equality rule, and check its source states against the
+qualified conversion inventory.
 Run the same explicit schema upgrade and one-time domain conversion against the
 original store, verify complete accounting/current reads, and start only the
 new service with unchanged intended endpoint/catalog identity and explicit roots.
@@ -312,6 +321,9 @@ records do not require an old Rheon client, manifest or protocol to remain suppo
 Keep general Run submissions closed while checking current history/artifact
 reads and the live project refresh/import/evidence path, then admit only one
 explicit one-update CUDA smoke and its fresh CPU restore through normal grants.
+Use Q10's actual typed pressure Trial for this same live smoke. A root-owned
+receipt must first prove the structural service switch and specifically authorize
+the bounded smoke with ordinary admission closed; M3 is not complete yet.
 Require completed/drained artifacts plus browser/API readback. Only then resume
 ordinary submissions. On failure stop new writers, preserve all new receipts,
 and keep service unavailable while the verified recovery choice is made. Do not
@@ -331,7 +343,8 @@ old selectors and retain the failed output; no Tuldok database downgrade occurs.
 
 ## Q10 — typed pressure-model development workflow (T/R; A11)
 
-After M3, publish a new project snapshot through the selected project interface,
+After M3's structural schema/service switch, while its smoke-only admission is
+still closed to ordinary submissions, publish a new project snapshot through the selected project interface,
 with explicit pressure task/reader/model/trainer/evaluator declarations and exact
 field units/geometry/gauge/source/runtime identities. Bind new Study/Trial intent
 and finite budgets prospectively; old Runs retain unknown historical ancestry.
@@ -348,3 +361,6 @@ context and permission negatives, before starting this Trial. Existing
 `tests/test_experiments.py`, `test_experiment_lineage.py` and the official browser
 model-development journey provide workflow regressions, not pressure accuracy.
 This bounded workflow qualification is separate from any subsequent model fit.
+It is the same live one-update/CPU-restore smoke as Q8, jointly satisfying A10/A11
+before M3 is marked complete; the pre-cutover Q3 train-only qualification remains
+separate. See the recorded implementation sequencing decision.

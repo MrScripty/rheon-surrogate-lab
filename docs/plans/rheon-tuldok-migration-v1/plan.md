@@ -1,17 +1,24 @@
 # Migrate the lab to current Rheon and Tuldok
 
-Status: Planned. Current phase: source assessment complete; runtime migration has
-not started. Acceptance: partial (A0 satisfied; migration claims pending).
+Status: Implementing and verifying. Parallel source implementation, real CPU/GPU
+qualification and isolated catalog rehearsal are underway. Acceptance remains
+partial; source/test completion alone does not authorize either service switch.
 Owner: lab migration task. The user
 requested GitHub updates, a change assessment and migration plan, and explicitly
 authorized improvements to Tuldok, including CUDA support, where needed.
 
-Next slice: M1, integrate and qualify the existing managed Torch and live-project
-capabilities on a new Tuldok branch based on the fetched main, including the
-Tuldok runtime failure cases in A8. Keep the running schema-8 service in place.
+Next slice: complete the corrected fresh catalog rehearsal, current cold reads,
+completed-current restore and browser inspection. Both the full new 74-scene
+CPU comparison and current-host one-update CUDA training/fresh CPU restore have
+passed. Advisory timing and the separately gated Rheon live smoke have passed.
+The original schema-8 service
+resumes after each stopped backup; do not
+switch it or enable a new Rheon binary until their separate gates pass.
 This revision addresses R1–R5 from the retained [standards review](reports/standards-review.md).
 The user's subsequent direction supersedes the previous compatibility design:
 this is a one-time coordinated migration with no backward-compatibility support.
+Current implementation decisions, scope extensions and combined live smoke
+sequencing are recorded in [implementation decisions](reports/implementation-decisions.md).
 
 ## Outcome and boundaries
 
@@ -155,7 +162,8 @@ copy of the actual stopped catalog in a separate database, not a second producti
 collection. Keep its endpoint, paths and DSN distinct; a restored catalog ID alone
 cannot distinguish it from production. Never run two versions against the original.
 The old service may resume on schema 8 after the rehearsal backup; M3 must take a
-new stopped bookend/backup and validate its current retained-state inventory.
+fresh stopped bookend and verify a complete backup under Q1's exact-equality
+rule, then validate its current retained-state inventory.
 Before expanding a milestone's concrete write set, inspect its affected owners;
 replan if that changes contracts, data custody, process ownership or physics.
 
@@ -163,8 +171,9 @@ replan if that changes contracts, data custody, process ownership or physics.
 
 Owner T is this task acting as Tuldok integration/operations owner; owner R is
 this task acting as lab/Rheon integration owner. Procedure IDs refer to
-[the acceptance protocol](acceptance-protocol.md). All claims are pending except
-A0. A5/A6 have distinct rehearsal and live receipts; a rehearsal cannot satisfy
+[the acceptance protocol](acceptance-protocol.md). Recorded passes below apply
+only to their exact candidate bytes; remaining live/catalog gates stay pending.
+A5/A6 have distinct rehearsal and live receipts; a rehearsal cannot satisfy
 their live portions. Existing upstream tests are supporting evidence, not local
 migration acceptance. Required-real means the named hardware/app/store is actually
 used; substitute fixture-only runs establish only their declared contracts.
@@ -173,13 +182,13 @@ used; substitute fixture-only runs establish only their declared contracts.
 | --- | --- | --- |
 | A0 | Targets, local deviations, live source, schema and incompatible consumers identified | T/R; existing [assessment](reports/assessment.md), [probes](reports/contract-probes.json), [nine checks](reports/negotiation-qualified-env.json); contract/integration; required-real local sources/PostgreSQL; automated; satisfied |
 | A1 | All source records/artifacts are accounted for in verified converted-current or archived-visible evidence, preserving original scientific facts and exact archived bytes; no unaccounted loss | T; Q1/Q2; contract/system; required-real quiesced catalog copy/PostgreSQL; automated; pending |
-| A2 | Actual CUDA float32 optimizer update and fresh CPU restore complete/drain with matching artifact hashes; CPU hides CUDA and has zero optimizer updates | T; Q3; system; required-real RTX5090/Pumas runtime/candidate Tuldok; automated; pending |
-| A3 | Fixed saved-input preprocessing, tensor/output reconstruction and zero-residual bypass match exactly; independent operator/gauge check passes | R; Q4 and fixed bindings; contract/integration; required-real CPU/native/checkpoint; automated; pending |
-| A4 | Rheon real model startup/failure/cancel/reap/restart/shutdown/cold inspection pass; 16-step restart has exactly one prediction after 15 native steps | R; Q5; system/user-workflow; required-real CPU model child and egui desktop; automated plus manual recorded desktop interaction; pending |
+| A2 | Actual CUDA float32 optimizer update and fresh CPU restore complete/drain with matching artifact hashes; CPU hides CUDA and has zero optimizer updates | T; Q3; system; required-real RTX5090/Pumas runtime/candidate Tuldok; automated; passed in 271.887 s, qualification/torch-pipeline-20261016-02/qualification.json and receipts/tuldok-runtime.json under the migration run root |
+| A3 | Fixed saved-input preprocessing, tensor/output reconstruction and zero-residual bypass match exactly; independent operator/gauge check passes | R; Q4 and fixed bindings; contract/integration; required-real CPU/native/checkpoint; automated; passed, [scientific parity](reports/q4-scientific-parity-v1.md) |
+| A4 | Rheon real model startup/failure/cancel/reap/restart/shutdown/cold inspection pass; 16-step restart has exactly one prediction after 15 native steps | R; Q5; system/user-workflow; required-real CPU model child and egui desktop; automated plus recorded agent-operated visible desktop interaction; passed, receipts/rheon-q5-real-lifecycle-03.json and receipts/rheon-visible-desktop-rehearsal.json under the migration run root |
 | A5 | Original live v1 data import/evidence/progress/refresh path works on candidate before cutover and on original catalog after cutover | T; Q6 rehearsal and Q8 live; user-workflow; required-real browser/API; automated plus manual recorded interaction; pending |
-| A6 | Live/saved native–AI signed voxel difference and legend work, with honest rejection/fallback and distinct same-request/trajectory metrics | R; Q5/Q6 rehearsal and Q9 live; user-workflow/integration; required-real Rheon desktop/CPU package; automated plus manual recorded interaction; pending |
-| A7 | All 74 cases satisfy fixed quality, per-case pressure and call non-regression rules; no native refinement/fallback or heldout use | R; Q7; system; required-real bounded CPU/native builds/checkpoint; automated; pending |
-| A8 | Tuldok CUDA cancellation during hashing/training, startup/deadline failure, drainage and cold interrupted/unknown recovery are qualified without duplicate work or CPU fallback | T; Q3 lifecycle cases; system/contract; required-real GPU plus isolated catalog; automated; pending |
+| A6 | Live/saved native–AI signed voxel difference and legend work, with honest rejection/fallback and distinct same-request/trajectory metrics | R; Q5/Q6 rehearsal and Q9 live; user-workflow/integration; required-real Rheon desktop/CPU package; automated plus recorded agent-operated visible desktop interaction; passed, [post-A7 enablement receipt](reports/evidence/rheon-post-a7-enablement.json); current read-only observer retained open |
+| A7 | All 74 cases satisfy fixed quality, per-case pressure and call non-regression rules; no native refinement/fallback or heldout use | R; Q7; system; required-real bounded CPU/native builds/checkpoint; automated; passed, 8,523 AI steps and 233 independent same-RHS samples; [full scientific qualification](reports/q7-scientific-qualification-v1.md); advisory timing is separate |
+| A8 | Tuldok CUDA cancellation during hashing/training, startup/deadline failure, drainage and cold interrupted/unknown recovery are qualified without duplicate work or CPU fallback | T; Q3 lifecycle cases; system/contract; required-real GPU plus isolated catalog; automated; five real cases passed with zero optimizer updates, qualification/torch-lifecycle-20261016-03/qualification.json and receipts/tuldok-runtime.json under the migration run root |
 | A9 | One-time conversion mapping and current producer/consumer path pass; obsolete formats are rejected by normal app routes, converter is unreachable there and superseded application paths are removed | T; Q2; contract/system; required-real candidate app/PostgreSQL and conversion fixtures; automated; pending |
 | A10 | Tuldok cutover bookend, identity/root/history and one bounded CUDA→CPU live smoke pass before general submissions resume | T; Q8; system/user-workflow; required-real original catalog/GPU/browser; automated plus manual inspection; pending |
 | A11 | New task/model/Study/Trial and field evidence use exact supported pressure semantics and runtime identity; no invented historical lineage or acceptance | T/R; Q10; contract/user-workflow; required-real candidate service/browser and bounded real GPU/CPU execution; automated plus manual inspection; pending |
@@ -248,26 +257,32 @@ Rollback uses the stopped pre-upgrade backup in a new destination and the old
 matching binary. Post-cutover writes require a separate retained-state recovery
 decision; an old backup cannot represent them.
 
-Current blockers: none prevent M1 source work. No runtime, service or solver
-switch is currently qualified: A1–A11 are pending. This is an unsatisfied gate,
-not an assertion that hardware/authority is missing. Required reference/source
-artifacts have local bindings; full runtime revalidation is a Q3 precondition.
+Current blockers: the corrected catalog rehearsal, cold/current restore and
+browser gates must pass before M3. A2/A3/A4/A6/A7/A8 are qualified for their
+recorded candidate bytes; Rheon enablement and advisory timing have passed.
+A1/A5/A9 and the Tuldok A10/A11 live smoke remain pending. Required local
+reference/source artifacts and the installed runtime have been revalidated.
 If a prerequisite is unavailable during execution, record the affected claim as
 blocked and continue only independent work. Do not repeat unknown admissions.
 
 Source isolation is deliberate: primary Rheon and the old live viewer have
-uncommitted user work. The task's detached
-`runs/dependency-migration-v1/Rheon` worktree is retained-protected at bc2f472,
-reachable through primary Rheon's fetched `origin/main`. Owner: migration task;
-consumer: this assessment and subsequent migration qualification; synchronize
-only by explicitly selecting and requalifying a new revision. Retire after
-accepted migration or explicit abandonment, checking cleanliness and protected
-reachability before removal. Do not stash, reset or sweep other worktrees.
+uncommitted user work. The task's `runs/dependency-migration-v1/Rheon` worktree
+is retained-protected on `integration/lab-current-contracts-20261016`, through
+`759d928448dec8b160f4c113e35bf2bf2bd1b9d3`. The Tuldok integration branch has
+permanent host commit `824665aefdc68a458b5510a0b33d6cae1eb4887d`; offline
+conversion/retirement is separate. The lab integration branch retains the full
+water lineage and accepted plan merge. Owner: migration task for Jeremy;
+consumers: current observation, migration qualification and integration review.
+Synchronize only through explicit assessment and requalification. Keep these
+sources while deployment/Project references depend on them. After review/merge
+and relocation of those consumers, reassess clean task-owned worktree retirement
+with exact protected heads recorded. Do not stash, reset or sweep other worktrees.
 
 The assessment branch `plan/rheon-tuldok-migration-20261016` is a local retained
-proposal based on 03c05e8. Target: lab integration review, ultimately main. Serial
-integration owner: migration task. Retain until its assessment is integrated or
-explicitly superseded; no push, history rewrite or automatic cleanup here.
+assessment based on 03c05e8, normally merged into lab integration at d6146a2.
+Target: lab integration review, ultimately main. Serial integration owner:
+migration task. The primary checkout remains on that assessment branch with
+unrelated user files preserved; no push, history rewrite or automatic cleanup.
 
 Replan for a changed upstream contract, unavailable historical bytes, catalog
 drift, CUDA custody incompatibility, new physical behavior, changed fallback

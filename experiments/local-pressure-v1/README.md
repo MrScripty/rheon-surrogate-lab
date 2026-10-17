@@ -1,5 +1,14 @@
 # Reusable local CPU pressure pipeline
 
+The captured-CPU bootstrap and project-assembly instructions below describe the
+retained pre-migration execution evidence. Current material is prepared through
+the [dependency migration producer](../dependency-migration-v1/README.md), using
+`bootstrap.py --dependency-config FILE --output NEWDIR`; it creates no database
+or Run. The current Tuldok owner admits execution through its ordinary approval
+and Run path. Historical `prepare --host` and `run --workspace` bootstrap
+commands are retired. Native capture/build tools in this namespace now select
+current Rheon and tool paths through the dependency configuration.
+
 This namespace owns fresh experiment configuration, data lineage and local
 bootstrap. It reuses the historical GroupNorm model, preprocessing, finite-volume
 loss, independent physics oracle and native diagnostic arithmetic without

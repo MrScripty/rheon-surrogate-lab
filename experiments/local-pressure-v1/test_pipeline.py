@@ -217,22 +217,6 @@ class TrainingContracts(unittest.TestCase):
         self.assertIn("trained_checkpoint_040_npz", train.trained_inputs(second))
         self.assertNotIn("trained_checkpoint_200_npz", train.trained_inputs(second))
 
-    def test_complete_history_budget_rejects_dense_checkpoint_schedule(self):
-        value = config(); value["training"]["checkpoint_interval"] = 1
-        with self.assertRaises(ContractError) as error:
-            project.output_projection(value, 1500186, 500000)
-        self.assertEqual(error.exception.code, "output_projection")
-
-    def test_generic_recipe_parser_accepts_configured_train_and_restore(self):
-        custody_source = Path(os.environ["TULDOK_CUSTODY_SOURCE"])
-        sys.path.insert(0, str(custody_source.parent))
-        from recipe_contract import decode_definition
-        for mode in ("train", "restore"):
-            definition = project.definition(config(), {name: b"fixture" for name in ("train.py", "config.json", "runtime-manifest.json", "source-witness.json")}, "a" * 64, mode)
-            decoded = decode_definition(canonical(definition))
-            self.assertEqual(len(definition["outputs"]), 18)
-            self.assertEqual(len(definition["inputs"]), 5 if mode == "train" else 22)
-
     def test_native_evaluation_arithmetic_is_byte_identical(self):
         self.assertEqual(read(LAB / "probes/local-pressure-evaluation-v1/src/main.rs", MIB), read(LAB / "probes/global-pressure-v1-training/src/main.rs", MIB))
 

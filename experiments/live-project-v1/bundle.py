@@ -9,6 +9,8 @@ import sys
 import zipfile
 
 PROFILE = Path(__file__).resolve().parents[2]/'experiments/local-pressure-v1'
+sys.path.insert(0,str(PROFILE.parent/'dependency-migration-v1'))
+import dependency_config
 sys.path.insert(0,str(PROFILE))
 import capture
 import contract
@@ -65,7 +67,7 @@ def export(root, trajectory_id, tuldok, output, verify_capture=capture.verify, n
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--capture',type=Path,required=True);parser.add_argument('--trajectory',required=True)
-    parser.add_argument('--tuldok-source',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--dependency-config',type=Path);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--capture-profile',choices=('local','cubic'),default='local')
     args=parser.parse_args()
     verifier=capture.verify;namespace='rheon-local-pressure-development'
@@ -74,7 +76,7 @@ def main():
         sys.path.insert(0,str(profile))
         verifier=contract.load_module('cubic_bundle_capture',profile/'cubic_capture.py').verify
         namespace='rheon-cubic-pressure-development'
-    print(json.dumps(export(args.capture,args.trajectory,args.tuldok_source,args.output,verifier,namespace)))
+    print(json.dumps(export(args.capture,args.trajectory,dependency_config.load(args.dependency_config).source('tuldok'),args.output,verifier,namespace)))
 
 
 if __name__=='__main__':main()

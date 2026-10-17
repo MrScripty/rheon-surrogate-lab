@@ -1,49 +1,34 @@
-"""Prepare the selected clean Rheon revision with the retained pressure patch."""
-import io
+"""Verify the current Rheon source selected by the migration configuration."""
+import sys
 from pathlib import Path
-import subprocess
-import tarfile
 
-from contract import LAB, MIB, canonical, decode, fresh, read, require, sha, write
+from contract import LAB, MIB, canonical, read, require, sha
 
-HISTORICAL = LAB / "experiments/global-pressure-v1/dependency"
-
-
-def inventory(root):
-    rows = []
-    for path in sorted(root.rglob("*")):
-        require(not path.is_symlink(), "dependency_path", str(path))
-        if path.is_dir() or path.name == "source-receipt.json" and path.parent == root:
-            continue
-        require(path.is_file(), "dependency_path", "regular source files")
-        rows.append({"path": path.relative_to(root).as_posix(), "sha256": sha(read(path, 16 * MIB)), "mode": 0o755 if path.stat().st_mode & 0o111 else 0o644})
-    return rows
+sys.path.insert(0, str(LAB / "experiments/dependency-migration-v1"))
+import dependency_config
 
 
-def prepare(source, revision, output):
-    require(subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=source, text=True).strip() == revision and not subprocess.check_output(["git", "status", "--porcelain"], cwd=source), "dependency_revision", "clean selected source revision")
-    contract = decode(read(HISTORICAL / "manifest.json", MIB))
-    patch = read(HISTORICAL / contract["patch_file"], MIB)
-    require(sha(patch) == contract["patch_sha256"], "dependency_patch", "retained reviewed pressure patch")
-    output = fresh(output)
-    archive = subprocess.check_output(["git", "archive", revision], cwd=source)
-    with tarfile.open(fileobj=io.BytesIO(archive)) as files:
-        files.extractall(output, filter="data")
-    # An isolated index prevents git apply from resolving the surrounding lab
-    # checkout when a prepared tree lives beneath runs/.
-    subprocess.run(["git", "init", "--quiet"], cwd=output, check=True)
-    subprocess.run(["git", "apply", "--check", str(HISTORICAL / contract["patch_file"])], cwd=output, check=True)
-    subprocess.run(["git", "apply", str(HISTORICAL / contract["patch_file"])], cwd=output, check=True)
-    __import__("shutil").rmtree(output / ".git")
-    files = inventory(output)
-    receipt = {"schema": "rheon-local-pressure-dependency-v1", "base_commit": revision, "base_tree": subprocess.check_output(["git", "rev-parse", revision + "^{tree}"], cwd=source, text=True).strip(), "patch_sha256": sha(patch), "prepared_tree_sha256": sha(canonical(files)), "license_sha256": sha(read(output / "LICENSE", MIB)), "files": files}
-    write(output / "source-receipt.json", receipt)
-    return verify(output)
+def selection(path=None):
+    return dependency_config.load(path)
 
 
-def verify(root):
-    receipt = decode(read(root / "source-receipt.json", 2 * MIB))
-    require(receipt["schema"] == "rheon-local-pressure-dependency-v1" and receipt["files"] == inventory(root) and receipt["prepared_tree_sha256"] == sha(canonical(receipt["files"])), "dependency_identity", "selected source/patch closure unchanged")
-    contract = decode(read(HISTORICAL / "manifest.json", MIB))
-    require(receipt["patch_sha256"] == contract["patch_sha256"] and receipt["license_sha256"] == sha(read(root / "LICENSE", MIB)), "dependency_contract", "reviewed patch and license")
-    return {key: value for key, value in receipt.items() if key != "files"}
+def verify(root, configuration=None):
+    selected = configuration or selection()
+    require(selected.source_root("lab") == LAB.resolve(), "dependency_lab", "configuration-selected current lab root")
+    source = selected.source_root("rheon")
+    require(Path(root).resolve() == source, "dependency_source", "configuration-selected current Rheon root")
+    # These are the Cargo/lib inputs for the selected native probes. No lean
+    # library include_str/include_bytes refers outside src. Cargo does not compile
+    # dependency binaries or their desktop tests for these library consumers.
+    # Bind every other src file, including shared diagnostic ownership, so newly
+    # added library modules cannot escape the build identity.
+    paths = [source/name for name in ("Cargo.toml", "Cargo.lock", "rust-toolchain.toml")]
+    if (source/"build.rs").exists():
+        paths.append(source/"build.rs")
+    paths += sorted(path for path in (source/"src").rglob("*")
+                    if path.is_file() and not path.is_relative_to(source/"src/bin"))
+    files = [{"path": path.relative_to(source).as_posix(), "sha256": sha(read(path, 16*MIB))} for path in paths]
+    row = selected.value["sources"]["rheon"]
+    return {"schema": "rheon-current-pressure-dependency-v1", "base_commit": row["revision"],
+            "source_content_sha256": sha(canonical(files)), "build_inputs": files,
+            "license_sha256": sha(read(source / "LICENSE", MIB))}

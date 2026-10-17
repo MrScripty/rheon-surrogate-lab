@@ -11,7 +11,6 @@ from contract import HERE, LAB, MIB, canonical, decode, fresh, load_module, read
 
 ORIGINAL = LAB / "experiments/global-pressure-v1"
 sys.path.insert(0, str(ORIGINAL))
-import prepare_dependency
 import verify_capture as oracle
 
 legacy = load_module("local_capture_process_primitives", ORIGINAL / "capture.py")

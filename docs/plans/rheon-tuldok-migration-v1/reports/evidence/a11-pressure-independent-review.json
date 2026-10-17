@@ -1,0 +1,67 @@
+{
+  "format": "rheon_typed_pressure_independent_review_v1",
+  "status": "scope_limited_pass",
+  "findings": [],
+  "reviewed_sources": {
+    "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/typed_pressure_evidence.py": "5f4ed16a0d45457a1300d4d3bc2c613210428eb63571f7d83420dd5161c84d16",
+    "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/typed_pressure_project.py": "04e1916ffcc3b6eaa71f9edb61e4e867088c94ca889b0568f09f2ccd774be54a",
+    "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/typed_pressure_workflow.py": "f55215bbfa6979d0515b7a4b8e73d19f15b4e0cb2472577c78e4dfb73d5a32ae",
+    "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/qualify_typed_pressure.py": "e56bad204cb938a710820833bf3e7de8f6c10ca434d1bff79f28f97c004a7027"
+  },
+  "assembly": {
+    "path": "runs/dependency-migration-v1/typed-pressure-project-02/assembly.json",
+    "sha256": "308bd88afa8563e0acd03cbfda8c1273e2d18597dc1e2c5123b3fa4d22ea4955"
+  },
+  "verified_numerical_sources_byte_identical": {
+    "model.py": "0bce2799411bb8da0e2dec5d82638f63959d9849924265b4c95fc239fcd57e99",
+    "portable_model.py": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935",
+    "frozen_gn.py": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c",
+    "original_model.py": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb",
+    "physical_residual.py": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5",
+    "train.py": "62c7dd0ad8bcc1b4e707800d6d329c318962d8e4abce973bf722e832f5f791b8"
+  },
+  "findings_resolved_or_nonblocking": [
+    {
+      "severity": "documentation",
+      "file": "typed_pressure_workflow.py",
+      "detail": "Module docstring describes Trial preparation as unsupported, while the later current prepare_current_trial entrypoint supports a closed Trial. Not a numerical/custody gate; sent to owner."
+    }
+  ],
+  "review_checks": [
+    "Captured predict_pressure returns physical full pressure: float32 raw converted to float64, multiplied by exact train-only Pa RMS, cell-zero gauged, added to supplied base once before subsequent correction deltas.",
+    "Both target and prediction are exact finite <f8 Pa ZYX fields with cell-zero gauge; native target payload identity binds the fixed consumed validation frame.",
+    "Probe extraction proves exact old dataset/splits hashes, frame payload hashes and original completed/drained training Run receipt membership; no untouched heldout8 path is referenced.",
+    "New training fits only current train-only packet; fixed probe is projected out of original trainer fitting receipts and evaluated only after original one-update train completes.",
+    "Original training profile bytes are renamed training-profile.json while original receipt output claims remain unchanged; restore checks actual training-profile.json artifact through current custody, then checks bytes against original receipt profile.json entry.",
+    "SDK task/runtime/model/source/preprocess/output/evaluator fields declare full_pressure Pa, train-only scaling, exact selected physical context and diagnostic-only consumed validation purpose.",
+    "Driver reads actual train Run artifact names and hashes for ordinary CPU restore; checks one originating Run, zero CPU updates, hidden CUDA, exact restored weights/predictions/normalization/checkpoint and fresh fixed-probe retained f64 arrays.",
+    "Driver gates execution on exact structural-switch closed-smoke receipt, launch source identity, persisted mutation intent and exclusive single-smoke claim; no numerical execution occurs during prepare-only."
+  ],
+  "validation": {
+    "focused_tests": {
+      "receipt": "a11-pressure-independent-tests.json",
+      "tests": 20,
+      "passed": 16,
+      "skipped": 4,
+      "elapsed_s": 4.637251683998329
+    },
+    "real_cpu_math": {
+      "receipt": "a11-pressure-independent-probe.json",
+      "script": "a11-pressure-independent-probe.py",
+      "elapsed_s": 30.965250563000154,
+      "weights_sha256": "26b66232928ce81d428dbdb1c8cc750a0cf5c0bc5f678977efc111a0a56d2d9a",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "pressure_sha256": "30bfd15c3cb9d3b424a6a10208c8dc9f247c4957124446cd73f39045378ed1d8",
+      "manual_reconstruction_exact": true,
+      "zero_residual_exact_base_no_network": true,
+      "cuda_initialized": false,
+      "optimizer_updates": 0
+    }
+  },
+  "limits": [
+    "No live admission, one-update training, production catalog/DB/service mutation, simulation or browser qualification was performed by this review.",
+    "Real newly-trained Run artifact custody and SDK output ingestion remain obligations of the gated A10/A11 live smoke.",
+    "The qualification driver was read while its owner was completing tests; this receipt binds only the recorded file hashes.",
+    "The CPU probe uses retained existing 26b weights; it establishes wrapper arithmetic and exact normalization semantics, not a trained candidate quality or speed claim."
+  ]
+}

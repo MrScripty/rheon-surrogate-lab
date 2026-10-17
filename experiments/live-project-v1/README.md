@@ -1,20 +1,19 @@
 # Live lab project
 
-`tuldok-project.json` opens the actual repo in Tuldok. The live project panel
-shows producer activity and recent file changes. Selected unpinned text/source
-files refresh automatically; declared hashes and immutable execution snapshots
-still retain their original identity and rejection behavior. Activity is external
-observation, not a fabricated completed Run or scientific qualification.
+Generate the current schema-2 project with the
+[dependency producer](../dependency-migration-v1/README.md). Its source manifest
+is `tuldok-project.json`; the generated manifest resolves selected source files
+and original scientific artifacts against the explicit primary artifact root.
+Bind Tuldok's project root alias `lab` to that primary root and open the
+root-relative `manifest_path` from the producer receipt. Opening the source
+manifest directly against the nested lab worktree would select the wrong
+artifact root. No symlinks or copied evidence snapshots are needed.
 
-The current host serves the repo through the user's existing Tuldok catalog on
-127.0.0.1:8091 with `--project-root lab=/absolute/lab`. Use `/workspaces`, choose
-**Rheon Surrogate Lab · cubic cells**, and inspect its Data/Pipeline/Runs views.
-A registered project also supports `/workspaces?project=PROJECT_ID#data`.
-Existing catalog data, credentials, sessions and local source edits are preserved.
-The local integration branches are `feat/live-project-activity` in Tuldok and
-`feat/live-experiment-view` in Rheon. Their clean source worktrees are retained
-under ignored `runs/live-integration`; they share the original repositories'
-Git history and do not change the dirty worktrees or in-progress merge.
+The Data/Pipeline/Runs views retain their own authority. Activity is an ordinary
+mutable evidence reference with ID `activity`, carrying external observation;
+it does not establish a completed Run or scientific qualification. Historical
+catalog conversion and service publication have separate acceptance procedures;
+generating a current manifest does not perform a cutover.
 
 Open Rheon's **actual egui desktop**, using the qualified integration build:
 
@@ -72,7 +71,7 @@ Actual managed training can be followed with Tuldok's existing scoped agent clie
 
 ```sh
 .venv/bin/python experiments/live-project-v1/live.py watch-run \
-  --tuldok-source /absolute/Tuldok --agent-config /private/agent-config.json \
+  --agent-config /private/agent-config.json \
   --run-id RUN_ID
 ```
 
@@ -94,7 +93,7 @@ Data reference; the new record is a draft and human review/release remain separa
 ```sh
 .venv/bin/python experiments/live-project-v1/bundle.py \
   --capture /absolute/verified-capture --trajectory TRAJECTORY_ID \
-  --tuldok-source /absolute/Tuldok --output "$PWD/runs/new-fields.zip"
+  --output /absolute/primary-artifact-root/runs/new-fields.zip
 ```
 
 ## Grid requirement

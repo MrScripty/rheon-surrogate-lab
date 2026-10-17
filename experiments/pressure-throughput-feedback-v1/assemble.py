@@ -93,6 +93,7 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         recipe=copy.deepcopy(bundle['recipes'][mode]);recipe.update(id=config['id']+'-'+mode,name=config['id']+' '+mode,
             entrypoint=prefix+'evidence.py',sources=sources,resources={**config['resources'],'cpu_cores':2 if mode=='train' else 1,
             'memory_bytes':8*1024**3 if mode=='train' else 4*1024**3})
+        if mode=='restore':recipe['resources']['wall_seconds']=600
         recipe['inputs']['runtime_manifest']={'max_bytes':32*1024**2}
         recipe['outputs']=[r for r in recipe['outputs'] if not r['path'].startswith('checkpoint-') or r['path']=='checkpoint-000.npz']
         recipe['outputs'].append(dict(path=f'checkpoint-{updates:03d}.npz',role='checkpoint',max_bytes=2*1024**2,required=True))

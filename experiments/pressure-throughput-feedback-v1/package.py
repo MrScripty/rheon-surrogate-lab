@@ -26,6 +26,7 @@ def main():
     result=package('physical_residual',project,artifacts,inventory,a.runtime.resolve(strict=True),a.output.resolve(),a.archive.resolve(),originals,
         dict(study_receipt_sha256=digest(study/'receipt.json'),training_run_id=receipt['training_run_id'],restore_run_id=receipt['restore_run_id'],band_feedback=receipt['band_feedback']),
         iteration=a.iteration.resolve(strict=True),runtime_owner=a.runtime_owner.resolve(strict=True),package_id=config['id'],
+        spatial_coarse='spatial_coarse_correction' in cpu['architecture'],
         package_version='pressure-band-feedback-v1',role='prospective trained candidate; accuracy unqualified; no promotion')
     print(json.dumps(result))
 

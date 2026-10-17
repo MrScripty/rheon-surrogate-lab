@@ -154,10 +154,13 @@ def load(path, emit=None):
         emit({'kind': 'loading', 'phase': 'Checking current managed CPU runtime assets'})
     runtime_owner.verify(runtime)
     spec = strict(read(root / 'numerical.json'))
-    closed(spec, 'schema kind correction weights inference', 'Closed current numerical mapping required')
-    require(spec['schema'] == 'rheon-pressure-numerics-v1', 'Current numerical mapping required', 'unsupported')
+    closed(spec, 'schema kind correction weights inference spatial_coarse', 'Closed current numerical mapping required')
+    require(spec['schema'] == 'rheon-pressure-numerics-v2', 'Current numerical mapping required', 'unsupported')
     kind = spec['kind']
     require(kind in ('seven_channel', 'physical_residual'), 'Unsupported numerical mapping', 'unsupported')
+    require(type(spec['spatial_coarse']) is bool and (not spec['spatial_coarse'] or
+            kind == 'physical_residual' and 'coarse.py' in files),
+            'Explicit captured residual coarse architecture required')
     policy = spec['inference']
     if kind == 'physical_residual':
         require(spec['correction'] == {'activation': 'linear', 'steps': 2}

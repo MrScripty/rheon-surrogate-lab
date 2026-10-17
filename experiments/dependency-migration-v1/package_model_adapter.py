@@ -59,7 +59,9 @@ def iteration_functions(path):
             'import math\nMAX_NETWORK_EVALUATIONS=32\n\n'+'\n\n\n'.join(parts.values())+'\n')
 
 
-def package(kind, sources, artifacts, inventory, runtime, output, archive, originals, provenance, iteration=None, runtime_owner=None, package_id=None, package_version=None, role=None):
+def package(kind, sources, artifacts, inventory, runtime, output, archive, originals, provenance, iteration=None, runtime_owner=None, package_id=None, package_version=None, role=None, spatial_coarse=False):
+    require(type(spatial_coarse) is bool and (not spatial_coarse or kind == 'physical_residual'),
+            'Explicit residual coarse architecture selection required')
     require(not output.exists() and not archive.exists(), 'Fresh package and archive destinations required')
     require(runtime_owner is not None and runtime_owner.is_file(), 'Explicit current runtime owner required')
     owner_spec = importlib.util.spec_from_file_location('rheon_packaging_torch_runtime', runtime_owner)
@@ -74,6 +76,8 @@ def package(kind, sources, artifacts, inventory, runtime, output, archive, origi
     numerical_sources = ['portable_model.py', 'frozen_gn.py', 'original_model.py']
     if kind == 'physical_residual':
         numerical_sources.append('physical_residual.py')
+    if spatial_coarse:
+        numerical_sources.append('coarse.py')
     for name in numerical_sources:
         shutil.copyfile(sources / name, output / name)
         source_mapping[name] = {'source': str(sources / name), **measure(output / name)}
@@ -89,7 +93,7 @@ def package(kind, sources, artifacts, inventory, runtime, output, archive, origi
         source_mapping['learned_iteration.py'] = {'source': str(iteration),
             'source_identity': measure(iteration), 'conversion': 'exact six policy function source segments',
             **measure(output / 'learned_iteration.py')}
-    numerical = {'schema': 'rheon-pressure-numerics-v1', 'kind': kind,
+    numerical = {'schema': 'rheon-pressure-numerics-v2', 'kind': kind, 'spatial_coarse': spatial_coarse,
                  'correction': {'activation': 'linear', 'steps': 2} if kind == 'physical_residual' else None,
                  'weights': inventory,
                  'inference': {'max_network_calls': 32, 'single_evaluation': True,

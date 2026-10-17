@@ -52,8 +52,13 @@ training and CPU inference use float32; existing physical arithmetic float64.
 No native fallback/refinement. Original Rheon desktop and Tuldok catalog/UI
 preserved; existing preview paths show recorded pressure, not live tracer flow.
 
-Write set: this plan, experiments/pressure-spatial-coarse-v1 and the narrow shared
-assembler model-overlay option. No Tuldok/Rheon changes, historical rewrites,
+Write set: this plan, experiments/pressure-spatial-coarse-v1, the narrow shared
+assembler/package options, and the existing dependency-migration inference
+packager/adapter numerical mapping. Review found that training capture alone
+could not deploy the new tensor; qualify a conversion before training. Newly
+generated packages use a closed v2 numerical mapping with explicit coarse flag;
+there is no new-reader fallback to v1. Retained historical packages contain
+their own unchanged reader bytes. No Tuldok/Rheon changes, historical rewrites,
 weights/datasets/runtime/credentials in Git. Reuse the existing lab worktree; no
 new registration. Retain branch for user review/continuation with immutable
 commits until later directed integration or retirement. CPU clocks, CUDA clocks,

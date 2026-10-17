@@ -22,3 +22,16 @@ architecture admission evidence, not production solver latency.
 Freeze control/candidate configs from the exact current-0.1 recipe. Candidate
 alone uses an explicit captured model overlay; all physical/loss/data/stream
 owners stay unchanged. No training has started at this source-freeze boundary.
+
+Source review caught missing inference packaging for the new tensor before any
+training admission. Extended only current lab packaging/numerical reconstruction:
+closed v2 mapping carries an explicit coarse flag; no new-reader v1 fallback.
+Historical package readers remain unchanged in their own directories. Nonzero
+synthetic coarse weights prove exact raw and two-call pressure conversion across
+three consumed grids. Two negative fixtures reach the intended tensor-inventory
+and coarse-flag errors; existing nine protocol tests pass. No learned accuracy
+claim is made from synthetic conversion coefficients. Both captures preserve all
+shared source/input/normalization identities, original seeded tensors and RNG;
+the only candidate tensor starts at zero. SDK preflight initially used system
+Python lacking jsonschema; corrected to the existing application environment for
+that read-only check, without admission/mutation replay.

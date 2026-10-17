@@ -11,14 +11,16 @@ import portable_model as owner
 KIND = None
 CORRECTION = None
 ARCHITECTURE = None
+SPATIAL_COARSE = False
 full_operator = owner.full_operator
 configure = owner.configure
 
 
 def select(spec):
-    global KIND, CORRECTION, ARCHITECTURE
+    global KIND, CORRECTION, ARCHITECTURE, SPATIAL_COARSE
     KIND = spec['kind']
     CORRECTION = copy.deepcopy(spec['correction'])
+    SPATIAL_COARSE = spec['spatial_coarse']
     ARCHITECTURE = copy.deepcopy(owner.ARCHITECTURE)
     if KIND == 'physical_residual':
         ARCHITECTURE.update(schema='rheon-physical-residual-pressure-v1', input_channels=1,
@@ -40,12 +42,16 @@ class PressureCorrectionNet(owner.PressureCorrectionNet):
                         block.layers[index] = torch.nn.Identity()
             import physical_residual
             physical_residual.transform(self, owner, CORRECTION)
+        if SPATIAL_COARSE:
+            from coarse import SpatialCoarseCorrection
+            self.spatial_coarse = SpatialCoarseCorrection()
 
     def forward(self, values):
         if KIND == 'seven_channel':
             return super().forward(values)
         import physical_residual
-        return physical_residual.forward(self, values, owner)
+        result = physical_residual.forward(self, values, owner)
+        return result + self.spatial_coarse(values) if SPATIAL_COARSE else result
 
 
 def build_inputs(residual, base, cell_size, rho, dt, normalization):

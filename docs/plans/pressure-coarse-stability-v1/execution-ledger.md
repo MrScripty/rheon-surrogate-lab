@@ -40,3 +40,30 @@
   report names match its selected final output03/02/02. Preliminary internal
   elapsed values remain in individual qualification receipts; no reconstructed
   preliminary command timing is claimed.
+
+- Independent Spec and Standards source/capture reviews both passed. Source
+  freeze5059dbca3f043c9e36421ccb2917d31242adb8ce. Actual Project
+  a629e335f28f471688fbe0cd1144b164 has36captured recipe sources and9inputs.
+  Assembly1.304406756s; CPU capture verification3.119601319s. Exact original
+  configuration, normalization, initialization and fivefull5000streams/1500prefixes
+  verified; only clipping import/call/helper differ. No optimization in capture.
+- Positive admission verification plus6isolated negatives passed, zero owner
+  mutations in fixtures. The new immutable capture binds final qualification03.
+  Admitted exactly one controller command through the original catalog; journalled
+  trial preparation/approval is in progress. No retries or longer fit requested.
+
+- One managed Run e8f26974fa8a4705ba4d63cf7179a3ab under Study f0df577b7c07486cba52ec597c48f99c completed1500
+  optimizer updates and1500 original CUDA finite-state checks. Two norm repairs
+  at1398/1399; first matches prior stopping update. All13baseline logged losses
+  through1300 exact. No numerical failure or additional repair through1500.
+- Run start-through-drain 224.220248s; instrumented loop
+  173.953927779s; complete managed command 387.191292793s.
+  Optimizer-only time unavailable; no throughput or pressure-accuracy claim.
+- Explicit cap raises before1501: Tuldok failed/drained exit1 is intentional
+  diagnostic cessation, not numerical failure. Controller exit0 proves closed
+  terminal readback. Custody collection/analyzer passed with all36 staged sources
+  and actual Project/material/spec/admission joins. Study closed, artifacts0,
+  no CPU restore, longer fit, new simulation, holdout or promotion.
+- Host closure verifies controller/custodian absent, original Tuldok/Rheon alive;
+  final activity truthfully reports1500/1500, two repairs and recorded control
+  preview. No persistent publisher. Timing/resource limits recorded in results.

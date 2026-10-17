@@ -1,6 +1,6 @@
 # Overflow-only clipping integration and capped CUDA stability
 
-Status: implementing. Owner: root. Base: 84525d986cdaba1b5252802e07dc6b43dee9b701.
+Status: accepted; clipping integration and1500-update finite stability screen complete. Owner: root. Base: 84525d986cdaba1b5252802e07dc6b43dee9b701.
 User authorized integration, qualification and one capped 1500-update CUDA screen.
 This plan executes the preceding pressure-coarse-gradient-v1/next-proposal.md.
 
@@ -58,5 +58,5 @@ The diagnosing-bugs workflow reuses the minimized red-capable norm reproduction;
 integration regression precedes managed replay. Independent review before
 admission and after results follows the code-review skill, fixed base above.
 
-Next slice: integrate and qualify clipping; only after acceptance capture/admit
-one managed screen. Results and changed decisions will be entered in the ledger.
+No implementation remains in this plan. Both independent final reviews passed.
+The next proposal covers a separate full fit/CPU qualification; it is unstarted.

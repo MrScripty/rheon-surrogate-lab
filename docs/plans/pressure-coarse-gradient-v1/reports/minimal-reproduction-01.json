@@ -1,0 +1,52 @@
+{
+  "format": "pressure-coarse-gradient-minimal-reproduction-v1",
+  "status": "reproduced",
+  "elapsed_s": 0.4338334770000074,
+  "original_guard_error_expected": true,
+  "observed_failed_update": 1398,
+  "observed_run_id": "5770116825f647ddabd2ba7e5413d885",
+  "analysis_sha256": "d5c3fce95bb8adc6a9ecfeee11a2ab686aa0185eaa0975ee8151c4716f570f5a",
+  "source_sha256": "ede033c038e3146711dca0f343b1329f9d0e39b3ed33a0676ced3e7bc513de94",
+  "observed_parameter_names": [
+    "encoders.0.layers.0.weight",
+    "decoders.3.layers.3.weight"
+  ],
+  "observations": [
+    {
+      "device": "cpu",
+      "pair_guard_rejected": true,
+      "gradients_unchanged": true,
+      "deleting_either_element_removes_failure": true,
+      "single_norms": [
+        1.7409796856577262e+19,
+        1.2629991112216412e+19
+      ],
+      "actual_pair_values": [
+        1.7409796856577262e+19,
+        1.2629991112216412e+19
+      ],
+      "independent_expected_norm": 2.150854951134439e+19,
+      "ordinary_pair_norm_is_infinite": true
+    },
+    {
+      "device": "cuda",
+      "pair_guard_rejected": true,
+      "gradients_unchanged": true,
+      "deleting_either_element_removes_failure": true,
+      "single_norms": [
+        1.7409796856577262e+19,
+        1.2629991112216412e+19
+      ],
+      "actual_pair_values": [
+        1.7409796856577262e+19,
+        1.2629991112216412e+19
+      ],
+      "independent_expected_norm": 2.150854951134439e+19,
+      "ordinary_pair_norm_is_infinite": true
+    }
+  ],
+  "optimizer_updates": 0,
+  "network_forwards": 0,
+  "simulations_advanced": 0,
+  "scope": "Actual observed finite per-parameter norm pair at original Torch clipping seam on CPU/CUDA. Both elements load-bearing for outer overflow; no original gradient tensors, new model fitting, pressure accuracy or fixed training claimed."
+}

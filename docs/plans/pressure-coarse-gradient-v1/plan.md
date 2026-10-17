@@ -1,5 +1,6 @@
 # Coarse gradient diagnostic
 
+Status: completed diagnostic; norm-reduction overflow reproduced, repair arithmetic qualified separately.
 Owner: root. Base 765e79815dc8912bb159691013a3b0c8b4b22c02; local branch
 experiment/coarse-gradient-diagnostic-20261017. User continuation adopts the
 completed coarse experiment's next-proposal.md. One managed CUDA replay, capped
@@ -50,8 +51,8 @@ are explicitly retained as experiment evidence; no instrumentation is installed
 into the shared production trainer or inference package.
 
 Admission review tightened the controller boundary: require a qualified captured
-gradient entrypoint, unique explicit cap1..1500 and bound reference plus matching
+gradient entrypoint, unique explicit cap 1..1500 and bound reference plus matching
 capture-verification/observer receipts before any catalog mutation. One Study
-attempt remains; its conservative3600s wall budget includes Tuldok overhead
-(actual prior1800s recipe reserved1937s), not a second training attempt. The
-recipe's1800s execution deadline and separate1500update cap are unchanged.
+attempt remains; its conservative 3600 s wall budget includes Tuldok overhead
+(actual prior 1800 s recipe reserved 1937 s), not a second training attempt. The
+recipe's 1800 s execution deadline and separate 1500-update cap are unchanged.

@@ -20,14 +20,22 @@ CORRECTION=None
 OBJECTIVE='canonical'
 OUTPUT_SCALE='previous-pressure-rms'
 FIRST_PRESSURE_WEIGHT=0.
+BAND_FEEDBACK=None
 
 
 def select(config):
-    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE,OUTPUT_SCALE,FIRST_PRESSURE_WEIGHT
+    global SELECTED,NORMALIZATION,CORRECTION,OBJECTIVE,OUTPUT_SCALE,FIRST_PRESSURE_WEIGHT,BAND_FEEDBACK
     FIRST_PRESSURE_WEIGHT=0.
+    BAND_FEEDBACK=None
     CORRECTION=None
     OBJECTIVE=config.get('objective','canonical')
     OUTPUT_SCALE=config.get('output_scale','previous-pressure-rms')
+    if config['schema'] == 'rheon-water-residual-experiment-v10':
+        select({**{k: v for k, v in config.items() if k != 'band_feedback'},
+                'schema': 'rheon-water-residual-experiment-v9'})
+        BAND_FEEDBACK=copy.deepcopy(config['band_feedback'])
+        ARCHITECTURE['training_band_feedback']=copy.deepcopy(BAND_FEEDBACK)
+        return
     if config['schema'] == 'rheon-water-residual-experiment-v9':
         select({**{k: v for k, v in config.items() if k != 'first_pressure_weight'},
                 'schema': 'rheon-water-residual-experiment-v8'})
@@ -170,4 +178,9 @@ def training_loss(network,sample,normalization,criterion=None):
     if FIRST_PRESSURE_WEIGHT and pressures:
         first=pressure_loss(pressures[0],sample,normalization) if criterion is None else criterion(pressures[0])
         result=result+FIRST_PRESSURE_WEIGHT*first
+    if BAND_FEEDBACK and BAND_FEEDBACK['weight'] and pressures:
+        import band_feedback
+        feedback=(band_feedback.loss(pressures[0],sample,BAND_FEEDBACK)
+                  +band_feedback.loss(prediction,sample,BAND_FEEDBACK))/2
+        result=result+BAND_FEEDBACK['weight']*feedback
     return result

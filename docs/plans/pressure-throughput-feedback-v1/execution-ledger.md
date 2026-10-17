@@ -94,3 +94,28 @@ process total), including an analytic odd-grid cosine, bounded weak-mode loss,
 zero-weight loss/gradient parity, first/final derivatives and strict policy
 validation. No extra network passes. See reports/band-feedback-tests-01.json.
 CUDA qualification and full matched fits are pending.
+
+## Live scheduler and frozen training comparison
+
+Deployed exact Tuldok a9e99d28fb88320323dbcbfb63ae8224b89043ff as current-04.
+Verified original PID/start identity, zero active Runs, graceful SIGINT drainage,
+HTTP health and all six retained Run states unchanged. Switch10.464s. Same
+original catalog, owner session and Project roots. Operator profile:6CPU slots,
+4GiB CPU minimum,8GiB CUDA minimum,8GiB host reserve.
+
+The current training owner now freezes v10 configurations and current typed
+Projects without invoking closed migration gates. Reuses exact train-only16
+parents/32states and qualified direction bank; one already-consumed validation
+probe is a diagnostic only. Control weight0 and challenger weight0.1 use max DCT
+mode3 per axis, DC excluded, signal floor0.1, first/final existing predictions.
+Both5000update fits retain identical seeds, sampling and learning-rate changes
+at3000/4500. Only the band-feedback weight differs scientifically. No new data,
+no optimizer resume, no model promotion, no untouched validation access. A
+one-update challenger qualification precedes both full fits.
+
+Version10 permits an explicit30–1800s trainer deadline; all historical policies
+keep their prior600s cap. This provides a bounded allowance for additional
+spectral reductions, not an increased update budget. All40 affected trainer
+tests pass in1.107s. Current Tuldok SDK owns checkpoint and field evidence;
+finite final-update clocks replace the one-update migration-only glue. Each
+API mutation retains dispatch intent before sending and never auto-replays.

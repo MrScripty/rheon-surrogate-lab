@@ -16,6 +16,22 @@ dimensions=portable.dimensions
 
 def experiment(value):
     require(type(value) is dict,'conditioning_configuration','object required')
+    if value.get('schema') == 'rheon-water-residual-experiment-v10':
+        spec=value.get('band_feedback')
+        require(type(spec) is dict and set(spec)=={'weight','max_mode','signal_floor_fraction','stages'},
+                'band_feedback','closed spatial feedback specification')
+        require(type(spec['weight']) in (int,float) and math.isfinite(spec['weight']) and 0<=spec['weight']<=1
+                and type(spec['max_mode']) is int and 1<=spec['max_mode']<=4
+                and type(spec['signal_floor_fraction']) in (int,float)
+                and math.isfinite(spec['signal_floor_fraction']) and 0<spec['signal_floor_fraction']<=1
+                and spec['stages']=='first-and-final','band_feedback','bounded mode, weight, floor and training stages')
+        resources=value.get('resources')
+        require(type(resources) is dict and type(resources.get('wall_seconds')) is int
+                and 30<=resources['wall_seconds']<=1800, 'resources', 'bounded spectral-training deadline')
+        experiment({**{k:v for k,v in value.items() if k!='band_feedback'},
+                    'schema':'rheon-water-residual-experiment-v9',
+                    'resources':{**resources,'wall_seconds':min(600,resources['wall_seconds'])}})
+        return decode(canonical(value))
     if value.get('schema') == 'rheon-water-residual-experiment-v9':
         weight = value.get('first_pressure_weight')
         require(type(weight) in (int, float) and math.isfinite(weight)
@@ -129,6 +145,8 @@ def experiment(value):
 
 
 def execution(config):
+    if config['schema'] == 'rheon-water-residual-experiment-v10':
+        return execution({**config, 'schema': 'rheon-water-residual-experiment-v9'})
     if config['schema'] == 'rheon-water-residual-experiment-v9':
         return execution({**config, 'schema': 'rheon-water-residual-experiment-v8'})
     if config['schema'] == 'rheon-water-residual-experiment-v8':

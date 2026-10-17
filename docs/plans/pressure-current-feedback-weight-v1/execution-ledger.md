@@ -48,3 +48,16 @@ in CSV. Spec and Standards reviews found no material issues. Actual reference
 self-comparison retained504rows with exact groups and zero false improvements.
 This is report calibration, not another checkpoint or measurement. See method.md
 for distinctions between independent pressure error, paired drift and timing.
+
+Both CUDA Runs completed and drained. First managed Study003finished after
+1922.802seconds with five exact numerical CPU artifact pairs,5,000updates and
+the expected50,000forwards/425703026cells. Its trainer took547.501seconds and
+fresh CPU restore trainer2.896seconds. Peak CUDA allocated870009344bytes
+(about830MiB). CPU fixture passed in9.443seconds and84row spatial diagnostic
+in4.663seconds; full74scene CPU campaign then started with16workers.
+
+Recorded a separate read-only handoff latency reproduction and counting replay
+while waiting for artifacts. One-byte read took33.214seconds with0.016745seconds
+client CPU; actual restore material reloaded one parent nine times through the
+production lineage authorization function. Cause/optimization remain unproven;
+see handoff-performance-preparation.md. No Tuldok/model changes or request replay.

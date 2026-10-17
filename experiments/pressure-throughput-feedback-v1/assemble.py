@@ -24,7 +24,7 @@ def write(path, value):
 
 
 def assemble(root, template, declarations, probe_path, tuldok, runtime, configuration, output, current_bank=None,
-             model_overlay=None):
+             model_overlay=None, gradient_diagnostic=None, diagnostic_updates=None):
     root, template, tuldok = [x.resolve(strict=True) for x in (root, template, tuldok)]
     runtime=runtime.resolve(strict=True)
     output = output.absolute()
@@ -60,6 +60,20 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         (output/'model.py').rename(output/'base_model.py')
         for name in ('model.py', 'coarse.py'):
             shutil.copyfile(overlay/name, output/name)
+    require((gradient_diagnostic is None) == (diagnostic_updates is None),
+            'diagnostic sources and explicit update cap must be selected together')
+    training_entry = 'evidence.py'
+    if gradient_diagnostic is not None:
+        diagnostic = gradient_diagnostic.resolve(strict=True)
+        names = {'gradient_screen.py', 'gradient-reference.json'}
+        require(diagnostic.is_dir() and {p.name for p in diagnostic.iterdir()} == names
+                and all(p.is_file() and not p.is_symlink() and p.stat().st_size <= 1024**2
+                        for p in diagnostic.iterdir())
+                and type(diagnostic_updates) is int and 1 <= diagnostic_updates <= 1500,
+                'bounded explicit gradient diagnostic sources and cap required')
+        for name in names:
+            shutil.copyfile(diagnostic/name, output/name)
+        training_entry = 'gradient_screen.py'
     shutil.copyfile(tuldok/'recipe_process.py',output/'custody-validator.py')
     witness['custody_validator_sha256']=digest(output/'custody-validator.py')
     shutil.copyfile(HERE/'training_diagnostic.py',output/'training_diagnostic.py')
@@ -109,7 +123,8 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         value['id']=namespace+':'+role
         if 'implementation' in value:
             value['implementation']['source']=prefix+Path(value['implementation']['source']).name
-        if role in ('trainer','evaluator'):value['implementation']['source']=prefix+'evidence.py'
+        if role in ('trainer','evaluator'):
+            value['implementation']['source']=prefix+(training_entry if role=='trainer' else 'evidence.py')
         for dep in value.get('requires',[]):dep['id']=old_ids.get(dep['id'],dep['id'])
     for role in ('reader','task','model','trainer','evaluator','view'):
         value=definitions[role]
@@ -143,6 +158,10 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
                 if arg.get('literal')=='--trained-checkpoint-001-npz':arg['literal']=f'--trained-checkpoint-{updates:03d}-npz'
                 if arg.get('input')=='trained_checkpoint_001_npz':arg['input']=f'trained_checkpoint_{updates:03d}_npz'
         else:
+            recipe['entrypoint'] = prefix + training_entry
+            if gradient_diagnostic is not None:
+                recipe['arguments'] += [{'literal':'--gradient-limit'}, {'literal':str(diagnostic_updates)},
+                    {'literal':'--gradient-reference'}, {'source':prefix+'gradient-reference.json'}]
             recipe.update(schema_version=3,format='external_model_evidence_recipe_v2',extension_selection={'selections':selections})
             recipe['inputs']['pressure_probe']={'max_bytes':1024*1024}
             recipe['arguments'] += [{'literal':'--pressure-probe'},{'input':'pressure_probe'},
@@ -169,6 +188,8 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
         'resources':{'wall_seconds':config['resources']['wall_seconds'],'source_bytes':8*1024**2,'output_bytes':config['resources']['max_output_bytes']},'contributions':refs}
     write(output/'provider.json',provider)
     project=copy.deepcopy(original_project);project.update(id=uuid.uuid4().hex,name=config['id'])
+    if gradient_diagnostic is not None:
+        project['name'] += ' gradient diagnostic (cap '+str(diagnostic_updates)+')'
     project['data'] += current_rows+[dict(id='runtime_manifest',label='Pumas runtime',path=runtime.relative_to(root).as_posix(),sha256=digest(runtime)),
         dict(id='pressure_probe',label='Consumed development probe',path=Path(probe['path']).relative_to(root).as_posix(),sha256=probe['sha256'])]
     project['recipes']=[dict(id=mode,label=mode,path=prefix+mode+'-recipe.json',sha256=digest(output/(mode+'-recipe.json'))) for mode in recipes]
@@ -182,7 +203,9 @@ def assemble(root, template, declarations, probe_path, tuldok, runtime, configur
     receipt=dict(format='rheon_pressure_training_assembly_v1',project=dict(id=project['id'],path=prefix+'project.json',sha256=digest(output/'project.json')),
         runtime_manifest_sha256=digest(runtime),configuration_sha256=digest(configuration),updates=updates,band_feedback=config['band_feedback'],
         model_specification=recipes['train']['model_evidence']['model_specification'],preprocessing_policy=bundle['preprocessing_policy'],output_policy=bundle['output_policy'],
-        limits=dict(attempt_slots=2,admitted_wall_seconds=2*config['resources']['wall_seconds'],retained_bytes=536870912,peak_staging_bytes=1073741824),
+        limits=dict(attempt_slots=1 if gradient_diagnostic is not None else 2,
+                    admitted_wall_seconds=2*config['resources']['wall_seconds'],
+                    retained_bytes=536870912,peak_staging_bytes=1073741824),
         sources=sources,template=str(template),optimizer_updates_executed=0,model_promotion=False)
     write(output/'assembly.json',receipt);return receipt
 
@@ -192,7 +215,9 @@ def main():
     for name in ('root','template','declarations','probe','tuldok','runtime','configuration','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--current-bank',type=Path)
     p.add_argument('--model-overlay',type=Path)
-    a=p.parse_args();r=assemble(a.root,a.template,a.declarations,a.probe,a.tuldok,a.runtime,a.configuration,a.output,a.current_bank,a.model_overlay)
+    p.add_argument('--gradient-diagnostic',type=Path)
+    p.add_argument('--diagnostic-updates',type=int)
+    a=p.parse_args();r=assemble(a.root,a.template,a.declarations,a.probe,a.tuldok,a.runtime,a.configuration,a.output,a.current_bank,a.model_overlay,a.gradient_diagnostic,a.diagnostic_updates)
     print(json.dumps({'project':r['project'],'updates':r['updates']}))
 
 if __name__=='__main__':main()

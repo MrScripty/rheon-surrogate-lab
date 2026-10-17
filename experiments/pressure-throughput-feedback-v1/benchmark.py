@@ -84,6 +84,21 @@ def worker(args):
     started = time.perf_counter()
     scene = dict(config['scenes'][args.scene])
     scene['steps'] = min(scene['steps'], scene['warmup_steps'] + config['ai_steps'])
+    if config.get('qualify_full_episode'):
+        import episode
+        sys.argv=[sys.argv[0],'--root',config['root'],'--bindings',config['bindings'],'--binary',config['binary'],
+            '--manifest',config['manifest'],'--output',str(args.output),'--scene',str(args.scene)]
+        episode.main()
+        result=read(args.output/'episode.json')
+        assert result['status']=='passed'
+        frames=[json.loads(line) for line in (args.output/'native/frames.jsonl').read_text().splitlines()]
+        callbacks=[json.loads(line) for line in (args.output/'native/callbacks.jsonl').read_text().splitlines()]
+        write(args.output/'receipt.json',{'scene':args.scene,'signature':numerical_signature(args.output/'native/frames.jsonl'),
+            'network_calls':[row['network_passes'] for row in callbacks],'metrics':result['metrics'],'sparse':result['sparse'],
+            'steps':len(frames),'ai_steps':len(callbacks),'elapsed_seconds':time.perf_counter()-started,
+            'peak_rss_bytes':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,'native_reaped':True,
+            'cuda_initialized':False,'cpu_affinity':sorted(os.sched_getaffinity(0))})
+        return
     result = rollout.run(Path(config['binary']), scene, args.output / 'native',
         adapter_manifest=Path(config['manifest']), timeout=120, threads=1)
     assert result['status'] == 'completed' and result['native_process']['reaped']
@@ -104,7 +119,8 @@ def worker(args):
 def benchmark(args):
     config = read(args.config)
     args.output.mkdir(parents=True, exist_ok=False)
-    cpus = sorted(os.sched_getaffinity(0))[2:]
+    cpus = [cpu for cpu in sorted(os.sched_getaffinity(0))[config.get('reserved_cpu_count',2):]
+            if cpu not in config.get('exclude_cpus',[])]
     assert args.workers <= len(cpus) and args.workers * config['worker_memory_bytes'] + config['reserve_bytes'] <= available()
     assert len(config['scene_indices']) >= args.workers
     runtime = read(config['runtime_manifest'])
@@ -143,7 +159,7 @@ def benchmark(args):
                 with lock:
                     live[child.pid] = child
                 while child.poll() is None:
-                    if stop.is_set() or time.perf_counter() - started > 240:
+                    if stop.is_set() or time.perf_counter() - started > config.get('worker_timeout_seconds',240):
                         raise TimeoutError('CPU benchmark cancelled or timed out')
                     time.sleep(.05)
                 if child.returncode:

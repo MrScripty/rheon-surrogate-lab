@@ -7,6 +7,7 @@ not synthesized; no tracer or velocity animation is claimed.
 import argparse
 import fcntl
 from pathlib import Path
+import re
 import signal
 import sys
 from threading import Event
@@ -16,7 +17,7 @@ sys.path.insert(0,str(HERE.parent/'dependency-migration-v1'))
 from live_migration import observer_type, read_json, preview_from_receipt
 
 
-def once(root, work, observer):
+def once(root, work, observer, study_names=('control','lowband')):
     paths=list(work.glob('*regression-*/case-*/episode.json'))
     if len(paths)>256:raise ValueError('observation exceeds finite development scope')
     records=[];unreadable=0
@@ -28,7 +29,7 @@ def once(root, work, observer):
     passed=[row for row in records if row[1]['status']=='passed']
     failed=len(records)-len(passed)
     studies=[]
-    for name in ('control','lowband'):
+    for name in study_names:
         attempts=[p for p in work.glob(name+'-study-*') if (p/'intent.json').is_file()]
         if len(attempts)>8:raise ValueError('too many finite study attempts')
         study=max(attempts,key=lambda p:(p/'intent.json').stat().st_mtime_ns) if attempts else work/(name+'-study-01')
@@ -55,7 +56,11 @@ def once(root, work, observer):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('root','work','output'):p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--study',action='append',help='Bounded local Study label; repeat for matched candidates')
     p.add_argument('--once',action='store_true');a=p.parse_args()
+    studies=a.study or ['control','lowband']
+    if not 1<=len(studies)<=8 or len(set(studies))!=len(studies) or any(not re.fullmatch('[a-z][a-z0-9-]{0,39}',s)for s in studies):
+        raise ValueError('one to eight unique simple Study labels required')
     root=a.root.resolve(strict=True);work=a.work.resolve(strict=True);output=a.output.resolve()
     if not work.is_relative_to(root) or not output.is_relative_to(root):raise ValueError('root-contained observation required')
     output.mkdir(parents=True,exist_ok=True)
@@ -65,7 +70,7 @@ def main():
         signal.signal(signal.SIGTERM,lambda *_:stop.set());signal.signal(signal.SIGINT,lambda *_:stop.set())
         observer=observer_type()(output)
         while not stop.is_set():
-            try:once(root,work,observer)
+            try:once(root,work,observer,studies)
             except (OSError,ValueError,KeyError,TypeError):
                 observer.publish('Observation unavailable','External source preview could not refresh; no result inferred.',state='failed')
             if a.once:break

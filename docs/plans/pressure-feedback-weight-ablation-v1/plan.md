@@ -1,0 +1,58 @@
+# Smaller pressure-feedback weights
+
+Status: Active. Operation: start. User authority: “continue with the next proposal”,
+referring to weights0.01and0.03 in the completed preceding results. Canonical
+plan: docs/plans/pressure-feedback-weight-ablation-v1/plan.md. Owner/integration
+owner: root. Branch experiment/pressure-feedback-weight-ablation-20261017, based
+on a4ae4e9cdff97f8b0e0f37472677dc96c8915dc1. Private local experiment branch
+retained for review/subsequent integration; no merge, rewrite or cleanup.
+
+Objective: measure whether smaller low-frequency feedback weights preserve the
+call improvements without the rejected0.1candidate's worst-pressure regressions.
+Reuse the established trainer, current catalog and lifecycle owners. The matched
+control and0.1candidate remain immutable historical evidence; control evidence
+reuse is explicitly labelled and hash-bound, not another execution.
+
+Current slice S1: freeze two5000-update CUDA Studies with weights0.01/0.03,
+identical actual initialization/input/normalization/runtime/sample order, schedule
+and scientific source. Change only feedback weight scientifically. CUDA training,
+fresh CPU restores, float32network, cubic spacing, sealed water physics,15native
+warm-up,32maximum network calls and physical/stopping gates remain fixed.
+The existing model-only1800s CUDA deadline and CPU600s deadline remain unchanged.
+No runtime prototype, network architecture or new training data is admitted.
+
+S2 depends on S1 artifacts: package each fresh CPU result; qualify one frame
+before its full74development episodes. One bounded16-worker one-thread CPU pool
+may overlap the other CUDA fit, excluding desktop/GPU/restore cores,2GiBaccounting
+reservation per worker plus8GiBavailable reserve. Do not run two16-worker pools.
+Classify/reap infrastructure failures and halt rather than treating them as model
+failures. Retain physical rejections explicitly.
+
+S3 depends on complete campaigns: fixed-call manufactured diagnostics and
+per-population gates against reference-current, prior accurate late model and
+harder-data control. A candidate must meet every unchanged accuracy and mean/max
+call criterion in all three populations before eligibility. Freeze an eligible
+package before consuming the unused eight whole scenes once; otherwise leave
+those scenes untouched. No automatic promotion. Serial CPU timing follows broad
+qualification drainage, same consumed grids and exact repeated physics/calls.
+
+Acceptance is completion and honest measurement, not guaranteed improvement.
+Claims: frozen matched materials (artifact/hash evidence); actual CUDA5000updates
+and fresh CPU parity (current catalog, environment-qualified); first-frame and
+all74trajectories/oracles with child drainage (CPU executable evidence); unchanged
+population decision/conditional holdout disposition (independent analysis);
+recorded clocks/memory/failures and original Project/Rheon source observation.
+All pending. Current phase: S1.
+
+Write set: this plan directory; two new config files in the existing experiment;
+existing observer only to select the two actual Study labels. Reuse all other
+experiment owners; adjust generic reporting only if measurement requires it.
+Raw artifacts live under runs/pressure-feedback-weight-ablation-v1, outside Git.
+No weights, datasets, credentials, previous plans/results, Tuldok/Rheon source
+or unrelated root changes are included.
+
+Standards MCP snapshot:v1:2e64b09d-e0ad-4f7f-a02f-0b0a61be561e. Independent
+standards/spec review covers the bounded source/configuration and result changes.
+Replan on altered scientific/custody semantics, runtime mismatch, insufficient
+resources, uncertain mutations or invalid control equivalence; never auto-replay
+admission or resume an unknown execution. Retain branches/checkout and catalog.

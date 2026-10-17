@@ -66,3 +66,34 @@ worst normalized pressure ratio across populations using each population's best
 retained comparator, then maxcalls, meancalls, lowerweight. Only one frozen eligible
 package may consume the eight unused scenes; no automatic promotion or retuning
 after holdout. No candidate result influenced this preregistration.
+
+
+Timing scope clarification: the approximately87s initial preflight includes
+OwnerHTTP session/context/capability negotiation plus Run listing. Those phases
+were not separately instrumented, so it does not establish Run listing as the
+slow operation. The earlier wording is superseded by this composite scope.
+Existing mutation journals independently measure preparation/approval/admission
+calls; variable observed costs are retained without assigning a root cause.
+
+
+## First actual matched fit and CPU gate
+
+Weight001CUDA5000updates and fresh CPU restore completed, exact five-artifact
+parity. Training Run a7f26e3d6f2d42d297ebf80d23e09e4c; restore
+ae3dc266d76147aea4fbd120b28a7502. Actual initial checkpoint, inputs, normalization,
+runtime and sample order match retained control. Optimizer393.834021091s,
+trainer397.646057983s, complete Study command1160.339704758s, CUDApeak837691904B.
+Weights8503d99bd96e9c8f935c08d8e6a649a73e64c394777453dd8ec26aff929844b9.
+
+First frame passed after15nativewarmup,6calls,pairedpressure5.4151900768e-7.
+Episode8.526s / outercommand9.116s. Full74CPU campaign then started; source
+closure frozen. Fixed-call manufactured diagnosis4.256s command, retained84rows.
+No population accuracy conclusion yet.
+
+Added reusable compare_training.py --root --reference --candidate LABEL=Study
+--output to verify actual matched execution evidence. Historical replay checks
+reporting only, not a repeated training run. Spec review found ambient cwd paths;
+fixed required explicit artifact root, root containment and regression. Actual
+ROOT/LAB invocations now generate byte-exact same report; old helper/report are
+archived under the artifact root. Both independent reviews closed P2; zero
+remaining findings for this report slice. See reports/report-verification.json.

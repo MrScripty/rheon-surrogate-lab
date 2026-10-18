@@ -58,3 +58,18 @@ After the required screens finish, run `collect.py --directory <study-docs>`,
 `pressure-low-mode-tail-v1/view.py --directory <study-docs>`. Keep all per-arm
 immutable results alongside the aggregate. Browser receipts verify scalar bindings,
 controls, report discovery and owned browser reaping.
+
+C66 restore acknowledgement recovery used the existing
+`pressure-four-pass-distillation-v1/recover.py` with the frozen shape config,
+assembly, original study output and exact completed Run
+`0b8f06c8e62d4dd481c6b5c2183c2b5b`. It verified the current owner API before
+reconciling the retained unresolved journal. No mutation was replayed. While its
+collector was still reading training artifacts, `seed_restore.py --study <study>
+--output <fresh-receipt>` reused eight exact published restore hashes from already
+verified collected training bytes. The original collector then rechecked all
+whole hashes and sizes. The completed recovery process was reaped (session 89346,
+return code zero). `shape-recovered-execution.json` adopts that completed read-only
+collection for CPU checks while retaining the original failed controller receipt.
+Managed elapsed time begins at the original intent, including timeout/recovery.
+The original measured API profile covers only the first attempt; recovery receipt
+and download verifications cover collection afterward.

@@ -15,7 +15,7 @@ from common import environment,read,sha,write
 from cpu import material
 
 
-def evaluate(config_path,projects,controller_path,output):
+def evaluate(config_path,projects,controller_path,output, *, fitted_script=None):
     config=read(config_path)
     controller=read(controller_path)
     if controller['status']!='completed' or not controller['owned_controller_reaped']:
@@ -61,7 +61,7 @@ def evaluate(config_path,projects,controller_path,output):
             print('Isolated snapshots complete',identifier,flush=True)
         parallel=[]
         for identifier,cpu in zip(['C53',candidate],cpus):
-            parallel.append(start([HERE/'fitted.py','--config',config_path,'--material',frozen,'--model',identifier,
+            parallel.append(start([fitted_script or HERE/'fitted.py','--config',config_path,'--material',frozen,'--model',identifier,
                 '--cpu',cpu,'--output',output/(identifier+'-fitted.json')],identifier+'-fitted'))
         parallel.append(start([ROOT/'experiments/pressure-low-mode-tail-v1/diagnose.py','--config',output/'diagnostic-config.json',
             '--model',candidate,'--cpu',cpus[-1],'--output',output/(candidate+'-diagnosis.json')],candidate+'-diagnosis'))

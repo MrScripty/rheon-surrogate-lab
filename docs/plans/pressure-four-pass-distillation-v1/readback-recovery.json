@@ -1,0 +1,272 @@
+{
+  "status": "passed",
+  "incident": "Teacher restore completed and drained, but original submission HTTP acknowledgement timed out at 300 seconds. Exact existing request reconciled through current owner API; no remote mutation or retraining during recovery.",
+  "recovery": {
+    "status": "completed",
+    "elapsed_s": 650.8592137130036,
+    "remote_mutations": 0,
+    "retraining_updates": 0,
+    "restore_run_id": "9849b84200b340679c84a9d937bdb492",
+    "original_journal_sha256": "7aa334156ef7b747b50b3c4d6485197febdcf3ca61a318b20954f660f94fb201",
+    "completed_study_receipt_sha256": "78a3fe853c02fa903d6e65af6cdb018c7e32d1d29b740ee4c5e15a26f2083a20"
+  },
+  "current_owner_confirmation": {
+    "id": "9849b84200b340679c84a9d937bdb492",
+    "request_key": "band-6d2cc8965c0c84246b0b1217-restore",
+    "dataset_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "actor_id": "4388490927c34e83a9dbe9598504df99",
+    "graph_revision": 1,
+    "material_sha256": "c3dcbf421f31181df311b84318d1841344c055992d034405ab16ad55a841c7ee",
+    "approval_id": "e05acc4366184ce59f83036bf299a00c",
+    "state": "completed",
+    "custody_phase": "drained"
+  },
+  "original_unresolved_journal_sha256": "7aa334156ef7b747b50b3c4d6485197febdcf3ca61a318b20954f660f94fb201",
+  "readback_proof_sha256": "f894c6422450c841de98296cf0af185e66e215cfab1575185110d8e21d3802a9",
+  "verified_studies": [
+    {
+      "arm": "two-pass-control",
+      "source": "runs/pressure-four-pass-distillation-v1/two-pass-control-study-01/receipt.json",
+      "sha256": "f8f63f40821f273d6c7fad476cea1c0c668248ae6cd3f9bbf2a2db8b756f69c1",
+      "training_run_id": "d7fe5ebc0fdf47b6b53eeb8442c4902e",
+      "restore_run_id": "1d6afc137a5b46909688484521d29b5f",
+      "artifact_parity": {
+        "checkpoint-1500.npz": true,
+        "history.json": true,
+        "normalization.json": true,
+        "predictions.npz": true,
+        "weights.npz": true
+      },
+      "optimizer_updates": 1500,
+      "restore_optimizer_updates": 0,
+      "cuda_initialized_on_restore": false
+    },
+    {
+      "arm": "four-pass-physics",
+      "source": "runs/pressure-four-pass-distillation-v1/four-pass-physics-study-01/receipt.json",
+      "sha256": "6fef190e70b6c1d5c448f0a4da4d141b848976ac9784b643727554b78c02df14",
+      "training_run_id": "474749c5b43c481f941b7d022d0e7a55",
+      "restore_run_id": "27a85aea6bea49ffa166bcabce8e0aa3",
+      "artifact_parity": {
+        "checkpoint-1500.npz": true,
+        "history.json": true,
+        "normalization.json": true,
+        "predictions.npz": true,
+        "weights.npz": true
+      },
+      "optimizer_updates": 1500,
+      "restore_optimizer_updates": 0,
+      "cuda_initialized_on_restore": false
+    },
+    {
+      "arm": "four-pass-teacher",
+      "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/receipt.json",
+      "sha256": "78a3fe853c02fa903d6e65af6cdb018c7e32d1d29b740ee4c5e15a26f2083a20",
+      "training_run_id": "1f751fab85a2472f8879493ff017022f",
+      "restore_run_id": "9849b84200b340679c84a9d937bdb492",
+      "artifact_parity": {
+        "checkpoint-1500.npz": true,
+        "history.json": true,
+        "normalization.json": true,
+        "predictions.npz": true,
+        "weights.npz": true
+      },
+      "optimizer_updates": 1500,
+      "restore_optimizer_updates": 0,
+      "cuda_initialized_on_restore": false
+    }
+  ],
+  "verified_byte_reuse": [
+    {
+      "source": "runs/pressure-four-pass-distillation-v1/verified-readback-reuse-01.json",
+      "sha256": "029e1b534c396cf15e3155ec8b876dc3d37a88a66cdff33c9a129f9020959255",
+      "receipt": {
+        "status": "partial_completed",
+        "successful_cache_copies": {
+          "two-pass-control": 4,
+          "four-pass-physics": 6
+        },
+        "teacher_not_touched": "No matching active recovery controller; operation refused before any teacher edit",
+        "controller_pause_s_less_than": 0.03,
+        "all_paused_controllers_resumed": true,
+        "rows": [
+          {
+            "arm": "two-pass-control",
+            "currently_verified_identical_files": [
+              {
+                "name": "checkpoint-1500.npz",
+                "sha256": "03a17a98dde94fd9be10e4a616431d92b2aeb2b3805b6881cefccce3418798cc",
+                "bytes": 1485452
+              },
+              {
+                "name": "checkpoint-000.npz",
+                "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+                "bytes": 1485452
+              },
+              {
+                "name": "weights.npz",
+                "sha256": "03a17a98dde94fd9be10e4a616431d92b2aeb2b3805b6881cefccce3418798cc",
+                "bytes": 1485452
+              },
+              {
+                "name": "history.json",
+                "sha256": "a842cdd4673c4adfd417a1b747b563bc0e40c0c753c5868988f1fa145bd6af66",
+                "bytes": 209245
+              },
+              {
+                "name": "splits.json",
+                "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                "bytes": 256361
+              },
+              {
+                "name": "normalization.json",
+                "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "bytes": 6752
+              }
+            ]
+          },
+          {
+            "arm": "four-pass-physics",
+            "currently_verified_identical_files": [
+              {
+                "name": "checkpoint-000.npz",
+                "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+                "bytes": 1485452
+              },
+              {
+                "name": "predictions.npz",
+                "sha256": "809d12ee05fad09c5e04f75e3eccd9a4c28ab0d189054bc956024beef627b91b",
+                "bytes": 129230
+              },
+              {
+                "name": "weights.npz",
+                "sha256": "be22b1b31f95c0182cb5506439199a5d5478e11771c021476bfffc7435da861e",
+                "bytes": 1485452
+              },
+              {
+                "name": "history.json",
+                "sha256": "3a7416a76571e7952fa6b1f48700286a83ec0ad1145a59057789fee115fef112",
+                "bytes": 209243
+              },
+              {
+                "name": "splits.json",
+                "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                "bytes": 256361
+              },
+              {
+                "name": "normalization.json",
+                "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "bytes": 6752
+              }
+            ]
+          },
+          {
+            "arm": "four-pass-teacher",
+            "currently_verified_identical_files": []
+          }
+        ],
+        "scope": "Exact downloaded training bytes reused under matching published CPU restore size/hash. Potentially in-flight destination skipped. No remote mutation or private Run read."
+      }
+    },
+    {
+      "source": "runs/pressure-four-pass-distillation-v1/verified-readback-reuse-02.json",
+      "sha256": "29350a7a68975c79e9f500b56d241287fa4a4bc317354ff92005c87e4ca42c4d",
+      "receipt": {
+        "status": "passed",
+        "arm": "four-pass-teacher",
+        "controller_pid": 1178859,
+        "controller_resumed": true,
+        "elapsed_s": 0.028022237005643547,
+        "restore_run_id": "9849b84200b340679c84a9d937bdb492",
+        "public_restore_terminal_sha256": "af6618ab7dacae8a0f7e42f3d748a4d48d93fb2c1d90ecddc049e01a18f5b2b3",
+        "skipped_possibly_inflight": "checkpoint-1500.npz",
+        "reused": [
+          {
+            "name": "checkpoint-000.npz",
+            "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+            "bytes": 1485452,
+            "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/train/checkpoint-000.npz",
+            "target": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/checkpoint-000.npz"
+          },
+          {
+            "name": "predictions.npz",
+            "sha256": "a02fe6320cda6c654c2311f4e1e01bce44ea1975dabe37b552abb5740dff1fb6",
+            "bytes": 129230,
+            "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/train/predictions.npz",
+            "target": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/predictions.npz"
+          },
+          {
+            "name": "weights.npz",
+            "sha256": "d40af11df9418c19ddf99d706ec8045e7952529e8e8b898cfe6b812abd1e9c33",
+            "bytes": 1485452,
+            "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/train/weights.npz",
+            "target": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/weights.npz"
+          },
+          {
+            "name": "history.json",
+            "sha256": "ef239a2378bdce3d3e5cfc5cc36aed1b089bb1e33ce4221445bb0a0bcf57e619",
+            "bytes": 209237,
+            "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/train/history.json",
+            "target": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/history.json"
+          }
+        ],
+        "scope": "Already owner-downloaded bytes reused only under exact published restore SHA256 and byte size. No remote mutation, private Run read or altered restore-specific receipt."
+      }
+    },
+    {
+      "source": "runs/pressure-four-pass-distillation-v1/verified-readback-reuse-03.json",
+      "sha256": "897bc140ee878f6a80770c62adae283edbed99b6f12bf18f6b93cd8a1ab42f45",
+      "receipt": {
+        "status": "passed",
+        "arm": "four-pass-teacher",
+        "pid": 1178859,
+        "reused": [
+          {
+            "name": "splits.json",
+            "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+            "bytes": 256361,
+            "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/train/splits.json",
+            "destination": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/splits.json"
+          },
+          {
+            "name": "normalization.json",
+            "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+            "bytes": 6752,
+            "source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/train/normalization.json",
+            "destination": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/normalization.json"
+          }
+        ],
+        "restore_run_id": "9849b84200b340679c84a9d937bdb492",
+        "terminal_sha256": "af6618ab7dacae8a0f7e42f3d748a4d48d93fb2c1d90ecddc049e01a18f5b2b3",
+        "remote_mutations": 0,
+        "scope": "Only previously owner-downloaded train bytes, under matching public CPU restore size and whole SHA256; no restore-specific receipt substitution",
+        "skipped_possibly_inflight": "checkpoint-1500.npz",
+        "controller_resumed": true,
+        "elapsed_s": 0.011651045992039144,
+        "executed_source_sha256": "11abbe218d718c8a64ca5ac68dfb3e4d6cf9c38fddf232038515a1ab8e63436d"
+      }
+    },
+    {
+      "source": "runs/pressure-four-pass-distillation-v1/verified-readback-reuse-04.json",
+      "sha256": "3cdaeee16d71a7b047b4f8637fafd6881d676c30c87d0051d4c09ae522d6a614",
+      "receipt": {
+        "status": "passed",
+        "arm": "four-pass-physics",
+        "pid": 1164524,
+        "reused": [],
+        "executed_source_sha256": "30180ba18b39f8dfe3b0fb8cc29b16df2ad5b01f64fbcd54de72834437eb9b96",
+        "restore_run_id": "27a85aea6bea49ffa166bcabce8e0aa3",
+        "terminal_sha256": "9b1e7e158390ecb708030367176ee02768b5e8027c9184487b6d2222b6ff305a",
+        "remote_mutations": 0,
+        "scope": "Only previously owner-downloaded train bytes, under matching public CPU restore size and whole SHA256; no restore-specific receipt substitution",
+        "skipped_possibly_inflight": "receipt.json",
+        "controller_resumed": true,
+        "elapsed_s": 0.00018118199659511447
+      }
+    }
+  ],
+  "sources": {
+    "experiments/pressure-four-pass-distillation-v1/recover.py": "8aeabdbfb175f0988f325336c5330759fd4f3dad8e70815c2be41a3a06a8dc29",
+    "experiments/pressure-four-pass-distillation-v1/reuse.py": "30180ba18b39f8dfe3b0fb8cc29b16df2ad5b01f64fbcd54de72834437eb9b96"
+  }
+}

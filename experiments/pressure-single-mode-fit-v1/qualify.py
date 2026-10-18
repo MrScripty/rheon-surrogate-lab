@@ -12,7 +12,10 @@ from qualify import qualify
 
 def check(project, output):
     started = time.perf_counter()
-    qualify(project, output)
+    base_output=output.with_suffix('.base.json')
+    if output.exists() or base_output.exists():
+        raise ValueError('Fresh composite qualification required')
+    qualify(project, base_output)
     import torch
     import model
     import data
@@ -45,7 +48,7 @@ def check(project, output):
     trace = fine_tuning.STATS['single_case']['trace'][0]
     assert [r['passes'] for r in trace['measurements']] == [1,2,4,8]
     assert not torch.cuda.is_initialized()
-    result = read(output)
+    result = read(base_output)
     result.update(single_case=dict(shape_zyx=list(sample['base'].shape[2:]),cell_size_m=float(sample['cell_size_m']),
         amplitude_rms_pa=fine_tuning.STATS['single_case']['amplitude_rms_pa'],
         independent_operator_defect=defect,finite_nonzero_gradient=True,no_teacher_loss=True,

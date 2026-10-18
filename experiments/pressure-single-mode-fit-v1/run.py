@@ -22,6 +22,10 @@ def run(args):
     arm = config['arms'][0]
     if len(config['arms']) != 1:
         raise ValueError('Exactly one qualified arm per controller')
+    qualification=read(args.qualification)
+    required='single_case'if arm['id']=='single-mode-fit'else'matched_control'
+    if qualification['status']!='passed' or required not in qualification:
+        raise ValueError('Complete arm-specific qualification required before any admission')
     study = args.output.parent/(arm['id']+'-study-01')
     if study.exists():
         raise ValueError('Fresh managed study required; inspect existing custody before resubmission')

@@ -19,6 +19,9 @@ def owner():
 
 def selected(config,arm):
     settings=owner().selected(config,arm)
+    if arm['id']=='joint-later-decay':
+        settings['baseline_material']=config['control_projects']+'/combined-fundamentals-cpu-01/material.json'
+        settings['baselines']=['C53','C64']
     phases=config['lr_phases']
     if sum(p['exposures']for p in phases)!=config['exposures_per_case']or any(type(p['exposures'])is not int or p['exposures']<=0 or not 0<p['learning_rate']<=1e-3 for p in phases):
         raise ValueError('Positive bounded LR phases with exact per-case exposure required')

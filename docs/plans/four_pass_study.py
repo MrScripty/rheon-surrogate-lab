@@ -32,6 +32,8 @@ def four_pass_link(text, base):
         block = block.replace(end, '<p class="note"><a href="pressure-single-mode-fit-v1/index.html">Fundamental fit and frequency curriculum: C62/C63</a> — learning curve, matched spectral exposure, restored CPU accuracy/time and retained results.</p>\n' + end)
     if (Path(base) / 'pressure-fundamental-bank-fit-v1/index.html').is_file():
         block = block.replace(end, '<p class="note"><a href="pressure-fundamental-bank-fit-v1/index.html">Shared fundamental fitting capacity</a> — per-grid/axis capacity, learning curves, CPU regression accuracy and retained time/memory.</p>\n' + end)
+    if (Path(base) / 'pressure-shape-decay-v1/index.html').is_file():
+        block = block.replace(end, '<p class="note"><a href="pressure-shape-decay-v1/index.html">Later-decay fitting comparison: C67 and conditional C68</a> — matched learning curves, shape-gradient relationships, restored CPU accuracy and time/memory.</p>\n' + end)
     if start in text or end in text:
         if text.count(start) != 1 or text.count(end) != 1:
             raise ValueError('Ambiguous study link region')

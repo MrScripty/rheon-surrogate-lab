@@ -9,8 +9,8 @@ snapshot: `snapshot:v1:ffcfc3f8-b52a-434e-b57f-d259a0355711`.
 Objective: measure per-shape loss-gradient relationships and test whether delaying
 learning-rate decay improves shared four-pass fitting. C53 remains deployed.
 Scientific success is distinct from accepting a correctly executed experiment.
-Current acceptance: pending gradient measurements, qualified CUDA training,
-fresh CPU restore and numerical checks. Blockers: none.
+Current acceptance: gradient measurements and C67 qualification passed; CUDA
+execution, fresh CPU restore and numerical checks are pending. Blockers: none.
 
 Binding design: same captured C66 model, normalization, cubic-grid physics,
 float32 parameters, float64 physical residual/reconstruction, four shared training
@@ -57,7 +57,7 @@ and operator owners. New owners are experiment settings/conditional admission,
 CPU gradient measurement, comparison evidence and its offline visualization.
 No service, persistence schema, deployment or physical/model contract changes.
 
-Milestones: gradient diagnosis (Active); C67 qualified comparison (Planned);
+Milestones: gradient diagnosis (Completed); C67 qualified comparison (Active);
 conditional C68 (Planned, gated); evidence/report closure (Planned). Replan if
 control identity cannot be reproduced, labels/operator disagree, CUDA/restore
 custody is unresolved, nonfinite values occur, or resource caps cannot be met.
@@ -78,5 +78,6 @@ no automatic synchronization; retire after integration or explicit disposition.
 No worktree is created. Keep method, timings, immutable results and source identities
 for review. Ledger: `execution-ledger.md`; issues: `issues.md`; evidence: `reports/`.
 
-Current phase: gradient diagnosis. Exactly one next slice: implement and run the
-two CPU gradient measurements, then qualify the matched C67 project.
+Current phase: C67 matched execution. Exactly one next slice: complete its managed
+CUDA training and fresh CPU restore, evaluate fitting/regression results, and
+apply the declared C68 gate.

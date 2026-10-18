@@ -1,0 +1,110 @@
+{
+  "status": "completed",
+  "elapsed_s": 32.58448098198278,
+  "rows": [
+    {
+      "label": "C53-snapshots",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+        "snapshots",
+        "--material",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/material.json",
+        "--id",
+        "C53",
+        "--cpu",
+        "23",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C53"
+      ],
+      "returncode": 0,
+      "elapsed_s": 11.841241023998009,
+      "reaped": true
+    },
+    {
+      "label": "C69-snapshots",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+        "snapshots",
+        "--material",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/material.json",
+        "--id",
+        "C69",
+        "--cpu",
+        "23",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C69"
+      ],
+      "returncode": 0,
+      "elapsed_s": 11.842877315997612,
+      "reaped": true
+    },
+    {
+      "label": "C53-fitted",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-fundamental-bank-fit-v1/fitted.py",
+        "--config",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-experiment.json",
+        "--material",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/material.json",
+        "--model",
+        "C53",
+        "--cpu",
+        "21",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C53-fitted.json"
+      ],
+      "returncode": 0,
+      "elapsed_s": 2.8220213610038627,
+      "reaped": true
+    },
+    {
+      "label": "C69-fitted",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-fundamental-bank-fit-v1/fitted.py",
+        "--config",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-experiment.json",
+        "--material",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/material.json",
+        "--model",
+        "C69",
+        "--cpu",
+        "22",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C69-fitted.json"
+      ],
+      "returncode": 0,
+      "elapsed_s": 2.8201054240053054,
+      "reaped": true
+    },
+    {
+      "label": "C69-diagnosis",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-low-mode-tail-v1/diagnose.py",
+        "--config",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/diagnostic-config.json",
+        "--model",
+        "C69",
+        "--cpu",
+        "23",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C69-diagnosis.json"
+      ],
+      "returncode": 0,
+      "elapsed_s": 8.896843153983355,
+      "reaped": true
+    }
+  ],
+  "available_host_bytes_before": 52396961792,
+  "all_owned_children_reaped": true,
+  "timing_policy": "128-case timings serial, one CPU thread/core; then three independent one-core diagnosis workers.",
+  "environment": {
+    "PYTHONPATH": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages",
+    "CUDA_VISIBLE_DEVICES": "",
+    "TULDOK_TORCH_DEVICE": "cpu",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "RAYON_NUM_THREADS": "1"
+  },
+  "source_sha256": "85867636a4dc264e956c9151e86db6a5856aefb178565992221132d7f3754746"
+}

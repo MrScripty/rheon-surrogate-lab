@@ -7,7 +7,7 @@ import re
 def reserved_four_pass_ids(base):
     experiments = Path(base).resolve().parents[1] / 'experiments'
     reserved = set()
-    for study in ['pressure-low-mode-tail-v1', 'pressure-single-mode-fit-v1', 'pressure-fundamental-bank-fit-v1', 'pressure-shape-decay-v1']:
+    for study in ['pressure-low-mode-tail-v1', 'pressure-single-mode-fit-v1', 'pressure-fundamental-bank-fit-v1', 'pressure-shape-decay-v1', 'pressure-balanced-shapes-v1']:
         config = experiments / study / 'config.json'
         if config.is_file():
             reserved.update(row['model_id'] for row in json.loads(config.read_text())['arms'])
@@ -36,6 +36,8 @@ def four_pass_link(text, base):
         block = block.replace(end, '<p class="note"><a href="pressure-shape-decay-v1/index.html">Later-decay fitting comparison: C67 and conditional C68</a> — matched learning curves, shape-gradient relationships, restored CPU accuracy and time/memory.</p>\n' + end)
     if (Path(base) / 'pressure-loss-components-v1/index.html').is_file():
         block = block.replace(end, '<p class="note"><a href="pressure-loss-components-v1/index.html">Loss-component diagnosis: C53/C66/C67</a> — final/early shape-gradient alignment, precision limitations and retained methods/timings.</p>\n' + end)
+    if (Path(base) / 'pressure-balanced-shapes-v1/index.html').is_file():
+        block = block.replace(end, '<p class="note"><a href="pressure-balanced-shapes-v1/index.html">Balanced shape aggregation: C69</a> — matched example work, distinct Adam-update counts, CPU fitting/regression accuracy and retained time/memory.</p>\n' + end)
     if start in text or end in text:
         if text.count(start) != 1 or text.count(end) != 1:
             raise ValueError('Ambiguous study link region')

@@ -1,6 +1,6 @@
 # Balanced shape aggregation
 
-Status: Active — CUDA screen and CPU restore. Canonical operation: Jeremy resumed model
+Status: Complete — execution qualified; scientific gate failed. Canonical operation: Jeremy resumed model
 improvement after the completed Tuldok performance repair, admitting the bounded
 proposal in pressure-loss-components-v1/next-steps.md. Keep C53 deployed.
 
@@ -70,4 +70,7 @@ snapshot:v1:ffcfc3f8-b52a-434e-b57f-d259a0355711. Ledger: execution-ledger.md;
 findings: issues.md; receipts: reports/. Scientific outcome is distinct from
 correct execution/recording. CPU qualification passed: literal averaging/clipping oracle, exact case/order identity,
 relative mean-gradient error 8.62e-8 and Adam parameter max error 3.73e-9.
-Next slice: one journaled CUDA Run, fresh CPU restore and fitting/regression gate.
+CUDA/CPU restore and scalar/browser verification passed. C69 failed the full
+fitting gate; no 24-case run, longer training or promotion was admitted.
+No next execution slice remains under this plan. A separate CPU diagnostic
+proposal is recorded in next-steps.md.

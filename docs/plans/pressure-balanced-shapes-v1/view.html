@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Balanced shape training — C69</title>
+<style>
+:root{color-scheme:dark}body{font:16px system-ui;margin:0;background:#101820;color:#e7eff6}main{max-width:1200px;margin:auto;padding:24px}a{color:#8bcfff}h2{margin-top:32px}p{line-height:1.6}label{display:inline-block;margin:10px 20px 10px 0}select{font:inherit;padding:6px;background:#203341;color:inherit}svg{width:100%;display:block;background:#16232d;border-radius:8px}svg text{fill:#cfdeeb;font:13px system-ui}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:9px;border-bottom:1px solid #345;white-space:nowrap;text-align:right}th:first-child,td:first-child{text-align:left}.note{color:#b9cbd8}.identity{overflow-wrap:anywhere}#decision{border-left:4px solid #fbb967;background:#213543;padding:16px}circle:focus{outline:2px solid white}#detail{min-height:2em}
+</style>
+<main>
+<p><a href="../cohort-progress.html">← Cohort progress</a> · <a href="plan.md">Method</a> · <a href="execution-ledger.md">Execution ledger</a> · <a href="comparison/results.json">Retained measurements</a></p>
+<h1>Does averaging across shapes improve pressure fitting?</h1>
+<p class="note">C69 averages eight shape gradients, clips once and takes one Adam step per balanced cycle. C66 updates after each example. Both see the same 1,600 examples and 6,400 network forwards, starting from C53 with the same loss, case order and exposure-based learning rates. C69 takes 200 optimizer steps; C66 takes 1,600. This changes Adam's moment dynamics as well as aggregation. C53 remains deployed.</p>
+<p id="decision"></p>
+<label>Case <select id="case"></select></label>
+<label>Passes <select id="passes"><option>1</option><option>2</option><option selected>4</option><option>8</option></select></label>
+<h2>Learning by exposure</h2>
+<p class="note">CUDA observations every ten exposures per case. Curves compare the same example work, rather than equating optimizer updates. The dashed target is 1e-6; restored CPU measurements determine the fitting gate.</p>
+<svg id="learning" viewBox="0 0 960 350" role="img" aria-label="Equation residual by exposure per case"></svg>
+<p id="detail" aria-live="polite"></p>
+<h2>Every fitted grid shape</h2>
+<p class="note">Mean-free pressure equation residual on the eight X-fundamental training cases. Cells remain cubic at each recorded spacing. Every shape must pass at four and eight network passes, with no one/two-pass regression against C53.</p>
+<div class="scroll"><table id="cases"><thead><tr><th>Grid X × Y × Z</th><th>Cells/metre</th><th>C53</th><th>C66 (retained)</th><th>C69</th><th>C69 / C66</th></tr></thead><tbody></tbody></table></div>
+<div class="scroll"><table id="fitted"><thead><tr><th>Model</th><th>Passes</th><th>Passing / 8</th><th>Worst residual</th><th>Median residual</th></tr></thead><tbody></tbody></table></div>
+<h2>Real requests: accuracy versus CPU inference time</h2>
+<p class="note">Same 128 consumed real requests, fixed-input pressure solves; these are not accumulated rollout drift. C53 and C69 timings are isolated between checkpoints on one CPU thread, three repetitions. Retained C66 timing comes from a previous CPU phase and does not establish a matched speed comparison.</p>
+<svg id="accuracy" viewBox="0 0 960 350" role="img" aria-label="Worst residual versus CPU milliseconds"></svg>
+<div class="scroll"><table id="regression"><thead><tr><th>Model</th><th>Passes</th><th>Real passing / 128</th><th>Real worst</th><th>Median CPU ms</th><th>Manufactured passing / 240</th><th>Manufactured worst</th></tr></thead><tbody></tbody></table></div>
+<h2>Work, time and memory</h2>
+<div class="scroll"><table id="training"><thead><tr><th>Model</th><th>Examples</th><th>Adam updates</th><th>CUDA trainer s</th><th>Managed workflow s</th><th>CPU phase s</th><th>Peak CUDA MiB</th><th>Peak host MiB</th></tr></thead><tbody></tbody></table></div>
+<p class="note">Workflow time includes preparation, admission, publication, download and fresh CPU restore. Trainer time includes its initialization and diagnostics. C66 timings are historical context. No deployment or solver-speed claim follows from this screen; no untouched holdouts were consumed.</p>
+<div id="identity" class="identity"></div>
+</main>
+<script id="study-data" type="application/json">__STUDY_DATA__</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('study-data').textContent);
+const $=id=>document.getElementById(id), ns='http://www.w3.org/2000/svg';
+const colors=['#83d3ff','#ffbd69','#afeead'], training=data.training[0];
+const fitted={C53:data.fitted.C53,C66:data.control.fitted,C69:data.fitted.C69};
+const fmt=n=>n.toExponential(3);
+function rows(id,values){
+ const body=$(id).querySelector('tbody');body.replaceChildren();
+ for(const valuesRow of values){const tr=document.createElement('tr');for(const value of valuesRow){const td=document.createElement('td');td.textContent=value;tr.append(td)}body.append(tr)}
+}
+function svgElement(tag,attrs,text,parent){
+ const node=document.createElementNS(ns,tag);for(const[key,value]of Object.entries(attrs))node.setAttribute(key,value);
+ if(text!==undefined)node.textContent=text;if(parent)parent.append(node);return node;
+}
+function plot(id,series,xlabel){
+ const svg=$(id);svg.replaceChildren();const values=series.flatMap(s=>s.points);
+ const xmax=Math.max(1,...values.map(p=>p.x))*1.04;
+ const ymin=Math.floor(Math.log10(Math.max(1e-14,Math.min(1e-6,...values.map(p=>p.y)))));
+ const ymax=Math.ceil(Math.log10(Math.max(1e-5,...values.map(p=>p.y))));
+ const X=x=>80+845*x/xmax,Y=y=>292-245*(Math.log10(Math.max(y,1e-14))-ymin)/(ymax-ymin);
+ for(let n=ymin;n<=ymax;n++){
+  svgElement('line',{x1:80,x2:925,y1:Y(10**n),y2:Y(10**n),stroke:n===-6?'#ffbd69':'#345','stroke-dasharray':n===-6?'6 4':'none'},undefined,svg);
+  svgElement('text',{x:8,y:Y(10**n)+4},'1e'+n,svg);
+ }
+ for(let n=0;n<=4;n++)svgElement('text',{x:X(xmax*n/4),y:316,'text-anchor':'middle'},(xmax*n/4).toFixed(1),svg);
+ svgElement('text',{x:500,y:343,'text-anchor':'middle'},xlabel,svg);
+ series.forEach((s,i)=>{
+  const color=colors[i%colors.length];svgElement('text',{x:100+i*240,y:22,fill:color},s.name,svg);
+  svgElement('polyline',{points:s.points.map(p=>[X(p.x),Y(p.y)].join(',')).join(' '),fill:'none',stroke:color,'stroke-width':2},undefined,svg);
+  for(const p of s.points){const dot=svgElement('circle',{cx:X(p.x),cy:Y(p.y),r:4,fill:color,tabindex:0},undefined,svg);const description=s.name+': '+p.label;
+   svgElement('title',{},description,dot);dot.addEventListener('focus',()=>$('detail').textContent=description);dot.addEventListener('mouseenter',()=>$('detail').textContent=description);
+  }
+ });
+}
+function render(){
+ const n=+$('passes').value,c=+$('case').value;
+ plot('learning',[data.control.training,training].map(t=>({name:t.id,points:t.fundamental_bank.trace.map(row=>{
+  const value=row.measurements.find(v=>v.case===c&&v.passes===n).relative_equation_residual;
+  return{x:row.exposures_per_case,y:value,label:row.exposures_per_case+' exposures, '+fmt(value)};
+ })})),'Exposures per case');
+ rows('cases',training.fundamental_bank.cases.map((cell,i)=>{
+  const values=['C53','C66','C69'].map(model=>fitted[model].measurements.find(row=>row.case===i&&row.passes===n).relative_equation_residual);
+  return[cell.counts_xyz.join(' × '),cell.cells_per_metre,...values.map(fmt),(values[2]/values[1]).toFixed(3)];
+ }));
+}
+for(const[cell,index]of training.fundamental_bank.cases.map((v,i)=>[v,i]))$('case').add(new Option(cell.counts_xyz.join('×')+' @ '+cell.cells_per_metre+'/m',index));
+$('case').addEventListener('change',render);$('passes').addEventListener('change',render);
+$('decision').textContent='C69 '+(data.decision.capacity_gate_passed?'passes':'fails')+' the full fitting gate. '+data.decision.next_action;
+rows('fitted',Object.entries(fitted).flatMap(([model,m])=>m.summary.map(row=>[model,row.passes,row.equation_passes+'/8',fmt(row.worst_equation_residual),fmt(row.median_equation_residual)])));
+const snapshots={C53:data.snapshots.C53,C69:data.snapshots.C69};
+plot('accuracy',Object.entries(snapshots).map(([model,m])=>({name:model,points:m.summary.map(row=>({x:row.median_inference_ms,y:row.worst_equation_residual,label:row.passes+' passes, '+row.median_inference_ms.toFixed(3)+' ms, '+fmt(row.worst_equation_residual)}))})),'Median CPU inference time (ms)');
+const summaries={C53:data.snapshots.C53.summary,C66:data.control.real_summary,C69:data.snapshots.C69.summary};
+rows('regression',Object.entries(summaries).flatMap(([model,values])=>values.map(row=>{
+ const source=model==='C66'?data.control.manufactured_summary:data.diagnostics[model].summary;
+ const group=source.filter(v=>v.passes===row.passes);
+ return[model,row.passes,row.equation_passes+'/128',fmt(row.worst_equation_residual),row.median_inference_ms.toFixed(3),group.reduce((sum,v)=>sum+v.qualified,0)+'/240',fmt(Math.max(...group.map(v=>v.worst_relative_residual)))];
+})));
+rows('training',[data.control.training,training].map(t=>[t.id,t.examples??t.fundamental_bank.optimizer_examples,t.updates,t.trainer_elapsed_s.toFixed(2),t.managed_workflow_elapsed_s.toFixed(2),t.id==='C69'?data.cpu_execution.elapsed_s.toFixed(2):'retained',(t.peak_cuda_allocated_bytes/2**20).toFixed(2),(t.peak_host_rss_bytes/2**20).toFixed(2)]));
+$('identity').textContent='C69 weights SHA-256: '+training.weights_sha256;
+render();
+</script></html>

@@ -1,0 +1,161 @@
+{
+  "schema": "rheon-low-mode-tail-study-v1",
+  "baseline_material": "runs/pressure-low-mode-tail-v1/cpu-01/material.json",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "source_lab": "runs/dependency-migration-v1/lab",
+  "baselines": [
+    "C53",
+    "C59"
+  ],
+  "train_initialization": "C53",
+  "updates": 1500,
+  "learning_rate": 1e-05,
+  "schedule": [
+    {
+      "update": 1000,
+      "learning_rate": 1e-06
+    },
+    {
+      "update": 1350,
+      "learning_rate": 1e-07
+    }
+  ],
+  "training_seed": 20261019,
+  "sampling_seed": 2026101901,
+  "target_relative_residual": 1e-06,
+  "arms": [
+    {
+      "id": "balanced-control",
+      "model_id": "C60",
+      "steps": 4,
+      "teacher_weight": 0.1,
+      "low_mode_weight": 0.0
+    },
+    {
+      "id": "low-mode-tail",
+      "model_id": "C61",
+      "steps": 4,
+      "teacher_weight": 0.1,
+      "low_mode_weight": 0.1
+    }
+  ],
+  "early_feedback_weight": 0.05,
+  "teacher_passes": 8,
+  "teacher_cache_bytes": 268435456,
+  "wall_seconds": 1800,
+  "validation_passes": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "diagnostic_amplitude_multipliers": [
+    0.0001,
+    0.01,
+    1.0,
+    100.0,
+    -1.0
+  ],
+  "diagnostic_modes_zyx": [
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      3,
+      2,
+      1
+    ],
+    [
+      4,
+      4,
+      4
+    ]
+  ],
+  "hard_bank": {
+    "seed": 2026101907,
+    "patterns": 32,
+    "grids": [
+      {
+        "counts_xyz": [
+          13,
+          15,
+          16
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          9,
+          11,
+          11
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          15,
+          9,
+          7
+        ],
+        "cells_per_metre": 8
+      },
+      {
+        "counts_xyz": [
+          11,
+          5,
+          15
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          7,
+          16,
+          5
+        ],
+        "cells_per_metre": 8
+      },
+      {
+        "counts_xyz": [
+          11,
+          12,
+          7
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          5,
+          13,
+          9
+        ],
+        "cells_per_metre": 8
+      },
+      {
+        "counts_xyz": [
+          16,
+          7,
+          11
+        ],
+        "cells_per_metre": 16
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "rheon-low-mode-tail-selection-v1",
+  "frozen_at_utc": "2026-10-18T03:04:37.837333+00:00",
+  "stage": "After CUDA completion, before isolated candidate CPU pass-sweep evaluation and client download of candidate pressure artifacts",
+  "baseline": "C53",
+  "candidates": [
+    "C60",
+    "C61"
+  ],
+  "relative_equation_target": 1e-06,
+  "population": "Same 128 consumed real snapshot identities; 240 manufactured cases reported separately",
+  "gates": [
+    "All 128 real requests qualify at four passes",
+    "All 128 real requests qualify at eight passes",
+    "Worst real residual at one and two passes does not exceed C53",
+    "Worst four-pass real residual does not exceed C53",
+    "Manufactured eight-pass qualified count is not below C53"
+  ],
+  "tie_break": [
+    "lowest four-pass worst residual",
+    "lowest median CPU inference time"
+  ],
+  "no_promotion": true,
+  "untouched_holdout_access_before_eligibility": false,
+  "configuration_sha256": "07f6eb6ff350cfe546c1a210c1f2d62b455cf6abc15555bed4b65dd2122e3109",
+  "scope_clarification": "The trainer already performs its own CPU/GPU output comparison; the independent pass sweep has not run."
+}

@@ -1,0 +1,1843 @@
+{
+  "schema": "rheon-pressure-pass-sweep-v1",
+  "root": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+  "config": {
+    "schema": "rheon-pressure-pass-sweep-v1",
+    "chart": "docs/plans/cohort-progress.html",
+    "source_lab": "runs/dependency-migration-v1/lab",
+    "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+    "validation_inputs": "runs/water-early-pressure-v1/control/project/inputs",
+    "reference_adapter": "runs/dependency-migration-v1/packages/control-runtime-current/manifest.json",
+    "binary": "runs/dependency-migration-v1/probe-build-current-03/rheon-residual-rollout",
+    "top_count": 10,
+    "passes": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "timing_repetitions": 3,
+    "maximum_workers": 21,
+    "reserve_memory_bytes": 12884901888,
+    "worker_memory_bytes": 1610612736,
+    "native_timeout_seconds": 900,
+    "worker_timeout_seconds": 3600,
+    "scene": {
+      "seed": 20261031,
+      "counts": [
+        16,
+        16,
+        16
+      ],
+      "cells_per_metre": 16,
+      "steps": 512,
+      "warmup_steps": 15,
+      "center": [
+        0.4,
+        0.55,
+        0.6
+      ],
+      "acceleration": 0.125,
+      "radius": 0.25,
+      "swirl": 0.7,
+      "fluctuation": 0.4,
+      "frequency": 1.2,
+      "sgs": false
+    },
+    "warmup_each_case": true
+  },
+  "models": [
+    {
+      "id": "C53",
+      "name": "current-late",
+      "weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+      "tags": [
+        "accurate"
+      ],
+      "original_worst_error": 0.0039000618319955205,
+      "original_inference_median_ms": 6.510952502139844,
+      "project": "runs/pressure-current-policy-v1/current-late-project-02",
+      "restore": "runs/pressure-current-policy-v1/current-late-study-03/restore",
+      "identities": {
+        "runs/pressure-current-policy-v1/current-late-project-02/source-witness.json": "21563712e1c732db4c88d0cb8bf3f6ad38110cb3f09f5f504c7c824ac2860f4f",
+        "runs/pressure-current-policy-v1/current-late-project-02/config.json": "bef61dd83d15ef2a0d6f011e3546b175943a67cd8995d1fc6e2a20129292378f",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/weights.npz": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/normalization.json": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/receipt.json": "27817abfd1b7beb4acae4a16d56152f3cf529d4ddba0d3ad21a4a0364a3fce1e",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/history.json": "a15b0428ec00093951da776e78374b89ee5fe4408336e69d38fbb66a6d02a596"
+      }
+    },
+    {
+      "id": "C59",
+      "name": "four-pass-teacher",
+      "project": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01",
+      "restore": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore",
+      "weights_sha256": "d40af11df9418c19ddf99d706ec8045e7952529e8e8b898cfe6b812abd1e9c33",
+      "tags": [
+        "four-pass-study"
+      ],
+      "identities": {
+        "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/config.json": "bbe4e8e8ebf31fd2cf6cc3a854f693e3328e5429cdb3175eb46f36d655a5e917",
+        "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/source-witness.json": "18535eae3a0a57fdb9ccac2e654c608ccfabf6b984eadee1d529413c642d7ead",
+        "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/weights.npz": "d40af11df9418c19ddf99d706ec8045e7952529e8e8b898cfe6b812abd1e9c33",
+        "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/normalization.json": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/receipt.json": "509d4c91ac41326623c6946800f5cae5c3cef1ed293b043a2aad1895c642de60",
+        "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/restore/history.json": "ef239a2378bdce3d3e5cfc5cc36aed1b089bb1e33ce4221445bb0a0bcf57e619"
+      },
+      "training_receipt_source": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-study-01/receipt.json",
+      "training_receipt_sha256": "78a3fe853c02fa903d6e65af6cdb018c7e32d1d29b740ee4c5e15a26f2083a20"
+    },
+    {
+      "id": "C60",
+      "name": "balanced-control",
+      "project": "runs/pressure-low-mode-tail-v1/balanced-control-project-01",
+      "restore": "runs/pressure-low-mode-tail-v1/balanced-control-study-01/restore",
+      "weights_sha256": "c8b72ef97d5c97dfdc4146ad0a37f757da947a2470e0612d1af6081a94c6f8e0",
+      "tags": [
+        "rheon-low-mode-tail-study-v1"
+      ],
+      "identities": {
+        "runs/pressure-low-mode-tail-v1/balanced-control-project-01/config.json": "c374bcbfdd9d13e3e2589895f12db3473537154fedba5cd26138bbc74e35a5f8",
+        "runs/pressure-low-mode-tail-v1/balanced-control-project-01/source-witness.json": "9c164ccc6246af361af647148bfdaae588b5ec67e28c4bd673d332ef83085a52",
+        "runs/pressure-low-mode-tail-v1/balanced-control-study-01/restore/weights.npz": "c8b72ef97d5c97dfdc4146ad0a37f757da947a2470e0612d1af6081a94c6f8e0",
+        "runs/pressure-low-mode-tail-v1/balanced-control-study-01/restore/normalization.json": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "runs/pressure-low-mode-tail-v1/balanced-control-study-01/restore/receipt.json": "f8629df1c5043adeb73f4fe02c33e20af00fddf4786e94363244673c3f31297d",
+        "runs/pressure-low-mode-tail-v1/balanced-control-study-01/restore/history.json": "ee0807dce9ab651602d6644ae5502b300ded1b8dae970949232da7ebfa7d633d"
+      },
+      "training_receipt_source": "runs/pressure-low-mode-tail-v1/balanced-control-study-01/receipt.json",
+      "training_receipt_sha256": "8c16eb5c890957419c509bcfdad1cd9fb63ad3b4b6a26784b85e87000600cdbd"
+    },
+    {
+      "id": "C61",
+      "name": "low-mode-tail",
+      "project": "runs/pressure-low-mode-tail-v1/low-mode-tail-project-01",
+      "restore": "runs/pressure-low-mode-tail-v1/low-mode-tail-study-01/restore",
+      "weights_sha256": "15f41da2dced4398b46b22301cb4a4b778a92cb0f44599a2c283fbc98ab45934",
+      "tags": [
+        "rheon-low-mode-tail-study-v1"
+      ],
+      "identities": {
+        "runs/pressure-low-mode-tail-v1/low-mode-tail-project-01/config.json": "01897b56181e03d4a7b0e2b5820212ddeb9c75522b3db3cb0ae32eacd2ea4905",
+        "runs/pressure-low-mode-tail-v1/low-mode-tail-project-01/source-witness.json": "5e4d37095e7f08faaf625894101df48b0d1b93ebf5a10b09b0555d4478a165df",
+        "runs/pressure-low-mode-tail-v1/low-mode-tail-study-01/restore/weights.npz": "15f41da2dced4398b46b22301cb4a4b778a92cb0f44599a2c283fbc98ab45934",
+        "runs/pressure-low-mode-tail-v1/low-mode-tail-study-01/restore/normalization.json": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "runs/pressure-low-mode-tail-v1/low-mode-tail-study-01/restore/receipt.json": "a1540059ce47d1c17b06cc8a03b66226e9eaa4c2b480a33c16252ecc288eb6eb",
+        "runs/pressure-low-mode-tail-v1/low-mode-tail-study-01/restore/history.json": "d2367b76063f0d43ccaa57fe1820836a74999a62e4d6bc1cdec6648f3c922d41"
+      },
+      "training_receipt_source": "runs/pressure-low-mode-tail-v1/low-mode-tail-study-01/receipt.json",
+      "training_receipt_sha256": "18097fe086d0047088c57dd2fa9b199a42ae2e29675cdd750115ee198dd76000"
+    }
+  ],
+  "chart_sha256": "3ee5bb692f00c79aa2b5c53108c74a5381c51d9dd1f5c62dfc6ad39cc8f09eaa",
+  "config_sha256": "e69457293de91b265dbedbaac8af771b847e8e69de53d4ffb5d4f50d33f38b5e",
+  "binary_sha256": "277676e6620c88b9e3123e51ec05515204f4af171bf9000d0dc7d313ec341807",
+  "support": {
+    "support": {
+      "cells": "cubic",
+      "counts_max": [
+        128,
+        128,
+        128
+      ],
+      "counts_min": [
+        5,
+        5,
+        5
+      ],
+      "density_kg_m3": 1000.0,
+      "dt_s": 0.016666666666666666,
+      "dynamic_viscosity_pa_s": 0.001,
+      "max_cells": 65536,
+      "origin": "zero",
+      "spacing_max_m": 1.0,
+      "spacing_min_m": 0.0078125
+    },
+    "context": {
+      "minimum_native_steps": 15,
+      "prior_pressure": "required"
+    },
+    "inputs": {
+      "base": "previous_pressure",
+      "dt": "dt",
+      "residual": "initial_residual",
+      "rho": "density"
+    },
+    "output": {
+      "dtype": "f64",
+      "gauge": "cell_zero",
+      "layout": "x_fast",
+      "role": "full_pressure"
+    }
+  },
+  "validation_identities": [
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 0,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0000"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 0,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0000"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        16,
+        10,
+        6
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 1,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0001"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        16,
+        10,
+        6
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 1,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0001"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        15,
+        10
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 2,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0002"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        15,
+        10
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 2,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0002"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        16,
+        6,
+        12
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 3,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0003"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        16,
+        6,
+        12
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 3,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0003"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        13,
+        12,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 4,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0004"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        13,
+        12,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 4,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0004"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        16,
+        9
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 5,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0005"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        16,
+        9
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 5,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0005"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        7,
+        8,
+        6
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 6,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0006"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        7,
+        8,
+        6
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 6,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0006"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        7,
+        12,
+        14
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 7,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0007"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        7,
+        12,
+        14
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 7,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0007"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        9,
+        16,
+        9
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 8,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0008"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        9,
+        16,
+        9
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 8,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0008"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        8,
+        15,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 9,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0009"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        8,
+        15,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 9,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0009"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        14,
+        7
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 10,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0010"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        14,
+        7
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 10,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0010"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        8,
+        16,
+        13
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 11,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0011"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        8,
+        16,
+        13
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 11,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0011"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        11,
+        12,
+        16
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 12,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0012"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        11,
+        12,
+        16
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 12,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0012"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        16,
+        14,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 13,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0013"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        16,
+        14,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 13,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0013"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        12,
+        10,
+        6
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 14,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0014"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        12,
+        10,
+        6
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 14,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0014"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        15,
+        5,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 15,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0015"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        15,
+        5,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 15,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0015"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        8,
+        12,
+        10
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 16,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0016"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        8,
+        12,
+        10
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 16,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0016"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        12,
+        13,
+        7
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 17,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0017"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        12,
+        13,
+        7
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 17,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0017"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        11,
+        12
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 18,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0018"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        11,
+        12
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 18,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0018"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        5,
+        15
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 19,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0019"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        5,
+        15
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 19,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0019"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        9,
+        7
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 20,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0020"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        9,
+        7
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 20,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0020"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        10,
+        5,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 21,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0021"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        10,
+        5,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 21,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0021"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        16,
+        6,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 22,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0022"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        16,
+        6,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 22,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0022"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        9,
+        15,
+        10
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 23,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0023"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        9,
+        15,
+        10
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 23,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0023"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        7,
+        16,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 24,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0024"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        7,
+        16,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 24,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0024"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        9,
+        11,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 25,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0025"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        9,
+        11,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 25,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0025"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        6,
+        12,
+        7
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 26,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0026"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        6,
+        12,
+        7
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 26,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0026"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        10,
+        7,
+        15
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 27,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0027"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        10,
+        7,
+        15
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 27,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0027"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        13,
+        10,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 28,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0028"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        13,
+        10,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 28,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0028"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        14,
+        6,
+        6
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 29,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0029"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        14,
+        6,
+        6
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 29,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0029"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        9,
+        6,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 30,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0030"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        9,
+        6,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 30,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0030"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        14,
+        6,
+        16
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 31,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0031"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        14,
+        6,
+        16
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 31,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0031"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        6,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 32,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0032"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        6,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 32,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0032"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        14,
+        14
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 33,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0033"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        14,
+        14
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 33,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0033"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        5,
+        13
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 34,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0034"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        5,
+        13
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 34,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0034"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        16,
+        6
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 35,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0035"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        16,
+        6
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 35,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0035"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        6,
+        14
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 36,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0036"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        6,
+        14
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 36,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0036"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        8,
+        16,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 37,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0037"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        8,
+        16,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 37,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0037"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        11,
+        15,
+        14
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 38,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0038"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        11,
+        15,
+        14
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 38,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0038"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        10,
+        12,
+        12
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 39,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0039"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        10,
+        12,
+        12
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 39,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0039"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        8,
+        12
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 40,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0040"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        10,
+        8,
+        12
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 40,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0040"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        16,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 41,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0041"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        16,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 41,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0041"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        8,
+        15,
+        10
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 42,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0042"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        8,
+        15,
+        10
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 42,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0042"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        7,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 43,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0043"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        7,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 43,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0043"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        13,
+        9
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 44,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0044"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        13,
+        9
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 44,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0044"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        8,
+        16
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 45,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0045"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        5,
+        8,
+        16
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 45,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0045"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        9,
+        6,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 46,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0046"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        9,
+        6,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 46,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0046"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        9,
+        7,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 47,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0047"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        9,
+        7,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 47,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0047"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        6,
+        7,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 48,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0048"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        6,
+        7,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 48,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0048"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        6,
+        10,
+        16
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 49,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0049"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        6,
+        10,
+        16
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 49,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0049"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        5,
+        6,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 50,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0050"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        5,
+        6,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 50,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0050"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        7,
+        9,
+        13
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 51,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0051"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        7,
+        9,
+        13
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 51,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0051"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        7,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 52,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0052"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        7,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 52,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0052"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        14,
+        9,
+        11
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 53,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0053"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        14,
+        9,
+        11
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 53,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0053"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        12,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 54,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0054"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        15,
+        12,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 54,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0054"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        16,
+        5
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 55,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0055"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        16,
+        5
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 55,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0055"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        7,
+        14
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 56,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0056"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        7,
+        14
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 56,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0056"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        13,
+        15,
+        16
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 57,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0057"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        13,
+        15,
+        16
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 57,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0057"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        5,
+        12
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 58,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0058"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        14,
+        5,
+        12
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 58,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0058"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        6,
+        8
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 59,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0059"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        6,
+        8
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 59,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0059"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        5,
+        6,
+        15
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 60,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0060"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        5,
+        6,
+        15
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 60,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0060"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        12,
+        7
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 61,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0061"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        11,
+        12,
+        7
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 61,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0061"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        11,
+        8,
+        9
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 62,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0062"
+    },
+    {
+      "cell_size_m": 0.125,
+      "counts_xyz": [
+        11,
+        8,
+        9
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 62,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0062"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        7,
+        8,
+        9
+      ],
+      "frame": 0,
+      "native_frame": 15,
+      "parent": 63,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0063"
+    },
+    {
+      "cell_size_m": 0.0625,
+      "counts_xyz": [
+        7,
+        8,
+        9
+      ],
+      "frame": 1,
+      "native_frame": 63,
+      "parent": 63,
+      "split": "validation",
+      "trajectory_id": "baseline--water-validation-0063"
+    }
+  ],
+  "validation_sources": {
+    "validation_dataset.npz": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+    "validation_dataset_extra.npz": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+    "validation_splits.json": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5"
+  }
+}

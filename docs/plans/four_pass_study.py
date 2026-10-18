@@ -5,13 +5,15 @@ import re
 
 
 def reserved_four_pass_ids(base):
+    tail = Path(base).resolve().parents[1] / 'experiments/pressure-low-mode-tail-v1/config.json'
+    reserved = {row['model_id'] for row in json.loads(tail.read_text())['arms']} if tail.is_file() else set()
     result = Path(base) / 'pressure-four-pass-distillation-v1/results.json'
     if not result.is_file():
-        return set()
+        return reserved
     data = json.loads(result.read_text())
     if data['schema'] != 'rheon-four-pass-results-v1' or data['status'] != 'completed':
         raise ValueError('Completed study required for its model identifiers')
-    return {row['id'] for row in data['training']}
+    return {row['id'] for row in data['training']} | reserved
 
 
 def four_pass_link(text, base):
@@ -20,6 +22,8 @@ def four_pass_link(text, base):
         return text
     start, end = '<!-- BEGIN FOUR PASS STUDY -->', '<!-- END FOUR PASS STUDY -->'
     block = start + '\n<p class="note"><a href="pressure-four-pass-distillation-v1/index.html">New: matched four-pass CUDA training study</a> — C53/C55 baselines, C57–C59 fine-tunes, CPU accuracy per pass, fresh-simulation drift, timing and retained methods.</p>\n' + end + '\n'
+    if (Path(base) / 'pressure-low-mode-tail-v1/index.html').is_file():
+        block = block.replace(end, '<p class="note"><a href="pressure-low-mode-tail-v1/index.html">Small-grid low-mode training screen: C60/C61</a> — matched CUDA training, CPU accuracy/time, mode/amplitude diagnostics and retained results.</p>\n' + end)
     if start in text or end in text:
         if text.count(start) != 1 or text.count(end) != 1:
             raise ValueError('Ambiguous study link region')

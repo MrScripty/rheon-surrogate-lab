@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "command": [
+    "python3",
+    "experiments/pressure-four-pass-distillation-v1/campaign.py",
+    "--config",
+    "experiments/pressure-four-pass-distillation-v1/config.json",
+    "--material",
+    "runs/pressure-four-pass-distillation-v1/baseline-material.json",
+    "--scenes",
+    "runs/pressure-four-pass-distillation-v1/fresh-scenes",
+    "--output",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/lifecycle-cancel-01"
+  ],
+  "elapsed_s": 2.1150441050122026,
+  "exit_code": 1,
+  "observed_owned_descendants": 4,
+  "alive_after_drain": [],
+  "all_owned_children_reaped": true,
+  "scope": "SIGTERM during three concurrent native-control episodes. Campaign owns/reaps episode children; native owner receipts independently verify all three native children reaped, with all recorded PIDs absent afterward.",
+  "native_children": [
+    {
+      "process": {
+        "pid": 8,
+        "returncode": -15,
+        "reaped": true,
+        "terminated": true
+      },
+      "alive_after_drain": false,
+      "receipt_sha256": "84b1aa582ff703b2770a1e60518c00244a6f1eb2df48c712889d539447ed7fab"
+    },
+    {
+      "process": {
+        "pid": 10,
+        "returncode": -15,
+        "reaped": true,
+        "terminated": true
+      },
+      "alive_after_drain": false,
+      "receipt_sha256": "6f816c20721e6d92b4372b1f0de8e2ad4534762ac2f4596c4a039a1cadbe25c1"
+    },
+    {
+      "process": {
+        "pid": 9,
+        "returncode": -15,
+        "reaped": true,
+        "terminated": true
+      },
+      "alive_after_drain": false,
+      "receipt_sha256": "449e51091def8fb740502e30df2a1f24f5ec389be66b81c9c74cd8e2f73142f4"
+    }
+  ]
+}

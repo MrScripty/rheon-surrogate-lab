@@ -1,0 +1,333 @@
+{
+  "status": "passed",
+  "baselines": [
+    {
+      "model": "C53",
+      "matched_error_values": 512,
+      "all_equation_errors_exactly_reproduced": true,
+      "source": "runs/pressure-four-pass-distillation-v1/baseline-cpu/C53/snapshots.json",
+      "sha256": "9055d7f7d42c75c14c2d954c4226e9cb1bf90e3eb62a6cec0f6934c82fc33fb0",
+      "previous_source": "runs/pressure-pass-sweep-v1/cpu-01/C53/snapshots.json",
+      "previous_sha256": "fd535759dd86a21371f0e5b8b762e4353dd458ba2a767d1b391ef36087f8a185",
+      "cuda_initialized": false,
+      "elapsed_s": 13.629098302015336,
+      "peak_rss_bytes": 742010880,
+      "summary": [
+        {
+          "passes": 1,
+          "cases": 128,
+          "equation_passes": 0,
+          "worst_equation_residual": 0.02873744482213389,
+          "median_equation_residual": 0.007085365250678358,
+          "median_inference_ms": 3.668926496175118,
+          "worst_same_request_pressure_rms_pa": 3.4987562545753828
+        },
+        {
+          "passes": 2,
+          "cases": 128,
+          "equation_passes": 0,
+          "worst_equation_residual": 0.0039000618319955205,
+          "median_equation_residual": 0.0005864625908128575,
+          "median_inference_ms": 7.0929334906395525,
+          "worst_same_request_pressure_rms_pa": 0.5164312908072185
+        },
+        {
+          "passes": 4,
+          "cases": 128,
+          "equation_passes": 7,
+          "worst_equation_residual": 9.785532661535126e-05,
+          "median_equation_residual": 9.679902078321546e-06,
+          "median_inference_ms": 13.962917000753805,
+          "worst_same_request_pressure_rms_pa": 0.013962263531225694
+        },
+        {
+          "passes": 8,
+          "cases": 128,
+          "equation_passes": 128,
+          "worst_equation_residual": 1.4522193519231677e-07,
+          "median_equation_residual": 4.730647629799917e-09,
+          "median_inference_ms": 27.738120988942683,
+          "worst_same_request_pressure_rms_pa": 1.8946021642570224e-05
+        }
+      ]
+    },
+    {
+      "model": "C55",
+      "matched_error_values": 512,
+      "all_equation_errors_exactly_reproduced": true,
+      "source": "runs/pressure-four-pass-distillation-v1/baseline-cpu/C55/snapshots.json",
+      "sha256": "f52ea2e68e037970e30f8b8e3d7c8cd2d11140325f5a856fd0e56539fabce4aa",
+      "previous_source": "runs/pressure-pass-sweep-v1/cpu-01/C55/snapshots.json",
+      "previous_sha256": "a418439408b7bae5be73b727036bbb92cc2379058c60cb34c68c21da7c192399",
+      "cuda_initialized": false,
+      "elapsed_s": 13.63913693401264,
+      "peak_rss_bytes": 745922560,
+      "summary": [
+        {
+          "passes": 1,
+          "cases": 128,
+          "equation_passes": 0,
+          "worst_equation_residual": 0.02879583962782569,
+          "median_equation_residual": 0.006450458302458827,
+          "median_inference_ms": 3.659785012132488,
+          "worst_same_request_pressure_rms_pa": 2.1074839662534446
+        },
+        {
+          "passes": 2,
+          "cases": 128,
+          "equation_passes": 0,
+          "worst_equation_residual": 0.004078717282660423,
+          "median_equation_residual": 0.0005284179004672779,
+          "median_inference_ms": 7.089423495926894,
+          "worst_same_request_pressure_rms_pa": 0.7433991805975918
+        },
+        {
+          "passes": 4,
+          "cases": 128,
+          "equation_passes": 5,
+          "worst_equation_residual": 0.0001566036441181134,
+          "median_equation_residual": 1.0777094899984677e-05,
+          "median_inference_ms": 13.988384467666037,
+          "worst_same_request_pressure_rms_pa": 0.027713757204473156
+        },
+        {
+          "passes": 8,
+          "cases": 128,
+          "equation_passes": 128,
+          "worst_equation_residual": 5.863962626392319e-07,
+          "median_equation_residual": 6.546265204520687e-09,
+          "median_inference_ms": 27.714955489500426,
+          "worst_same_request_pressure_rms_pa": 4.304454466545227e-05
+        }
+      ]
+    }
+  ],
+  "baseline_execution": {
+    "status": "passed",
+    "elapsed_s": 14.299397353024688,
+    "concurrent_with_managed_training": true,
+    "children": [
+      {
+        "model": "C53",
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+          "snapshots",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--id",
+          "C53",
+          "--cpu",
+          "22",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-cpu/C53"
+        ],
+        "returncode": 0,
+        "reaped": true
+      },
+      {
+        "model": "C55",
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+          "snapshots",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--id",
+          "C55",
+          "--cpu",
+          "23",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-cpu/C55"
+        ],
+        "returncode": 0,
+        "reaped": true
+      }
+    ]
+  },
+  "native_controls": {
+    "status": "completed",
+    "elapsed_s": 74.7471228519862,
+    "maximum_workers": 3,
+    "cpus": [
+      21,
+      22,
+      23
+    ],
+    "rows": [
+      {
+        "scene": 0,
+        "status": "completed",
+        "cpu": 21,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-00.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-00",
+          "--cpu",
+          "21"
+        ],
+        "elapsed_s": 23.436770312982844,
+        "native_reaped": true
+      },
+      {
+        "scene": 1,
+        "status": "completed",
+        "cpu": 22,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-01.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-01",
+          "--cpu",
+          "22"
+        ],
+        "elapsed_s": 30.473285292013315,
+        "native_reaped": true
+      },
+      {
+        "scene": 3,
+        "status": "completed",
+        "cpu": 21,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-03.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-03",
+          "--cpu",
+          "21"
+        ],
+        "elapsed_s": 13.722182242985582,
+        "native_reaped": true
+      },
+      {
+        "scene": 5,
+        "status": "completed",
+        "cpu": 21,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-05.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-05",
+          "--cpu",
+          "21"
+        ],
+        "elapsed_s": 10.862215483008185,
+        "native_reaped": true
+      },
+      {
+        "scene": 4,
+        "status": "completed",
+        "cpu": 22,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-04.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-04",
+          "--cpu",
+          "22"
+        ],
+        "elapsed_s": 17.958756229985738,
+        "native_reaped": true
+      },
+      {
+        "scene": 2,
+        "status": "completed",
+        "cpu": 23,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-02.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-02",
+          "--cpu",
+          "23"
+        ],
+        "elapsed_s": 54.299707629019395,
+        "native_reaped": true
+      },
+      {
+        "scene": 6,
+        "status": "completed",
+        "cpu": 21,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-06.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-06",
+          "--cpu",
+          "21"
+        ],
+        "elapsed_s": 24.420171330013545,
+        "native_reaped": true
+      },
+      {
+        "scene": 7,
+        "status": "completed",
+        "cpu": 22,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/episode.py",
+          "--material",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/baseline-material.json",
+          "--scene",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-scenes/scene-07.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/fresh-native-01/scene-07",
+          "--cpu",
+          "22"
+        ],
+        "elapsed_s": 26.165025875990978,
+        "native_reaped": true
+      }
+    ],
+    "all_owned_children_reaped": true,
+    "model": "native-control",
+    "passes": null
+  },
+  "source_closure": {
+    "experiments/pressure-four-pass-distillation-v1/episode.py": "61e7fbed7c83bc85399e01956ee3fc108a3ead2f21cf36c88a62b207cd3d9df3",
+    "experiments/pressure-four-pass-distillation-v1/watch_restores.py": "ee488d9e01bdb5c6c5938970e854fa6742ec9a57b76837349692b3f3b80cb7e8",
+    "experiments/pressure-four-pass-distillation-v1/monitor.py": "f563abd1bc6c5badf4f53aa66ea0c4ba9a6cc209eaf53b880bc418561a869b41",
+    "experiments/pressure-four-pass-distillation-v1/cpu.py": "dcfb79b91f31009ad8ca10ee99ecda8ffd11a2be1bfa471745c8c76ff8b880a0",
+    "experiments/pressure-four-pass-distillation-v1/campaign.py": "4e8dd08d66bc71d4d66e322fbe9936289fa7801258e229f0959d6f90d9c01c78"
+  },
+  "timing_limit": "Concurrent prequalification phase; these CPU timings are not isolated performance claims."
+}

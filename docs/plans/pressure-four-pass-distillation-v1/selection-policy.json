@@ -1,0 +1,16 @@
+{
+  "status": "frozen_before_candidate_snapshot_results",
+  "population": "Existing consumed 128 snapshots; fresh-scene model results excluded from selection",
+  "ranking": [
+    "Most cases meeting the unchanged 1e-6 relative equation-residual target at four passes",
+    "Smallest worst relative equation residual at four passes",
+    "Smallest median isolated CPU inference time at four passes",
+    "Stable model identifier"
+  ],
+  "selection": "Best new arm is selected for independent diagnostic qualification, even if it fails the desired target. Selection does not imply improvement or deployment promotion.",
+  "desired_result": "All 128 snapshots qualify at four passes; all 128 still qualify at eight passes; independently simulated trajectories retain physical qualification.",
+  "baseline": "C53 at eight passes, with C53/C55 at 1/2/4/8 passes retained for context",
+  "duration": "Eight independent setups, 512 steps each, 15 native warm-up steps, dt=1/60 s. Stop on failed physical qualification. Extend only a qualified candidate.",
+  "fresh_simulation_policy": "Run selected arm at four and eight passes and C53 at eight passes, using identical frozen scenes. No fitting or reselection from fresh-scene results.",
+  "deployment_promotion": false
+}

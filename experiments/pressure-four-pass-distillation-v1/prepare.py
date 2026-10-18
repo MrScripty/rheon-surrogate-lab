@@ -18,7 +18,7 @@ def replace_once(text, before, after):
     return text.replace(before, after, 1)
 
 
-def prepare(config_path, arm_id, destination):
+def prepare(config_path, arm_id, destination, *, source_overrides=None, config_overrides=None, objective_overrides=None):
     config = read(config_path)
     material = read(ROOT / config['baseline_material'])
     selected = next(m for m in material['models'] if m['id'] == config['train_initialization'])
@@ -47,8 +47,12 @@ def prepare(config_path, arm_id, destination):
             raise ValueError('Qualified clipping/trainer source changed')
         shutil.copyfile(qualified / name, destination / name)
     shutil.copyfile(template / 'model.py', destination / 'baseline_model.py')
-    for name in ['model.py', 'fine_tuning.py']:
-        shutil.copyfile(HERE / name, destination / name)
+    implementations = {name: HERE/name for name in ['model.py', 'fine_tuning.py']}
+    implementations.update(source_overrides or {})
+    for name, source in implementations.items():
+        if Path(name).name != name or not Path(source).is_file():
+            raise ValueError('Explicit flat source override required')
+        shutil.copyfile(source, destination / name)
     history = read(artifacts / 'history.json')
     baseline_config = read(template / 'config.json')
     inventory = history['checkpoints'][f"checkpoint-{baseline_config['training']['updates']:03d}.npz"]['inventory']
@@ -57,6 +61,7 @@ def prepare(config_path, arm_id, destination):
                      training_passes=arm['steps'], teacher_passes=config['teacher_passes'],
                      teacher_weight=arm['teacher_weight'], early_weight=config['early_feedback_weight'],
                      relative_equation_target=config['target_relative_residual'], teacher_cache_bytes=config['teacher_cache_bytes'])
+    objective.update(objective_overrides or {})
     write(destination / 'fine-tuning.json', objective)
     captured = copy.deepcopy(baseline_config)
     captured['id'] = 'fourpass-' + arm_id
@@ -64,6 +69,7 @@ def prepare(config_path, arm_id, destination):
                                 seed=config['training_seed'], sampling_seed=config['sampling_seed'],
                                 learning_rate=config['learning_rate'], schedule=config['schedule'])
     captured['resources']['wall_seconds'] = config['wall_seconds']
+    captured.update(config_overrides or {})
     write(destination / 'config.json', captured)
     trainer = (destination / 'train.py').read_text()
     trainer = replace_once(trainer, "return {**DATA,**direction_feedback.SLOTS,'current_dataset':'current.npz','current_manifest':'current.json'}",
@@ -80,7 +86,7 @@ def prepare(config_path, arm_id, destination):
     if result.returncode:
         raise RuntimeError('Architecture probe failed: ' + result.stderr[-2000:])
     architecture = json.loads(result.stdout)
-    names = set(witness['sources']) | {'baseline_model.py', 'fine_tuning.py', 'fine-tuning.json', 'gradient_clipping.py'}
+    names = set(witness['sources']) | set(implementations) | {'baseline_model.py', 'fine-tuning.json', 'gradient_clipping.py'}
     witness.update(architecture=architecture, experiment_sha256=sha(destination / 'config.json'),
                    sources={name:sha(destination/name) for name in sorted(names)})
     witness['inputs']['initial_weights'] = dict(bytes=(artifacts/'weights.npz').stat().st_size, sha256=sha(artifacts/'weights.npz'))

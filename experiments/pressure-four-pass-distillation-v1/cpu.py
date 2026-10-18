@@ -27,8 +27,11 @@ def material(config_path, projects, output, include_candidates):
                 raise ValueError('Completed CUDA/fresh CPU restore required')
             project=projects/(arm['id']+'-project-01')
             restore=directory/'restore'
-            result['models'].append(dict(id='C'+str(number),name=arm['id'],project=str(project.relative_to(ROOT)),
-                   restore=str(restore.relative_to(ROOT)),weights_sha256=sha(restore/'weights.npz'),tags=['four-pass-study'],
+            identifier=arm.get('model_id','C'+str(number))
+            if any(m['id']==identifier for m in result['models']):
+                raise ValueError('Candidate ID already belongs to another checkpoint: '+identifier)
+            result['models'].append(dict(id=identifier,name=arm['id'],project=str(project.relative_to(ROOT)),
+                   restore=str(restore.relative_to(ROOT)),weights_sha256=sha(restore/'weights.npz'),tags=[config['schema']],
                    identities={str(p.relative_to(ROOT)):sha(p)for p in [project/'config.json',project/'source-witness.json',
                        restore/'weights.npz',restore/'normalization.json',restore/'receipt.json',restore/'history.json']},
                    training_receipt_source=str(receipt_path.relative_to(ROOT)),training_receipt_sha256=sha(receipt_path)))

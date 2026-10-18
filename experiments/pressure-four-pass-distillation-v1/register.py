@@ -35,7 +35,7 @@ def register(args):
         projects.append(dict(arm=arm['id'],project_id=project['id'],manifest_sha256=project['manifest_sha256']))
     write(args.output/'receipt.json',dict(status='passed',endpoint=args.endpoint,catalog_id=args.catalog_id,
                                          projects=projects,optimizer_updates=0,source_sha256=sha(__file__)))
-    print('Registered three qualified prospective training projects',flush=True)
+    print('Registered',len(projects),'qualified prospective training projects',flush=True)
 
 
 if __name__=='__main__':

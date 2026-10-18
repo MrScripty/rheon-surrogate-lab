@@ -7,7 +7,7 @@ import re
 def reserved_four_pass_ids(base):
     experiments = Path(base).resolve().parents[1] / 'experiments'
     reserved = set()
-    for study in ['pressure-low-mode-tail-v1', 'pressure-single-mode-fit-v1', 'pressure-fundamental-bank-fit-v1']:
+    for study in ['pressure-low-mode-tail-v1', 'pressure-single-mode-fit-v1', 'pressure-fundamental-bank-fit-v1', 'pressure-shape-decay-v1']:
         config = experiments / study / 'config.json'
         if config.is_file():
             reserved.update(row['model_id'] for row in json.loads(config.read_text())['arms'])

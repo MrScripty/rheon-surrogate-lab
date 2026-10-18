@@ -54,6 +54,10 @@ impl Track64 {
         if !quality.qualified{return Err(format!("64-bit physical gate failed: {quality:?}"))}
         self.state=next; self.step+=1; Ok(quality)
     }
+    pub fn set_horizon(&mut self,steps:usize)->Result<(),String>{
+        if self.step!=0||steps<self.scene.steps||steps>3600{return Err("Invalid research streaming horizon".into())}
+        self.scene.steps=steps;Ok(())
+    }
 }
 
 #[derive(Clone,Debug,Serialize)]

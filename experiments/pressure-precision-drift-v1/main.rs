@@ -19,7 +19,12 @@ fn equal64(a:impl Iterator<Item=f64>,b:impl Iterator<Item=f64>)->bool{
 fn main()->Result<()>{
     let args=std::env::args().skip(1).collect::<Vec<_>>();
     ensure!(args.len()==2,"Pass scene JSON and a new NDJSON output path");
-    let scene:Scene=serde_json::from_slice(&fs::read(&args[0])?)?;scene.validate().map_err(anyhow::Error::msg)?;
+    let mut scene:Scene=serde_json::from_slice(&fs::read(&args[0])?)?;
+    let horizon=scene.steps;
+    ensure!((1..=3600).contains(&horizon),"Streaming horizon must be 1–3600 steps");
+    // Admit the same bounded geometry/physics through the original constructor.
+    // The raw DiagnosticSession and this probe retain current fields, not history.
+    scene.steps=horizon.min(512);scene.validate().map_err(anyhow::Error::msg)?;
     let mut output=BufWriter::new(fs::OpenOptions::new().write(true).create_new(true).open(&args[1])?);
     let start=Instant::now();let cancel=AtomicBool::new(false);
     let grid=GridGeometry::new(scene.counts.map(|n|n as u64),[scene.h();3],[0.0;3])?;
@@ -28,11 +33,15 @@ fn main()->Result<()>{
     let initial=original.initial();
     let mut precise=Track64::new(scene.clone(),&initial.reference_tracer).map_err(anyhow::Error::msg)?;
     let mut twin=Track64::new(scene.clone(),&initial.reference_tracer).map_err(anyhow::Error::msg)?;
+    original.precision_set_horizon(horizon).map_err(anyhow::Error::msg)?;
+    rounded.precision_set_horizon(horizon).map_err(anyhow::Error::msg)?;
+    precise.set_horizon(horizon).map_err(anyhow::Error::msg)?;
+    twin.set_horizon(horizon).map_err(anyhow::Error::msg)?;
     let method=if scene.sgs{PressureImplementation::SymmetricGaussSeidelPcgV1}else{PressureImplementation::JacobiPcgV1};
     let mut legacy_provider=PressureWorkspace::with_implementation(&grid,128*1024*1024,method)?;
     let operator=PressureOperator::new(&grid,RHO)?;
     let mut verified_casts=0_usize;
-    for step in 1..=scene.steps {
+    for step in 1..=horizon {
         let frame=original.advance(&cancel,|request|{
             let mut rhs=vec![0.0;grid.cell_len()];operator.apply_full(request.initial_guess,&mut rhs).map_err(|e|e.to_string())?;
             for(a,b)in rhs.iter_mut().zip(request.residual){*a+=b;}
@@ -63,8 +72,8 @@ fn main()->Result<()>{
         serde_json::to_writer(&mut output,&row)?;output.write_all(b"\n")?;
         if step%16==0{output.flush()?;}
     }
-    serde_json::to_writer(&mut output,&json!({"kind":"complete","steps":scene.steps,"elapsed_s":start.elapsed().as_secs_f64(),
-        "canonical_f32_exact_steps":scene.steps,"f64_repeat_exact_steps":scene.steps,"verified_cast_values":verified_casts,
+    serde_json::to_writer(&mut output,&json!({"kind":"complete","steps":horizon,"elapsed_s":start.elapsed().as_secs_f64(),
+        "canonical_f32_exact_steps":horizon,"f64_repeat_exact_steps":horizon,"verified_cast_values":verified_casts,
         "neural_calls":0,"same_pressure_settings":true,"pressure_dtype":"f64","field_storage":["f32","f64"],
         "max_rss_kib":std::fs::read_to_string("/proc/self/status")?.lines().find(|l|l.starts_with("VmHWM:")).unwrap_or("")}))?;
     output.write_all(b"\n")?;output.flush()?;Ok(())

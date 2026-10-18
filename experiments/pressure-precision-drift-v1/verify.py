@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 import time
 
 from build import read, sha
@@ -15,7 +16,7 @@ def chart(path):
     return json.loads(re.search(r'<script id="chart-data" type="application/json">(.*?)</script>', path.read_text(), re.S)[1])
 
 
-def verify(build, run, output):
+def verify(build, run, output, config, chart_key):
     started = time.perf_counter()
     root = Path(__file__).resolve().parents[2]
     base = root / 'docs/plans'
@@ -27,14 +28,14 @@ def verify(build, run, output):
     after = chart(page)
     changed = [key for key in before if before[key] != after.get(key)]
     assert set(changed) <= {'history_refreshed_utc'}, changed
-    assert set(after) - set(before) == {'precision'}
+    assert set(after) - set(before) == {chart_key}
     data = read(output / 'chart-data.json')
-    assert after['precision'] == data
+    assert after[chart_key] == data
     text = page.read_text()
     assert precision_markup(text, base) == text, 'Refresh must be idempotent'
     enriched = dict(before)
     enrich_precision(enriched, base)
-    assert enriched['precision'] == data
+    assert enriched[chart_key] == data
     try:
         precision_markup(text.replace('// END PRECISION CHART', '// END MISSING REGION'), base)
     except ValueError:
@@ -48,10 +49,22 @@ def verify(build, run, output):
         assert sha(build / 'source' / source) == expected, source
     for source, expected in material['original_sources'].items():
         assert sha(root / material['config']['source'] / source) == expected, source
-    assert sha(root / 'experiments/pressure-precision-drift-v1/config.json') == material['config_sha256']
+    assert sha(config) == material['config_sha256']
     build_receipt = read(build / 'build-receipt.json')
     assert sha(root / build_receipt['binary']) == build_receipt['sha256']
     assert all(c['returncode'] == 0 for c in build_receipt['commands'])
+    admission = []
+    scene = read(build / 'matched16-scene.json')
+    with tempfile.TemporaryDirectory(prefix='precision-admission-') as temporary:
+        for name, changes in [('zero_steps', {'steps': 0}), ('excess_horizon', {'steps': 3601}),
+                              ('invalid_axis', {'counts': [4, 16, 16]}), ('excess_cells', {'counts': [128, 128, 128]})]:
+            path = Path(temporary) / (name + '.json')
+            destination = Path(temporary) / (name + '.jsonl')
+            path.write_text(json.dumps({**scene, **changes}))
+            command = [str(root / build_receipt['binary']), str(path), str(destination)]
+            result = subprocess.run(command, capture_output=True, text=True, timeout=10)
+            assert result.returncode != 0 and not destination.exists(), name
+            admission.append(dict(case=name, returncode=result.returncode, rejected_before_output=True, message=result.stderr.strip()))
     tests_command = [sys.executable, '-m', 'unittest', 'discover', '-s', str(Path(__file__).parent), '-p', 'test_build.py', '-v']
     tests = subprocess.run(tests_command, capture_output=True, text=True, timeout=30)
     assert tests.returncode == 0, tests.stdout + tests.stderr
@@ -85,7 +98,8 @@ def verify(build, run, output):
     assert lifecycle['status'] == 'passed' and lifecycle['all_observed_children_absent']
     assert lifecycle['native_binary_sha256'] == build_receipt['sha256']
     sources = {str(p.relative_to(root)): sha(p) for p in sorted(Path(__file__).parent.iterdir()) if p.is_file()}
-    sources.update({str(p.relative_to(root)): sha(p) for p in [base / 'precision_chart.py', output / 'chart.js', output / 'section.html', page]})
+    templates = base / 'pressure-precision-drift-v1'
+    sources.update({str(p.relative_to(root)): sha(p) for p in [base / 'precision_chart.py', templates / 'chart.js', templates / 'section.html', page]})
     (output / 'source-closure.json').write_text(json.dumps(material, indent=2) + '\n')
     receipt = dict(status='passed', completed_utc=datetime.now(timezone.utc).isoformat(),
                    elapsed_s=time.perf_counter()-started, physical_steps=frames, verified_cast_values=checks,
@@ -95,10 +109,13 @@ def verify(build, run, output):
                    refresh=dict(command='python3 docs/plans/refresh-current-cohorts.py', returncode=0,
                                 markup_idempotent=True, damaged_region_rejected=True),
                    tests=dict(command=tests_command, returncode=tests.returncode, output=tests.stdout+tests.stderr),
+                   invalid_horizon_and_geometry_admission=admission,
                    browser=browser, historical_browser=historical_browser, lifecycle=lifecycle,
                    sources=sources, source_closure_sha256=sha(output / 'source-closure.json'),
                    standards_snapshot='snapshot:v1:ffcfc3f8-b52a-434e-b57f-d259a0355711',
-                   command=[sys.executable, __file__, '--build', str(build), '--run', str(run), '--output', str(output)])
+                   prefix_exact_steps={s['id']:s.get('prefix_exact_steps')for s in data['summaries']},
+                   command=[sys.executable, __file__, '--build', str(build), '--run', str(run), '--output', str(output),
+                            '--config',str(config),'--chart-key',chart_key])
     (output / 'verification.json').write_text(json.dumps(receipt, indent=2) + '\n')
     print(json.dumps(dict(status='passed', physical_steps=frames, verified_cast_values=checks, elapsed_s=receipt['elapsed_s'])))
 
@@ -108,5 +125,7 @@ if __name__ == '__main__':
     parser.add_argument('--build', type=Path, required=True)
     parser.add_argument('--run', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--config', type=Path, default=Path('experiments/pressure-precision-drift-v1/config.json'))
+    parser.add_argument('--chart-key', default='precision')
     args = parser.parse_args()
-    verify(args.build.resolve(), args.run.resolve(), args.output.resolve())
+    verify(args.build.resolve(), args.run.resolve(), args.output.resolve(), args.config.resolve(), args.chart_key)

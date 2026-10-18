@@ -12,6 +12,14 @@ def enrich_precision(data, base):
     if precision.get('schema') != 'rheon-storage-precision-chart-v1' or precision.get('status') != 'completed':
         raise ValueError('Precision evidence must be a completed storage-precision study')
     data['precision'] = precision
+    minute = Path(base) / 'pressure-precision-drift-v1/one-minute/chart-data.json'
+    if minute.is_file():
+        recording = json.loads(minute.read_text())
+        if recording.get('schema') != precision['schema'] or recording.get('status') != 'completed':
+            raise ValueError('One-minute precision evidence must be completed')
+        if recording['point_columns'] != precision['point_columns']:
+            raise ValueError('Precision recordings must use the same measured quantities')
+        data['precision_minute'] = recording
 
 
 def _region(text, name, body, anchor, javascript=False):

@@ -1,0 +1,54 @@
+{
+  "status": "completed",
+  "objective": "Measure 60 uninterrupted simulated seconds of float32 versus float64 storage drift under the previously qualified settings.",
+  "branch": "experiment/pressure-precision-drift-20261017",
+  "base": "00e7ae121cd0e69770b4e753c55fd361df162ec4",
+  "owner": "Jeremy; implementation by Codex",
+  "execution": "Four scenes; 3600 steps each at dt=1/60 s, maximum three single-core CPU workers, 1800 second cap per worker. Original 16-step fixture first. Research-only streaming horizon extension; no full-field histories retained. No physics or training changes.",
+  "thresholds": {
+    "relative_velocity_l2": 0.01,
+    "relative_tracer_l2": 0.01,
+    "relative_pressure_l2": 0.01
+  },
+  "interpretation": "One percent relative field difference is an explicit diagnostic threshold, not a universal perceptual or physical validity criterion. If no crossing occurs, report only a lower bound of 60 seconds for these scenes; do not extrapolate.",
+  "qualification": [
+    "Same canonical float32 full-field and float64 twin controls as the original study, every step.",
+    "Verify all first 512 frame records against the retained original run exactly.",
+    "Check observed casting bounds and physical gates.",
+    "Retain original 8.53-second recording, add selectable one-minute recording.",
+    "Record elapsed time, peak RSS, commands, source closure, lifecycle and UI verification."
+  ],
+  "retention": "Current branch remains local for Jeremy review; preserve historical receipts and curves. No simulation datasets, binary or model weights committed.",
+  "completed_utc": "2026-10-18T01:00:09.458122+00:00",
+  "result": {
+    "simulated_s_per_scene": 60,
+    "steps_per_scene": 3600,
+    "total_steps": 14400,
+    "verified_cast_values": 1025280000,
+    "wall_elapsed_s": 729.4462081750098,
+    "peak_native_rss_kib": 10476,
+    "worst_relative_l2": {
+      "velocity": 2.9826232674174346e-06,
+      "pressure": 3.399385581764321e-06,
+      "tracer": 5.259718035278262e-06
+    },
+    "one_percent_crossings": 0,
+    "historical_prefix_exact_steps_per_scene": 512,
+    "all_physical_and_reproducibility_controls_passed": true
+  },
+  "verification": {
+    "status": "passed",
+    "browser_checks": 10,
+    "historical_browser_checks": 12,
+    "lifecycle_passed": true,
+    "invalid_horizon_and_geometry_cases": 4
+  },
+  "assessment": "No pressure, velocity or tracer relative L2 difference reached 1% in any tested scene through 60 seconds. This establishes only a lower bound of 60 seconds for that diagnostic criterion in these fixed setups; it does not predict an eventual crossing time or establish a universal perceptual limit.",
+  "records": [
+    "results.json",
+    "chart-data.json",
+    "source-closure.json",
+    "verification.json",
+    "lifecycle-verification.json"
+  ]
+}

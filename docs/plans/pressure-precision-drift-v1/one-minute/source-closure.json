@@ -1,0 +1,338 @@
+{
+  "schema": "rheon-storage-precision-study-v1",
+  "root": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+  "config": {
+    "schema": "rheon-storage-precision-study-v1",
+    "source": "runs/dependency-migration-v1/Rheon",
+    "baseline_build": "runs/dependency-migration-v1/probe-build-current-03/build-receipt.json",
+    "dependency_config": "runs/dependency-migration-v1/selection-probe-current-03.json",
+    "retained_scene": "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+    "maximum_workers": 3,
+    "worker_timeout_s": 1800,
+    "scenes": [
+      {
+        "id": "matched16",
+        "label": "Matched 16 \u00d7 16 \u00d7 16",
+        "overrides": {
+          "steps": 3600
+        }
+      },
+      {
+        "id": "rectangular",
+        "label": "Rectangular 24 \u00d7 16 \u00d7 12",
+        "overrides": {
+          "seed": 20261032,
+          "counts": [
+            24,
+            16,
+            12
+          ],
+          "center": [
+            0.65,
+            0.4,
+            0.3
+          ],
+          "acceleration": 0.15,
+          "swirl": -0.65,
+          "fluctuation": 0.6,
+          "frequency": 1.5,
+          "radius": 0.2,
+          "steps": 3600
+        }
+      },
+      {
+        "id": "larger20",
+        "label": "Larger 20 \u00d7 20 \u00d7 20",
+        "overrides": {
+          "seed": 20261033,
+          "counts": [
+            20,
+            20,
+            20
+          ],
+          "steps": 3600
+        }
+      },
+      {
+        "id": "zero",
+        "label": "Zero-forcing control",
+        "overrides": {
+          "acceleration": 0.0,
+          "steps": 3600
+        }
+      }
+    ]
+  },
+  "config_sha256": "7d822b9753aa5fe5d0663c794de12a6d85e02ee54204fa4e2ebba09d9eaf648b",
+  "scenes": [
+    {
+      "id": "matched16",
+      "label": "Matched 16 \u00d7 16 \u00d7 16",
+      "scene": {
+        "seed": 20261031,
+        "counts": [
+          16,
+          16,
+          16
+        ],
+        "cells_per_metre": 16,
+        "steps": 3600,
+        "warmup_steps": 15,
+        "center": [
+          0.4,
+          0.55,
+          0.6
+        ],
+        "acceleration": 0.125,
+        "radius": 0.25,
+        "swirl": 0.7,
+        "fluctuation": 0.4,
+        "frequency": 1.2,
+        "sgs": false
+      },
+      "path": "runs/pressure-precision-drift-v1/build-minute-01/matched16-scene.json"
+    },
+    {
+      "id": "rectangular",
+      "label": "Rectangular 24 \u00d7 16 \u00d7 12",
+      "scene": {
+        "seed": 20261032,
+        "counts": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16,
+        "steps": 3600,
+        "warmup_steps": 15,
+        "center": [
+          0.65,
+          0.4,
+          0.3
+        ],
+        "acceleration": 0.15,
+        "radius": 0.2,
+        "swirl": -0.65,
+        "fluctuation": 0.6,
+        "frequency": 1.5,
+        "sgs": false
+      },
+      "path": "runs/pressure-precision-drift-v1/build-minute-01/rectangular-scene.json"
+    },
+    {
+      "id": "larger20",
+      "label": "Larger 20 \u00d7 20 \u00d7 20",
+      "scene": {
+        "seed": 20261033,
+        "counts": [
+          20,
+          20,
+          20
+        ],
+        "cells_per_metre": 16,
+        "steps": 3600,
+        "warmup_steps": 15,
+        "center": [
+          0.4,
+          0.55,
+          0.6
+        ],
+        "acceleration": 0.125,
+        "radius": 0.25,
+        "swirl": 0.7,
+        "fluctuation": 0.4,
+        "frequency": 1.2,
+        "sgs": false
+      },
+      "path": "runs/pressure-precision-drift-v1/build-minute-01/larger20-scene.json"
+    },
+    {
+      "id": "zero",
+      "label": "Zero-forcing control",
+      "scene": {
+        "seed": 20261031,
+        "counts": [
+          16,
+          16,
+          16
+        ],
+        "cells_per_metre": 16,
+        "steps": 3600,
+        "warmup_steps": 15,
+        "center": [
+          0.4,
+          0.55,
+          0.6
+        ],
+        "acceleration": 0.0,
+        "radius": 0.25,
+        "swirl": 0.7,
+        "fluctuation": 0.4,
+        "frequency": 1.2,
+        "sgs": false
+      },
+      "path": "runs/pressure-precision-drift-v1/build-minute-01/zero-scene.json"
+    }
+  ],
+  "original_build_sha256": "d91be7f162d6c28fb0df5d63b739fc4a6f6e26f8b2c89f8d04342bfb36eee1f4",
+  "original_sources": {
+    "Cargo.toml": "f6739636088fa7bf83c755699626d530696ece73d847f6fe476896220e77fc55",
+    "Cargo.lock": "3b5836a7be9f1290c698cadaff010e11b93e33b4af839c8549391c23e7d8ec0c",
+    "rust-toolchain.toml": "09ff66fa19e0cb8bbad00b6032e28f1cf77b0a37a73013648177b35297f98800",
+    "src/advection.rs": "0163a872c314b2b3bb7f732348aafdbfa7b162dceea74807b7e7e3eb60ab0849",
+    "src/aligned_strain.rs": "1541bc444d1b098c5a59a221b7068538b013362db46ed66e37eb4931ad425e4f",
+    "src/box_flux.rs": "554b3cdc916e7527bbfdbd6a54b8cf7e27549c3c661015b259c8b2d18784bbb0",
+    "src/box_flux_step.rs": "e2ef3afcd8adffe0f79c0030eb56e5bb55943775e474a1dab2a7fe78ac38441b",
+    "src/collision.rs": "101c91ced5efc250f3a12bc47d5bbf04b812096caf8580c0229362e959839115",
+    "src/column_mac.rs": "40b86c5bab2d458c8b31b1f8def21c5f715acecb37813fb57417f7fe363aca84",
+    "src/column_momentum.rs": "373f63ac001fe8e9f8017a912033b3cc431169c6e4c86c2e6b514ee945f1f9b0",
+    "src/column_shear.rs": "bd2a20a11f927c2a886b524a4a45791100f9c3e8119b7648153b7775cb6a3299",
+    "src/column_surface.rs": "cd58d4d7d1c3d94092374ebd65fd191e3cf58f7ae68caeaf30ca15d36df666e0",
+    "src/compressible.rs": "dc0f2a3a8ebcb108c6a094ec59a467f1390b846dd27c505b16248a64dc1031b3",
+    "src/coupled_discrete.rs": "b296021b8dd2f763b6eeab1e49e78bf06ec2ec801ac9595441e9e3920235d8e7",
+    "src/dense3d_sequence.rs": "90e9249fd82cc829a84cea9162d680971e660bfc6c32619355b353d17b25a431",
+    "src/diagnostic/engine.rs": "5a8459775c9ad39e778b9472e3ff745861e9b92b6313005417a88c93d670d6db",
+    "src/diagnostic/engine_typed_tests.rs": "9351179e2ac145eac7c78c8d4c85aa1a31efff26192d01c68588328294259b3f",
+    "src/diagnostic/mod.rs": "d34914f0213682f3a25d592aa4dcf87ea318b4779000ec72cf3ee34de835dd22",
+    "src/diagnostic/scene.rs": "624bf7fccda12893db7d72174ef67dcad07eaf2c7112ce4aa053e23aa4a94396",
+    "src/diagnostic/wire.rs": "aa5feb1d3e5b6a02308d009e4e469c33c15c5b96062e12c6a4e76a8f00b49e34",
+    "src/emitter.rs": "57ea2badaeb329fe91647df98be60bff8dbe693e41076979eda4b79ad8f48f84",
+    "src/emitter_controls.rs": "47d0b180dafc7e57ad1b205f2a12c5a472a78c1d60a7c3f7521ec470211a89c4",
+    "src/export.rs": "afe2b79d11f1b8c0ccd16dcaae51a22c8d35ba2e7a23c362729fe907b208f0d3",
+    "src/fitted_height.rs": "0181db7ffbad932b7e3492ce1a8e260736389e4ded3472c81fe2697861f6777a",
+    "src/fixed_bottom_ale.rs": "3cc724d376d115fccd8b6c658d7f26b6436f4d13d105a5ae8416fd9c04b17a47",
+    "src/forces.rs": "c5585940330096890016ff68f25645aa12cdaec2b796a8b234c138e88dd892bb",
+    "src/free_surface.rs": "f43fd9a71da6aac985dfcfb6cc471318227c1727d6e0dad8e2a5feb5b3728a8e",
+    "src/geometry.rs": "712d04f27d55d7e77f17effefbf2660ca3b8a000de5b7aa51b42b89fe5d3b634",
+    "src/lib.rs": "42da79c38ad3dd6bed1ebd45c900674b94500b8ab3a66a2a724a63e128e70d9e",
+    "src/liquid_step.rs": "f99dce6a99f6af8a9aef2436af7f33de58dac3be5998a48e9187fbdf2acc3f93",
+    "src/liquid_volume.rs": "24623038f62261ce6a17b034e9b6d82c5f0aba02dd0df7aad174c885ed2a8c96",
+    "src/material.rs": "49874ff972f16a972d706236b34e62f83e994c57e39b642c6d94a1a6f4b7fb66",
+    "src/material_session.rs": "4e18e446ad82f10523f72bae1b7cc6007f2ecf5ad05407bb666be3e2ae9be960",
+    "src/mesh_collision.rs": "71503d2c5939dbb59946bc157eedafecdedd0831f1e81d29e794fba7290dfd24",
+    "src/mesh_import.rs": "3e8f2d79e59b3f27c7ffeeacc83d9b7d08faafa2fffa7de81dfd8665b36a6890",
+    "src/motion.rs": "8ab9f26199f36d76cb2f5e4cb58d40905205f0d6fc90988549f7e389c489a3ea",
+    "src/observation.rs": "2c6d4cd75cdb0f2d560d0f79df4e53914e10f340de0740b939311d8cc35d5dee",
+    "src/obstacle_pressure.rs": "b45262632483ce08773924b407eeffbe99bd62663094ce6fd71b24d132026b07",
+    "src/obstacle_shear.rs": "745da07d5e949276a2e0cb7ac4bdde4aedf557bf6189d5a51581d8ce79b1dc1f",
+    "src/operator.rs": "cd98684d5204908e5344b2628a8f93ea2a55a90c6678e03a71f2d75ab1f2be38",
+    "src/parallel.rs": "ee5420673a59ae4fb247b3542878e74902f7a87056744d4303fb400be074677e",
+    "src/particle_fluid.rs": "ed4ab916e602a55b2245beba5bdbff268fcb704b67fa41248d47ad2598f2468f",
+    "src/pressure.rs": "f397939dd0ad3621a4e9a50cb15ddf2a5cc63c061037f38f3de560d03f5c5db7",
+    "src/pressure_session.rs": "ae687a8822dd6cfeadf5dc6e13e7983d8d1afcdf9e5db1857d4dce64cd0e3fb8",
+    "src/provider_step.rs": "79167b70a8d164a2367f43816feab443eefb41f23bc4bd940716dd5fd32d495b",
+    "src/recording/carrier.rs": "b9c83015df214b426315f1840cbd2029d3f4b85525aef2fc8592e97468d54509",
+    "src/recording/comparison.rs": "5a82201f4583cf9eb4cc38d43c7ee88bc54d10a84df46272c2dd84091aa4a307",
+    "src/recording/diagnostic.rs": "eb8dc9a62ac7eff5b3d9da27137ce859b25ff7cc22b9f674188bec8bda380262",
+    "src/recording/material.rs": "e01a730b04fd34d7fdc797ede735cb45fa743101dd51e8fd406b02bacdd43d00",
+    "src/recording/provider/comparison.rs": "90c1230c2cbfb2415c74e5d3c9b66e74f68c7b2096bf4063c5513ac2c6feaa75",
+    "src/recording/provider/runtime.rs": "d7b2a1f7cfa866b33887f7c8f804999058d6e70a1c9d71421372d151152ebccb",
+    "src/recording/provider.rs": "980ea5af7094016b13e7d0f39110aa2ff673b0173416e0fe583e6266b7c27f57",
+    "src/recording.rs": "d022f8f46c288538298896ae444c9780265a6bf77fa9a4e1ba4b9732cf026eb2",
+    "src/sampling.rs": "6bf158f71f795078b5a88a5662ec2169693508e555f0f98d539657873aaabbcf",
+    "src/scheduling.rs": "21fa031c06eeff8c2f722beb5553af9ba86d0afab479f4036916480338dc1411",
+    "src/session/configured.rs": "d99ae990e9c7ddc956f95f414a25832411a4dc84ab434df95ff9f8f68cf52a83",
+    "src/session.rs": "367c370e2257e35de09943e8dc3e1257b994c5e01d1409af1a989682f41c583e",
+    "src/sgs.rs": "0b4140af63144df8ff1839782b3c70295c18b96decc67aba348a37a33e9f996d",
+    "src/simulation.rs": "8dea790daf2a2d0801db3003094f9fffe034c9b87946d520a1eacc266c95f078",
+    "src/solver_provider/configured.rs": "124ca65dd1dec3a8a89043198fb085453a42ca8aff0dc87c67b04b6a986109be",
+    "src/solver_provider/context.rs": "55ef773ace8d2eb9419fae50a353dd2e7f9869b2c53d907f090b2629b2385834",
+    "src/solver_provider/modal.rs": "c597450ad73a4dede64a1fedcc65a0b4d5551f594f29b2d0cf7c85b0e2e14796",
+    "src/solver_provider.rs": "0ab7db08a9016e73d664c730e4ff513d42599a84c680ea061e6604859432a5a5",
+    "src/static_obstacle.rs": "df50f3761fd7258ca42026ba852d2c326a1a5efa42daa4021967b799493b1080",
+    "src/tracer_barrier.rs": "1007f35400b5e1b3206653b9f9ccaafbc169617ad896aec54f94fc792eba2fae",
+    "src/translated_viscous.rs": "6fa240053738411bb93b3e365def39fdc8a93597cd0c0523dcd1af39cbc68163",
+    "src/viscosity.rs": "3cb7643d321fa94957fafdc101abf0ee9ef273f99c9a512938124e72f32178aa",
+    "src/vtk_export.rs": "56c3f03d957df0a7fd0c00a1af229f47f1c21cdf53cbf3770656a9bb0b66735e"
+  },
+  "transformations": "Original f32 functions unchanged; generate f64 storage specializations with the same pressure solver/settings. Added research observation methods and an initialization-only streaming horizon up to 3600 steps; original geometry/physics validation retained, no full-frame history is accumulated.",
+  "generated_sources": {
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "rust-toolchain.toml": "09ff66fa19e0cb8bbad00b6032e28f1cf77b0a37a73013648177b35297f98800",
+    "Cargo.lock": "3b5836a7be9f1290c698cadaff010e11b93e33b4af839c8549391c23e7d8ec0c",
+    "Cargo.toml": "f6739636088fa7bf83c755699626d530696ece73d847f6fe476896220e77fc55",
+    "src/obstacle_shear.rs": "745da07d5e949276a2e0cb7ac4bdde4aedf557bf6189d5a51581d8ce79b1dc1f",
+    "src/fitted_height.rs": "0181db7ffbad932b7e3492ce1a8e260736389e4ded3472c81fe2697861f6777a",
+    "src/aligned_strain.rs": "1541bc444d1b098c5a59a221b7068538b013362db46ed66e37eb4931ad425e4f",
+    "src/column_surface.rs": "cd58d4d7d1c3d94092374ebd65fd191e3cf58f7ae68caeaf30ca15d36df666e0",
+    "src/box_flux.rs": "554b3cdc916e7527bbfdbd6a54b8cf7e27549c3c661015b259c8b2d18784bbb0",
+    "src/fixed_bottom_ale.rs": "3cc724d376d115fccd8b6c658d7f26b6436f4d13d105a5ae8416fd9c04b17a47",
+    "src/liquid_step.rs": "f99dce6a99f6af8a9aef2436af7f33de58dac3be5998a48e9187fbdf2acc3f93",
+    "src/column_momentum.rs": "373f63ac001fe8e9f8017a912033b3cc431169c6e4c86c2e6b514ee945f1f9b0",
+    "src/advection.rs": "0163a872c314b2b3bb7f732348aafdbfa7b162dceea74807b7e7e3eb60ab0849",
+    "src/mesh_import.rs": "3e8f2d79e59b3f27c7ffeeacc83d9b7d08faafa2fffa7de81dfd8665b36a6890",
+    "src/compressible.rs": "dc0f2a3a8ebcb108c6a094ec59a467f1390b846dd27c505b16248a64dc1031b3",
+    "src/vtk_export.rs": "56c3f03d957df0a7fd0c00a1af229f47f1c21cdf53cbf3770656a9bb0b66735e",
+    "src/export.rs": "afe2b79d11f1b8c0ccd16dcaae51a22c8d35ba2e7a23c362729fe907b208f0d3",
+    "src/operator.rs": "0cf9c9673d7b3599fb6f3ee66c28845d06eaf0971e89236a744dec4b70258ff4",
+    "src/emitter.rs": "57ea2badaeb329fe91647df98be60bff8dbe693e41076979eda4b79ad8f48f84",
+    "src/provider_step.rs": "79167b70a8d164a2367f43816feab443eefb41f23bc4bd940716dd5fd32d495b",
+    "src/column_mac.rs": "40b86c5bab2d458c8b31b1f8def21c5f715acecb37813fb57417f7fe363aca84",
+    "src/precision_diagnostic.rs": "6443c36a3cbc903a00c5e6f2dba57abf1e0459129887bb74f58b6fd434bbf0f0",
+    "src/observation.rs": "2c6d4cd75cdb0f2d560d0f79df4e53914e10f340de0740b939311d8cc35d5dee",
+    "src/lib.rs": "b85eb4483716c93524bb0f8005f75aaac3705a65f0449ddcff0ab5a7027d7185",
+    "src/pressure_session.rs": "ae687a8822dd6cfeadf5dc6e13e7983d8d1afcdf9e5db1857d4dce64cd0e3fb8",
+    "src/particle_fluid.rs": "ed4ab916e602a55b2245beba5bdbff268fcb704b67fa41248d47ad2598f2468f",
+    "src/solver_provider.rs": "0ab7db08a9016e73d664c730e4ff513d42599a84c680ea061e6604859432a5a5",
+    "src/pressure.rs": "f397939dd0ad3621a4e9a50cb15ddf2a5cc63c061037f38f3de560d03f5c5db7",
+    "src/viscosity.rs": "3cb7643d321fa94957fafdc101abf0ee9ef273f99c9a512938124e72f32178aa",
+    "src/static_obstacle.rs": "df50f3761fd7258ca42026ba852d2c326a1a5efa42daa4021967b799493b1080",
+    "src/sgs.rs": "0b4140af63144df8ff1839782b3c70295c18b96decc67aba348a37a33e9f996d",
+    "src/dense3d_sequence.rs": "90e9249fd82cc829a84cea9162d680971e660bfc6c32619355b353d17b25a431",
+    "src/box_flux_step.rs": "e2ef3afcd8adffe0f79c0030eb56e5bb55943775e474a1dab2a7fe78ac38441b",
+    "src/session.rs": "367c370e2257e35de09943e8dc3e1257b994c5e01d1409af1a989682f41c583e",
+    "src/sampling.rs": "6bf158f71f795078b5a88a5662ec2169693508e555f0f98d539657873aaabbcf",
+    "src/translated_viscous.rs": "6fa240053738411bb93b3e365def39fdc8a93597cd0c0523dcd1af39cbc68163",
+    "src/emitter_controls.rs": "47d0b180dafc7e57ad1b205f2a12c5a472a78c1d60a7c3f7521ec470211a89c4",
+    "src/tracer_barrier.rs": "1007f35400b5e1b3206653b9f9ccaafbc169617ad896aec54f94fc792eba2fae",
+    "src/mesh_collision.rs": "71503d2c5939dbb59946bc157eedafecdedd0831f1e81d29e794fba7290dfd24",
+    "src/motion.rs": "8ab9f26199f36d76cb2f5e4cb58d40905205f0d6fc90988549f7e389c489a3ea",
+    "src/scheduling.rs": "21fa031c06eeff8c2f722beb5553af9ba86d0afab479f4036916480338dc1411",
+    "src/parallel.rs": "ee5420673a59ae4fb247b3542878e74902f7a87056744d4303fb400be074677e",
+    "src/free_surface.rs": "f43fd9a71da6aac985dfcfb6cc471318227c1727d6e0dad8e2a5feb5b3728a8e",
+    "src/obstacle_pressure.rs": "b45262632483ce08773924b407eeffbe99bd62663094ce6fd71b24d132026b07",
+    "src/geometry.rs": "712d04f27d55d7e77f17effefbf2660ca3b8a000de5b7aa51b42b89fe5d3b634",
+    "src/liquid_volume.rs": "24623038f62261ce6a17b034e9b6d82c5f0aba02dd0df7aad174c885ed2a8c96",
+    "src/forces.rs": "c5585940330096890016ff68f25645aa12cdaec2b796a8b234c138e88dd892bb",
+    "src/material.rs": "49874ff972f16a972d706236b34e62f83e994c57e39b642c6d94a1a6f4b7fb66",
+    "src/coupled_discrete.rs": "b296021b8dd2f763b6eeab1e49e78bf06ec2ec801ac9595441e9e3920235d8e7",
+    "src/recording.rs": "d022f8f46c288538298896ae444c9780265a6bf77fa9a4e1ba4b9732cf026eb2",
+    "src/simulation.rs": "8dea790daf2a2d0801db3003094f9fffe034c9b87946d520a1eacc266c95f078",
+    "src/material_session.rs": "4e18e446ad82f10523f72bae1b7cc6007f2ecf5ad05407bb666be3e2ae9be960",
+    "src/column_shear.rs": "bd2a20a11f927c2a886b524a4a45791100f9c3e8119b7648153b7775cb6a3299",
+    "src/collision.rs": "101c91ced5efc250f3a12bc47d5bbf04b812096caf8580c0229362e959839115",
+    "src/precision_diagnostic/sampling64.rs": "085b8ba1c9c8ba08ea3e110384e78a5603827810c1524068069d7f28f373b55c",
+    "src/precision_diagnostic/advection64.rs": "5f9330ac11bfa8f20b5c83ef3e79d01accc3031462423fd9ab1619b2e2cdbf84",
+    "src/precision_diagnostic/viscosity64.rs": "a3e950731e6543c5fcf9f7532fc5787e74d81cdf1e2580e9e19cac19cbfc4ed3",
+    "src/solver_provider/context.rs": "55ef773ace8d2eb9419fae50a353dd2e7f9869b2c53d907f090b2629b2385834",
+    "src/solver_provider/modal.rs": "c597450ad73a4dede64a1fedcc65a0b4d5551f594f29b2d0cf7c85b0e2e14796",
+    "src/solver_provider/configured.rs": "124ca65dd1dec3a8a89043198fb085453a42ca8aff0dc87c67b04b6a986109be",
+    "src/session/configured.rs": "d99ae990e9c7ddc956f95f414a25832411a4dc84ab434df95ff9f8f68cf52a83",
+    "src/recording/diagnostic.rs": "eb8dc9a62ac7eff5b3d9da27137ce859b25ff7cc22b9f674188bec8bda380262",
+    "src/recording/material.rs": "e01a730b04fd34d7fdc797ede735cb45fa743101dd51e8fd406b02bacdd43d00",
+    "src/recording/comparison.rs": "5a82201f4583cf9eb4cc38d43c7ee88bc54d10a84df46272c2dd84091aa4a307",
+    "src/recording/carrier.rs": "b9c83015df214b426315f1840cbd2029d3f4b85525aef2fc8592e97468d54509",
+    "src/recording/provider.rs": "980ea5af7094016b13e7d0f39110aa2ff673b0173416e0fe583e6266b7c27f57",
+    "src/diagnostic/scene.rs": "624bf7fccda12893db7d72174ef67dcad07eaf2c7112ce4aa053e23aa4a94396",
+    "src/diagnostic/mod.rs": "d34914f0213682f3a25d592aa4dcf87ea318b4779000ec72cf3ee34de835dd22",
+    "src/diagnostic/wire.rs": "aa5feb1d3e5b6a02308d009e4e469c33c15c5b96062e12c6a4e76a8f00b49e34",
+    "src/diagnostic/engine_typed_tests.rs": "9351179e2ac145eac7c78c8d4c85aa1a31efff26192d01c68588328294259b3f",
+    "src/diagnostic/engine.rs": "53c61237d2b4f337ab82cccb5c781e22d7626c9d4e4a651004ba7b25f20e2fbc",
+    "src/recording/provider/runtime.rs": "d7b2a1f7cfa866b33887f7c8f804999058d6e70a1c9d71421372d151152ebccb",
+    "src/recording/provider/comparison.rs": "90c1230c2cbfb2415c74e5d3c9b66e74f68c7b2096bf4063c5513ac2c6feaa75"
+  },
+  "experiment_sources": {
+    "browser.cjs": "04e99864be346a0923746fc0b8844dccb9001604ad62266db65cc41b8ffe75bd",
+    "test_build.py": "1ecb56b4dc4333551e72d9acc76a4f421af668b90aee9fbf965b1e27fcea259d",
+    "run.py": "81ad7255e8ce713b5466e5228bc670b15a235c717e168114a4bbdee2a4353b89",
+    "build.py": "7fbc29573c246e6d459b98c2bbc152d0899a337e8cc6e5cbcaedea7f5bf2336c",
+    "config.json": "f68e8a1f5975f666645886d7ecd2aa6ec06757ef88c8c55b3c37e93243187123",
+    "main.rs": "dd9f489c1d91d57c10b376ec8abe084a646a23423300905fe4bb7f397ab34c4c",
+    "one-minute.json": "7d822b9753aa5fe5d0663c794de12a6d85e02ee54204fa4e2ebba09d9eaf648b",
+    "verify_lifecycle.py": "1534850d55257754485a272feb7c6eca45b6b2e3b9f6a983b806e8726686f73c",
+    "precision.rs": "291f5eb0f381891b8f44d2ca67a3356f0c0c8fd4e4298510b2d47736a18f7521",
+    "collect.py": "7b3115d702603a8db1434326c11645fa488ea46c0ed70269543436299b3ee458",
+    "verify.py": "1baf075630377623f57477fb30983580d6244121558ca69c94d59138a07fea7a"
+  },
+  "selection_chart_sha256": "8a16778bd05d491654903cffddd99c8dadd60149e686c44d5c9aa3fe5081eae2"
+}

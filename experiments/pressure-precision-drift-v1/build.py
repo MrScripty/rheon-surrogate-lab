@@ -48,6 +48,12 @@ HELPER='''
     }
     /// Immutable full fields for bitwise canonical-path qualification.
     pub fn precision_reference_velocity(&self)->[&[f32];3]{refs(&self.reference.velocity)}
+    /// Legacy raw sessions keep only the current state; extend this research stream.
+    /// Geometry/physics admission still occurs through the original constructor.
+    pub fn precision_set_horizon(&mut self,steps:usize)->Result<(),String>{
+        if self.step!=0||steps<self.scene.steps||steps>3600{return Err("Invalid research streaming horizon".into())}
+        self.scene.steps=steps;Ok(())
+    }
 '''
 
 
@@ -113,7 +119,7 @@ unsafe_code = "forbid"
     page=root/'docs/plans/cohort-progress.html';shutil.copyfile(page,run/'selection-chart.html')
     receipt=dict(schema=config['schema'],root=str(root),config=config,config_sha256=sha(config_path),scenes=scenes,
         original_build_sha256=sha(root/config['baseline_build']),original_sources=original,
-        transformations='Only original f32 storage types/casts become f64 in generated copies; same pressure solver/settings. Original float32 functions unchanged. Original engine uses added observation methods.',
+        transformations='Original f32 functions unchanged; generate f64 storage specializations with the same pressure solver/settings. Added research observation methods and an initialization-only streaming horizon up to 3600 steps; original geometry/physics validation retained, no full-frame history is accumulated.',
         generated_sources={str(p.relative_to(copy)):sha(p)for p in copy.rglob('*')if p.is_file()},
         experiment_sources={p.name:sha(p)for p in here.iterdir()if p.is_file()},
         selection_chart_sha256=sha(page))

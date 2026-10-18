@@ -1,6 +1,7 @@
 const precisionColumns=Object.fromEntries((data.precision?.point_columns||[]).map((name,i)=>[name,i]));
 function precisionValue(point,name){return point[precisionColumns[name]]}
-function precisionTrace(){return data.precision?.traces.find(t=>t.id===$('precision-scene').value)}
+function precisionStudy(){return $('precision-recording').value==='minute'?data.precision_minute:data.precision}
+function precisionTrace(){return precisionStudy()?.traces.find(t=>t.id===$('precision-scene').value)}
 function precisionNumber(value){return Number.isFinite(value)?(value===0?'0':value.toExponential(4)):'undefined (zero reference norm)'}
 function precisionPlot(id,points,series,unit){
  const svg=$(id),key=$(id+'-key'),log=$('precision-scale').value==='log';svg.replaceChildren();key.replaceChildren();
@@ -32,16 +33,26 @@ function renderPrecision(){
  $('precision-detail').textContent=`Step ${step} · ${precisionValue(p,'time_s').toFixed(4)} s · ${field} difference ${precisionNumber(precisionValue(p,column))} ${unit} · projection cast RMS ${precisionNumber(precisionValue(p,'projection_cast_rms'))} m/s · D(cast) ${precisionNumber(precisionValue(p,'projection_div_cast'))} s⁻¹`;
  const s=trace.scene,h=1/s.cells_per_metre,extent=s.counts.map(n=>+(n*h).toFixed(4));
  $('precision-physics').textContent=`${s.counts.join(' × ')} cells · ${extent.join(' × ')} m · cubic h = ${h} m · water 1000 kg/m³ · μ = 0.001 Pa·s · Δt = 1/60 s · origin (0,0,0) · closed free-slip walls. Force base center (${s.center.join(', ')}) as fractions of domain extents (oscillating), radius scale ${s.radius} × shortest extent, acceleration ${s.acceleration} m/s², swirl ${s.swirl}, fluctuation ${s.fluctuation}, frequency ${s.frequency} Hz.`;
- $('precision-status').textContent=`${trace.points.length} retained steps · float32 canonical fields: ${trace.summary.canonical_f32_exact_steps}/${trace.points.length} bit-exact · float64 repeat: ${trace.summary.f64_repeat_exact_steps}/${trace.points.length} exact zero. ${$('precision-scale').value==='log'?'Zero values are omitted from logarithmic axes; no artificial error floor is added.':'Zero values are shown on linear axes.'}`;
- $('precision-receipt').textContent=`${data.precision.verified_cast_values.toLocaleString()} casts checked across four scenes. Study elapsed ${data.precision.execution.elapsed_s.toFixed(2)} s with up to three single-core workers. This includes control replays and is not an inference-speed benchmark.`;
+ const study=precisionStudy(),duration=precisionValue(trace.points.at(-1),'time_s');
+ $('precision-status').textContent=`${trace.points.length} retained steps · ${duration.toFixed(2)} simulated seconds · float32 canonical fields: ${trace.summary.canonical_f32_exact_steps}/${trace.points.length} bit-exact · float64 repeat: ${trace.summary.f64_repeat_exact_steps}/${trace.points.length} exact zero. ${$('precision-scale').value==='log'?'Zero values are omitted from logarithmic axes; no artificial error floor is added.':'Zero values are shown on linear axes.'}`;
+ $('precision-receipt').textContent=`${study.verified_cast_values.toLocaleString()} casts checked across ${study.traces.length} scenes. Study elapsed ${study.execution.elapsed_s.toFixed(2)} s with up to ${study.execution.maximum_workers} single-core workers. This includes control replays and is not an inference-speed benchmark.`;
+ $('precision-method-duration').textContent=`${study.traces.length} simulations retain every step for ${trace.points.length} steps (${duration.toFixed(2)} seconds each), including a rectangular domain and a zero-force control. The original 8.53-second recording is retained separately.`;
+ const crossings=trace.summary.first_threshold_crossing;
+ $('precision-threshold').textContent=crossings?'1% relative-difference diagnostic: '+['velocity','pressure','tracer'].map(name=>name+(crossings[name]?` first reaches 1% at step ${crossings[name].step} (${crossings[name].time_s.toFixed(2)} s)`:` stays below 1% throughout ${duration.toFixed(2)} s`)).join('; ')+'. This threshold is not a universal visual or physical validity limit.':'';
+ const evidence='pressure-precision-drift-v1/'+($('precision-recording').value==='minute'?'one-minute/':'');
+ for(const name of ['results','plan','verification'])$('precision-'+name+'-link').href=evidence+name+'.json';
  const tab=$('tab-state-precision');if(tab)tab.textContent=trace.label;
 }
 function setupPrecision(){
- const traces=data.precision?.traces||[];
+ const recordings=$('precision-recording');
+ if(data.precision_minute)recordings.append(new Option('One minute · 3,600 steps','minute'));
+ if(data.precision)recordings.append(new Option('Original · 8.53 seconds','initial'));
+ const traces=precisionStudy()?.traces||[];
  if(!traces.length){$('precision-status').textContent='Precision study has no qualified records yet.';return}
  for(const trace of traces)$('precision-scene').append(new Option(trace.label,trace.id));
  function sceneChanged(){const trace=precisionTrace();$('precision-step').max=trace.points.length;$('precision-step').value=trace.points.length;renderPrecision()}
  $('precision-scene').addEventListener('change',sceneChanged);
  for(const id of ['precision-field','precision-norm','precision-scale'])$(id).addEventListener('change',renderPrecision);
  $('precision-step').addEventListener('input',renderPrecision);sceneChanged();
+ recordings.addEventListener('change',()=>{const id=$('precision-scene').value;$('precision-scene').replaceChildren();for(const trace of precisionStudy().traces)$('precision-scene').append(new Option(trace.label,trace.id));$('precision-scene').value=id;sceneChanged()});
 }

@@ -16,8 +16,10 @@ COLUMNS=['step','time_s','pressure_rms_pa','pressure_relative_l2','velocity_rms_
 def compact(value):return float(format(value,'.9g'))if isinstance(value,float)else value
 
 
-def collect(build,run,output,historical_reference=None):
+def collect(build,run,output,historical_reference=None,config_path=None,prefix_run=None):
     material=read(build/'material.json');root=Path(material['root']);execution=read(run/'execution.json')
+    config_path=config_path or root/'experiments/pressure-precision-drift-v1/config.json'
+    if sha(config_path)!=material['config_sha256']:raise ValueError('Study configuration changed')
     if execution['status']!='completed'or not execution['all_owned_children_reaped']:raise ValueError('Precision workers have not completed and drained')
     sources={};traces=[];summaries=[]
     def source(path):
@@ -28,6 +30,13 @@ def collect(build,run,output,historical_reference=None):
         if receipt['frames_sha256']!=sha(path):raise ValueError('Precision frame source changed')
         values=[json.loads(line)for line in path.read_bytes().splitlines()];frames=values[:-1];complete=values[-1]
         if complete['kind']!='complete'or len(frames)!=row['scene']['steps']:raise ValueError('Missing precision steps')
+        prefix_steps=None
+        if prefix_run is not None:
+            prior_path=prefix_run/row['id']/'frames.jsonl'
+            prior=[json.loads(line)for line in prior_path.read_bytes().splitlines()]
+            if prior[-1]['kind']!='complete'or len(prior)-1>=len(frames):raise ValueError('Expected a shorter completed prefix study')
+            if frames[:len(prior)-1]!=prior[:-1]:raise ValueError('New trajectory does not reproduce historical prefix: '+row['id'])
+            prefix_steps=len(prior)-1;source(prior_path)
         points=[]
         for frame in frames:
             if not(frame['canonical_f32_exact']and frame['f64_repeat_exact']and frame['f32_quality']['qualified']and frame['f64_quality']['qualified']):
@@ -57,6 +66,14 @@ def collect(build,run,output,historical_reference=None):
             worst_projection_cast_velocity=max(f['casts']['projection']['maximum']for f in frames),
             canonical_f32_exact_steps=complete['canonical_f32_exact_steps'],f64_repeat_exact_steps=complete['f64_repeat_exact_steps'],
             historical_native_quality_exact=reference_match,receipt_source=source(folder/'receipt.json'),frames_source=source(folder/'frames.jsonl'))
+        summary.update(prefix_exact_steps=prefix_steps,simulated_duration_s=frames[-1]['time_s'],
+            final={name:frames[-1][name]for name in ['pressure','velocity','tracer']},
+            worst_relative_l2={name:max((f[name]['relative_l2']for f in frames if f[name]['relative_l2']is not None),default=None)
+                for name in ['pressure','velocity','tracer']},
+            relative_difference_threshold=.01,
+            first_threshold_crossing={name:next((dict(step=f['step'],time_s=f['time_s'],relative_l2=f[name]['relative_l2'])
+                for f in frames if f[name]['relative_l2']is not None and f[name]['relative_l2']>=.01),None)
+                for name in ['pressure','velocity','tracer']})
         traces.append(dict(id=row['id'],label=row['label'],scene=row['scene'],points=[[compact(v)for v in p]for p in points],summary=summary))
         summaries.append(summary)
     if any(s['id']=='zero'and(s['worst_pressure_rms_pa']!=0 or s['worst_velocity_rms_m_s']!=0)for s in summaries):
@@ -72,10 +89,12 @@ def collect(build,run,output,historical_reference=None):
     summary=dict(schema=result['schema'],status='completed',method=result['method'],limits=result['limits'],fixed=result['fixed'],
         summaries=summaries,verified_cast_values=result['verified_cast_values'],execution=execution,build=read(build/'build-receipt.json'),sources=sources,
         selection_chart_sha256=material['selection_chart_sha256'],commands=[
-            ['python3','experiments/pressure-precision-drift-v1/build.py','--config','experiments/pressure-precision-drift-v1/config.json','--output',str(build.relative_to(root))],
+            ['python3','experiments/pressure-precision-drift-v1/build.py','--config',str(config_path.relative_to(root)),'--output',str(build.relative_to(root))],
             ['python3','experiments/pressure-precision-drift-v1/run.py','--build',str(build.relative_to(root)),'--output',str(run.relative_to(root))],
             ['python3','experiments/pressure-precision-drift-v1/collect.py','--build',str(build.relative_to(root)),'--run',str(run.relative_to(root)),'--output',str(output.relative_to(root))]
-            + (['--historical-reference',str(historical_reference.relative_to(root))]if historical_reference is not None else [])])
+            + ['--config',str(config_path.relative_to(root))]
+            + (['--historical-reference',str(historical_reference.relative_to(root))]if historical_reference is not None else [])
+            + (['--prefix-run',str(prefix_run.relative_to(root))]if prefix_run is not None else [])])
     (output/'results.json').write_text(json.dumps(summary,indent=2,allow_nan=False)+'\n')
     print(json.dumps(dict(status='completed',scenes=len(traces),steps=sum(len(t['points'])for t in traces),verified_cast_values=result['verified_cast_values'])))
     return result
@@ -84,4 +103,7 @@ def collect(build,run,output,historical_reference=None):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--build',type=Path,required=True);p.add_argument('--run',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--historical-reference',type=Path)
-    args=p.parse_args();collect(args.build.resolve(),args.run.resolve(),args.output.resolve(),args.historical_reference.resolve()if args.historical_reference else None)
+    p.add_argument('--config',type=Path)
+    p.add_argument('--prefix-run',type=Path)
+    args=p.parse_args();collect(args.build.resolve(),args.run.resolve(),args.output.resolve(),args.historical_reference.resolve()if args.historical_reference else None,
+        args.config.resolve()if args.config else None,args.prefix_run.resolve()if args.prefix_run else None)

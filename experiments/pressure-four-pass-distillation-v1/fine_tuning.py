@@ -74,7 +74,7 @@ def relative_square(value, reference):
     return value.flatten(1).square().sum(1) / reference.flatten(1).square().sum(1).clamp_min(1e-300)
 
 
-def loss(model, network, sample, normalization, criterion=None):
+def loss(model, network, sample, normalization, criterion=None, *, final_feedback=None):
     import physical_residual
     pressures = []
     prediction = physical_residual.predict_pressure(network, sample, normalization, model.owner,
@@ -99,4 +99,6 @@ def loss(model, network, sample, normalization, criterion=None):
         error = error-error.mean(dim=(2, 3, 4), keepdim=True)
         target = target-target.mean(dim=(2, 3, 4), keepdim=True)
         result = result + SPEC['teacher_weight']*torch.log1p(relative_square(error, target)/goal**2)
+    if final_feedback is not None:
+        result = result + final_feedback(prediction, sample)
     return result

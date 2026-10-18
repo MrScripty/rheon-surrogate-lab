@@ -1,0 +1,44 @@
+{
+  "id": "7002ae0601464f85ad6878b13ed81a07",
+  "state": "failed",
+  "custody_phase": "drained",
+  "events": [
+    {
+      "at": "2026-10-18T15:33:19.753346+00:00",
+      "message": "Exact owner-approved external recipe admitted.",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-18T15:33:21.740746+00:00",
+      "message": "Starting the approved custodian; recipe waits behind its launch barrier.",
+      "state": "running"
+    },
+    {
+      "at": "2026-10-18T15:33:59.081814+00:00",
+      "message": "External process drained without successful publication.",
+      "state": "failed"
+    }
+  ],
+  "started_at": "2026-10-18T15:33:21.740754+00:00",
+  "finished_at": "2026-10-18T15:33:59.081823+00:00",
+  "execution_resources": {
+    "cpu_affinity": [
+      2,
+      3
+    ],
+    "device": "cuda",
+    "host_memory_reserve_bytes": 8589934592,
+    "memory_reservation_bytes": 8589934592
+  },
+  "custody": {
+    "drained": true,
+    "echild": true,
+    "outcome": "failed",
+    "reason": "nonzero_exit",
+    "leader_returncode": 1
+  },
+  "source": "runs/pressure-adam-replay-v1/managed-failed-02/adam-replay-study-01",
+  "reason": "Captured portable_policy.py rejected max_output_bytes=64 MiB; retained limit was 32 MiB. CUDA training body did not start.",
+  "fix": "Only the captured resource cap changes to 64 MiB; exact policy preflight added before qualification/admission.",
+  "automatic_retry": false
+}

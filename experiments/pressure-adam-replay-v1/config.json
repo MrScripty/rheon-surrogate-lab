@@ -1,0 +1,148 @@
+{
+  "schema": "rheon-adam-replay-study-v1",
+  "baseline_material": "runs/pressure-fundamental-bank-fit-v1/shape-isolation-cpu-01/material.json",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "source_lab": "runs/dependency-migration-v1/lab",
+  "baselines": [
+    "C53",
+    "C66"
+  ],
+  "train_initialization": "C53",
+  "teacher_passes": 8,
+  "teacher_cache_bytes": 268435456,
+  "target_relative_residual": 1e-06,
+  "wall_seconds": 1800,
+  "validation_passes": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "grids": [
+    {
+      "counts_xyz": [
+        13,
+        15,
+        16
+      ],
+      "cells_per_metre": 16
+    },
+    {
+      "counts_xyz": [
+        9,
+        11,
+        11
+      ],
+      "cells_per_metre": 16
+    },
+    {
+      "counts_xyz": [
+        15,
+        9,
+        7
+      ],
+      "cells_per_metre": 8
+    },
+    {
+      "counts_xyz": [
+        11,
+        5,
+        15
+      ],
+      "cells_per_metre": 16
+    },
+    {
+      "counts_xyz": [
+        7,
+        16,
+        5
+      ],
+      "cells_per_metre": 8
+    },
+    {
+      "counts_xyz": [
+        11,
+        12,
+        7
+      ],
+      "cells_per_metre": 16
+    },
+    {
+      "counts_xyz": [
+        5,
+        13,
+        9
+      ],
+      "cells_per_metre": 8
+    },
+    {
+      "counts_xyz": [
+        16,
+        7,
+        11
+      ],
+      "cells_per_metre": 16
+    }
+  ],
+  "modes_zyx": [
+    [
+      0,
+      0,
+      1
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ]
+  ],
+  "exposures_per_case": 200,
+  "bank_cache_max_bytes": 8388608,
+  "bank_sampling_seed": 2026102101,
+  "training_seed": 20261020,
+  "sampling_seed": 2026102001,
+  "learning_rate": 0.0001,
+  "early_feedback_weight": 0.05,
+  "arms": [
+    {
+      "id": "adam-replay",
+      "model_id": "C69-replay",
+      "grid_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "mode_indices": [
+        0
+      ],
+      "steps": 4,
+      "teacher_weight": 0.0
+    }
+  ],
+  "control_study": "docs/plans/pressure-fundamental-bank-fit-v1",
+  "control_projects": "runs/pressure-fundamental-bank-fit-v1",
+  "control_project": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01",
+  "control_result": "docs/plans/pressure-fundamental-bank-fit-v1/shape-isolation/results.json",
+  "aggregate_gradient_relative_l2_tolerance": 5e-06,
+  "control_settings": "runs/pressure-balanced-shapes-v1/balanced-shapes-experiment.json",
+  "control_restore": "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/restore",
+  "capture_updates": [
+    1,
+    10,
+    100,
+    150,
+    200
+  ],
+  "adam_reconstruction_absolute_tolerance": 2e-07,
+  "gradient_reconstruction_relative_tolerance": 5e-06
+}

@@ -36,7 +36,8 @@ def collect(directory,allow_partial=False):
         p=directory/'reports'/(i+'-gradients.json');sources[str(p.relative_to(ROOT))]=sha(p)
     decision=dict(status='running'if allow_partial else'study_completed',baseline_retained='C53',model_promoted=False,
         original_untouched_holdouts_consumed=0,next_action='Await restored CPU qualification.'if allow_partial else
-            'Use the matched schedule result and gradient evidence to plan the next bounded test; retain C53.')
+            'C67 failed the full fitting gate: skip C68, retain C53, and diagnose loss-term gradient conflict before further CUDA training.'if not arms['shape-later-decay']['decision']['capacity_gate_passed']else
+            'Use the completed 24-case result to plan a separate real-frame retention experiment; retain C53.')
     write(directory/'results.json',dict(schema='rheon-shape-decay-study-v1',status='running'if allow_partial else'completed',arms=arms,gradients=gradients,decision=decision,sources=sources))
     write(directory/'decision.json',decision)
     print('Projected',list(arms),decision['status'],flush=True)

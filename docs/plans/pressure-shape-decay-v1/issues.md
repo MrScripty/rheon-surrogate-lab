@@ -18,3 +18,11 @@ The first C67 match check rejected the expected captured config.json hash change
 That file is now compared semantically with only schedule and experiment ID
 excluded; all numerical source files remain byte-identical. No qualification
 was published and no managed mutation occurred in that failed preflight.
+
+
+Sequence closure: C67's restored CPU four-pass and early-pass gates failed.
+This is a retained scientific result, not an execution blocker. Conditional C68
+was skipped and its preparation guard was exercised against the actual failed
+decision. Both managed Runs completed/drained, all published artifacts verified,
+and every owned controller, monitor, CPU worker and headless browser exited and
+was reaped. No unresolved custody, resource-cap violation or recovery remains.

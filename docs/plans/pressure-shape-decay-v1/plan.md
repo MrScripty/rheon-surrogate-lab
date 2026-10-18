@@ -1,6 +1,6 @@
 # Pressure learning across grid shapes: gradient diagnosis and later decay
 
-Status: Active. Canonical operation: start this plan, then continue its slices.
+Status: Completed. Canonical operation: the authorized sequence is closed.
 Jeremy authorized the recorded next proposal by asking to continue improving the
 model after the completed C64–C66 study. This plan owns the new sequence; the
 previous completed plan and its results remain unchanged. Coding-standards MCP
@@ -9,8 +9,8 @@ snapshot: `snapshot:v1:ffcfc3f8-b52a-434e-b57f-d259a0355711`.
 Objective: measure per-shape loss-gradient relationships and test whether delaying
 learning-rate decay improves shared four-pass fitting. C53 remains deployed.
 Scientific success is distinct from accepting a correctly executed experiment.
-Current acceptance: gradient measurements and C67 qualification passed; CUDA
-execution, fresh CPU restore and numerical checks are pending. Blockers: none.
+Current acceptance: execution/evidence verification passed; the C67 scientific
+fitting gate failed. Conditional C68 was correctly skipped. Blockers: none.
 
 Binding design: same captured C66 model, normalization, cubic-grid physics,
 float32 parameters, float64 physical residual/reconstruction, four shared training
@@ -57,8 +57,8 @@ and operator owners. New owners are experiment settings/conditional admission,
 CPU gradient measurement, comparison evidence and its offline visualization.
 No service, persistence schema, deployment or physical/model contract changes.
 
-Milestones: gradient diagnosis (Completed); C67 qualified comparison (Active);
-conditional C68 (Planned, gated); evidence/report closure (Planned). Replan if
+Milestones: gradient diagnosis (Completed); C67 qualified comparison (Completed);
+conditional C68 (Skipped: failed C67 gate); evidence/report closure (Completed). Replan if
 control identity cannot be reproduced, labels/operator disagree, CUDA/restore
 custody is unresolved, nonfinite values occur, or resource caps cannot be met.
 Stop at that boundary and preserve evidence rather than weakening a gate.
@@ -78,6 +78,6 @@ no automatic synchronization; retire after integration or explicit disposition.
 No worktree is created. Keep method, timings, immutable results and source identities
 for review. Ledger: `execution-ledger.md`; issues: `issues.md`; evidence: `reports/`.
 
-Current phase: C67 matched execution. Exactly one next slice: complete its managed
-CUDA training and fresh CPU restore, evaluate fitting/regression results, and
-apply the declared C68 gate.
+Current phase: complete. No further slice is admitted under this plan. C53 remains
+deployed. The next separate proposal is recorded in next-steps.md; retained results,
+commands, timings and verification are in the report and execution ledger.

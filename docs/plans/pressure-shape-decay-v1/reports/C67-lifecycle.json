@@ -1,0 +1,84 @@
+{
+  "status": "completed",
+  "project_id": "d23b16aca66a4233a9d1522e954fb4b3",
+  "runs": [
+    {
+      "phase": "training",
+      "run_id": "e17624f982b54e858698207227010410",
+      "state": "completed",
+      "custody_phase": "drained",
+      "artifacts": 27,
+      "terminal_sha256": "a3e6879a6486326f6b5947858a9d548fe6b2f34b6871684d119cc5899beba88e"
+    },
+    {
+      "phase": "restore",
+      "run_id": "849bdddaeff3476a88b37813e311da4a",
+      "state": "completed",
+      "custody_phase": "drained",
+      "artifacts": 10,
+      "terminal_sha256": "e0680e55e84009ead7abda2c454b9e49a5d254dabac6008904e0d2ee2f7e932b"
+    }
+  ],
+  "controller": {
+    "status": "completed",
+    "elapsed_s": 1230.1049164909928,
+    "command": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python3.12",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-low-mode-tail-v1/manage.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-shape-decay-v1/shape-later-decay-experiment.json",
+      "--assembly",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-shape-decay-v1/shape-later-decay-project-01/assembly.json",
+      "--qualification",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/docs/plans/pressure-shape-decay-v1/reports/C67-qualification.json",
+      "--tuldok",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "--session-file",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/private/owner-session.txt",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-shape-decay-v1/shape-later-decay-study-01",
+      "--endpoint",
+      "http://127.0.0.1:8091",
+      "--catalog-id",
+      "a7da4a8de53541a2a0e2aad08005bb71",
+      "--project-alias",
+      "current-lab"
+    ],
+    "pid": 2329875,
+    "returncode": 0,
+    "owned_controller_reaped": true,
+    "config_sha256": "a0c9713784e70ae71ba7ec6a9e2128825bcd7a5aa9d6edf0d88f97e2a4b90c88",
+    "assembly_sha256": "e0b31a1ed0eb1b3885570818ad18212d31ffe7b79199df0fd064d9f9637c8b22",
+    "qualification_sha256": "b6605067a706c6bd9fc89aeb8ebc3569d8555dfcd07ef1e42209c556eac1affe",
+    "source_sha256": "cc6e88c543554b9ad6401cf4918013dd2b0dc23b171c56f605581ee4446e2ee5",
+    "automatic_retry": false,
+    "remote_custody": "Existing Tuldok catalog owns bounded CUDA and CPU Runs; controller termination is not remote cessation."
+  },
+  "artifact_parity": {
+    "checkpoint-1600.npz": true,
+    "history.json": true,
+    "normalization.json": true,
+    "predictions.npz": true,
+    "weights.npz": true
+  },
+  "trainer_elapsed_s": 72.38629629201023,
+  "training_loop_s": 68.23277568817139,
+  "managed_workflow_elapsed_s": 1223.624925074022,
+  "cpu_evaluation_elapsed_s": 36.14673341601156,
+  "all_cpu_workers_reaped": true,
+  "restore_execution": {
+    "cuda_initialized": false,
+    "device": "cpu",
+    "optimizer_updates": 0
+  },
+  "published_artifacts_collected": 37,
+  "verified_local_artifact_reuses": 9,
+  "baseline_retained": "C53",
+  "model_promoted": false,
+  "C68_started": false,
+  "sources": {
+    "runs/pressure-shape-decay-v1/shape-later-decay-controller-01/execution.json": "32f59e9384ba23390975211cfb599f3b999bb733574dc642ff8735aa84da441f",
+    "docs/plans/pressure-shape-decay-v1/reports/shape-later-decay/result.json": "ccfdfa1df5850ce8386d4d2d76fde7d68b1ce79ffcf959a9fd184d5972114934"
+  }
+}

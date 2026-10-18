@@ -33,3 +33,21 @@
 - The first report invocation found its output subdirectory absent. It failed
   before publishing evidence. The report now creates its fresh destination after
   validation; no model execution was repeated.
+
+- C66 restore submission timed out at the client after 300 seconds. The original
+  controller failed and reaped its child; its unresolved journal is retained.
+  Read-only exact request-key lookup found restore
+  `0b8f06c8e62d4dd481c6b5c2183c2b5b` completed and drained. The existing recovery
+  owner verifies the current API request/graph/material/approval/actor/catalog
+  before reconciling locally and collecting existing artifacts. No resubmission,
+  new restore or retraining is authorized by that timeout. The initial API profile
+  excludes recovery calls; completed managed elapsed time includes the whole gap.
+
+- C65's first report correctly passed its numerical gate, but copied the combined
+  arm's stop-action wording. Its original report is retained in
+  `axis-isolation-report-01`. The corrected report chooses stop actions by arm
+  before gate result; only C64 controls whether isolation runs start. Historical
+  report/verification source bytes are retained by hash in `source-archive`, with
+  an explicit `source-history.json` mapping. Scientific values and model weights
+  are unchanged. Verification checks the exact retained source version when the
+  current script has evolved; data/config/weight identity checks remain exact.

@@ -1,6 +1,6 @@
 # Shared fundamental-mode fitting capacity
 
-Status: Implementing. Jeremy authorized continuing the accepted C62/C63 next
+Status: Completed; execution and evidence verified, C53 retained. Jeremy authorized continuing the accepted C62/C63 next
 proposal. Canonical settings: `experiments/pressure-fundamental-bank-fit-v1/config.json`.
 Branch `experiment/pressure-fundamental-bank-20261017` is private, based on
 `b3e64e726cef931e4f91c80d1fcc8f1ebbae1c27`. Jeremy owns integration after review;
@@ -49,6 +49,9 @@ Write set: new experiment and matching docs directories; an explicit qualificati
 key parameter in the shared controller owner and fitted-evaluator parameter in
 the shared CPU owner, with focused verification;
 narrow C64-C66 reservations and report-link edits in the existing chart helper.
+The restore timeout also required a bounded exact-byte reuse helper in the
+existing four-pass workflow, and explicit historical source-version evidence for
+corrected report metadata. Those workflow repairs are recorded separately.
 Preserve all unrelated dirty work, historical captures, weights and results. Do not
 commit weights, complete simulation fields or credentials. Commit workflow changes
 separately from model/experiment changes, following the cached coding-standards
@@ -60,8 +63,13 @@ failed attempts and CPU numerical results. Independent CPU workers use one threa
 and distinct cores, max three; preserve 12 GiB host reserve plus 2 GiB per worker.
 Fitting-bank resident tensors <=8 MiB; each CUDA trainer wall cap 1,800 seconds.
 
-Next slice: C64 completed CUDA training, fresh CPU restore, readback and CPU
-qualification. Four-pass fitting passed 15/24; eight-pass passed 24/24; early-pass
-case guards failed. Immutable evidence: `combined-fundamentals/capacity-decision.json`.
-Qualify and execute C65/C66 through the existing scheduler, then compare their
-restored CPU gates. C53 remains baseline; C64 real-request worst errors regressed.
+Outcome: C64 passes 15/24 four-pass fitted cases, C65 passes 3/3, C66 passes
+5/8. All fitted cases pass at eight. Only C65 passes its full fitting gate;
+broader regressions prevent promotion. C66's restore client timed out, but the
+exact existing completed Run was recovered read-only with no new remote mutation
+or retraining. All required work completed and owned processes reaped.
+
+Next slice: proposed only in `next-steps.md`: CPU gradient-alignment diagnosis,
+then a matched later-decay shape-only schedule test. No additional jobs started.
+Retain this branch for Jeremy's experiment review under the stated lifecycle
+contract; do not merge, rebase or publish automatically.

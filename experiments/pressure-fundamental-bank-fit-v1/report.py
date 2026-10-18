@@ -86,9 +86,10 @@ def report(config_path,projects,cpu,controller_path,output):
     capacity=all(checks.values())
     decision=dict(status='capacity_screen_completed',baseline_retained='C53',capacity_gate_passed=capacity,
         capacity_checks=checks,model_promoted=False,original_untouched_holdouts_consumed=0,
-        next_action=('Propose a separate mixed-loss retention test; skip the conditional subset fits.'if capacity else
-            'Run the predeclared axis and shape isolation fits.'if arm['id']=='combined-fundamentals'else
-            'Compare the completed axis and shape fitting screens before choosing further work.'),
+        next_action=('Compare the completed axis and shape fitting screens before choosing further work.'
+            if arm['id']!='combined-fundamentals'else
+            'Propose a separate mixed-loss retention test; skip the conditional subset fits.'if capacity else
+            'Run the predeclared axis and shape isolation fits.'),
         interpretation='A bounded pure-fitting screen is not deployment qualification or proof of architectural impossibility.')
     decision['capacity_evidence']={str(p.relative_to(ROOT)):sha(p)for p in [cpu/'C53-fitted.json',
         cpu/(identifier+'-fitted.json'),study/'receipt.json',config_path]}

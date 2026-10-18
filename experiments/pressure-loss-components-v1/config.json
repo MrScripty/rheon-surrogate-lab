@@ -1,0 +1,20 @@
+{
+  "schema": "rheon-loss-components-v1",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "material": "runs/pressure-shape-decay-v1/shape-later-decay-cpu-01/material.json",
+  "models": [
+    "C53",
+    "C66",
+    "C67"
+  ],
+  "objective_models": {
+    "C53": "C66",
+    "C66": "C66",
+    "C67": "C67"
+  },
+  "prior_gradients": "docs/plans/pressure-shape-decay-v1/reports",
+  "vector_workspace_max_bytes": 16777216,
+  "vector_disk_max_bytes": 67108864,
+  "value_relative_tolerance": 1e-12,
+  "gradient_relative_tolerance": 5e-06
+}

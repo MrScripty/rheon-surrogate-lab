@@ -1,0 +1,39 @@
+{
+  "scope": "Original preflight failures, retained rather than counted as passing measurements.",
+  "failures": [
+    {
+      "source": "runs/pressure-loss-components-v1/workers-01/execution.json",
+      "sha256": "f30859ef0a79ba659152d5aec9f4fe69f7e4b9092ea21eecccc9a87ef3d526fa",
+      "status": "failed",
+      "all_workers_reaped": true,
+      "diagnostics": {
+        "C53": "ValueError: Component gradients do not sum to captured full gradient",
+        "C66": "ValueError: Component gradients do not sum to captured full gradient",
+        "C67": "ValueError: Component gradients do not sum to captured full gradient"
+      },
+      "elapsed_s": 5.026330546010286,
+      "worker_returncodes": {
+        "C53": 1,
+        "C66": 1,
+        "C67": 1
+      }
+    },
+    {
+      "source": "runs/pressure-loss-components-v1/workers-02/execution.json",
+      "sha256": "7f37db4dab1241ec24d551714485860e91b9355a673e3809d2dc205632c33cfc",
+      "status": "failed",
+      "all_workers_reaped": true,
+      "diagnostics": {
+        "C53": "ValueError: Reconstructed joint gradient differs from captured full gradient",
+        "C66": "C66 {'canonical': 13, 'final': 13, 'early': 18, 'full': 16, 'without_early': 13}",
+        "C67": "C67 {'canonical': 11, 'final': 12, 'early': 15, 'full': 17, 'without_early': 12}"
+      },
+      "elapsed_s": 5.190792083012639,
+      "worker_returncodes": {
+        "C53": 1,
+        "C66": 0,
+        "C67": 0
+      }
+    }
+  ]
+}

@@ -16,6 +16,7 @@ from current_cohort_records import ROOT, LAB, discover, discover_completed_model
 from drift_pressure_metrics import enrich_drift_pressure
 from pass_sweep_chart import enrich_pass_sweep
 from precision_chart import enrich_precision, precision_markup
+from four_pass_study import four_pass_link, reserved_four_pass_ids
 
 PAGE = ROOT / 'cohort-progress.html'
 MARKER = 'current-managed-pressure-v1'
@@ -49,6 +50,7 @@ def main():
     for key in ('history', 'policy_studies', 'trajectory_studies'):
         data[key] = [r for r in data[key] if r.get('chart_importer') != MARKER]
     points = {p['weights_sha256']: p for p in data['cohort_points']}
+    reserved_ids = reserved_four_pass_ids(ROOT)
     new_entries = discover_completed_models()
     reference_probe = data['frequency_probes'][0]
     for entry in new_entries:
@@ -77,7 +79,10 @@ def main():
         sources[diagnostic['case_source']] = diagnostic['cases_sha256']
         timings = diagnostic['per_case_inference_s']
         if weight not in points:
-            point = dict(id=f'C{len(points)+1:02d}', order=len(points)+1,
+            number = max(int(p['id'][1:]) for p in points.values()) + 1
+            while f'C{number:02d}' in reserved_ids:
+                number += 1
+            point = dict(id=f'C{number:02d}', order=number,
                 name=name, family=entry['family'], weights_sha256=weight,
                 trained_at=datetime.fromtimestamp(history['training_started_unix'], timezone.utc).isoformat(),
                 best_error=min(errors), median_error=statistics.median(errors), worst_error=max(errors),
@@ -398,7 +403,7 @@ def main():
     now=datetime.now(timezone.utc);data['history_refreshed_utc']=now.isoformat();data['snapshot_date']=now.astimezone(ZoneInfo('America/Vancouver')).date().isoformat()
     text=text[:match.start(2)]+json.dumps(data,separators=(',',':'),allow_nan=False)+text[match.end(2):]
     text=re.sub(r'Evidence snapshot · [^<]+','Evidence snapshot · '+now.astimezone(ZoneInfo('America/Vancouver')).strftime('%d %b %Y'),text)
-    PAGE.write_text(precision_markup(text, ROOT))
+    PAGE.write_text(four_pass_link(precision_markup(text, ROOT), ROOT))
     print(f"Updated chart: {len(data['cohort_points'])} checkpoints, {len(data['history'])} history rows, {len(data['drift_traces'])} trajectories.")
 
 

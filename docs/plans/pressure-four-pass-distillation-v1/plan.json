@@ -1,5 +1,5 @@
 {
-  "status": "implementing",
+  "status": "completed",
   "objective": "Canonical native/physical loss plus log1p((relative equation residual / 1e-6)^2) at the final correction; earlier corrections have total weight 0.05. Teacher arm adds weight 0.1 of log1p((mean-free pressure discrepancy / frozen eight-pass correction L2 / 1e-6)^2). Acceptance thresholds unchanged.",
   "owner": "Jeremy; implementation by Codex",
   "branch": "experiment/pressure-four-pass-distillation-20261017",
@@ -27,10 +27,22 @@
   },
   "retention": "Preserve all historical results; record commands, hashes, baseline identities, device, elapsed times, peak memory, run custody, qualified failures and decisions. No weights or full simulation arrays in Git. Branch retained locally for Jeremy review.",
   "no_promotion": true,
-  "stage": "All three matched CUDA trainings and fresh CPU restores completed and drained, with exact local artifact parity. One timed-out restore acknowledgement recovered read-only from the exact completed owner-approved request. Serial CPU qualification is running before fresh-scene candidate selection.",
+  "stage": "Three matched 1500-update CUDA fits, exact fresh CPU restores, five-model isolated 128-case pass sweeps, frozen diagnostic selection, eight independent native/C53/C59 four/eight-pass scene campaigns, postfit spectral diagnosis and chart verification completed. No model promoted.",
   "diagnosis": "After four passes, low spatial modes contain 99.80% (C53) and 99.77% (C55) of remaining pressure-error energy. Coefficients below 1e-4 of original full correction L2 contribute about 0.0010% and 0.00055% of that error respectively; this supports targeting coherent low-mode correction rather than assuming weak-signal noise is dominant.",
   "execution": "Tuldok existing catalog; at most one CUDA run active under its scheduler, with independent CPU restoration/qualification allowed concurrently. Three arms each have 1500 updates and fresh Adam state, matching C53 warm-start tensors and RNG/sample seeds.",
   "registration": "registration.json",
   "normalization": "New log-equation training feedback divides by the initial correction-request residual L2. Snapshot and native physical qualification divide by the full pressure RHS L2. Acceptance remains 1e-6 in the latter convention.",
-  "readback_incident": "readback-recovery.json"
+  "readback_incident": "readback-recovery.json",
+  "decision": "decision.json",
+  "results": "results.json",
+  "report": "index.html",
+  "verification": "verification.json",
+  "four_pass_target_met": false,
+  "branch_retention": "Private experiment branch retained for Jeremy review; no automatic rebase or integration. Retire only after accepted integration or an explicit owner disposition.",
+  "next_sequence": [
+    "Before another fit, measure low-mode contraction on small odd and thin rectangular grids using newly generated analytical training cases. Consumed-validation tail examples include 13x15x16, 9x11x11 and 15x9x7; generate new labels/seeds rather than fitting their recorded validation pressures.",
+    "Freeze a balanced train-only hard-case bank and compare a tail-aware final-pass physical/low-mode objective against the existing objective, with matched C53 initialization and explicit earlier-pass/eight-pass regression guards. Use a bounded screen before a longer fit.",
+    "Require the four-pass snapshot gate and retained eight-pass stability before selecting for independent scenes. Keep current fresh scenes as regression tests and use untouched scenes for the next independent decision.",
+    "Separately profile Tuldok restore/readback validation and request-key lookup. Managed workflows took roughly 38-40 minutes for 2.6-5.6-minute trainers; retain authority and hash checks while reducing repeated work."
+  ]
 }

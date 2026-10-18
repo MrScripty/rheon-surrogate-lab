@@ -1,0 +1,51 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),{spawn}=require('node:child_process'),assert=require('node:assert/strict');
+const root=process.cwd(),out=path.resolve(process.argv[3]||'runs/pressure-four-pass-distillation-v1/browser');fs.mkdirSync(out,{recursive:true});
+const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'drift-magnitude-browser-'));
+const binary=process.argv[2];if(!binary)throw Error('Pass the Chromium headless executable as the first argument');
+const child=spawn(binary,['--headless','--no-sandbox','--disable-gpu','--no-first-run','--remote-debugging-port=0','--window-size=1440,1000','--user-data-dir='+temporary,'about:blank'],{stdio:['ignore','ignore','pipe']});
+let ws,logs='',sequence=0;const pending=new Map(),errors=[],checks=[];child.stderr.on('data',b=>logs+=b);
+const pause=ms=>new Promise(r=>setTimeout(r,ms));
+async function until(fn){for(let i=0;i<200;i++){const v=await fn();if(v)return v;await pause(100)}throw Error('Timed out waiting for browser')}
+let send,evaluate;
+(async()=>{
+ const port=await until(()=>{try{return fs.readFileSync(path.join(temporary,'DevToolsActivePort'),'utf8').split('\n')[0]}catch{return null}});
+ const target=await until(async()=>{const targets=await(await fetch('http://127.0.0.1:'+port+'/json')).json();return targets.find(t=>t.type==='page')});
+ ws=new WebSocket(target.webSocketDebuggerUrl);await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject});
+ send=(method,params={})=>new Promise((resolve,reject)=>{const id=++sequence;const timer=setTimeout(()=>{pending.delete(id);reject(Error('CDP timeout '+method))},30000);pending.set(id,{resolve:v=>{clearTimeout(timer);resolve(v)},reject});ws.send(JSON.stringify({id,method,params}))});
+ ws.onmessage=event=>{const m=JSON.parse(event.data);if(m.id){const entry=pending.get(m.id);if(entry){pending.delete(m.id);m.error?entry.reject(Error(JSON.stringify(m.error))):entry.resolve(m.result)}}if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails)};
+ evaluate=async expression=>{const r=await send('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value};
+ await send('Runtime.enable');await send('Page.enable');await send('Page.navigate',{url:require('node:url').pathToFileURL(path.join(root,'docs/plans/cohort-progress.html')).href});
+ await until(()=>evaluate(`document.readyState==="complete"&&!!document.querySelector('a[href="pressure-four-pass-distillation-v1/index.html"]')`));
+ await evaluate(`document.querySelector('a[href="pressure-four-pass-distillation-v1/index.html"]').click()`);
+ await until(()=>evaluate('document.readyState==="complete"&&document.querySelectorAll("#accuracy circle").length===20'));
+ checks.push({name:'historical_dashboard_link_opens_completed_study',passed:true});
+ const change=async(id,value)=>evaluate(`(()=>{const e=document.getElementById(${JSON.stringify(id)});e.value=${JSON.stringify(value)};e.dispatchEvent(new Event('change',{bubbles:true}));return e.value})()`);
+ assert.equal(await evaluate('document.querySelectorAll("#snapshot-table tbody tr").length'),20);checks.push({name:'five_models_four_pass_settings_bound_to_retained_summary',passed:true});
+ await evaluate('document.querySelector("[data-model=C55]").click()');assert.equal(await evaluate('document.querySelectorAll("#accuracy circle").length'),16);
+ await evaluate('document.querySelector("[data-model=C55]").click()');checks.push({name:'model_filter_updates_plot_and_measurement_table',passed:true});
+ await change('x-axis','time');await change('error','worst_same_request_pressure_rms_pa');
+ await evaluate('document.querySelector("#accuracy circle").focus()');assert.match(await evaluate('document.getElementById("detail").textContent'),/passes;.*qualified;.*ms/);checks.push({name:'latency_axis_absolute_error_and_keyboard_details',passed:true});
+ await change('error','worst_equation_residual');
+ assert.equal(await evaluate('document.querySelectorAll("#scene option").length'),8);
+ for(let scene=0;scene<8;scene++)for(const metric of ['absolute','relative','reference','equation']){
+  await change('scene',String(scene));await change('drift-metric',metric);
+  assert.equal(await evaluate('Array.from(document.querySelectorAll("svg path")).some(p=>/NaN|Infinity/.test(p.getAttribute("d")||""))'),false);
+  const observed=await evaluate('document.querySelectorAll("#drift [data-rejection]").length');
+  const expected=await evaluate(`Object.values(JSON.parse(document.getElementById('study-data').textContent).campaigns).reduce((n,c)=>n+c.episodes[${scene}].rejected.length,0)`);
+  assert.equal(observed,expected);
+ }
+ checks.push({name:'all_eight_scenes_four_metrics_finite_rejections_retained_without_fake_samples',passed:true});
+ assert.doesNotMatch(await evaluate('document.getElementById("rejections").textContent'),/\[object Object\]/);assert.match(await evaluate('document.getElementById("rejections").textContent'),/equation residual.*target/);
+ await evaluate('document.querySelector("[data-policy=native-control]").click()');assert.equal(await evaluate('document.querySelectorAll("#drift [data-curve]").length'),2);await evaluate('document.querySelector("[data-policy=native-control]").click()');checks.push({name:'drift_policy_filter_and_readable_rejection_reason',passed:true});
+ assert.equal(await evaluate('document.querySelectorAll("#training tbody tr").length'),3);assert.match(await evaluate('document.getElementById("training").textContent'),/exact artifact parity/);
+ await evaluate('document.querySelectorAll("#models input").forEach(e=>{if(e.checked)e.click()})');assert.equal(await evaluate('document.querySelectorAll("#accuracy circle").length'),0);
+ assert.equal(await evaluate('Array.from(document.querySelectorAll("svg path")).some(p=>/NaN|Infinity/.test(p.getAttribute("d")||""))'),false);
+ await evaluate('document.querySelectorAll("#models input").forEach(e=>{if(!e.checked)e.click()})');checks.push({name:'empty_filter_is_finite_and_recovers',passed:true});
+ await change('scene','0');await change('drift-metric','absolute');
+ const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});fs.writeFileSync(path.join(out,'four-pass-desktop.png'),Buffer.from(shot.data,'base64'));
+ await evaluate('document.getElementById("drift").scrollIntoView({block:"center"})');const drift=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});fs.writeFileSync(path.join(out,'four-pass-drift.png'),Buffer.from(drift.data,'base64'));
+ await send('Emulation.setDeviceMetricsOverride',{width:430,height:932,deviceScaleFactor:1,mobile:false});assert.equal(await evaluate('document.documentElement.scrollWidth>innerWidth+1'),false);checks.push({name:'mobile_layout_has_no_document_overflow',passed:true});
+ assert.deepEqual(errors,[]);
+ fs.writeFileSync(path.join(out,'browser-receipt.json'),JSON.stringify({status:'passed',html_sha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(root,'docs/plans/pressure-four-pass-distillation-v1/index.html'))).digest('hex'),source_sha256:require('node:crypto').createHash('sha256').update(fs.readFileSync(__filename)).digest('hex'),browser:binary,command:['node',__filename,...process.argv.slice(2)],checks,console_errors:errors},null,2)+'\n');console.log(JSON.stringify({status:'passed',checks,console_errors:errors},null,2));
+})().catch(e=>{console.error(e);fs.writeFileSync(path.join(out,'browser-failure.log'),String(e)+'\n'+logs);process.exitCode=1}).finally(async()=>{if(ws)ws.close();if(child.exitCode===null){child.kill('SIGTERM');await new Promise(resolve=>{child.once('exit',resolve);setTimeout(()=>{if(child.exitCode===null)child.kill('SIGKILL')},3000).unref()})}fs.rmSync(temporary,{recursive:true,force:true})});

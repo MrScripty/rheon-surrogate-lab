@@ -1,0 +1,192 @@
+{
+  "status": "completed_without_model_promotion",
+  "baseline_retained": "C53",
+  "diagnostic_selection": "C59",
+  "finding": "Four-pass warm-start feedback improves typical pressure errors but does not remove the difficult tail. None of the three arms achieves a qualified pass reduction.",
+  "four_pass": {
+    "C53": {
+      "passes": 4,
+      "cases": 128,
+      "equation_passes": 7,
+      "worst_equation_residual": 9.785532661535126e-05,
+      "median_equation_residual": 9.679902078321546e-06,
+      "median_inference_ms": 12.197529984405264,
+      "worst_same_request_pressure_rms_pa": 0.013962263531225694
+    },
+    "C55": {
+      "passes": 4,
+      "cases": 128,
+      "equation_passes": 5,
+      "worst_equation_residual": 0.0001566036441181134,
+      "median_equation_residual": 1.0777094899984677e-05,
+      "median_inference_ms": 12.318135020905174,
+      "worst_same_request_pressure_rms_pa": 0.027713757204473156
+    },
+    "C57": {
+      "passes": 4,
+      "cases": 128,
+      "equation_passes": 8,
+      "worst_equation_residual": 0.0001133006051889427,
+      "median_equation_residual": 8.129196946671387e-06,
+      "median_inference_ms": 11.982938493019901,
+      "worst_same_request_pressure_rms_pa": 0.027205326444581332
+    },
+    "C58": {
+      "passes": 4,
+      "cases": 128,
+      "equation_passes": 8,
+      "worst_equation_residual": 0.0001079803179622199,
+      "median_equation_residual": 6.8193776147876184e-06,
+      "median_inference_ms": 11.991693507297896,
+      "worst_same_request_pressure_rms_pa": 0.016243516701781566
+    },
+    "C59": {
+      "passes": 4,
+      "cases": 128,
+      "equation_passes": 8,
+      "worst_equation_residual": 0.00010189623276510213,
+      "median_equation_residual": 6.766599539880154e-06,
+      "median_inference_ms": 12.175379510154016,
+      "worst_same_request_pressure_rms_pa": 0.01512715146517916
+    }
+  },
+  "eight_pass": {
+    "C53": {
+      "passes": 8,
+      "cases": 128,
+      "equation_passes": 128,
+      "worst_equation_residual": 1.4522193519231677e-07,
+      "median_equation_residual": 4.730647629799917e-09,
+      "median_inference_ms": 24.221624989877455,
+      "worst_same_request_pressure_rms_pa": 1.8946021642570224e-05
+    },
+    "C55": {
+      "passes": 8,
+      "cases": 128,
+      "equation_passes": 128,
+      "worst_equation_residual": 5.863962626392319e-07,
+      "median_equation_residual": 6.546265204520687e-09,
+      "median_inference_ms": 24.47405201382935,
+      "worst_same_request_pressure_rms_pa": 4.304454466545227e-05
+    },
+    "C57": {
+      "passes": 8,
+      "cases": 128,
+      "equation_passes": 128,
+      "worst_equation_residual": 1.6211624948626176e-07,
+      "median_equation_residual": 3.909747629514091e-09,
+      "median_inference_ms": 23.785643541486934,
+      "worst_same_request_pressure_rms_pa": 4.437918776753918e-05
+    },
+    "C58": {
+      "passes": 8,
+      "cases": 128,
+      "equation_passes": 128,
+      "worst_equation_residual": 2.074389809261811e-07,
+      "median_equation_residual": 2.3301115246678254e-09,
+      "median_inference_ms": 23.84255302604288,
+      "worst_same_request_pressure_rms_pa": 3.191432978578215e-05
+    },
+    "C59": {
+      "passes": 8,
+      "cases": 128,
+      "equation_passes": 128,
+      "worst_equation_residual": 1.7988929196473786e-07,
+      "median_equation_residual": 2.432025662058802e-09,
+      "median_inference_ms": 24.113804480293766,
+      "worst_same_request_pressure_rms_pa": 2.7495105324406108e-05
+    }
+  },
+  "selected_median_paired_error_reduction_percent": 32.86605572986547,
+  "selected_worst_error_increase_percent": 4.129469789247975,
+  "training_total_pressure_error_sum_of_squares_reduction_percent": 80.59587517040714,
+  "fresh_scenes": {
+    "native-control": {
+      "completed": 8,
+      "requested": 8,
+      "steps_per_scene": 512,
+      "warmup_steps": 15,
+      "elapsed_s": 74.7471228519862,
+      "first_rejection_step": null,
+      "worst_accepted_trajectory_pressure_relative_l2": 6.025520813503523e-15
+    },
+    "C53-p8": {
+      "completed": 8,
+      "requested": 8,
+      "steps_per_scene": 512,
+      "warmup_steps": 15,
+      "elapsed_s": 196.66323112000828,
+      "first_rejection_step": null,
+      "worst_accepted_trajectory_pressure_relative_l2": 3.773751146187803e-06
+    },
+    "C59-p4": {
+      "completed": 0,
+      "requested": 8,
+      "steps_per_scene": 512,
+      "warmup_steps": 15,
+      "elapsed_s": 7.820672314002877,
+      "first_rejection_step": 16,
+      "worst_accepted_trajectory_pressure_relative_l2": null
+    },
+    "C59-p8": {
+      "completed": 8,
+      "requested": 8,
+      "steps_per_scene": 512,
+      "warmup_steps": 15,
+      "elapsed_s": 182.5166731000063,
+      "first_rejection_step": null,
+      "worst_accepted_trajectory_pressure_relative_l2": 3.9864255043898645e-06
+    }
+  },
+  "timing": {
+    "training": [
+      {
+        "model": "C57",
+        "updates": 1500,
+        "trainer_elapsed_s": 155.25903444099822,
+        "loop_and_bank_preparation_s": 151.37137389183044,
+        "managed_workflow_elapsed_s": 2259.314011561015
+      },
+      {
+        "model": "C58",
+        "updates": 1500,
+        "trainer_elapsed_s": 292.33861228098976,
+        "loop_and_bank_preparation_s": 287.31934571266174,
+        "managed_workflow_elapsed_s": 2343.889992301003
+      },
+      {
+        "model": "C59",
+        "updates": 1500,
+        "trainer_elapsed_s": 335.9520231820061,
+        "loop_and_bank_preparation_s": 332.279705286026,
+        "managed_workflow_elapsed_s": 2409.201230484381
+      }
+    ],
+    "isolated_cpu_all_five_models_s": 61.65271990100155,
+    "no_qualified_speedup": true
+  },
+  "interpretation": [
+    "All four-pass fresh proposals reject at step 16 after 15 native warm-up steps; previous-pressure context is present. No invalid AI state was accepted.",
+    "C59 improves 95 of the 128 four-pass snapshots but worsens 33; the largest paired regression is about 3.17x. Aggregate training pressure error and median validation error do not certify worst-case accuracy.",
+    "The selected four-pass median residual is 6.77e-6 against the 1e-6 target, and 120/128 snapshots fail it. The gap is not confined to a single outlier; the next objective must improve typical contraction and protect the tail.",
+    "The eight-pass candidate passes all snapshots and fresh scenes, but does not improve the worst snapshot residual or worst observed trajectory drift over C53. A longer eight-pass rollout is not the deciding next experiment.",
+    "Single seed, 1500-update screening. These results reject promotion of these checkpoints, not the possibility of better future training.",
+    "The eight fresh scenes are now consumed evaluation data. Preserve them as regression cases; do not call them untouched in later tuning. Original historical holdouts were not loaded.",
+    "One restore HTTP acknowledgement timed out after the Run had committed. Exact request recovery used no remote mutations or retraining; full fresh CPU artifact parity passed."
+  ],
+  "next_sequence": [
+    "Before another fit, measure low-mode contraction on small odd and thin rectangular grids using newly generated analytical training cases. Consumed-validation tail examples include 13x15x16, 9x11x11 and 15x9x7; generate new labels/seeds rather than fitting their recorded validation pressures.",
+    "Freeze a balanced train-only hard-case bank and compare a tail-aware final-pass physical/low-mode objective against the existing objective, with matched C53 initialization and explicit earlier-pass/eight-pass regression guards. Use a bounded screen before a longer fit.",
+    "Require the four-pass snapshot gate and retained eight-pass stability before selecting for independent scenes. Keep current fresh scenes as regression tests and use untouched scenes for the next independent decision.",
+    "Separately profile Tuldok restore/readback validation and request-key lookup. Managed workflows took roughly 38-40 minutes for 2.6-5.6-minute trainers; retain authority and hash checks while reducing repeated work."
+  ],
+  "resources": {
+    "maximum_simulation_workers": 3,
+    "threads_per_simulation": 1,
+    "postfit_diagnostic_workers": 1,
+    "postfit_diagnostic_scope": "A short train-only diagnostic on a fourth distinct CPU core overlapped the simulation pool; no fitting and no GPU work.",
+    "lowest_observed_available_host_bytes": 51756343296
+  },
+  "results_sha256": "cc2dfbf839d955fcdbfffd8f0a246115fe2c3470da6bbc193d64ce9ef75e2d13",
+  "model_promotion": false
+}

@@ -5,8 +5,12 @@ import re
 
 
 def reserved_four_pass_ids(base):
-    tail = Path(base).resolve().parents[1] / 'experiments/pressure-low-mode-tail-v1/config.json'
-    reserved = {row['model_id'] for row in json.loads(tail.read_text())['arms']} if tail.is_file() else set()
+    experiments = Path(base).resolve().parents[1] / 'experiments'
+    reserved = set()
+    for study in ['pressure-low-mode-tail-v1', 'pressure-single-mode-fit-v1']:
+        config = experiments / study / 'config.json'
+        if config.is_file():
+            reserved.update(row['model_id'] for row in json.loads(config.read_text())['arms'])
     result = Path(base) / 'pressure-four-pass-distillation-v1/results.json'
     if not result.is_file():
         return reserved

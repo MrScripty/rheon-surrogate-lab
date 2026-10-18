@@ -1,0 +1,25 @@
+{
+  "schema": "rheon-single-mode-fit-study-v1",
+  "baseline_material": "runs/pressure-low-mode-tail-v1/cpu-01/material.json",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "source_lab": "runs/dependency-migration-v1/lab",
+  "baselines": ["C53", "C60", "C61"],
+  "train_initialization": "C53",
+  "teacher_passes": 8,
+  "teacher_cache_bytes": 268435456,
+  "target_relative_residual": 0.000001,
+  "wall_seconds": 1800,
+  "validation_passes": [1, 2, 4, 8],
+  "fitting_case": {"counts_xyz": [13, 15, 16], "cells_per_metre": 16, "mode_zyx": [0, 0, 1], "amplitude_reference": "original-train-correction-rms"},
+  "arms": [
+    {"id": "single-mode-fit", "model_id": "C62", "steps": 4, "teacher_weight": 0.0,
+     "updates": 2000, "learning_rate": 0.0001, "training_seed": 20261020, "sampling_seed": 2026102001,
+     "early_feedback_weight": 0.05,
+     "schedule": [{"update": 1000, "learning_rate": 0.00001}, {"update": 1500, "learning_rate": 0.000001}, {"update": 1750, "learning_rate": 0.0000001}, {"update": 1900, "learning_rate": 0.00000001}]},
+    {"id": "frequency-curriculum", "model_id": "C63", "steps": 4, "teacher_weight": 0.1,
+     "updates": 1500, "learning_rate": 0.00001, "training_seed": 20261019, "sampling_seed": 2026101901,
+     "early_feedback_weight": 0.05,
+     "schedule": [{"update": 1000, "learning_rate": 0.000001}, {"update": 1350, "learning_rate": 0.0000001}]}
+  ],
+  "curriculum": {"seed": 2026101907, "fundamental_patterns": 12, "other_low_patterns": 12, "high_patterns": 8, "max_low_mode": 3}
+}

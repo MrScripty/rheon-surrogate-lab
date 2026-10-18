@@ -1,0 +1,31 @@
+{
+  "schema": "rheon-aggregate-gradient-diagnosis-v1",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "material": "runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/material.json",
+  "models": [
+    "C53",
+    "C66",
+    "C69"
+  ],
+  "objective_models": {
+    "C53": "C66",
+    "C66": "C66",
+    "C69": "C69"
+  },
+  "target_case": 7,
+  "per_case_norm_caps": [
+    1.0
+  ],
+  "global_norm_cap": 1.0,
+  "norm_epsilon": 1e-06,
+  "value_relative_tolerance": 1e-12,
+  "gradient_relative_tolerance": 5e-06,
+  "vector_workspace_max_bytes": 16777216,
+  "vector_disk_max_bytes": 67108864,
+  "prior_components": "docs/plans/pressure-loss-components-v1/reports",
+  "fitting_results": {
+    "C53": "runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C53-fitted.json",
+    "C66": "runs/pressure-fundamental-bank-fit-v1/shape-isolation-cpu-01/C66-fitted.json",
+    "C69": "runs/pressure-balanced-shapes-v1/balanced-shapes-cpu-01/C69-fitted.json"
+  }
+}

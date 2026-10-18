@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shared gradient diagnosis — C53/C66/C69</title>
+<style>
+:root{color-scheme:dark}body{font:16px system-ui;margin:0;background:#101820;color:#e7eff6}main{max-width:1200px;margin:auto;padding:24px}a{color:#8bcfff}h2{margin-top:32px}p{line-height:1.6}.note{color:#bed0dd}label{display:inline-block;margin:10px 18px 10px 0}select{background:#203341;color:inherit;font:inherit;padding:6px}svg{display:block;width:100%;background:#16232d;border-radius:8px}svg text{fill:#cfdeeb;font:13px system-ui}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:8px;border-bottom:1px solid #345;text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}rect:focus{outline:2px solid white}#finding{border-left:4px solid #ffbd69;background:#213543;padding:16px}.identity{overflow-wrap:anywhere}#detail{min-height:2em}.target{color:#ffce88}
+</style><main>
+<p><a href="../cohort-progress.html">← Cohort progress</a> · <a href="plan.md">Method</a> · <a href="execution-ledger.md">Ledger</a> · <a href="results.json">Scalar evidence</a> · <a href="reports/verification.json">Verification</a></p>
+<h1>Does the shared gradient oppose the weak shape?</h1>
+<p class="note">Frozen C53, C66 and C69 checkpoints on the same eight X-fundamental cases. Three CPU workers; no optimizer update, CUDA or new simulations. Compare raw averaging with a cap of 1 on each case gradient before averaging; both retain the final global cap of 1. C53 remains deployed.</p>
+<p id="finding"></p>
+<label>Checkpoint <select id="model"><option>C53</option><option>C66</option><option selected>C69</option></select></label>
+<label>Loss term <select id="term"><option value="full">Full objective</option><option value="final">Final-pass equation feedback</option><option value="early">Weighted early-pass feedback</option><option value="without_early">Canonical + final</option><option value="canonical">Canonical pressure loss</option></select></label>
+<h2>Alignment with each shared direction</h2>
+<p class="note">Cosine +1 means that stepping opposite the shared gradient locally decreases the selected case loss; −1 means it increases that loss. This is an infinitesimal Euclidean statement, not measured pressure improvement or Adam's actual update. Gold marks case 7, the weak 16×7×11 grid. Hover or keyboard-focus a bar for its retained value.</p>
+<svg id="alignment" viewBox="0 0 960 420" role="img" aria-label="Eight cases' raw and capped shared-gradient alignment"></svg><p id="detail" aria-live="polite"></p>
+<h2>Magnitude and signed influence</h2>
+<p class="note">Norm budget is a fraction of summed gradient lengths. Signed contribution is a projection onto the common mean: it can be negative, and all eight contributions sum to one. It is not a probability or a loss weight. Pressure residual is the four-pass CPU result before any perturbation.</p>
+<div class="scroll"><table id="cases"><thead><tr><th>Case / grid X×Y×Z</th><th>Cells/m</th><th>Pressure residual</th><th>Full gradient L2</th><th>Raw norm budget</th><th>Capped norm budget</th><th>Raw signed influence</th><th>Capped signed influence</th></tr></thead><tbody></tbody></table></div>
+<h2>Case 7: separate final and early feedback</h2>
+<p id="direction-scale" class="note"></p>
+<div class="scroll"><table id="target"><thead><tr><th>Term</th><th>Gradient L2</th><th>Raw cosine</th><th>Capped cosine</th><th>Raw directional derivative</th><th>Capped directional derivative</th></tr></thead><tbody></tbody></table></div>
+<p class="note">Negative derivative means local loss descent along the negative globally clipped mean. Derivative magnitudes depend on direction length; compare cosines when inspecting orientation. Loss feedback and final physical pressure accuracy remain distinct.</p>
+<h2>Time, memory and measurement limits</h2>
+<div class="scroll"><table id="runtime"><thead><tr><th>Checkpoint</th><th>Worker seconds</th><th>Peak host MiB</th><th>CPU / threads</th><th>Separate-gradient limits / 8</th></tr></thead><tbody></tbody></table></div>
+<p id="limits" class="note"></p><p id="identity" class="identity"></p>
+<p><a href="next-steps.md">Next proposal and its limits</a> · <a href="reports/math-check.json">Literal vector oracle</a> · <a href="reports/joint-guard.json">Actual derivative guard</a> · <a href="reports/cancellation-final.json">Process cancellation</a></p>
+</main><script id="study-data" type="application/json">__STUDY_DATA__</script><script>
+'use strict';
+const data=JSON.parse(document.getElementById('study-data').textContent),$=id=>document.getElementById(id),ns='http://www.w3.org/2000/svg';
+const selected=()=>data.models[$('model').value],fmt=n=>n===null?'undefined':n.toExponential(3),cos=n=>n===null?'undefined':n.toFixed(6),pct=n=>n===null?'undefined':(100*n).toFixed(2)+'%';
+function rows(id,values){const body=$(id).querySelector('tbody');body.replaceChildren();for(const valuesRow of values){const tr=document.createElement('tr');for(const value of valuesRow){const td=document.createElement('td');td.textContent=value;tr.append(td)}body.append(tr)}}
+function node(tag,attrs,text,parent){const e=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(text!==undefined)e.textContent=text;if(parent)parent.append(e);return e}
+function render(){
+ const m=selected(),term=$('term').value,summary=data.summary.find(v=>v.model===m.model),policies=Object.entries(m.policies);
+ const svg=$('alignment');svg.replaceChildren();const Y=v=>200-140*v;
+ for(const value of [-1,-.5,0,.5,1]){node('line',{x1:70,x2:930,y1:Y(value),y2:Y(value),stroke:value===0?'#9bb4c8':'#345'},undefined,svg);node('text',{x:15,y:Y(value)+4},String(value),svg)}
+ policies.forEach(([name,p],j)=>{
+  const color=j?'#ffbd69':'#83d3ff';node('text',{x:100+j*320,y:25},j?'Per-case cap, then mean':'Raw mean',svg);
+  p.cases.forEach((c,i)=>{
+   const value=c.terms[term].cosine_mean,x=87+i*103+j*32,y=value===null?Y(0):Y(value);
+   const bar=node('rect',{x,y:Math.min(Y(0),y),width:28,height:Math.max(2,Math.abs(Y(0)-y)),fill:color,stroke:i===data.target_case?'#ffe0a5':'none','stroke-width':2,tabindex:0},undefined,svg);
+   const description=m.model+' case '+i+' '+(j?'capped':'raw')+' '+term+' cosine '+cos(value);node('title',{},description,bar);
+   bar.addEventListener('focus',()=>$('detail').textContent=description);bar.addEventListener('mouseenter',()=>$('detail').textContent=description);
+  });
+ });
+ m.cases.forEach((c,i)=>node('text',{x:115+i*103,y:375,'text-anchor':'middle'},String(i),svg));node('text',{x:500,y:407,'text-anchor':'middle'},'Fitting case (see grid dimensions below)',svg);
+ const raw=m.policies.raw_mean,capped=m.policies['per_case_cap_1.0'];
+ rows('cases',m.cases.map((c,i)=>[i+': '+c.counts_xyz.join('×'),c.cells_per_metre,fmt(c.pressure_residual_by_pass['4']),fmt(raw.cases[i].gradient_l2),pct(raw.cases[i].norm_budget_share),pct(summary.policies['per_case_cap_1.0'].effective_norm_budget_shares[i]),pct(raw.cases[i].signed_mean_contribution),pct(capped.cases[i].signed_mean_contribution)]));
+ const target=data.target_case;
+ rows('target',m.terms.map(t=>[t,fmt(m.term_norms[t][target]),cos(raw.cases[target].terms[t].cosine_mean),cos(capped.cases[target].terms[t].cosine_mean),fmt(raw.cases[target].terms[t].derivative_along_negative_clipped_mean),fmt(capped.cases[target].terms[t].derivative_along_negative_clipped_mean)]));
+ $('direction-scale').textContent='After the global clip, raw direction L2 = '+raw.clipped_mean_l2.toFixed(6)+'; capped direction L2 = '+capped.clipped_mean_l2.toFixed(6)+'.';
+ $('identity').textContent=m.model+' weights SHA-256: '+m.weights_sha256;
+}
+$('model').addEventListener('change',render);$('term').addEventListener('change',render);
+$('finding').textContent=data.decision.finding+' '+data.decision.next_action;
+rows('runtime',data.summary.map(s=>{const m=data.models[s.model];return[s.model,s.elapsed_s.toFixed(3),(s.peak_rss_bytes/2**20).toFixed(2),m.cpu+' / '+m.threads,s.separate_gradient_precision_limited_cases+'/8']}));
+$('limits').textContent='Concurrent pool: '+data.execution.elapsed_s.toFixed(3)+' seconds. All workers reaped. Captured versus reconstructed joint gradients match exactly on 24/24 cases. Separate float32 backwards exceed the retained 5e-6 additivity check on '+data.decision.separate_gradient_precision_limited_cases+'/24 cases; those are recorded limits, not passes. Direct-vector means verify the plotted projections. Exact Adam moments were not retained: actual optimizer-direction replay is unavailable. No model accuracy improvement was measured in this diagnostic.';
+render();
+</script></html>

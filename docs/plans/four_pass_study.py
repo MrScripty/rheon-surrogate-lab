@@ -38,6 +38,8 @@ def four_pass_link(text, base):
         block = block.replace(end, '<p class="note"><a href="pressure-loss-components-v1/index.html">Loss-component diagnosis: C53/C66/C67</a> — final/early shape-gradient alignment, precision limitations and retained methods/timings.</p>\n' + end)
     if (Path(base) / 'pressure-balanced-shapes-v1/index.html').is_file():
         block = block.replace(end, '<p class="note"><a href="pressure-balanced-shapes-v1/index.html">Balanced shape aggregation: C69</a> — matched example work, distinct Adam-update counts, CPU fitting/regression accuracy and retained time/memory.</p>\n' + end)
+    if (Path(base) / 'pressure-aggregate-gradients-v1/index.html').is_file():
+        block = block.replace(end, '<p class="note"><a href="pressure-aggregate-gradients-v1/index.html">Shared gradient diagnosis: C53/C66/C69</a> — case influence, final/early directions, per-case norm caps and retained CPU timings/limits.</p>\n' + end)
     if start in text or end in text:
         if text.count(start) != 1 or text.count(end) != 1:
             raise ValueError('Ambiguous study link region')

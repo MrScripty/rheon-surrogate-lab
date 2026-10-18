@@ -51,7 +51,9 @@ whole-workflow elapsed time, memory, retained CPU timing, Run custody and failur
 CPU workers use one thread on distinct cores, max three, with 12 GiB host reserve
 plus 2 GiB per worker. Teacher cache <=256 MiB; CUDA wall cap 1,800 s per arm.
 
-CPU source/math/autograd qualification passed without updates. C62 is executing
-through the existing managed pipeline; retain full readback before evaluating.
+CPU source/math/autograd qualification passed without updates. C62 completed CUDA
+training, fresh CPU restore and the full recorded CPU screen. Its fitted-case gate
+passed: four-pass residual 8.82325286189385e-9, eight-pass 2.545420251713197e-12.
+Its broader regression guards failed; it remains a diagnostic specialist.
 
-Next slice: complete C62 CUDA/CPU restore and evaluate the fitted-case gate.
+Next slice: qualify and execute C63's matched frequency curriculum, then its CPU screen.

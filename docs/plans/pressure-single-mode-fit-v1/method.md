@@ -57,3 +57,29 @@ single-mode-fit --output <fresh-project>`. CPU `qualify.py --project <project>
 <fresh-controller>`. The session contents, weights and complete field arrays
 remain outside Git. `evaluate.py` consumes the completed controller receipt and
 the actual Project identity through its retained assembly.
+
+## Conditional C63 curriculum
+
+C62 passed its restored CPU gate. C63 starts again from C53, rather than from the
+specialist. Its complete training configuration matches C60 except the Project
+ID, and its objective matches except the arm name. Numerical source is identical
+except the supplemental-bank generator and its captured curriculum descriptor.
+Primary analytical-bank generation delegates directly to the unchanged owner.
+The 1,500-update seeds, learning-rate schedule, teacher weight 0.1, early weight
+0.05, clipping, original real/direction/current examples, grid order, four signed
+amplitudes and resident tensor budget are preserved.
+
+Each supplemental grid gets 32 patterns: the three fundamental axes repeated four
+times each; 12 explicit other modes with indices at most three; and eight modes
+with at least one index four or higher, including grid-dependent near-Nyquist
+axes/corner. Repetition supplies explicit sampling weight. The canonical private
+sampling order is unchanged. Actual exposure is 579 fundamental, 542 other low
+and 379 high examples, versus C60's 131 fundamental draws. The original 128 real
+requests and 240 manufactured cases remain consumed regression diagnostics.
+These manufactured targets are not new fluid trajectories or holdouts.
+
+Independent CPU qualification verifies every supplemental label against the
+operator, unchanged original sources/inputs/normalization/objective, exact outer
+sampling order and equal residency, plus finite nonzero gradients without updates.
+The capacity stage remains immutable in `capacity-results.json` and
+`capacity-decision.json`; final aggregate results may add the curriculum stage.

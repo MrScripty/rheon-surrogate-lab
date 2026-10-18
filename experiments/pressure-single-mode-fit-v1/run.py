@@ -14,7 +14,7 @@ sys.path.insert(0,str(ROOT/'experiments/pressure-four-pass-distillation-v1'))
 from common import read, sha, write
 
 
-def run(args):
+def run(args, *, qualification_key=None):
     if args.output.exists():
         raise ValueError('Fresh execution directory required; no mutation replay')
     args.output.mkdir()
@@ -23,7 +23,7 @@ def run(args):
     if len(config['arms']) != 1:
         raise ValueError('Exactly one qualified arm per controller')
     qualification=read(args.qualification)
-    required='single_case'if arm['id']=='single-mode-fit'else'matched_control'
+    required=qualification_key or ('single_case'if arm['id']=='single-mode-fit'else'matched_control')
     if qualification['status']!='passed' or required not in qualification:
         raise ValueError('Complete arm-specific qualification required before any admission')
     study = args.output.parent/(arm['id']+'-study-01')

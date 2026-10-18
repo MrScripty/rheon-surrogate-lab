@@ -60,4 +60,8 @@ failed attempts and CPU numerical results. Independent CPU workers use one threa
 and distinct cores, max three; preserve 12 GiB host reserve plus 2 GiB per worker.
 Fitting-bank resident tensors <=8 MiB; each CUDA trainer wall cap 1,800 seconds.
 
-Next slice: prepare, qualify and execute C64, then apply its restored CPU gate.
+Next slice: C64 completed CUDA training, fresh CPU restore, readback and CPU
+qualification. Four-pass fitting passed 15/24; eight-pass passed 24/24; early-pass
+case guards failed. Immutable evidence: `combined-fundamentals/capacity-decision.json`.
+Qualify and execute C65/C66 through the existing scheduler, then compare their
+restored CPU gates. C53 remains baseline; C64 real-request worst errors regressed.

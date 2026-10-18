@@ -44,6 +44,8 @@ def four_pass_link(text, base):
         block = block.replace(end, '<p class="note"><a href="pressure-adam-replay-v1/index.html">C69 Adam observation replay</a> — exact checkpoint replay, observed optimizer steps, pressure changes, timings and precision limits.</p>\n' + end)
     if (Path(base) / 'pressure-adam-step-screen-v1/index.html').is_file():
         block = block.replace(end, '<p class="note"><a href="pressure-adam-step-screen-v1/index.html">C69 CPU Adam step screen</a> — preserved/reset moments, smaller steps, all-case retention guards, calibration and measured runtime.</p>\n' + end)
+    if (Path(base) / 'pressure-adam-momentum-damping-v1/index.html').is_file():
+        block = block.replace(end, '<p class="note"><a href="pressure-adam-momentum-damping-v1/index.html">C69 partial first-moment damping</a> — 30 distinct CPU parameter probes with second moment and Adam counter preserved; all-case guards, step geometry and timing retained.</p>\n' + end)
     if start in text or end in text:
         if text.count(start) != 1 or text.count(end) != 1:
             raise ValueError('Ambiguous study link region')

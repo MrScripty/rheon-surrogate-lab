@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Adam first-moment damping screen</title>
+<style>
+body{font:16px system-ui;background:#111c27;color:#e2edf7;max-width:1150px;margin:2rem auto;padding:0 1rem}a{color:#96cbff}p{line-height:1.5}.note{color:#c2d1de}select{background:#24394b;color:inherit;padding:.4rem;margin:.3rem}svg{width:100%;height:350px;background:#172938}table{display:block;overflow-x:auto;max-width:100%;border-collapse:collapse;font-size:14px}td,th{padding:.5rem;border-bottom:1px solid #43576b;text-align:right}td:first-child,th:first-child{text-align:left}
+</style>
+<h1>Adam first-moment damping</h1>
+<p><a href="../cohort-progress.html">Cohort progress</a> · <a href="../pressure-adam-step-screen-v1/index.html">Previous reset screen</a> · <a href="plan.md">Method</a> · <a href="execution-ledger.md">Results and timing</a> · <a href="results.json">All measurements</a> · <a href="next-steps.md">Next proposal</a></p>
+<p id="summary"></p>
+<p class="note">Only historical first-moment memory changes. Second moment, Adam step counter, saved CUDA gradient, learning rate and loss stay fixed. These are independent CPU one-step probes; C53 remains deployed. Factor 0 removes historical first moment; factor 1 preserves it. Update 1 has zero history, so all factors coincide.</p>
+<label>Saved update <select id="update"></select></label>
+<label>Case <select id="case"></select></label>
+<label>Measurement <select id="metric"><option value="pressure">Four-pass relative equation residual</option><option value="loss">Full captured loss</option></select></label>
+<label>Scale <select id="scale"><option value="relative">Change from before (%)</option><option value="absolute">Absolute logarithmic</option></select></label>
+<svg id="chart" viewBox="0 0 1050 350" role="img" aria-label="Error versus retained first moment"></svg>
+<p class="note">Blue: sampled damping factors. Dashed pink: before-state. Orange: observed CUDA endpoint evaluated on CPU. Lower is better; connecting lines describe sampled factors only. Absolute residual view includes the unchanged 1e−6 target.</p>
+<h2>Weak case and all-case guards</h2>
+<table><thead><tr><th>Policy</th><th>Retained factor</th><th>Step L2</th><th>Length / preserved</th><th>Direction cosine</th><th>Weak residual · 4</th><th>Fits · 4 / 8</th><th>Short regressions</th><th>Lost fits</th><th>Guard</th></tr></thead><tbody id="rows"></tbody></table>
+<h2>Runtime and limits</h2>
+<table><thead><tr><th>Saved update</th><th>Worker seconds</th><th>States</th><th>Peak MiB</th><th>CPU Adam max |error|</th></tr></thead><tbody id="runtime"></tbody></table>
+<p id="limits" class="note"></p>
+<script id="data" type="application/json">STUDY_DATA</script>
+<script>
+const d=JSON.parse(document.getElementById('data').textContent),$=id=>document.getElementById(id),f=v=>v===null?'—':Number(v).toExponential(4),ns='http://www.w3.org/2000/svg';
+$('summary').textContent=d.unique_evaluations+' distinct parameter states across five saved updates and eight fitting cases. CPU pool '+d.execution.elapsed_s.toFixed(2)+' seconds. '+d.decision.guard_passing_candidates.length+' damping entries pass every guard.';
+$('update').innerHTML=d.snapshots.map(s=>'<option>'+s.update+'</option>').join('');$('update').value='100';
+$('case').innerHTML=d.snapshots[0].cases.map((c,i)=>'<option value="'+i+'">'+i+' · '+c.counts_xyz.join(' × ')+'</option>').join('');$('case').value='7';
+$('runtime').innerHTML=d.snapshots.map(s=>'<tr>'+[s.update,s.elapsed_s.toFixed(3),s.unique_states,(s.peak_rss_bytes/1048576).toFixed(1),f(s.adam_reconstruction_max_absolute_error)].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+$('limits').textContent=d.limits.join(' ')+' Guards compare with the before-state: no case worse at 1/2 passes; no qualifying 4/8-pass case lost; weak loss and residual gains exceed twice empirical CPU/GPU value gaps; lower worst four-pass error. Local passes cannot qualify retraining or deployment.';
+function render(){
+ const s=d.snapshots.find(s=>s.update===Number($('update').value)),index=Number($('case').value),metric=$('metric').value,relative=$('scale').value==='relative';
+ const value=r=>{const m=s.measurements[r.parameter_sha256].metrics;return metric==='loss'?m.losses[index]:m.pressure.find(p=>p.case===index&&p.passes===4).relative_equation_residual};
+ const before=value(s.rows.find(r=>r.policy==='before')),observed=value(s.rows.find(r=>r.policy==='observed')),rows=s.rows.filter(r=>r.policy==='damped');
+ $('rows').innerHTML=s.rows.map(r=>'<tr>'+[r.policy,r.factor===null?'—':r.factor,f(r.delta_l2),f(r.length_ratio_to_preserved),f(r.cosine_to_preserved),f(r.weak_four_pass_residual),r.four_pass_qualified+'/8 · '+r.eight_pass_qualified+'/8',r.short_pass_regressions.length,r.lost_previously_fitted.length,r.guard_passed?'pass':'fail'].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+ const transform=v=>relative?100*(v/Math.max(before,1e-30)-1):Math.log10(Math.max(v,1e-16));let values=s.rows.map(value);if(!relative&&metric==='pressure')values.push(d.config.target_relative_residual);let lo=Math.min(...values.map(transform)),hi=Math.max(...values.map(transform));if(lo===hi)hi=lo+1;const pad=(hi-lo)*.08;lo-=pad;hi+=pad;
+ const x=v=>90+v*880,y=v=>292-(transform(v)-lo)/(hi-lo)*240,svg=$('chart');svg.replaceChildren();
+ function add(tag,attrs,text){const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));if(text!==undefined)e.textContent=text;svg.append(e);return e}
+ for(let i=0;i<5;i++){const Y=292-i*60;add('line',{x1:90,x2:970,y1:Y,y2:Y,stroke:'#354c61'});add('text',{x:83,y:Y+4,fill:'#d4e1ed','text-anchor':'end','font-size':12},relative?(lo+(hi-lo)*i/4).toFixed(2)+'%':f(10**(lo+(hi-lo)*i/4)))}
+ for(const [v,color,label] of [[before,'#e6a4bf','before'],[observed,'#f1c374','observed endpoint']]){add('line',{x1:90,x2:970,y1:y(v),y2:y(v),stroke:color,'stroke-dasharray':'5 4'});add('text',{x:970,y:y(v)-6,fill:color,'text-anchor':'end','font-size':12},label)}
+ if(!relative&&metric==='pressure'){const v=d.config.target_relative_residual;add('line',{x1:90,x2:970,y1:y(v),y2:y(v),stroke:'#8bdfba','stroke-dasharray':'3 4'});add('text',{x:970,y:y(v)-6,fill:'#8bdfba','text-anchor':'end','font-size':12},'target 1e-6')}
+ add('polyline',{points:rows.map(r=>x(r.factor)+','+y(value(r))).join(' '),fill:'none',stroke:'#8bc8ff','stroke-width':2});
+ for(const r of rows){const label='retained '+r.factor+': '+f(value(r)),e=add('circle',{cx:x(r.factor),cy:y(value(r)),r:5,fill:'#8bc8ff',tabindex:0,'aria-label':label}),t=document.createElementNS(ns,'title');t.textContent=label;e.append(t)}
+ for(const factor of d.config.retention_factors)add('text',{x:x(factor),y:322,fill:'#d4e1ed','text-anchor':'middle','font-size':12},factor);
+}
+for(const id of ['update','case','metric','scale'])$(id).onchange=render;render();
+</script>
+</html>

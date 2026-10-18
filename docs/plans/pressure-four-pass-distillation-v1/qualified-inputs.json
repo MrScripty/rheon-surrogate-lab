@@ -1,0 +1,305 @@
+{
+  "status": "qualified_before_training",
+  "standards_snapshot": "snapshot:v1:ffcfc3f8-b52a-434e-b57f-d259a0355711",
+  "baseline_material": {
+    "path": "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+    "sha256": "3b1977e4fb5c9117c437a546f78d442a0d8a3984315bf86f1b3ad340744584f5"
+  },
+  "runtime": {
+    "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+    "sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+    "profile": "managed_torch_python_v1",
+    "packages": {
+      "numpy": "2.5.3",
+      "torch": "2.14.0+cu132"
+    }
+  },
+  "arms": {
+    "two-pass-control": {
+      "project": {
+        "id": "00bf46cf90ac4d2abc15dbe674191ddf",
+        "path": "runs/pressure-four-pass-distillation-v1/two-pass-control-project-01/project.json",
+        "sha256": "20e3204a5b5174a2bc34c095a7ac27f0dbae1c7d10be2fdd0decb3e43e4029e0"
+      },
+      "source_witness_sha256": "37f154be68f1f5714f1d1f214bc5fbdd9ae48fbcbd588835d672c8b3f07e70fb",
+      "config_sha256": "dd945c684c5ceef1183a439deab94c9f34ec1be72e9515f1b2cbe66cbb504dc1",
+      "sources": {
+        "analytical.py": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb",
+        "band_feedback.py": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d",
+        "baseline_model.py": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04",
+        "config.json": "dd945c684c5ceef1183a439deab94c9f34ec1be72e9515f1b2cbe66cbb504dc1",
+        "custody-validator.py": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57",
+        "data.py": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f",
+        "direction_feedback.py": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f",
+        "evidence.py": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210",
+        "fine-tuning.json": "205fe8e360a1f50c2a802fe51fda9adbb1c446971de283e8c9d5935209fcadfe",
+        "fine_tuning.py": "0e3b2882e9b4e981adc2bc14783e10b24d665048c08b814340d9b5e642cfb96f",
+        "frozen_gn.py": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c",
+        "gradient_clipping.py": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd",
+        "historical-reservation.json": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5",
+        "model.py": "a2ebefe6a8ce12c7e6e1e12fa82b835029f364b50e91284f33b60bfe31b0eaee",
+        "original_data.py": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd",
+        "original_model.py": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb",
+        "original_train.py": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d",
+        "physical_residual.py": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5",
+        "policy.py": "c3e679239c58332e034064fb8825768fec4fb616f01a22f9c0c4eb1995ce29f2",
+        "portable_model.py": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935",
+        "portable_policy.py": "c9270abbbb05794b68c53d83a14f90d4c16e9d0fea1e28ce3791b8018f862995",
+        "prepared.py": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76",
+        "qualification.json": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17",
+        "scenes.py": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383",
+        "smoke_train.py": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58",
+        "support.py": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25",
+        "test_inference.py": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6",
+        "train.py": "18b5ae6232e7a00760288d37c015905363fdea4b97e0d1815bc12033e0d69e12",
+        "training_diagnostic.py": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+      },
+      "inputs": {
+        "current_dataset": {
+          "bytes": 21428086,
+          "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"
+        },
+        "current_manifest": {
+          "bytes": 168912,
+          "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"
+        },
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        },
+        "initial_weights": {
+          "bytes": 1485452,
+          "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"
+        }
+      },
+      "objective": {
+        "schema": "rheon-fine-tuning-objective-v1",
+        "arm": "two-pass-control",
+        "initial_weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "training_passes": 2,
+        "teacher_passes": 8,
+        "teacher_weight": 0.0,
+        "early_weight": 0.05,
+        "relative_equation_target": 1e-06,
+        "teacher_cache_bytes": 268435456
+      }
+    },
+    "four-pass-physics": {
+      "project": {
+        "id": "fc4e229fd3254f85a845d1c277bcea75",
+        "path": "runs/pressure-four-pass-distillation-v1/four-pass-physics-project-01/project.json",
+        "sha256": "572b68c953174383c66240108a257883da509819abb2354c04fd630280a69228"
+      },
+      "source_witness_sha256": "54e18b54dca1c38fbf04e2aa1890547b8db4f83805bcd2ebf116f0a71c416d86",
+      "config_sha256": "189f900062879182057dc51cf08d78d9c8a18be26b70d19b54dcf74bb433bb5e",
+      "sources": {
+        "analytical.py": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb",
+        "band_feedback.py": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d",
+        "baseline_model.py": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04",
+        "config.json": "189f900062879182057dc51cf08d78d9c8a18be26b70d19b54dcf74bb433bb5e",
+        "custody-validator.py": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57",
+        "data.py": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f",
+        "direction_feedback.py": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f",
+        "evidence.py": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210",
+        "fine-tuning.json": "fff4ea649e66cfc0a040992ca87688f5221840175efcb6392dd40a80ed34c041",
+        "fine_tuning.py": "0e3b2882e9b4e981adc2bc14783e10b24d665048c08b814340d9b5e642cfb96f",
+        "frozen_gn.py": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c",
+        "gradient_clipping.py": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd",
+        "historical-reservation.json": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5",
+        "model.py": "a2ebefe6a8ce12c7e6e1e12fa82b835029f364b50e91284f33b60bfe31b0eaee",
+        "original_data.py": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd",
+        "original_model.py": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb",
+        "original_train.py": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d",
+        "physical_residual.py": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5",
+        "policy.py": "c3e679239c58332e034064fb8825768fec4fb616f01a22f9c0c4eb1995ce29f2",
+        "portable_model.py": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935",
+        "portable_policy.py": "c9270abbbb05794b68c53d83a14f90d4c16e9d0fea1e28ce3791b8018f862995",
+        "prepared.py": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76",
+        "qualification.json": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17",
+        "scenes.py": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383",
+        "smoke_train.py": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58",
+        "support.py": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25",
+        "test_inference.py": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6",
+        "train.py": "18b5ae6232e7a00760288d37c015905363fdea4b97e0d1815bc12033e0d69e12",
+        "training_diagnostic.py": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+      },
+      "inputs": {
+        "current_dataset": {
+          "bytes": 21428086,
+          "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"
+        },
+        "current_manifest": {
+          "bytes": 168912,
+          "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"
+        },
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        },
+        "initial_weights": {
+          "bytes": 1485452,
+          "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"
+        }
+      },
+      "objective": {
+        "schema": "rheon-fine-tuning-objective-v1",
+        "arm": "four-pass-physics",
+        "initial_weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "training_passes": 4,
+        "teacher_passes": 8,
+        "teacher_weight": 0.0,
+        "early_weight": 0.05,
+        "relative_equation_target": 1e-06,
+        "teacher_cache_bytes": 268435456
+      }
+    },
+    "four-pass-teacher": {
+      "project": {
+        "id": "35fb6c884f9943dd87b9de7fed713690",
+        "path": "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/project.json",
+        "sha256": "73be2e59c2573adc1649320a50ba060e88ea770e4e734eebf7bb4af7be9bd5bd"
+      },
+      "source_witness_sha256": "18535eae3a0a57fdb9ccac2e654c608ccfabf6b984eadee1d529413c642d7ead",
+      "config_sha256": "bbe4e8e8ebf31fd2cf6cc3a854f693e3328e5429cdb3175eb46f36d655a5e917",
+      "sources": {
+        "analytical.py": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb",
+        "band_feedback.py": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d",
+        "baseline_model.py": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04",
+        "config.json": "bbe4e8e8ebf31fd2cf6cc3a854f693e3328e5429cdb3175eb46f36d655a5e917",
+        "custody-validator.py": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57",
+        "data.py": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f",
+        "direction_feedback.py": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f",
+        "evidence.py": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210",
+        "fine-tuning.json": "3c483076a053de56f0c3336c64eec8450765c7965ca8531325b8704c2b213bf2",
+        "fine_tuning.py": "0e3b2882e9b4e981adc2bc14783e10b24d665048c08b814340d9b5e642cfb96f",
+        "frozen_gn.py": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c",
+        "gradient_clipping.py": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd",
+        "historical-reservation.json": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5",
+        "model.py": "a2ebefe6a8ce12c7e6e1e12fa82b835029f364b50e91284f33b60bfe31b0eaee",
+        "original_data.py": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd",
+        "original_model.py": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb",
+        "original_train.py": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d",
+        "physical_residual.py": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5",
+        "policy.py": "c3e679239c58332e034064fb8825768fec4fb616f01a22f9c0c4eb1995ce29f2",
+        "portable_model.py": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935",
+        "portable_policy.py": "c9270abbbb05794b68c53d83a14f90d4c16e9d0fea1e28ce3791b8018f862995",
+        "prepared.py": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76",
+        "qualification.json": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17",
+        "scenes.py": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383",
+        "smoke_train.py": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58",
+        "support.py": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25",
+        "test_inference.py": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6",
+        "train.py": "18b5ae6232e7a00760288d37c015905363fdea4b97e0d1815bc12033e0d69e12",
+        "training_diagnostic.py": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+      },
+      "inputs": {
+        "current_dataset": {
+          "bytes": 21428086,
+          "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"
+        },
+        "current_manifest": {
+          "bytes": 168912,
+          "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"
+        },
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        },
+        "initial_weights": {
+          "bytes": 1485452,
+          "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"
+        }
+      },
+      "objective": {
+        "schema": "rheon-fine-tuning-objective-v1",
+        "arm": "four-pass-teacher",
+        "initial_weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "training_passes": 4,
+        "teacher_passes": 8,
+        "teacher_weight": 0.1,
+        "early_weight": 0.05,
+        "relative_equation_target": 1e-06,
+        "teacher_cache_bytes": 268435456
+      }
+    }
+  },
+  "clipping_repair": "Exact qualified trainer/gradient_clipping.py from completed coarse-fit project; network architecture comes from C53.",
+  "baselines": [
+    {
+      "id": "C53",
+      "project": "runs/pressure-current-policy-v1/current-late-project-02",
+      "restore": "runs/pressure-current-policy-v1/current-late-study-03/restore",
+      "weights_sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+      "identities": {
+        "runs/pressure-current-policy-v1/current-late-project-02/source-witness.json": "21563712e1c732db4c88d0cb8bf3f6ad38110cb3f09f5f504c7c824ac2860f4f",
+        "runs/pressure-current-policy-v1/current-late-project-02/config.json": "bef61dd83d15ef2a0d6f011e3546b175943a67cd8995d1fc6e2a20129292378f",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/weights.npz": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/normalization.json": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/receipt.json": "27817abfd1b7beb4acae4a16d56152f3cf529d4ddba0d3ad21a4a0364a3fce1e",
+        "runs/pressure-current-policy-v1/current-late-study-03/restore/history.json": "a15b0428ec00093951da776e78374b89ee5fe4408336e69d38fbb66a6d02a596"
+      }
+    },
+    {
+      "id": "C55",
+      "project": "runs/pressure-current-feedback-weight-v1/current001-project-01",
+      "restore": "runs/pressure-current-feedback-weight-v1/current001-study-01/restore",
+      "weights_sha256": "632b0d5171e562c1f7f9582a747c3268105d65f677bf3364dd8e2aeaf5c2199b",
+      "identities": {
+        "runs/pressure-current-feedback-weight-v1/current001-project-01/source-witness.json": "fb2a9667d9940aa8c0440d10751ce5a334c2f6e51f8c2458cbf7fa2e14296c80",
+        "runs/pressure-current-feedback-weight-v1/current001-project-01/config.json": "1bb0bdc3ecebf2d3461d766522f52eac176a25a91730de09cfc8211e424c1044",
+        "runs/pressure-current-feedback-weight-v1/current001-study-01/restore/weights.npz": "632b0d5171e562c1f7f9582a747c3268105d65f677bf3364dd8e2aeaf5c2199b",
+        "runs/pressure-current-feedback-weight-v1/current001-study-01/restore/normalization.json": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "runs/pressure-current-feedback-weight-v1/current001-study-01/restore/receipt.json": "a62fca944e51d8f1e491f18e4168b2aa53fe82ff56be07afede2d1aad3295cd1",
+        "runs/pressure-current-feedback-weight-v1/current001-study-01/restore/history.json": "3518fbbbec8ad79603fa339ed92f108b6e35f3046639f6e4c805a753e03629f6"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "status": "implementing",
+  "objective": "Canonical native/physical loss plus log1p((relative equation residual / 1e-6)^2) at the final correction; earlier corrections have total weight 0.05. Teacher arm adds weight 0.1 of log1p((mean-free pressure discrepancy / frozen eight-pass correction L2 / 1e-6)^2). Acceptance thresholds unchanged.",
+  "owner": "Jeremy; implementation by Codex",
+  "branch": "experiment/pressure-four-pass-distillation-20261017",
+  "base": "1bd83558648d3e935f82b0bb2774ce472752ecf9",
+  "method": [
+    "Diagnose remaining pressure and equation error after 1/2/4/8 passes on original training parents only, split by spatial mode and signal amplitude.",
+    "Freeze C53 initialization, same train-only data/scales, sample orders, seeds, Adam and learning-rate schedule. Compare 1500-update CUDA two-pass control, four-pass physics objective, and four-pass physics plus frozen eight-pass teacher feedback. Retain physical/native targets as primary truth.",
+    "Use the qualified finite-gradient clipping repair. No architecture, physical settings, model input channels or deployment promotion changes.",
+    "Use existing Tuldok catalog and visible projects, managed Pumas Torch runtime, and fresh CPU restore. Never retrain privately as a substitute for managed execution.",
+    "Measure restored candidates and C53/C55 on matched consumed 128 snapshots at 1/2/4/8 passes. Separate equation residual, same-request pressure error, trajectory drift and runtime.",
+    "Select a candidate before fresh independent scenes; retain failed checks honestly, stop invalid trajectories, and extend duration only when qualified."
+  ],
+  "acceptance": {
+    "target_relative_residual": 1e-06,
+    "desired_passes": 4,
+    "baseline_passes": 8,
+    "scientific_target_relaxed": false
+  },
+  "resources": {
+    "maximum_parallel_cpu_workers": 3,
+    "threads_per_worker": 1,
+    "reserve_memory_gib": 12,
+    "teacher_cache_mib": 256,
+    "training_wall_cap_s": 1800
+  },
+  "retention": "Preserve all historical results; record commands, hashes, baseline identities, device, elapsed times, peak memory, run custody, qualified failures and decisions. No weights or full simulation arrays in Git. Branch retained locally for Jeremy review.",
+  "no_promotion": true,
+  "stage": "Three prospective Tuldok projects registered; initialization/objective qualification passed; ready for managed CUDA admission.",
+  "diagnosis": "After four passes, low spatial modes contain 99.80% (C53) and 99.77% (C55) of remaining pressure-error energy. Coefficients below 1e-4 of original full correction L2 contribute about 0.0010% and 0.00055% of that error respectively; this supports targeting coherent low-mode correction rather than assuming weak-signal noise is dominant.",
+  "execution": "Tuldok existing catalog; at most one CUDA run active under its scheduler, with independent CPU restoration/qualification allowed concurrently. Three arms each have 1500 updates and fresh Adam state, matching C53 warm-start tensors and RNG/sample seeds.",
+  "registration": "registration.json"
+}

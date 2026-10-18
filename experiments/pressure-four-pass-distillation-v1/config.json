@@ -1,0 +1,63 @@
+{
+  "schema": "rheon-four-pass-distillation-v1",
+  "baseline_material": "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "source_lab": "runs/dependency-migration-v1/lab",
+  "baselines": [
+    "C53",
+    "C55"
+  ],
+  "prefixes": [
+    0,
+    1,
+    2,
+    4,
+    8
+  ],
+  "train_initialization": "C53",
+  "updates": 1500,
+  "learning_rate": 1e-05,
+  "schedule": [
+    {
+      "update": 1000,
+      "learning_rate": 1e-06
+    },
+    {
+      "update": 1350,
+      "learning_rate": 1e-07
+    }
+  ],
+  "training_seed": 20261018,
+  "sampling_seed": 2026101801,
+  "target_relative_residual": 1e-06,
+  "arms": [
+    {
+      "id": "two-pass-control",
+      "steps": 2,
+      "teacher_weight": 0.0
+    },
+    {
+      "id": "four-pass-physics",
+      "steps": 4,
+      "teacher_weight": 0.0
+    },
+    {
+      "id": "four-pass-teacher",
+      "steps": 4,
+      "teacher_weight": 0.1
+    }
+  ],
+  "early_feedback_weight": 0.05,
+  "teacher_passes": 8,
+  "teacher_cache_bytes": 268435456,
+  "maximum_cpu_workers": 3,
+  "cpu_worker_memory_bytes": 2147483648,
+  "reserve_memory_bytes": 12884901888,
+  "wall_seconds": 1800,
+  "validation_passes": [
+    1,
+    2,
+    4,
+    8
+  ]
+}

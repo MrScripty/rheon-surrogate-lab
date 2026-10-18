@@ -1,6 +1,7 @@
 # Fundamental-mode fit and conditional frequency curriculum
 
-Status: Implementing. Jeremy authorized continuing the recorded C60/C61 decision.
+Status: Accepted as a completed experiment. Jeremy authorized continuing the
+recorded C60/C61 decision; numerical promotion gates failed as recorded.
 Branch: `experiment/pressure-single-mode-fit-20261017`, private, based on
 `53a2921058057aca605bef5d2d4636ba971802a9`. Jeremy owns eventual integration;
 retain for experiment review, no automatic rebase/merge, retire after integration
@@ -56,4 +57,15 @@ training, fresh CPU restore and the full recorded CPU screen. Its fitted-case ga
 passed: four-pass residual 8.82325286189385e-9, eight-pass 2.545420251713197e-12.
 Its broader regression guards failed; it remains a diagnostic specialist.
 
-Next slice: qualify and execute C63's matched frequency curriculum, then its CPU screen.
+C63 also completed CUDA training, fresh CPU restore and the recorded CPU screen.
+Matched-source, actual bank/order/work and artifact-parity checks passed. C63
+improved low-mode errors against C60 but failed the unchanged C53 guards: 8/128
+real requests qualified at four passes, 128/128 at eight, and 210/240 manufactured
+eight-pass cases versus C53's 230. No candidate, independent scene or longer fit
+was admitted after that screen. Reports, timings and findings are retained here.
+
+Next proposed slice: a 24-case fundamental-only fit (eight grids, three axes),
+without competing losses, to separate shared fitting capacity from mixed-loss
+interference. Keep C53, the cubic operator and current precision. This proposal
+has not started; retain this branch for Jeremy's review until integration or
+explicit disposition, without automatic synchronization or history rewriting.

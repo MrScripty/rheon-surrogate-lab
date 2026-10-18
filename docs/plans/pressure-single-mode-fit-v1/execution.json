@@ -1,0 +1,323 @@
+{
+  "status": "completed",
+  "stages": [
+    {
+      "arm": "single-mode-fit",
+      "controller": {
+        "status": "completed",
+        "elapsed_s": 1000.0615269510017,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python3.12",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-low-mode-tail-v1/manage.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-experiment.json",
+          "--assembly",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-project-02/assembly.json",
+          "--qualification",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/qualification-02.json",
+          "--tuldok",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+          "--session-file",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/private/owner-session.txt",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-study-01",
+          "--endpoint",
+          "http://127.0.0.1:8091",
+          "--catalog-id",
+          "a7da4a8de53541a2a0e2aad08005bb71",
+          "--project-alias",
+          "current-lab"
+        ],
+        "pid": 1227377,
+        "returncode": 0,
+        "owned_controller_reaped": true,
+        "config_sha256": "e6e8b025c816b6cf2e564471bdbd95823fe65b0227cb508f602dadf088eeffc6",
+        "assembly_sha256": "bcf8a3be9efc03d49d333b4c71991f2490d7ff57234c0084944533c08e37f07b",
+        "qualification_sha256": "14a8f4a817a5a21bd569482f591f249e3e2a4e4faa9f3ccbae92956227c7def9",
+        "source_sha256": "a6b05856ee16eb3e06812760a83056f1a2a9a0f5eb883af1c5da889b8088e441",
+        "automatic_retry": false,
+        "remote_custody": "Existing Tuldok catalog owns bounded CUDA and CPU Runs; controller termination is not remote cessation."
+      },
+      "cpu": {
+        "status": "completed",
+        "elapsed_s": 33.79994042299222,
+        "rows": [
+          {
+            "label": "C53-snapshots",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+              "snapshots",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/material.json",
+              "--id",
+              "C53",
+              "--cpu",
+              "23",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/C53"
+            ],
+            "returncode": 0,
+            "elapsed_s": 12.346564153005602,
+            "reaped": true
+          },
+          {
+            "label": "C62-snapshots",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+              "snapshots",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/material.json",
+              "--id",
+              "C62",
+              "--cpu",
+              "23",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/C62"
+            ],
+            "returncode": 0,
+            "elapsed_s": 12.29721438701381,
+            "reaped": true
+          },
+          {
+            "label": "C53-fitted",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-single-mode-fit-v1/fitted.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-experiment.json",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/material.json",
+              "--model",
+              "C53",
+              "--cpu",
+              "21",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/C53-fitted.json"
+            ],
+            "returncode": 0,
+            "elapsed_s": 2.7223393830063287,
+            "reaped": true
+          },
+          {
+            "label": "C62-fitted",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-single-mode-fit-v1/fitted.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-experiment.json",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/material.json",
+              "--model",
+              "C62",
+              "--cpu",
+              "22",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/C62-fitted.json"
+            ],
+            "returncode": 0,
+            "elapsed_s": 2.721972542000003,
+            "reaped": true
+          },
+          {
+            "label": "C62-diagnosis",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-low-mode-tail-v1/diagnose.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/diagnostic-config.json",
+              "--model",
+              "C62",
+              "--cpu",
+              "23",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/single-mode-fit-cpu-01/C62-diagnosis.json"
+            ],
+            "returncode": 0,
+            "elapsed_s": 9.15318543300964,
+            "reaped": true
+          }
+        ],
+        "available_host_bytes_before": 52998066176,
+        "all_owned_children_reaped": true,
+        "timing_policy": "128-case timings serial, one CPU thread/core; then three independent one-core diagnosis workers.",
+        "environment": {
+          "PYTHONPATH": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages",
+          "CUDA_VISIBLE_DEVICES": "",
+          "TULDOK_TORCH_DEVICE": "cpu",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "MKL_NUM_THREADS": "1",
+          "RAYON_NUM_THREADS": "1"
+        },
+        "source_sha256": "40ab36759755a2e5ab849e258f1b615d546cf2948d671ef20cdd223fb62712c0"
+      }
+    },
+    {
+      "arm": "frequency-curriculum",
+      "controller": {
+        "status": "completed",
+        "elapsed_s": 1380.1218642299937,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python3.12",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-low-mode-tail-v1/manage.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-experiment.json",
+          "--assembly",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-project-01/assembly.json",
+          "--qualification",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/curriculum-qualification-02.json",
+          "--tuldok",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+          "--session-file",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-four-pass-distillation-v1/private/owner-session.txt",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-study-01",
+          "--endpoint",
+          "http://127.0.0.1:8091",
+          "--catalog-id",
+          "a7da4a8de53541a2a0e2aad08005bb71",
+          "--project-alias",
+          "current-lab"
+        ],
+        "pid": 1238047,
+        "returncode": 0,
+        "owned_controller_reaped": true,
+        "config_sha256": "3f4564d04e3c2b8b19b1ef8355947931ca2ee04a9211ed815bb38588801e1b73",
+        "assembly_sha256": "5af3daf63ef0bd2ee80164bc0a9b3cf6df8486a5faa52eaf5840e2fb8c0612c3",
+        "qualification_sha256": "edf0c7c91a92a6d685b332e30c58b7923b39fef02b2e0a25a427fbd178159970",
+        "source_sha256": "497aa42e65976c50f92e1fa0eec32b6c9b8ed5f310877cf5e6ace23fc23de36a",
+        "automatic_retry": false,
+        "remote_custody": "Existing Tuldok catalog owns bounded CUDA and CPU Runs; controller termination is not remote cessation."
+      },
+      "cpu": {
+        "status": "completed",
+        "elapsed_s": 36.48682038800325,
+        "rows": [
+          {
+            "label": "C53-snapshots",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+              "snapshots",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/material.json",
+              "--id",
+              "C53",
+              "--cpu",
+              "23",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/C53"
+            ],
+            "returncode": 0,
+            "elapsed_s": 13.342521547980141,
+            "reaped": true
+          },
+          {
+            "label": "C63-snapshots",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-four-pass-distillation-v1/cpu.py",
+              "snapshots",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/material.json",
+              "--id",
+              "C63",
+              "--cpu",
+              "23",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/C63"
+            ],
+            "returncode": 0,
+            "elapsed_s": 13.191756125015672,
+            "reaped": true
+          },
+          {
+            "label": "C53-fitted",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-single-mode-fit-v1/fitted.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-experiment.json",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/material.json",
+              "--model",
+              "C53",
+              "--cpu",
+              "21",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/C53-fitted.json"
+            ],
+            "returncode": 0,
+            "elapsed_s": 2.82140269401134,
+            "reaped": true
+          },
+          {
+            "label": "C63-fitted",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-single-mode-fit-v1/fitted.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-experiment.json",
+              "--material",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/material.json",
+              "--model",
+              "C63",
+              "--cpu",
+              "22",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/C63-fitted.json"
+            ],
+            "returncode": 0,
+            "elapsed_s": 2.8212039780046325,
+            "reaped": true
+          },
+          {
+            "label": "C63-diagnosis",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-low-mode-tail-v1/diagnose.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/diagnostic-config.json",
+              "--model",
+              "C63",
+              "--cpu",
+              "23",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-single-mode-fit-v1/frequency-curriculum-cpu-01/C63-diagnosis.json"
+            ],
+            "returncode": 0,
+            "elapsed_s": 9.950383384013548,
+            "reaped": true
+          }
+        ],
+        "available_host_bytes_before": 52339691520,
+        "all_owned_children_reaped": true,
+        "timing_policy": "128-case timings serial, one CPU thread/core; then three independent one-core diagnosis workers.",
+        "environment": {
+          "PYTHONPATH": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages",
+          "CUDA_VISIBLE_DEVICES": "",
+          "TULDOK_TORCH_DEVICE": "cpu",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1",
+          "MKL_NUM_THREADS": "1",
+          "RAYON_NUM_THREADS": "1"
+        },
+        "source_sha256": "40ab36759755a2e5ab849e258f1b615d546cf2948d671ef20cdd223fb62712c0"
+      }
+    }
+  ],
+  "resource_observations": [
+    {
+      "arm": "single-mode-fit",
+      "source": "runs/pressure-single-mode-fit-v1/single-mode-fit-gpu.json",
+      "sha256": "6bce510ef4c025499b6ad8a9cd35e32e3f4fdebacb15a7f8f3d12965a3dcd958",
+      "samples": 100,
+      "scope": "Whole GPU samples, including unrelated GPU work; managed trainer receipts own per-run elapsed time and peak CUDA allocation",
+      "minimum_host_available_bytes": 51580850176,
+      "maximum_whole_gpu_memory_mib": 1143.0
+    },
+    {
+      "arm": "frequency-curriculum",
+      "source": "runs/pressure-single-mode-fit-v1/frequency-curriculum-gpu.json",
+      "sha256": "db5746d50efb6151017bb79798a07cec22615e626597ce3df1430a9873c912b1",
+      "samples": 138,
+      "scope": "Whole GPU samples, including unrelated GPU work; managed trainer receipts own per-run elapsed time and peak CUDA allocation",
+      "minimum_host_available_bytes": 50297282560,
+      "maximum_whole_gpu_memory_mib": 2012.0
+    }
+  ]
+}

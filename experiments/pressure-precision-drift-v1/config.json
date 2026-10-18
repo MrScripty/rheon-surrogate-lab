@@ -1,0 +1,15 @@
+{
+  "schema": "rheon-storage-precision-study-v1",
+  "source": "runs/dependency-migration-v1/Rheon",
+  "baseline_build": "runs/dependency-migration-v1/probe-build-current-03/build-receipt.json",
+  "dependency_config": "runs/dependency-migration-v1/selection-probe-current-03.json",
+  "retained_scene": "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+  "maximum_workers": 3,
+  "worker_timeout_s": 600,
+  "scenes": [
+    {"id": "matched16", "label": "Matched 16 × 16 × 16", "overrides": {}},
+    {"id": "rectangular", "label": "Rectangular 24 × 16 × 12", "overrides": {"seed": 20261032, "counts": [24, 16, 12], "center": [0.65, 0.4, 0.3], "acceleration": 0.15, "swirl": -0.65, "fluctuation": 0.6, "frequency": 1.5, "radius": 0.2}},
+    {"id": "larger20", "label": "Larger 20 × 20 × 20", "overrides": {"seed": 20261033, "counts": [20, 20, 20]}},
+    {"id": "zero", "label": "Zero-forcing control", "overrides": {"acceleration": 0.0}}
+  ]
+}

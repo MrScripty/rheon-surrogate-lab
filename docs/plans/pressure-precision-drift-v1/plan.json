@@ -1,0 +1,32 @@
+{
+  "status": "completed",
+  "objective": "Add a precision section to the existing charts with measured accumulated float32 versus float64 field-storage differences and isolated local casting errors.",
+  "branch": "experiment/pressure-precision-drift-20261017",
+  "base": "fb39c8e",
+  "owner": "Jeremy; implementation by Codex",
+  "execution": "Four 512-step CPU scenes, at most three concurrent single-core native workers, after a 16-step fixture. No network, training, learned weights, or GPU initialization.",
+  "controlled_difference": "Velocity and passive tracer storage at the existing advection, force, viscosity and projection boundaries. Existing intermediate arithmetic, pressure solver, pressure dtype, stopping policy, forcing, geometry, timestep, seed, wall conditions and initial state remain the same.",
+  "implementation": "Copy the exact measured Rheon build inputs into a research-only source tree. Generate float64 storage variants of the existing sampling/advection/viscosity and pressure-velocity methods, preserving their arithmetic and traversal. Leave original float32 methods unchanged. Keep production and historical sources untouched.",
+  "qualification": [
+    "Verify every copied source against the retained native build receipt",
+    "Compare native float32 advancement with the public DiagnosticSession, including full pressure and velocity buffers",
+    "On identical float32 inputs, require rounding every float64 stage output back to float32 to reproduce every original stage output bit-for-bit",
+    "Directly measure each stage's cast perturbation and the divergence of the projection cast perturbation",
+    "Run an identical float64 twin to distinguish measurement/process error from controlled storage-precision differences",
+    "Keep both independent precision trajectories qualified under the same existing physical gates",
+    "Preserve every historical embedded scientific data field",
+    "Exercise filters, units, missing/zero values, keyboard details and responsive plots in the browser"
+  ],
+  "scope": "The 64-bit track is a numerical comparison, not exact real-arithmetic truth. The result measures the causal effect of storage precision under the fixed solver policy, including any iteration-path changes caused by that precision. It is not an immutable lower bound for all float32 methods or an AI training result.",
+  "artifacts": [
+    "experiments/pressure-precision-drift-v1",
+    "docs/plans/pressure-precision-drift-v1",
+    "runs/pressure-precision-drift-v1",
+    "docs/plans/cohort-progress.html",
+    "docs/plans/precision_chart.py",
+    "docs/plans/refresh-cohort-progress.py",
+    "docs/plans/refresh-current-cohorts.py"
+  ],
+  "retention": "Retain source transformations, configuration, measured curves, source hashes, commands, environment, elapsed times, memory and child-reaping receipts. No weights or full simulation datasets will be committed. Branch remains local for user review.",
+  "completed_results": "2048 physical steps; 145817600 local casts verified; original float32 full fields bit-exact at every step; float64 twin exactly zero at every step; zero-forcing trajectory exactly zero drift. Native study elapsed 102.43723688498721 seconds. See results.json and verification.json."
+}

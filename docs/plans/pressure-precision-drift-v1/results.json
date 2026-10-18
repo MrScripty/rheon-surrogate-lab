@@ -1,0 +1,396 @@
+{
+  "schema": "rheon-storage-precision-chart-v1",
+  "status": "completed",
+  "method": "Same Rheon equations, pressure solver, solver tolerance and initial state. Pressure/intermediate arithmetic remains float64. Only velocity/tracer storage changes between float32 and float64, beginning at the first step; no shared native warm-up is imposed. No neural network is used. Local cast measurements replay each stage on identical float32 inputs, including identical pressure for the projection.",
+  "limits": "The independent trajectory difference measures the effect of storage precision under this fixed numerical algorithm and stopping policy. Float64 is a comparison, not exact real arithmetic. Changed precision may change iteration paths. This does not measure network float32-versus-float64 inference or establish a universal float32 error floor.",
+  "fixed": {
+    "density_kg_m3": 1000,
+    "dynamic_viscosity_pa_s": 0.001,
+    "dt_s": 0.016666666666666666,
+    "cells": "cubic",
+    "boundaries": "impermeable stationary free-slip walls",
+    "pressure_dtype": "float64",
+    "pressure_relative_tolerance": 1e-08,
+    "pressure_absolute_tolerance": 1e-12
+  },
+  "summaries": [
+    {
+      "id": "matched16",
+      "label": "Matched 16 \u00d7 16 \u00d7 16",
+      "steps": 512,
+      "elapsed_s": 47.65497770498041,
+      "peak_rss": "VmHWM:\t    6904 kB",
+      "verified_cast_values": 28835840,
+      "worst_pressure_rms_pa": 8.853921270698216e-06,
+      "worst_velocity_rms_m_s": 1.9989616012695646e-08,
+      "worst_pressure_relative_l2": 1.090650923343899e-06,
+      "worst_projection_cast_divergence": 4.32131548600001e-07,
+      "worst_projection_cast_velocity": 7.450545125298191e-09,
+      "canonical_f32_exact_steps": 512,
+      "f64_repeat_exact_steps": 512,
+      "historical_native_quality_exact": true,
+      "receipt_source": "../../runs/pressure-precision-drift-v1/cpu-01/matched16/receipt.json",
+      "frames_source": "../../runs/pressure-precision-drift-v1/cpu-01/matched16/frames.jsonl"
+    },
+    {
+      "id": "rectangular",
+      "label": "Rectangular 24 \u00d7 16 \u00d7 12",
+      "steps": 512,
+      "elapsed_s": 67.20823047900922,
+      "peak_rss": "VmHWM:\t    7388 kB",
+      "verified_cast_values": 32440320,
+      "worst_pressure_rms_pa": 4.168215114420713e-06,
+      "worst_velocity_rms_m_s": 1.3172855992573573e-08,
+      "worst_pressure_relative_l2": 1.9772916273484303e-06,
+      "worst_projection_cast_divergence": 3.576646927516691e-07,
+      "worst_projection_cast_velocity": 7.450165206979165e-09,
+      "canonical_f32_exact_steps": 512,
+      "f64_repeat_exact_steps": 512,
+      "historical_native_quality_exact": null,
+      "receipt_source": "../../runs/pressure-precision-drift-v1/cpu-01/rectangular/receipt.json",
+      "frames_source": "../../runs/pressure-precision-drift-v1/cpu-01/rectangular/frames.jsonl"
+    },
+    {
+      "id": "larger20",
+      "label": "Larger 20 \u00d7 20 \u00d7 20",
+      "steps": 512,
+      "elapsed_s": 101.47997077400214,
+      "peak_rss": "VmHWM:\t   10452 kB",
+      "verified_cast_values": 55705600,
+      "worst_pressure_rms_pa": 1.6760405870553426e-05,
+      "worst_velocity_rms_m_s": 2.7788769078616513e-08,
+      "worst_pressure_relative_l2": 2.2335485667886475e-06,
+      "worst_projection_cast_divergence": 4.768612456018673e-07,
+      "worst_projection_cast_velocity": 7.450556005483833e-09,
+      "canonical_f32_exact_steps": 512,
+      "f64_repeat_exact_steps": 512,
+      "historical_native_quality_exact": null,
+      "receipt_source": "../../runs/pressure-precision-drift-v1/cpu-01/larger20/receipt.json",
+      "frames_source": "../../runs/pressure-precision-drift-v1/cpu-01/larger20/frames.jsonl"
+    },
+    {
+      "id": "zero",
+      "label": "Zero-forcing control",
+      "steps": 512,
+      "elapsed_s": 21.179360191017622,
+      "peak_rss": "VmHWM:\t    6952 kB",
+      "verified_cast_values": 28835840,
+      "worst_pressure_rms_pa": 0.0,
+      "worst_velocity_rms_m_s": 0.0,
+      "worst_pressure_relative_l2": 0.0,
+      "worst_projection_cast_divergence": 0.0,
+      "worst_projection_cast_velocity": 0.0,
+      "canonical_f32_exact_steps": 512,
+      "f64_repeat_exact_steps": 512,
+      "historical_native_quality_exact": null,
+      "receipt_source": "../../runs/pressure-precision-drift-v1/cpu-01/zero/receipt.json",
+      "frames_source": "../../runs/pressure-precision-drift-v1/cpu-01/zero/frames.jsonl"
+    }
+  ],
+  "verified_cast_values": 145817600,
+  "execution": {
+    "status": "completed",
+    "elapsed_s": 102.43723688498721,
+    "maximum_workers": 3,
+    "cpu_pool": [
+      0,
+      1,
+      2
+    ],
+    "available_memory_at_start": 55784509440,
+    "workers": [
+      {
+        "id": "fixture",
+        "status": "passed",
+        "elapsed_s": 0.9543559600133449,
+        "cpu": 0,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "0",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/rheon-storage-precision-probe",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/fixture-scene.json",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/cpu-01/fixture/frames.jsonl"
+        ],
+        "process": {
+          "pid": 3,
+          "returncode": 0,
+          "reaped": true
+        },
+        "native": {
+          "canonical_f32_exact_steps": 16,
+          "elapsed_s": 0.951852428,
+          "f64_repeat_exact_steps": 16,
+          "field_storage": [
+            "f32",
+            "f64"
+          ],
+          "kind": "complete",
+          "max_rss_kib": "VmHWM:\t    6724 kB",
+          "neural_calls": 0,
+          "pressure_dtype": "f64",
+          "same_pressure_settings": true,
+          "steps": 16,
+          "verified_cast_values": 901120
+        },
+        "frames_sha256": "2b0c8c83700419f89ed7ed2efc9602d2bda9bd54c7256feb17d4f49aa254e8b0",
+        "scene_sha256": "65706203750719dbffa19589911c5d3e8622556dd5fae4e634017c325eb39da2",
+        "binary_sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13"
+      },
+      {
+        "id": "matched16",
+        "status": "passed",
+        "elapsed_s": 47.65497770498041,
+        "cpu": 0,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "0",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/rheon-storage-precision-probe",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/matched16-scene.json",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/cpu-01/matched16/frames.jsonl"
+        ],
+        "process": {
+          "pid": 4,
+          "returncode": 0,
+          "reaped": true
+        },
+        "native": {
+          "canonical_f32_exact_steps": 512,
+          "elapsed_s": 47.640076517,
+          "f64_repeat_exact_steps": 512,
+          "field_storage": [
+            "f32",
+            "f64"
+          ],
+          "kind": "complete",
+          "max_rss_kib": "VmHWM:\t    6904 kB",
+          "neural_calls": 0,
+          "pressure_dtype": "f64",
+          "same_pressure_settings": true,
+          "steps": 512,
+          "verified_cast_values": 28835840
+        },
+        "frames_sha256": "9a95bb9c08be06fcfbf12a769b0e220f476266ca52d9b1ab06142c7da29916e0",
+        "scene_sha256": "008ba87bfda89acc058383eaf99d29f50a651f8b18a3b69a55d87798f704654d",
+        "binary_sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13"
+      },
+      {
+        "id": "rectangular",
+        "status": "passed",
+        "elapsed_s": 67.20823047900922,
+        "cpu": 1,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "1",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/rheon-storage-precision-probe",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/rectangular-scene.json",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/cpu-01/rectangular/frames.jsonl"
+        ],
+        "process": {
+          "pid": 5,
+          "returncode": 0,
+          "reaped": true
+        },
+        "native": {
+          "canonical_f32_exact_steps": 512,
+          "elapsed_s": 67.195885329,
+          "f64_repeat_exact_steps": 512,
+          "field_storage": [
+            "f32",
+            "f64"
+          ],
+          "kind": "complete",
+          "max_rss_kib": "VmHWM:\t    7388 kB",
+          "neural_calls": 0,
+          "pressure_dtype": "f64",
+          "same_pressure_settings": true,
+          "steps": 512,
+          "verified_cast_values": 32440320
+        },
+        "frames_sha256": "0a7aff0c0271d97b3178282e62af91abf02cd15e84a3d489b8d435d93db5720f",
+        "scene_sha256": "c9fdfbcd9751430726703e29ebaa8e3c4b8adc0f54912cfe8ae785c76378f7ef",
+        "binary_sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13"
+      },
+      {
+        "id": "zero",
+        "status": "passed",
+        "elapsed_s": 21.179360191017622,
+        "cpu": 0,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "0",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/rheon-storage-precision-probe",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/zero-scene.json",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/cpu-01/zero/frames.jsonl"
+        ],
+        "process": {
+          "pid": 7,
+          "returncode": 0,
+          "reaped": true
+        },
+        "native": {
+          "canonical_f32_exact_steps": 512,
+          "elapsed_s": 21.170348525,
+          "f64_repeat_exact_steps": 512,
+          "field_storage": [
+            "f32",
+            "f64"
+          ],
+          "kind": "complete",
+          "max_rss_kib": "VmHWM:\t    6952 kB",
+          "neural_calls": 0,
+          "pressure_dtype": "f64",
+          "same_pressure_settings": true,
+          "steps": 512,
+          "verified_cast_values": 28835840
+        },
+        "frames_sha256": "f190f9689ac98e5bcc3293cfbf73a64f8689b73ee37ccc6f1a2b1b341ed6207b",
+        "scene_sha256": "80aea6ab768e0bb21469c87859a05f4b8345fbb263e14d07faa1a99005616781",
+        "binary_sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13"
+      },
+      {
+        "id": "larger20",
+        "status": "passed",
+        "elapsed_s": 101.47997077400214,
+        "cpu": 2,
+        "command": [
+          "/usr/bin/taskset",
+          "-c",
+          "2",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/rheon-storage-precision-probe",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/larger20-scene.json",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/cpu-01/larger20/frames.jsonl"
+        ],
+        "process": {
+          "pid": 6,
+          "returncode": 0,
+          "reaped": true
+        },
+        "native": {
+          "canonical_f32_exact_steps": 512,
+          "elapsed_s": 101.468152547,
+          "f64_repeat_exact_steps": 512,
+          "field_storage": [
+            "f32",
+            "f64"
+          ],
+          "kind": "complete",
+          "max_rss_kib": "VmHWM:\t   10452 kB",
+          "neural_calls": 0,
+          "pressure_dtype": "f64",
+          "same_pressure_settings": true,
+          "steps": 512,
+          "verified_cast_values": 55705600
+        },
+        "frames_sha256": "f200579a11da6bc90c0a1b4d97d040591cfaaa6d534b75d8178e8425fee5ee72",
+        "scene_sha256": "b12650a30c4a34b2a9f7414d7afb0ea1ac5945fa46975c4695fa083f331bcf3a",
+        "binary_sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13"
+      }
+    ],
+    "all_owned_children_reaped": true,
+    "binary_sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13",
+    "material_sha256": "8abf046cf203ee9eca967cfd7fad6b22ddd4db6ad44a8ffd5cd01d472282fa4a",
+    "environment": {
+      "RAYON_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "CUDA_VISIBLE_DEVICES": ""
+    },
+    "source_sha256": "81ad7255e8ce713b5466e5228bc670b15a235c717e168114a4bbdee2a4353b89",
+    "completed_utc": "2026-10-18T00:15:45.197606+00:00"
+  },
+  "build": {
+    "status": "built",
+    "commands": [
+      {
+        "command": [
+          "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/cargo",
+          "build",
+          "--manifest-path",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/probe/Cargo.toml",
+          "--release",
+          "--offline"
+        ],
+        "returncode": 0,
+        "elapsed_s": 11.043049862026237
+      },
+      {
+        "command": [
+          "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/cargo",
+          "clippy",
+          "--manifest-path",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-precision-drift-v1/build-02/probe/Cargo.toml",
+          "--release",
+          "--offline",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "returncode": 0,
+        "elapsed_s": 2.6223427139921114
+      }
+    ],
+    "binary": "runs/pressure-precision-drift-v1/build-02/rheon-storage-precision-probe",
+    "sha256": "006e0f21b12e07a244436138bb429979edc802bd7c6bc9804c23d4203af44e13",
+    "environment": {
+      "CARGO_HOME": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/.cargo-local",
+      "CARGO_TARGET_DIR": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/cargo-target-probes",
+      "CARGO_BUILD_JOBS": "2",
+      "RUSTUP_TOOLCHAIN": "1.92.0",
+      "RUSTC": "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/rustc",
+      "RUSTDOC": "/home/jeremy/.rustup/toolchains/1.92.0-x86_64-unknown-linux-gnu/bin/rustdoc",
+      "RAYON_NUM_THREADS": "1"
+    },
+    "material_sha256": "8abf046cf203ee9eca967cfd7fad6b22ddd4db6ad44a8ffd5cd01d472282fa4a",
+    "probe_lock_sha256": "65f140c805414af39ace5d284a668bebbcd51f0db71bb9a3c4bfb7055ad41814"
+  },
+  "sources": {
+    "../../runs/pressure-precision-drift-v1/build-02/material.json": "8abf046cf203ee9eca967cfd7fad6b22ddd4db6ad44a8ffd5cd01d472282fa4a",
+    "../../runs/pressure-precision-drift-v1/build-02/build-receipt.json": "2d586833d9408e3fcc21a7a065798269ff197a14e2cacedcc3c900d1405e6500",
+    "../../runs/pressure-precision-drift-v1/cpu-01/execution.json": "9d48c6b21afd90fef86af7df7591ba4549e962816217997f0255715fd170351c",
+    "../../runs/pressure-pass-sweep-v1/cpu-01/C53/passes-16/native/frames.jsonl": "89173d80c6a4f498f5bb16c9570c694f5ee505e6b5d697d93b579869a67c6037",
+    "../../runs/pressure-precision-drift-v1/cpu-01/matched16/receipt.json": "3ed0fda6d74cef8c61301f45f9becab398c4d96e3be7b940d8e82ed5a475f8fe",
+    "../../runs/pressure-precision-drift-v1/cpu-01/matched16/frames.jsonl": "9a95bb9c08be06fcfbf12a769b0e220f476266ca52d9b1ab06142c7da29916e0",
+    "../../runs/pressure-precision-drift-v1/cpu-01/rectangular/receipt.json": "a1d7090aa80fe61e7164e05bb57b306d4818852b5cbc2b895dc2fc19be2b42be",
+    "../../runs/pressure-precision-drift-v1/cpu-01/rectangular/frames.jsonl": "0a7aff0c0271d97b3178282e62af91abf02cd15e84a3d489b8d435d93db5720f",
+    "../../runs/pressure-precision-drift-v1/cpu-01/larger20/receipt.json": "f1589dd97f2c0cca0a633419c2a53ec0feb190a3bae50a6ee317e11d36c0ee2d",
+    "../../runs/pressure-precision-drift-v1/cpu-01/larger20/frames.jsonl": "f200579a11da6bc90c0a1b4d97d040591cfaaa6d534b75d8178e8425fee5ee72",
+    "../../runs/pressure-precision-drift-v1/cpu-01/zero/receipt.json": "8b3aafeef69665505144bdd3524c06b21b01eb698cdda4835e7264c427221dde",
+    "../../runs/pressure-precision-drift-v1/cpu-01/zero/frames.jsonl": "f190f9689ac98e5bcc3293cfbf73a64f8689b73ee37ccc6f1a2b1b341ed6207b"
+  },
+  "selection_chart_sha256": "bafd62126c73776df6b979324b2583508c8f75cf6de7ec7d1eb82c3b126ac1e6",
+  "commands": [
+    [
+      "python3",
+      "experiments/pressure-precision-drift-v1/build.py",
+      "--config",
+      "experiments/pressure-precision-drift-v1/config.json",
+      "--output",
+      "runs/pressure-precision-drift-v1/build-02"
+    ],
+    [
+      "python3",
+      "experiments/pressure-precision-drift-v1/run.py",
+      "--build",
+      "runs/pressure-precision-drift-v1/build-02",
+      "--output",
+      "runs/pressure-precision-drift-v1/cpu-01"
+    ],
+    [
+      "python3",
+      "experiments/pressure-precision-drift-v1/collect.py",
+      "--build",
+      "runs/pressure-precision-drift-v1/build-02",
+      "--run",
+      "runs/pressure-precision-drift-v1/cpu-01",
+      "--output",
+      "docs/plans/pressure-precision-drift-v1",
+      "--historical-reference",
+      "runs/pressure-pass-sweep-v1/cpu-01/C53/passes-16/native/frames.jsonl"
+    ]
+  ]
+}

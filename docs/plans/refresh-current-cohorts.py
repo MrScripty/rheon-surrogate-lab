@@ -15,6 +15,7 @@ from zoneinfo import ZoneInfo
 from current_cohort_records import ROOT, LAB, discover, discover_completed_models, digest, read, relative
 from drift_pressure_metrics import enrich_drift_pressure
 from pass_sweep_chart import enrich_pass_sweep
+from precision_chart import enrich_precision, precision_markup
 
 PAGE = ROOT / 'cohort-progress.html'
 MARKER = 'current-managed-pressure-v1'
@@ -393,10 +394,11 @@ def main():
             data['pressure_spectrogram']=psd
     enrich_drift_pressure(data, ROOT)
     enrich_pass_sweep(data, ROOT)
+    enrich_precision(data, ROOT)
     now=datetime.now(timezone.utc);data['history_refreshed_utc']=now.isoformat();data['snapshot_date']=now.astimezone(ZoneInfo('America/Vancouver')).date().isoformat()
     text=text[:match.start(2)]+json.dumps(data,separators=(',',':'),allow_nan=False)+text[match.end(2):]
     text=re.sub(r'Evidence snapshot · [^<]+','Evidence snapshot · '+now.astimezone(ZoneInfo('America/Vancouver')).strftime('%d %b %Y'),text)
-    PAGE.write_text(text)
+    PAGE.write_text(precision_markup(text, ROOT))
     print(f"Updated chart: {len(data['cohort_points'])} checkpoints, {len(data['history'])} history rows, {len(data['drift_traces'])} trajectories.")
 
 

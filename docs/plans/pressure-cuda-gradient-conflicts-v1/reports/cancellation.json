@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "tests": [
+    {
+      "boundary": "startup",
+      "signal": "SIGTERM",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/run.py",
+        "--config",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/config.json",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/startup",
+        "--no-publish"
+      ],
+      "controller_reaped": true,
+      "returncode": -2,
+      "elapsed_s": 0.10475246899295598,
+      "registered": {
+        "pid": 3284859,
+        "command": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+          "-B",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/check.py",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/startup/qualification.json"
+        ]
+      },
+      "execution": {
+        "status": "cancelled",
+        "elapsed_s": 0.051866198977222666,
+        "minimum_host_available_bytes": 51945992192,
+        "available_host_bytes_before": 51945992192,
+        "all_owned_children_reaped": true,
+        "workers": [
+          {
+            "name": "qualification",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+              "-B",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/check.py",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/startup/qualification.json"
+            ],
+            "pid": 3284859,
+            "device": "cpu",
+            "peak_rss_bytes": 544768,
+            "returncode": -15,
+            "reaped": true
+          }
+        ],
+        "optimizer_updates": 0,
+        "automatic_retry": false,
+        "config_sha256": "1a0a656e63064f959d1483e815497801e8b0f07d3ac69888bac3eafd958d723b",
+        "runtime_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+        "source_sha256": "582b60baf88bb81bf4d30f3fc7c72fd878eb184b97c63b9032b0d7b9d72a663a"
+      }
+    },
+    {
+      "boundary": "workers",
+      "signal": "SIGINT",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/run.py",
+        "--config",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/config.json",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/workers",
+        "--no-publish"
+      ],
+      "controller_reaped": true,
+      "returncode": -2,
+      "elapsed_s": 4.5277132659975905,
+      "registered": {
+        "completed_updates": [
+          100
+        ],
+        "elapsed_s": 3.3387510449974798
+      },
+      "execution": {
+        "status": "cancelled",
+        "elapsed_s": 4.437152856000466,
+        "minimum_host_available_bytes": 50345934848,
+        "available_host_bytes_before": 51911516160,
+        "all_owned_children_reaped": true,
+        "workers": [
+          {
+            "name": "qualification",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+              "-B",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/check.py",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/workers/qualification.json"
+            ],
+            "pid": 3284876,
+            "device": "cpu",
+            "peak_rss_bytes": 34504704,
+            "returncode": 0,
+            "reaped": true
+          },
+          {
+            "name": "cuda",
+            "command": [
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/bin/python3.14",
+              "-B",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/measure.py",
+              "--config",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-cuda-gradient-conflicts-v1/config.json",
+              "--vectors",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/workers/vectors",
+              "--output",
+              "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-cuda-gradient-conflicts-v1/cancellation-01/workers/measurement.json"
+            ],
+            "pid": 3284891,
+            "device": "cuda",
+            "peak_rss_bytes": 2194440192,
+            "returncode": -15,
+            "reaped": true
+          }
+        ],
+        "optimizer_updates": 0,
+        "automatic_retry": false,
+        "config_sha256": "1a0a656e63064f959d1483e815497801e8b0f07d3ac69888bac3eafd958d723b",
+        "runtime_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+        "source_sha256": "582b60baf88bb81bf4d30f3fc7c72fd878eb184b97c63b9032b0d7b9d72a663a"
+      }
+    }
+  ],
+  "source_sha256": "106cef0da5263408c04ff38f5c7eb2e83c2d879b85d67d9f7706ebf8df4fd2a1"
+}

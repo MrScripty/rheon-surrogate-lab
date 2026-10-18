@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>CUDA gradient conflicts</title>
+<style>body{font:16px system-ui;background:#111c27;color:#e2edf7;max-width:1180px;margin:2rem auto;padding:0 1rem}p{line-height:1.5}a{color:#93ceff}select{background:#24394b;color:inherit;padding:.45rem;margin:.4rem}.note{color:#bfcfdd}table{display:block;max-width:100%;overflow:auto;border-collapse:collapse;font-size:14px}td,th{padding:.5rem;text-align:right;border-bottom:1px solid #405668}td:first-child,th:first-child{text-align:left}.negative{color:#ffb0a8}.positive{color:#9cddc8}svg{width:100%;height:auto;background:#172938}</style>
+<h1>CUDA case and pass gradient conflicts</h1>
+<p><a href="../cohort-progress.html">Cohort progress</a> · <a href="../pressure-adam-momentum-damping-v1/index.html">Momentum damping</a> · <a href="plan.md">Method</a> · <a href="execution-ledger.md">Results and timing</a> · <a href="results.json">All scalar records</a> · <a href="next-steps.md">Next proposal</a></p>
+<p id="summary"></p>
+<p class="note">Negative cosine means the two gradients point in opposing directions: following one loss's steepest descent locally increases the other loss. Zero means locally orthogonal; +1 means aligned. This does not predict an entire training trajectory. C53 remains deployed.</p>
+<label>Saved update <select id="update"></select></label>
+<label>Compare against weak case 7 <select id="anchor"><option value="vs_weak_final">Four-pass equation gradient</option><option value="vs_weak_full">Full training-loss gradient</option></select></label>
+<svg id="chart" viewBox="0 0 1050 490" role="img" aria-label="Gradient cosine by case and network pass"></svg>
+<p class="note">Columns show independently measured equation-loss gradients at each pass and the unchanged full training objective. All cells retain their actual cosine and gradient norm in keyboard-accessible labels. Red means opposed, teal means aligned. All grids have cubic voxels.</p>
+<h2>Selected short-pass constraints</h2>
+<table><thead><tr><th>Case</th><th>Pass</th><th>Cosine with weak · 4</th><th>Gradient norm</th><th>Gradient · observed Adam delta</th><th>Equation residual</th></tr></thead><tbody id="short"></tbody></table>
+<label>Layer breakdown: case <select id="layercase"><option>0</option><option>1</option><option>4</option></select></label>
+<label>Pass <select id="layerpass"><option>1</option><option>2</option></select></label>
+<table><thead><tr><th>Parameter tensor</th><th>Dot contribution</th><th>Cosine</th><th>Weak gradient norm</th><th>Short gradient norm</th></tr></thead><tbody id="layers"></tbody></table>
+<h2>Reproduction and resources</h2><table><thead><tr><th>Update</th><th>Original raw/clipped CUDA gradient</th><th>Original full loss</th><th>Individual mean gap</th><th>Worker seconds</th></tr></thead><tbody id="replay"></tbody></table>
+<p id="limits" class="note"></p>
+<script id="data" type="application/json">STUDY_DATA</script><script>
+const d=JSON.parse(document.getElementById('data').textContent),$=id=>document.getElementById(id),f=v=>v===null?'—':Number(v).toExponential(4),ns='http://www.w3.org/2000/svg';
+const opposed=d.summary.reduce((n,s)=>n+s.opposed_short_gradient_pairs,0),compared=d.summary.reduce((n,s)=>n+s.compared_pairs,0);
+$('summary').textContent=opposed+'/'+compared+' selected short-pass gradient pairs oppose the weak four-pass gradient. Exact CUDA raw/clipped replay at all three snapshots. '+d.execution.elapsed_s.toFixed(2)+' seconds controller time; '+(d.gpu_peak_allocated_bytes/1048576).toFixed(1)+' MiB peak tensor allocation. No optimizer updates.';
+$('update').innerHTML=d.snapshots.map(s=>'<option>'+s.update+'</option>').join('');$('update').value='150';
+$('replay').innerHTML=d.snapshots.map(s=>'<tr>'+[s.update,s.cuda_replay.raw_exact&&s.cuda_replay.clipped_exact?'exact':'within tolerance',s.cuda_replay.maximum_loss_relative_gap===0?'exact':f(s.cuda_replay.maximum_loss_relative_gap),f(s.separate_full_gradient_mean_relative_l2_gap),s.elapsed_s.toFixed(3)].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+$('limits').textContent=d.scope_limits.join(' ');
+function render(){
+ const s=d.snapshots.find(s=>s.update===Number($('update').value)),anchor=$('anchor').value,svg=$('chart');svg.replaceChildren();
+ function add(tag,attrs,text){const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));if(text!==undefined)e.textContent=text;svg.append(e);return e}
+ const terms=['1','2','3','4','full'];terms.forEach((t,j)=>add('text',{x:245+j*155,y:34,fill:'#e2edf7','text-anchor':'middle'},t==='full'?'Full loss':'Pass '+t));
+ s.cases.forEach((c,i)=>{add('text',{x:145,y:72+i*48,fill:'#d0dfec','text-anchor':'end','font-size':14},'Case '+i+' · '+c.counts_xyz.join('×'));
+  terms.forEach((term,j)=>{const r=s.rows.find(r=>r.case===i&&r.term===term),v=r[anchor].cosine,color=v<0?'#ba615e':'#327d75',label='case '+i+' term '+term+' cosine '+Number(v).toFixed(4)+' gradient norm '+f(r.gradient_l2);const e=add('rect',{x:175+j*155,y:44+i*48,width:140,height:40,fill:color,'fill-opacity':.3+.7*Math.abs(v),tabindex:0,'aria-label':label});const title=document.createElementNS(ns,'title');title.textContent=label;e.append(title);add('text',{x:245+j*155,y:70+i*48,fill:'#ffffff','text-anchor':'middle','pointer-events':'none'},Number(v).toFixed(4))})});
+ $('short').innerHTML=s.rows.filter(r=>[0,1,4].includes(r.case)&&['1','2'].includes(r.term)).map(r=>'<tr>'+[r.case,r.term,Number(r.vs_weak_final.cosine).toFixed(4),f(r.gradient_l2),f(r.vs_observed_delta.dot),f(r.relative_residual)].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+ const pair=s.layer_comparisons.find(p=>p.case===Number($('layercase').value)&&p.passes===Number($('layerpass').value));
+ $('layers').innerHTML=pair.layers.map(r=>'<tr>'+[r.name,f(r.dot),r.cosine===null?'—':Number(r.cosine).toFixed(4),f(r.left_l2),f(r.right_l2)].map(v=>'<td>'+v+'</td>').join('')+'</tr>').join('');
+}
+for(const id of ['update','anchor','layercase','layerpass'])$(id).onchange=render;render();
+</script></html>

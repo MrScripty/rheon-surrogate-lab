@@ -18,7 +18,7 @@ def replace_once(text, before, after):
     return text.replace(before, after, 1)
 
 
-def prepare(config_path, arm_id, destination, *, source_overrides=None, config_overrides=None, objective_overrides=None):
+def prepare(config_path, arm_id, destination, *, source_overrides=None, config_overrides=None, objective_overrides=None, trainer_transform=None):
     config = read(config_path)
     material = read(ROOT / config['baseline_material'])
     selected = next(m for m in material['models'] if m['id'] == config['train_initialization'])
@@ -78,6 +78,8 @@ def prepare(config_path, arm_id, destination, *, source_overrides=None, config_o
                            'network = model.PressureCorrectionNet().to(device)\n    import fine_tuning\n    fine_tuning.initialize(network, args.initial_weights, helpers)\n    initial_inventory = helpers.state_inventory(network)')
     trainer = replace_once(trainer, "write(output/'receipt.json', receipt)",
                            "receipt['fine_tuning_statistics'] = dict(fine_tuning.STATS)\n    write(output/'receipt.json', receipt)")
+    if trainer_transform is not None:
+        trainer = trainer_transform(trainer)
     (destination / 'train.py').write_text(trainer)
     runtime = read(ROOT / config['runtime'])
     bootstrap = "import sys,json;sys.path.insert(0,sys.argv[1]);import model;model.select(json.load(open(sys.argv[1]+'/config.json')));print(json.dumps(model.ARCHITECTURE,sort_keys=True))"

@@ -25,7 +25,15 @@ def material(config_path, projects, output, include_candidates):
             receipt=read(receipt_path)
             if receipt['status']!='completed' or receipt['optimizer_updates']!=config['updates'] or not all(receipt['artifact_parity'].values()):
                 raise ValueError('Completed CUDA/fresh CPU restore required')
-            project=projects/(arm['id']+'-project-01')
+            intent=read(directory/'intent.json')
+            assembly_path=Path(intent['assembly'])
+            if sha(assembly_path)!=receipt['assembly_sha256']:
+                raise ValueError('Training assembly changed')
+            assembly=read(assembly_path)
+            project_file=ROOT/assembly['project']['path']
+            if sha(project_file)!=assembly['project']['sha256']:
+                raise ValueError('Captured project changed')
+            project=project_file.parent
             restore=directory/'restore'
             identifier=arm.get('model_id','C'+str(number))
             if any(m['id']==identifier for m in result['models']):

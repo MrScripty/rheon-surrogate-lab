@@ -361,4 +361,3 @@ The owner supplied the [Apache-2.0 project license](../LICENSE) when creating th
 repository. Dependencies retain their own licenses. See
 [dependency provenance](../THIRD_PARTY.md). The optional Rheon API patch remains a
 separate proposal; this publication changes no upstream Rheon code or dependency.
-

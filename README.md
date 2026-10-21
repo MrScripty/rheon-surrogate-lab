@@ -36,4 +36,3 @@ That model supports one 32³ sealed box with prescribed forcing and passive trac
 Bulk datasets, native builds and run artifacts are generally ignored. Follow the selected experiment's exact prerequisites; public receipts do not replace missing inputs.
 
 Licensed under [Apache-2.0](LICENSE). See [dependency provenance](THIRD_PARTY.md).
-

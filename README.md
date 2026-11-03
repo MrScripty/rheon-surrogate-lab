@@ -33,6 +33,10 @@ That model supports one 32³ sealed box with prescribed forcing and passive trac
 - [Global-pressure capture](experiments/global-pressure-v1/README.md): source and native-build contracts
 - [GroupNorm candidate](experiments/global-pressure-v1/groupnorm-v1/README.md) and [native diagnostic](experiments/global-pressure-v1/groupnorm-native-dev-v1/README.md): preserved development protocol
 
+Benchmark results and model source are kept in the [unified Tuldok project](projects/rheon-model-portfolio-unified-04). After a project gains results or models, run `python scripts/track_project_results.py projects/<project>` and commit the files it allows.
+
+The chart and dashboard scripts in `docs/plans/` are retired and stay only as a record. They replay run data this repository does not host, and they reject any study document whose hash changed. Tuldok's benchmark view replaces them.
+
 Bulk datasets, native builds and run artifacts are generally ignored. Follow the selected experiment's exact prerequisites; public receipts do not replace missing inputs.
 
 Licensed under [Apache-2.0](LICENSE). See [dependency provenance](THIRD_PARTY.md).

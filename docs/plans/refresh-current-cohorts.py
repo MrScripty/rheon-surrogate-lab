@@ -3,6 +3,7 @@
 Historical source branches stay untouched. Reads sealed managed artifacts and
 recorded CPU campaigns; executes no training or simulation.
 """
+from dashboard_build import render_dashboard
 import hashlib
 import json
 import math
@@ -16,7 +17,9 @@ from current_cohort_records import ROOT, LAB, discover, discover_completed_model
 from drift_pressure_metrics import enrich_drift_pressure
 from pass_sweep_chart import enrich_pass_sweep
 from precision_chart import enrich_precision, precision_markup
-from four_pass_study import four_pass_link, reserved_four_pass_ids
+from four_pass_study import four_pass_link, reserved_four_pass_ids, import_four_pass_rollouts
+from best_error_metrics import enrich_best_error
+from solver_comparison import enrich_solver_comparison
 
 PAGE = ROOT / 'cohort-progress.html'
 MARKER = 'current-managed-pressure-v1'
@@ -60,10 +63,16 @@ def main():
         diagnostic = load(diagnostic_path)
         load(ROOT / diagnostic['admission_source'], diagnostic['admission_sha256'])
         load(ROOT / entry['training_source'], entry['training_sha256'])
+        if entry.get('manufactured_training_bank'):
+            load(ROOT / entry['study_source'], entry['study_sha256'])
+        if entry.get('physical_training_stage'):
+            load(ROOT / entry['study_source'], entry['study_sha256'])
+            load(ROOT / entry['evaluation_source'], entry['evaluation_sha256'])
         project, artifacts = LAB / entry['project'], LAB / entry['artifacts']
         training_receipt = load(artifacts.parent / 'train/receipt.json')
         history = load(artifacts / 'history.json', training_receipt['outputs']['history.json']['sha256'])
-        splits = load(artifacts / 'splits.json', training_receipt['outputs']['splits.json']['sha256'])
+        splits = ({'parents':[]} if entry.get('modal_teacher_training') else
+                  load(artifacts / 'splits.json', training_receipt['outputs']['splits.json']['sha256']))
         if (diagnostic['weights_sha256'] != weight or digest(artifacts / 'weights.npz') != weight
                 or diagnostic['optimizer_updates'] or diagnostic['simulation_steps']):
             raise ValueError(f'Unbound chart diagnostic: {name}')
@@ -82,7 +91,10 @@ def main():
             number = max(int(p['id'][1:]) for p in points.values()) + 1
             while f'C{number:02d}' in reserved_ids:
                 number += 1
-            point = dict(id=f'C{number:02d}', order=number,
+            cohort_id = entry.get('cohort_id', f'C{number:02d}')
+            if any(p['id'] == cohort_id for p in points.values()):
+                raise ValueError(f'Cohort ID already belongs to another checkpoint: {cohort_id}')
+            point = dict(id=cohort_id, order=max(p['order'] for p in points.values())+1,
                 name=name, family=entry['family'], weights_sha256=weight,
                 trained_at=datetime.fromtimestamp(history['training_started_unix'], timezone.utc).isoformat(),
                 best_error=min(errors), median_error=statistics.median(errors), worst_error=max(errors),
@@ -95,9 +107,32 @@ def main():
                 policy='Original model proposal, before adaptive repetition or native refinement',
                 timing_scope='CPU pressure prediction; excludes setup, sample assembly, native verification and fallback',
                 **{k: diagnostic[k] for k in ['run_root','replay_project','replay_artifacts','replay_source_lab']})
+            if entry.get('initialized_from'):
+                point.update(initialized_from=entry['initialized_from'], optimizer_updates=entry['optimizer_updates'],
+                    study_source=entry['study_source'],
+                    policy='Original predict_pressure proposal with unchanged two-pass deployment default; explicit four/eight-pass results are separate inference policies')
+            if entry.get('optimizer_aggregation'):
+                point.update(**{k:entry[k] for k in ['optimizer_examples','optimizer_aggregation','optimizer_work']})
+            if entry.get('auxiliary_feedback_mode'):
+                initializer = next(p for p in points.values() if p['id'] == entry['initialized_from'])
+                if initializer['weights_sha256'] != entry['initialization_sha256']:
+                    raise ValueError('Detached-correction initialization differs from original checkpoint')
+                point.update(**{k:entry[k] for k in ['optimizer_examples','optimizer_work','auxiliary_feedback_mode','auxiliary_losses']})
+            if entry.get('physical_training_stage'):
+                point.update(optimizer_examples=entry['optimizer_examples'], optimizer_work=entry['optimizer_work'],
+                    training_stage='Recorded physical pressure requests; inherited C53 training excluded',
+                    policy='Original captured predict_pressure proposal with two correction stages; numerical/learned coarse stages and spacing features are included where declared by the model')
+                for key in ['initialization_description', 'network_parameters']:
+                    if key in entry:
+                        point[key] = entry[key]
             points[weight] = point
             data['cohort_points'].append(point)
         point = points[weight]
+        if entry.get('captured_pressure_probe'):
+            point.update(training_stage=entry['training_exposure_scope'],
+                policy='Captured full learned pressure prediction; '+str(entry['proposal_network_evaluations'])+' fine CNN stages; learned global layers included',
+                proposal_network_evaluations=entry['proposal_network_evaluations'],optimizer_updates=entry['optimizer_updates'],
+                network_parameters=entry['network_parameters'])
         identity = lambda c: json.dumps([c['trajectory_id'], c.get('native_frame', c['frame']), c['counts_xyz'], c['cell_size_m']])
         baseline = points[data['resolution_evaluations'][0]['weights_sha256']]
         if sorted(map(identity, cases)) != sorted(map(identity, baseline['timing_cases'])):
@@ -118,27 +153,47 @@ def main():
         def domain(counts, spacing):
             return training_domains.setdefault((tuple(counts),spacing),dict(counts_xyz=list(counts),cell_size_m=spacing,
                 snapshots=set(),simulations=set(),manufactured_presentations=0))
-        for parent in splits['parents']:
-            if parent['entry']['split'] != 'train':
-                continue
-            d = domain(parent['counts_xyz'],parent['cell_size_m'])
-            parent_id = (parent.get('capture_manifest_sha256'),parent['entry']['trajectory_id'])
-            d['simulations'].add(parent_id)
-            d['snapshots'].update((*parent_id,frame['index']) for frame in parent['frames'])
-        for key in ('analytical_feedback','supplemental_feedback'):
-            feedback = history[key]
-            if sum(feedback['grid_exposures']) != feedback['additional_examples']:
-                raise ValueError('Training grid exposures disagree')
-            for grid, count in zip(feedback['grids'],feedback['grid_exposures']):
-                grid = grid.get('grid',grid)
-                domain(grid['counts_xyz'],grid.get('cell_size_m') or 1/grid['cells_per_metre'])['manufactured_presentations'] += count
+        single_case = entry.get('manufactured_training_case')
+        manufactured_cases = entry.get('manufactured_training_bank') or ([single_case] if single_case else [])
+        if manufactured_cases:
+            for case in manufactured_cases:
+                domain(case['counts_xyz'], case['cell_size_m'])['manufactured_presentations'] += case['presentations']
+        else:
+            for parent in splits['parents']:
+                parent_entry = parent.get('entry', parent) if entry.get('physical_training_stage') else parent['entry']
+                if parent_entry['split'] != 'train':
+                    continue
+                d = domain(parent['counts_xyz'],parent['cell_size_m'])
+                if parent.get('source') == 'operator-generated-spatial-band':
+                    d.setdefault('synthetic_snapshots',set()).update((parent_entry['trajectory_id'],f['index']) for f in parent['frames'])
+                    continue
+                parent_id = (parent.get('capture_manifest_sha256', parent.get('native_receipt')),parent_entry['trajectory_id'])
+                d['simulations'].add(parent_id)
+                d['snapshots'].update((*parent_id,frame['index']) for frame in parent['frames'])
+            for key in ('analytical_feedback','supplemental_feedback'):
+                feedback = history.get(key)
+                if feedback is None:
+                    continue
+                if sum(feedback['grid_exposures']) != feedback['additional_examples']:
+                    raise ValueError('Training grid exposures disagree')
+                for grid, count in zip(feedback['grids'],feedback['grid_exposures']):
+                    grid = grid.get('grid',grid)
+                    domain(grid['counts_xyz'],grid.get('cell_size_m') or 1/grid['cells_per_metre'])['manufactured_presentations'] += count
         counted = [dict(counts_xyz=d['counts_xyz'],cell_size_m=d['cell_size_m'],unique_real_snapshots=len(d['snapshots']),
             real_simulations=len(d['simulations']),manufactured_presentations=d['manufactured_presentations']) for d in training_domains.values()]
-        upsert('training_exposures',dict(weights_sha256=weight,source=relative(artifacts/'splits.json'),
+        if entry.get('proposal_network_evaluations') == 1:
+            for row, original in zip(counted,training_domains.values()):
+                row['unique_synthetic_snapshots'] = len(original.get('synthetic_snapshots',set()))
+        manufactured_scope = (f"Additional fine-tuning stage only: {sum(c['presentations'] for c in manufactured_cases):,} presentations of "
+            + ('one manufactured fundamental-mode case' if len(manufactured_cases)==1 else f'{len(manufactured_cases)} manufactured fundamental-mode cases')
+            + f"; no real frames used for optimizer updates. {entry.get('initialized_from','C53')} supplies the inherited initialization; its earlier training is not counted again.")
+        if entry.get('optimizer_aggregation'):
+            manufactured_scope += f" {entry['optimizer_examples']:,} examples were combined into {entry['optimizer_updates']:,} optimizer updates by averaging each complete balanced cycle."
+        upsert('training_exposures',dict(weights_sha256=weight,source=entry['study_source'] if manufactured_cases or entry.get('modal_teacher_training') else relative(artifacts/'splits.json'),
             receipt_source=relative(artifacts.parent/'train/receipt.json'),history_source=relative(artifacts/'history.json'),domains=counted,
             **{key:sum(d[key] for d in counted) for key in ['unique_real_snapshots','real_simulations','manufactured_presentations']},
-            current_policy_presentations=history.get('current_feedback',{}).get('additional_examples',0),
-            scope='Original real teacher snapshots and analytical training draws. Current-policy residual replays are counted separately; they are not additional CFD simulations.'),'weights_sha256')
+            current_policy_presentations=(history.get('current_feedback') or {}).get('additional_examples',0),
+            scope=(entry.get('training_exposure_scope') or f"Additional {entry['optimizer_updates']:,}-update physical-request fitting stage only; C53 supplies inherited neural tensors and normalization. Counts describe available training snapshots, not optimizer draw frequencies. Balanced tier sampling changes per-parent exposure. Earlier C53 training is not counted again." if entry.get('physical_training_stage') else manufactured_scope if manufactured_cases else 'Original real teacher snapshots and analytical training draws. Current-policy residual replays are counted separately; they are not additional CFD simulations.')),'weights_sha256')
         # New probes replay the exact saved benchmark, so physical coordinates are shared.
         probe_path = directory / 'mode-probe.json'
         probe = load(probe_path)
@@ -155,10 +210,21 @@ def main():
                 raise ValueError('Frequency trace does not match source')
             frequency_cases.append(dict(**sample,id=hashlib.sha256(f'{relative(probe_path)}:{i}'.encode()).hexdigest()[:20],
                 rms_cycles_per_m=reference['rms_cycles_per_m'],rms_cycles_per_cell=reference['rms_cycles_per_cell'],
-                first_error=trace[0],final_error=trace[-1],trace=trace,network_evaluations=len(trace),equation_passed=case['equation_passed']))
+                first_error=trace[0],final_error=trace[-1],trace=trace,network_evaluations=len(trace),equation_passed=case['equation_passed'],
+                **({k:case[k] for k in ['fine_network_evaluations','work_unit']} if entry.get('captured_pressure_probe') else {})))
         benchmark = hashlib.sha256(json.dumps([probe['seed'],probe['source_sha256'],sorted(sample_keys)]).encode()).hexdigest()
+        # Benchmark identity describes the signed input population and 32-call
+        # protocol. The tiny architecture needs a different proposal adapter,
+        # but every input above is checked against the retained benchmark.
+        captured_probe = entry.get('captured_pressure_probe', False)
+        tiny_probe = entry.get('proposal_network_evaluations') == 1 and not captured_probe
+        if tiny_probe:
+            benchmark = reference_probe['benchmark_sha256']
         upsert('frequency_probes',dict(weights_sha256=weight,source=relative(probe_path),benchmark_sha256=benchmark,
-            seed=probe['seed'],cases=frequency_cases),'weights_sha256')
+            seed=probe['seed'],cases=frequency_cases,
+            **(dict(probe_protocol=probe['scope'],probe_implementation_sha256=probe['source_sha256']) if captured_probe else {}),
+            **(dict(probe_implementation_sha256=probe['source_sha256'],
+                    probe_protocol='Same signed inputs and unchanged physical gates; at most 32 one-network local proposals, without a numerical hierarchy') if tiny_probe else {})),'weights_sha256')
 
     traces_by_receipt = {sources.get(t['receipt_source']):t for t in data['drift_traces']}
     trace_keys = {t['id'] for t in data['drift_traces']}
@@ -378,17 +444,36 @@ def main():
             scope=qualification['scope'])
         data['rollout_campaign_status'].append(status)
         points[weight]['rollout_qualification'] = status
+    import_four_pass_rollouts(data, ROOT, LAB, load)
+    from pressure_methods_chart import enrich_methods_study
+    enrich_methods_study(data, ROOT, LAB, load)
+    from pressure_methods_v2_chart import enrich_methods_v2
+    enrich_methods_v2(data, ROOT, LAB, load)
+    from pressure_methods_v3_chart import enrich_methods_v3
+    enrich_methods_v3(data, ROOT, LAB, load)
+    from pressure_methods_v4_chart import enrich_methods_v4
+    enrich_methods_v4(data, ROOT, LAB, load)
+    from pressure_methods_v5_chart import enrich_methods_v5
+    enrich_methods_v5(data, ROOT, LAB, load)
+    from pressure_methods_v6_chart import enrich_methods_v6
+    enrich_methods_v6(data, ROOT, LAB, load)
+    from full_ai_chart import enrich_full_ai, full_ai_markup
+    enrich_full_ai(data, ROOT, LAB, load)
     # Include the new raw-proposal measurements as their own scientific metric.
     for entry in new_entries:
         point=points[entry['weights_sha256']]
         data['history'].append(dict(chart_importer=MARKER,group=f'{group_number:02d} · Current original-proposal snapshots',
             name=point['name'],source=point['source'],median=point['median_error'],worst=point['worst_error'],qualified=None,cases=128,
-            population='Same 128 consumed validation snapshots',policy='Original proposal · chart CPU diagnostic',weights_sha256=point['weights_sha256'],updates=5000))
+            population='Same 128 consumed validation snapshots',policy='Original proposal · chart CPU diagnostic',weights_sha256=point['weights_sha256'],updates=entry.get('optimizer_updates',5000)))
     # Expose the build already bound into each setup's identity so the UI can
     # distinguish otherwise identical simulations before and after cutover.
     for trace in data['drift_traces']:
         receipt=load(ROOT/trace['receipt_source'],sources.get(trace['receipt_source']))
-        trace['native_binary_sha256']=receipt['binary_sha256']
+        if trace.get('recording_format') in ('independent-full-field-v4', 'independent-full-field-v5', 'independent-full-field-v6'):
+            build=load(ROOT/trace['build_receipt_source'],receipt['build_receipt_sha256'])
+            trace['native_binary_sha256']=build['binary_sha256']
+        else:
+            trace['native_binary_sha256']=receipt['binary_sha256']
     spectral=ROOT/'pressure-spectrogram-data.json'
     if spectral.exists():
         psd=load(spectral)
@@ -399,11 +484,28 @@ def main():
             data['pressure_spectrogram']=psd
     enrich_drift_pressure(data, ROOT)
     enrich_pass_sweep(data, ROOT)
+    from pressure_methods_chart import enrich_methods_passes
+    enrich_methods_passes(data, ROOT)
+    from pressure_methods_v2_chart import enrich_methods_v2_passes
+    enrich_methods_v2_passes(data, ROOT)
+    from pressure_methods_v3_chart import enrich_methods_v3_passes
+    enrich_methods_v3_passes(data, ROOT)
+    enrich_methods_v3_passes(data, ROOT, study_key='methods_v4', tag='methods-v4-study',
+        timing_note=' C104–C111 add measured original two-stage proposals; adaptive solver-policy results remain separate on Pressure methods IV.')
+    enrich_methods_v3_passes(data, ROOT, study_key='methods_v5', tag='methods-v5-study',
+        timing_note=' C112–C114 add measured one-call local-network proposals only; hierarchy/GCR policies remain separate on Pressure methods V.', passes=1)
+    enrich_methods_v3_passes(data, ROOT, study_key='methods_v6', tag='methods-v6-study',
+        timing_note=' C115–C118 add measured one-call local-network proposals only; solver-training iterations are not inference pass counts.', passes=1)
+    for study_key, stages in [('full_ai_one_stage',1),('full_ai_two_stage',2)]:
+        enrich_methods_v3_passes(data, ROOT, study_key=study_key,tag='full-ai-study',passes=stages,
+            timing_note=' New full-AI fits add only measured captured proposals; learned global layers are included and fine CNN stages are counted explicitly.')
     enrich_precision(data, ROOT)
+    enrich_best_error(data, ROOT)
+    enrich_solver_comparison(data, ROOT)
     now=datetime.now(timezone.utc);data['history_refreshed_utc']=now.isoformat();data['snapshot_date']=now.astimezone(ZoneInfo('America/Vancouver')).date().isoformat()
     text=text[:match.start(2)]+json.dumps(data,separators=(',',':'),allow_nan=False)+text[match.end(2):]
     text=re.sub(r'Evidence snapshot · [^<]+','Evidence snapshot · '+now.astimezone(ZoneInfo('America/Vancouver')).strftime('%d %b %Y'),text)
-    PAGE.write_text(four_pass_link(precision_markup(text, ROOT), ROOT))
+    PAGE.write_text(render_dashboard(four_pass_link(precision_markup(full_ai_markup(text, ROOT), ROOT), ROOT), ROOT))
     print(f"Updated chart: {len(data['cohort_points'])} checkpoints, {len(data['history'])} history rows, {len(data['drift_traces'])} trajectories.")
 
 

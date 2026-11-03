@@ -10,6 +10,33 @@ from drift_pressure_metrics import enrich_drift_pressure, pressure_magnitudes
 
 
 class PressureMagnitudeTests(unittest.TestCase):
+    def test_recorded_mean_free_norms_are_exact_and_keep_their_gauge(self):
+        reference = [-1, 0, 1]
+        candidate = [-1.1, 0.1, 1]
+        norm = lambda values: math.sqrt(sum(v*v for v in values))
+        absolute = norm([a-b for a,b in zip(candidate,reference)])
+        reference_norm = norm(reference)
+        relative = absolute/reference_norm
+        record = dict(index=0,time_s=1/60,pressure=dict(relative_l2=relative,
+                     absolute_l2=absolute,reference_l2=reference_norm))
+        for recording_format in ['independent-full-field-v4','independent-full-field-v5','independent-full-field-v6']:
+            with tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                raw = json.dumps(dict(rows=[record])).encode()
+                (base/'result.json').write_bytes(raw)
+                trace = dict(recording_format=recording_format,frames_source='result.json',
+                             scene=dict(counts=[3,1,1]),points=[[1,1/60,relative,True,1e-7]])
+                data = dict(drift_traces=[trace],history_sources={'result.json':hashlib.sha256(raw).hexdigest()})
+                enrich_drift_pressure(data,base)
+                row = trace['pressure_magnitudes'][0]
+                self.assertEqual(row[0],absolute/math.sqrt(3))
+                self.assertEqual(row[1:], [reference_norm/math.sqrt(3)]*3)
+                self.assertEqual(trace['pressure_magnitude_coverage'], {'exact mean-free field norms':1})
+                self.assertIn('spatial pressure mean removed',data['drift_pressure_method']['gauge'])
+                (base/'result.json').write_bytes(raw+b'\n')
+                with self.assertRaisesRegex(ValueError,'full-field result changed'):
+                    enrich_drift_pressure(data,base)
+
     def test_independent_pressure_error_is_bounded_and_not_same_request_error(self):
         reference = [0, 3, 4]
         candidate = [0, 3.03, 4.04]

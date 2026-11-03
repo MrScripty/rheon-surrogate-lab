@@ -54,6 +54,24 @@ def enrich_drift_pressure(data, base):
         path = base / source
         expected = data["history_sources"].get(source)
         rows, reasons = [], Counter()
+        if trace.get('recording_format') in ('independent-full-field-v4', 'independent-full-field-v5', 'independent-full-field-v6'):
+            raw = path.read_bytes()
+            if not expected or hashlib.sha256(raw).hexdigest() != expected:
+                raise ValueError(f'Drift full-field result changed: {source}')
+            recorded = json.loads(raw)['rows']
+            if len(recorded) != len(trace['points']):
+                raise ValueError('Full-field drift population differs')
+            scale = math.sqrt(math.prod(trace['scene']['counts']))
+            for point, record in zip(trace['points'], recorded):
+                if point[0] != record['index']+1 or point[1] != record['time_s'] or point[2] != record['pressure']['relative_l2']:
+                    raise ValueError('Full-field drift point differs from source')
+                pressure = record['pressure']
+                reference = pressure['reference_l2']/scale
+                rows.append([pressure['absolute_l2']/scale,reference,reference,reference])
+            trace['pressure_magnitudes'] = rows
+            trace['pressure_magnitude_coverage'] = {'exact mean-free field norms':len(rows)}
+            totals.update(trace['pressure_magnitude_coverage'])
+            continue
         if not path.is_file() or not expected:
             reasons["sealed frame source unavailable"] = len(trace["points"])
         else:
@@ -85,6 +103,9 @@ def enrich_drift_pressure(data, base):
         reference_bounds="max(0, B-D)/(1+e) <= reference_rms <= (B+D)/(1-e), D = same_request_l2/sqrt(cell_count)",
         absolute_error="independent_relative_l2 * reference_rms; bounds scaled by the same relative error",
     )
+    if totals['exact mean-free field norms']:
+        data['drift_pressure_method']['additional_recording'] = 'V4/V5/V6 full-field comparisons retain exact absolute/reference norms after removing spatial pressure mean; their equal lower/upper values are exact norms, not triangle-inequality estimates.'
+        data['drift_pressure_method']['gauge'] = 'Per recording: common cell-zero for earlier traces; spatial pressure mean removed for V4/V5/V6 full-field comparisons'
     return dict(totals)
 
 

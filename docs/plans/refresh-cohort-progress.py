@@ -1,4 +1,5 @@
 """Refresh the offline HTML chart from retained scientific result records."""
+from dashboard_build import render_dashboard
 import hashlib
 import json
 import math
@@ -11,6 +12,8 @@ from drift_pressure_metrics import enrich_drift_pressure
 from pass_sweep_chart import enrich_pass_sweep
 from precision_chart import enrich_precision, precision_markup
 from four_pass_study import four_pass_link, reserved_four_pass_ids
+from best_error_metrics import enrich_best_error
+from solver_comparison import enrich_solver_comparison
 
 ROOT = Path(__file__).resolve().parent
 PAGE = ROOT / "cohort-progress.html"
@@ -1393,7 +1396,9 @@ if spectral_path.exists():
 enrich_drift_pressure(data, ROOT)
 enrich_pass_sweep(data, ROOT)
 enrich_precision(data, ROOT)
+enrich_best_error(data, ROOT)
+enrich_solver_comparison(data, ROOT)
 text = text[:match.start(2)] + json.dumps(data, separators=(",", ":")) + text[match.end(2):]
 text = re.sub(r"Evidence snapshot · [^<]+", "Evidence snapshot · " + snapshot_date.strftime("%d %b %Y"), text)
-PAGE.write_text(four_pass_link(precision_markup(text, ROOT), ROOT))
+PAGE.write_text(render_dashboard(four_pass_link(precision_markup(text, ROOT), ROOT), ROOT))
 print(f"Updated {len(rows)} cohort/policy results across {len(set(r['group'] for r in rows))} study families; {sum(r.get('status') == 'pending' for r in rows)} pending.")

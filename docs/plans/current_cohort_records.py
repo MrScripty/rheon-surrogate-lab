@@ -85,7 +85,25 @@ def discover():
 
 def discover_completed_models():
     """Include completed fits even when their later rollout campaign failed."""
+    from four_pass_study import completed_four_pass_models
     models = [m for study in discover() for m in study['models']]
+    models.extend(completed_four_pass_models(ROOT, LAB, SOURCE_LAB))
+    from detached_correction_chart import completed_detached_study
+    models.extend(completed_detached_study(ROOT, LAB, SOURCE_LAB)[0])
+    from pressure_methods_chart import completed_methods_study
+    models.extend(completed_methods_study(ROOT, LAB, SOURCE_LAB)[0])
+    from pressure_methods_v2_chart import completed_methods_v2
+    models.extend(completed_methods_v2(ROOT, LAB, SOURCE_LAB)[0])
+    from pressure_methods_v3_chart import completed_methods_v3
+    models.extend(completed_methods_v3(ROOT, LAB, SOURCE_LAB)[0])
+    from pressure_methods_v4_chart import completed_methods_v4
+    models.extend(completed_methods_v4(ROOT, LAB, SOURCE_LAB)[0])
+    from pressure_methods_v5_chart import completed_methods_v5
+    models.extend(completed_methods_v5(ROOT, LAB, SOURCE_LAB)[0])
+    from pressure_methods_v6_chart import completed_methods_v6
+    models.extend(completed_methods_v6(ROOT, LAB, SOURCE_LAB)[0])
+    from full_ai_chart import completed_full_ai
+    models.extend(completed_full_ai(ROOT, LAB, SOURCE_LAB))
     for path in sorted(SOURCE_PLANS.glob('pressure-*/reports/completed-fit-custody.json')):
         custody = read(path)
         measurement = custody['measurement']

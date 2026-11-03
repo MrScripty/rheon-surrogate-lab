@@ -1,0 +1,50 @@
+{
+  "status": "reserved_before_measurement",
+  "scenes": [
+    {
+      "id": 0,
+      "path": "runs/pressure-methods-v2/harder-scene-00.json",
+      "sha256": "87aa97b5c64f00cce4fb57db7bb94c28df2293b48297690eda53aa30c753b1e2"
+    },
+    {
+      "id": 1,
+      "path": "runs/pressure-methods-v2/harder-scene-01.json",
+      "sha256": "1328e26705caa23fa32a58519cb67895aacbe916bd3f4a0b2c36d9daf07f180d"
+    },
+    {
+      "id": 2,
+      "path": "runs/pressure-methods-v2/harder-scene-02.json",
+      "sha256": "9cf9b48efd512b03d8b49f3b1347e7e0c9a68415913c7f133c11644c8f5cddcc"
+    },
+    {
+      "id": 3,
+      "path": "runs/pressure-methods-v2/harder-scene-03.json",
+      "sha256": "5350178b7964336dbfbcb8a51faf092af174001fac6a4686e5d9bf7788e82f7e",
+      "native_only_followup_of": 2,
+      "reason": "Original acceleration 2 m/s^2 crosses native CFL 0.5 before 512 steps; halve force before any model comparison"
+    },
+    {
+      "id": 4,
+      "path": "runs/pressure-methods-v2/harder-scene-04.json",
+      "sha256": "36df0a5124998ad62f475853e0bffe711a89a0c5f99555d3d306823264a44b80",
+      "native_only_followup_of": 3,
+      "reason": "1 m/s^2 still crosses native CFL 0.5 at step 167; test 0.25 before model access"
+    }
+  ],
+  "relative_l2_levels": [
+    1e-06,
+    1e-05,
+    0.0001,
+    0.001,
+    0.01
+  ],
+  "absolute_limits": {
+    "velocity_m_s": 1e-05,
+    "tracer_concentration": 1e-05
+  },
+  "tolerance_scope": "Diagnostic sensitivity levels; no application-specific tolerance supplied",
+  "native_qualification": "Run native-only pilots before model policies; retain native physical failures as challenge limits",
+  "source_sha256": "2b2d7a56d9a6b11e0b59b6c79a2b044005b639cecc8f7cd907fe40d6470668c7",
+  "original_preparer_sha256": "12d8991090efd787ef048e906680f8a270c3ca46799531ba2d7ff11225772f99",
+  "captured_preparer_sha256": "8d1184d7b8ea8df1a2e4032b24eb1ec2a8b4d257c622100ec4339acc5f33277e"
+}

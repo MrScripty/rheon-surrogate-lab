@@ -1,0 +1,507 @@
+# Pressure methods v4 · v4-student50-control CUDA
+
+Retrospective source review · fit-af2d2e2f93da1faa
+
+Authored interpretation of captured source and receipts. No new training, benchmark, lineage or scientific promotion is implied.
+
+**Method.** A pressure-only residual predictor with 93,758 trained parameters: 92,560 fine-network coefficients, 63 learned coarse logits and a 1,135-parameter grid-shape head. The fine network has four encoder widths [4,8,12,16], bottleneck 24 and reversed decoder widths, average pooling, nearest upsampling, skip concatenation and a global pooled addition. Captured selection removes GroupNorm, SiLU and convolution biases from this one-channel fine path. Its input is the normalized physical residual q=(rho/h)r; rho is fluid density and h is metres per cell. dt is validated metadata, already reflected in the externally assembled RHS, rather than an independent neural input channel. Before each of two requested internal correction passes, up to 63 non-DC cosine modes receive positive learned gains conditioned by a 3→16 tanh→63 shape head. A fine-equation residual gate may reject that coarse proposal, then the float32 CNN correction is reconstructed and accumulated in float64. The gate does not certify the final CNN output. These are pressure iterations, not two physical simulation steps; this model does not itself advance velocity or tracer.
+
+**Purpose.** Provide the matched half-width control without the teacher-correction loss, so the distillation intervention can be assessed against the same initial weights, data, update budget and source implementation. C107 is a sibling experiment of C106; it was not trained by continuing the completed C106 checkpoint.
+
+**Experiment.** Both arms start from checkpoint dd6688cf203e9b65aceaeedfd123492aeb0c8200840cc40813956aba89993bce and use the same sampling order, 2,400 CUDA Adam updates, batch size one, seed 2026101905 and fixed original C53 normalization. The fine learning rate is 3e-4, then 3e-5 at update 1801 and 1e-5 at 2251. The executed head_optimizer.py multiplies the coarse/shape-head rate by 10/3; the inherited architecture field saying 1000 is stale and is preserved as an original observation. Training uses 34 captured train-only parents and 68 selected frames: 15 parents at 8 cells/m, 17 at 16 and two at 32. Domains include rectangular grids and 32³,64³,128³ cubes; dt=1/60 s and fluid density=1000 kg/m³ throughout. These are parent/frame counts, not proof of 34 independent scenes or held-out generalization. The physical final/intermediate equation feedback is shared; the old eight-pass pressure-teacher term has weight zero in both arms. C107’s fine-correction distillation weight is zero and records zero teacher forwards.
+
+**Observed outcome.** Training completed at the declared budget. On the fresh common set of 128 original consumed pressure requests, this exact C107 checkpoint has worst mean-free pressure relative L2 0.0081532900523824878 and equation relative L2 0.0010294370663109186. C107’s corresponding tails are about 0.00815329/0.00102944 versus C106’s 0.0155048/0.00678757. The common requests cover only 8 and 16 cells/m, small grids and 1/60 s pressure solves. Both receipts record zero held-out evaluations. These results establish this controlled diagnostic comparison, not large-grid, 50/100-density, full-state, multistep or drift accuracy. No new qualified latency follows from this review.
+
+**Lesson.** This matched run favors the physical-loss control on the retained diagnostic tails; adding a teacher loss does not guarantee an improvement. It is not evidence that distillation is generally harmful: replicated seeds and held-out scene/time/grid tests are still needed. Parameter count and original architecture labels alone omit active preprocessing, global gating, internal correction work and optimizer overrides. Compare these pressure-only scores separately from the nearly exact full-state component anchors and preserve the old reference epoch.
+
+**Reproduction.** The exact original receipt/history, source witness, all 45 witnessed files, fixed normalization, training population, original train/restore recipes and runtime manifest are bound below or in the review report. Reproduction requires the witness’s twelve exact input blobs, shared initial/teacher weights and the pinned original solver/data contract, then an explicitly admitted CUDA training execution with the captured configuration. Opening a project must not execute it. Clean retraining and exact final-checkpoint reproduction have not been exercised; new Rheon-generated data must be a separate physics epoch.
+
+## Exact source bindings for this review
+
+```json
+{
+  "original_receipt": {
+    "path": "runs/pressure-methods-v4/v4-student50-control-study-01/train/receipt.json",
+    "sha256": "af2d2e2f93da1faaf23c20d7e3fd45da842c3c1b476b6040054141c2dbf6f382"
+  },
+  "history": {
+    "path": "runs/pressure-methods-v4/v4-student50-control-study-01/train/history.json",
+    "sha256": "2b6af876f3eaebb94b9ba6c0efedc1297d12aa2ba69e86ca8e0579df394bb7d5"
+  },
+  "sources": [
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/analytical.py",
+      "sha256": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/band_feedback.py",
+      "sha256": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/baseline_model.py",
+      "sha256": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/coarse.py",
+      "sha256": "faf57fd30b7eba837d387c4c4ca53b67fa128d97f4d6d97727e8306a3853e895"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/config.json",
+      "sha256": "be7ff6173af78d3c6bde154c2009b74e782e48665eff78871ac4c24d43989603"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/custody-validator.py",
+      "sha256": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/data.py",
+      "sha256": "09231fe0119461205b74578dab9ce77cbcbea7c537900941432e97f52e51f16d"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/direction_feedback.py",
+      "sha256": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/distillation.json",
+      "sha256": "e99ea86fd1abaee220071225e2730c0fbae5b22ec0f19510007b80fde424bf7d"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/evidence.py",
+      "sha256": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/feedback_objective.py",
+      "sha256": "1b49995a3bf55a6d24ba6d5d00c88a8506cb4e6aeca8ca2b17a3c809ef8e223b"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/fine-tuning.json",
+      "sha256": "08f51f5235f0a7051ec640209ed07eb488f4b6957a411727cf5f32b1a1e5f2cb"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/fine_tuning.py",
+      "sha256": "bc1d0ec5f7d496d0d79af767a7032e5108750a43f6525594c45c57e126c8780c"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/fixed-normalization.json",
+      "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/frozen_gn.py",
+      "sha256": "ce280f6ce86aeccc31521b13e4df039780fda8c112c63616457771377903e08d"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/gradient_clipping.py",
+      "sha256": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/head_optimizer.py",
+      "sha256": "e976b949d6d7695ae1335ac4e6d881d734945d1105cd5871c8aaf5decb35bdcf"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/historical-reservation.json",
+      "sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/historical_data.py",
+      "sha256": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/historical_physical.py",
+      "sha256": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/hybrid-method.json",
+      "sha256": "7286631ecc547c35be01b10413acc6e3f85649357bac8c308e25019cffccfbe7"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/learned_coarse_model.py",
+      "sha256": "248761d431507dae54403ef68bae79004b8c3e23356d91c8cc4b88289ae0adf0"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/methods_view.py",
+      "sha256": "d971132a88e966ddbaf70f6f8a0f5ace2c34b1878c9ba51af9adf221100eff22"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/mixed_order.py",
+      "sha256": "93d987b0f10101fb5b380e7310aa77eb6f5c7557198f6d43d90f102393e47b04"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/model.py",
+      "sha256": "fe0a0b3bfbcc9479f14efe1b6c54981fb82ad8a7576b92470e0f1f9f63d24de9"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/native_reconstruct.py",
+      "sha256": "d2db7ae0a145e82560ede85518a542a2fc83f7e7c6de33697823457b96d74445"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/original_data.py",
+      "sha256": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/original_model.py",
+      "sha256": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/original_train.py",
+      "sha256": "886a66d65ac6214fc3c18805252e5d977336caa6353254b253aa8daef4b239a9"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/physical_residual.py",
+      "sha256": "6e1392c26880c034d09c72437fefd4c1865d6540f40e245825a6ad6a4e7f4204"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/policy.py",
+      "sha256": "1509131b63b42d1d4e3f4bb2ae9f1950454dd86b906d234c8792b212c06724d7"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/portable_model.py",
+      "sha256": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/portable_policy.py",
+      "sha256": "9aafa54db7d8a7ec73def867d75aeda7860fc06600eebfef2b30c9e0fddd5460"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/prepared.py",
+      "sha256": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/qualification.json",
+      "sha256": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/reference_spectral.py",
+      "sha256": "938737f75d504d469bb03647c19dbfdf330b9547205a264b4deac99fb0ecf64f"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/retained_domain_model.py",
+      "sha256": "6c3c831f50c8bd5100d3498f86c68e4658a0eb7c47a3a6b6fbf3b5a34df7a231"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/scenes.py",
+      "sha256": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/smoke_train.py",
+      "sha256": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/student_slice.py",
+      "sha256": "f144329caed584de6715fb45e2581c9148e559a183f66559349bfe17df58f580"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/support.py",
+      "sha256": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/teacher_model.py",
+      "sha256": "63425e0a06f96ccd35476c94fabccb9bdfbd3691c706d98f2fa362ea00b3b4d9"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/test_inference.py",
+      "sha256": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/train.py",
+      "sha256": "9e75fd34f56923f2fbc3702b762ea0d51b0f23760da0a477a626b66b0277aef7"
+    },
+    {
+      "path": "runs/pressure-methods-v4/v4-student50-control-project-01/training_diagnostic.py",
+      "sha256": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+    }
+  ],
+  "source_witness": {
+    "path": "runs/pressure-methods-v4/v4-student50-control-project-01/source-witness.json",
+    "sha256": "5cb64a22d3a94027e8dc951dc25cc0ab0284e8b66457781fe20e2e841e2beb0e"
+  },
+  "training_population": {
+    "path": "runs/pressure-methods-v4/v4-student50-control-study-01/train/splits.json",
+    "sha256": "8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169"
+  }
+}
+```
+
+## Original retained fit facts before this review
+
+```json
+{
+  "fit": {
+    "item_id": "fit-af2d2e2f93da1faa",
+    "kind": "training_attempt",
+    "name": "Pressure methods v4 · v4-student50-control CUDA",
+    "task": "pressure_proposal",
+    "schema": "rheon-water-learning-training-v1",
+    "method": {
+      "schema": "rheon-physical-residual-pressure-v1",
+      "input_channels": 1,
+      "encoder_widths": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "bottleneck_width": 24,
+      "decoder_widths": [
+        16,
+        12,
+        8,
+        4
+      ],
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "activation": "linear",
+      "dtype": "float32",
+      "pressure_dtype": "float64",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "learned_coarse_revision": {
+        "basis": "Orthonormal separable Neumann cosine modes 0..3, excluding DC",
+        "bound": "max_axis_cells^2/2",
+        "coefficients": "Positive learned sigmoid gains; no analytical inverse eigenvalues",
+        "gate": "Accept learned coarse proposal only when its actual fine-equation residual norm does not increase",
+        "initialization": "Gain 1 on 16^3; all original neural tensors preserved",
+        "limitation": "Gate controls coarse proposal only; final neural pass and trajectory still require independent evaluation",
+        "placement": "Learned coarse proposal before every fine neural pass",
+        "trainable_parameters": 63
+      },
+      "student_distillation": {
+        "distillation_weight": 0.0,
+        "normalization": "Shared fixed original C53 scales",
+        "target": "Teacher fine correction on each student-generated inner pressure residual",
+        "teacher_used_at_inference": false,
+        "teacher_weights_sha256": "42b2504fd922e9123823427857b4de36b153dbc343e157ad6fac36e3760612f4",
+        "width_fraction": [
+          1,
+          2
+        ]
+      },
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "counts_supported": "positive per-axis integers within cell budget",
+      "max_cells": 2097152
+    },
+    "receipt_sha256": "af2d2e2f93da1faaf23c20d7e3fd45da842c3c1b476b6040054141c2dbf6f382",
+    "receipt_paths": [
+      "runs/pressure-methods-v4/v4-student50-control-study-01/train/receipt.json"
+    ],
+    "recorded_Run_observations": [
+      {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "run_id": "74240450dfb642599b9aea0d83517a0f",
+        "epoch": "current_catalog",
+        "observed_in": [
+          "current_catalog"
+        ],
+        "graph_name": "Pressure methods v4 · v4-student50-control CUDA",
+        "state": "completed"
+      }
+    ],
+    "optimizer_updates": 2400,
+    "parameter_fits": null,
+    "declared_parameter_count": null,
+    "training_closure": {
+      "experiment_sha256": "be7ff6173af78d3c6bde154c2009b74e782e48665eff78871ac4c24d43989603",
+      "inputs": {
+        "dataset": {
+          "bytes": 22711895,
+          "sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5"
+        },
+        "dataset_extra": {
+          "bytes": 25135473,
+          "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368"
+        },
+        "initial_weights": {
+          "bytes": 381750,
+          "sha256": "dd6688cf203e9b65aceaeedfd123492aeb0c8200840cc40813956aba89993bce"
+        },
+        "splits": {
+          "bytes": 57361,
+          "sha256": "8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169"
+        },
+        "teacher_weights": {
+          "bytes": 1491574,
+          "sha256": "42b2504fd922e9123823427857b4de36b153dbc343e157ad6fac36e3760612f4"
+        },
+        "view_02": {
+          "bytes": 22277708,
+          "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb"
+        },
+        "view_03": {
+          "bytes": 23650806,
+          "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8"
+        },
+        "view_04": {
+          "bytes": 22239100,
+          "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc"
+        },
+        "view_05": {
+          "bytes": 24113006,
+          "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda"
+        },
+        "view_06": {
+          "bytes": 19897861,
+          "sha256": "8cdfb4b865349fcd6123a079fb73e5737a332fe443ae99fb7960534210d66080"
+        },
+        "view_07": {
+          "bytes": 22257574,
+          "sha256": "4ac480f3523ed959b1204e52b9cd8cf03df9364746348bef753bd2af8ae689f9"
+        },
+        "view_08": {
+          "bytes": 18319876,
+          "sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+      "sample_order_sha256": "157178a36ed5bebdd0971c3643a6720aa377962175614cdde7115ddef5cfbf56",
+      "source_witness_sha256": "5cb64a22d3a94027e8dc951dc25cc0ab0284e8b66457781fe20e2e841e2beb0e"
+    },
+    "checkpoints": [
+      {
+        "name": "checkpoint-000.npz",
+        "sha256": "dd6688cf203e9b65aceaeedfd123492aeb0c8200840cc40813956aba89993bce",
+        "bytes": 381750,
+        "stage": "initial"
+      },
+      {
+        "name": "checkpoint-2400.npz",
+        "sha256": "9d50b22dcad28fe27d6f7ce0bbb0583741ff63a5f3b8684d1398a18e58014365",
+        "bytes": 381750,
+        "stage": "retained_snapshot"
+      },
+      {
+        "name": "weights.npz",
+        "sha256": "9d50b22dcad28fe27d6f7ce0bbb0583741ff63a5f3b8684d1398a18e58014365",
+        "bytes": 381750,
+        "stage": "selected"
+      }
+    ],
+    "raw_receipt_status": "complete",
+    "declared_runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 4196962304,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "named_entries": [
+      "cohorts/105"
+    ],
+    "purpose": {
+      "status": "source_review_required",
+      "evidence": "Captured architecture, training configuration and linked named entries."
+    },
+    "outcome": {
+      "status": "retained_training_evidence_only",
+      "fresh_common_benchmark": "pending",
+      "scientific_promotion": false
+    },
+    "lesson": {
+      "status": "review_required_no_automatic_causal_claim"
+    },
+    "reproduction": {
+      "receipt": "runs/pressure-methods-v4/v4-student50-control-study-01/train/receipt.json",
+      "source_and_data_closure": "Retained hashes; clean reproduction not yet exercised."
+    },
+    "applicability": {
+      "status": "adapter_and_contract_review_required",
+      "task": "pressure_proposal",
+      "fresh_result": null
+    }
+  },
+  "original_receipt": {
+    "path": "runs/pressure-methods-v4/v4-student50-control-study-01/train/receipt.json",
+    "sha256": "af2d2e2f93da1faaf23c20d7e3fd45da842c3c1b476b6040054141c2dbf6f382",
+    "bytes": 14427
+  },
+  "bound_training_configuration": null,
+  "qualified_common_pressure": {
+    "scope": "128 original consumed pressure requests; not a full-state, independent-validation or drift qualification",
+    "capture_and_common_score": {
+      "path": "docs/plans/model-portfolio-migration-v1/reports/pressure-common-score-01.json",
+      "sha256": "3517bc4076e6ea0da9da857db43461e1be0b841804648bb12f40db2e990f1dcd"
+    },
+    "subjects": {
+      "C107": {
+        "name": "v4-student50-control",
+        "weights_sha256": "9d50b22dcad28fe27d6f7ce0bbb0583741ff63a5f3b8684d1398a18e58014365",
+        "cases": 128,
+        "worst": {
+          "common_equation_relative_l2": 0.0010294370663109186,
+          "pressure_mean_free_relative_l2": 0.008153290052382488,
+          "pressure_absolute_rms": 0.07251107197189392,
+          "pressure_absolute_max": 0.14680334340321166
+        },
+        "worst_case": {
+          "common_equation_relative_l2": {
+            "trajectory_id": "baseline--water-validation-0025",
+            "native_frame": 63,
+            "counts_xyz": [
+              9,
+              11,
+              11
+            ],
+            "cell_size_m": 0.0625
+          },
+          "pressure_mean_free_relative_l2": {
+            "trajectory_id": "baseline--water-validation-0060",
+            "native_frame": 63,
+            "counts_xyz": [
+              5,
+              6,
+              15
+            ],
+            "cell_size_m": 0.125
+          }
+        },
+        "by_cells_per_metre": {
+          "8.0": {
+            "cases": 64,
+            "worst": {
+              "common_equation_relative_l2": 0.0005068918641344823,
+              "pressure_mean_free_relative_l2": 0.008153290052382488,
+              "pressure_absolute_rms": 0.07251107197189392,
+              "pressure_absolute_max": 0.14680334340321166
+            }
+          },
+          "16.0": {
+            "cases": 64,
+            "worst": {
+              "common_equation_relative_l2": 0.0010294370663109186,
+              "pressure_mean_free_relative_l2": 0.001945319210723386,
+              "pressure_absolute_rms": 0.02564620642361516,
+              "pressure_absolute_max": 0.0745122684990893
+            }
+          }
+        },
+        "execution_variant": "captured_CUDA_eager",
+        "result": {
+          "path": "runs/model-portfolio-migration-v1/pressure-GPU-C107-accuracy-01/results.json",
+          "sha256": "b69b08e0356c5c0019975a018c968546ecba9ac4ff90ea2a4ea8508146806cac"
+        },
+        "CNN_operation_AST_preserved": null,
+        "CPU_neural_forward": false
+      }
+    },
+    "qualified_latency": false
+  },
+  "interpretation": {
+    "card_status": "retrospective_evidence_draft",
+    "architecture_description": "Recorded fields; source semantics still require review.",
+    "purpose_and_lesson": "No causal lesson or completion claim is inferred from a training receipt.",
+    "reproduction": "Source/data/checkpoint identities retained. Clean reproduction remains unverified.",
+    "historical_original_Run_observations": "References only; no native Run, Trial, ancestry or current execution authority is created."
+  }
+}
+```
+
+## Exact original receipt bytes
+
+```json
+{"architecture":{"activation":"linear","analytical_training_feedback":{"amplitude_reference":"train-correction-cell-rms","cache_max_bytes":805306368,"grid_capacity":16,"grids":[{"cells_per_metre":16,"counts_xyz":[16,16,16]},{"cells_per_metre":16,"counts_xyz":[24,24,24]},{"cells_per_metre":16,"counts_xyz":[32,32,32]},{"cells_per_metre":16,"counts_xyz":[40,40,40]},{"cells_per_metre":16,"counts_xyz":[24,16,12]},{"cells_per_metre":8,"counts_xyz":[17,13,9]},{"cells_per_metre":8,"counts_xyz":[33,17,9]},{"cells_per_metre":8,"counts_xyz":[9,25,13]}],"patterns":32,"sampling":"uniform-balanced-grid","seed":2026101507,"weight":0.1},"block_normalization":{"name":"Identity"},"bottleneck_width":24,"channels":["dimensionless_laplacian_rhs"],"conditioning":"physical-residual","convolutions_per_block":2,"coordinates":"implicit grid indices; no coordinate feature maps","correction":{"activation":"linear","steps":2},"counts_supported":"positive per-axis integers within cell budget","current_policy_training_feedback":{"manifest_sha256":"fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e","seed":2026102801,"stage":"late","weight":0.1},"decoder_widths":[16,12,8,4],"direction_training_feedback":{"manifest_sha256":"ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc","seed":2026102701,"stage":"late","weight":0.1},"dtype":"float32","encoder_widths":[4,8,12,16],"fine_tuning":{"arm":"v4-student50-control","early_weight":0.05,"initial_weights_sha256":"dd6688cf203e9b65aceaeedfd123492aeb0c8200840cc40813956aba89993bce","relative_equation_target":1e-06,"schema":"rheon-fine-tuning-objective-v1","teacher_cache_bytes":268435456,"teacher_passes":8,"teacher_weight":0.0,"training_passes":2},"first_correction_pressure_feedback_weight":0.0,"gauge":"subtract_first_correction_cell","global_path":"add_spatial_mean_broadcast","head":"linear_1x1x1","initialization":"retain original first-convolution residual column and all surviving seeded tensors","input_channels":1,"intermediate_feedback":{"relative_equation_weight":0.1,"stages":"all nonfinal corrections; real and analytical train samples"},"kernel":[3,3,3],"learned_coarse_revision":{"basis":"Orthonormal separable Neumann cosine modes 0..3, excluding DC","bound":"max_axis_cells^2/2","coefficients":"Positive learned sigmoid gains; no analytical inverse eigenvalues","gate":"Accept learned coarse proposal only when its actual fine-equation residual norm does not increase","initialization":"Gain 1 on 16^3; all original neural tensors preserved","limitation":"Gate controls coarse proposal only; final neural pass and trajectory still require independent evaluation","placement":"Learned coarse proposal before every fine neural pass","trainable_parameters":63},"max_cells":2097152,"method_comparison":{"normalization":"fixed original C53 train-only scales","sampling":"Balanced spatial tiers; private RNG; fixed update budget.","supervision":"Recorded physical pressure requests only; inherited auxiliary banks are disabled in the captured trainer."},"output_scale":"previous-pressure-rms","padding":"replicate","physical_cells":"one scalar h per sample; no cell-size network channels","pool":"per-axis average, kernel=min(2,count), ceil, exclude padding","preprocessing":"q=(rho/h)*residual; q / train-only q RMS","pressure_dtype":"float64","reconstruction":"float32 raw times selected train-only RMS, cell-zero gauge, add supplied base","restrictions":"uniform-density cubic sealed Neumann operator; no independently specified geometry masks","schema":"rheon-physical-residual-pressure-v1","shape_informed_coarse":{"added_parameters":1135,"features":"log(Nz/16), log(Ny/16), log(Nx/16)","fine_initialization":"Exact completed v2-headshape CPU restore; matched continuation control","head_learning_rate_multiplier":1000,"network":"3 -> 16 tanh -> 63 additive coarse logits; final layer initially zero","operator":"Existing sealed constant-density equation"},"student_distillation":{"distillation_weight":0.0,"normalization":"Shared fixed original C53 scales","target":"Teacher fine correction on each student-generated inner pressure residual","teacher_used_at_inference":false,"teacher_weights_sha256":"42b2504fd922e9123823427857b4de36b153dbc343e157ad6fac36e3760612f4","width_fraction":[1,2]},"supplemental_training_feedback":{"amplitude_reference":"train-correction-cell-rms","cache_max_bytes":805306368,"grid_capacity":16,"grids":[{"cells_per_metre":16,"counts_xyz":[16,23,25]},{"cells_per_metre":16,"counts_xyz":[23,25,16]},{"cells_per_metre":16,"counts_xyz":[25,16,23]},{"cells_per_metre":16,"counts_xyz":[10,7,25]},{"cells_per_metre":16,"counts_xyz":[7,25,10]},{"cells_per_metre":16,"counts_xyz":[25,10,7]}],"patterns":32,"sampling":"uniform-balanced-grid","seed":2026101607,"source":"grids","weight":0.1},"training_band_feedback":{"max_mode":3,"signal_floor_fraction":0.1,"stages":"first-and-final","weight":0.03},"training_objective":"canonical-intermediate-contraction","upsampling":"nearest_to_skip_shape"},"cases":[{"cell_size_m":0.125,"counts_xyz":[16,16,16],"frame":0,"native_frame":15,"parent":0,"split":"train","trajectory_id":"baseline--water-train-0000"},{"cell_size_m":0.0625,"counts_xyz":[12,6,11],"frame":1,"native_frame":63,"parent":3,"split":"train","trajectory_id":"baseline--water-train-0003"},{"cell_size_m":0.125,"counts_xyz":[8,5,9],"frame":0,"native_frame":15,"parent":6,"split":"train","trajectory_id":"baseline--water-train-0006"},{"cell_size_m":0.0625,"counts_xyz":[6,14,9],"frame":1,"native_frame":63,"parent":9,"split":"train","trajectory_id":"baseline--water-train-0009"},{"cell_size_m":0.125,"counts_xyz":[6,13,12],"frame":0,"native_frame":15,"parent":12,"split":"train","trajectory_id":"baseline--water-train-0012"},{"cell_size_m":0.0625,"counts_xyz":[14,15,7],"frame":1,"native_frame":63,"parent":15,"split":"train","trajectory_id":"baseline--water-train-0015"},{"cell_size_m":0.125,"counts_xyz":[64,64,64],"frame":0,"native_frame":15,"parent":18,"split":"train","trajectory_id":"large-train-64-cpm8"},{"cell_size_m":0.0625,"counts_xyz":[31,23,17],"frame":1,"native_frame":63,"parent":21,"split":"train","trajectory_id":"v2-train-00-cpm16"},{"cell_size_m":0.125,"counts_xyz":[48,13,9],"frame":0,"native_frame":15,"parent":24,"split":"train","trajectory_id":"v2-train-02-cpm8"},{"cell_size_m":0.0625,"counts_xyz":[64,64,64],"frame":1,"native_frame":15,"parent":27,"split":"train","trajectory_id":"v3-train-00-n64-cpm16"},{"cell_size_m":0.125,"counts_xyz":[64,64,64],"frame":0,"native_frame":0,"parent":30,"split":"train","trajectory_id":"v3-train-01-n64-cpm8"},{"cell_size_m":0.03125,"counts_xyz":[128,128,128],"frame":1,"native_frame":15,"parent":33,"split":"train","trajectory_id":"v3-train-01-n128-cpm32"}],"closure":{"experiment_sha256":"be7ff6173af78d3c6bde154c2009b74e782e48665eff78871ac4c24d43989603","inputs":{"dataset":{"bytes":22711895,"sha256":"20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5"},"dataset_extra":{"bytes":25135473,"sha256":"2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368"},"initial_weights":{"bytes":381750,"sha256":"dd6688cf203e9b65aceaeedfd123492aeb0c8200840cc40813956aba89993bce"},"splits":{"bytes":57361,"sha256":"8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169"},"teacher_weights":{"bytes":1491574,"sha256":"42b2504fd922e9123823427857b4de36b153dbc343e157ad6fac36e3760612f4"},"view_02":{"bytes":22277708,"sha256":"85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb"},"view_03":{"bytes":23650806,"sha256":"98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8"},"view_04":{"bytes":22239100,"sha256":"1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc"},"view_05":{"bytes":24113006,"sha256":"6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda"},"view_06":{"bytes":19897861,"sha256":"8cdfb4b865349fcd6123a079fb73e5737a332fe443ae99fb7960534210d66080"},"view_07":{"bytes":22257574,"sha256":"4ac480f3523ed959b1204e52b9cd8cf03df9364746348bef753bd2af8ae689f9"},"view_08":{"bytes":18319876,"sha256":"2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30"}},"normalization_sha256":"f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1","runtime_manifest_sha256":"b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682","sample_order_sha256":"157178a36ed5bebdd0971c3643a6720aa377962175614cdde7115ddef5cfbf56","source_witness_sha256":"5cb64a22d3a94027e8dc951dc25cc0ab0284e8b66457781fe20e2e841e2beb0e"},"diagnostic_population":"train_only","elapsed_s":147.22814316599397,"execution":{"amp":false,"batches_cuda":true,"cuda_cpu_pressure_max_abs_difference":1.1606587336787655e-06,"deterministic_algorithms":true,"device":"cuda:0","gpu":"NVIDIA GeForce RTX 5090 Laptop GPU","model_dtype":"float32","parameters_gradients_adam_moments_cuda":true,"peak_allocated_bytes":1759897088,"peak_reserved_bytes":2006974464,"tf32":false},"fine_tuning_statistics":{"distillation_loss_calls":0,"distillation_teacher_forward_cells":0,"distillation_teacher_forwards":0,"teacher_cache_hits":0,"teacher_cache_peak_bytes":0,"teacher_forwards":0},"frozen_full_teacher_unchanged":true,"heldout_evaluations":0,"mode":"train","optimizer_updates":2400,"originating_training_run":null,"outputs":{"checkpoint-000.npz":{"bytes":381750,"role":"checkpoint","sha256":"dd6688cf203e9b65aceaeedfd123492aeb0c8200840cc40813956aba89993bce"},"checkpoint-2400.npz":{"bytes":381750,"role":"checkpoint","sha256":"9d50b22dcad28fe27d6f7ce0bbb0583741ff63a5f3b8684d1398a18e58014365"},"history.json":{"bytes":15842,"role":"training_diagnostics","sha256":"2b6af876f3eaebb94b9ba6c0efedc1297d12aa2ba69e86ca8e0579df394bb7d5"},"normalization.json":{"bytes":6752,"role":"preprocessing","sha256":"f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"},"predictions.npz":{"bytes":1238286,"role":"predictions","sha256":"b305c051882e3a6d2d4d5443966cb2046fb7f8630095e01307b03285f988aba6"},"profile.json":{"bytes":189,"role":"training_diagnostics","sha256":"bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"},"splits.json":{"bytes":57361,"role":"training_splits","sha256":"8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169"},"summary.json":{"bytes":682,"role":"result_summary","sha256":"b0bd8316e1adcf0b3eb3e8ba7938a0603d318465a6800eb0d0ff688bcebdaa15"},"weights.npz":{"bytes":381750,"role":"checkpoint","sha256":"9d50b22dcad28fe27d6f7ce0bbb0583741ff63a5f3b8684d1398a18e58014365"}},"per_case_inference_s":[0.011786778981331736,0.005026442988310009,0.004191763990093023,0.004929224000079557,0.005335968016879633,0.005548207001993433,0.7351438909827266,0.024508704023901373,0.010911485005635768,0.6244305160071235,0.6015924779931083,3.0208040090219583],"prediction_export_inventory":{"case_000":{"bytes":32768,"dtype":"<f8","sha256":"32bceaaf2b343411605e854489420a0f6d15fa2979da01077ed7cb3643115425","shape":[16,16,16]},"case_001":{"bytes":6336,"dtype":"<f8","sha256":"cadf4ff0a4f3fcd49aa17321f436c0a5b35cc49daae8068a8458765cc8a19c22","shape":[11,6,12]},"case_002":{"bytes":2880,"dtype":"<f8","sha256":"c0add8d97321c18f8bfa8b949775b86ffca0cd7ad9153bd945ac3d35a3823342","shape":[9,5,8]},"case_003":{"bytes":6048,"dtype":"<f8","sha256":"5bbf76901eb9c9c79a222648e5124a5008d1421a4a3bd129abe0d1a4423b7a49","shape":[9,14,6]},"case_004":{"bytes":7488,"dtype":"<f8","sha256":"e8310b1c3611b35ae29645ff9d44ed48d89f4b4f40b4cb5e17a24c77b10d9444","shape":[12,13,6]},"case_005":{"bytes":11760,"dtype":"<f8","sha256":"6819f404d4d80d0ea03142e5a27e125bfb32459febfcad9b26c9ed5b1bd7f9fe","shape":[7,15,14]},"case_006":{"bytes":262144,"dtype":"<f8","sha256":"046d7186f629dddaf94f39888b6f2f35c825b59e211813bf52f8c45f89fe6ba0","shape":[32,32,32]},"case_007":{"bytes":96968,"dtype":"<f8","sha256":"3f6403b5ae1eca2bf211c5123694fcacdc5f7c09d2f807c428f94ce874c97f63","shape":[17,23,31]},"case_008":{"bytes":22464,"dtype":"<f8","sha256":"49c2198f1fd650fb07e80822fdef909667dc007c9799153ea8d184f34bc0c2c4","shape":[9,13,24]},"case_009":{"bytes":262144,"dtype":"<f8","sha256":"ae9626cdabc79bf59f717f5a64bc0ff7cb060046643ad34101fa68e7ec4bfdb5","shape":[32,32,32]},"case_010":{"bytes":262144,"dtype":"<f8","sha256":"34376716d9d37c5588f47f071dd602b5753a7e17b018efc9e58529f8a2cda06f","shape":[32,32,32]},"case_011":{"bytes":262144,"dtype":"<f8","sha256":"88cdd215933fed5715eb4c060d49b1338007a047033be37e06a7dcbb78665817","shape":[32,32,32]}},"prediction_export_policy":"NPZ samples at most32cells/axis; full prediction_inventory hashes every full-resolution value and is checked exactly on fresh CPU restore","prediction_inventory":{"case_000":{"bytes":32768,"dtype":"<f8","sha256":"32bceaaf2b343411605e854489420a0f6d15fa2979da01077ed7cb3643115425","shape":[16,16,16]},"case_001":{"bytes":6336,"dtype":"<f8","sha256":"cadf4ff0a4f3fcd49aa17321f436c0a5b35cc49daae8068a8458765cc8a19c22","shape":[11,6,12]},"case_002":{"bytes":2880,"dtype":"<f8","sha256":"c0add8d97321c18f8bfa8b949775b86ffca0cd7ad9153bd945ac3d35a3823342","shape":[9,5,8]},"case_003":{"bytes":6048,"dtype":"<f8","sha256":"5bbf76901eb9c9c79a222648e5124a5008d1421a4a3bd129abe0d1a4423b7a49","shape":[9,14,6]},"case_004":{"bytes":7488,"dtype":"<f8","sha256":"e8310b1c3611b35ae29645ff9d44ed48d89f4b4f40b4cb5e17a24c77b10d9444","shape":[12,13,6]},"case_005":{"bytes":11760,"dtype":"<f8","sha256":"6819f404d4d80d0ea03142e5a27e125bfb32459febfcad9b26c9ed5b1bd7f9fe","shape":[7,15,14]},"case_006":{"bytes":2097152,"dtype":"<f8","sha256":"4433f3b6d41e09bfa0a8f11ed2985574db98226611d963792239bc07c3e8d9e7","shape":[64,64,64]},"case_007":{"bytes":96968,"dtype":"<f8","sha256":"3f6403b5ae1eca2bf211c5123694fcacdc5f7c09d2f807c428f94ce874c97f63","shape":[17,23,31]},"case_008":{"bytes":44928,"dtype":"<f8","sha256":"e64fd59bd4387cfad49e36247fff72f8bfc21fb3bdfafaa86b7bfe3bc19ef464","shape":[9,13,48]},"case_009":{"bytes":2097152,"dtype":"<f8","sha256":"e31330d454683fbee3d4d66ae94f764bc2626c7785d3b3b59647211c83880b11","shape":[64,64,64]},"case_010":{"bytes":2097152,"dtype":"<f8","sha256":"101a6d6bbde0d55e622312bb9cb62a8e5eb2a782c0e89c4d70ab7433f4502f2f","shape":[64,64,64]},"case_011":{"bytes":16777216,"dtype":"<f8","sha256":"15cbaf2e138179ce0b48fdc497292cde2a2aba82eeb4e9ae104e5cc39ab255e8","shape":[128,128,128]}},"runtime":{"inference_device":"cpu","interop_threads":1,"numpy":"2.5.3","peak_rss_bytes":4196962304,"threads":1,"torch":"2.14.0+cu132"},"schema":"rheon-water-learning-training-v1","scientific_acceptance_or_model_promotion":false,"status":"complete"}
+```

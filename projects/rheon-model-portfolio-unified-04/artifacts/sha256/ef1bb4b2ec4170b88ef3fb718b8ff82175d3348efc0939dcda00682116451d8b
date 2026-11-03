@@ -1,0 +1,86 @@
+{
+  "format": "tuldok_contribution_v1",
+  "id": "rheon.pressure.fourpass.axis-isolation.f0ab30110260:task",
+  "kind": "task",
+  "label": "Sealed cubic water pressure correction",
+  "ports": [
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:initial_residual",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "initial_residual",
+      "units": "m3/s2"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:previous_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "previous_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:native_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "target",
+      "encoding": "npy",
+      "id": "native_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:full_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "output",
+      "encoding": "npy",
+      "id": "full_pressure",
+      "units": "Pa"
+    }
+  ],
+  "requires": [],
+  "stages": [
+    {
+      "clock": "optimizer_update",
+      "failure_policy": "fail",
+      "id": "train",
+      "inputs": [
+        "initial_residual",
+        "previous_pressure",
+        "native_pressure"
+      ],
+      "outputs": [
+        "full_pressure"
+      ],
+      "version": "1.0.0"
+    }
+  ],
+  "version": "1.0.0"
+}

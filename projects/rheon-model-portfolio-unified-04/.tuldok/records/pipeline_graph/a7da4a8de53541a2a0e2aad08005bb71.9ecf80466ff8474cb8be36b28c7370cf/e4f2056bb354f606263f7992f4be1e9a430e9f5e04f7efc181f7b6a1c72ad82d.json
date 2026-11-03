@@ -1,0 +1,344 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "7428d25298843d829e913bf85d2f8c0c7eace7cab77670ddf28b7d5547170274",
+        "execution_sha256": "bb91eb528d2873fcbc0b8a0daff4a632a5cc87fee8aa2877d32fa6b6566f282f",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-19T16:40:16+00:00",
+      "result": "success",
+      "target": "9ecf80466ff8474cb8be36b28c7370cf"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "9ecf80466ff8474cb8be36b28c7370cf",
+    "layout": {},
+    "mode": "real",
+    "name": "Full AI pressure tuning · a-redistributed CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "1496551970fb75fb0a553f4c4447c5b021573e25c4da1c8fe79c765b246d3cdf",
+          "inputs": {
+            "dataset": {
+              "expected_sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+              "reference_id": "dataset_extra"
+            },
+            "initial_weights": {
+              "expected_sha256": "70f57f064cde88762bcd9abbd4ef0d31ce12c188290b915488a3ee663886f0ef",
+              "reference_id": "initial_weights"
+            },
+            "runtime_manifest": {
+              "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+              "reference_id": "runtime_manifest"
+            },
+            "splits": {
+              "expected_sha256": "8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169",
+              "reference_id": "splits"
+            },
+            "teacher_weights": {
+              "expected_sha256": "42b2504fd922e9123823427857b4de36b153dbc343e157ad6fac36e3760612f4",
+              "reference_id": "teacher_weights"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "70f57f064cde88762bcd9abbd4ef0d31ce12c188290b915488a3ee663886f0ef",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_checkpoint_1200_npz": {
+              "artifact_name": "checkpoint-1200.npz",
+              "expected_sha256": "e4a555f0ecd8303090e44010b1583f28832bb14cfc7723f12b2edf74a309e920",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_checkpoint_600_npz": {
+              "artifact_name": "checkpoint-600.npz",
+              "expected_sha256": "997b4b0c6afd108b8ecd734250fea0e20059b880b2e7c12d15559eaa8b2d12c4",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "84d900edee61234080ea1f0cdf21254e1d6051cd6cc52871fb47fc6085f75ccb",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "93b5c68d3d6ad0a03f479be5a1babaace93c5c877a366c7f2301b262d9e191e0",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_profile_json": {
+              "artifact_name": "training-profile.json",
+              "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "844a28a6c7d290684cd316adb78418b53eeebf4019d00c15337756b5481b831b",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "e4a555f0ecd8303090e44010b1583f28832bb14cfc7723f12b2edf74a309e920",
+              "kind": "run_artifact",
+              "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+            },
+            "view_02": {
+              "expected_sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+              "reference_id": "view_02"
+            },
+            "view_03": {
+              "expected_sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+              "reference_id": "view_03"
+            },
+            "view_04": {
+              "expected_sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+              "reference_id": "view_04"
+            },
+            "view_05": {
+              "expected_sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+              "reference_id": "view_05"
+            },
+            "view_06": {
+              "expected_sha256": "8cdfb4b865349fcd6123a079fb73e5737a332fe443ae99fb7960534210d66080",
+              "reference_id": "view_06"
+            },
+            "view_07": {
+              "expected_sha256": "4ac480f3523ed959b1204e52b9cd8cf03df9364746348bef753bd2af8ae689f9",
+              "reference_id": "view_07"
+            },
+            "view_08": {
+              "expected_sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30",
+              "reference_id": "view_08"
+            }
+          },
+          "project_id": "0f09a945c56942299a11bdd093708107",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "9ecf80466ff8474cb8be36b28c7370cf",
+      "layout": {},
+      "mode": "real",
+      "name": "Full AI pressure tuning · a-redistributed CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "1496551970fb75fb0a553f4c4447c5b021573e25c4da1c8fe79c765b246d3cdf",
+            "inputs": {
+              "dataset": {
+                "expected_sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+                "reference_id": "dataset_extra"
+              },
+              "initial_weights": {
+                "expected_sha256": "70f57f064cde88762bcd9abbd4ef0d31ce12c188290b915488a3ee663886f0ef",
+                "reference_id": "initial_weights"
+              },
+              "runtime_manifest": {
+                "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+                "reference_id": "runtime_manifest"
+              },
+              "splits": {
+                "expected_sha256": "8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169",
+                "reference_id": "splits"
+              },
+              "teacher_weights": {
+                "expected_sha256": "42b2504fd922e9123823427857b4de36b153dbc343e157ad6fac36e3760612f4",
+                "reference_id": "teacher_weights"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "70f57f064cde88762bcd9abbd4ef0d31ce12c188290b915488a3ee663886f0ef",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_checkpoint_1200_npz": {
+                "artifact_name": "checkpoint-1200.npz",
+                "expected_sha256": "e4a555f0ecd8303090e44010b1583f28832bb14cfc7723f12b2edf74a309e920",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_checkpoint_600_npz": {
+                "artifact_name": "checkpoint-600.npz",
+                "expected_sha256": "997b4b0c6afd108b8ecd734250fea0e20059b880b2e7c12d15559eaa8b2d12c4",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "84d900edee61234080ea1f0cdf21254e1d6051cd6cc52871fb47fc6085f75ccb",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "93b5c68d3d6ad0a03f479be5a1babaace93c5c877a366c7f2301b262d9e191e0",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_profile_json": {
+                "artifact_name": "training-profile.json",
+                "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "844a28a6c7d290684cd316adb78418b53eeebf4019d00c15337756b5481b831b",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "8ff78b401411739b1a2e2f397a4e490b9444725089c2fb428aff503a37246169",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "e4a555f0ecd8303090e44010b1583f28832bb14cfc7723f12b2edf74a309e920",
+                "kind": "run_artifact",
+                "run_id": "29862a04e16446cc91ccdcf82fcbd1f3"
+              },
+              "view_02": {
+                "expected_sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+                "reference_id": "view_02"
+              },
+              "view_03": {
+                "expected_sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+                "reference_id": "view_03"
+              },
+              "view_04": {
+                "expected_sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+                "reference_id": "view_04"
+              },
+              "view_05": {
+                "expected_sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+                "reference_id": "view_05"
+              },
+              "view_06": {
+                "expected_sha256": "8cdfb4b865349fcd6123a079fb73e5737a332fe443ae99fb7960534210d66080",
+                "reference_id": "view_06"
+              },
+              "view_07": {
+                "expected_sha256": "4ac480f3523ed959b1204e52b9cd8cf03df9364746348bef753bd2af8ae689f9",
+                "reference_id": "view_07"
+              },
+              "view_08": {
+                "expected_sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30",
+                "reference_id": "view_08"
+              }
+            },
+            "project_id": "0f09a945c56942299a11bdd093708107",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

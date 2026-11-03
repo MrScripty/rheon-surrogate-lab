@@ -1,0 +1,228 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "deecf8ab7365766f6f879313763e3a8ec1379a593e91283bf07027a36d9461b1",
+        "execution_sha256": "affbc8b281b8066a1c9d9637ccc6d51da22bf6400fbafbaf4727a0192cc3f59d",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-19T20:30:11+00:00",
+      "result": "success",
+      "target": "3b0b76d4ccfc473b88316b730a415637"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "3b0b76d4ccfc473b88316b730a415637",
+    "layout": {},
+    "mode": "real",
+    "name": "Full AI a-tail8-s3 restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "72f5c2a1e64cb57f7439fb0aa30aa6e9c9c35710318ab2cc324a0d295b4871b5",
+          "inputs": {
+            "initial_inventory": {
+              "expected_sha256": "1e19f86244cfcde8c5ed964ba3ab5304fd458aa1167cf60c3adf04b3a9922eb2",
+              "reference_id": "initial_inventory"
+            },
+            "initial_weights": {
+              "expected_sha256": "14b5ad502e3e7bdc250b6583f3df9ef9517fa08125acd769b486260b7ad78190",
+              "reference_id": "initial_weights"
+            },
+            "normalization": {
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "reference_id": "normalization"
+            },
+            "runtime_manifest": {
+              "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+              "reference_id": "runtime_manifest"
+            },
+            "teacher": {
+              "expected_sha256": "bdc5dc286758c2bb3a5c3b3ef775a53d680b3ffac9af8a81ed8f73ccbd28644f",
+              "reference_id": "teacher"
+            },
+            "teacher_manifest": {
+              "expected_sha256": "7a1d8578ab4760db4f07faa9fb2079ce6c4bc5a4ed47425cad18d990c247dff8",
+              "reference_id": "teacher_manifest"
+            },
+            "trained_history": {
+              "artifact_name": "history.json",
+              "expected_sha256": "884bc7ef7990c062ad2e1963e9b0fe8a8889fadc3f3773fe8880461309c004b5",
+              "kind": "run_artifact",
+              "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+            },
+            "trained_initial": {
+              "artifact_name": "initial-weights.npz",
+              "expected_sha256": "14b5ad502e3e7bdc250b6583f3df9ef9517fa08125acd769b486260b7ad78190",
+              "kind": "run_artifact",
+              "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+            },
+            "trained_probe": {
+              "artifact_name": "probe.npy",
+              "expected_sha256": "0d5900facb1aaddac180667abdd576f7e311a5d325dd6d71090fb4a43f2b79d0",
+              "kind": "run_artifact",
+              "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+            },
+            "trained_receipt": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "516f4d627c6425fdb6dbb67a69688eea0114c8b3bafc1f63f8af9c51958038e2",
+              "kind": "run_artifact",
+              "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+            },
+            "trained_weights": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "67c39c78e7fceea7dc38facbf5f6ab5ae774a9915f5a88d59b538ae69c31e466",
+              "kind": "run_artifact",
+              "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+            }
+          },
+          "project_id": "3cf3964bbebf4890900ffb31c3e95004",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "3b0b76d4ccfc473b88316b730a415637",
+      "layout": {},
+      "mode": "real",
+      "name": "Full AI a-tail8-s3 restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "72f5c2a1e64cb57f7439fb0aa30aa6e9c9c35710318ab2cc324a0d295b4871b5",
+            "inputs": {
+              "initial_inventory": {
+                "expected_sha256": "1e19f86244cfcde8c5ed964ba3ab5304fd458aa1167cf60c3adf04b3a9922eb2",
+                "reference_id": "initial_inventory"
+              },
+              "initial_weights": {
+                "expected_sha256": "14b5ad502e3e7bdc250b6583f3df9ef9517fa08125acd769b486260b7ad78190",
+                "reference_id": "initial_weights"
+              },
+              "normalization": {
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "reference_id": "normalization"
+              },
+              "runtime_manifest": {
+                "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+                "reference_id": "runtime_manifest"
+              },
+              "teacher": {
+                "expected_sha256": "bdc5dc286758c2bb3a5c3b3ef775a53d680b3ffac9af8a81ed8f73ccbd28644f",
+                "reference_id": "teacher"
+              },
+              "teacher_manifest": {
+                "expected_sha256": "7a1d8578ab4760db4f07faa9fb2079ce6c4bc5a4ed47425cad18d990c247dff8",
+                "reference_id": "teacher_manifest"
+              },
+              "trained_history": {
+                "artifact_name": "history.json",
+                "expected_sha256": "884bc7ef7990c062ad2e1963e9b0fe8a8889fadc3f3773fe8880461309c004b5",
+                "kind": "run_artifact",
+                "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+              },
+              "trained_initial": {
+                "artifact_name": "initial-weights.npz",
+                "expected_sha256": "14b5ad502e3e7bdc250b6583f3df9ef9517fa08125acd769b486260b7ad78190",
+                "kind": "run_artifact",
+                "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+              },
+              "trained_probe": {
+                "artifact_name": "probe.npy",
+                "expected_sha256": "0d5900facb1aaddac180667abdd576f7e311a5d325dd6d71090fb4a43f2b79d0",
+                "kind": "run_artifact",
+                "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+              },
+              "trained_receipt": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "516f4d627c6425fdb6dbb67a69688eea0114c8b3bafc1f63f8af9c51958038e2",
+                "kind": "run_artifact",
+                "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+              },
+              "trained_weights": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "67c39c78e7fceea7dc38facbf5f6ab5ae774a9915f5a88d59b538ae69c31e466",
+                "kind": "run_artifact",
+                "run_id": "7576d00e48c642729ff8a95b8fe300ab"
+              }
+            },
+            "project_id": "3cf3964bbebf4890900ffb31c3e95004",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

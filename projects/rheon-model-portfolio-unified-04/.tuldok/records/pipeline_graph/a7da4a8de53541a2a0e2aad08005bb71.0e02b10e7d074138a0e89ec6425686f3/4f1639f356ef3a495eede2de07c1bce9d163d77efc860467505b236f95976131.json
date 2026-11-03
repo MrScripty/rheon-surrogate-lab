@@ -1,0 +1,192 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "cbd86f47564f5420275af066373416349fd7faa4fcff73a2d2f66938d36df8d4",
+        "execution_sha256": "6921e686ef43a4425332d48d6b7f49d26f8f7d4215c8cc3e1cd002d8a72e9ca8",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-16T02:02:20+00:00",
+      "result": "success",
+      "target": "0e02b10e7d074138a0e89ec6425686f3"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "0e02b10e7d074138a0e89ec6425686f3",
+    "layout": {},
+    "mode": "real",
+    "name": "water-cohort-four-control · validation CPU inference",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "801dc8b09752dd80a161eb8a945f8b4a862f4ca6ce92a48cb36184a641188db0",
+          "inputs": {
+            "trained_history": {
+              "artifact_name": "history.json",
+              "expected_sha256": "42f2c899978a5029cb0f6d7d4c09595a223957c776fa8880fffc40875e388523",
+              "kind": "run_artifact",
+              "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+            },
+            "trained_normalization": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+            },
+            "trained_receipt": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "0f152b2c6c909b37b778d57906076cdca994ca46216425e0844e838301ef302c",
+              "kind": "run_artifact",
+              "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+            },
+            "trained_weights": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "db1da22408d8c6bac948d2798cb7e28871fcefaca6458f0e979c3d5486abee40",
+              "kind": "run_artifact",
+              "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+            },
+            "validation_dataset": {
+              "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+              "reference_id": "validation_dataset"
+            },
+            "validation_dataset_extra": {
+              "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+              "reference_id": "validation_dataset_extra"
+            },
+            "validation_splits": {
+              "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+              "reference_id": "validation_splits"
+            }
+          },
+          "project_id": "bfe1efa551b343e9bb86aec1be6b796a",
+          "recipe_id": "validation"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "0e02b10e7d074138a0e89ec6425686f3",
+      "layout": {},
+      "mode": "real",
+      "name": "water-cohort-four-control · validation CPU inference",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "801dc8b09752dd80a161eb8a945f8b4a862f4ca6ce92a48cb36184a641188db0",
+            "inputs": {
+              "trained_history": {
+                "artifact_name": "history.json",
+                "expected_sha256": "42f2c899978a5029cb0f6d7d4c09595a223957c776fa8880fffc40875e388523",
+                "kind": "run_artifact",
+                "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+              },
+              "trained_normalization": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+              },
+              "trained_receipt": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "0f152b2c6c909b37b778d57906076cdca994ca46216425e0844e838301ef302c",
+                "kind": "run_artifact",
+                "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+              },
+              "trained_weights": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "db1da22408d8c6bac948d2798cb7e28871fcefaca6458f0e979c3d5486abee40",
+                "kind": "run_artifact",
+                "run_id": "90410f42f39147fdb9fa22c789d1e06f"
+              },
+              "validation_dataset": {
+                "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+                "reference_id": "validation_dataset"
+              },
+              "validation_dataset_extra": {
+                "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+                "reference_id": "validation_dataset_extra"
+              },
+              "validation_splits": {
+                "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+                "reference_id": "validation_splits"
+              }
+            },
+            "project_id": "bfe1efa551b343e9bb86aec1be6b796a",
+            "recipe_id": "validation"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

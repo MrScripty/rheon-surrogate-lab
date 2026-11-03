@@ -1,0 +1,312 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "f9415675634a339e24f04de2b082f9eb9c9ef2ca143a3599b2c2de33400234ff",
+        "execution_sha256": "fe350c6bdf54c2be0c0b57acf8533cc07919e9a07004b6fb6939cee262ddc098",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-16T02:01:57+00:00",
+      "result": "success",
+      "target": "473deb27ac694a24a39ab9786f6bd6a0"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "473deb27ac694a24a39ab9786f6bd6a0",
+    "layout": {},
+    "mode": "real",
+    "name": "water-cohort-two-shape-feedback · CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "70acb051e1f4a6790a1b83dd1bbc18cbd8082fb1f74f601c97664844d19a8712",
+          "inputs": {
+            "dataset": {
+              "expected_sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904",
+              "reference_id": "dataset_extra"
+            },
+            "splits": {
+              "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+              "reference_id": "splits"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_checkpoint_1000_npz": {
+              "artifact_name": "checkpoint-1000.npz",
+              "expected_sha256": "44affc7aacf87651775892a4ecdea748dbc9fca2fc117071f8ab97c4ad9e70cd",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_checkpoint_100_npz": {
+              "artifact_name": "checkpoint-100.npz",
+              "expected_sha256": "e1f78c8a12b3a907a8ea7afacb75cc561a2b24decd61ab321079f014760b799c",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_checkpoint_2000_npz": {
+              "artifact_name": "checkpoint-2000.npz",
+              "expected_sha256": "03427eab51c3375d1d716221c9435cd49d5b777ae8e829ddce2f0166d9f346fe",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_checkpoint_4000_npz": {
+              "artifact_name": "checkpoint-4000.npz",
+              "expected_sha256": "972bafb3cfd7baace898561fe46bf5b3de30715502d6522b3552e04325f50b36",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_checkpoint_5000_npz": {
+              "artifact_name": "checkpoint-5000.npz",
+              "expected_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_checkpoint_500_npz": {
+              "artifact_name": "checkpoint-500.npz",
+              "expected_sha256": "005fa29b9f65bb3b3e162165eed039a0518ddc2dfb69520f91886af690d73879",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "122e5bcbf192cf0b2b1bdbad277157ab42891d4d8f38ec3c211537a21d9dc411",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "7dd72b79842f2df2b0eedcb3e51143e6eefd83e0dabea5397570bc466c76573f",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_profile_json": {
+              "artifact_name": "profile.json",
+              "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "07e98b58c8c3aafbe14429d620deeb06c1bdd9baa64ff29892ff1ab55bdb4b8e",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+              "kind": "run_artifact",
+              "run_id": "76090fe64e344e708b6080cfe9e18d20"
+            }
+          },
+          "project_id": "b843d4bc0bad44e587ff6ab7cf0e54fc",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "473deb27ac694a24a39ab9786f6bd6a0",
+      "layout": {},
+      "mode": "real",
+      "name": "water-cohort-two-shape-feedback · CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "70acb051e1f4a6790a1b83dd1bbc18cbd8082fb1f74f601c97664844d19a8712",
+            "inputs": {
+              "dataset": {
+                "expected_sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904",
+                "reference_id": "dataset_extra"
+              },
+              "splits": {
+                "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_checkpoint_1000_npz": {
+                "artifact_name": "checkpoint-1000.npz",
+                "expected_sha256": "44affc7aacf87651775892a4ecdea748dbc9fca2fc117071f8ab97c4ad9e70cd",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_checkpoint_100_npz": {
+                "artifact_name": "checkpoint-100.npz",
+                "expected_sha256": "e1f78c8a12b3a907a8ea7afacb75cc561a2b24decd61ab321079f014760b799c",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_checkpoint_2000_npz": {
+                "artifact_name": "checkpoint-2000.npz",
+                "expected_sha256": "03427eab51c3375d1d716221c9435cd49d5b777ae8e829ddce2f0166d9f346fe",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_checkpoint_4000_npz": {
+                "artifact_name": "checkpoint-4000.npz",
+                "expected_sha256": "972bafb3cfd7baace898561fe46bf5b3de30715502d6522b3552e04325f50b36",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_checkpoint_5000_npz": {
+                "artifact_name": "checkpoint-5000.npz",
+                "expected_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_checkpoint_500_npz": {
+                "artifact_name": "checkpoint-500.npz",
+                "expected_sha256": "005fa29b9f65bb3b3e162165eed039a0518ddc2dfb69520f91886af690d73879",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "122e5bcbf192cf0b2b1bdbad277157ab42891d4d8f38ec3c211537a21d9dc411",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "7dd72b79842f2df2b0eedcb3e51143e6eefd83e0dabea5397570bc466c76573f",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_profile_json": {
+                "artifact_name": "profile.json",
+                "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "07e98b58c8c3aafbe14429d620deeb06c1bdd9baa64ff29892ff1ab55bdb4b8e",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+                "kind": "run_artifact",
+                "run_id": "76090fe64e344e708b6080cfe9e18d20"
+              }
+            },
+            "project_id": "b843d4bc0bad44e587ff6ab7cf0e54fc",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

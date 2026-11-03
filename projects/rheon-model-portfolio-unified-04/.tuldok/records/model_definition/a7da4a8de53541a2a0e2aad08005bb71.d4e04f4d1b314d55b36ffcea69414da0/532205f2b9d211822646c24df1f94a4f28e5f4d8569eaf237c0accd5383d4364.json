@@ -1,0 +1,247 @@
+{
+  "audit": [
+    {
+      "action": "models.create",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "15b013391b04ccbfc9dddccf0c78059749bbc62897efd8c1de765278aa442dba",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-19T06:00:21+00:00",
+      "result": "success",
+      "target": "d4e04f4d1b314d55b36ffcea69414da0"
+    }
+  ],
+  "current": {
+    "format": "model_draft_v1",
+    "id": "d4e04f4d1b314d55b36ffcea69414da0",
+    "kind": "captured_source",
+    "name": "Pressure methods v5 · v5-spectrum",
+    "output_policy": {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "centering": "cell",
+      "correction": {
+        "activation": "linear",
+        "steps": 1
+      },
+      "dtype": "float64",
+      "gauge": "cell_zero",
+      "kind": "full_pressure",
+      "layout": "x_fast",
+      "output_scale": "laplacian-rhs-rms",
+      "reconstruction": "Float32 raw times fixed train-only Laplacian RHS RMS; cell-zero gauge; add supplied base once.",
+      "units": "Pa"
+    },
+    "preprocessing_policy": {
+      "channel_order": [
+        "dimensionless_laplacian_rhs"
+      ],
+      "fit_population": "train",
+      "kind": "rheon_physical_residual_v1",
+      "network_dtype": "float32",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "physical_dtype": "float64",
+      "q": "(rho/h)*initial_residual",
+      "scalar_context": {
+        "cell_size": {
+          "geometry": "one positive cubic h per sample",
+          "units": "m"
+        },
+        "density": {
+          "units": "kg/m3",
+          "value": 1000
+        },
+        "dt": {
+          "units": "s",
+          "value": 0.016666666666666666
+        }
+      },
+      "scaling": "q / train-only q RMS",
+      "zero_residual": "return supplied previous pressure exactly without invoking network"
+    },
+    "revision": 1,
+    "source_selector": {
+      "expected_sha256": "f525a8902ce17d427a1f0ef00324ea3c6a8eb05a466f5c4c5cae11b3b48a0b60",
+      "project_id": "7b80de0036b34a2c8f221a972f38a24f",
+      "recipe_id": "train"
+    },
+    "specification": {
+      "architecture": {
+        "activation": "linear",
+        "bias": false,
+        "boundary": "Replicated one-cell halo at each convolution",
+        "channels": [
+          "dimensionless_laplacian_rhs"
+        ],
+        "coarse_training_cycles": 1,
+        "deployment": "Local correction called after an independently validated numerical multilevel cycle",
+        "fixed_skip": "q / 8",
+        "input_channels": 1,
+        "kernels": [
+          3,
+          3,
+          3
+        ],
+        "parameters": 648,
+        "preprocessing": "q=(rho/h)*residual, divided by fixed original train-only q RMS",
+        "reconstruction": "Raw correction times the same q RMS; cell-zero gauge; add supplied base",
+        "restrictions": "Uniform-density cubic sealed Neumann operator, up to 128 cells per axis for training",
+        "schema": "rheon-multilevel-local-smoother-v1",
+        "widths": [
+          1,
+          4,
+          4,
+          1
+        ]
+      },
+      "configuration": {},
+      "format": "rheon_pressure_model_v1",
+      "physical_context": {
+        "density_kg_m3": 1000,
+        "domain_extent": "counts_xyz * scalar cell_size_m",
+        "dt_s": 0.016666666666666666,
+        "geometry": "sealed full uniform-density cubic water",
+        "historical_parent_run": null,
+        "minimum_native_steps": 15,
+        "model_promotion": false,
+        "neural_compute": "float32 CUDA train; float32 CPU restore with CUDA hidden",
+        "origin_xyz_m": [
+          0,
+          0,
+          0
+        ],
+        "prior_pressure": "qualified solved pressure at immediately preceding interval",
+        "viscosity_pa_s": 0.001
+      }
+    },
+    "task": {
+      "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+      "id": "rheon.pressure.v5.v5-spectrum.7a08f3c918a3:task",
+      "kind": "task",
+      "revision": 1,
+      "sha256": "6f2d203594617e21015e1bdb1ed4e4355c0f00402b0e595a195900e67f459367"
+    }
+  },
+  "format": "model_definition_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "format": "model_draft_v1",
+      "id": "d4e04f4d1b314d55b36ffcea69414da0",
+      "kind": "captured_source",
+      "name": "Pressure methods v5 · v5-spectrum",
+      "output_policy": {
+        "axes": [
+          "z",
+          "y",
+          "x"
+        ],
+        "centering": "cell",
+        "correction": {
+          "activation": "linear",
+          "steps": 1
+        },
+        "dtype": "float64",
+        "gauge": "cell_zero",
+        "kind": "full_pressure",
+        "layout": "x_fast",
+        "output_scale": "laplacian-rhs-rms",
+        "reconstruction": "Float32 raw times fixed train-only Laplacian RHS RMS; cell-zero gauge; add supplied base once.",
+        "units": "Pa"
+      },
+      "preprocessing_policy": {
+        "channel_order": [
+          "dimensionless_laplacian_rhs"
+        ],
+        "fit_population": "train",
+        "kind": "rheon_physical_residual_v1",
+        "network_dtype": "float32",
+        "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "physical_dtype": "float64",
+        "q": "(rho/h)*initial_residual",
+        "scalar_context": {
+          "cell_size": {
+            "geometry": "one positive cubic h per sample",
+            "units": "m"
+          },
+          "density": {
+            "units": "kg/m3",
+            "value": 1000
+          },
+          "dt": {
+            "units": "s",
+            "value": 0.016666666666666666
+          }
+        },
+        "scaling": "q / train-only q RMS",
+        "zero_residual": "return supplied previous pressure exactly without invoking network"
+      },
+      "revision": 1,
+      "source_selector": {
+        "expected_sha256": "f525a8902ce17d427a1f0ef00324ea3c6a8eb05a466f5c4c5cae11b3b48a0b60",
+        "project_id": "7b80de0036b34a2c8f221a972f38a24f",
+        "recipe_id": "train"
+      },
+      "specification": {
+        "architecture": {
+          "activation": "linear",
+          "bias": false,
+          "boundary": "Replicated one-cell halo at each convolution",
+          "channels": [
+            "dimensionless_laplacian_rhs"
+          ],
+          "coarse_training_cycles": 1,
+          "deployment": "Local correction called after an independently validated numerical multilevel cycle",
+          "fixed_skip": "q / 8",
+          "input_channels": 1,
+          "kernels": [
+            3,
+            3,
+            3
+          ],
+          "parameters": 648,
+          "preprocessing": "q=(rho/h)*residual, divided by fixed original train-only q RMS",
+          "reconstruction": "Raw correction times the same q RMS; cell-zero gauge; add supplied base",
+          "restrictions": "Uniform-density cubic sealed Neumann operator, up to 128 cells per axis for training",
+          "schema": "rheon-multilevel-local-smoother-v1",
+          "widths": [
+            1,
+            4,
+            4,
+            1
+          ]
+        },
+        "configuration": {},
+        "format": "rheon_pressure_model_v1",
+        "physical_context": {
+          "density_kg_m3": 1000,
+          "domain_extent": "counts_xyz * scalar cell_size_m",
+          "dt_s": 0.016666666666666666,
+          "geometry": "sealed full uniform-density cubic water",
+          "historical_parent_run": null,
+          "minimum_native_steps": 15,
+          "model_promotion": false,
+          "neural_compute": "float32 CUDA train; float32 CPU restore with CUDA hidden",
+          "origin_xyz_m": [
+            0,
+            0,
+            0
+          ],
+          "prior_pressure": "qualified solved pressure at immediately preceding interval",
+          "viscosity_pa_s": 0.001
+        }
+      },
+      "task": {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "id": "rheon.pressure.v5.v5-spectrum.7a08f3c918a3:task",
+        "kind": "task",
+        "revision": 1,
+        "sha256": "6f2d203594617e21015e1bdb1ed4e4355c0f00402b0e595a195900e67f459367"
+      }
+    }
+  ]
+}

@@ -1,0 +1,468 @@
+# Pressure four-pass · balanced-shapes · C53 fine-tune CUDA
+
+Retrospective source review · fit-c2d989595d367aad
+
+Authored interpretation of captured source and receipts. No new training, benchmark, lineage or scientific promotion is implied.
+
+**Method.** A 370,016-parameter linear, bias-free one-channel F32 multiscale pressure CNN warm-started from exact C53 tensors. F64 sealed cubic-grid equation assembly uses q=(rho/h)r and fixed train-only normalization. Shared neural corrections are gauged and accumulated in F64. The fitting objective unrolls four pressure corrections with final logarithmic equation loss and total earlier-stage weight 0.05; the captured default inference still executes two. These passes do not advance physical simulation time.
+
+**Purpose.** Accumulate and average one complete eight-shape cycle before each optimizer step, comparing equal example exposure with C66.
+
+**Experiment.** 200 CUDA Adam updates; model seed 20261020, retained physical-index seed 2026102001, initial rate 0.0001 and schedule [{'update': 101, 'learning_rate': 1e-05}, {'update': 151, 'learning_rate': 1e-06}, {'update': 176, 'learning_rate': 1e-07}, {'update': 191, 'learning_rate': 1e-08}]. Original 16 physical trajectories/32 frames calibrate fixed normalization and manufactured pressure amplitude, but no physical scene frame enters the optimizer. Actual fitting uses 8 manufactured fundamental fields and 1,600 example presentations; all inherited auxiliary banks are disabled. There are 200 optimizer updates and 6,400 student neural root forwards. C69 averages all eight case losses/gradients before clipping and one Adam step; C66/C67 step after each case. Physical metadata remains dt=1/60 s and fluid density 1000 kg/m3; grid density means cells per metre, not fluid density. Calibration and consumed diagnostics add no independent optimizer scenes.
+
+**Observed outcome.** Retained final fitting loss 3.0867098786047578. Common 128 consumed pressure requests use default TWO-correction inference: worst mean-free pressure relative L2 0.0099685227429031544, equation relative L2 0.0047359064791797443, median case-median complete GPU pressure call 4.363486 ms. Host input/output, transfers and synchronization are included; setup/scoring are excluded. Fitting-bank 1/2/4/8-correction traces are retained consumed-case equation diagnostics, not independent pressure or full-step benchmarks. No new model execution, fresh four-correction common benchmark or rollout result is added.
+
+**Lesson.** A physical data manifest does not establish physical optimizer exposure. C66/C67/C69 share exactly 1,600 sampled examples, 200 exposures per case and 6,400 neural forwards. C69 has fewer optimizer updates because it averages a full cycle; those updates are not eight times less neural work. C67 changes rate-drop timing. Report calibration data, actual optimizer population, update aggregation, fitting recurrence and measured inference recurrence separately.
+
+**Reproduction.** Retain exact typed native source/config/runtime/input receipts, C53 warm tensors, fine-tuning contract, normalization, final checkpoint and the actual optimizer owner. Recreate manufactured fundamental fields from explicit grid/mode/density definitions and original train-calibrated amplitude; reproduce private balanced cycles and gradient aggregation. For the curriculum preserve its repeated patterns and supplemental category order. Historical publication/restore uses CPU neural queries; qualify a GPU-only equivalent before replay. Clean retraining, intended four-correction common evaluation, new-Rheon regeneration and long own-history drift remain unqualified. Preserve original receipts and ancestry.
+
+## Exact source bindings for this review
+
+```json
+{
+  "original_receipt": {
+    "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/train/receipt.json",
+    "sha256": "c2d989595d367aad86d1cdacf781e2abcfded386a7deda9ae42ad2596e2fb57d"
+  },
+  "history": {
+    "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/train/history.json",
+    "sha256": "c43221c6b480d7775ea2837f38223672b2c68bf5d5a08ce0db408bf743d59d56"
+  },
+  "sources": [
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/analytical.py",
+      "sha256": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/band_feedback.py",
+      "sha256": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/baseline_model.py",
+      "sha256": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/config.json",
+      "sha256": "dd341aad3ec2b350c1563222ccc2575d8adf869ddf3ff718b59af484b7741efa"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/custody-validator.py",
+      "sha256": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/data.py",
+      "sha256": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/direction_feedback.py",
+      "sha256": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/evidence.py",
+      "sha256": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/fine-tuning.json",
+      "sha256": "b456acd9d938c3ca1faab3ee183564ffb119e93abb3d7590ce70fe2f6e413827"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/fine_tuning.py",
+      "sha256": "df32da5a1a8a0b6b90dd4aeaf05a167403bd72ecb2e0913fcb611ed5dd01425c"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/fit_bank.py",
+      "sha256": "1097fd591be079ba8beacabb02b3cd7848e9f53f604113101fc2f37d39e0b393"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/frozen_gn.py",
+      "sha256": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/gradient_clipping.py",
+      "sha256": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/historical-reservation.json",
+      "sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/model.py",
+      "sha256": "a2ebefe6a8ce12c7e6e1e12fa82b835029f364b50e91284f33b60bfe31b0eaee"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/original_data.py",
+      "sha256": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/original_fine_tuning.py",
+      "sha256": "6e8d5e11744c0622f700bc645226d5dd96dbf831dd9bea754328c97dc70ecc12"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/original_fit_bank.py",
+      "sha256": "e68c1fa6723331af3448edec8294ca0dc67a5b97576a1cd251c5a789e9bf0668"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/original_model.py",
+      "sha256": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/original_train.py",
+      "sha256": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/physical_residual.py",
+      "sha256": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/policy.py",
+      "sha256": "c3e679239c58332e034064fb8825768fec4fb616f01a22f9c0c4eb1995ce29f2"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/portable_model.py",
+      "sha256": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/portable_policy.py",
+      "sha256": "c9270abbbb05794b68c53d83a14f90d4c16e9d0fea1e28ce3791b8018f862995"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/prepared.py",
+      "sha256": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/qualification.json",
+      "sha256": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/scenes.py",
+      "sha256": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/smoke_train.py",
+      "sha256": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/support.py",
+      "sha256": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/test_inference.py",
+      "sha256": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/train.py",
+      "sha256": "b9c98c38dfd22ec77ed1bc6dcbad8e692b276dc96fe9cb5cf928ec2b6be0774b"
+    },
+    {
+      "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/training_diagnostic.py",
+      "sha256": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+    }
+  ],
+  "source_witness": {
+    "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-project-01/source-witness.json",
+    "sha256": "8de4e3cb1a47ab9581f356f2463bdc1b90dbc7db405ead3f279c6945884224ee"
+  },
+  "training_population": {
+    "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/train/splits.json",
+    "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+  },
+  "training_inputs": [
+    {
+      "bytes": 21428086,
+      "path": "runs/pressure-current-policy-v1/bank-02/late.npz",
+      "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521",
+      "slot": "current_dataset"
+    },
+    {
+      "bytes": 168912,
+      "path": "runs/pressure-current-policy-v1/bank-02/manifest.json",
+      "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+      "slot": "current_manifest"
+    },
+    {
+      "bytes": 610070,
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/dataset.npz",
+      "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e",
+      "slot": "dataset"
+    },
+    {
+      "bytes": 610806,
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/dataset_extra.npz",
+      "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5",
+      "slot": "dataset_extra"
+    },
+    {
+      "bytes": 24476086,
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/direction_dataset.npz",
+      "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6",
+      "slot": "direction_dataset"
+    },
+    {
+      "bytes": 298490,
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/direction_manifest.json",
+      "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+      "slot": "direction_manifest"
+    },
+    {
+      "bytes": 1485452,
+      "path": "runs/pressure-current-policy-v1/current-late-study-03/restore/weights.npz",
+      "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+      "slot": "initial_weights"
+    },
+    {
+      "bytes": 256361,
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/splits.json",
+      "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+      "slot": "splits"
+    }
+  ]
+}
+```
+
+## Original retained fit facts before this review
+
+```json
+{
+  "fit": {
+    "item_id": "fit-c2d989595d367aad",
+    "kind": "training_attempt",
+    "name": "Pressure four-pass · balanced-shapes · C53 fine-tune CUDA",
+    "task": "pressure_proposal",
+    "schema": "rheon-water-learning-training-v1",
+    "method": {
+      "schema": "rheon-physical-residual-pressure-v1",
+      "input_channels": 1,
+      "encoder_widths": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "bottleneck_width": 48,
+      "decoder_widths": [
+        32,
+        24,
+        16,
+        8
+      ],
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "activation": "silu",
+      "dtype": "float32",
+      "pressure_dtype": "float64",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "counts_supported": "positive per-axis integers within cell budget",
+      "max_cells": 65536
+    },
+    "receipt_sha256": "c2d989595d367aad86d1cdacf781e2abcfded386a7deda9ae42ad2596e2fb57d",
+    "receipt_paths": [
+      "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/train/receipt.json"
+    ],
+    "recorded_Run_observations": [
+      {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "run_id": "6fcbb59779304a038662f653fcc0e629",
+        "epoch": "current_catalog",
+        "observed_in": [
+          "current_catalog"
+        ],
+        "graph_name": "Pressure four-pass · balanced-shapes · C53 fine-tune CUDA",
+        "state": "completed"
+      }
+    ],
+    "optimizer_updates": 200,
+    "parameter_fits": null,
+    "declared_parameter_count": null,
+    "training_closure": {
+      "experiment_sha256": "dd341aad3ec2b350c1563222ccc2575d8adf869ddf3ff718b59af484b7741efa",
+      "inputs": {
+        "current_dataset": {
+          "bytes": 21428086,
+          "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"
+        },
+        "current_manifest": {
+          "bytes": 168912,
+          "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"
+        },
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "initial_weights": {
+          "bytes": 1485452,
+          "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+      "sample_order_sha256": "1c0ecfa7a8d6c6d9afbbd65469987d7d7cf7dd02f0342ba8c204fa66fbe4b674",
+      "source_witness_sha256": "8de4e3cb1a47ab9581f356f2463bdc1b90dbc7db405ead3f279c6945884224ee"
+    },
+    "checkpoints": [
+      {
+        "name": "checkpoint-000.npz",
+        "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "bytes": 1485452,
+        "stage": "initial"
+      },
+      {
+        "name": "checkpoint-200.npz",
+        "sha256": "593ff362fbd3c0b82573c9b18549cc942d085563a2fb0ea947fef855a6ce2e11",
+        "bytes": 1485452,
+        "stage": "retained_snapshot"
+      },
+      {
+        "name": "weights.npz",
+        "sha256": "593ff362fbd3c0b82573c9b18549cc942d085563a2fb0ea947fef855a6ce2e11",
+        "bytes": 1485452,
+        "stage": "selected"
+      }
+    ],
+    "raw_receipt_status": "complete",
+    "declared_runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 2413776896,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "named_entries": [
+      "cohorts/67"
+    ],
+    "purpose": {
+      "status": "source_review_required",
+      "evidence": "Captured architecture, training configuration and linked named entries."
+    },
+    "outcome": {
+      "status": "retained_training_evidence_only",
+      "fresh_common_benchmark": "pending",
+      "scientific_promotion": false
+    },
+    "lesson": {
+      "status": "review_required_no_automatic_causal_claim"
+    },
+    "reproduction": {
+      "receipt": "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/train/receipt.json",
+      "source_and_data_closure": "Retained hashes; clean reproduction not yet exercised."
+    },
+    "applicability": {
+      "status": "adapter_and_contract_review_required",
+      "task": "pressure_proposal",
+      "fresh_result": null
+    }
+  },
+  "original_receipt": {
+    "path": "runs/pressure-balanced-shapes-v1/balanced-shapes-study-01/train/receipt.json",
+    "sha256": "c2d989595d367aad86d1cdacf781e2abcfded386a7deda9ae42ad2596e2fb57d",
+    "bytes": 60334
+  },
+  "bound_training_configuration": null,
+  "qualified_common_pressure": {
+    "scope": "128 original consumed pressure requests; not a full-state, independent-validation or drift qualification",
+    "capture_and_common_score": {
+      "path": "docs/plans/model-portfolio-migration-v1/reports/pressure-common-score-01.json",
+      "sha256": "3517bc4076e6ea0da9da857db43461e1be0b841804648bb12f40db2e990f1dcd"
+    },
+    "subjects": {
+      "C69": {
+        "name": "balanced-shapes",
+        "weights_sha256": "593ff362fbd3c0b82573c9b18549cc942d085563a2fb0ea947fef855a6ce2e11",
+        "cases": 128,
+        "worst": {
+          "common_equation_relative_l2": 0.004735906479179744,
+          "pressure_mean_free_relative_l2": 0.009968522742903154,
+          "pressure_absolute_rms": 0.6225867715521493,
+          "pressure_absolute_max": 1.3621810236057843
+        },
+        "worst_case": {
+          "common_equation_relative_l2": {
+            "trajectory_id": "baseline--water-validation-0016",
+            "native_frame": 15,
+            "counts_xyz": [
+              8,
+              12,
+              10
+            ],
+            "cell_size_m": 0.125
+          },
+          "pressure_mean_free_relative_l2": {
+            "trajectory_id": "baseline--water-validation-0032",
+            "native_frame": 63,
+            "counts_xyz": [
+              15,
+              6,
+              8
+            ],
+            "cell_size_m": 0.125
+          }
+        },
+        "by_cells_per_metre": {
+          "8.0": {
+            "cases": 64,
+            "worst": {
+              "common_equation_relative_l2": 0.004735906479179744,
+              "pressure_mean_free_relative_l2": 0.009968522742903154,
+              "pressure_absolute_rms": 0.6225867715521493,
+              "pressure_absolute_max": 1.3621810236057843
+            }
+          },
+          "16.0": {
+            "cases": 64,
+            "worst": {
+              "common_equation_relative_l2": 0.004167705070144583,
+              "pressure_mean_free_relative_l2": 0.009278459196406118,
+              "pressure_absolute_rms": 0.2635071169842586,
+              "pressure_absolute_max": 0.6672826988309253
+            }
+          }
+        },
+        "execution_variant": "captured_CUDA_eager",
+        "result": {
+          "path": "runs/model-portfolio-migration-v1/pressure-portfolio-GPU-qualification-01/C69/results.json",
+          "sha256": "746b451aa0aa25f293537299ba51c858c44ffb318845a3501aec6a95f6a54aba"
+        },
+        "CNN_operation_AST_preserved": null,
+        "CPU_neural_forward": false
+      }
+    },
+    "qualified_latency": false
+  },
+  "interpretation": {
+    "card_status": "retrospective_evidence_draft",
+    "architecture_description": "Recorded fields; source semantics still require review.",
+    "purpose_and_lesson": "No causal lesson or completion claim is inferred from a training receipt.",
+    "reproduction": "Source/data/checkpoint identities retained. Clean reproduction remains unverified.",
+    "historical_original_Run_observations": "References only; no native Run, Trial, ancestry or current execution authority is created."
+  }
+}
+```
+
+## Exact original receipt bytes
+
+```json
+{"architecture":{"activation":"silu","analytical_training_feedback":{"amplitude_reference":"train-correction-cell-rms","cache_max_bytes":805306368,"grid_capacity":16,"grids":[{"cells_per_metre":16,"counts_xyz":[16,16,16]},{"cells_per_metre":16,"counts_xyz":[24,24,24]},{"cells_per_metre":16,"counts_xyz":[32,32,32]},{"cells_per_metre":16,"counts_xyz":[40,40,40]},{"cells_per_metre":16,"counts_xyz":[24,16,12]},{"cells_per_metre":8,"counts_xyz":[17,13,9]},{"cells_per_metre":8,"counts_xyz":[33,17,9]},{"cells_per_metre":8,"counts_xyz":[9,25,13]}],"patterns":32,"sampling":"uniform-balanced-grid","seed":2026101507,"weight":0.1},"block_normalization":{"name":"Identity"},"bottleneck_width":48,"channels":["dimensionless_laplacian_rhs"],"conditioning":"physical-residual","convolutions_per_block":2,"coordinates":"implicit grid indices; no coordinate feature maps","correction":{"activation":"linear","steps":2},"counts_supported":"positive per-axis integers within cell budget","current_policy_training_feedback":{"manifest_sha256":"fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e","seed":2026102801,"stage":"late","weight":0.1},"decoder_widths":[32,24,16,8],"direction_training_feedback":{"manifest_sha256":"ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc","seed":2026102701,"stage":"late","weight":0.1},"dtype":"float32","encoder_widths":[8,16,24,32],"fine_tuning":{"arm":"balanced-shapes","early_weight":0.05,"fitting_bank":{"amplitude_reference":"original-train-correction-rms","cache_max_bytes":8388608,"grids":[{"cells_per_metre":16,"counts_xyz":[13,15,16]},{"cells_per_metre":16,"counts_xyz":[9,11,11]},{"cells_per_metre":8,"counts_xyz":[15,9,7]},{"cells_per_metre":16,"counts_xyz":[11,5,15]},{"cells_per_metre":8,"counts_xyz":[7,16,5]},{"cells_per_metre":16,"counts_xyz":[11,12,7]},{"cells_per_metre":8,"counts_xyz":[5,13,9]},{"cells_per_metre":16,"counts_xyz":[16,7,11]}],"modes_zyx":[[0,0,1]],"sampling_seed":2026102101},"initial_weights_sha256":"3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954","relative_equation_target":1e-06,"schema":"rheon-fine-tuning-objective-v1","teacher_cache_bytes":268435456,"teacher_passes":8,"teacher_weight":0.0,"training_passes":4},"first_correction_pressure_feedback_weight":0.0,"gauge":"subtract_first_correction_cell","global_path":"add_spatial_mean_broadcast","head":"linear_1x1x1","initialization":"retain original first-convolution residual column and all surviving seeded tensors","input_channels":1,"intermediate_feedback":{"relative_equation_weight":0.1,"stages":"all nonfinal corrections; real and analytical train samples"},"kernel":[3,3,3],"max_cells":65536,"output_scale":"previous-pressure-rms","padding":"replicate","physical_cells":"one scalar h per sample; no cell-size network channels","pool":"per-axis average, kernel=min(2,count), ceil, exclude padding","preprocessing":"q=(rho/h)*residual; q / train-only q RMS","pressure_dtype":"float64","reconstruction":"float32 raw times selected train-only RMS, cell-zero gauge, add supplied base","restrictions":"uniform-density cubic sealed Neumann operator; no independently specified geometry masks","schema":"rheon-physical-residual-pressure-v1","supplemental_training_feedback":{"amplitude_reference":"train-correction-cell-rms","cache_max_bytes":805306368,"grid_capacity":16,"grids":[{"cells_per_metre":16,"counts_xyz":[16,23,25]},{"cells_per_metre":16,"counts_xyz":[23,25,16]},{"cells_per_metre":16,"counts_xyz":[25,16,23]},{"cells_per_metre":16,"counts_xyz":[10,7,25]},{"cells_per_metre":16,"counts_xyz":[7,25,10]},{"cells_per_metre":16,"counts_xyz":[25,10,7]}],"patterns":32,"sampling":"uniform-balanced-grid","seed":2026101607,"source":"grids","weight":0.1},"training_band_feedback":{"max_mode":3,"signal_floor_fraction":0.1,"stages":"first-and-final","weight":0.03},"training_objective":"canonical-intermediate-contraction","upsampling":"nearest_to_skip_shape"},"cases":[{"cell_size_m":0.125,"counts_xyz":[16,16,16],"frame":0,"native_frame":15,"parent":0,"split":"train","trajectory_id":"baseline--water-train-0000"},{"cell_size_m":0.0625,"counts_xyz":[16,10,6],"frame":1,"native_frame":63,"parent":1,"split":"train","trajectory_id":"baseline--water-train-0001"},{"cell_size_m":0.125,"counts_xyz":[12,7,13],"frame":0,"native_frame":15,"parent":2,"split":"train","trajectory_id":"baseline--water-train-0002"},{"cell_size_m":0.125,"counts_xyz":[10,15,6],"frame":1,"native_frame":63,"parent":4,"split":"train","trajectory_id":"baseline--water-train-0004"},{"cell_size_m":0.0625,"counts_xyz":[11,10,6],"frame":0,"native_frame":15,"parent":5,"split":"train","trajectory_id":"baseline--water-train-0005"},{"cell_size_m":0.125,"counts_xyz":[8,5,9],"frame":1,"native_frame":63,"parent":6,"split":"train","trajectory_id":"baseline--water-train-0006"},{"cell_size_m":0.125,"counts_xyz":[12,8,9],"frame":0,"native_frame":15,"parent":8,"split":"train","trajectory_id":"baseline--water-train-0008"},{"cell_size_m":0.0625,"counts_xyz":[6,14,9],"frame":1,"native_frame":63,"parent":9,"split":"train","trajectory_id":"baseline--water-train-0009"},{"cell_size_m":0.125,"counts_xyz":[10,16,16],"frame":0,"native_frame":15,"parent":10,"split":"train","trajectory_id":"baseline--water-train-0010"},{"cell_size_m":0.125,"counts_xyz":[6,13,12],"frame":1,"native_frame":63,"parent":12,"split":"train","trajectory_id":"baseline--water-train-0012"},{"cell_size_m":0.0625,"counts_xyz":[5,15,15],"frame":0,"native_frame":15,"parent":13,"split":"train","trajectory_id":"baseline--water-train-0013"},{"cell_size_m":0.0625,"counts_xyz":[14,15,7],"frame":1,"native_frame":63,"parent":15,"split":"train","trajectory_id":"baseline--water-train-0015"}],"closure":{"experiment_sha256":"dd341aad3ec2b350c1563222ccc2575d8adf869ddf3ff718b59af484b7741efa","inputs":{"current_dataset":{"bytes":21428086,"sha256":"8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"},"current_manifest":{"bytes":168912,"sha256":"fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"},"dataset":{"bytes":610070,"sha256":"89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"},"dataset_extra":{"bytes":610806,"sha256":"c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"},"direction_dataset":{"bytes":24476086,"sha256":"4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"},"direction_manifest":{"bytes":298490,"sha256":"ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"},"initial_weights":{"bytes":1485452,"sha256":"3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"},"splits":{"bytes":256361,"sha256":"bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"}},"normalization_sha256":"f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1","runtime_manifest_sha256":"b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682","sample_order_sha256":"1c0ecfa7a8d6c6d9afbbd65469987d7d7cf7dd02f0342ba8c204fa66fbe4b674","source_witness_sha256":"8de4e3cb1a47ab9581f356f2463bdc1b90dbc7db405ead3f279c6945884224ee"},"diagnostic_population":"train_only","elapsed_s":68.80370784000843,"execution":{"amp":false,"batches_cuda":true,"cuda_cpu_pressure_max_abs_difference":1.0964079820041661e-05,"deterministic_algorithms":true,"device":"cuda:0","gpu":"NVIDIA GeForce RTX 5090 Laptop GPU","model_dtype":"float32","parameters_gradients_adam_moments_cuda":true,"peak_allocated_bytes":21035520,"peak_reserved_bytes":37748736,"tf32":false},"fine_tuning_statistics":{"fundamental_bank":{"aggregation":"mean-complete-balanced-cycle","amplitude_rms_pa":2.8535734640782584,"cases":[{"cells_per_metre":16,"counts_xyz":[13,15,16],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[9,11,11],"mode_zyx":[0,0,1]},{"cells_per_metre":8,"counts_xyz":[15,9,7],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[11,5,15],"mode_zyx":[0,0,1]},{"cells_per_metre":8,"counts_xyz":[7,16,5],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[11,12,7],"mode_zyx":[0,0,1]},{"cells_per_metre":8,"counts_xyz":[5,13,9],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[16,7,11],"mode_zyx":[0,0,1]}],"description_sha256":"30f7092460b6a649b28e4bf380a5769c2955d1e29461e0f64a6e1d474dab960f","expected_exposures":[200,200,200,200,200,200,200,200],"optimizer_examples":1600,"optimizer_exposures":[200,200,200,200,200,200,200,200],"optimizer_updates":200,"resident_tensor_bytes":297152,"sampling_order_sha256":"d0ea221a7e03a83673ece7fc9cdf4f5212bb54f3023511f93d95c84e45647899","trace":[{"examples":80,"exposures_per_case":10,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.20844380575432458},{"case":0,"passes":2,"relative_equation_residual":0.02518234880047817},{"case":0,"passes":4,"relative_equation_residual":0.00012043741020870453},{"case":0,"passes":8,"relative_equation_residual":1.4682497629907078e-08},{"case":1,"passes":1,"relative_equation_residual":0.10446725705136442},{"case":1,"passes":2,"relative_equation_residual":0.0025407339258209168},{"case":1,"passes":4,"relative_equation_residual":7.166942503100921e-06},{"case":1,"passes":8,"relative_equation_residual":8.244726248980221e-11},{"case":2,"passes":1,"relative_equation_residual":0.14990939879679852},{"case":2,"passes":2,"relative_equation_residual":0.010833586996243453},{"case":2,"passes":4,"relative_equation_residual":5.793728471057435e-05},{"case":2,"passes":8,"relative_equation_residual":2.4904848581761367e-09},{"case":3,"passes":1,"relative_equation_residual":0.08901555741746116},{"case":3,"passes":2,"relative_equation_residual":0.004092312573008956},{"case":3,"passes":4,"relative_equation_residual":8.987955412468412e-06},{"case":3,"passes":8,"relative_equation_residual":1.543769842248357e-10},{"case":4,"passes":1,"relative_equation_residual":0.09281060131493286},{"case":4,"passes":2,"relative_equation_residual":0.007875067772383747},{"case":4,"passes":4,"relative_equation_residual":3.168701780651687e-05},{"case":4,"passes":8,"relative_equation_residual":7.45204260767391e-10},{"case":5,"passes":1,"relative_equation_residual":0.08901385376247137},{"case":5,"passes":2,"relative_equation_residual":0.004091764120341133},{"case":5,"passes":4,"relative_equation_residual":8.98495597896997e-06},{"case":5,"passes":8,"relative_equation_residual":1.5568064063742365e-10},{"case":6,"passes":1,"relative_equation_residual":0.03659984556735973},{"case":6,"passes":2,"relative_equation_residual":0.0014213214877207936},{"case":6,"passes":4,"relative_equation_residual":1.6055099658315362e-06},{"case":6,"passes":8,"relative_equation_residual":3.5397607134399384e-12},{"case":7,"passes":1,"relative_equation_residual":0.2151584289687309},{"case":7,"passes":2,"relative_equation_residual":0.04166147618245366},{"case":7,"passes":4,"relative_equation_residual":0.0022332389453044213},{"case":7,"passes":8,"relative_equation_residual":7.2336865422219425e-06}],"optimizer_updates":10,"update":10},{"examples":160,"exposures_per_case":20,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.14541143764833894},{"case":0,"passes":2,"relative_equation_residual":0.01277040870240054},{"case":0,"passes":4,"relative_equation_residual":4.581083209782639e-05},{"case":0,"passes":8,"relative_equation_residual":2.4910380853651814e-09},{"case":1,"passes":1,"relative_equation_residual":0.08267215515545456},{"case":1,"passes":2,"relative_equation_residual":0.001572784255126139},{"case":1,"passes":4,"relative_equation_residual":3.470578771136388e-06},{"case":1,"passes":8,"relative_equation_residual":1.0991151977618052e-11},{"case":2,"passes":1,"relative_equation_residual":0.1407545234130026},{"case":2,"passes":2,"relative_equation_residual":0.009637988624905709},{"case":2,"passes":4,"relative_equation_residual":3.8804179804112405e-05},{"case":2,"passes":8,"relative_equation_residual":1.2472113389023713e-09},{"case":3,"passes":1,"relative_equation_residual":0.08232468377805312},{"case":3,"passes":2,"relative_equation_residual":0.0030548093098893715},{"case":3,"passes":4,"relative_equation_residual":2.9326476015979395e-06},{"case":3,"passes":8,"relative_equation_residual":3.9432807782750976e-11},{"case":4,"passes":1,"relative_equation_residual":0.07544804841313701},{"case":4,"passes":2,"relative_equation_residual":0.005003602906201561},{"case":4,"passes":4,"relative_equation_residual":1.1334572932597907e-05},{"case":4,"passes":8,"relative_equation_residual":1.663634166197375e-11},{"case":5,"passes":1,"relative_equation_residual":0.08232423688309985},{"case":5,"passes":2,"relative_equation_residual":0.0030540439621096413},{"case":5,"passes":4,"relative_equation_residual":2.9273956940042152e-06},{"case":5,"passes":8,"relative_equation_residual":3.866660707371369e-11},{"case":6,"passes":1,"relative_equation_residual":0.020047784569191165},{"case":6,"passes":2,"relative_equation_residual":0.00032546479167737077},{"case":6,"passes":4,"relative_equation_residual":1.5978609955860157e-07},{"case":6,"passes":8,"relative_equation_residual":1.7257669097081758e-13},{"case":7,"passes":1,"relative_equation_residual":0.22738656405150365},{"case":7,"passes":2,"relative_equation_residual":0.0487970007436523},{"case":7,"passes":4,"relative_equation_residual":0.002822883320441047},{"case":7,"passes":8,"relative_equation_residual":1.0761009948816592e-05}],"optimizer_updates":20,"update":20},{"examples":240,"exposures_per_case":30,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.13412539519860645},{"case":0,"passes":2,"relative_equation_residual":0.010595619093511852},{"case":0,"passes":4,"relative_equation_residual":2.3398584680719335e-05},{"case":0,"passes":8,"relative_equation_residual":5.97023114687811e-10},{"case":1,"passes":1,"relative_equation_residual":0.0779721931952081},{"case":1,"passes":2,"relative_equation_residual":0.0015261198716436998},{"case":1,"passes":4,"relative_equation_residual":2.1070928413644727e-06},{"case":1,"passes":8,"relative_equation_residual":6.5087187622400806e-12},{"case":2,"passes":1,"relative_equation_residual":0.1386901905946372},{"case":2,"passes":2,"relative_equation_residual":0.010331453892716074},{"case":2,"passes":4,"relative_equation_residual":4.4421505536793193e-05},{"case":2,"passes":8,"relative_equation_residual":1.7344913718909191e-09},{"case":3,"passes":1,"relative_equation_residual":0.08088093595176626},{"case":3,"passes":2,"relative_equation_residual":0.003327322389862208},{"case":3,"passes":4,"relative_equation_residual":9.85844329377856e-06},{"case":3,"passes":8,"relative_equation_residual":6.224855374749461e-11},{"case":4,"passes":1,"relative_equation_residual":0.06778847756581974},{"case":4,"passes":2,"relative_equation_residual":0.0037006907766792612},{"case":4,"passes":4,"relative_equation_residual":2.2990484520075207e-06},{"case":4,"passes":8,"relative_equation_residual":2.0124007479719887e-11},{"case":5,"passes":1,"relative_equation_residual":0.0808855676074944},{"case":5,"passes":2,"relative_equation_residual":0.0033274657691246515},{"case":5,"passes":4,"relative_equation_residual":9.858516644911056e-06},{"case":5,"passes":8,"relative_equation_residual":6.268311416323442e-11},{"case":6,"passes":1,"relative_equation_residual":0.028766683995973524},{"case":6,"passes":2,"relative_equation_residual":0.0005294961295005539},{"case":6,"passes":4,"relative_equation_residual":7.555611096246704e-07},{"case":6,"passes":8,"relative_equation_residual":7.645732775792818e-13},{"case":7,"passes":1,"relative_equation_residual":0.2251932211395384},{"case":7,"passes":2,"relative_equation_residual":0.049147851551013755},{"case":7,"passes":4,"relative_equation_residual":0.0029051401045654514},{"case":7,"passes":8,"relative_equation_residual":1.1655614363828097e-05}],"optimizer_updates":30,"update":30},{"examples":320,"exposures_per_case":40,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.1333193450626921},{"case":0,"passes":2,"relative_equation_residual":0.01290521996800042},{"case":0,"passes":4,"relative_equation_residual":4.719688047324854e-05},{"case":0,"passes":8,"relative_equation_residual":3.7212365412329867e-10},{"case":1,"passes":1,"relative_equation_residual":0.08418386047903388},{"case":1,"passes":2,"relative_equation_residual":0.002789408909156911},{"case":1,"passes":4,"relative_equation_residual":2.2232464161218194e-06},{"case":1,"passes":8,"relative_equation_residual":3.132955105651058e-11},{"case":2,"passes":1,"relative_equation_residual":0.12233643065327647},{"case":2,"passes":2,"relative_equation_residual":0.007435651405589626},{"case":2,"passes":4,"relative_equation_residual":3.21031150319142e-05},{"case":2,"passes":8,"relative_equation_residual":1.2904319737577295e-09},{"case":3,"passes":1,"relative_equation_residual":0.06144089750757365},{"case":3,"passes":2,"relative_equation_residual":0.0017459323226111036},{"case":3,"passes":4,"relative_equation_residual":5.521853932163239e-06},{"case":3,"passes":8,"relative_equation_residual":3.4676391558099374e-11},{"case":4,"passes":1,"relative_equation_residual":0.07061119445817193},{"case":4,"passes":2,"relative_equation_residual":0.004401817171672797},{"case":4,"passes":4,"relative_equation_residual":2.840502232264434e-06},{"case":4,"passes":8,"relative_equation_residual":1.4432608727504344e-11},{"case":5,"passes":1,"relative_equation_residual":0.06143429807720758},{"case":5,"passes":2,"relative_equation_residual":0.0017459909005255994},{"case":5,"passes":4,"relative_equation_residual":5.522243192109855e-06},{"case":5,"passes":8,"relative_equation_residual":3.495127641011864e-11},{"case":6,"passes":1,"relative_equation_residual":0.026282375984801782},{"case":6,"passes":2,"relative_equation_residual":0.0008694501210819749},{"case":6,"passes":4,"relative_equation_residual":9.556788091610838e-07},{"case":6,"passes":8,"relative_equation_residual":1.161675004051503e-12},{"case":7,"passes":1,"relative_equation_residual":0.20893607299975192},{"case":7,"passes":2,"relative_equation_residual":0.045042610880968136},{"case":7,"passes":4,"relative_equation_residual":0.0025239557345305133},{"case":7,"passes":8,"relative_equation_residual":8.91302303058861e-06}],"optimizer_updates":40,"update":40},{"examples":400,"exposures_per_case":50,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.09788406489525633},{"case":0,"passes":2,"relative_equation_residual":0.005804393702842231},{"case":0,"passes":4,"relative_equation_residual":5.194857859276556e-06},{"case":0,"passes":8,"relative_equation_residual":1.1789070534999504e-10},{"case":1,"passes":1,"relative_equation_residual":0.06916345309954824},{"case":1,"passes":2,"relative_equation_residual":0.0019947301305174394},{"case":1,"passes":4,"relative_equation_residual":2.2127996854103975e-06},{"case":1,"passes":8,"relative_equation_residual":1.0530752127169417e-11},{"case":2,"passes":1,"relative_equation_residual":0.134979543780018},{"case":2,"passes":2,"relative_equation_residual":0.00994297889352217},{"case":2,"passes":4,"relative_equation_residual":1.1930069726999844e-05},{"case":2,"passes":8,"relative_equation_residual":1.9107953395604228e-10},{"case":3,"passes":1,"relative_equation_residual":0.06370157768906345},{"case":3,"passes":2,"relative_equation_residual":0.0023252634204394083},{"case":3,"passes":4,"relative_equation_residual":2.0106053805333156e-06},{"case":3,"passes":8,"relative_equation_residual":2.4764692894515313e-11},{"case":4,"passes":1,"relative_equation_residual":0.06252041237278408},{"case":4,"passes":2,"relative_equation_residual":0.003240763104506514},{"case":4,"passes":4,"relative_equation_residual":2.7282842653903185e-06},{"case":4,"passes":8,"relative_equation_residual":9.391441416161335e-12},{"case":5,"passes":1,"relative_equation_residual":0.06370419360617809},{"case":5,"passes":2,"relative_equation_residual":0.00232511038369469},{"case":5,"passes":4,"relative_equation_residual":2.012714806794946e-06},{"case":5,"passes":8,"relative_equation_residual":9.829404804377833e-12},{"case":6,"passes":1,"relative_equation_residual":0.022660949882969343},{"case":6,"passes":2,"relative_equation_residual":0.0003514752761996769},{"case":6,"passes":4,"relative_equation_residual":8.005269772960195e-07},{"case":6,"passes":8,"relative_equation_residual":1.04911971222541e-12},{"case":7,"passes":1,"relative_equation_residual":0.22082495453260498},{"case":7,"passes":2,"relative_equation_residual":0.048387195319239774},{"case":7,"passes":4,"relative_equation_residual":0.002755851648266241},{"case":7,"passes":8,"relative_equation_residual":1.0106755714237578e-05}],"optimizer_updates":50,"update":50},{"examples":480,"exposures_per_case":60,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08599565154187011},{"case":0,"passes":2,"relative_equation_residual":0.0043489459277404165},{"case":0,"passes":4,"relative_equation_residual":1.2264757107897112e-05},{"case":0,"passes":8,"relative_equation_residual":1.7725760500016202e-10},{"case":1,"passes":1,"relative_equation_residual":0.06910047721623212},{"case":1,"passes":2,"relative_equation_residual":0.0018084319162679622},{"case":1,"passes":4,"relative_equation_residual":1.067848409711548e-06},{"case":1,"passes":8,"relative_equation_residual":3.352057616388039e-12},{"case":2,"passes":1,"relative_equation_residual":0.13154099420472828},{"case":2,"passes":2,"relative_equation_residual":0.009627842145162855},{"case":2,"passes":4,"relative_equation_residual":1.3489599709072814e-05},{"case":2,"passes":8,"relative_equation_residual":1.34402742984172e-10},{"case":3,"passes":1,"relative_equation_residual":0.05961330533918089},{"case":3,"passes":2,"relative_equation_residual":0.001479504016480203},{"case":3,"passes":4,"relative_equation_residual":2.549969152948854e-06},{"case":3,"passes":8,"relative_equation_residual":9.476310918091095e-12},{"case":4,"passes":1,"relative_equation_residual":0.060463132620453525},{"case":4,"passes":2,"relative_equation_residual":0.0030573023641476825},{"case":4,"passes":4,"relative_equation_residual":1.7008969835061975e-06},{"case":4,"passes":8,"relative_equation_residual":4.860284236644037e-12},{"case":5,"passes":1,"relative_equation_residual":0.05961317812114529},{"case":5,"passes":2,"relative_equation_residual":0.0014801299234304384},{"case":5,"passes":4,"relative_equation_residual":2.5485605448933763e-06},{"case":5,"passes":8,"relative_equation_residual":8.874576238377304e-12},{"case":6,"passes":1,"relative_equation_residual":0.022541697711740513},{"case":6,"passes":2,"relative_equation_residual":0.0004149340725264891},{"case":6,"passes":4,"relative_equation_residual":2.3008189303172116e-07},{"case":6,"passes":8,"relative_equation_residual":1.4968639274800727e-12},{"case":7,"passes":1,"relative_equation_residual":0.22209407854862107},{"case":7,"passes":2,"relative_equation_residual":0.04904609314357905},{"case":7,"passes":4,"relative_equation_residual":0.0027871180794644046},{"case":7,"passes":8,"relative_equation_residual":1.0234245167853181e-05}],"optimizer_updates":60,"update":60},{"examples":560,"exposures_per_case":70,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.09057675261644008},{"case":0,"passes":2,"relative_equation_residual":0.005061891635176998},{"case":0,"passes":4,"relative_equation_residual":7.81047197889618e-06},{"case":0,"passes":8,"relative_equation_residual":1.3897883749786268e-10},{"case":1,"passes":1,"relative_equation_residual":0.0713282057705544},{"case":1,"passes":2,"relative_equation_residual":0.0019409427129652864},{"case":1,"passes":4,"relative_equation_residual":2.038250163741474e-06},{"case":1,"passes":8,"relative_equation_residual":1.2356159176243319e-11},{"case":2,"passes":1,"relative_equation_residual":0.1297480059326322},{"case":2,"passes":2,"relative_equation_residual":0.008705874467651947},{"case":2,"passes":4,"relative_equation_residual":6.3995315182776435e-06},{"case":2,"passes":8,"relative_equation_residual":9.409033517153109e-11},{"case":3,"passes":1,"relative_equation_residual":0.057987596613612954},{"case":3,"passes":2,"relative_equation_residual":0.000797623661452418},{"case":3,"passes":4,"relative_equation_residual":8.516772807191751e-07},{"case":3,"passes":8,"relative_equation_residual":3.941543355131129e-12},{"case":4,"passes":1,"relative_equation_residual":0.06125247485048649},{"case":4,"passes":2,"relative_equation_residual":0.003259994213629285},{"case":4,"passes":4,"relative_equation_residual":4.16329763091102e-06},{"case":4,"passes":8,"relative_equation_residual":3.004005946952338e-11},{"case":5,"passes":1,"relative_equation_residual":0.05798780512338365},{"case":5,"passes":2,"relative_equation_residual":0.0007977225807175047},{"case":5,"passes":4,"relative_equation_residual":8.532478634525819e-07},{"case":5,"passes":8,"relative_equation_residual":1.052641073069516e-11},{"case":6,"passes":1,"relative_equation_residual":0.0251420041971917},{"case":6,"passes":2,"relative_equation_residual":0.0004170910775632236},{"case":6,"passes":4,"relative_equation_residual":4.844794511161367e-07},{"case":6,"passes":8,"relative_equation_residual":9.10940934494533e-13},{"case":7,"passes":1,"relative_equation_residual":0.21662996676622776},{"case":7,"passes":2,"relative_equation_residual":0.04592637891011863},{"case":7,"passes":4,"relative_equation_residual":0.002495358446052259},{"case":7,"passes":8,"relative_equation_residual":8.597369853868612e-06}],"optimizer_updates":70,"update":70},{"examples":640,"exposures_per_case":80,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08915787854895793},{"case":0,"passes":2,"relative_equation_residual":0.005195385206048083},{"case":0,"passes":4,"relative_equation_residual":1.5861975011364993e-05},{"case":0,"passes":8,"relative_equation_residual":1.4392841799708072e-10},{"case":1,"passes":1,"relative_equation_residual":0.0667128113590027},{"case":1,"passes":2,"relative_equation_residual":0.0012058418761580817},{"case":1,"passes":4,"relative_equation_residual":1.3126034220677333e-06},{"case":1,"passes":8,"relative_equation_residual":1.4730296132615535e-11},{"case":2,"passes":1,"relative_equation_residual":0.13066004316699317},{"case":2,"passes":2,"relative_equation_residual":0.008923898300476012},{"case":2,"passes":4,"relative_equation_residual":7.1859398582687556e-06},{"case":2,"passes":8,"relative_equation_residual":1.244545694797551e-10},{"case":3,"passes":1,"relative_equation_residual":0.05759865506032829},{"case":3,"passes":2,"relative_equation_residual":0.0006876429658988721},{"case":3,"passes":4,"relative_equation_residual":1.2965774935393296e-06},{"case":3,"passes":8,"relative_equation_residual":4.982366333621449e-12},{"case":4,"passes":1,"relative_equation_residual":0.054019384846722994},{"case":4,"passes":2,"relative_equation_residual":0.002668192193203148},{"case":4,"passes":4,"relative_equation_residual":1.7459089531194122e-06},{"case":4,"passes":8,"relative_equation_residual":3.9719155724344417e-11},{"case":5,"passes":1,"relative_equation_residual":0.05759789218106577},{"case":5,"passes":2,"relative_equation_residual":0.0006876769523099272},{"case":5,"passes":4,"relative_equation_residual":1.2988138835987359e-06},{"case":5,"passes":8,"relative_equation_residual":3.0578588448298544e-12},{"case":6,"passes":1,"relative_equation_residual":0.02820455964409498},{"case":6,"passes":2,"relative_equation_residual":0.0007475699164668884},{"case":6,"passes":4,"relative_equation_residual":8.181313705306433e-07},{"case":6,"passes":8,"relative_equation_residual":4.839795273093647e-12},{"case":7,"passes":1,"relative_equation_residual":0.21710529361904765},{"case":7,"passes":2,"relative_equation_residual":0.04583651242657554},{"case":7,"passes":4,"relative_equation_residual":0.0024883892699826965},{"case":7,"passes":8,"relative_equation_residual":8.676599118697363e-06}],"optimizer_updates":80,"update":80},{"examples":720,"exposures_per_case":90,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08640695840321759},{"case":0,"passes":2,"relative_equation_residual":0.004056207544443917},{"case":0,"passes":4,"relative_equation_residual":2.3059030963188357e-05},{"case":0,"passes":8,"relative_equation_residual":4.549184215764103e-10},{"case":1,"passes":1,"relative_equation_residual":0.06344640658854195},{"case":1,"passes":2,"relative_equation_residual":0.0010625685736010717},{"case":1,"passes":4,"relative_equation_residual":1.2989361732198923e-06},{"case":1,"passes":8,"relative_equation_residual":1.2124107930942569e-11},{"case":2,"passes":1,"relative_equation_residual":0.13765244128711063},{"case":2,"passes":2,"relative_equation_residual":0.00969313153771989},{"case":2,"passes":4,"relative_equation_residual":1.0655037919657957e-05},{"case":2,"passes":8,"relative_equation_residual":1.675937415138959e-10},{"case":3,"passes":1,"relative_equation_residual":0.06010490221988082},{"case":3,"passes":2,"relative_equation_residual":0.0008355927477224238},{"case":3,"passes":4,"relative_equation_residual":5.058255206744902e-07},{"case":3,"passes":8,"relative_equation_residual":2.3723277837962017e-12},{"case":4,"passes":1,"relative_equation_residual":0.04953133134832937},{"case":4,"passes":2,"relative_equation_residual":0.002247726801640025},{"case":4,"passes":4,"relative_equation_residual":8.999569305527684e-07},{"case":4,"passes":8,"relative_equation_residual":3.3135513120189695e-12},{"case":5,"passes":1,"relative_equation_residual":0.06010591553482215},{"case":5,"passes":2,"relative_equation_residual":0.0008357657856880284},{"case":5,"passes":4,"relative_equation_residual":5.044551882358023e-07},{"case":5,"passes":8,"relative_equation_residual":5.127439522979266e-12},{"case":6,"passes":1,"relative_equation_residual":0.02949383043417012},{"case":6,"passes":2,"relative_equation_residual":0.0007519455644758828},{"case":6,"passes":4,"relative_equation_residual":4.570742186220222e-07},{"case":6,"passes":8,"relative_equation_residual":1.2267769791247998e-12},{"case":7,"passes":1,"relative_equation_residual":0.21741944909982427},{"case":7,"passes":2,"relative_equation_residual":0.04508085737270077},{"case":7,"passes":4,"relative_equation_residual":0.0023669163613045884},{"case":7,"passes":8,"relative_equation_residual":7.836841078103957e-06}],"optimizer_updates":90,"update":90},{"examples":800,"exposures_per_case":100,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.06858909718457518},{"case":0,"passes":2,"relative_equation_residual":0.0031004577035212894},{"case":0,"passes":4,"relative_equation_residual":2.869200431630699e-05},{"case":0,"passes":8,"relative_equation_residual":8.679117844386464e-10},{"case":1,"passes":1,"relative_equation_residual":0.05308332752792583},{"case":1,"passes":2,"relative_equation_residual":0.0006114791921839778},{"case":1,"passes":4,"relative_equation_residual":6.648585927192732e-07},{"case":1,"passes":8,"relative_equation_residual":7.42930947259471e-12},{"case":2,"passes":1,"relative_equation_residual":0.14480496247261804},{"case":2,"passes":2,"relative_equation_residual":0.01209527612899469},{"case":2,"passes":4,"relative_equation_residual":1.6431249376340544e-05},{"case":2,"passes":8,"relative_equation_residual":2.200832831237825e-10},{"case":3,"passes":1,"relative_equation_residual":0.06275584499539062},{"case":3,"passes":2,"relative_equation_residual":0.0014146281505344823},{"case":3,"passes":4,"relative_equation_residual":1.3206287798281043e-06},{"case":3,"passes":8,"relative_equation_residual":1.1072201204092396e-11},{"case":4,"passes":1,"relative_equation_residual":0.045010227113662},{"case":4,"passes":2,"relative_equation_residual":0.0015268478200730804},{"case":4,"passes":4,"relative_equation_residual":5.566397546723973e-07},{"case":4,"passes":8,"relative_equation_residual":1.6357233844802121e-12},{"case":5,"passes":1,"relative_equation_residual":0.06275759241588062},{"case":5,"passes":2,"relative_equation_residual":0.001414635051947131},{"case":5,"passes":4,"relative_equation_residual":1.3204910181862872e-06},{"case":5,"passes":8,"relative_equation_residual":1.1190233528377786e-11},{"case":6,"passes":1,"relative_equation_residual":0.029730210875373853},{"case":6,"passes":2,"relative_equation_residual":0.0008597618112990147},{"case":6,"passes":4,"relative_equation_residual":7.310574067949836e-07},{"case":6,"passes":8,"relative_equation_residual":2.620947125440369e-12},{"case":7,"passes":1,"relative_equation_residual":0.22852115167269102},{"case":7,"passes":2,"relative_equation_residual":0.04897197783770554},{"case":7,"passes":4,"relative_equation_residual":0.002565063996723744},{"case":7,"passes":8,"relative_equation_residual":8.476901350812708e-06}],"optimizer_updates":100,"update":100},{"examples":880,"exposures_per_case":110,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.07421875289113887},{"case":0,"passes":2,"relative_equation_residual":0.003278891998419461},{"case":0,"passes":4,"relative_equation_residual":3.332582164269367e-05},{"case":0,"passes":8,"relative_equation_residual":9.00550427306947e-10},{"case":1,"passes":1,"relative_equation_residual":0.05756167218411979},{"case":1,"passes":2,"relative_equation_residual":0.0010024157816266378},{"case":1,"passes":4,"relative_equation_residual":6.532491590482886e-07},{"case":1,"passes":8,"relative_equation_residual":4.471562802601945e-12},{"case":2,"passes":1,"relative_equation_residual":0.14089353858974207},{"case":2,"passes":2,"relative_equation_residual":0.009913555431337099},{"case":2,"passes":4,"relative_equation_residual":4.523304907621031e-06},{"case":2,"passes":8,"relative_equation_residual":3.417508416891292e-11},{"case":3,"passes":1,"relative_equation_residual":0.057821769228878925},{"case":3,"passes":2,"relative_equation_residual":0.0008953394419825251},{"case":3,"passes":4,"relative_equation_residual":6.668885464523228e-07},{"case":3,"passes":8,"relative_equation_residual":9.444435641931407e-12},{"case":4,"passes":1,"relative_equation_residual":0.04921910518483273},{"case":4,"passes":2,"relative_equation_residual":0.002072589468448106},{"case":4,"passes":4,"relative_equation_residual":8.018216212595334e-07},{"case":4,"passes":8,"relative_equation_residual":1.6976907319122302e-12},{"case":5,"passes":1,"relative_equation_residual":0.0578198684592795},{"case":5,"passes":2,"relative_equation_residual":0.0008956420322663828},{"case":5,"passes":4,"relative_equation_residual":6.653373318724033e-07},{"case":5,"passes":8,"relative_equation_residual":4.139224981408248e-12},{"case":6,"passes":1,"relative_equation_residual":0.02303057016168351},{"case":6,"passes":2,"relative_equation_residual":0.00045187548676083175},{"case":6,"passes":4,"relative_equation_residual":1.2904757844757643e-07},{"case":6,"passes":8,"relative_equation_residual":8.165137364059879e-13},{"case":7,"passes":1,"relative_equation_residual":0.22214819750215017},{"case":7,"passes":2,"relative_equation_residual":0.045632711528723474},{"case":7,"passes":4,"relative_equation_residual":0.0022482147585795643},{"case":7,"passes":8,"relative_equation_residual":6.639214339383524e-06}],"optimizer_updates":110,"update":110},{"examples":960,"exposures_per_case":120,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.07505734368718751},{"case":0,"passes":2,"relative_equation_residual":0.0029780782151135506},{"case":0,"passes":4,"relative_equation_residual":2.5203167618627307e-05},{"case":0,"passes":8,"relative_equation_residual":5.088317166546794e-10},{"case":1,"passes":1,"relative_equation_residual":0.05962942210788627},{"case":1,"passes":2,"relative_equation_residual":0.0011761214671663336},{"case":1,"passes":4,"relative_equation_residual":7.162769753698293e-07},{"case":1,"passes":8,"relative_equation_residual":1.4105855346240117e-11},{"case":2,"passes":1,"relative_equation_residual":0.13950445516942694},{"case":2,"passes":2,"relative_equation_residual":0.009776909424687227},{"case":2,"passes":4,"relative_equation_residual":4.265591010618511e-06},{"case":2,"passes":8,"relative_equation_residual":2.517218225745939e-11},{"case":3,"passes":1,"relative_equation_residual":0.055404646634096784},{"case":3,"passes":2,"relative_equation_residual":0.000731439312413931},{"case":3,"passes":4,"relative_equation_residual":3.0454317706393583e-07},{"case":3,"passes":8,"relative_equation_residual":7.296202334999707e-12},{"case":4,"passes":1,"relative_equation_residual":0.04975193819973651},{"case":4,"passes":2,"relative_equation_residual":0.002252995011120719},{"case":4,"passes":4,"relative_equation_residual":8.076652088505757e-07},{"case":4,"passes":8,"relative_equation_residual":3.5797489371114906e-12},{"case":5,"passes":1,"relative_equation_residual":0.05540508245030064},{"case":5,"passes":2,"relative_equation_residual":0.0007315774904752496},{"case":5,"passes":4,"relative_equation_residual":3.051259851081595e-07},{"case":5,"passes":8,"relative_equation_residual":2.3137291537790215e-12},{"case":6,"passes":1,"relative_equation_residual":0.023972807242985752},{"case":6,"passes":2,"relative_equation_residual":0.00039374749396594476},{"case":6,"passes":4,"relative_equation_residual":1.326872552769457e-07},{"case":6,"passes":8,"relative_equation_residual":1.5044069726231996e-12},{"case":7,"passes":1,"relative_equation_residual":0.22063012320910846},{"case":7,"passes":2,"relative_equation_residual":0.04545688440772673},{"case":7,"passes":4,"relative_equation_residual":0.002270443911738024},{"case":7,"passes":8,"relative_equation_residual":6.824897637289324e-06}],"optimizer_updates":120,"update":120},{"examples":1040,"exposures_per_case":130,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08124049993499657},{"case":0,"passes":2,"relative_equation_residual":0.0036755632793909186},{"case":0,"passes":4,"relative_equation_residual":7.518254643510052e-06},{"case":0,"passes":8,"relative_equation_residual":2.537091789149397e-10},{"case":1,"passes":1,"relative_equation_residual":0.06071877771657763},{"case":1,"passes":2,"relative_equation_residual":0.0013514181148853292},{"case":1,"passes":4,"relative_equation_residual":6.57242303008096e-07},{"case":1,"passes":8,"relative_equation_residual":7.961361190176198e-12},{"case":2,"passes":1,"relative_equation_residual":0.13553296212835247},{"case":2,"passes":2,"relative_equation_residual":0.008820264171638385},{"case":2,"passes":4,"relative_equation_residual":4.605086086849387e-06},{"case":2,"passes":8,"relative_equation_residual":2.8335865736375164e-11},{"case":3,"passes":1,"relative_equation_residual":0.053023091686148216},{"case":3,"passes":2,"relative_equation_residual":0.0007749099658006368},{"case":3,"passes":4,"relative_equation_residual":6.659850012742189e-07},{"case":3,"passes":8,"relative_equation_residual":2.118406144240771e-11},{"case":4,"passes":1,"relative_equation_residual":0.048062580727395936},{"case":4,"passes":2,"relative_equation_residual":0.002028502531115778},{"case":4,"passes":4,"relative_equation_residual":6.267312020337715e-07},{"case":4,"passes":8,"relative_equation_residual":2.573438233264438e-12},{"case":5,"passes":1,"relative_equation_residual":0.0530250267304547},{"case":5,"passes":2,"relative_equation_residual":0.000774698024597238},{"case":5,"passes":4,"relative_equation_residual":6.659430136990959e-07},{"case":5,"passes":8,"relative_equation_residual":6.902974575020214e-12},{"case":6,"passes":1,"relative_equation_residual":0.02529404052037141},{"case":6,"passes":2,"relative_equation_residual":0.0005355005285426343},{"case":6,"passes":4,"relative_equation_residual":2.0004492717371454e-07},{"case":6,"passes":8,"relative_equation_residual":7.732423911373837e-13},{"case":7,"passes":1,"relative_equation_residual":0.21428232115911075},{"case":7,"passes":2,"relative_equation_residual":0.043442756587490125},{"case":7,"passes":4,"relative_equation_residual":0.0021411554336115673},{"case":7,"passes":8,"relative_equation_residual":6.2533323692704076e-06}],"optimizer_updates":130,"update":130},{"examples":1120,"exposures_per_case":140,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08391027483990834},{"case":0,"passes":2,"relative_equation_residual":0.0038883181526037196},{"case":0,"passes":4,"relative_equation_residual":7.943671288164292e-06},{"case":0,"passes":8,"relative_equation_residual":2.155459244990188e-10},{"case":1,"passes":1,"relative_equation_residual":0.06255600017000842},{"case":1,"passes":2,"relative_equation_residual":0.0012370418296109714},{"case":1,"passes":4,"relative_equation_residual":6.106221974976689e-07},{"case":1,"passes":8,"relative_equation_residual":4.219701906422726e-12},{"case":2,"passes":1,"relative_equation_residual":0.13293508488578115},{"case":2,"passes":2,"relative_equation_residual":0.008658639307723795},{"case":2,"passes":4,"relative_equation_residual":2.114088079440655e-06},{"case":2,"passes":8,"relative_equation_residual":2.4660976208567035e-11},{"case":3,"passes":1,"relative_equation_residual":0.05214602079566617},{"case":3,"passes":2,"relative_equation_residual":0.0004630743809313123},{"case":3,"passes":4,"relative_equation_residual":5.414086529188232e-07},{"case":3,"passes":8,"relative_equation_residual":3.9035947217135894e-12},{"case":4,"passes":1,"relative_equation_residual":0.0493579122578134},{"case":4,"passes":2,"relative_equation_residual":0.0020270780584089303},{"case":4,"passes":4,"relative_equation_residual":6.620859871921351e-07},{"case":4,"passes":8,"relative_equation_residual":1.763226382323853e-12},{"case":5,"passes":1,"relative_equation_residual":0.05214686414217962},{"case":5,"passes":2,"relative_equation_residual":0.00046266504195824565},{"case":5,"passes":4,"relative_equation_residual":5.413531490527175e-07},{"case":5,"passes":8,"relative_equation_residual":3.377110265688303e-12},{"case":6,"passes":1,"relative_equation_residual":0.027355504333589666},{"case":6,"passes":2,"relative_equation_residual":0.0005770217424131678},{"case":6,"passes":4,"relative_equation_residual":2.4889325174199423e-07},{"case":6,"passes":8,"relative_equation_residual":1.786180790102736e-12},{"case":7,"passes":1,"relative_equation_residual":0.21326638108187723},{"case":7,"passes":2,"relative_equation_residual":0.04350509128834783},{"case":7,"passes":4,"relative_equation_residual":0.002164883163438682},{"case":7,"passes":8,"relative_equation_residual":6.443094857435862e-06}],"optimizer_updates":140,"update":140},{"examples":1200,"exposures_per_case":150,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.0830372158937805},{"case":0,"passes":2,"relative_equation_residual":0.003921171928106579},{"case":0,"passes":4,"relative_equation_residual":6.745477780972007e-06},{"case":0,"passes":8,"relative_equation_residual":2.0197643641438041e-10},{"case":1,"passes":1,"relative_equation_residual":0.06191346255449389},{"case":1,"passes":2,"relative_equation_residual":0.0012528977266114524},{"case":1,"passes":4,"relative_equation_residual":4.186567880844521e-07},{"case":1,"passes":8,"relative_equation_residual":2.917664670773598e-12},{"case":2,"passes":1,"relative_equation_residual":0.13287523726961073},{"case":2,"passes":2,"relative_equation_residual":0.00846877557356543},{"case":2,"passes":4,"relative_equation_residual":1.366861482570179e-06},{"case":2,"passes":8,"relative_equation_residual":1.4681760164653745e-11},{"case":3,"passes":1,"relative_equation_residual":0.052258856851811614},{"case":3,"passes":2,"relative_equation_residual":0.0004918554078632258},{"case":3,"passes":4,"relative_equation_residual":1.9456934327147785e-07},{"case":3,"passes":8,"relative_equation_residual":3.624709302773838e-12},{"case":4,"passes":1,"relative_equation_residual":0.048856381496228056},{"case":4,"passes":2,"relative_equation_residual":0.0019472092737904726},{"case":4,"passes":4,"relative_equation_residual":3.109952431107999e-07},{"case":4,"passes":8,"relative_equation_residual":1.1023136329929789e-12},{"case":5,"passes":1,"relative_equation_residual":0.052259932953723984},{"case":5,"passes":2,"relative_equation_residual":0.0004919568139908426},{"case":5,"passes":4,"relative_equation_residual":1.9559500866171585e-07},{"case":5,"passes":8,"relative_equation_residual":3.1074199213304895e-12},{"case":6,"passes":1,"relative_equation_residual":0.02649703143197952},{"case":6,"passes":2,"relative_equation_residual":0.0005935602362591714},{"case":6,"passes":4,"relative_equation_residual":2.3480261743403925e-07},{"case":6,"passes":8,"relative_equation_residual":1.3911370525738993e-12},{"case":7,"passes":1,"relative_equation_residual":0.21140127785971705},{"case":7,"passes":2,"relative_equation_residual":0.04251818908402029},{"case":7,"passes":4,"relative_equation_residual":0.0020742693895450595},{"case":7,"passes":8,"relative_equation_residual":5.963566203939542e-06}],"optimizer_updates":150,"update":150},{"examples":1280,"exposures_per_case":160,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08490413501414452},{"case":0,"passes":2,"relative_equation_residual":0.004309918907442622},{"case":0,"passes":4,"relative_equation_residual":4.2224687282712715e-06},{"case":0,"passes":8,"relative_equation_residual":2.2282651891260502e-10},{"case":1,"passes":1,"relative_equation_residual":0.06253288827172142},{"case":1,"passes":2,"relative_equation_residual":0.0013738922585152127},{"case":1,"passes":4,"relative_equation_residual":4.5128125173923407e-07},{"case":1,"passes":8,"relative_equation_residual":9.912940470055224e-12},{"case":2,"passes":1,"relative_equation_residual":0.13224003522334946},{"case":2,"passes":2,"relative_equation_residual":0.008182363906513727},{"case":2,"passes":4,"relative_equation_residual":8.623213513868371e-07},{"case":2,"passes":8,"relative_equation_residual":1.2849331597769632e-11},{"case":3,"passes":1,"relative_equation_residual":0.051549533604037204},{"case":3,"passes":2,"relative_equation_residual":0.0004925912154742574},{"case":3,"passes":4,"relative_equation_residual":1.093315086395341e-07},{"case":3,"passes":8,"relative_equation_residual":3.85886475405108e-12},{"case":4,"passes":1,"relative_equation_residual":0.0490636948866665},{"case":4,"passes":2,"relative_equation_residual":0.0019730475952839683},{"case":4,"passes":4,"relative_equation_residual":3.296974651644275e-07},{"case":4,"passes":8,"relative_equation_residual":1.4654453582199556e-12},{"case":5,"passes":1,"relative_equation_residual":0.051548876707964784},{"case":5,"passes":2,"relative_equation_residual":0.0004929683518855267},{"case":5,"passes":4,"relative_equation_residual":1.0764860887817403e-07},{"case":5,"passes":8,"relative_equation_residual":7.515837946900559e-12},{"case":6,"passes":1,"relative_equation_residual":0.02626765197614229},{"case":6,"passes":2,"relative_equation_residual":0.0005714673548469001},{"case":6,"passes":4,"relative_equation_residual":2.1588994656915783e-07},{"case":6,"passes":8,"relative_equation_residual":1.132319158292985e-12},{"case":7,"passes":1,"relative_equation_residual":0.20954900041187194},{"case":7,"passes":2,"relative_equation_residual":0.04178146939737755},{"case":7,"passes":4,"relative_equation_residual":0.0020167426084292095},{"case":7,"passes":8,"relative_equation_residual":5.689954573402944e-06}],"optimizer_updates":160,"update":160},{"examples":1360,"exposures_per_case":170,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08398626537531209},{"case":0,"passes":2,"relative_equation_residual":0.0040895786420789984},{"case":0,"passes":4,"relative_equation_residual":3.819133911268728e-06},{"case":0,"passes":8,"relative_equation_residual":1.6422404202207375e-10},{"case":1,"passes":1,"relative_equation_residual":0.06216924950654487},{"case":1,"passes":2,"relative_equation_residual":0.0013035356177983144},{"case":1,"passes":4,"relative_equation_residual":4.3287187506742034e-07},{"case":1,"passes":8,"relative_equation_residual":7.629265615635744e-12},{"case":2,"passes":1,"relative_equation_residual":0.13268607410543032},{"case":2,"passes":2,"relative_equation_residual":0.008406263649117651},{"case":2,"passes":4,"relative_equation_residual":7.822435769110759e-07},{"case":2,"passes":8,"relative_equation_residual":8.49366482238645e-12},{"case":3,"passes":1,"relative_equation_residual":0.05196500623239125},{"case":3,"passes":2,"relative_equation_residual":0.0005183880765335773},{"case":3,"passes":4,"relative_equation_residual":1.2309172310254591e-07},{"case":3,"passes":8,"relative_equation_residual":1.0630597059277316e-11},{"case":4,"passes":1,"relative_equation_residual":0.04911721551136177},{"case":4,"passes":2,"relative_equation_residual":0.0019591510114731433},{"case":4,"passes":4,"relative_equation_residual":3.480167566362135e-07},{"case":4,"passes":8,"relative_equation_residual":3.02664694942762e-12},{"case":5,"passes":1,"relative_equation_residual":0.05196532241769705},{"case":5,"passes":2,"relative_equation_residual":0.0005185905931445431},{"case":5,"passes":4,"relative_equation_residual":1.2343277661857673e-07},{"case":5,"passes":8,"relative_equation_residual":4.1364378441084675e-12},{"case":6,"passes":1,"relative_equation_residual":0.02667805551364792},{"case":6,"passes":2,"relative_equation_residual":0.0005798472734922526},{"case":6,"passes":4,"relative_equation_residual":2.2862876615199302e-07},{"case":6,"passes":8,"relative_equation_residual":1.6416237595595369e-12},{"case":7,"passes":1,"relative_equation_residual":0.2105367311715274},{"case":7,"passes":2,"relative_equation_residual":0.0421584125642533},{"case":7,"passes":4,"relative_equation_residual":0.002041290909333101},{"case":7,"passes":8,"relative_equation_residual":5.80478144013418e-06}],"optimizer_updates":170,"update":170},{"examples":1440,"exposures_per_case":180,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08417231382967366},{"case":0,"passes":2,"relative_equation_residual":0.0041707424781667665},{"case":0,"passes":4,"relative_equation_residual":3.5468228047325135e-06},{"case":0,"passes":8,"relative_equation_residual":1.6665746455373663e-10},{"case":1,"passes":1,"relative_equation_residual":0.062145716601043025},{"case":1,"passes":2,"relative_equation_residual":0.0013112271392314392},{"case":1,"passes":4,"relative_equation_residual":4.3285038273620205e-07},{"case":1,"passes":8,"relative_equation_residual":3.616412317428872e-12},{"case":2,"passes":1,"relative_equation_residual":0.13254702522491704},{"case":2,"passes":2,"relative_equation_residual":0.008343391900722285},{"case":2,"passes":4,"relative_equation_residual":7.551230151435416e-07},{"case":2,"passes":8,"relative_equation_residual":8.049040294280262e-12},{"case":3,"passes":1,"relative_equation_residual":0.05187802632394356},{"case":3,"passes":2,"relative_equation_residual":0.0005339823589868158},{"case":3,"passes":4,"relative_equation_residual":1.1575662292232857e-07},{"case":3,"passes":8,"relative_equation_residual":5.951849216511525e-12},{"case":4,"passes":1,"relative_equation_residual":0.04906299643510472},{"case":4,"passes":2,"relative_equation_residual":0.0019593688929830724},{"case":4,"passes":4,"relative_equation_residual":3.4005084999074843e-07},{"case":4,"passes":8,"relative_equation_residual":2.061999884828791e-12},{"case":5,"passes":1,"relative_equation_residual":0.051876581144238175},{"case":5,"passes":2,"relative_equation_residual":0.0005338500217331892},{"case":5,"passes":4,"relative_equation_residual":1.1720429002801072e-07},{"case":5,"passes":8,"relative_equation_residual":9.747216971716381e-12},{"case":6,"passes":1,"relative_equation_residual":0.02660314031139669},{"case":6,"passes":2,"relative_equation_residual":0.0005767954414257262},{"case":6,"passes":4,"relative_equation_residual":2.233036003802932e-07},{"case":6,"passes":8,"relative_equation_residual":1.9043888501015028e-12},{"case":7,"passes":1,"relative_equation_residual":0.2100540907855362},{"case":7,"passes":2,"relative_equation_residual":0.04195212030352068},{"case":7,"passes":4,"relative_equation_residual":0.002023977119629665},{"case":7,"passes":8,"relative_equation_residual":5.719457035209222e-06}],"optimizer_updates":180,"update":180},{"examples":1520,"exposures_per_case":190,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.0839555267952234},{"case":0,"passes":2,"relative_equation_residual":0.004120378689902133},{"case":0,"passes":4,"relative_equation_residual":3.4465210410666746e-06},{"case":0,"passes":8,"relative_equation_residual":1.5416501863901804e-10},{"case":1,"passes":1,"relative_equation_residual":0.062057691910229085},{"case":1,"passes":2,"relative_equation_residual":0.0012976708994393042},{"case":1,"passes":4,"relative_equation_residual":4.35506224831982e-07},{"case":1,"passes":8,"relative_equation_residual":2.6208863209085442e-12},{"case":2,"passes":1,"relative_equation_residual":0.13272263259179123},{"case":2,"passes":2,"relative_equation_residual":0.008388285033108496},{"case":2,"passes":4,"relative_equation_residual":7.478678821445995e-07},{"case":2,"passes":8,"relative_equation_residual":5.495826767672971e-12},{"case":3,"passes":1,"relative_equation_residual":0.05200372306075052},{"case":3,"passes":2,"relative_equation_residual":0.0005379662055189069},{"case":3,"passes":4,"relative_equation_residual":1.0512216337672256e-07},{"case":3,"passes":8,"relative_equation_residual":4.35776008627537e-12},{"case":4,"passes":1,"relative_equation_residual":0.04903521675950795},{"case":4,"passes":2,"relative_equation_residual":0.0019573583492166315},{"case":4,"passes":4,"relative_equation_residual":3.3851691404305973e-07},{"case":4,"passes":8,"relative_equation_residual":1.1206520893386247e-12},{"case":5,"passes":1,"relative_equation_residual":0.052003174253204464},{"case":5,"passes":2,"relative_equation_residual":0.0005383038381331312},{"case":5,"passes":4,"relative_equation_residual":1.0579270422008106e-07},{"case":5,"passes":8,"relative_equation_residual":1.73022715601033e-11},{"case":6,"passes":1,"relative_equation_residual":0.026623585375703217},{"case":6,"passes":2,"relative_equation_residual":0.0005791379092034153},{"case":6,"passes":4,"relative_equation_residual":2.2337104209606483e-07},{"case":6,"passes":8,"relative_equation_residual":2.4852885677712628e-12},{"case":7,"passes":1,"relative_equation_residual":0.210227897243565},{"case":7,"passes":2,"relative_equation_residual":0.042008835725217644},{"case":7,"passes":4,"relative_equation_residual":0.0020268600791690516},{"case":7,"passes":8,"relative_equation_residual":5.731447357496105e-06}],"optimizer_updates":190,"update":190},{"examples":1600,"exposures_per_case":200,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.08396168429314095},{"case":0,"passes":2,"relative_equation_residual":0.004123929799072635},{"case":0,"passes":4,"relative_equation_residual":3.4412256506835944e-06},{"case":0,"passes":8,"relative_equation_residual":1.5375959851249527e-10},{"case":1,"passes":1,"relative_equation_residual":0.06205590383663455},{"case":1,"passes":2,"relative_equation_residual":0.0012985347275661242},{"case":1,"passes":4,"relative_equation_residual":4.3550959990427743e-07},{"case":1,"passes":8,"relative_equation_residual":2.8529692942084377e-12},{"case":2,"passes":1,"relative_equation_residual":0.13272310841313847},{"case":2,"passes":2,"relative_equation_residual":0.008388206899520247},{"case":2,"passes":4,"relative_equation_residual":7.475823173937048e-07},{"case":2,"passes":8,"relative_equation_residual":6.597425975738672e-12},{"case":3,"passes":1,"relative_equation_residual":0.051989371821646216},{"case":3,"passes":2,"relative_equation_residual":0.0005399354598753371},{"case":3,"passes":4,"relative_equation_residual":1.0311224568297898e-07},{"case":3,"passes":8,"relative_equation_residual":8.488635139662729e-12},{"case":4,"passes":1,"relative_equation_residual":0.04903765945068782},{"case":4,"passes":2,"relative_equation_residual":0.00195775055120344},{"case":4,"passes":4,"relative_equation_residual":3.3737560747507973e-07},{"case":4,"passes":8,"relative_equation_residual":1.9994587185012334e-12},{"case":5,"passes":1,"relative_equation_residual":0.05199232256724464},{"case":5,"passes":2,"relative_equation_residual":0.0005395344646610229},{"case":5,"passes":4,"relative_equation_residual":1.0390575511157309e-07},{"case":5,"passes":8,"relative_equation_residual":8.160085230448182e-12},{"case":6,"passes":1,"relative_equation_residual":0.02661315227382982},{"case":6,"passes":2,"relative_equation_residual":0.0005781948142005845},{"case":6,"passes":4,"relative_equation_residual":2.222764511283076e-07},{"case":6,"passes":8,"relative_equation_residual":1.6556751331738857e-12},{"case":7,"passes":1,"relative_equation_residual":0.2102209433918726},{"case":7,"passes":2,"relative_equation_residual":0.041995305100845384},{"case":7,"passes":4,"relative_equation_residual":0.0020258564217324687},{"case":7,"passes":8,"relative_equation_residual":5.726744356274615e-06}],"optimizer_updates":200,"update":200}]},"teacher_cache_hits":0,"teacher_cache_peak_bytes":0,"teacher_forwards":0},"heldout_evaluations":0,"mode":"train","optimizer_updates":200,"originating_training_run":null,"outputs":{"checkpoint-000.npz":{"bytes":1485452,"role":"checkpoint","sha256":"3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"},"checkpoint-200.npz":{"bytes":1485452,"role":"checkpoint","sha256":"593ff362fbd3c0b82573c9b18549cc942d085563a2fb0ea947fef855a6ce2e11"},"history.json":{"bytes":7476,"role":"training_diagnostics","sha256":"c43221c6b480d7775ea2837f38223672b2c68bf5d5a08ce0db408bf743d59d56"},"normalization.json":{"bytes":6752,"role":"preprocessing","sha256":"f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"},"predictions.npz":{"bytes":129230,"role":"predictions","sha256":"08f9130894289c4ca248d1f5bd1c460fbb965798a798853bdadd477fe83f43a9"},"profile.json":{"bytes":189,"role":"training_diagnostics","sha256":"bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"},"splits.json":{"bytes":256361,"role":"training_splits","sha256":"bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"},"summary.json":{"bytes":475,"role":"result_summary","sha256":"6c45f6d30b7e11b8083e2702c8985f438682c3ef4983b8ea9ef6e74f0641f312"},"weights.npz":{"bytes":1485452,"role":"checkpoint","sha256":"593ff362fbd3c0b82573c9b18549cc942d085563a2fb0ea947fef855a6ce2e11"}},"per_case_inference_s":[0.02294147200882435,0.004437894996954128,0.005642411997541785,0.004502021998632699,0.003912470012437552,0.003663573006633669,0.004669298999942839,0.004844408016651869,0.010096204990986735,0.005509084992809221,0.006596658000489697,0.005939469992881641],"prediction_inventory":{"case_000":{"bytes":32768,"dtype":"<f8","sha256":"d2b03d1ef94c1534ef04679bc815e807ccacb01bc77cc5212ea0bfef93b0b059","shape":[16,16,16]},"case_001":{"bytes":7680,"dtype":"<f8","sha256":"0110de5df3688a333ce0c95c6fdba692da6baa0e4dea5f4e16f4ee0dee62a2ad","shape":[6,10,16]},"case_002":{"bytes":8736,"dtype":"<f8","sha256":"e2df86c7345c59836b9f67de6efa6de4e720f953bc9bbb140ef93e6697c23df1","shape":[13,7,12]},"case_003":{"bytes":7200,"dtype":"<f8","sha256":"d3ba89556561e96d34bbeb65762b983e41dc701f57c28c370c7ab125cf6cb5dd","shape":[6,15,10]},"case_004":{"bytes":5280,"dtype":"<f8","sha256":"03200d3f8b12ab4189d3046bbe85ba0681ad2a98b012d278fb3c221384cdd8df","shape":[6,10,11]},"case_005":{"bytes":2880,"dtype":"<f8","sha256":"56a906946cd90eb2be869673d0c216364a43e7f584a5cfc3ff36396d4da8837d","shape":[9,5,8]},"case_006":{"bytes":6912,"dtype":"<f8","sha256":"6b72714827de810e7c35636b4a6183bbbdc56070d3562d507b202f61e7f396bf","shape":[9,8,12]},"case_007":{"bytes":6048,"dtype":"<f8","sha256":"a585cd7ae6b22ddda8950aa43501b15ed09929fe5b342e467432c8e891b6271c","shape":[9,14,6]},"case_008":{"bytes":20480,"dtype":"<f8","sha256":"d28e91b04d65ab16e153f33d1c0882f6da9b40137f56ea5a90b94174f7b84395","shape":[16,16,10]},"case_009":{"bytes":7488,"dtype":"<f8","sha256":"6034a4adc3bb7f8f7646978b14ca0d73cecd4bf814241af27c8fe085c20edc61","shape":[12,13,6]},"case_010":{"bytes":9000,"dtype":"<f8","sha256":"e2cb9fdf8333d6efa048e9491c6bbd400ae4954ed4f0f22ad2511e02a9cf39bf","shape":[15,15,5]},"case_011":{"bytes":11760,"dtype":"<f8","sha256":"791a919f23fec84ac59b42a6ef7b9474273af936da0baba8745db995cb63b27e","shape":[7,15,14]}},"runtime":{"inference_device":"cpu","interop_threads":1,"numpy":"2.5.3","peak_rss_bytes":2413776896,"threads":1,"torch":"2.14.0+cu132"},"schema":"rheon-water-learning-training-v1","scientific_acceptance_or_model_promotion":false,"status":"complete"}
+```

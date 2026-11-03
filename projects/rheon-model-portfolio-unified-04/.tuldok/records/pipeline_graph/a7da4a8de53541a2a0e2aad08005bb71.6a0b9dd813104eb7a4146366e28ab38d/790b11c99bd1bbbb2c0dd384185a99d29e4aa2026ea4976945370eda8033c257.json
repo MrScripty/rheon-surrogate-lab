@@ -1,0 +1,324 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "e38d777b6229968e62b8c48edcace9d86ef2cacef6109425e76b6e5b88b887d7",
+        "execution_sha256": "8561a7fc56dae0e3ab396cf683d533bc3722ab5a492ebdba3a06fad912934820",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-15T18:00:58+00:00",
+      "result": "success",
+      "target": "6a0b9dd813104eb7a4146366e28ab38d"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "6a0b9dd813104eb7a4146366e28ab38d",
+    "layout": {},
+    "mode": "real",
+    "name": "water-conditioning-constant-high · CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "452862dd71bae3da9891f416f793abde08ae5b58461ef8915c161ec8abefdb11",
+          "inputs": {
+            "dataset": {
+              "expected_sha256": "6b1be98660eb38a45fa3323490675ae37a1c6d8bd9a8ee9b1f5e3c300bff33e1",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "4c23766d38ee8fc178c105e6bc6c426bd3adf5fb82296042c5c8d7d28e8739e3",
+              "reference_id": "dataset_extra"
+            },
+            "splits": {
+              "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+              "reference_id": "splits"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_10000_npz": {
+              "artifact_name": "checkpoint-10000.npz",
+              "expected_sha256": "52622ea6d24d66a76da66a6aaaee4b3d7083a408213d535af97b64247d5a8e29",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_1000_npz": {
+              "artifact_name": "checkpoint-1000.npz",
+              "expected_sha256": "6942b4e47f7a3e6c4f2b25d145f0412cf4ef35a61b816577c6c251051a5ded06",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_100_npz": {
+              "artifact_name": "checkpoint-100.npz",
+              "expected_sha256": "d94c5e9416afa0d352004c712b6b2bde762d49fb6e21c8de2365124adf6eaa88",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_2000_npz": {
+              "artifact_name": "checkpoint-2000.npz",
+              "expected_sha256": "49b976bd497c4a4019db015d711406b44aefb1ce72161cf24985b9cc8a410f6f",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_4000_npz": {
+              "artifact_name": "checkpoint-4000.npz",
+              "expected_sha256": "5aabd71de062234b618c05098b2756859eb3d6ee9a33a3bd616727e98a27d027",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_500_npz": {
+              "artifact_name": "checkpoint-500.npz",
+              "expected_sha256": "3d86cb2a9a7eb7e87a435d17bbe7937e9f4435724a5a80302a5e1ae491055748",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_6000_npz": {
+              "artifact_name": "checkpoint-6000.npz",
+              "expected_sha256": "38c54e2efa5c23d773206ab06ee444d8f425c701640f5c9bb191a223a995c589",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_checkpoint_8000_npz": {
+              "artifact_name": "checkpoint-8000.npz",
+              "expected_sha256": "30ba4af3f7a6d1569553f94be96768ad55f3de2ca3b229650e01a42f878a09ea",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "0a21dc2dfe1fa1c55a6fb5fd6cc95ec2e2cbc88ecd58c8e860f596f50e345c31",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "37965c625cb8c3efb06bfd3e5b2d2e422d62a979a386c2e3b6bb164cda09da8e",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "c26761cb927918bb2a52c78eee12dce0dd016696b5e2e790dcc9448060a428fd",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "fd9c0cda62f88ed10ff7fa310e8b04a5c08bf853326924dc25c84ef06054b178",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "52622ea6d24d66a76da66a6aaaee4b3d7083a408213d535af97b64247d5a8e29",
+              "kind": "run_artifact",
+              "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+            }
+          },
+          "project_id": "4ae2989a969c4e92834d223abeb7a2db",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "6a0b9dd813104eb7a4146366e28ab38d",
+      "layout": {},
+      "mode": "real",
+      "name": "water-conditioning-constant-high · CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "452862dd71bae3da9891f416f793abde08ae5b58461ef8915c161ec8abefdb11",
+            "inputs": {
+              "dataset": {
+                "expected_sha256": "6b1be98660eb38a45fa3323490675ae37a1c6d8bd9a8ee9b1f5e3c300bff33e1",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "4c23766d38ee8fc178c105e6bc6c426bd3adf5fb82296042c5c8d7d28e8739e3",
+                "reference_id": "dataset_extra"
+              },
+              "splits": {
+                "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_10000_npz": {
+                "artifact_name": "checkpoint-10000.npz",
+                "expected_sha256": "52622ea6d24d66a76da66a6aaaee4b3d7083a408213d535af97b64247d5a8e29",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_1000_npz": {
+                "artifact_name": "checkpoint-1000.npz",
+                "expected_sha256": "6942b4e47f7a3e6c4f2b25d145f0412cf4ef35a61b816577c6c251051a5ded06",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_100_npz": {
+                "artifact_name": "checkpoint-100.npz",
+                "expected_sha256": "d94c5e9416afa0d352004c712b6b2bde762d49fb6e21c8de2365124adf6eaa88",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_2000_npz": {
+                "artifact_name": "checkpoint-2000.npz",
+                "expected_sha256": "49b976bd497c4a4019db015d711406b44aefb1ce72161cf24985b9cc8a410f6f",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_4000_npz": {
+                "artifact_name": "checkpoint-4000.npz",
+                "expected_sha256": "5aabd71de062234b618c05098b2756859eb3d6ee9a33a3bd616727e98a27d027",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_500_npz": {
+                "artifact_name": "checkpoint-500.npz",
+                "expected_sha256": "3d86cb2a9a7eb7e87a435d17bbe7937e9f4435724a5a80302a5e1ae491055748",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_6000_npz": {
+                "artifact_name": "checkpoint-6000.npz",
+                "expected_sha256": "38c54e2efa5c23d773206ab06ee444d8f425c701640f5c9bb191a223a995c589",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_checkpoint_8000_npz": {
+                "artifact_name": "checkpoint-8000.npz",
+                "expected_sha256": "30ba4af3f7a6d1569553f94be96768ad55f3de2ca3b229650e01a42f878a09ea",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "0a21dc2dfe1fa1c55a6fb5fd6cc95ec2e2cbc88ecd58c8e860f596f50e345c31",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "37965c625cb8c3efb06bfd3e5b2d2e422d62a979a386c2e3b6bb164cda09da8e",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "c26761cb927918bb2a52c78eee12dce0dd016696b5e2e790dcc9448060a428fd",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "fd9c0cda62f88ed10ff7fa310e8b04a5c08bf853326924dc25c84ef06054b178",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "52622ea6d24d66a76da66a6aaaee4b3d7083a408213d535af97b64247d5a8e29",
+                "kind": "run_artifact",
+                "run_id": "8f5d33757ec34f97bc0e0fec56c76f1f"
+              }
+            },
+            "project_id": "4ae2989a969c4e92834d223abeb7a2db",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

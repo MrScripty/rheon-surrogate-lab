@@ -1,0 +1,252 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "93e0b6b4265fb93a8e903e4ad8f9e32edff5f3df14d39c699ceaa64cf41aeca8",
+        "execution_sha256": "316afd7d495864191fd0e6b4d416494c62757c68245ee78d406ccc6e617ce9c5",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-15T19:34:21+00:00",
+      "result": "success",
+      "target": "fa988f830c5a410f8371a4074e1c1ff7"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "fa988f830c5a410f8371a4074e1c1ff7",
+    "layout": {},
+    "mode": "real",
+    "name": "water-residual-smoke · CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "0f9de9f725f4f88cc6f119d51da87ac52ab1098c37c6bc3c9493936c71e9aa89",
+          "inputs": {
+            "dataset": {
+              "expected_sha256": "6b1be98660eb38a45fa3323490675ae37a1c6d8bd9a8ee9b1f5e3c300bff33e1",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "4c23766d38ee8fc178c105e6bc6c426bd3adf5fb82296042c5c8d7d28e8739e3",
+              "reference_id": "dataset_extra"
+            },
+            "splits": {
+              "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+              "reference_id": "splits"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "d94f07e2873160a4aa9f7a56ca5694067d428fb94a89df293b3145a09c1b1b2a",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_checkpoint_002_npz": {
+              "artifact_name": "checkpoint-002.npz",
+              "expected_sha256": "9002f34e6b12fadf69e81635c622684d2bcdb553b3bb2623e809262bdc00ffbb",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "65307b2b008c5a12ac41c23dcad7f4a804a68ff1b235369af17184c74c7658eb",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "73d1cb4a0d9e37c5dc10b40328d10e93d881151310c6c330978eece155c38dd0",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "a723ff6f9d41101fc3a5dc92e8971b37ebfd0a2cc5dfbcbd42d01e6093f9d5cf",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_profile_json": {
+              "artifact_name": "profile.json",
+              "expected_sha256": "d1fc041c4980d802aa10536461bea5aec61340227250c108a7da53154257c07e",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "733a339f563172abfebe8e9cd354e533c171a55e865bd6017a871d9974055bcd",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "9002f34e6b12fadf69e81635c622684d2bcdb553b3bb2623e809262bdc00ffbb",
+              "kind": "run_artifact",
+              "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+            }
+          },
+          "project_id": "9aa4d83e50494f57b527e3f963c81bc3",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "fa988f830c5a410f8371a4074e1c1ff7",
+      "layout": {},
+      "mode": "real",
+      "name": "water-residual-smoke · CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "0f9de9f725f4f88cc6f119d51da87ac52ab1098c37c6bc3c9493936c71e9aa89",
+            "inputs": {
+              "dataset": {
+                "expected_sha256": "6b1be98660eb38a45fa3323490675ae37a1c6d8bd9a8ee9b1f5e3c300bff33e1",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "4c23766d38ee8fc178c105e6bc6c426bd3adf5fb82296042c5c8d7d28e8739e3",
+                "reference_id": "dataset_extra"
+              },
+              "splits": {
+                "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "d94f07e2873160a4aa9f7a56ca5694067d428fb94a89df293b3145a09c1b1b2a",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_checkpoint_002_npz": {
+                "artifact_name": "checkpoint-002.npz",
+                "expected_sha256": "9002f34e6b12fadf69e81635c622684d2bcdb553b3bb2623e809262bdc00ffbb",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "65307b2b008c5a12ac41c23dcad7f4a804a68ff1b235369af17184c74c7658eb",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "73d1cb4a0d9e37c5dc10b40328d10e93d881151310c6c330978eece155c38dd0",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "a723ff6f9d41101fc3a5dc92e8971b37ebfd0a2cc5dfbcbd42d01e6093f9d5cf",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_profile_json": {
+                "artifact_name": "profile.json",
+                "expected_sha256": "d1fc041c4980d802aa10536461bea5aec61340227250c108a7da53154257c07e",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "733a339f563172abfebe8e9cd354e533c171a55e865bd6017a871d9974055bcd",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "9002f34e6b12fadf69e81635c622684d2bcdb553b3bb2623e809262bdc00ffbb",
+                "kind": "run_artifact",
+                "run_id": "455586b9f3c24a06ba0b50df1d932c12"
+              }
+            },
+            "project_id": "9aa4d83e50494f57b527e3f963c81bc3",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "format": "tuldok_contribution_v1",
+  "id": "rheon.pressure.fourpass.axis-isolation.f0ab30110260:model",
+  "implementation": {
+    "entrypoint": "PressureCorrectionNet",
+    "source": "runs/pressure-fundamental-bank-fit-v1/axis-isolation-project-01/model.py"
+  },
+  "kind": "model",
+  "label": "Pressure model declaration",
+  "ports": [
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:initial_residual",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "initial_residual",
+      "units": "m3/s2"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:previous_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "previous_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:full_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "output",
+      "encoding": "npy",
+      "id": "full_pressure",
+      "units": "Pa"
+    }
+  ],
+  "requires": [],
+  "version": "1.0.0"
+}

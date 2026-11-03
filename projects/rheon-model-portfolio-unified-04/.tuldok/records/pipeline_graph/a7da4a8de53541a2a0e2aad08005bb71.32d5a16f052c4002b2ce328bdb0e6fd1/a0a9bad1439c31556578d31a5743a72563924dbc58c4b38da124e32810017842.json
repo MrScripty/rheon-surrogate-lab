@@ -1,0 +1,328 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "6d3eef17bf39cf2085f0c35c146860e2d9c6645f47df9454e56a08c7e931c3e0",
+        "execution_sha256": "069c03008ac8da94a276addd6a2f1e2553fedec5c90b256f90fce69a34f40956",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-16T11:15:32+00:00",
+      "result": "success",
+      "target": "32d5a16f052c4002b2ce328bdb0e6fd1"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "32d5a16f052c4002b2ce328bdb0e6fd1",
+    "layout": {},
+    "mode": "real",
+    "name": "water-direction-late · CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "9710b6a288f3474c7a844702ccaed4f205778bb1abb7a02b3622aaec8a986949",
+          "inputs": {
+            "dataset": {
+              "expected_sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904",
+              "reference_id": "dataset_extra"
+            },
+            "direction_dataset": {
+              "expected_sha256": "c6647ca5a63fcedb21541b8f81c66089014678a3ea129d6aafd2986c4098bb8f",
+              "reference_id": "direction_dataset"
+            },
+            "direction_manifest": {
+              "expected_sha256": "4b0a35e50ad5958bbc69c074f90ddacaa76c10435e1c3b731cf9be19b40f9135",
+              "reference_id": "direction_manifest"
+            },
+            "splits": {
+              "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+              "reference_id": "splits"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_checkpoint_1000_npz": {
+              "artifact_name": "checkpoint-1000.npz",
+              "expected_sha256": "a3efb366e82ce1779aad2b980796b03fff344b8ea504878197e55aa8b49f3513",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_checkpoint_100_npz": {
+              "artifact_name": "checkpoint-100.npz",
+              "expected_sha256": "58d43deb97c0fa4af06738703373bbc6ab5484bd7af13fa609a97cfaee5a6634",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_checkpoint_2000_npz": {
+              "artifact_name": "checkpoint-2000.npz",
+              "expected_sha256": "34df5ad979a3a280328601f6b96273234754ba92b8910c094addaedd49fa755e",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_checkpoint_4000_npz": {
+              "artifact_name": "checkpoint-4000.npz",
+              "expected_sha256": "06666afe7f9bffb4fec88ee704de31655feff448a4f9a795651ebd8af46fdec0",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_checkpoint_5000_npz": {
+              "artifact_name": "checkpoint-5000.npz",
+              "expected_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_checkpoint_500_npz": {
+              "artifact_name": "checkpoint-500.npz",
+              "expected_sha256": "f8b5b45d803e07cc2470fbf158da85f7b31b3344b67ba370091b90ab9fc3b748",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "d0fc404058cf7c1701f0da5e488d6b65160734a788772e8b379f5b8e84be5f2a",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "430ed8f4e74de922d93cf41ff14ce9a8d7c5cd1f664c520f4bfc3962bb8856b3",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_profile_json": {
+              "artifact_name": "profile.json",
+              "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "219479e596771b32cbf9bdf6053133a6d6a4c20e6cf8b2b68a6f9385ff505598",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+              "kind": "run_artifact",
+              "run_id": "ad303611cd064137ab339f7dcbbf968e"
+            }
+          },
+          "project_id": "04479dab69ae4227b6ae9c6f19692eb5",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "32d5a16f052c4002b2ce328bdb0e6fd1",
+      "layout": {},
+      "mode": "real",
+      "name": "water-direction-late · CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "9710b6a288f3474c7a844702ccaed4f205778bb1abb7a02b3622aaec8a986949",
+            "inputs": {
+              "dataset": {
+                "expected_sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904",
+                "reference_id": "dataset_extra"
+              },
+              "direction_dataset": {
+                "expected_sha256": "c6647ca5a63fcedb21541b8f81c66089014678a3ea129d6aafd2986c4098bb8f",
+                "reference_id": "direction_dataset"
+              },
+              "direction_manifest": {
+                "expected_sha256": "4b0a35e50ad5958bbc69c074f90ddacaa76c10435e1c3b731cf9be19b40f9135",
+                "reference_id": "direction_manifest"
+              },
+              "splits": {
+                "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_checkpoint_1000_npz": {
+                "artifact_name": "checkpoint-1000.npz",
+                "expected_sha256": "a3efb366e82ce1779aad2b980796b03fff344b8ea504878197e55aa8b49f3513",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_checkpoint_100_npz": {
+                "artifact_name": "checkpoint-100.npz",
+                "expected_sha256": "58d43deb97c0fa4af06738703373bbc6ab5484bd7af13fa609a97cfaee5a6634",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_checkpoint_2000_npz": {
+                "artifact_name": "checkpoint-2000.npz",
+                "expected_sha256": "34df5ad979a3a280328601f6b96273234754ba92b8910c094addaedd49fa755e",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_checkpoint_4000_npz": {
+                "artifact_name": "checkpoint-4000.npz",
+                "expected_sha256": "06666afe7f9bffb4fec88ee704de31655feff448a4f9a795651ebd8af46fdec0",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_checkpoint_5000_npz": {
+                "artifact_name": "checkpoint-5000.npz",
+                "expected_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_checkpoint_500_npz": {
+                "artifact_name": "checkpoint-500.npz",
+                "expected_sha256": "f8b5b45d803e07cc2470fbf158da85f7b31b3344b67ba370091b90ab9fc3b748",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "d0fc404058cf7c1701f0da5e488d6b65160734a788772e8b379f5b8e84be5f2a",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "430ed8f4e74de922d93cf41ff14ce9a8d7c5cd1f664c520f4bfc3962bb8856b3",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_profile_json": {
+                "artifact_name": "profile.json",
+                "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "219479e596771b32cbf9bdf6053133a6d6a4c20e6cf8b2b68a6f9385ff505598",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+                "kind": "run_artifact",
+                "run_id": "ad303611cd064137ab339f7dcbbf968e"
+              }
+            },
+            "project_id": "04479dab69ae4227b6ae9c6f19692eb5",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

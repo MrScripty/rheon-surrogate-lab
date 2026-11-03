@@ -1,0 +1,292 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "33250cde080f71b9baf8fb3cc2fae15f5bb3bba1fd923a19e0d3c9b3e166e783",
+        "execution_sha256": "507a6a2fd8eb7c7892f29f7de526a275a2162274460cff58b2ad66c6df5ac199",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-20T10:49:55+00:00",
+      "result": "success",
+      "target": "949ba6e5036c4630a55d52e9f841c049"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "949ba6e5036c4630a55d52e9f841c049",
+    "layout": {},
+    "mode": "real",
+    "name": "Full AI temporal b2-fixed-viscosity-s3 restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "300c957ddfa59616d07c0b579fd4b5a79b2b823a29080b45ff743aa5bba68e29",
+          "inputs": {
+            "manifest": {
+              "expected_sha256": "bdf54cecf37e5cd9422ee51a1a88ecb22ef9efcfb7a98f1a867ccafb8a95075b",
+              "reference_id": "manifest"
+            },
+            "normalization": {
+              "expected_sha256": "fb77ae2ee0fd4ef67969866be000561036b8311b6ca46f258ccd1cdd82c0c037",
+              "reference_id": "normalization"
+            },
+            "part_00": {
+              "expected_sha256": "5f3148974b446d197250057d260276fb3df78a33a3f392c9f64a318896fcdd44",
+              "reference_id": "part_00"
+            },
+            "part_01": {
+              "expected_sha256": "8d7d017e7d0a9ef828455e6bed1690ae723184351a7daf63a740182acfd700fc",
+              "reference_id": "part_01"
+            },
+            "part_02": {
+              "expected_sha256": "e03079814e38591f42ff74b52af9858a80a17c6af85ec7cd420c64d7950447cd",
+              "reference_id": "part_02"
+            },
+            "part_03": {
+              "expected_sha256": "5c59c5301b1741c1c7299cac50a5a69b29af212e0030df11c83d1952f2379c1f",
+              "reference_id": "part_03"
+            },
+            "part_04": {
+              "expected_sha256": "24134714c26931dfbb54d69cf0ce6571ca40e83922be48542210c516770ad4bb",
+              "reference_id": "part_04"
+            },
+            "part_05": {
+              "expected_sha256": "8aa71a0ef99e94d7ee8638924f9714c1c87c166bef115cb44c4b67cd94ebd1e7",
+              "reference_id": "part_05"
+            },
+            "part_06": {
+              "expected_sha256": "7297165d24117593602caa726a16ad0c4d3004b06bb7ba642018440d5d255cc5",
+              "reference_id": "part_06"
+            },
+            "part_07": {
+              "expected_sha256": "51b0e01f901362a6d9220a5f05c96c76b8808ca0fcf3c9ce706b60d70a161265",
+              "reference_id": "part_07"
+            },
+            "part_08": {
+              "expected_sha256": "151b18d70962cf6564730d36040ce1f98a97c97387ea70bf6a7c8e92a955fb53",
+              "reference_id": "part_08"
+            },
+            "part_09": {
+              "expected_sha256": "7e539998779bc21cc5ad0eed7747688253412b861a4d179f701e379778fb4ff6",
+              "reference_id": "part_09"
+            },
+            "part_10": {
+              "expected_sha256": "8d92e916e9c29a577b9e40bab774904c76d4f337a303802e6ad79d7bf5e98b75",
+              "reference_id": "part_10"
+            },
+            "runtime_manifest": {
+              "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+              "reference_id": "runtime_manifest"
+            },
+            "trained_history": {
+              "artifact_name": "history.json",
+              "expected_sha256": "f57f6f10ae9b23dec9e0bac1612e0e9bbffec678992232128a9e416e6c1dae9f",
+              "kind": "run_artifact",
+              "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+            },
+            "trained_initial": {
+              "artifact_name": "initial-weights.npz",
+              "expected_sha256": "37cd276d1b84c0cba7817e738e58a58198fb43892b6120c87e03969a2e860a52",
+              "kind": "run_artifact",
+              "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+            },
+            "trained_probe": {
+              "artifact_name": "probe.npy",
+              "expected_sha256": "c78de065c60cf865de02910e7cefdec9805f8f8a9485ea621ac506a36453cb11",
+              "kind": "run_artifact",
+              "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+            },
+            "trained_receipt": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "ba0434d67161938953a8560f0a1ad0e11402602221c6204304a37719093fb6e3",
+              "kind": "run_artifact",
+              "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+            },
+            "trained_weights": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "f9782d1c27bbb7a00b730e4ce302fa7f66693032c0c9001a74008a712faaf47c",
+              "kind": "run_artifact",
+              "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+            }
+          },
+          "project_id": "a45032bf357249d28142ec225c2a5ba5",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "949ba6e5036c4630a55d52e9f841c049",
+      "layout": {},
+      "mode": "real",
+      "name": "Full AI temporal b2-fixed-viscosity-s3 restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "300c957ddfa59616d07c0b579fd4b5a79b2b823a29080b45ff743aa5bba68e29",
+            "inputs": {
+              "manifest": {
+                "expected_sha256": "bdf54cecf37e5cd9422ee51a1a88ecb22ef9efcfb7a98f1a867ccafb8a95075b",
+                "reference_id": "manifest"
+              },
+              "normalization": {
+                "expected_sha256": "fb77ae2ee0fd4ef67969866be000561036b8311b6ca46f258ccd1cdd82c0c037",
+                "reference_id": "normalization"
+              },
+              "part_00": {
+                "expected_sha256": "5f3148974b446d197250057d260276fb3df78a33a3f392c9f64a318896fcdd44",
+                "reference_id": "part_00"
+              },
+              "part_01": {
+                "expected_sha256": "8d7d017e7d0a9ef828455e6bed1690ae723184351a7daf63a740182acfd700fc",
+                "reference_id": "part_01"
+              },
+              "part_02": {
+                "expected_sha256": "e03079814e38591f42ff74b52af9858a80a17c6af85ec7cd420c64d7950447cd",
+                "reference_id": "part_02"
+              },
+              "part_03": {
+                "expected_sha256": "5c59c5301b1741c1c7299cac50a5a69b29af212e0030df11c83d1952f2379c1f",
+                "reference_id": "part_03"
+              },
+              "part_04": {
+                "expected_sha256": "24134714c26931dfbb54d69cf0ce6571ca40e83922be48542210c516770ad4bb",
+                "reference_id": "part_04"
+              },
+              "part_05": {
+                "expected_sha256": "8aa71a0ef99e94d7ee8638924f9714c1c87c166bef115cb44c4b67cd94ebd1e7",
+                "reference_id": "part_05"
+              },
+              "part_06": {
+                "expected_sha256": "7297165d24117593602caa726a16ad0c4d3004b06bb7ba642018440d5d255cc5",
+                "reference_id": "part_06"
+              },
+              "part_07": {
+                "expected_sha256": "51b0e01f901362a6d9220a5f05c96c76b8808ca0fcf3c9ce706b60d70a161265",
+                "reference_id": "part_07"
+              },
+              "part_08": {
+                "expected_sha256": "151b18d70962cf6564730d36040ce1f98a97c97387ea70bf6a7c8e92a955fb53",
+                "reference_id": "part_08"
+              },
+              "part_09": {
+                "expected_sha256": "7e539998779bc21cc5ad0eed7747688253412b861a4d179f701e379778fb4ff6",
+                "reference_id": "part_09"
+              },
+              "part_10": {
+                "expected_sha256": "8d92e916e9c29a577b9e40bab774904c76d4f337a303802e6ad79d7bf5e98b75",
+                "reference_id": "part_10"
+              },
+              "runtime_manifest": {
+                "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+                "reference_id": "runtime_manifest"
+              },
+              "trained_history": {
+                "artifact_name": "history.json",
+                "expected_sha256": "f57f6f10ae9b23dec9e0bac1612e0e9bbffec678992232128a9e416e6c1dae9f",
+                "kind": "run_artifact",
+                "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+              },
+              "trained_initial": {
+                "artifact_name": "initial-weights.npz",
+                "expected_sha256": "37cd276d1b84c0cba7817e738e58a58198fb43892b6120c87e03969a2e860a52",
+                "kind": "run_artifact",
+                "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+              },
+              "trained_probe": {
+                "artifact_name": "probe.npy",
+                "expected_sha256": "c78de065c60cf865de02910e7cefdec9805f8f8a9485ea621ac506a36453cb11",
+                "kind": "run_artifact",
+                "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+              },
+              "trained_receipt": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "ba0434d67161938953a8560f0a1ad0e11402602221c6204304a37719093fb6e3",
+                "kind": "run_artifact",
+                "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+              },
+              "trained_weights": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "f9782d1c27bbb7a00b730e4ce302fa7f66693032c0c9001a74008a712faaf47c",
+                "kind": "run_artifact",
+                "run_id": "bff7ba1f5e484b569a39c1deee04ad5a"
+              }
+            },
+            "project_id": "a45032bf357249d28142ec225c2a5ba5",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

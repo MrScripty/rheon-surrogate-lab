@@ -1,0 +1,44 @@
+{
+  "format": "tuldok_contribution_v1",
+  "id": "rheon.pressure.v4.v4-student50-control.53280a933ab9:evaluator",
+  "implementation": {
+    "entrypoint": "mean_free_relative_l2",
+    "source": "runs/pressure-methods-v4/v4-student50-control-project-01/evidence.py"
+  },
+  "kind": "evaluator",
+  "label": "Pressure evaluator declaration",
+  "ports": [
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:native_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "target",
+      "encoding": "npy",
+      "id": "native_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:full_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "output",
+      "encoding": "npy",
+      "id": "full_pressure",
+      "units": "Pa"
+    }
+  ],
+  "requires": [],
+  "version": "1.0.0"
+}

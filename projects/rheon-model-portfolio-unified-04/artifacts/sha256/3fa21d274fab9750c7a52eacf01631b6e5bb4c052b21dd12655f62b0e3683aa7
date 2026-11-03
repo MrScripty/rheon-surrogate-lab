@@ -1,0 +1,59 @@
+{
+  "format": "tuldok_contribution_v1",
+  "id": "rheon.fullai.v1.a-control.e08a6ed5a53f:model",
+  "implementation": {
+    "entrypoint": "PressureCorrectionNet",
+    "source": "runs/full-ai-next-priorities-v1/a-control-project-02/model.py"
+  },
+  "kind": "model",
+  "label": "Pressure model declaration",
+  "ports": [
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:initial_residual",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "initial_residual",
+      "units": "m3/s2"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:previous_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "previous_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:full_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "output",
+      "encoding": "npy",
+      "id": "full_pressure",
+      "units": "Pa"
+    }
+  ],
+  "requires": [],
+  "version": "1.0.0"
+}

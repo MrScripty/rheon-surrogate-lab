@@ -1,0 +1,192 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "4306808f0bbd79afc22e82bea4113d3b598216d0ac59ca62365da6b37d115ae4",
+        "execution_sha256": "2d33c8b9b0558cf56edef7b7a0c1d9617bdbf309fd7b98f7e19502d34c173e11",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-16T04:09:06+00:00",
+      "result": "success",
+      "target": "1672af829468428eac0fe1ee9e89c5d0"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "1672af829468428eac0fe1ee9e89c5d0",
+    "layout": {},
+    "mode": "real",
+    "name": "water-shape-two-seed3 · validation CPU inference",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "7ecd83bbb27dd9c3813fd1e0d930b0539bf0405019324278c7890d07d10c1d52",
+          "inputs": {
+            "trained_history": {
+              "artifact_name": "history.json",
+              "expected_sha256": "b5822aeffec14e72888dd112b38a260e3b4b0ffd637c2375f9c32d574ba4f6eb",
+              "kind": "run_artifact",
+              "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+            },
+            "trained_normalization": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+            },
+            "trained_receipt": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "d3555c4d1c7318a64223b17b635feaae07f490bf5c0d967589d6d73608754ba4",
+              "kind": "run_artifact",
+              "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+            },
+            "trained_weights": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "f37933d4faabc57964e7de49ebff5ffd74a4d73613d542cdc89508f08deade6c",
+              "kind": "run_artifact",
+              "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+            },
+            "validation_dataset": {
+              "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+              "reference_id": "validation_dataset"
+            },
+            "validation_dataset_extra": {
+              "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+              "reference_id": "validation_dataset_extra"
+            },
+            "validation_splits": {
+              "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+              "reference_id": "validation_splits"
+            }
+          },
+          "project_id": "b64c1b6a89244e5f990ad09bca9b6b66",
+          "recipe_id": "validation"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "1672af829468428eac0fe1ee9e89c5d0",
+      "layout": {},
+      "mode": "real",
+      "name": "water-shape-two-seed3 · validation CPU inference",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "7ecd83bbb27dd9c3813fd1e0d930b0539bf0405019324278c7890d07d10c1d52",
+            "inputs": {
+              "trained_history": {
+                "artifact_name": "history.json",
+                "expected_sha256": "b5822aeffec14e72888dd112b38a260e3b4b0ffd637c2375f9c32d574ba4f6eb",
+                "kind": "run_artifact",
+                "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+              },
+              "trained_normalization": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+              },
+              "trained_receipt": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "d3555c4d1c7318a64223b17b635feaae07f490bf5c0d967589d6d73608754ba4",
+                "kind": "run_artifact",
+                "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+              },
+              "trained_weights": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "f37933d4faabc57964e7de49ebff5ffd74a4d73613d542cdc89508f08deade6c",
+                "kind": "run_artifact",
+                "run_id": "fdfb01aebeba4c4bad31962d815baa97"
+              },
+              "validation_dataset": {
+                "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+                "reference_id": "validation_dataset"
+              },
+              "validation_dataset_extra": {
+                "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+                "reference_id": "validation_dataset_extra"
+              },
+              "validation_splits": {
+                "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+                "reference_id": "validation_splits"
+              }
+            },
+            "project_id": "b64c1b6a89244e5f990ad09bca9b6b66",
+            "recipe_id": "validation"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "ecaad7fb00bd3bebd741685879e7be2b6671098bc7973d81d8ae30edb57799ed",
+        "execution_sha256": "7651770ef560cb166c207edc3561c16837f8c54785dd56524deff92ac754ed8c",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-16T10:39:47+00:00",
+      "result": "success",
+      "target": "628d619b5ad6424497aefb7bc9644373"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "628d619b5ad6424497aefb7bc9644373",
+    "layout": {},
+    "mode": "real",
+    "name": "water-direction-smoke · CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "2a262a90f7641cf4b5ce8e1ab1527ba4e532adde19b377c958908d0a8feb73de",
+          "inputs": {
+            "dataset": {
+              "expected_sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904",
+              "reference_id": "dataset_extra"
+            },
+            "direction_dataset": {
+              "expected_sha256": "83f147a056f94366ddedeeaf3505eab51e8efba6bd33e033283c07a0e4b06a08",
+              "reference_id": "direction_dataset"
+            },
+            "direction_manifest": {
+              "expected_sha256": "4b0a35e50ad5958bbc69c074f90ddacaa76c10435e1c3b731cf9be19b40f9135",
+              "reference_id": "direction_manifest"
+            },
+            "splits": {
+              "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+              "reference_id": "splits"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_checkpoint_001_npz": {
+              "artifact_name": "checkpoint-001.npz",
+              "expected_sha256": "d091fca502f0acfb7130e4eca82c3c078041164547aebe18ba89ff9e4c1179b8",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "01e7dc6a00acdfb52f9256e339b2c69c080039e5c16b096966802ab3ba391419",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "2e27406566f4067e82b46f04073cc72faf1ab8c401080b654d991c851c2c1ce9",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_profile_json": {
+              "artifact_name": "profile.json",
+              "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "803a07c660a70a9345ae4522de601f801e7fa5d37187b76a2a17d52b2c26ae4c",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "d091fca502f0acfb7130e4eca82c3c078041164547aebe18ba89ff9e4c1179b8",
+              "kind": "run_artifact",
+              "run_id": "f5818120176842448f2e0ef520a25c1c"
+            }
+          },
+          "project_id": "cd6d51f6574b44f2864ded5bdeac33c5",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "628d619b5ad6424497aefb7bc9644373",
+      "layout": {},
+      "mode": "real",
+      "name": "water-direction-smoke · CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "2a262a90f7641cf4b5ce8e1ab1527ba4e532adde19b377c958908d0a8feb73de",
+            "inputs": {
+              "dataset": {
+                "expected_sha256": "7d9a7c3769f35c59796fc1a663aacec4d38944534af12d00ed7f1f5bbe16b6f7",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "73c9845df83276b261b3a7c01c565f361894a8794cddbe3ce6e4d0331c6e8904",
+                "reference_id": "dataset_extra"
+              },
+              "direction_dataset": {
+                "expected_sha256": "83f147a056f94366ddedeeaf3505eab51e8efba6bd33e033283c07a0e4b06a08",
+                "reference_id": "direction_dataset"
+              },
+              "direction_manifest": {
+                "expected_sha256": "4b0a35e50ad5958bbc69c074f90ddacaa76c10435e1c3b731cf9be19b40f9135",
+                "reference_id": "direction_manifest"
+              },
+              "splits": {
+                "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_checkpoint_001_npz": {
+                "artifact_name": "checkpoint-001.npz",
+                "expected_sha256": "d091fca502f0acfb7130e4eca82c3c078041164547aebe18ba89ff9e4c1179b8",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "01e7dc6a00acdfb52f9256e339b2c69c080039e5c16b096966802ab3ba391419",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "2e27406566f4067e82b46f04073cc72faf1ab8c401080b654d991c851c2c1ce9",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_profile_json": {
+                "artifact_name": "profile.json",
+                "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "803a07c660a70a9345ae4522de601f801e7fa5d37187b76a2a17d52b2c26ae4c",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "86b4c8ca83aa95a145297af4cf0692bf2aa24ce6fe6e990118ed70e16b00bb42",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "d091fca502f0acfb7130e4eca82c3c078041164547aebe18ba89ff9e4c1179b8",
+                "kind": "run_artifact",
+                "run_id": "f5818120176842448f2e0ef520a25c1c"
+              }
+            },
+            "project_id": "cd6d51f6574b44f2864ded5bdeac33c5",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

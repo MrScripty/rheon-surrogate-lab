@@ -1,0 +1,292 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "e7696d1d06d2d89e5c292f1a1bdc5a994f5d8358efe80ac3db611a0f2f40b561",
+        "execution_sha256": "de94eb03720862b892db694f81c9563a289bc2d622f11f238ec676fa3848c25d",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-17T20:55:56+00:00",
+      "result": "success",
+      "target": "aec772e9153644a7a68e4772189c577e"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "aec772e9153644a7a68e4772189c577e",
+    "layout": {},
+    "mode": "real",
+    "name": "water-coarse-candidate full5000 clipping-qualified fit CPU restore",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "f3e0ec1a88e0d328c606b0887e244dac41989d36f9b0699c40e70750eca82a30",
+          "inputs": {
+            "current_dataset": {
+              "expected_sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521",
+              "reference_id": "current_dataset"
+            },
+            "current_manifest": {
+              "expected_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+              "reference_id": "current_manifest"
+            },
+            "dataset": {
+              "expected_sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e",
+              "reference_id": "dataset"
+            },
+            "dataset_extra": {
+              "expected_sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5",
+              "reference_id": "dataset_extra"
+            },
+            "direction_dataset": {
+              "expected_sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6",
+              "reference_id": "direction_dataset"
+            },
+            "direction_manifest": {
+              "expected_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+              "reference_id": "direction_manifest"
+            },
+            "runtime_manifest": {
+              "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+              "reference_id": "runtime_manifest"
+            },
+            "splits": {
+              "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+              "reference_id": "splits"
+            },
+            "trained_checkpoint_000_npz": {
+              "artifact_name": "checkpoint-000.npz",
+              "expected_sha256": "6021ebf7385556cedf9d168d74a70c0027c825f27e3e08b969bf534128434723",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_checkpoint_5000_npz": {
+              "artifact_name": "checkpoint-5000.npz",
+              "expected_sha256": "c38091565d58c2a897c2dd6fa853d223262dcc64a2118ee428ea58e17a3b8ade",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_history_json": {
+              "artifact_name": "history.json",
+              "expected_sha256": "06e5c1f2b7222be224445893dd9cdd1ba2945b081cfe145af2cc3ab9783277f7",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_normalization_json": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_predictions_npz": {
+              "artifact_name": "predictions.npz",
+              "expected_sha256": "c78fd4e57a21fd31291329fee6199813ec0bf7cf314827658979d64a95689b80",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_profile_json": {
+              "artifact_name": "training-profile.json",
+              "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_receipt_json": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "385e70a58603732475ca524a0cb810cd827f5325f1366a353590d291d289a987",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_splits_json": {
+              "artifact_name": "splits.json",
+              "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            },
+            "trained_weights_npz": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "c38091565d58c2a897c2dd6fa853d223262dcc64a2118ee428ea58e17a3b8ade",
+              "kind": "run_artifact",
+              "run_id": "c01e1741f48a474d9a2a3252b3971827"
+            }
+          },
+          "project_id": "de4e5d3a600943cdb8b6aa4225d360ce",
+          "recipe_id": "restore"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "aec772e9153644a7a68e4772189c577e",
+      "layout": {},
+      "mode": "real",
+      "name": "water-coarse-candidate full5000 clipping-qualified fit CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "f3e0ec1a88e0d328c606b0887e244dac41989d36f9b0699c40e70750eca82a30",
+            "inputs": {
+              "current_dataset": {
+                "expected_sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521",
+                "reference_id": "current_dataset"
+              },
+              "current_manifest": {
+                "expected_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+                "reference_id": "current_manifest"
+              },
+              "dataset": {
+                "expected_sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5",
+                "reference_id": "dataset_extra"
+              },
+              "direction_dataset": {
+                "expected_sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6",
+                "reference_id": "direction_dataset"
+              },
+              "direction_manifest": {
+                "expected_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+                "reference_id": "direction_manifest"
+              },
+              "runtime_manifest": {
+                "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+                "reference_id": "runtime_manifest"
+              },
+              "splits": {
+                "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "6021ebf7385556cedf9d168d74a70c0027c825f27e3e08b969bf534128434723",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_checkpoint_5000_npz": {
+                "artifact_name": "checkpoint-5000.npz",
+                "expected_sha256": "c38091565d58c2a897c2dd6fa853d223262dcc64a2118ee428ea58e17a3b8ade",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "06e5c1f2b7222be224445893dd9cdd1ba2945b081cfe145af2cc3ab9783277f7",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "c78fd4e57a21fd31291329fee6199813ec0bf7cf314827658979d64a95689b80",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_profile_json": {
+                "artifact_name": "training-profile.json",
+                "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "385e70a58603732475ca524a0cb810cd827f5325f1366a353590d291d289a987",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "c38091565d58c2a897c2dd6fa853d223262dcc64a2118ee428ea58e17a3b8ade",
+                "kind": "run_artifact",
+                "run_id": "c01e1741f48a474d9a2a3252b3971827"
+              }
+            },
+            "project_id": "de4e5d3a600943cdb8b6aa4225d360ce",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

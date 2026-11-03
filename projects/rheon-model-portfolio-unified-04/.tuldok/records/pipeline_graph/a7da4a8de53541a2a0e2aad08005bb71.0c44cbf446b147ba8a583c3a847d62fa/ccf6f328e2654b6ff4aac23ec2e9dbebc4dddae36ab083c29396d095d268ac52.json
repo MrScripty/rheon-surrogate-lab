@@ -1,0 +1,192 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "5ca88bbb54f09ea358efb62e0267efd9cdacadb11f7eb134d5c18a4854108231",
+        "execution_sha256": "da71a539186ee4d94e05895326204d0f73f8a12d4773dac8d208c4e8d9548cec",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-16T07:57:51+00:00",
+      "result": "success",
+      "target": "0c44cbf446b147ba8a583c3a847d62fa"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "0c44cbf446b147ba8a583c3a847d62fa",
+    "layout": {},
+    "mode": "real",
+    "name": "water-supplement-control · validation CPU inference",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "09537733f82e45a72acd79f844fc246f4fed22e92f5c6926079ed7efde5d7164",
+          "inputs": {
+            "trained_history": {
+              "artifact_name": "history.json",
+              "expected_sha256": "631139bea4e811b4ae88cdf166ea81c5c71763c258d1c1029740be4b201a75b3",
+              "kind": "run_artifact",
+              "run_id": "b6f7ac68a12947b8bfac18120628413c"
+            },
+            "trained_normalization": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+              "kind": "run_artifact",
+              "run_id": "b6f7ac68a12947b8bfac18120628413c"
+            },
+            "trained_receipt": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "2ed95199d5282a9e28d54d0b4c0fcbcf808b897ff7068dedd9d735186d9254ac",
+              "kind": "run_artifact",
+              "run_id": "b6f7ac68a12947b8bfac18120628413c"
+            },
+            "trained_weights": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "2e618e68871a3777c761a75691ca8ec9525717acfdafc501362562b6c8c30d19",
+              "kind": "run_artifact",
+              "run_id": "b6f7ac68a12947b8bfac18120628413c"
+            },
+            "validation_dataset": {
+              "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+              "reference_id": "validation_dataset"
+            },
+            "validation_dataset_extra": {
+              "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+              "reference_id": "validation_dataset_extra"
+            },
+            "validation_splits": {
+              "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+              "reference_id": "validation_splits"
+            }
+          },
+          "project_id": "0f47072ac20f43a082ca0d96fecd5479",
+          "recipe_id": "validation"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "0c44cbf446b147ba8a583c3a847d62fa",
+      "layout": {},
+      "mode": "real",
+      "name": "water-supplement-control · validation CPU inference",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "09537733f82e45a72acd79f844fc246f4fed22e92f5c6926079ed7efde5d7164",
+            "inputs": {
+              "trained_history": {
+                "artifact_name": "history.json",
+                "expected_sha256": "631139bea4e811b4ae88cdf166ea81c5c71763c258d1c1029740be4b201a75b3",
+                "kind": "run_artifact",
+                "run_id": "b6f7ac68a12947b8bfac18120628413c"
+              },
+              "trained_normalization": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "b6f7ac68a12947b8bfac18120628413c"
+              },
+              "trained_receipt": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "2ed95199d5282a9e28d54d0b4c0fcbcf808b897ff7068dedd9d735186d9254ac",
+                "kind": "run_artifact",
+                "run_id": "b6f7ac68a12947b8bfac18120628413c"
+              },
+              "trained_weights": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "2e618e68871a3777c761a75691ca8ec9525717acfdafc501362562b6c8c30d19",
+                "kind": "run_artifact",
+                "run_id": "b6f7ac68a12947b8bfac18120628413c"
+              },
+              "validation_dataset": {
+                "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+                "reference_id": "validation_dataset"
+              },
+              "validation_dataset_extra": {
+                "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+                "reference_id": "validation_dataset_extra"
+              },
+              "validation_splits": {
+                "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+                "reference_id": "validation_splits"
+              }
+            },
+            "project_id": "0f47072ac20f43a082ca0d96fecd5479",
+            "recipe_id": "validation"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

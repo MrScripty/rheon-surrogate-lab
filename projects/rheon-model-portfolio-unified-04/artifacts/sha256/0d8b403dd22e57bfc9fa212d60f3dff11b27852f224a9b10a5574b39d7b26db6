@@ -1,0 +1,102 @@
+{
+  "defaults": {},
+  "format": "tuldok_contribution_v1",
+  "id": "rheon.fullai.v1.a-one-stage.2766720a053f:trainer",
+  "implementation": {
+    "entrypoint": "main",
+    "source": "runs/full-ai-next-priorities-v1/a-one-stage-project-01/evidence.py"
+  },
+  "kind": "trainer",
+  "label": "Pressure trainer declaration",
+  "parameters": {
+    "additionalProperties": false,
+    "properties": {},
+    "type": "object"
+  },
+  "ports": [
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:initial_residual",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "initial_residual",
+      "units": "m3/s2"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:previous_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "input",
+      "encoding": "npy",
+      "id": "previous_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:native_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "target",
+      "encoding": "npy",
+      "id": "native_pressure",
+      "units": "Pa"
+    },
+    {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "contract": {
+        "id": "rheon.pressure:full_pressure",
+        "version": "1.0.0"
+      },
+      "direction": "output",
+      "encoding": "npy",
+      "id": "full_pressure",
+      "units": "Pa"
+    }
+  ],
+  "requires": [
+    {
+      "id": "rheon.fullai.v1.a-one-stage.2766720a053f:reader",
+      "version": "1.0.0",
+      "sha256": "e94ab9cb43bc06c61a4043ee08c0ba87b94f2789b0aada5638e36c73bfac01c0"
+    }
+  ],
+  "stages": [
+    {
+      "clock": "optimizer_update",
+      "failure_policy": "fail",
+      "id": "train",
+      "inputs": [
+        "initial_residual",
+        "previous_pressure",
+        "native_pressure"
+      ],
+      "outputs": [
+        "full_pressure"
+      ],
+      "version": "1.0.0"
+    }
+  ],
+  "version": "1.0.0"
+}

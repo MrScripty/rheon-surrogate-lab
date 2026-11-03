@@ -1,0 +1,321 @@
+{
+  "audit": [],
+  "current": {
+    "catalog_id": "6ea7a1a673e846b999c850f06a6d85bd",
+    "definition": {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "642f8eeecc564584868ebf05cb07a9b7",
+      "layout": {},
+      "mode": "real",
+      "name": "Pressure four-pass · c37-a · C37 fine-tune CPU restore",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "f055c4ffbca151668f0d2d4f608cb623d91a87043a64fb19372831a400313286",
+            "inputs": {
+              "current_dataset": {
+                "expected_sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521",
+                "reference_id": "current_dataset"
+              },
+              "current_manifest": {
+                "expected_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+                "reference_id": "current_manifest"
+              },
+              "dataset": {
+                "expected_sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e",
+                "reference_id": "dataset"
+              },
+              "dataset_extra": {
+                "expected_sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5",
+                "reference_id": "dataset_extra"
+              },
+              "direction_dataset": {
+                "expected_sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6",
+                "reference_id": "direction_dataset"
+              },
+              "direction_manifest": {
+                "expected_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+                "reference_id": "direction_manifest"
+              },
+              "initial_weights": {
+                "expected_sha256": "8cd2a0d4a694f44f393ebc8381a407e4195fd9361f1e115060104bd0df60ac8f",
+                "reference_id": "initial_weights"
+              },
+              "runtime_manifest": {
+                "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+                "reference_id": "runtime_manifest"
+              },
+              "splits": {
+                "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                "reference_id": "splits"
+              },
+              "trained_checkpoint_000_npz": {
+                "artifact_name": "checkpoint-000.npz",
+                "expected_sha256": "8cd2a0d4a694f44f393ebc8381a407e4195fd9361f1e115060104bd0df60ac8f",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_checkpoint_1600_npz": {
+                "artifact_name": "checkpoint-1600.npz",
+                "expected_sha256": "3342a3f49a34b77e5638a1143d26766e3c19aeac4e283c3fa5bbb160e1d85df1",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_history_json": {
+                "artifact_name": "history.json",
+                "expected_sha256": "726dfa107ec8e95d0aa3432880ecd389138e29904c8402770bd63fb20e64fbdc",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_normalization_json": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_predictions_npz": {
+                "artifact_name": "predictions.npz",
+                "expected_sha256": "7385dabc0e5dbb929edb765ce562e8ddd32982dab37a181a301a19992f489860",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_profile_json": {
+                "artifact_name": "training-profile.json",
+                "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_receipt_json": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "4dd23f41a4aa0d5dcfec1d77887648572ff6e64288f966373592c40b4004b3a7",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_splits_json": {
+                "artifact_name": "splits.json",
+                "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              },
+              "trained_weights_npz": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "3342a3f49a34b77e5638a1143d26766e3c19aeac4e283c3fa5bbb160e1d85df1",
+                "kind": "run_artifact",
+                "run_id": "7c0ed33782f14df4b402611d32b90204"
+              }
+            },
+            "project_id": "e447075b38e7477a8d187a66ebe41734",
+            "recipe_id": "restore"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    },
+    "definition_family": "pipeline_graph",
+    "format": "project_material_fork_intent_v1",
+    "id": "b217537aecc34d82a7f9408c3d4539b4",
+    "name": "Pressure four-pass · c37-a · C37 fine-tune CPU restore",
+    "required_reselection": [
+      "inputs",
+      "recipe_source",
+      "runtime"
+    ],
+    "revision": 1
+  },
+  "fork_origin": {
+    "checkpoint": "116b2c64c459d06f8b8c8a0ae83ed10aca60dbec373a54c4c9d390a45d889c57",
+    "created_at": "2026-10-24T14:24:08.666424+00:00",
+    "family": "pipeline_graph",
+    "id": "a7da4a8de53541a2a0e2aad08005bb71.642f8eeecc564584868ebf05cb07a9b7",
+    "project_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "revision": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "6ea7a1a673e846b999c850f06a6d85bd",
+  "revisions": [
+    {
+      "catalog_id": "6ea7a1a673e846b999c850f06a6d85bd",
+      "definition": {
+        "edges": [
+          {
+            "from": "input",
+            "input": "data",
+            "output": "data",
+            "to": "execute"
+          },
+          {
+            "from": "execute",
+            "input": "artifacts",
+            "output": "artifacts",
+            "to": "output"
+          }
+        ],
+        "id": "642f8eeecc564584868ebf05cb07a9b7",
+        "layout": {},
+        "mode": "real",
+        "name": "Pressure four-pass · c37-a · C37 fine-tune CPU restore",
+        "nodes": [
+          {
+            "definition_version": 1,
+            "id": "input",
+            "parameters": {
+              "expected_sha256": "f055c4ffbca151668f0d2d4f608cb623d91a87043a64fb19372831a400313286",
+              "inputs": {
+                "current_dataset": {
+                  "expected_sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521",
+                  "reference_id": "current_dataset"
+                },
+                "current_manifest": {
+                  "expected_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+                  "reference_id": "current_manifest"
+                },
+                "dataset": {
+                  "expected_sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e",
+                  "reference_id": "dataset"
+                },
+                "dataset_extra": {
+                  "expected_sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5",
+                  "reference_id": "dataset_extra"
+                },
+                "direction_dataset": {
+                  "expected_sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6",
+                  "reference_id": "direction_dataset"
+                },
+                "direction_manifest": {
+                  "expected_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+                  "reference_id": "direction_manifest"
+                },
+                "initial_weights": {
+                  "expected_sha256": "8cd2a0d4a694f44f393ebc8381a407e4195fd9361f1e115060104bd0df60ac8f",
+                  "reference_id": "initial_weights"
+                },
+                "runtime_manifest": {
+                  "expected_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+                  "reference_id": "runtime_manifest"
+                },
+                "splits": {
+                  "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                  "reference_id": "splits"
+                },
+                "trained_checkpoint_000_npz": {
+                  "artifact_name": "checkpoint-000.npz",
+                  "expected_sha256": "8cd2a0d4a694f44f393ebc8381a407e4195fd9361f1e115060104bd0df60ac8f",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_checkpoint_1600_npz": {
+                  "artifact_name": "checkpoint-1600.npz",
+                  "expected_sha256": "3342a3f49a34b77e5638a1143d26766e3c19aeac4e283c3fa5bbb160e1d85df1",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_history_json": {
+                  "artifact_name": "history.json",
+                  "expected_sha256": "726dfa107ec8e95d0aa3432880ecd389138e29904c8402770bd63fb20e64fbdc",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_normalization_json": {
+                  "artifact_name": "normalization.json",
+                  "expected_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_predictions_npz": {
+                  "artifact_name": "predictions.npz",
+                  "expected_sha256": "7385dabc0e5dbb929edb765ce562e8ddd32982dab37a181a301a19992f489860",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_profile_json": {
+                  "artifact_name": "training-profile.json",
+                  "expected_sha256": "bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_receipt_json": {
+                  "artifact_name": "receipt.json",
+                  "expected_sha256": "4dd23f41a4aa0d5dcfec1d77887648572ff6e64288f966373592c40b4004b3a7",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_splits_json": {
+                  "artifact_name": "splits.json",
+                  "expected_sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                },
+                "trained_weights_npz": {
+                  "artifact_name": "weights.npz",
+                  "expected_sha256": "3342a3f49a34b77e5638a1143d26766e3c19aeac4e283c3fa5bbb160e1d85df1",
+                  "kind": "run_artifact",
+                  "run_id": "7c0ed33782f14df4b402611d32b90204"
+                }
+              },
+              "project_id": "e447075b38e7477a8d187a66ebe41734",
+              "recipe_id": "restore"
+            },
+            "type": "input"
+          },
+          {
+            "definition_version": 1,
+            "id": "execute",
+            "parameters": {},
+            "type": "execute"
+          },
+          {
+            "definition_version": 1,
+            "id": "output",
+            "parameters": {},
+            "type": "output"
+          }
+        ],
+        "recipe": "external_recipe",
+        "recipe_version": 1,
+        "revision": 1,
+        "schema_version": 1
+      },
+      "definition_family": "pipeline_graph",
+      "format": "project_material_fork_intent_v1",
+      "id": "b217537aecc34d82a7f9408c3d4539b4",
+      "name": "Pressure four-pass · c37-a · C37 fine-tune CPU restore",
+      "required_reselection": [
+        "inputs",
+        "recipe_source",
+        "runtime"
+      ],
+      "revision": 1
+    }
+  ]
+}

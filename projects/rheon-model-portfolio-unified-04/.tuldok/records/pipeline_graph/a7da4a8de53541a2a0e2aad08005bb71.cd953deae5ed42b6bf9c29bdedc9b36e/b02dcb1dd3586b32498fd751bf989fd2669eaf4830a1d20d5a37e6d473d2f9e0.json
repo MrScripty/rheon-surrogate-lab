@@ -1,0 +1,192 @@
+{
+  "audit": [
+    {
+      "action": "pipeline.create_external",
+      "actor_id": "4388490927c34e83a9dbe9598504df99",
+      "details": {
+        "document_sha256": "4030bbe2a92e1a9e0440998f26bc33f4e8bd03f71635f40cd54dae99485ac39e",
+        "execution_sha256": "d32c95e8863cce8cc1c4a0f3cf14cbf5713cc03f05b7fc9a09b030b53a76dde1",
+        "revision": 1
+      },
+      "occurred_at": "2026-10-15T20:00:21+00:00",
+      "result": "success",
+      "target": "cd953deae5ed42b6bf9c29bdedc9b36e"
+    }
+  ],
+  "current": {
+    "edges": [
+      {
+        "from": "input",
+        "input": "data",
+        "output": "data",
+        "to": "execute"
+      },
+      {
+        "from": "execute",
+        "input": "artifacts",
+        "output": "artifacts",
+        "to": "output"
+      }
+    ],
+    "id": "cd953deae5ed42b6bf9c29bdedc9b36e",
+    "layout": {},
+    "mode": "real",
+    "name": "water-residual-recurrent · validation CPU inference",
+    "nodes": [
+      {
+        "definition_version": 1,
+        "id": "input",
+        "parameters": {
+          "expected_sha256": "7e823990abec5dc6c0332b666435cf2fcb682e0558d1d2b1db8a31841330fbd0",
+          "inputs": {
+            "trained_history": {
+              "artifact_name": "history.json",
+              "expected_sha256": "37db2d22155c716818c526b1e4f6e6d094c20b265a6c88c46a9fc0aa61aaa001",
+              "kind": "run_artifact",
+              "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+            },
+            "trained_normalization": {
+              "artifact_name": "normalization.json",
+              "expected_sha256": "73d1cb4a0d9e37c5dc10b40328d10e93d881151310c6c330978eece155c38dd0",
+              "kind": "run_artifact",
+              "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+            },
+            "trained_receipt": {
+              "artifact_name": "receipt.json",
+              "expected_sha256": "d1e7ab06e801f4c47777a049dc9d22c03fcf73233a1e2958101bf93112ece651",
+              "kind": "run_artifact",
+              "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+            },
+            "trained_weights": {
+              "artifact_name": "weights.npz",
+              "expected_sha256": "d0d8231d7e61c5b2ea109061e4ce72f913f9b5f9dd537da3d2f0cad043947574",
+              "kind": "run_artifact",
+              "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+            },
+            "validation_dataset": {
+              "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+              "reference_id": "validation_dataset"
+            },
+            "validation_dataset_extra": {
+              "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+              "reference_id": "validation_dataset_extra"
+            },
+            "validation_splits": {
+              "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+              "reference_id": "validation_splits"
+            }
+          },
+          "project_id": "37703c8b23c640d5afdc5effb273d292",
+          "recipe_id": "validation"
+        },
+        "type": "input"
+      },
+      {
+        "definition_version": 1,
+        "id": "execute",
+        "parameters": {},
+        "type": "execute"
+      },
+      {
+        "definition_version": 1,
+        "id": "output",
+        "parameters": {},
+        "type": "output"
+      }
+    ],
+    "recipe": "external_recipe",
+    "recipe_version": 1,
+    "revision": 1,
+    "schema_version": 1
+  },
+  "format": "pipeline_graph_history_v1",
+  "origin_catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "revisions": [
+    {
+      "edges": [
+        {
+          "from": "input",
+          "input": "data",
+          "output": "data",
+          "to": "execute"
+        },
+        {
+          "from": "execute",
+          "input": "artifacts",
+          "output": "artifacts",
+          "to": "output"
+        }
+      ],
+      "id": "cd953deae5ed42b6bf9c29bdedc9b36e",
+      "layout": {},
+      "mode": "real",
+      "name": "water-residual-recurrent · validation CPU inference",
+      "nodes": [
+        {
+          "definition_version": 1,
+          "id": "input",
+          "parameters": {
+            "expected_sha256": "7e823990abec5dc6c0332b666435cf2fcb682e0558d1d2b1db8a31841330fbd0",
+            "inputs": {
+              "trained_history": {
+                "artifact_name": "history.json",
+                "expected_sha256": "37db2d22155c716818c526b1e4f6e6d094c20b265a6c88c46a9fc0aa61aaa001",
+                "kind": "run_artifact",
+                "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+              },
+              "trained_normalization": {
+                "artifact_name": "normalization.json",
+                "expected_sha256": "73d1cb4a0d9e37c5dc10b40328d10e93d881151310c6c330978eece155c38dd0",
+                "kind": "run_artifact",
+                "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+              },
+              "trained_receipt": {
+                "artifact_name": "receipt.json",
+                "expected_sha256": "d1e7ab06e801f4c47777a049dc9d22c03fcf73233a1e2958101bf93112ece651",
+                "kind": "run_artifact",
+                "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+              },
+              "trained_weights": {
+                "artifact_name": "weights.npz",
+                "expected_sha256": "d0d8231d7e61c5b2ea109061e4ce72f913f9b5f9dd537da3d2f0cad043947574",
+                "kind": "run_artifact",
+                "run_id": "3b08d8c674d048c79af91d23cf14e38f"
+              },
+              "validation_dataset": {
+                "expected_sha256": "c917515d8290c9d60094c3412db19e0f5d06e83c62cace2eb8ec2c979f1ddf3e",
+                "reference_id": "validation_dataset"
+              },
+              "validation_dataset_extra": {
+                "expected_sha256": "a881a83e6b9832e95fbaa18013f4e049341a2146991257c9b258402a6b7ea1e7",
+                "reference_id": "validation_dataset_extra"
+              },
+              "validation_splits": {
+                "expected_sha256": "9d68874f91fe903b253a6f19e193c57304bde5e5dbc280db7fea43dee04371c5",
+                "reference_id": "validation_splits"
+              }
+            },
+            "project_id": "37703c8b23c640d5afdc5effb273d292",
+            "recipe_id": "validation"
+          },
+          "type": "input"
+        },
+        {
+          "definition_version": 1,
+          "id": "execute",
+          "parameters": {},
+          "type": "execute"
+        },
+        {
+          "definition_version": 1,
+          "id": "output",
+          "parameters": {},
+          "type": "output"
+        }
+      ],
+      "recipe": "external_recipe",
+      "recipe_version": 1,
+      "revision": 1,
+      "schema_version": 1
+    }
+  ]
+}

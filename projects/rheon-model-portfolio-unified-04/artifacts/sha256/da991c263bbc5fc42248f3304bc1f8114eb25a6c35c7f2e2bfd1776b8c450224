@@ -1,0 +1,1261 @@
+{
+  "arguments": [
+    {
+      "literal": "train"
+    },
+    {
+      "literal": "--dataset"
+    },
+    {
+      "input": "dataset"
+    },
+    {
+      "literal": "--dataset-extra"
+    },
+    {
+      "input": "dataset_extra"
+    },
+    {
+      "literal": "--splits"
+    },
+    {
+      "input": "splits"
+    },
+    {
+      "literal": "--config"
+    },
+    {
+      "source": "runs/pressure-methods-v6/v6-unrolled-project-01/config.json"
+    },
+    {
+      "literal": "--runtime-manifest"
+    },
+    {
+      "input": "runtime_manifest"
+    },
+    {
+      "literal": "--source-witness"
+    },
+    {
+      "source": "runs/pressure-methods-v6/v6-unrolled-project-01/source-witness.json"
+    },
+    {
+      "literal": "--input-evidence"
+    },
+    {
+      "input_evidence": true
+    },
+    {
+      "literal": "--output-dir"
+    },
+    {
+      "output_dir": true
+    },
+    {
+      "literal": "--pressure-probe"
+    },
+    {
+      "input": "pressure_probe"
+    },
+    {
+      "literal": "--model-evidence-context"
+    },
+    {
+      "model_evidence_context": true
+    },
+    {
+      "literal": "--initial-weights"
+    },
+    {
+      "input": "initial_weights"
+    },
+    {
+      "literal": "--view-shards"
+    },
+    {
+      "input": "view_02"
+    },
+    {
+      "input": "view_03"
+    },
+    {
+      "input": "view_04"
+    },
+    {
+      "input": "view_05"
+    },
+    {
+      "input": "view_06"
+    },
+    {
+      "input": "view_07"
+    },
+    {
+      "input": "view_08"
+    }
+  ],
+  "entrypoint": "runs/pressure-methods-v6/v6-unrolled-project-01/evidence.py",
+  "environment": {},
+  "extension_selection": {
+    "selections": {
+      "task": {
+        "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:task",
+        "version": "1.0.0",
+        "sha256": "800066413fd07d155dbde8263cdaa8b85e5f1c0f2bb1a5e02d53202113bfba5e"
+      },
+      "model": {
+        "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:model",
+        "version": "1.0.0",
+        "sha256": "5e31398280be7281ed6334cceabcc05c6252c5e854a34ecba2db183a2e799e2d"
+      },
+      "trainer": {
+        "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:trainer",
+        "version": "1.0.0",
+        "sha256": "7e0037693d3384ac7ad8050a2e97c58fec87a87a2b055b1404087b7914058122"
+      },
+      "evaluator": {
+        "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:evaluator",
+        "version": "1.0.0",
+        "sha256": "a7947cd87ecb0d5a233150869f59eee1a4ae15a80488c24c5c892809a1f42daa"
+      },
+      "view": {
+        "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:view",
+        "version": "1.0.0",
+        "sha256": "54acde36a087efced118f258d547744635ad244d3addb3f5222b8c2514028aab"
+      }
+    }
+  },
+  "format": "external_model_evidence_recipe_v2",
+  "id": "v6-unrolled-train",
+  "inputs": {
+    "dataset": {
+      "max_bytes": 41943040
+    },
+    "dataset_extra": {
+      "max_bytes": 41943040
+    },
+    "pressure_probe": {
+      "max_bytes": 1048576
+    },
+    "runtime_manifest": {
+      "max_bytes": 33554432
+    },
+    "splits": {
+      "max_bytes": 4194304
+    },
+    "initial_weights": {
+      "max_bytes": 2097152
+    },
+    "view_02": {
+      "max_bytes": 41943040
+    },
+    "view_03": {
+      "max_bytes": 41943040
+    },
+    "view_04": {
+      "max_bytes": 41943040
+    },
+    "view_05": {
+      "max_bytes": 41943040
+    },
+    "view_06": {
+      "max_bytes": 41943040
+    },
+    "view_07": {
+      "max_bytes": 41943040
+    },
+    "view_08": {
+      "max_bytes": 41943040
+    }
+  },
+  "model_evidence": {
+    "format": "extension_field_policy_v1",
+    "task": {
+      "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:task",
+      "revision": 1,
+      "definition": {
+        "format": "tuldok_contribution_v1",
+        "id": "rheon.pressure.v6.v6-unrolled.d17c16b56de3:task",
+        "kind": "task",
+        "label": "Sealed cubic water pressure correction",
+        "ports": [
+          {
+            "axes": [
+              "z",
+              "y",
+              "x"
+            ],
+            "contract": {
+              "id": "rheon.pressure:initial_residual",
+              "version": "1.0.0"
+            },
+            "direction": "input",
+            "encoding": "npy",
+            "id": "initial_residual",
+            "units": "m3/s2"
+          },
+          {
+            "axes": [
+              "z",
+              "y",
+              "x"
+            ],
+            "contract": {
+              "id": "rheon.pressure:previous_pressure",
+              "version": "1.0.0"
+            },
+            "direction": "input",
+            "encoding": "npy",
+            "id": "previous_pressure",
+            "units": "Pa"
+          },
+          {
+            "axes": [
+              "z",
+              "y",
+              "x"
+            ],
+            "contract": {
+              "id": "rheon.pressure:native_pressure",
+              "version": "1.0.0"
+            },
+            "direction": "target",
+            "encoding": "npy",
+            "id": "native_pressure",
+            "units": "Pa"
+          },
+          {
+            "axes": [
+              "z",
+              "y",
+              "x"
+            ],
+            "contract": {
+              "id": "rheon.pressure:full_pressure",
+              "version": "1.0.0"
+            },
+            "direction": "output",
+            "encoding": "npy",
+            "id": "full_pressure",
+            "units": "Pa"
+          }
+        ],
+        "requires": [],
+        "stages": [
+          {
+            "clock": "optimizer_update",
+            "failure_policy": "fail",
+            "id": "train",
+            "inputs": [
+              "initial_residual",
+              "previous_pressure",
+              "native_pressure"
+            ],
+            "outputs": [
+              "full_pressure"
+            ],
+            "version": "1.0.0"
+          }
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "adapter_sha256": "c396ad0320d54710a9acb3d1322ddb273b91340dedc3f2c25e4be6dc8fdd25f0",
+    "profile": {
+      "id": "rheon.pressure.fixed-consumed-validation",
+      "revision": 1,
+      "probe_selection": {
+        "role": "validation",
+        "algorithm": "sha256_rank_v1",
+        "namespace": "rheon-pressure-consumed-validation",
+        "seed": 0,
+        "count": 1
+      },
+      "capture": {
+        "clock": "optimizer_update",
+        "interval": 2400,
+        "retain_selected": true,
+        "max_snapshots": 1
+      },
+      "required_capabilities": [
+        "checkpoints",
+        "fixed_validation_predictions",
+        "scalar_history",
+        "field_pairs"
+      ],
+      "optional_capabilities": [],
+      "limits": {
+        "manifest_bytes": 1048576,
+        "shard_bytes": 8388608,
+        "total_output_bytes": 67108864
+      }
+    },
+    "probe": {
+      "data_input": "pressure_probe",
+      "candidates": [
+        {
+          "frozen_reference": {
+            "input": "pressure_probe",
+            "sha256": "9d6e729f4197a16fef455e1c857465fe91a73eb6b4da5b43da2936d58db69330",
+            "member_id": "baseline--water-validation-0000-frame-15",
+            "split": "validation"
+          },
+          "input_sha256": "6391e4391e1ff1806c46d9f58e19f3d8e0d1dd1df80c447979d2f5ac3f15324c",
+          "target_sha256": "514349ea18678c2dfb70dbabe97e20d5db535a3995cc32aaad514331f48487a7"
+        }
+      ]
+    },
+    "fit_members": [
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0000",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "baseline--water-train-0001",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0001",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0002",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0003",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "baseline--water-train-0003",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0004",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "baseline--water-train-0005",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "baseline--water-train-0006",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0007",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_02",
+        "member_id": "baseline--water-train-0008",
+        "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0008",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "baseline--water-train-0009",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "dataset",
+        "member_id": "baseline--water-train-0010",
+        "sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+        "split": "train"
+      },
+      {
+        "input": "dataset_extra",
+        "member_id": "baseline--water-train-0010",
+        "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0010",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "baseline--water-train-0011",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0012",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "dataset",
+        "member_id": "baseline--water-train-0013",
+        "sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+        "split": "train"
+      },
+      {
+        "input": "dataset_extra",
+        "member_id": "baseline--water-train-0013",
+        "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0013",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "baseline--water-train-0014",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_02",
+        "member_id": "baseline--water-train-0015",
+        "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "baseline--water-train-0015",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "baseline--water-train-0015",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_02",
+        "member_id": "large-train-32-cpm8",
+        "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "large-train-32-cpm8",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "large-train-32-cpm16",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "large-train-32-cpm16",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "dataset",
+        "member_id": "large-train-64-cpm8",
+        "sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+        "split": "train"
+      },
+      {
+        "input": "dataset_extra",
+        "member_id": "large-train-64-cpm8",
+        "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+        "split": "train"
+      },
+      {
+        "input": "view_02",
+        "member_id": "large-train-64-cpm8",
+        "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "large-train-64-cpm8",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "large-train-64-cpm16",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "large-train-64-cpm16",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_06",
+        "member_id": "large-train-64-cpm16",
+        "sha256": "8cdfb4b865349fcd6123a079fb73e5737a332fe443ae99fb7960534210d66080",
+        "split": "train"
+      },
+      {
+        "input": "view_07",
+        "member_id": "large-train-64-cpm16",
+        "sha256": "4ac480f3523ed959b1204e52b9cd8cf03df9364746348bef753bd2af8ae689f9",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "v2-train-00-cpm8",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "v2-train-00-cpm8",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "v2-train-00-cpm16",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "dataset",
+        "member_id": "v2-train-01-cpm8",
+        "sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+        "split": "train"
+      },
+      {
+        "input": "dataset_extra",
+        "member_id": "v2-train-01-cpm8",
+        "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+        "split": "train"
+      },
+      {
+        "input": "dataset_extra",
+        "member_id": "v2-train-01-cpm16",
+        "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+        "split": "train"
+      },
+      {
+        "input": "view_02",
+        "member_id": "v2-train-01-cpm16",
+        "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "v2-train-02-cpm8",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "v2-train-02-cpm8",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "v2-train-02-cpm16",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_08",
+        "member_id": "v3-train-00-n64-cpm8",
+        "sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30",
+        "split": "train"
+      },
+      {
+        "input": "view_08",
+        "member_id": "v3-train-00-n64-cpm16",
+        "sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30",
+        "split": "train"
+      },
+      {
+        "input": "dataset",
+        "member_id": "v3-train-00-n128-cpm16",
+        "sha256": "20aa821bd0399b2f1057146e770678063164dcd407438c60c2a80b616d1991f5",
+        "split": "train"
+      },
+      {
+        "input": "dataset_extra",
+        "member_id": "v3-train-00-n128-cpm16",
+        "sha256": "2e020e3ac3c056424c4c10a6d38ca90b75d5c234267b0ee741f85801f6a30368",
+        "split": "train"
+      },
+      {
+        "input": "view_02",
+        "member_id": "v3-train-00-n128-cpm32",
+        "sha256": "85e8ec527f5aa2115d16c304a74fb2a1791f510776101c8b33ed4f0386028acb",
+        "split": "train"
+      },
+      {
+        "input": "view_03",
+        "member_id": "v3-train-00-n128-cpm32",
+        "sha256": "98ea9131adcd137d32b2c88bfdee4a67797df8e7a9175d0b3b1514a979de3fa8",
+        "split": "train"
+      },
+      {
+        "input": "view_08",
+        "member_id": "v3-train-01-n64-cpm8",
+        "sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30",
+        "split": "train"
+      },
+      {
+        "input": "view_08",
+        "member_id": "v3-train-01-n64-cpm16",
+        "sha256": "2f4bce03bbd9eb61d863b0c2f29def8b026ed3d69d24baa77b3adc0f99bbed30",
+        "split": "train"
+      },
+      {
+        "input": "view_04",
+        "member_id": "v3-train-01-n128-cpm16",
+        "sha256": "1c8d23206366da05e0fdadb04ef93e1331d7116641bd54007d991b6af4d417cc",
+        "split": "train"
+      },
+      {
+        "input": "view_05",
+        "member_id": "v3-train-01-n128-cpm16",
+        "sha256": "6dcb2730fa2afa4f65d1a72f527ac3414d7ade576183ea55e441a92cd7973eda",
+        "split": "train"
+      },
+      {
+        "input": "view_06",
+        "member_id": "v3-train-01-n128-cpm32",
+        "sha256": "8cdfb4b865349fcd6123a079fb73e5737a332fe443ae99fb7960534210d66080",
+        "split": "train"
+      },
+      {
+        "input": "view_07",
+        "member_id": "v3-train-01-n128-cpm32",
+        "sha256": "4ac480f3523ed959b1204e52b9cd8cf03df9364746348bef753bd2af8ae689f9",
+        "split": "train"
+      }
+    ],
+    "fields": [
+      {
+        "id": "pressure",
+        "contract": {
+          "format": "field_adapter_contract_v1",
+          "owner": "Rheon pressure lab",
+          "adapter": {
+            "name": "rheon_pressure_correction",
+            "version": 1
+          },
+          "source_sha256": "c396ad0320d54710a9acb3d1322ddb273b91340dedc3f2c25e4be6dc8fdd25f0",
+          "inputs": [
+            {
+              "field_id": "initial_residual",
+              "dtype": "<f8",
+              "shape_zyx": [
+                16,
+                16,
+                16
+              ],
+              "centering": "cell",
+              "stage": "native_preprojection",
+              "units": "m3/s2",
+              "gauge_policy_sha256": "224eb9f1a03158148fc781ffef51a66e64b70ac9c9fdd2bae59caf84d4f284d9"
+            },
+            {
+              "field_id": "previous_pressure",
+              "dtype": "<f8",
+              "shape_zyx": [
+                16,
+                16,
+                16
+              ],
+              "centering": "cell",
+              "stage": "solved_previous_interval",
+              "units": "Pa",
+              "gauge_policy_sha256": "e96e870755e5122d42899f65c13b7323a9b82c2711c241c9a2e0b54afb001b9c"
+            }
+          ],
+          "output": {
+            "field_id": "full_pressure",
+            "dtype": "<f8",
+            "shape_zyx": [
+              16,
+              16,
+              16
+            ],
+            "centering": "cell",
+            "stage": "train",
+            "units": "Pa",
+            "gauge_policy_sha256": "e96e870755e5122d42899f65c13b7323a9b82c2711c241c9a2e0b54afb001b9c"
+          },
+          "time_mode": "standalone"
+        },
+        "geometry": {
+          "shape_xyz": [
+            16,
+            16,
+            16
+          ],
+          "origin_xyz": [
+            0,
+            0,
+            0
+          ],
+          "spacing_xyz": [
+            0.125,
+            0.125,
+            0.125
+          ],
+          "orientation": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "units": "m"
+        },
+        "gauge_policy": {
+          "kind": "cell_zero",
+          "pressure_units": "Pa",
+          "correction": "subtract first correction cell; add supplied solved base exactly once",
+          "prior": "exact recorded solved base; native frame 15"
+        }
+      }
+    ],
+    "field_targets": [
+      {
+        "member_id": "baseline--water-validation-0000-frame-15",
+        "field_id": "pressure",
+        "payload_sha256": "cefe605b34f0d87f27d3cd0a20c28d7aaea64d521b09861a2dd4394e5aff396d"
+      }
+    ],
+    "field_outputs": [
+      {
+        "clock": 2400,
+        "field_id": "pressure",
+        "member_id": "baseline--water-validation-0000-frame-15",
+        "prediction": "pressure-prediction.npy",
+        "reference": "pressure-reference.npy"
+      }
+    ],
+    "probe_inputs": [
+      {
+        "member_id": "baseline--water-validation-0000-frame-15",
+        "fields": [
+          {
+            "field_id": "initial_residual",
+            "artifact": "probe-residual.npy"
+          },
+          {
+            "field_id": "previous_pressure",
+            "artifact": "probe-base.npy"
+          }
+        ]
+      }
+    ],
+    "metric_definitions": [
+      {
+        "id": "same_rhs_mean_free_relative_l2",
+        "semantic_version": 1,
+        "split": "validation",
+        "units": "dimensionless",
+        "direction": "minimize",
+        "reduction": "single_fixed_member_mean_free_pressure_relative_l2",
+        "population_sha256": "83bd03ae3fe00df1edad5a913a97fa7c62983cdf7efcbc6ccf3ca9579f8bdab3",
+        "domain": {
+          "minimum": 0,
+          "maximum": 1e+300
+        },
+        "undefined_rule": "not_applicable",
+        "evaluator_sha256": "c396ad0320d54710a9acb3d1322ddb273b91340dedc3f2c25e4be6dc8fdd25f0",
+        "preprocessing_sha256": "33ec217639dee83916ae38581749882a700253e1a843176da432eb45ee6bd6d6"
+      }
+    ],
+    "model_specification": {
+      "format": "rheon_pressure_model_v1",
+      "architecture": {
+        "schema": "rheon-multilevel-local-smoother-v1",
+        "input_channels": 1,
+        "channels": [
+          "dimensionless_laplacian_rhs"
+        ],
+        "widths": [
+          1,
+          4,
+          4,
+          1
+        ],
+        "kernels": "tiny",
+        "bias": false,
+        "activation": "linear",
+        "parameters": 648,
+        "boundary": "Replicated one-cell halo at each convolution",
+        "fixed_skip": "q / 8",
+        "preprocessing": "q=(rho/h)*residual, divided by fixed original train-only q RMS",
+        "reconstruction": "Raw correction times the same q RMS; cell-zero gauge; add supplied base",
+        "coarse_training_cycles": 0,
+        "deployment": "Local correction called after an independently validated numerical multilevel cycle",
+        "restrictions": "Uniform-density cubic sealed Neumann operator, up to 128 cells per axis for training; larger inference requires separate qualification"
+      },
+      "physical_context": {
+        "density_kg_m3": 1000,
+        "domain_extent": "counts_xyz * scalar cell_size_m",
+        "dt_s": 0.016666666666666666,
+        "geometry": "sealed full uniform-density cubic water",
+        "historical_parent_run": null,
+        "minimum_native_steps": 15,
+        "model_promotion": false,
+        "neural_compute": "float32 CUDA train; float32 CPU restore with CUDA hidden",
+        "origin_xyz_m": [
+          0,
+          0,
+          0
+        ],
+        "prior_pressure": "qualified solved pressure at immediately preceding interval",
+        "viscosity_pa_s": 0.001
+      },
+      "configuration": {}
+    },
+    "preprocessing_policy": {
+      "channel_order": [
+        "dimensionless_laplacian_rhs"
+      ],
+      "fit_population": "train",
+      "kind": "rheon_physical_residual_v1",
+      "network_dtype": "float32",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "physical_dtype": "float64",
+      "q": "(rho/h)*initial_residual",
+      "scalar_context": {
+        "cell_size": {
+          "geometry": "one positive cubic h per sample",
+          "units": "m"
+        },
+        "density": {
+          "units": "kg/m3",
+          "value": 1000
+        },
+        "dt": {
+          "units": "s",
+          "value": 0.016666666666666666
+        }
+      },
+      "scaling": "q / train-only q RMS",
+      "zero_residual": "return supplied previous pressure exactly without invoking network"
+    },
+    "output_policy": {
+      "axes": [
+        "z",
+        "y",
+        "x"
+      ],
+      "centering": "cell",
+      "correction": {
+        "activation": "linear",
+        "steps": 1
+      },
+      "dtype": "float64",
+      "gauge": "cell_zero",
+      "kind": "full_pressure",
+      "layout": "x_fast",
+      "output_scale": "laplacian-rhs-rms",
+      "reconstruction": "Float32 raw times fixed train-only Laplacian RHS RMS; cell-zero gauge; add supplied base once.",
+      "units": "Pa"
+    }
+  },
+  "name": "v6-unrolled train",
+  "outputs": [
+    {
+      "max_bytes": 2097152,
+      "path": "weights.npz",
+      "required": true,
+      "role": "checkpoint"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "predictions.npz",
+      "required": true,
+      "role": "predictions"
+    },
+    {
+      "max_bytes": 1048576,
+      "path": "normalization.json",
+      "required": true,
+      "role": "preprocessing"
+    },
+    {
+      "max_bytes": 4194304,
+      "path": "splits.json",
+      "required": true,
+      "role": "training_splits"
+    },
+    {
+      "max_bytes": 1048576,
+      "path": "history.json",
+      "required": true,
+      "role": "training_diagnostics"
+    },
+    {
+      "max_bytes": 1048576,
+      "path": "training-profile.json",
+      "required": true,
+      "role": "training_diagnostics"
+    },
+    {
+      "max_bytes": 1048576,
+      "path": "receipt.json",
+      "required": true,
+      "role": "training_result"
+    },
+    {
+      "max_bytes": 65536,
+      "path": "summary.json",
+      "required": true,
+      "role": "result_summary"
+    },
+    {
+      "max_bytes": 2097152,
+      "path": "checkpoint-000.npz",
+      "required": true,
+      "role": "checkpoint"
+    },
+    {
+      "max_bytes": 2097152,
+      "path": "checkpoint-2400.npz",
+      "required": true,
+      "role": "checkpoint"
+    },
+    {
+      "max_bytes": 65536,
+      "path": "execution-context.json",
+      "required": true,
+      "role": "model_context"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "model-evidence.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "model-definition.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "profile.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "probe.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "metric-definitions.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "checkpoints.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "observations.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "field-index.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "fitted-transform.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "output-policy.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "checkpoint-2400.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "pressure-diagnostic.json",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "probe-residual.npy",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "probe-base.npy",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "pressure-prediction.npy",
+      "required": true,
+      "role": "model_evidence"
+    },
+    {
+      "max_bytes": 8388608,
+      "path": "pressure-reference.npy",
+      "required": true,
+      "role": "model_evidence"
+    }
+  ],
+  "parameters": {},
+  "resources": {
+    "cpu_cores": 2,
+    "max_output_bytes": 67108864,
+    "memory_bytes": 17179869184,
+    "wall_seconds": 1800
+  },
+  "runtime": "managed_torch_python_v1",
+  "runtime_device": "cuda",
+  "runtime_snapshot_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+  "schema_version": 3,
+  "sources": [
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/analytical.py",
+      "sha256": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/band_feedback.py",
+      "sha256": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/baseline_model.py",
+      "sha256": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/coarse.py",
+      "sha256": "faf57fd30b7eba837d387c4c4ca53b67fa128d97f4d6d97727e8306a3853e895"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/config.json",
+      "sha256": "727f77673434abafe3a53e9f0181b88c24d1f55b0b7a63ab81f7fff35e02176d"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/custody-validator.py",
+      "sha256": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/data.py",
+      "sha256": "ecb49d27bb91054a088a7ea2718e59a00708ef878bcd295305c6a5ed3ea982b7"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/direction_feedback.py",
+      "sha256": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/evidence.py",
+      "sha256": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/fine-tuning.json",
+      "sha256": "386d0fc9b26b0ed7b83061575053bd95c9ef71226857238498c3681f4c95150f"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/fine_tuning.py",
+      "sha256": "fd9b0c2ca161260f796d98ac52a4c7a00e640750141feb6ad38bcc04801a2138"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/fixed-normalization.json",
+      "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/frozen_gn.py",
+      "sha256": "ce280f6ce86aeccc31521b13e4df039780fda8c112c63616457771377903e08d"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/gradient_clipping.py",
+      "sha256": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/head_optimizer.py",
+      "sha256": "e280386a3df5ca474903a4e6c42ec69177348d76b59226897e41c39af0000818"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/historical-reservation.json",
+      "sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/historical_data.py",
+      "sha256": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/historical_physical.py",
+      "sha256": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/hybrid-method.json",
+      "sha256": "7286631ecc547c35be01b10413acc6e3f85649357bac8c308e25019cffccfbe7"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/learned_coarse_model.py",
+      "sha256": "248761d431507dae54403ef68bae79004b8c3e23356d91c8cc4b88289ae0adf0"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/methods_view.py",
+      "sha256": "d971132a88e966ddbaf70f6f8a0f5ace2c34b1878c9ba51af9adf221100eff22"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/mixed_order.py",
+      "sha256": "93d987b0f10101fb5b380e7310aa77eb6f5c7557198f6d43d90f102393e47b04"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/model.py",
+      "sha256": "27cb9925301bcd46fca71568d7015c40a02660b55f61a1ef3b8c3019127300b8"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/native_reconstruct.py",
+      "sha256": "bf9f9e5712a22ae01a1dcdeffbdd89a9ba177b50f8aa36deb9692e7f15c61335"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/original_data.py",
+      "sha256": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/original_model.py",
+      "sha256": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/original_train.py",
+      "sha256": "886a66d65ac6214fc3c18805252e5d977336caa6353254b253aa8daef4b239a9"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/physical_residual.py",
+      "sha256": "6e1392c26880c034d09c72437fefd4c1865d6540f40e245825a6ad6a4e7f4204"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/policy.py",
+      "sha256": "1509131b63b42d1d4e3f4bb2ae9f1950454dd86b906d234c8792b212c06724d7"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/portable_model.py",
+      "sha256": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/portable_policy.py",
+      "sha256": "9aafa54db7d8a7ec73def867d75aeda7860fc06600eebfef2b30c9e0fddd5460"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/prepared.py",
+      "sha256": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/qualification.json",
+      "sha256": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/reference_spectral.py",
+      "sha256": "938737f75d504d469bb03647c19dbfdf330b9547205a264b4deac99fb0ecf64f"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/retained_domain_model.py",
+      "sha256": "6c3c831f50c8bd5100d3498f86c68e4658a0eb7c47a3a6b6fbf3b5a34df7a231"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/scenes.py",
+      "sha256": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/smoke_train.py",
+      "sha256": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/source-witness.json",
+      "sha256": "97fb7719bcb8998c4fd4f2c88ce898e1a2633ee0f65384e0de7682635eba3a67"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/support.py",
+      "sha256": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/test_inference.py",
+      "sha256": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/train.py",
+      "sha256": "b5b11637cbe2a3a4742504781689f35581731290b78101a86d7378ec2a1a1f4d"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/training_diagnostic.py",
+      "sha256": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/training_multilevel.py",
+      "sha256": "eb8dfc7f963455112eb430701a941c3a9921b9ca4331e02ee1786fa2e3ad5dba"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/tuldok_extension_sdk/__init__.py",
+      "sha256": "b7e0b3167de54dd1ce8bf5209af92ee0bcab9ba6eb6fc9f8c7db4e3fea96fc18"
+    },
+    {
+      "path": "runs/pressure-methods-v6/v6-unrolled-project-01/tuldok_extension_sdk/evidence.py",
+      "sha256": "94e17b5f0e21bdfddf24771e223e85fced6561f73da1fac55250906cf8d4de23"
+    }
+  ],
+  "version": 1
+}

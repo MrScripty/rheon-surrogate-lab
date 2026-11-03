@@ -1,0 +1,76 @@
+From 261b9c7debd3d57d6a60785e005cf318f0c75769 Mon Sep 17 00:00:00 2001
+From: MrScripty <TheEnvironmentGuy@protonmail.com>
+Date: Fri, 23 Oct 2026 13:15:54 -0700
+Subject: [PATCH] fix(project): validate extraction content before source stop
+
+Report native composition failures during the live read-only preview. Keep the stopped-source capability as an independent extraction requirement so content readiness never grants cessation authority.
+---
+ docs/runbooks/external-project-extraction.md |  6 ++++++
+ project_transfer.py                          |  2 +-
+ tests/test_project_transfer.py               | 17 +++++++++++++++++
+ 3 files changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/docs/runbooks/external-project-extraction.md b/docs/runbooks/external-project-extraction.md
+index 0684abe0..682a689b 100644
+--- a/docs/runbooks/external-project-extraction.md
++++ b/docs/runbooks/external-project-extraction.md
+@@ -38,6 +38,12 @@ The report binds the exact selection, source schema and snapshot, backup and
+ external inventory. Extraction requires the same report digest and selection.
+ An unresolved or incomplete report is not successful empty-project creation.
+ 
++When the selected content and unique payloads are available, Preview validates
++the captured native domain composition while the source is still live. Domain
++refusals appear before an owner has to stop the source to discover them. This
++does not satisfy cessation: the independent `cessation_proof_unavailable`
++blocker remains until the existing trusted owner completes Stop and capture.
++
+ ## Stop through the existing owner
+ 
+ The explicit stop operation belongs to the currently opened legacy controller.
+diff --git a/project_transfer.py b/project_transfer.py
+index c7aee05b..1507e71e 100644
+--- a/project_transfer.py
++++ b/project_transfer.py
+@@ -501,10 +501,10 @@ class ProjectTransfer:
+         for value in captured['working_files']:
+             closed(value,{'kind','path','sha256','bytes','text'},'observed working file')
+             if ('project_file',file_id(source.db.dataset_id,value['kind'],value['path'])) in required:file_observations.append(copy.deepcopy(value))
+-        if not isinstance(source,StoppedSourceLease):blockers.append(dict(family='source',id=source.db.dataset_id,code='cessation_proof_unavailable',detail='The current trusted owner must explicitly stop and capture this source.'))
+         if not blockers:
+             try:_validate_candidate(records,source.db.dataset_id,source.artifacts)
+             except WorkbenchError as error:blockers.append(dict(family='closure',id=source.db.dataset_id,code=getattr(error,'code','invalid'),detail=str(error)))
++        if not isinstance(source,StoppedSourceLease):blockers.append(dict(family='source',id=source.db.dataset_id,code='cessation_proof_unavailable',detail='The current trusted owner must explicitly stop and capture this source.'))
+         report=dict(format='project_transfer_report_v1',source=dict(catalog_id=source.db.dataset_id,schema_version=source.db.schema_version,
+             catalog_signature=source.db._signature(),snapshot_sha256=source.fingerprint,
+             backup_receipt_sha256=digest(canonical(source.backup_receipt)) if source.backup_receipt is not None else None,
+diff --git a/tests/test_project_transfer.py b/tests/test_project_transfer.py
+index 7f088140..b3bf4848 100644
+--- a/tests/test_project_transfer.py
++++ b/tests/test_project_transfer.py
+@@ -79,6 +79,23 @@ class ProjectTransferTests(unittest.TestCase):
+         with self.assertRaises(WorkbenchError):
+             with self.dataset._project_request():pass
+         with self.assertRaises(WorkbenchError):self.dataset.stop_for_project_extraction(self.parent_fd,'retry-backup')
++
++    def test_live_preview_reports_domain_refusal_before_source_stop(self):
++        from project_projection import ProjectProjection
++        record=self.text();self.selection['roots']['records']=[record['id']]
++        before=tree_manifest(self.dataset.path)
++        # Controlled downstream domain refusal: callers must see it while the
++        # source is still live, without stopping just to discover the failure.
++        with preview_source(self.dataset) as source,patch.object(ProjectProjection,'validate_records',
++                side_effect=WorkbenchError('Selected retained composition is incompatible.','invalid',409)):
++            report=ProjectTransfer(source).preview(self.selection)
++        self.assertFalse(report['can_extract'])
++        self.assertIn(dict(family='closure',id=self.dataset.db.dataset_id,code='invalid',
++            detail='Selected retained composition is incompatible.'),report['blockers'])
++        self.assertTrue(any(row['code']=='cessation_proof_unavailable' for row in report['blockers']))
++        self.assertFalse(self.dataset._extraction_stopping)
++        self.assertFalse(self.dataset._closed)
++        self.assertEqual(tree_manifest(self.dataset.path),before)
+     def test_json_bool_and_fake_controller_guards_never_stop(self):
+         for guard in (True,{},SimpleNamespace(require=lambda _:None)):
+             with self.assertRaises(WorkbenchError) as caught:
+-- 
+2.43.0
+

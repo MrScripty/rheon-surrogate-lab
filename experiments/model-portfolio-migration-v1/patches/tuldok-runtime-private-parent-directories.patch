@@ -1,0 +1,46 @@
+diff --git a/runtime_snapshots.py b/runtime_snapshots.py
+index 09ce69c..e179576 100644
+--- a/runtime_snapshots.py
++++ b/runtime_snapshots.py
+@@ -316,7 +316,14 @@ class RuntimeSnapshots:
+             try:
+                 for index,row in enumerate(manifest['files']):
+                     if index%128==0 and shutil.disk_usage(self.path).free<reserve_bytes:fail('Disk reserve was consumed during capture.','unavailable')
+-                    destination=staging/row['path'];destination.parent.mkdir(parents=True,mode=0o700,exist_ok=True)
++                    # pathlib's parents=True applies mode only to the final
++                    # directory. Create every snapshot parent privately without
++                    # changing the process-wide umask used by other threads.
++                    parent=staging
++                    parts=PurePosixPath(row['path']).parts
++                    for part in parts[:-1]:
++                        parent=parent/part;parent.mkdir(mode=0o700,exist_ok=True)
++                    destination=parent/parts[-1]
+                     observed=file_identity(sources[row['path']],destination=destination)
+                     if observed!={key:row[key] for key in ('bytes','sha256','mode','kind')}:fail('Source changed after inventory.','stale')
+                 with (staging/'manifest.json').open('xb') as handle:
+diff --git a/tests/test_runtime_snapshots.py b/tests/test_runtime_snapshots.py
+index 8ff9a40..11d58a3 100644
+--- a/tests/test_runtime_snapshots.py
++++ b/tests/test_runtime_snapshots.py
+@@ -53,6 +53,21 @@ class RuntimeSnapshotContract(unittest.TestCase):
+         self.assertEqual((root/'packages/torch/__init__.py').stat().st_mode&0o777,0o400)
+         self.assertFalse(list(owner.path.glob('.capture-*')))
+ 
++    def test_capture_seals_intermediate_directories_under_group_writable_umask(self):
++        db,access,owner,config=self.fixture()
++        nested=Path(config['site_packages'])/'torch'/'nested'/'data'
++        nested.mkdir(parents=True);(nested/'fixture.txt').write_text('Recorded nested source')
++        observed=owner.inspect(config)
++        previous=os.umask(0o002)
++        try:
++            value=owner.create(config,observed['inventory_sha256'],quiesced=True,reserve_bytes=0)
++            root=Path(value['root'])
++            for directory in [root,*[path for path in root.rglob('*') if path.is_dir()]]:
++                self.assertEqual(directory.stat().st_mode & 0o022,0)
++            self.assertEqual(owner.get(observed['inventory_sha256']),value)
++        finally:
++            self.assertEqual(os.umask(previous),0o002)
++
+     def test_backup_restore_keeps_cold_runtime_modes_and_refuses_changed_completed_modes(self):
+         from backup_metadata import backup_catalog, restore_catalog, StorageTransferError
+         db, access, owner, config = self.fixture()

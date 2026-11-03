@@ -18,14 +18,18 @@ def replace_once(text, before, after):
     return text.replace(before, after, 1)
 
 
-def prepare(config_path, arm_id, destination, *, source_overrides=None, config_overrides=None, objective_overrides=None, trainer_transform=None):
+def prepare(config_path, arm_id, destination, *, source_overrides=None, config_overrides=None, objective_overrides=None, trainer_transform=None, template_identifier=None):
     config = read(config_path)
     material = read(ROOT / config['baseline_material'])
     selected = next(m for m in material['models'] if m['id'] == config['train_initialization'])
     for path, identity in selected['identities'].items():
         if sha(ROOT / path) != identity:
             raise ValueError('Baseline identity changed: ' + path)
-    template = ROOT / selected['project']
+    template_entry = selected if template_identifier is None else next(m for m in material['models'] if m['id'] == template_identifier)
+    for path, identity in template_entry['identities'].items():
+        if sha(ROOT / path) != identity:
+            raise ValueError('Template identity changed: ' + path)
+    template = ROOT / template_entry['project']
     artifacts = ROOT / selected['restore']
     witness = read(template / 'source-witness.json')
     project = read(template / 'project.json')
@@ -55,7 +59,8 @@ def prepare(config_path, arm_id, destination, *, source_overrides=None, config_o
         shutil.copyfile(source, destination / name)
     history = read(artifacts / 'history.json')
     baseline_config = read(template / 'config.json')
-    inventory = history['checkpoints'][f"checkpoint-{baseline_config['training']['updates']:03d}.npz"]['inventory']
+    initialization_config = read(ROOT / selected['project'] / 'config.json')
+    inventory = history['checkpoints'][f"checkpoint-{initialization_config['training']['updates']:03d}.npz"]['inventory']
     objective = dict(schema='rheon-fine-tuning-objective-v1', arm=arm_id,
                      initial_weights_sha256=sha(artifacts / 'weights.npz'), initial_inventory=inventory,
                      training_passes=arm['steps'], teacher_passes=config['teacher_passes'],
@@ -147,8 +152,8 @@ def prepare(config_path, arm_id, destination, *, source_overrides=None, config_o
     provider.update(package={'id':namespace,'version':'1.0.0'},label=captured['id'],contributions=refs,
                     sources=[dict(row,bytes=(ROOT/row['path']).stat().st_size)for row in sources])
     write(destination/'provider.json',provider)
-    project.update(id=uuid.uuid4().hex,name='Pressure four-pass · '+arm_id+' · C53 fine-tune')
-    project['data'].append(dict(id='initial_weights',label='Verified C53 initialization',path=selected['restore']+'/weights.npz',sha256=sha(artifacts/'weights.npz')))
+    project.update(id=uuid.uuid4().hex,name='Pressure four-pass · '+arm_id+' · '+selected['id']+' fine-tune')
+    project['data'].append(dict(id='initial_weights',label='Verified '+selected['id']+' initialization',path=selected['restore']+'/weights.npz',sha256=sha(artifacts/'weights.npz')))
     project['recipes'] = [dict(id=mode,label=mode,path=prefix+mode+'-recipe.json',sha256=sha(destination/(mode+'-recipe.json')))for mode in ['train','restore']]
     project['extensions'] = [dict(id='pressure',label=captured['id'],path=prefix+'provider.json',sha256=sha(destination/'provider.json'))]
     write(destination/'project.json',project)

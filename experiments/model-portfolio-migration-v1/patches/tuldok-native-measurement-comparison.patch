@@ -1,0 +1,1783 @@
+diff --git a/agent_api.py b/agent_api.py
+index d07cdff..64e6e0b 100644
+--- a/agent_api.py
++++ b/agent_api.py
+@@ -952,6 +952,23 @@ _project_file_operation('measurement_query','POST','/measurements/{packet_sha256
+     required=[*list(_MEASUREMENT_SELECTION),'metric_id'],output=_MEASUREMENT_BOUND(_MEASUREMENT_QUERY))
+ _project_file_operation('measurement_inspect','GET','/measurements/{packet_sha256}/observations/{observation_id}',
+     dict(_MEASUREMENT_SELECTION,observation_id=_MEASUREMENT_ID),output=_MEASUREMENT_BOUND(_MEASUREMENT_INSPECTION))
++
++_COMPARISON_QUERY = obj(dict(
++    {key:_MEASUREMENT_QUERY['properties'][key] for key in ('metric','definition','filters','subject_ids','total','offset','limit','sampling')},
++    subject_ids=array(_MEASUREMENT_ID,256,1),
++    summary=array(obj(dict(_MEASUREMENT_SUMMARY['properties'],source=obj(_MEASUREMENT_SELECTION))),256),
++    rows=array(obj(dict(_MEASUREMENT_OBSERVATION['properties'],source=obj(_MEASUREMENT_SELECTION))),100)))
++_COMPARISON_VALUE = obj({'format':const('retained_measurement_comparison_v1'),
++    'scope':_MEASUREMENT_SCOPE,'scope_definition':{'type':'object'},
++    'dimensions':_MEASUREMENT_HEADER['properties']['dimensions'],'metrics':array(_MEASUREMENT_METRIC,32,1),
++    'definition_source':obj(_MEASUREMENT_SELECTION),'case_population_sha256':SHA,
++    'case_count':integer(1,4096),'observation_count':integer(1,100000),
++    'subjects':array(obj(dict(_MEASUREMENT_SUBJECT['properties'],source=obj(_MEASUREMENT_SELECTION))),256,1),
++    'query':{'oneOf':[_COMPARISON_QUERY,_NULL]}})
++_project_file_operation('measurement_compare','POST','/measurements/compare',
++    dict(sources=array(obj(_MEASUREMENT_SELECTION),16,1),metric_id=_MEASUREMENT_ID,
++        subject_ids=array(_MEASUREMENT_ID,256,1),filters=_MEASUREMENT_DIMENSIONS,offset=SAFE_NAT,limit=integer(1,100)),
++    required=['sources'],output=obj({'sources':array(_MEASUREMENT_SOURCE,16,1),'value':_COMPARISON_VALUE}))
+ _project_file_operation('data_annotate', 'POST', '/data/{record_id}', {
+     'record_id': ID, 'revision': SAFE_POS, 'source_revision': SAFE_POS,
+     'task': {'enum': list(ANNOTATIONS)}, 'annotation': JSON_OBJECT,
+@@ -3040,6 +3057,8 @@ def _validate_measurement_selection(action, page, arguments, project_id):
+     """Correlate fixed scalar replies; scientific validity remains upstream."""
+     def refuse():
+         raise AgentAPIError('Retained measurements differ from the selected source or continuation.', 'transport', 502)
++    if action=='measurement_compare':
++        return _validate_comparison_selection(page, arguments)
+     if action=='measurement_sources':
+         offset,limit=arguments.get('offset',0),arguments.get('limit',40)
+         keys=[(d['origin_catalog_id'],d['id']) for d in page['items']]
+@@ -3072,6 +3091,50 @@ def _validate_measurement_selection(action, page, arguments, project_id):
+                 or any(r['metric_id']!=arguments['metric_id'] or r['subject_id'] not in subjects for r in result['rows'])):refuse()
+ 
+ 
++def _validate_comparison_selection(page, arguments):
++    """Bind aggregate replies to reviewed packets, subjects and exact page intent."""
++    def refuse():
++        raise AgentAPIError('Measurement comparison differs from its selected packets or continuation.', 'transport', 502)
++    def key(locator):
++        return locator['origin_catalog_id'], locator['packet_sha256']
++    selected = arguments['sources']
++    keys = [key(item) for item in selected]
++    documents, value = page['sources'], page['value']
++    if (len(keys)!=len(set(keys)) or len(documents)!=len(keys)
++            or [(doc['origin_catalog_id'],doc['id']) for doc in documents]!=keys
++            or any(doc['blob']['sha256']!=doc['id'] or doc['source']['measured_sha256']!=doc['id'] for doc in documents)
++            or sum(doc['blob']['bytes'] for doc in documents)>128*1024*1024
++            or value['definition_source']!=selected[0]):refuse()
++    subjects = value['subjects']
++    identities = [subject['id'] for subject in subjects]
++    if (len(identities)!=len(set(identities)) or any(key(subject['source']) not in keys for subject in subjects)
++            or value['observation_count']!=len(subjects)*value['case_count']*len(value['metrics'])):refuse()
++    owners = {subject['id']:subject['source'] for subject in subjects}
++    query = value['query']
++    if 'metric_id' not in arguments:
++        if query is not None:refuse()
++        return
++    if query is None:refuse()
++    wanted = arguments.get('subject_ids', identities)
++    offset,limit = arguments.get('offset',0),arguments.get('limit',50)
++    metrics = [metric for metric in value['metrics'] if metric['id']==arguments['metric_id']]
++    if (len(metrics)!=1 or query['metric']!=metrics[0] or query['subject_ids']!=wanted
++            or len(wanted)!=len(set(wanted)) or any(identity not in owners for identity in wanted)
++            or query['filters']!=arguments.get('filters',{})
++            or query['offset']!=offset or query['limit']!=limit
++            or len(query['rows'])!=min(limit,max(0,query['total']-offset))
++            or [summary['subject_id'] for summary in query['summary']]!=wanted
++            or sum(summary['count'] for summary in query['summary'])!=query['total']):refuse()
++    for summary in query['summary']:
++        if (summary['source']!=owners[summary['subject_id']]
++                or sum(summary['states'].values())!=summary['count']
++                or (summary['maximum'] is None)!=(summary['states']['measured']==0)):refuse()
++    for row in query['rows']:
++        if (row['subject_id'] not in wanted or row['metric_id']!=arguments['metric_id']
++                or row['source']!=owners[row['subject_id']]
++                or (row['value'] is None)!=(row['state']!='measured')):refuse()
++
++
+ class PublicationOwnerClient(AgentClient):
+     """Explicit owner publication actions only; ordinary AgentClient stays agent-only."""
+     OPERATIONS = frozenset(('runs.publication_status', 'runs.recover_publication', 'runs.cancel_publication',
+diff --git a/project_dispatch.py b/project_dispatch.py
+index 50bedbc..6c9420a 100644
+--- a/project_dispatch.py
++++ b/project_dispatch.py
+@@ -37,7 +37,7 @@ _EXECUTION_ACTIONS = frozenset(('native_preflight','native_submit','native_retry
+     'execution_study_prepare_package','execution_study_prepare_verifier','execution_study_abandon_preparation','execution_study_reconcile_preparation'))
+ _RUNTIME_ACTIONS=frozenset(('runtime_sources','runtime_inspect','runtime_capture','runtime_status','runtime_abandon'))
+ _MEASUREMENT_ACTIONS=frozenset(('measurement_import','measurement_sources','measurement_metadata',
+-    'measurement_subjects','measurement_query','measurement_inspect'))
++    'measurement_subjects','measurement_query','measurement_inspect','measurement_compare'))
+ _M4_ACTIONS=frozenset(('files_inspect','file_get','file_history','file_adopt','files_adopt','file_adopt_deletion','material_intents','material_intent','material_intent_capabilities','fork_info'))
+ SUPPORTED_OPERATIONS = frozenset('project_files.' + action for action in
+     _DATA_ACTIONS | _MATERIAL_ACTIONS | _HISTORY_ACTIONS | _OTHER_ACTIONS | _EXECUTION_ACTIONS | _M4_ACTIONS | _RUNTIME_ACTIONS | _MEASUREMENT_ACTIONS)
+@@ -440,6 +440,7 @@ def _measurements(projection,action,a):
+     if action=='measurement_import':
+         return projection.source_adapter.import_measurements(_body(a),a['expected_checkpoint'],a['request_key'])
+     if action=='measurement_sources':return owner.sources(offset=a.get('offset',0),limit=a.get('limit',40))
++    if action=='measurement_compare':return owner.compare(a['sources'],**_body(a,'sources'))
+     origin,packet=a['origin_catalog_id'],a['packet_sha256']
+     if action=='measurement_metadata':return owner.metadata(origin,packet)
+     if action=='measurement_subjects':return owner.subjects(origin,packet,offset=a.get('offset',0),limit=a.get('limit',40))
+diff --git a/project_measurements.py b/project_measurements.py
+index b97bca5..2800b50 100644
+--- a/project_measurements.py
++++ b/project_measurements.py
+@@ -10,7 +10,8 @@ from datetime import datetime
+ from project_artifacts import validate_declaration
+ from project_material import decode_records as material_records
+ from projects import ID, NAME, SHA, relative_path
+-from retained_measurements import MeasurementTable, MAX_BYTES, MAX_RESPONSE_BYTES, encode, text
++from retained_measurements import (MeasurementTable, MeasurementComparison, MAX_BYTES, MAX_RESPONSE_BYTES,
++    MAX_COMPARISON_SOURCES, MAX_COMPARISON_BYTES, encode, text)
+ from workbench import WorkbenchError, timestamp
+ 
+ 
+@@ -198,3 +199,39 @@ class ProjectMeasurements:
+     def inspect(self, origin_catalog_id, packet_sha256, observation_id):
+         return self._read(origin_catalog_id, packet_sha256, 'measurements.inspect',
+                           lambda table: table.inspect(observation_id))
++
++    def compare(self, sources, metric_id=None, **selection):
++        """Read one checkpoint's bounded group with every original source intact."""
++        if type(sources) is not list or not 1 <= len(sources) <= MAX_COMPARISON_SOURCES:
++            raise WorkbenchError('Choose 1 through 16 native measurement sources.', 'too_large', 413)
++        targets = []
++        for source in sources:
++            _closed(source, ('origin_catalog_id','packet_sha256'))
++            _identity(source['origin_catalog_id'], ID)
++            _identity(source['packet_sha256'], SHA)
++            targets.append(source['origin_catalog_id'] + '.' + source['packet_sha256'])
++        if len(set(targets)) != len(targets):
++            raise WorkbenchError('Native comparison repeats a measurement source.')
++        with self.access.lock, self.session.lock, self.db.lock:
++            for target in targets:
++                self.access.require('inspect', 'measurements.compare', target)
++            self.session.check()
++            documents = self._documents()
++            if any(target not in documents for target in targets):
++                raise WorkbenchError('A comparison source is unavailable.', 'not_found', 404)
++            chosen = [documents[target] for target in targets]
++            if sum(doc['blob']['bytes'] for doc in chosen) > MAX_COMPARISON_BYTES:
++                raise WorkbenchError('Native comparison exceeds 128 MiB of original packets.', 'too_large', 413)
++            tables = []
++            for locator, doc in zip(sources, chosen):
++                raw = self.artifacts.read_blob(doc['blob'], maximum_bytes=MAX_BYTES)
++                table = MeasurementTable(raw)
++                if table.metadata()['title'] != doc['title']:
++                    raise WorkbenchError('Comparison title differs from its original packet.')
++                tables.append((locator, table))
++            value = MeasurementComparison(tables).read(metric_id, **selection)
++            result = self._bounded(dict(sources=chosen, value=value))
++            self.session.check()
++            for target in targets:
++                self.access.require('inspect', 'measurements.compare', target)
++            return result
+diff --git a/retained_measurements.py b/retained_measurements.py
+index 1118880..796aaa1 100644
+--- a/retained_measurements.py
++++ b/retained_measurements.py
+@@ -23,6 +23,9 @@ MAX_SOURCE_BYTES = 8 * 1024 * 1024
+ MAX_SOURCE_TOTAL = 16 * 1024 * 1024
+ MAX_RESPONSE_BYTES = 256 * 1024
+ MAX_ROWS = 100000
++MAX_COMPARISON_SOURCES = 16
++MAX_COMPARISON_SUBJECTS = 256
++MAX_COMPARISON_BYTES = 128 * 1024 * 1024
+ STATES = ('measured', 'failed', 'unsupported', 'unavailable')
+ ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$')
+ SHA = re.compile(r'^[a-f0-9]{64}$')
+@@ -137,6 +140,7 @@ class MeasurementTable:
+         if type(raw) is not bytes or not 0 < len(raw) <= MAX_BYTES:
+             fail('A bounded complete byte snapshot is required.', 'too_large', 413)
+         self.sha256 = hashlib.sha256(raw).hexdigest()
++        self.bytes = len(raw)
+         doc = decode(raw)
+         exact(doc, ('format', 'schema_version', 'title', 'scope', 'dimensions', 'subjects',
+                     'cases', 'metrics', 'observations', 'sources'))
+@@ -348,3 +352,112 @@ class MeasurementTable:
+             state='exceeds_inspection_bound';value=None
+         return {'reference':copy.deepcopy(reference),'source_sha256':self._sources[reference['source_id']]['sha256'],
+                 'state':state,'value':value}
++
++
++class MeasurementComparison:
++    """One bounded scientific comparison over immutable, source-bound tables.
++
++    The native custody owner supplies validated locator/table pairs. Compatibility
++    depends on original definitions and actual case evidence, not display names.
++    Returned rows keep their packet locator; no observations or counts are pooled
++    across subjects. Pagination affects rows only, never the maximum denominator.
++    """
++    def __init__(self, tables):
++        if type(tables) is not list or not 1 <= len(tables) <= MAX_COMPARISON_SOURCES:
++            fail('Choose 1 through 16 comparison sources.', 'too_large', 413)
++        self._tables = []
++        self._subjects = {}
++        seen = set()
++        basis = None
++        observations = raw_bytes = 0
++        for locator, table in tables:
++            exact(locator, ('origin_catalog_id', 'packet_sha256'))
++            if (type(locator['origin_catalog_id']) is not str
++                    or not re.fullmatch('[a-f0-9]{32}', locator['origin_catalog_id'])
++                    or not isinstance(table, MeasurementTable) or locator['packet_sha256'] != table.sha256):
++                fail('Comparison source differs from its validated packet.')
++            key = (locator['origin_catalog_id'], locator['packet_sha256'])
++            if key in seen:
++                fail('Comparison repeats a source.')
++            seen.add(key)
++            raw_bytes += table.bytes
++            if raw_bytes > MAX_COMPARISON_BYTES:
++                fail('Comparison exceeds 128 MiB of original packets.', 'too_large', 413)
++            metadata = table.metadata()
++            cases = []
++            for case in table._cases.values():
++                reference = case['reference']
++                evidence = table._reference(reference)
++                cases.append(dict(id=case['id'], dimensions=case['dimensions'], evidence=evidence,
++                    opaque_source_sha256=table._sources[reference['source_id']]['sha256']
++                    if reference['pointer'] is None else None))
++            current = dict(scope=metadata['scope_definition'], dimensions=metadata['dimensions'],
++                metrics=[table._definition(metric, ('id','label','units')) for metric in table._metrics.values()],
++                cases=cases)
++            # Canonical source bytes distinguish Boolean/numeric values too;
++            # ordinary Python equality is not the scientific identity relation.
++            identity = digest(current)
++            if basis is None:
++                basis = identity
++                self._header = dict(format='retained_measurement_comparison_v1',
++                    scope=metadata['scope'], scope_definition=metadata['scope_definition'],
++                    dimensions=metadata['dimensions'], metrics=metadata['metrics'],
++                    definition_source=copy.deepcopy(locator), case_population_sha256=digest(cases),
++                    case_count=metadata['case_count'])
++            elif identity != basis:
++                fail('Comparison sources have different scope, metric, dimension or original case definitions.', 'incompatible', 409)
++            for subject in table._subjects.values():
++                if subject['id'] in self._subjects:
++                    fail('Comparison sources overlap a subject identity.', 'conflict', 409)
++                self._subjects[subject['id']] = dict(copy.deepcopy(subject), source=copy.deepcopy(locator))
++            observations += metadata['observation_count']
++            if len(self._subjects) > MAX_COMPARISON_SUBJECTS or observations > MAX_ROWS:
++                fail('Comparison exceeds 256 subjects or 100,000 observations.', 'too_large', 413)
++            self._tables.append((copy.deepcopy(locator), table))
++        self._header.update(subjects=list(self._subjects.values()), observation_count=observations)
++
++    def read(self, metric_id=None, *, subject_ids=None, filters=None, offset=0, limit=50):
++        result = copy.deepcopy(self._header)
++        result['query'] = None
++        if metric_id is None:
++            if subject_ids is not None or filters is not None or offset != 0 or limit != 50:
++                fail('A comparison selection requires an explicit metric.')
++            return self._bounded(result)
++        selected = list(self._subjects) if subject_ids is None else subject_ids
++        if (type(selected) is not list or not selected
++                or any(type(value) is not str or value not in self._subjects for value in selected)
++                or len(set(selected)) != len(selected)):
++            fail('Choose existing unique comparison subjects.')
++        if type(offset) is not int or not 0 <= offset <= 2**53-1 or type(limit) is not int or not 1 <= limit <= 100:
++            fail('Comparison page bounds must be finite integers.')
++        summaries = {}
++        rows = []
++        total = 0
++        template = None
++        for locator, table in self._tables:
++            own = [identity for identity in selected if identity in table._subjects]
++            if not own:
++                continue
++            page = table.query(metric_id, subject_ids=own, filters=filters, offset=0, limit=1)
++            if template is None:
++                template = page
++            for summary in page['summary']:
++                summaries[summary['subject_id']] = dict(summary, source=copy.deepcopy(locator))
++            start = max(0, offset-total)
++            if total+page['total'] > offset and len(rows) < limit:
++                current = table.query(metric_id, subject_ids=own, filters=filters,
++                    offset=start, limit=limit-len(rows))
++                rows.extend(dict(row, source=copy.deepcopy(locator)) for row in current['rows'])
++            total += page['total']
++        metric = next(item for item in self._header['metrics'] if item['id'] == metric_id)
++        result['query'] = dict(metric=copy.deepcopy(metric), definition=template['definition'],
++            filters=template['filters'], subject_ids=list(selected),
++            summary=[summaries[identity] for identity in selected], rows=rows,
++            total=total, offset=offset, limit=limit, sampling='none')
++        return self._bounded(result)
++
++    @staticmethod
++    def _bounded(value):
++        if len(encode(value)) > MAX_RESPONSE_BYTES:
++            fail('Comparison response exceeds its bound; choose fewer sources or a smaller page.', 'too_large', 413)
++        return value
+diff --git a/static/project-files.js b/static/project-files.js
+index ee86c1c..65cfa49 100644
+--- a/static/project-files.js
++++ b/static/project-files.js
+@@ -83,6 +83,7 @@
+   "project_files.material_intent_capabilities": "86e90e2d0f094beb1c277a680da9a35e28d78c827390ac1c4e51fc3003c1ce32",
+   "project_files.material_intents": "6431fd2780d706c77d2c4dd82f15794017368fd3bade28ac62bbdff5c8b0c547",
+   "project_files.materials": "92a6a6a1750fed89aef9574ab6e82be2c6c6351bfa89fbfcb1f3866d4ea3cb13",
++  "project_files.measurement_compare": "abbb5e406a3c95155e90f08e8a071f330425190b25275f0f6512de08b8afb929",
+   "project_files.measurement_import": "c8e500396138fc60a31fc916c441bb95454f410231a6508609a7ebba5cd31f18",
+   "project_files.measurement_inspect": "fcbe9846ca49c3da4713b54a3cb4a8237189d8eea5799f275d33992ef268914f",
+   "project_files.measurement_metadata": "5a92ed5259f8876a3c5b8fd1886a9e0f44f0aea8e53d7f63902ac765ddac0de7",
+@@ -175,668 +176,678 @@
+ {
+   "project_files.artifact_resolve": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/artifacts/resolve",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/artifacts/resolve"
+   },
+   "project_files.artifact_status": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/artifacts/status",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/artifacts/status"
+   },
+   "project_files.artifacts": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/artifacts",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/artifacts"
+   },
+   "project_files.candidate": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/candidates/{candidate_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/candidates/{candidate_id}"
+   },
+   "project_files.candidate_select": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies/{study_id}/candidates",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies/{study_id}/candidates"
+   },
+   "project_files.data_annotate": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}"
+   },
+   "project_files.data_availability": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/availability",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/availability"
+   },
+   "project_files.data_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}"
+   },
+   "project_files.data_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/history"
+   },
+   "project_files.data_import_audio": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-audio",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-audio"
+   },
+   "project_files.data_import_image": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-image",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-image"
+   },
+   "project_files.data_import_mesh": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-mesh",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-mesh"
+   },
+   "project_files.data_import_pointcloud": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-pointcloud",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-pointcloud"
+   },
+   "project_files.data_import_scientific": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-scientific",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-scientific"
+   },
+   "project_files.data_import_sequence": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-sequence",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-sequence"
+   },
+   "project_files.data_import_text": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-text",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-text"
+   },
+   "project_files.data_import_volume": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-volume",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-volume"
+   },
+   "project_files.data_preference_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/preferences/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/preferences/delete"
+   },
+   "project_files.data_preference_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/preference-history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/preference-history"
+   },
+   "project_files.data_preference_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/preferences",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/preferences"
+   },
+   "project_files.data_preferences": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/preferences",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/preferences"
+   },
+   "project_files.data_query": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data"
+   },
+   "project_files.data_response_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/response-history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/response-history"
+   },
+   "project_files.data_response_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/responses",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/responses"
+   },
+   "project_files.data_responses": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/responses",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/responses"
+   },
+   "project_files.data_rights": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}/rights",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}/rights"
+   },
+   "project_files.data_scientific": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/scientific",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/scientific"
+   },
+   "project_files.data_source_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}/source/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}/source/delete"
+   },
+   "project_files.data_source_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}/source",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}/source"
+   },
+   "project_files.definitions": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/definitions",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/definitions"
+   },
+   "project_files.dependencies": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}/dependencies",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/dependencies"
+   },
+   "project_files.evidence": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/evidence",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/evidence"
+   },
+   "project_files.execution_approve_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/approvals",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/approvals"
+   },
+   "project_files.execution_cancel": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/runs/{run_id}/cancel",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/runs/{run_id}/cancel"
+   },
+   "project_files.execution_generation_resume": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/generation/{producer_id}/resume",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/generation/{producer_id}/resume"
+   },
+   "project_files.execution_grounded_review": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/grounded/{producer_id}/review",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/grounded/{producer_id}/review"
+   },
+   "project_files.execution_health": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/execution",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/execution"
+   },
+   "project_files.execution_preflight_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/preflight",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/execution/preflight"
+   },
+   "project_files.execution_producer_cancel": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/producers/{producer_id}/cancel",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/producers/{producer_id}/cancel"
+   },
+   "project_files.execution_producer_decide": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/producers/{producer_id}/decide",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/producers/{producer_id}/decide"
+   },
+   "project_files.execution_producer_health": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/execution/producers/health",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/execution/producers/health"
+   },
+   "project_files.execution_producer_start": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/producers",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/producers"
+   },
+   "project_files.execution_reconcile_current": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/reconcile-current",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/reconcile-current"
+   },
+   "project_files.execution_study_abandon_preparation": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/abandon",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/abandon"
+   },
+   "project_files.execution_study_admit": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/runs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/runs"
+   },
+   "project_files.execution_study_approve": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/approvals",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/approvals"
+   },
+   "project_files.execution_study_continue": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/continue",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/continue"
+   },
+   "project_files.execution_study_prepare_package": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/packages",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/packages"
+   },
+   "project_files.execution_study_prepare_verifier": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/verifiers",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/verifiers"
+   },
+   "project_files.execution_study_reconcile_preparation": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/reconcile",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/reconcile"
+   },
+   "project_files.execution_study_stop": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/stop",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/stop"
+   },
+   "project_files.execution_submit_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/runs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/runs"
+   },
+   "project_files.expose_holdout": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/disclose",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/runs/{run_id}/disclose"
+   },
+   "project_files.file_adopt": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/files/adopt",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/files/adopt"
+   },
+   "project_files.file_adopt_deletion": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/files/adopt-deletion",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/files/adopt-deletion"
+   },
+   "project_files.file_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/files/{file_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/files/{file_id}"
+   },
+   "project_files.file_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/files/{file_id}/history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/files/{file_id}/history"
++  },
++  "project_files.files_adopt": {
++    "method": "POST",
++    "mutation": true,
++    "path": "/api/workspace/project-files/files/adopt-many"
+   },
+   "project_files.files_inspect": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/files",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/files"
+   },
+   "project_files.fork_info": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/fork",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/fork"
+   },
+   "project_files.graph_clone": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs/{graph_id}/clone",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs/{graph_id}/clone"
+   },
+   "project_files.graph_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs"
+   },
+   "project_files.graph_create_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs/external",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs/external"
+   },
+   "project_files.graph_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/graphs/{graph_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/graphs/{graph_id}"
+   },
+   "project_files.graph_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs/{graph_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs/{graph_id}"
+   },
+   "project_files.graphs": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/graphs",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/graphs"
+   },
+   "project_files.lineage": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/lineage",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/lineage"
+   },
+   "project_files.lineage_record": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/lineage",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/lineage"
+   },
+   "project_files.material_intent": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/material-intents/{family}/{definition_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/material-intents/{family}/{definition_id}"
+   },
+   "project_files.material_intent_capabilities": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/material-intents/capabilities",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/material-intents/capabilities"
+   },
+   "project_files.material_intents": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/material-intents",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/material-intents"
+   },
+   "project_files.materials": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/materials",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials"
++  },
++  "project_files.measurement_compare": {
++    "method": "POST",
++    "mutation": false,
++    "path": "/api/workspace/project-files/measurements/compare"
++  },
++  "project_files.measurement_import": {
++    "method": "POST",
++    "mutation": true,
++    "path": "/api/workspace/project-files/measurements/import"
++  },
++  "project_files.measurement_inspect": {
++    "method": "GET",
++    "mutation": false,
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}/observations/{observation_id}"
++  },
++  "project_files.measurement_metadata": {
++    "method": "GET",
++    "mutation": false,
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}"
++  },
++  "project_files.measurement_query": {
++    "method": "POST",
++    "mutation": false,
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}/query"
++  },
++  "project_files.measurement_sources": {
++    "method": "GET",
++    "mutation": false,
++    "path": "/api/workspace/project-files/measurements"
++  },
++  "project_files.measurement_subjects": {
++    "method": "GET",
++    "mutation": false,
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}/subjects"
+   },
+   "project_files.model_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/models",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/models"
+   },
+   "project_files.model_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/models/{model_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/models/{model_id}"
+   },
+   "project_files.model_material": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/model",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/model"
+   },
+   "project_files.model_publish": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/models/{model_id}/publish",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/models/{model_id}/publish"
+   },
+   "project_files.model_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/models/{model_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/models/{model_id}"
+   },
+   "project_files.models": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/models",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/models"
+   },
+   "project_files.native_preflight": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/preflight",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/preflight"
+   },
+   "project_files.native_reconcile": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/phases/{phase_id}/reconcile",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/phases/{phase_id}/reconcile"
+   },
+   "project_files.native_retry": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/runs/{run_id}/retry",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/runs/{run_id}/retry"
+   },
+   "project_files.native_submit": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/runs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/runs"
+   },
+   "project_files.package_state": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/candidates/{candidate_id}/package-state",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/candidates/{candidate_id}/package-state"
+   },
+   "project_files.policies": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/policies",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/policies"
+   },
+   "project_files.policy": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/policies/get",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/policies/get"
+   },
+   "project_files.producer": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/producers/{origin_catalog_id}/{producer_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/producers/{origin_catalog_id}/{producer_id}"
+   },
+   "project_files.producers": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/producers",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/producers"
+   },
+   "project_files.progression": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/progression",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/progression"
+   },
+   "project_files.progression_origins": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/progression/origins",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/progression/origins"
+   },
+   "project_files.publication_result": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}/publication-result",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/publication-result"
+   },
+   "project_files.recipe_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/recipes",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/recipes"
+   },
+   "project_files.recipe_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/recipes/{recipe_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/recipes/{recipe_id}"
+   },
+   "project_files.recipe_material": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/recipe",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/recipe"
+   },
+   "project_files.recipe_prepare": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/recipes/{graph_id}/prepare",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/recipes/{graph_id}/prepare"
+   },
+   "project_files.recipe_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/recipes/{recipe_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/recipes/{recipe_id}"
+   },
+   "project_files.recipes": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/recipes",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/recipes"
+   },
+   "project_files.release_freeze": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/releases/freeze",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/releases/freeze"
+   },
+   "project_files.release_preview": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/releases/preview",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/releases/preview"
+   },
+   "project_files.retained_analysis": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/analysis",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/analysis"
+   },
+   "project_files.retained_analysis_export": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/analysis/export",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/analysis/export"
+   },
+   "project_files.run": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}"
+   },
+   "project_files.run_document_segment": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}/document-segment",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/document-segment"
+   },
+   "project_files.runs": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs"
+   },
+   "project_files.runtime_abandon": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runtime/abandon",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/runtime/abandon"
+   },
+   "project_files.runtime_capture": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runtime/capture",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/runtime/capture"
+   },
+   "project_files.runtime_inspect": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runtime/inspect",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runtime/inspect"
+   },
+   "project_files.runtime_material": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/runtime",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/runtime"
+   },
+   "project_files.runtime_sources": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runtime/sources",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runtime/sources"
+   },
+   "project_files.runtime_status": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runtime/status",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runtime/status"
+   },
+   "project_files.save_as": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/save-as",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/save-as"
+   },
+   "project_files.search_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/searches",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/searches"
+   },
+   "project_files.search_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/searches/{search_id}/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/searches/{search_id}/delete"
+   },
+   "project_files.search_rename": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/searches/{search_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/searches/{search_id}"
+   },
+   "project_files.searches": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/searches",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/searches"
+   },
+   "project_files.selection_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/selections",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/selections"
+   },
+   "project_files.selection_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/selections/{selection_id}/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/selections/{selection_id}/delete"
+   },
+   "project_files.selection_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/selections/{selection_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/selections/{selection_id}"
+   },
+   "project_files.selection_rename": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/selections/{selection_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/selections/{selection_id}"
+   },
+   "project_files.selections": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/selections",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/selections"
+   },
+   "project_files.snapshot": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/snapshot",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/snapshot"
+   },
+   "project_files.source_references": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/sources/{project_id}/references",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/sources/{project_id}/references"
+   },
+   "project_files.source_register": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/sources/register",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/sources/register"
+   },
+   "project_files.studies": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/studies",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/studies"
+   },
+   "project_files.study": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/studies/{study_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/studies/{study_id}"
+   },
+   "project_files.study_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies"
+   },
+   "project_files.study_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies/{study_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies/{study_id}"
+   },
+   "project_files.trial": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/trials/{trial_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/trials/{trial_id}"
+   },
+   "project_files.trial_prepare": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies/{study_id}/trials",
+-    "mutation": true
+-  },
+-  "project_files.measurement_import": {
+-    "method": "POST",
+-    "path": "/api/workspace/project-files/measurements/import",
+-    "mutation": true
+-  },
+-  "project_files.measurement_inspect": {
+-    "method": "GET",
+-    "path": "/api/workspace/project-files/measurements/{packet_sha256}/observations/{observation_id}",
+-    "mutation": false
+-  },
+-  "project_files.measurement_metadata": {
+-    "method": "GET",
+-    "path": "/api/workspace/project-files/measurements/{packet_sha256}",
+-    "mutation": false
+-  },
+-  "project_files.measurement_query": {
+-    "method": "POST",
+-    "path": "/api/workspace/project-files/measurements/{packet_sha256}/query",
+-    "mutation": false
+-  },
+-  "project_files.measurement_sources": {
+-    "method": "GET",
+-    "path": "/api/workspace/project-files/measurements",
+-    "mutation": false
+-  },
+-  "project_files.measurement_subjects": {
+-    "method": "GET",
+-    "path": "/api/workspace/project-files/measurements/{packet_sha256}/subjects",
+-    "mutation": false
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies/{study_id}/trials"
+   }
+ }
+ /* PROJECT_FILES_ROUTES_END */;
+@@ -1149,7 +1160,7 @@
+     projectProgression.setContext({key:JSON.stringify([state?.binding,state?.project?.project_id,checkpoint(),window.TuldokAuth?.identity?.()?.credential_id,epoch]),
+       project_id:state?.project?.project_id,enabled:m2Allowed('progression')&&m2Allowed('progression_origins')});
+     projectMeasurements.setContext({key:JSON.stringify([state?.binding,state?.project?.project_id,checkpoint(),window.TuldokAuth?.identity?.()?.credential_id,epoch]),
+-      enabled:['measurement_sources','measurement_metadata','measurement_subjects','measurement_query','measurement_inspect'].every(m2Allowed)});
++      enabled:['measurement_sources','measurement_compare','measurement_inspect'].every(m2Allowed)});
+     if(blocked||state?.state!=='open'||scientificEpoch!==null&&(scientificEpoch!==epoch||explored?.checkpoint!==checkpoint()))clearScientific();
+     const action=$('project-explore-kind').value;
+     $('project-explore-load').disabled=!m2Allowed(action);
+diff --git a/static/project-measurements.js b/static/project-measurements.js
+index 7f99a04..314d3f3 100644
+--- a/static/project-measurements.js
++++ b/static/project-measurements.js
+@@ -20,11 +20,11 @@
+     details.append(node('summary', title), node('pre', JSON.stringify(value, null, 2))); return details;
+   }
+   window.ProjectMeasurements = function({root, read, onContextFocusLost = () => {}}) {
+-    root.innerHTML = '<h2>Retained measurements</h2><p>Compare exact saved scalars and inspect their original cases. Maxima use every matching case; failed and unavailable observations remain counted.</p><div class="actions"><button type="button" id="project-measurements-sources">Load measurement sources</button><button type="button" id="project-measurements-sources-prev" hidden>Previous sources</button><button type="button" id="project-measurements-sources-next" hidden>Next sources</button></div><p id="project-measurements-source-page"></p><form id="project-measurements-source-form"><label>Measurement source<select id="project-measurements-source"></select></label><button id="project-measurements-load">Load source</button></form><p id="project-measurements-status" role="status" aria-live="polite"></p><div id="project-measurements-context"></div><form id="project-measurements-form" hidden><label>Metric<select id="project-measurements-metric"></select></label><label>Select subjects on this page<select id="project-measurements-subjects" multiple size="4"></select></label><p id="project-measurements-subject-page"></p><div class="actions"><button type="button" id="project-measurements-subjects-prev" hidden>Previous subjects</button><button type="button" id="project-measurements-subjects-next" hidden>Next subjects</button></div><details><summary>Filter declared attributes</summary><p>Grid density and domain cell counts are separate attributes. Filters use exact recorded values; unknown values must be selected explicitly.</p><div id="project-measurements-filters"></div></details><button id="project-measurements-compare">Compare metric</button></form><section id="project-measurements-results" hidden aria-label="Measurement comparison"><h3 id="project-measurements-heading" tabindex="-1"></h3><p id="project-measurements-counts"></p><div id="project-measurements-chart" role="img" aria-label="Maximum retained value per selected subject; exact values and keyboard inspection follow"></div><div id="project-measurements-maxima"></div><div id="project-measurements-rows"></div><div class="actions"><button type="button" id="project-measurements-prev">Previous observations</button><button type="button" id="project-measurements-next">Next observations</button></div></section><section id="project-measurements-inspection" hidden aria-label="Exact observation and original source"></section>';
++    root.innerHTML = '<h2>Retained measurements</h2><p>Compare exact saved scalars and inspect their original cases. Maxima use every matching case; failed and unavailable observations remain counted.</p><div class="actions"><button type="button" id="project-measurements-sources">Load measurement sources</button><button type="button" id="project-measurements-sources-prev" hidden>Previous sources</button><button type="button" id="project-measurements-sources-next" hidden>Next sources</button></div><p id="project-measurements-source-page"></p><form id="project-measurements-source-form"><label>Measurement sources (choose 1–16)<select id="project-measurements-source" multiple size="4"></select></label><button type="button" id="project-measurements-source-all">Select all listed sources</button><button id="project-measurements-load">Load selected sources</button></form><p id="project-measurements-status" role="status" aria-live="polite"></p><div id="project-measurements-context"></div><form id="project-measurements-form" hidden><label>Metric<select id="project-measurements-metric"></select></label><label>Select subjects on this page<select id="project-measurements-subjects" multiple size="4"></select></label><p id="project-measurements-subject-page"></p><div class="actions"><button type="button" id="project-measurements-subjects-all">Select all subjects</button><button type="button" id="project-measurements-subjects-clear">Clear subject selection</button></div><div class="actions"><button type="button" id="project-measurements-subjects-prev" hidden>Previous subjects</button><button type="button" id="project-measurements-subjects-next" hidden>Next subjects</button></div><details><summary>Filter declared attributes</summary><p>Grid density and domain cell counts are separate attributes. Filters use exact recorded values; unknown values must be selected explicitly.</p><div id="project-measurements-filters"></div></details><button id="project-measurements-compare">Compare metric</button></form><section id="project-measurements-results" hidden aria-label="Measurement comparison"><h3 id="project-measurements-heading" tabindex="-1"></h3><p id="project-measurements-counts"></p><div id="project-measurements-chart" role="img" aria-label="Maximum retained value per selected subject; exact values and keyboard inspection follow"></div><div id="project-measurements-maxima"></div><div id="project-measurements-rows"></div><div class="actions"><button type="button" id="project-measurements-prev">Previous observations</button><button type="button" id="project-measurements-next">Next observations</button></div></section><section id="project-measurements-inspection" hidden aria-label="Exact observation and original source"></section>';
+     const $ = name => root.querySelector('#project-measurements-' + name);
+     let context = null, generation = 0, plotGeneration = 0, pending, busy = false, pendingFocus = false;
+-    let sources = [], sourceOffset = 0, sourceTotal = 0, selected = null, descriptor = null, metadata = null;
+-    let subjects = [], subjectOffset = 0, subjectTotal = 0, filters = new Map(), applied = null, query = null;
++    let sources = [], sourceOffset = 0, sourceTotal = 0, selected = null, descriptors = null, metadata = null;
++    let subjects = [], subjectOffset = 0, subjectTotal = 0, filters = new Map(), applied = null, query = null, selectedSubjects = new Set();
+     const renderer = window.RetainedChart.mount($('chart'), spec, {onError: error => {
+       const ownsFocus = root.contains(document.activeElement); clearResults(); $('status').textContent = error.message; controls();
+       if (ownsFocus) $('compare').focus();
+@@ -37,15 +37,17 @@
+     function controls() {
+       for (const control of root.querySelectorAll('input,select,button')) control.disabled = !context?.enabled || busy;
+       $('sources-prev').hidden = sourceOffset === 0; $('sources-next').hidden = sourceOffset + sources.length >= sourceTotal;
+-      $('source').disabled ||= !sources.length; $('load').disabled ||= !$('source').value;
+-      $('subjects-prev').hidden = subjectOffset === 0; $('subjects-next').hidden = subjectOffset + subjects.length >= subjectTotal;
+-      $('compare').disabled ||= !metadata || !$('subjects').selectedOptions.length;
++      $('source').disabled ||= !sources.length; $('source-all').disabled ||= !sources.length || sources.length > 16;
++      $('load').disabled ||= !$('source').selectedOptions.length || $('source').selectedOptions.length > 16;
++      $('subjects-prev').hidden = subjectOffset === 0; $('subjects-next').hidden = subjectOffset + 40 >= subjectTotal;
++      $('compare').disabled ||= !metadata || !selectedSubjects.size;
++      $('subjects-all').disabled ||= !metadata; $('subjects-clear').disabled ||= !metadata;
+       $('prev').disabled ||= !query || query.offset === 0;
+       $('next').disabled ||= !query || query.offset + query.rows.length >= query.total;
+       root.setAttribute('aria-busy', String(busy));
+     }
+     function clearSource() {
+-      selected = descriptor = metadata = null; subjects = []; subjectOffset = subjectTotal = 0; filters.clear();
++      selected = descriptors = metadata = null; subjects = []; selectedSubjects.clear(); subjectOffset = subjectTotal = 0; filters.clear();
+       $('form').hidden = true; $('context').replaceChildren(); $('filters').replaceChildren();
+       $('metric').replaceChildren(); $('subjects').replaceChildren(); clearResults();
+     }
+@@ -84,34 +86,68 @@
+           seen.add(key);
+         }
+         sources = value.items; sourceOffset = offset; sourceTotal = value.total; $('source').replaceChildren();
+-        for (const item of sources) {
++        for (const [index, item] of sources.entries()) {
+           const option = node('option', item.title + ' · ' + item.id.slice(0, 12) + (item.availability?.state === 'missing' ? ' · missing packet' : ''));
+-          option.value = sourceKey(item); $('source').append(option);
++          option.value = sourceKey(item); option.selected = index === 0; $('source').append(option);
+         }
+         $('source-page').textContent = `${sources.length ? offset + 1 : 0}–${offset + sources.length} of ${sourceTotal} sources`;
+-        $('status').textContent = sources.length ? 'Choose a source and load its exact retained metadata.' : 'No retained measurement sources in this project.';
++        $('status').textContent = sources.length ? 'Choose compatible sources and load their exact retained metadata.' : 'No retained measurement sources in this project.';
+         return $('source');
+       });
+     }
+-    function checkRead(value, source = selected) {
+-      if (!value || value.source?.origin_catalog_id !== source?.origin_catalog_id || value.source?.id !== source?.id
+-          || value.source.blob?.sha256 !== source.id || value.source.source?.measured_sha256 !== source.id
+-          || descriptor && (value.source.blob.bytes !== descriptor.blob.bytes || value.source.title !== descriptor.title)
+-          || new TextEncoder().encode(JSON.stringify(value)).length > 256 * 1024) throw Error('Measurement reply differs from the selected packet.');
+-      return value.value;
++    const same = (left, right) => {
++      if (Object.is(left, right)) return true;
++      if (!left || !right || typeof left !== 'object' || typeof right !== 'object' || Array.isArray(left) !== Array.isArray(right)) return false;
++      const keys = Object.keys(left);
++      return keys.length === Object.keys(right).length && keys.every(key => Object.hasOwn(right, key) && same(left[key], right[key]));
++    };
++    const locatorKey = value => value.origin_catalog_id + '.' + value.packet_sha256;
++    const selection = () => ({sources:selected.map(item => ({origin_catalog_id:item.origin_catalog_id, packet_sha256:item.id}))});
++    function checkComparison(response) {
++      if (!response || !Array.isArray(response.sources) || response.sources.length !== selected.length
++          || new TextEncoder().encode(JSON.stringify(response)).length > 256 * 1024) throw Error('Comparison differs from selected sources.');
++      for (const [index, source] of response.sources.entries()) {
++        const expected = selected[index];
++        if (source.origin_catalog_id !== expected.origin_catalog_id || source.id !== expected.id
++            || source.title !== expected.title || source.blob?.sha256 !== source.id || source.blob.bytes !== expected.blob.bytes
++            || source.source?.measured_sha256 !== source.id) throw Error('Comparison source identity changed.');
++      }
++      if (descriptors && !same(descriptors, response.sources)) throw Error('Original comparison capture facts changed.');
++      const value = response.value, keys = selected.map(sourceKey);
++      if (value?.format !== 'retained_measurement_comparison_v1' || !hash(value.case_population_sha256)
++          || !Array.isArray(value.subjects) || !value.subjects.length || value.subjects.length > 256
++          || !natural(value.case_count) || !value.case_count || !natural(value.observation_count)
++          || !Array.isArray(value.metrics) || !value.metrics.length || value.metrics.length > 32
++          || !Array.isArray(value.dimensions) || value.dimensions.length > 32
++          || value.observation_count !== value.subjects.length * value.case_count * value.metrics.length
++          || locatorKey(value.definition_source) !== keys[0]
++          || value.subjects.some(item => !identity(item.id) || typeof item.label !== 'string' || !keys.includes(locatorKey(item.source)))
++          || new Set(value.subjects.map(item => item.id)).size !== value.subjects.length) throw Error('Invalid comparison metadata.');
++      if (metadata && ['scope','scope_definition','dimensions','metrics','definition_source','case_population_sha256','case_count','observation_count','subjects'].some(key => !same(value[key], metadata[key]))) throw Error('Comparison population changed.');
++      return value;
++    }
++    function checkRead(response, source) {
++      const original = descriptors.find(item => sourceKey(item) === locatorKey(source));
++      if (!original || response?.source?.origin_catalog_id !== source.origin_catalog_id || response.source.id !== source.packet_sha256
++          || response.source.blob?.sha256 !== source.packet_sha256 || !same(response.source, original)
++          || new TextEncoder().encode(JSON.stringify(response)).length > 256 * 1024) throw Error('Observation differs from its original packet.');
++      return response.value;
+     }
+-    const selection = () => ({origin_catalog_id: selected.origin_catalog_id, packet_sha256: selected.id});
+-    async function subjectPage(offset, active, signal) {
+-      const value = checkRead(await read('measurement_subjects', {...selection(), offset, limit: 40}, signal)); if (!active()) return;
+-      page(value, offset, 40, value.items);
+-      if (value.total !== metadata.subject_count) throw Error('Subject page differs from the retained packet population.');
+-      if (value.items.some(item => !identity(item.id) || typeof item.label !== 'string')
+-          || new Set(value.items.map(item => item.id)).size !== value.items.length) throw Error('Invalid retained subjects.');
+-      subjects = value.items; subjectOffset = offset; subjectTotal = value.total; $('subjects').replaceChildren();
+-      for (const item of subjects) { const option = node('option', item.label + ' · ' + item.id); option.value = item.id; option.selected = true; $('subjects').append(option); }
+-      $('subject-page').textContent = `Subjects ${subjects.length ? offset + 1 : 0}–${offset + subjects.length} of ${subjectTotal}. Only explicitly selected subjects on this page will be compared.`;
++    function subjectPage(offset) {
++      if (!metadata || !natural(offset) || offset > subjectTotal) throw Error('Invalid comparison subject page.');
++      subjectOffset = offset; $('subjects').replaceChildren();
++      const items = subjects.slice(offset, offset + 40);
++      for (const item of items) {
++        const option = node('option', item.label + ' · ' + item.id); option.value = item.id;
++        option.selected = selectedSubjects.has(item.id); $('subjects').append(option);
++      }
++      subjectSelectionStatus();
+       return $('subjects');
+     }
++    function subjectSelectionStatus() {
++      const count = Math.min(40, subjectTotal - subjectOffset);
++      $('subject-page').textContent = `Subjects ${count ? subjectOffset + 1 : 0}–${subjectOffset + count} of ${subjectTotal}. ${selectedSubjects.size} selected across all pages; selection is retained when paging.`;
++    }
+     function dimensions() {
+       filters.clear(); $('filters').replaceChildren();
+       for (const [index, dimension] of metadata.dimensions.entries()) {
+@@ -158,12 +194,13 @@
+       for (const text of headings) { const cell = node('th', text); cell.scope = 'col'; row.append(cell); }
+       head.append(row); result.append(node('caption', caption), head, body); return {result, body};
+     }
+-    async function inspect(observation_id) {
++    async function inspect(observation_id, source) {
+       clearInspection();
+       return perform(async(active, signal) => {
+-        const value = checkRead(await read('measurement_inspect', {...selection(), observation_id}, signal)); if (!active()) return;
+-        if (value.packet_sha256 !== selected.id || value.observation?.id !== observation_id
+-            || value.observation.metric_id !== applied?.metric_id || !applied.subject_ids.includes(value.observation.subject_id)) throw Error('Observation differs from the selected comparison.');
++        const value = checkRead(await read('measurement_inspect', {...source, observation_id}, signal), source); if (!active()) return;
++        if (value.packet_sha256 !== source.packet_sha256 || value.observation?.id !== observation_id
++            || value.observation.metric_id !== applied?.metric_id || !applied.subject_ids.includes(value.observation.subject_id)
++            || !same(subjects.find(item => item.id === value.observation.subject_id)?.source, source)) throw Error('Observation differs from the selected comparison.');
+         const heading = node('h3', value.subject.label + ' · ' + value.case.id); heading.tabIndex = -1;
+         const observation = value.observation;
+         $('inspection').append(heading, node('p', `${value.metric.label} · ${value.metric.units} · ${observation.state} · ${observation.value === null ? observation.reason : display(observation.value)}`),
+@@ -175,27 +212,31 @@
+       });
+     }
+     async function showQuery(value, request, active, signal, authority) {
+-      if (value.packet_sha256 !== selected.id || value.metric?.id !== request.metric_id
++      if (!value || value.metric?.id !== request.metric_id
++          || !same(value.metric, metadata.metrics.find(metric => metric.id === request.metric_id))
+           || JSON.stringify(value.subject_ids) !== JSON.stringify(request.subject_ids)
+           || !value.filters || Object.keys(value.filters).length !== Object.keys(request.filters).length
+           || Object.entries(request.filters).some(([key, wanted]) => !Object.hasOwn(value.filters, key) || value.filters[key] !== wanted)
+           || !Array.isArray(value.summary) || value.summary.length !== request.subject_ids.length || value.sampling !== 'none') throw Error('Measurement comparison differs from its requested selection.');
+       page(value, request.offset, request.limit, value.rows);
++      if (value.summary.reduce((count, summary) => count + summary.count, 0) !== value.total) throw Error('Comparison denominator differs from its complete summaries.');
+       const maxima = table('Maximum over all matching cases, including every observation status', ['Subject / execution attributes','Maximum','Measured','Failed','Unsupported','Unavailable']);
+-      const points = [];
++      const points = [], inspections = new Map();
+       for (const [index, summary] of value.summary.entries()) {
+         if (summary.subject_id !== request.subject_ids[index] || !natural(summary.count) || STATES.some(state => !natural(summary.states?.[state]))
+             || STATES.reduce((sum, state) => sum + summary.states[state], 0) !== summary.count
+             || (summary.maximum === null) !== (summary.states.measured === 0)) throw Error('Invalid complete measurement summary.');
+-        const subject = subjects.find(item => item.id === summary.subject_id); if (!subject) throw Error('Subject is outside the selected page.');
++        const subject = subjects.find(item => item.id === summary.subject_id); if (!subject || !same(subject.source, summary.source)) throw Error('Subject differs from its original comparison packet.');
+         const row = node('tr'), label = node('td'); label.append(node('strong', subject.label), attributes('Execution attributes', subject.dimensions));
+         const maximum = node('td');
+         if (summary.maximum === null) maximum.textContent = 'No measured value';
+         else {
+           const point = summary.maximum;
+           if (!finite(point.value) || !identity(point.id) || !identity(point.case_id)) throw Error('Invalid retained maximum.');
+-          maximum.append(button(display(point.value) + ' · inspect maximum for ' + subject.label, () => void inspect(point.id)));
+-          points.push({subject_id:subject.id, value:point.value, observation_id:point.id});
++          maximum.append(button(display(point.value) + ' · inspect maximum for ' + subject.label, () => void inspect(point.id, summary.source)));
++          const token = JSON.stringify([summary.source.origin_catalog_id, summary.source.packet_sha256, point.id]);
++          inspections.set(token, {id:point.id, source:summary.source});
++          points.push({subject_id:subject.id, value:point.value, observation_id:token});
+         }
+         row.append(label, maximum, ...STATES.map(state => node('td', String(summary.states[state])))); maxima.body.append(row);
+       }
+@@ -204,7 +245,8 @@
+         if (!request.subject_ids.includes(observation.subject_id) || observation.metric_id !== request.metric_id || !identity(observation.id)
+             || !STATES.includes(observation.state) || (observation.state === 'measured' ? !finite(observation.value) : observation.value !== null)) throw Error('Invalid retained observation row.');
+         const subject = subjects.find(item => item.id === observation.subject_id), row = node('tr'), detail = node('td');
+-        detail.append(button('Inspect ' + observation.id, () => void inspect(observation.id)), attributes('Case and execution attributes', observation.dimensions));
++        if (!subject || !same(subject.source, observation.source)) throw Error('Observation belongs to another packet.');
++        detail.append(button('Inspect ' + observation.id, () => void inspect(observation.id, observation.source)), attributes('Case and execution attributes', observation.dimensions));
+         row.append(node('td', subject.label), node('td', observation.case_id), node('td', observation.value === null ? observation.state + ': ' + observation.reason : display(observation.value)), detail); observations.body.append(row);
+       }
+       query = value; applied = structuredClone(request); $('results').hidden = false;
+@@ -214,44 +256,59 @@
+       const plotTicket = ++plotGeneration;
+       if (points.length) await renderer.render({maxima:points}, {signal,
+         isCurrent: () => context?.enabled && context.key === authority && plotTicket === plotGeneration,
+-        onSignal:{measurement_select: selection => { const id = selection?.observation_id?.[0]; if (points.some(point => point.observation_id === id)) void inspect(id); }}});
++        onSignal:{measurement_select: selection => { const id = selection?.observation_id?.[0]; const original = inspections.get(id); if (original) void inspect(original.id, original.source); }}});
+       else { renderer.clear(); $('chart').append(node('p', 'No measured values for this selection. Missing and failed observations remain counted below.')); }
+       if (active()) { $('heading').focus(); $('status').textContent = 'Exact retained comparison. Metric and scope definitions are available above.'; }
+     }
+     function compare(offset = 0, saved = null) {
+       return perform(async(active, signal, authority) => {
+         const request = saved ? {...saved, offset} : {metric_id:$('metric').value,
+-          subject_ids:[...$('subjects').selectedOptions].map(option => option.value), filters:filterValues(), offset, limit:50};
++          subject_ids:subjects.filter(item => selectedSubjects.has(item.id)).map(item => item.id), filters:filterValues(), offset, limit:50};
+         if (!request.subject_ids.length) throw Error('Choose at least one subject.');
+         clearResults();
+-        const value = checkRead(await read('measurement_query', {...selection(), ...request}, signal)); if (!active()) return;
++        const value = checkComparison(await read('measurement_compare', {...selection(), ...request}, signal)).query; if (!active()) return;
+         await showQuery(value, request, active, signal, authority);
+       });
+     }
+     $('sources').onclick = () => void loadSources();
+     $('sources-prev').onclick = () => void loadSources(Math.max(0, sourceOffset - 40));
+     $('sources-next').onclick = () => void loadSources(sourceOffset + 40);
+-    $('source').onchange = () => { invalidate(); clearSource(); controls(); };
++    $('source').onchange = () => { invalidate(); clearSource(); $('status').textContent = 'Load the selected compatible sources.'; controls(); };
+     $('source-form').onsubmit = event => {
+       event.preventDefault();
+       void perform(async(active, signal) => {
+-        const chosen = sources.find(source => sourceKey(source) === $('source').value); clearSource(); selected = chosen;
+-        if (!selected) throw Error('Choose a retained measurement source.');
+-        const response = await read('measurement_metadata', selection(), signal); if (!active()) return;
+-        metadata = checkRead(response); descriptor = response.source;
+-        if (metadata.packet_sha256 !== selected.id || metadata.title !== selected.title || !Array.isArray(metadata.metrics) || metadata.metrics.length > 32
+-            || !Array.isArray(metadata.dimensions) || metadata.dimensions.length > 32) throw Error('Invalid exact measurement metadata.');
+-        $('context').append(node('h3', metadata.title), node('p', metadata.scope.label + ' · population: ' + metadata.scope.population),
++        const chosen = [...$('source').selectedOptions].map(option => sources.find(item => sourceKey(item) === option.value));
++        clearSource(); selected = chosen;
++        if (!selected.length || selected.length > 16 || selected.some(item => !item)) throw Error('Choose 1 through 16 retained sources.');
++        const response = await read('measurement_compare', selection(), signal); if (!active()) return;
++        metadata = checkComparison(response); descriptors = response.sources;
++        if (metadata.query !== null) throw Error('Metadata reply unexpectedly contains a query.');
++        subjects = metadata.subjects; subjectTotal = subjects.length; selectedSubjects = new Set(subjects.map(item => item.id));
++        $('context').append(node('h3', `Comparison of ${selected.length} retained sources`), node('p', metadata.scope.label + ' · population: ' + metadata.scope.population),
+           node('p', typeof metadata.scope_definition.task === 'string' ? metadata.scope_definition.task : 'Interpret results using the retained scope definition.'),
+-          jsonDetails('Exact scope, metric definitions and packet source', {metadata, source:descriptor}));
++          jsonDetails('Exact compatible scope, metric definitions and original packet sources', {metadata, sources:descriptors}));
+         for (const metric of metadata.metrics) { const option = node('option', metric.label + ' · ' + metric.units); option.value = metric.id; $('metric').append(option); }
+-        dimensions(); await subjectPage(0, active, signal); if (!active()) return;
++        dimensions(); subjectPage(0); if (!active()) return;
+         $('form').hidden = false; $('status').textContent = 'Choose a metric, subjects and optional exact attribute filters.'; return $('metric');
+       });
+     };
+-    $('metric').onchange = invalidate; $('subjects').onchange = invalidate;
++    $('source-all').onclick = () => {
++      for (const option of $('source').options) option.selected = true;
++      $('source').onchange();
++    };
++    $('metric').onchange = invalidate;
++    $('subjects').onchange = () => {
++      for (const option of $('subjects').options) {
++        if (option.selected) selectedSubjects.add(option.value); else selectedSubjects.delete(option.value);
++      }
++      invalidate(); subjectSelectionStatus(); controls();
++    };
++    for (const [name, all] of [['subjects-all',true],['subjects-clear',false]]) $(name).onclick = () => {
++      selectedSubjects = new Set(all ? subjects.map(item => item.id) : []);
++      invalidate(); subjectPage(subjectOffset); controls();
++    };
+     for (const [name, direction] of [['subjects-prev',-1],['subjects-next',1]]) $(name).onclick = () => {
+-      clearResults(); void perform((active, signal) => subjectPage(subjectOffset + direction * 40, active, signal));
++      clearResults(); void perform(() => subjectPage(subjectOffset + direction * 40));
+     };
+     $('form').onsubmit = event => { event.preventDefault(); void compare(); };
+     $('prev').onclick = () => void compare(Math.max(0, query.offset - query.limit), applied);
+diff --git a/tests/test_measurement_comparison.py b/tests/test_measurement_comparison.py
+new file mode 100644
+index 0000000..b289d75
+--- /dev/null
++++ b/tests/test_measurement_comparison.py
+@@ -0,0 +1,110 @@
++"""Scientific composition of real retained scalar tables, no native transport."""
++import copy
++import struct
++import unittest
++from unittest.mock import patch
++
++import retained_measurements as owner
++from retained_measurements import MeasurementComparison, MeasurementTable, encode
++from test_retained_measurements import fixture, source
++from workbench import WorkbenchError
++
++
++def partition(subject):
++    document = fixture()
++    document['title'] = 'Original partition ' + subject
++    document['subjects'] = [item for item in document['subjects'] if item['id'] == subject]
++    document['observations'] = [row for row in document['observations'] if row['subject_id'] == subject]
++    return document
++
++
++def selected(document, origin='a'*32):
++    table = MeasurementTable(encode(document))
++    return dict(origin_catalog_id=origin, packet_sha256=table.sha256), table
++
++
++class ComparisonTests(unittest.TestCase):
++    def setUp(self):
++        self.inputs = [selected(partition('a')), selected(partition('b'))]
++        self.comparison = MeasurementComparison(self.inputs)
++
++    def test_complete_maxima_and_missing_denominators_keep_original_packet(self):
++        result = self.comparison.read('error')
++        self.assertEqual(len(result['subjects']), 2)
++        self.assertEqual(result['case_count'], 2)
++        self.assertEqual(result['observation_count'], 8)
++        self.assertEqual([s['maximum']['value'] for s in result['query']['summary']], [2e-15, .02])
++        for row in result['query']['rows']:
++            locator, original = next(item for item in self.inputs if item[0] == row['source'])
++            evidence = original.inspect(row['id'])
++            self.assertEqual(struct.pack('!d', row['value']), struct.pack('!d', evidence['scalar_evidence']['value']))
++        missing = self.comparison.read('latency')['query']
++        self.assertEqual(missing['total'], 4)
++        self.assertEqual([s['states'] for s in missing['summary']], [
++            dict(measured=0, failed=0, unsupported=0, unavailable=2),
++            dict(measured=0, failed=1, unsupported=0, unavailable=1)])
++        self.assertTrue(all(s['maximum'] is None for s in missing['summary']))
++
++    def test_global_pages_span_packets_without_changing_maxima(self):
++        full = self.comparison.read('error')['query']
++        rows = []
++        for offset in range(5):
++            page = self.comparison.read('error', offset=offset, limit=1)['query']
++            self.assertEqual(page['summary'], full['summary'])
++            self.assertEqual(page['total'], 4)
++            rows.extend(page['rows'])
++        self.assertEqual(rows, full['rows'])
++        self.assertEqual([r['subject_id'] for r in rows], ['a','a','b','b'])
++        ordered = self.comparison.read('error', subject_ids=['b','a'])['query']
++        self.assertEqual([s['subject_id'] for s in ordered['summary']], ['b','a'])
++
++    def test_density_domain_device_and_unknown_filters_are_separate(self):
++        density = self.comparison.read('error', filters={'cpm':16})['query']
++        domain = self.comparison.read('error', filters={'grid_x':16})['query']
++        self.assertEqual([s['maximum']['value'] for s in density['summary']], [1e-17,.01])
++        self.assertEqual([s['maximum']['value'] for s in domain['summary']], [2e-15,.02])
++        cpu = self.comparison.read('error', filters={'device':'CPU'})['query']
++        self.assertEqual([s['count'] for s in cpu['summary']], [0,2])
++        unknown = self.comparison.read('error', filters={'device':None})['query']
++        self.assertEqual(unknown['total'], 0)
++        self.assertTrue(all(s['maximum'] is None for s in unknown['summary']))
++
++    def test_changed_original_case_evidence_or_dimension_meaning_refuses_comparison(self):
++        changed = partition('b')
++        context = fixture()['sources'][0]
++        import base64, json
++        original = json.loads(base64.b64decode(context['data_base64']))
++        original['different_original_case'] = True
++        changed['sources'][0] = source('context', original)
++        for document in (changed, partition('b')):
++            if document is not changed:
++                document['dimensions'][0]['units'] = 'different units'
++            with self.assertRaises(WorkbenchError) as error:
++                MeasurementComparison([self.inputs[0], selected(document)])
++            self.assertEqual(error.exception.code, 'incompatible')
++
++    def test_overlapping_subjects_and_repeated_sources_are_explicit_errors(self):
++        with self.assertRaises(WorkbenchError): MeasurementComparison([self.inputs[0], self.inputs[0]])
++        other = partition('a'); other['title'] = 'Different packet, same subject'
++        with self.assertRaises(WorkbenchError) as error:
++            MeasurementComparison([self.inputs[0], selected(other)])
++        self.assertEqual(error.exception.code, 'conflict')
++
++    def test_bounds_and_invalid_selections_never_return_partial_results(self):
++        for constant, maximum in [('MAX_COMPARISON_BYTES', 1), ('MAX_COMPARISON_SUBJECTS', 1), ('MAX_ROWS', 7)]:
++            with patch.object(owner, constant, maximum), self.assertRaises(WorkbenchError):
++                MeasurementComparison(self.inputs)
++        with self.assertRaises(WorkbenchError): MeasurementComparison(self.inputs * 9)
++        for arguments in ({'subject_ids':[['bad']]}, {'subject_ids':[]}, {'subject_ids':['a','a']},
++                          {'subject_ids':['missing']}, {'offset':True}, {'limit':101}):
++            with self.subTest(arguments=arguments), self.assertRaises(WorkbenchError):
++                self.comparison.read('error', **arguments)
++        with self.assertRaises(WorkbenchError): self.comparison.read(filters={})
++
++    def test_returned_metadata_and_query_values_have_no_mutable_owner_alias(self):
++        expected = self.comparison.read('error')
++        result = self.comparison.read('error')
++        result['query']['metric']['label'] = 'Changed'
++        result['query']['summary'][0]['states']['measured'] = 99
++        result['subjects'][0]['source']['origin_catalog_id'] = 'b'*32
++        self.assertEqual(self.comparison.read('error'), expected)
+diff --git a/tests/test_project_measurement_comparison_http.py b/tests/test_project_measurement_comparison_http.py
+new file mode 100644
+index 0000000..0906375
+--- /dev/null
++++ b/tests/test_project_measurement_comparison_http.py
+@@ -0,0 +1,58 @@
++"""Real native HTTP source import, atomic comparison and scalar inspection."""
++import hashlib
++import json
++import os
++import unittest
++
++import test_project_files_http as m1
++import test_project_files_m2_http as m2
++from retained_measurements import encode
++from test_measurement_comparison import partition
++
++
++@unittest.skipUnless(os.environ.get('TULDOK_DATABASE_URL'), 'Requires disposable PostgreSQL')
++class ComparisonHTTP(unittest.TestCase):
++    cleanup_owned=m1.ProjectFilesHTTP.cleanup_owned
++    select_host=m1.ProjectFilesHTTP.select_host
++    request=m1.ProjectFilesHTTP.request
++    state=m1.ProjectFilesHTTP.state
++    envelope=m1.ProjectFilesHTTP.envelope
++    action=m1.ProjectFilesHTTP.action
++    create=m1.ProjectFilesHTTP.create
++    arguments=m2.ProjectFilesM2HTTP.arguments
++    transport=m2.ProjectFilesM2HTTP.transport
++    call=m2.ProjectFilesM2HTTP.call
++    def setUp(self):
++        self.operations=[]
++        m1.ProjectFilesHTTP.setUp(self)
++
++    def test_two_original_sources_compare_and_inspect_through_real_HTTP(self):
++        self.create()
++        sources=[]
++        for subject, identity in [('a','b'*32),('b','c'*32)]:
++            raw=encode(partition(subject));digest=hashlib.sha256(raw).hexdigest()
++            filename=subject+'-measurements.json';manifest_name=subject+'-source.json'
++            (self.external/filename).write_bytes(raw)
++            manifest=dict(schema_version=1,id=identity,name='Original '+subject,
++                data=[dict(id='scalars',label='Retained scalars',path=filename,sha256=digest)],
++                recipes=[],evidence=[],requirements=[])
++            (self.external/manifest_name).write_text(json.dumps(manifest))
++            registered=self.call('source_register',root='fixture',manifest_path=manifest_name)
++            snapshot={key:registered[key] for key in ('origin_catalog_id','project_id','manifest_sha256')}
++            admitted=self.call('measurement_import',snapshot=snapshot,reference_id='scalars',expected_sha256=digest)
++            sources.append(dict(origin_catalog_id=admitted['origin_catalog_id'],packet_sha256=digest))
++        before=self.workspace._projection.session.snapshot
++        metadata=self.call('measurement_compare',sources=sources)['value']
++        self.assertEqual([s['id'] for s in metadata['subjects']],['a','b'])
++        self.assertIsNone(metadata['query'])
++        query=self.call('measurement_compare',sources=sources,metric_id='error',offset=1,limit=2)['value']['query']
++        self.assertEqual(query['total'],4)
++        self.assertEqual([s['maximum']['value'] for s in query['summary']],[2e-15,.02])
++        self.assertEqual([r['subject_id'] for r in query['rows']],['a','b'])
++        maximum=query['summary'][1]
++        inspected=self.call('measurement_inspect',**maximum['source'],observation_id=maximum['maximum']['id'])['value']
++        self.assertEqual(inspected['scalar_evidence']['value'],.02)
++        self.assertEqual(inspected['case']['dimensions']['cpm'],8)
++        missing=self.call('measurement_compare',sources=sources,metric_id='latency')['value']['query']
++        self.assertTrue(all(s['maximum'] is None for s in missing['summary']))
++        self.assertEqual(self.workspace._projection.session.snapshot,before)
+diff --git a/tests/test_project_measurements_clients.py b/tests/test_project_measurements_clients.py
+index bc41531..e05b6b2 100644
+--- a/tests/test_project_measurements_clients.py
++++ b/tests/test_project_measurements_clients.py
+@@ -4,7 +4,7 @@ import unittest
+ from unittest.mock import patch
+ 
+ import agent_api as api
+-from retained_measurements import MeasurementTable, encode
++from retained_measurements import MeasurementTable, MeasurementComparison, encode
+ from test_project_files_clients import BINDING, PROJECT, CHECKPOINT, OTHER, bound, client
+ from test_retained_measurements import fixture
+ from tuldok_client import ProjectFilesClient
+@@ -24,6 +24,23 @@ class MeasurementContracts(unittest.TestCase):
+         return ProjectFilesClient(client({'status':200,'result':dict(binding=BINDING,project_id=PROJECT,
+             checkpoint=CHECKPOINT,value=value)}))
+ 
++    def test_group_comparison_header_and_query_correlate_every_original_source(self):
++        locator=dict(origin_catalog_id=PROJECT,packet_sha256=self.table.sha256)
++        comparison=MeasurementComparison([(locator,self.table)])
++        args=dict(binding=BINDING,checkpoint=CHECKPOINT,sources=[locator])
++        page=dict(sources=[self.source],value=comparison.read())
++        self.assertEqual(self.sdk(page).measurement_compare(**args)['value'],page)
++        query=dict(sources=[self.source],value=comparison.read('error',offset=1,limit=1))
++        request=dict(args,metric_id='error',offset=1,limit=1)
++        self.assertEqual(self.sdk(query).measurement_compare(**request)['value'],query)
++        for mutate in (lambda p:p['sources'][0].update(id=OTHER),
++                       lambda p:p['value']['query'].update(offset=0),
++                       lambda p:p['value']['query']['summary'][0]['states'].update(measured=99),
++                       lambda p:p['value']['query']['rows'][0]['source'].update(packet_sha256=OTHER),
++                       lambda p:p['value']['subjects'][0]['source'].update(origin_catalog_id='f'*32)):
++            bad=copy.deepcopy(query);mutate(bad)
++            with self.assertRaises(api.AgentAPIError):self.sdk(bad).measurement_compare(**request)
++
+     def test_capability_bound_applies_to_the_actual_advertised_profile(self):
+         sizes={profile:len(api.capabilities(PROJECT,profile=profile)['operations']) for profile in ('catalog','project')}
+         maximum=max(sizes.values())
+diff --git a/tuldok_client.py b/tuldok_client.py
+index ce838bc..be0daf7 100644
+--- a/tuldok_client.py
++++ b/tuldok_client.py
+@@ -417,6 +417,10 @@ class ProjectFilesClient:
+     def measurement_query(self, **arguments):
+         return self._call('measurement_query', arguments)
+ 
++    def measurement_compare(self, **arguments):
++        """Compare compatible retained sources at one selected checkpoint."""
++        return self._call('measurement_compare', arguments)
++
+     def measurement_inspect(self, **arguments):
+         return self._call('measurement_inspect', arguments)
+ 

@@ -1,0 +1,47 @@
+diff --git a/project_store.py b/project_store.py
+index 9c4bd10..7ec6cd7 100644
+--- a/project_store.py
++++ b/project_store.py
+@@ -96,8 +96,11 @@ def _json_value(value, depth=0):
+     if type(value) is float and math.isfinite(value):
+         return
+     if type(value) is str:
+-        if any(0xD800 <= ord(c) <= 0xDFFF for c in value):
+-            _fail('Project JSON contains an invalid Unicode surrogate.')
++        if not value.isascii():
++            try:
++                value.encode('utf-8')
++            except UnicodeEncodeError:
++                _fail('Project JSON contains an invalid Unicode surrogate.')
+         return
+     if type(value) is list:
+         for item in value:
+diff --git a/tests/test_project_store.py b/tests/test_project_store.py
+index 98e52ad..0f65339 100644
+--- a/tests/test_project_store.py
++++ b/tests/test_project_store.py
+@@ -272,6 +272,24 @@ except ProjectStoreError as exc:
+             self.assert_code('unsupported', self.store.commit, [value], checkpoint, 'bad', body('bad'))
+         self.assert_code('invalid', self.store.commit, [record(), record()], checkpoint, 'bad', body('bad'))
+ 
++    def test_every_unicode_scalar_is_valid_and_every_surrogate_is_refused(self):
++        # Unicode scalar values exclude exactly D800..DFFF. Check the complete
++        # finite domain rather than a copied sample of the implementation.
++        for value in range(0x110000):
++            text = chr(value)
++            if 0xD800 <= value <= 0xDFFF:
++                for content in (text, 'ASCII prefix' + text, 'λ' + text + 'suffix'):
++                    error = self.assert_code('invalid', store_module._json_value, content)
++                    self.assertEqual(str(error), 'Project JSON contains an invalid Unicode surrogate.')
++            else:
++                store_module._json_value(text)
++
++    def test_unicode_validation_preserves_exact_canonical_bytes(self):
++        for value in ('ASCII' * 20000, '\x00\n\r\t\\"', 'é e\u0301 漢字 😀',
++                      '\ud7ff\ue000\ufffe\uffff\U0010ffff'):
++            document = {'key': [value, {'λ': value}]}
++            self.assertEqual(store_module._encode(document), canonical(document))
++
+     def test_large_checkpoint_index_publishes_and_cold_opens(self):
+         # The migrated lab's small record declarations produced a 17.99 MB
+         # index, even though individual records and their total were in bounds.

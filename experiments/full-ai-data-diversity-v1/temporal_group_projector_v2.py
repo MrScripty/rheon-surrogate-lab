@@ -1,0 +1,54 @@
+"""Device-packet entry for the qualified explicit-duration correction phase."""
+import torch
+from temporal_group_projector_v1 import TemporalGroupProjector as Parent
+from temporal_control_packets_v1 import control_packet
+from recurrent_sampler_native import dimensions
+from cuda_native_transfer_v1 import FIELDS
+
+
+class TemporalGroupProjector(Parent):
+    @torch.no_grad()
+    def phase(self, fields, scene, start_fine, width):
+        packet = torch.from_numpy(control_packet(scene, start_fine, width)).to('cuda')
+        return self.phase_packet(fields, scene, width, packet)
+
+    @torch.no_grad()
+    def phase_packet(self, fields, scene, width, packet):
+        rate = 60 * scene['reference_substeps']
+        if type(width) is not int or not 1 <= width <= 32 or rate not in (240, 480):
+            raise ValueError('Explicit bounded local duration required')
+        if set(fields) != set(FIELDS) or any(v.device.type != 'cuda' for v in fields.values()):
+            raise ValueError('Complete current CUDA state required')
+        counts = tuple(scene['counts'])
+        shape, sizes = tuple(reversed(counts)), dimensions(counts)
+        core = self.model
+        core.prepare_geometry(counts)
+        core._nested_enabled = True
+        h, rho, dt = 1 / scene['cells_per_metre'], 1000., width / rate
+        core.configure_transport(h, dt)
+        forcing = self.controls.generate_from_packet(counts, packet)
+        addition = forcing[0]
+        for row in forcing[1:]:
+            addition = [a + b for a, b in zip(addition, row)]
+        current = [fields[n].reshape(s) for n, s in zip(FIELDS[1:], sizes)]
+        advected = core.transport(current, counts, dt / h)
+        entering = core.affine_ops.three(advected[:3], addition, counts)
+        provisional = core.gather_ops.three(core, entering, entering, counts,
+            'viscosity', .001 / rho * dt / h ** 2)
+        previous = fields['pressure'].reshape(1, 1, *shape)
+        rhs = core.gather_ops.ordered_rhs(core, provisional, shape, 'flux', 0, h * h, dt)
+        history = core.gather_ops.three(core, [previous[0, 0]], None, counts,
+            'momentum', (h * h) * (1 / (rho * h)), multiply_only=True, as_double=True)
+        request = core.gather_ops.difference(core, history, rhs, shape, 'flux', 0, -1., rho / h)
+        correction = core.pressure(request.reshape(1, 1, *shape), counts)
+        pressure = core.affine_ops.binary('sum_gauge', previous, correction)
+        # This uses the same fused arithmetic and wall handling before its final
+        # native F32 cast, providing the unrounded anchor needed for gradients.
+        velocity = core.gather_ops.three(core, [pressure[0, 0]], provisional, counts,
+            'momentum', dt * (1 / (rho * h)), as_double=True)
+        return dict(counts=counts, shape=shape, h=h, rho=rho, dt=dt,
+            reference_dt_s=1 / rate, width=width, start_fine=None,
+            current=fields, forcing=forcing, known_packet=packet,
+            advected=advected, provisional=provisional, previous=previous,
+            base_pressure=pressure, base_velocity=velocity, base_tracer=advected[3])
+

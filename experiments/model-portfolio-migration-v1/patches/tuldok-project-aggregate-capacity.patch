@@ -1,0 +1,72 @@
+diff --git a/docs/contracts/project-files.md b/docs/contracts/project-files.md
+index 7959d37..e04aa7a 100644
+--- a/docs/contracts/project-files.md
++++ b/docs/contracts/project-files.md
+@@ -32,9 +32,12 @@ request receipts and a SHA256 checkpoint. Its digest covers canonical bytes of
+ the document with `checkpoint` omitted. The store supports only its declared
+ format and family; malformed and future versions fail before projection writes.
+ The canonical checkpoint index is limited to 64 MiB, separately from the
+-100,000-record, 40 MiB-per-record and 256 MiB-total-record limits. Commit checks
++100,000-record, 40 MiB-per-record and 2 GiB-total-record limits. The aggregate
++budget covers canonical record bytes, excluding artifact payloads; scientific
++catalogs retain original runtime/file observations across many Runs. Commit
++and cold Open enforce the same aggregate budget. Commit checks
+ the index size before staging immutable records. This format is unchanged;
+-older installations with the former 16 MiB index limit cannot open larger
++older installations with the former 16 MiB index or 256 MiB aggregate limit cannot open larger
+ checkpoints and must be upgraded before consuming them.
+ 
+ Verified stopped-source backups and ordinary catalog backups share identical
+diff --git a/project_store.py b/project_store.py
+index 60a12b8..31a184b 100644
+--- a/project_store.py
++++ b/project_store.py
+@@ -62,7 +62,9 @@ SUPPORTED_FORMATS = {
+     'text_proposal_history': 'project_text_proposal_history_v1',
+ }
+ MAX_RECORDS = 100_000
+-MAX_TOTAL_BYTES = 256 * 1024 * 1024
++# Scientific history can retain original runtime/file observations in hundreds
++# of Runs. Bound the whole local checkpoint separately from each document.
++MAX_TOTAL_BYTES = 2 * 1024 * 1024 * 1024
+ IDENTIFIER = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$')
+ REQUEST_KEY = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$')
+ DOMAIN_FORMAT = re.compile(r'^[a-z][a-z0-9_]{0,95}_v([1-9][0-9]*)$')
+diff --git a/tests/test_project_store.py b/tests/test_project_store.py
+index d3d9357..9f32161 100644
+--- a/tests/test_project_store.py
++++ b/tests/test_project_store.py
+@@ -308,6 +308,33 @@ except ProjectStoreError as exc:
+         for value in invalid:
+             with self.subTest(value=repr(value)):
+                 self.assert_code('invalid', self.store.commit, [value], checkpoint, 'bad', body('bad'))
++
++    def test_portfolio_above_256_MiB_commits_and_cold_reopens(self):
++        # Each document fits the 40 MiB owner bound. Aggregate project metadata
++        # must also support scientific catalogs larger than the old 256 MiB.
++        text = 'p' * (30 * 1024 * 1024)
++        values = [record(str(index), text) for index in range(9)]
++        committed = self.store.commit(values, self.store.snapshot()['checkpoint'],
++                                      'large-portfolio', body('large-portfolio'))
++        self.assertGreater(sum(row['bytes'] for row in self.manifest()['inventory']),
++                           256 * 1024 * 1024)
++        self.assertEqual(self.reopen(), committed)
++        self.assertEqual(self.store.snapshot()['records'], values)
++
++    def test_aggregate_byte_bound_rejects_commit_and_cold_open(self):
++        values = [record('a'), record('b')]
++        total = sum(len(canonical(value['document'])) for value in values)
++        before = self.bytes_tree()
++        checkpoint = self.store.snapshot()['checkpoint']
++        with patch.object(store_module, 'MAX_TOTAL_BYTES', total - 1):
++            self.assert_code('invalid', self.store.commit, values, checkpoint,
++                             'over-budget', body('over-budget'))
++        self.assertEqual(self.bytes_tree(), before)
++        committed = self.commit(values)
++        self.store.close()
++        with patch.object(store_module, 'MAX_TOTAL_BYTES', total - 1):
++            self.assert_code('invalid', ProjectStore.open, self.root)
++        self.assertEqual(self.reopen(), committed)
+         for value in [dict(record(), family='access_credentials'),
+                       dict(record(), document={'format': 'workbench_text_v2'}),
+                       dict(record(), document={'format': 'unknown_v1'})]:

@@ -1,0 +1,32 @@
+{
+  "schema": "rheon-pressure-methods-campaign-v1",
+  "request_file": "/home/jeremy/.codex/attachments/b041bbf4-c637-4c4c-9f86-0aacb418ce0d/pasted-text-1.txt",
+  "runtime": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "baseline_material": "runs/pressure-pass-sweep-v1/cpu-01/material.json",
+  "checkpoints": ["C53", "C44", "C37"],
+  "target_relative_residual": 0.000001,
+  "numerical_max_mode": 3,
+  "neural_only_passes": [1, 2, 4, 8],
+  "hybrid_passes": [1, 2, 4],
+  "orderings": ["before", "after"],
+  "timing_repetitions": 3,
+  "mixed_mode_seed": 2026101808,
+  "mixed_cases_per_grid": 4,
+  "new_grid_dimensions": [32, 64],
+  "new_grid_cells_per_metre": [8, 16],
+  "temporal_teacher_substeps": [1, 2, 4],
+  "model_dt_s": 0.016666666666666666,
+  "reserve_host_bytes": 12884901888,
+  "worker_memory_bytes": 2147483648,
+  "worker_deadline_seconds": 1800,
+  "cohorts": [
+    {"id": 1, "name": "larger-training-domains"},
+    {"id": 2, "name": "frozen-model-numerical-correction"},
+    {"id": 3, "name": "finer-teacher-timesteps"},
+    {"id": 4, "name": "numerical-coarse-neural-fine"},
+    {"id": 5, "name": "sparse-numerical-anchors"},
+    {"id": 6, "name": "revised-learned-coarse-fine"},
+    {"id": 7, "name": "spacing-training-and-conditioning"},
+    {"id": 8, "name": "periodic-numerical-correction"}
+  ]
+}

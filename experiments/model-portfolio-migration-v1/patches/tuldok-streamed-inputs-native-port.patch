@@ -1,0 +1,931 @@
+diff --git a/capture_payloads.py b/capture_payloads.py
+new file mode 100644
+index 0000000..de6c26b
+--- /dev/null
++++ b/capture_payloads.py
+@@ -0,0 +1,97 @@
++"""Bounded-memory, descriptor-backed payloads for explicitly streamed recipes.
++
++These objects never serialize a live path into execution material. Publication
++copies and hashes the selected bytes into the existing owned inventory.
++"""
++import hashlib
++import os
++import stat
++
++from workbench import WorkbenchError
++
++CHUNK_BYTES = 1024 * 1024
++FORMAT = 'streamed_project_inputs_v1'
++
++
++def identity(info):
++    return (info.st_dev, info.st_ino, info.st_mode, info.st_nlink, info.st_uid,
++            info.st_gid, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
++
++
++class FilePayload:
++    def __init__(self, descriptor, maximum, *, expected_sha256=None, guard=None):
++        self.fd = os.dup(descriptor)
++        self.guard = guard
++        try:
++            info = os.fstat(self.fd)
++            if not stat.S_ISREG(info.st_mode) or info.st_size > maximum:
++                raise WorkbenchError('Capture must be a bounded regular file.', 'too_large', 400)
++            self.size = info.st_size
++            self.original = identity(info)
++            self.guard_identity = guard() if guard else None
++            self.expected_sha256 = expected_sha256
++            self.expected_sha256 = self._transfer()
++        except BaseException:
++            self.close()
++            raise
++
++    def __len__(self):
++        return self.size
++
++    def close(self):
++        if getattr(self, 'fd', None) is not None:
++            os.close(self.fd)
++            self.fd = None
++
++    def __del__(self):
++        self.close()
++
++    def _check(self):
++        try:
++            if (self.fd is None or identity(os.fstat(self.fd)) != self.original
++                    or (self.guard and self.guard() != self.guard_identity)):
++                raise WorkbenchError('Selected capture identity changed.', 'conflict', 409)
++        except OSError as error:
++            raise WorkbenchError('Selected capture path unavailable.', 'unavailable', 409) from error
++
++    def _transfer(self, destination=None):
++        self._check()
++        digest = hashlib.sha256()
++        offset = 0
++        while offset < self.size:
++            chunk = os.pread(self.fd, min(CHUNK_BYTES, self.size - offset), offset)
++            if not chunk:
++                raise WorkbenchError('Selected capture was truncated.', 'conflict', 409)
++            digest.update(chunk)
++            if destination is not None:
++                destination.write(chunk)
++            offset += len(chunk)
++        self._check()
++        measured = digest.hexdigest()
++        if self.expected_sha256 is not None and measured != self.expected_sha256:
++            raise WorkbenchError('Selected capture digest changed.', 'conflict', 409)
++        return measured
++
++    def digest(self):
++        return self._transfer()
++
++    def copy_to(self, handle):
++        self._transfer(handle)
++
++    def __eq__(self, other):
++        if isinstance(other, FilePayload):
++            return len(self) == len(other) and self.digest() == other.digest()
++        if isinstance(other, bytes):
++            return len(self) == len(other) and self.digest() == hashlib.sha256(other).hexdigest()
++        return NotImplemented
++
++
++def payload_digest(raw):
++    return raw.digest() if isinstance(raw, FilePayload) else hashlib.sha256(raw).hexdigest()
++
++
++def copy_payload(raw, destination):
++    if isinstance(raw, FilePayload):
++        raw.copy_to(destination)
++    else:
++        destination.write(raw)
+diff --git a/model_definitions.py b/model_definitions.py
+index dabfe61..c69c028 100644
+--- a/model_definitions.py
++++ b/model_definitions.py
+@@ -78,7 +78,8 @@ def reference(value, kind, catalog_id):
+ 
+ 
+ def blob(raw, name, media_type='application/json'):
+-    return {'name':name,'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),'media_type':media_type}
++    from capture_payloads import payload_digest
++    return {'name':name,'sha256':payload_digest(raw),'bytes':len(raw),'media_type':media_type}
+ 
+ 
+ def blob_identity(value):
+@@ -109,7 +110,7 @@ def owned_inventory(root, material_sha256, names):
+         if root_fd is not None:os.close(root_fd)
+ 
+ 
+-def read_owned_blob(root, material_sha256, item, maximum, *, with_identity=False):
++def read_owned_blob(root, material_sha256, item, maximum, *, with_identity=False, stream=False):
+     """Read a flat owner inventory without following links or trusting row sizes."""
+     closed(item, ('name','sha256','bytes','media_type'))
+     natural(item['bytes'],'Blob bytes',0,maximum)
+@@ -126,6 +127,23 @@ def read_owned_blob(root, material_sha256, item, maximum, *, with_identity=False
+             before=os.fstat(source.fileno())
+             if not stat.S_ISREG(before.st_mode) or before.st_size!=item['bytes'] or before.st_nlink!=1:
+                 raise WorkbenchError('Retained blob is not an owned bounded regular file.','unavailable',409)
++            if stream:
++                from capture_payloads import FilePayload
++                def guard():
++                    parent = os.open(root, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++                    selected = None
++                    try:
++                        selected = os.open(material_sha256, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW, dir_fd=parent)
++                        leaf = blob_identity(os.stat(item['name'], dir_fd=selected, follow_symlinks=False))
++                        if leaf != blob_identity(before):
++                            raise WorkbenchError('Retained blob path changed.', 'unavailable', 409)
++                        directory_id = lambda info: (info.st_dev,info.st_ino,info.st_mode,info.st_uid,info.st_gid)
++                        return (directory_id(os.fstat(parent)), directory_id(os.fstat(selected)), leaf)
++                    finally:
++                        if selected is not None: os.close(selected)
++                        os.close(parent)
++                raw=FilePayload(source.fileno(), maximum, expected_sha256=item['sha256'], guard=guard)
++                return (raw,blob_identity(before)) if with_identity else raw
+             raw=source.read(item['bytes']+1);after=os.fstat(source.fileno())
+             if blob_identity(before)!=blob_identity(after) or len(raw)!=item['bytes'] or hashlib.sha256(raw).hexdigest()!=item['sha256']:
+                 raise WorkbenchError('Retained blob identity differs.','unavailable',409)
+diff --git a/pipeline.py b/pipeline.py
+index 82bd30b..d9c9894 100644
+--- a/pipeline.py
++++ b/pipeline.py
+@@ -338,10 +338,15 @@ def decode_recipe_material(value, *, catalog_id):
+     for item in material['data']:reference(item,'release',catalog_id)
+     envelope=material['resource_envelope'];closed(envelope,('attempt_slots','admitted_wall_seconds','retained_bytes','peak_staging_bytes'))
+     for number in envelope.values():natural(number,'Resource envelope',1)
++    # This pure decoder owns descriptor bounds. The authenticated recipe bytes
++    # own the narrower capture policy before any large capture is read/copied.
++    capture_limit = (min(envelope['retained_bytes'], recipe_contract.MAX_CONFIGURED_CAPTURE_BYTES)
++                     if material['trainer']['id'] == 'external_recipe_v1'
++                     else recipe_contract.CPU_CAPTURE_BYTES)
+     inventory=[material['recipe_document'],material['resolved_profile'],*material['captures']]
+     names=[];total=0
+     for item in inventory:
+-        closed(item,('name','sha256','bytes','media_type'));natural(item['bytes'],'Capture bytes',0,recipe_contract.CPU_CAPTURE_BYTES)
++        closed(item,('name','sha256','bytes','media_type'));natural(item['bytes'],'Capture bytes',0,capture_limit)
+         if (type(item['name']) is not str or not re.fullmatch(r'(?:recipe\.json|profile\.json|capture-\d{4}\.bin)',item['name']) or
+                 type(item['sha256']) is not str or not HASH.fullmatch(item['sha256']) or
+                 item['media_type']!=('application/octet-stream' if item['name'].startswith('capture-') else 'application/json')):
+@@ -349,7 +354,7 @@ def decode_recipe_material(value, *, catalog_id):
+         if item['name'] in ('recipe.json','profile.json') and item['bytes']>2*1024**2:
+             raise WorkbenchError('Recipe/profile document exceeds its bound.','unavailable',409)
+         names.append(item['name']);total+=item['bytes']
+-    if len(set(names))!=len(names) or total>recipe_contract.CPU_CAPTURE_BYTES+2*1024**2:
++    if len(set(names))!=len(names) or total>capture_limit+2*1024**2:
+         raise WorkbenchError('Recipe inventory exceeds its bound.','unavailable',409)
+     if material['recipe_document']['name']!='recipe.json' or material['resolved_profile']['name']!='profile.json':
+         raise WorkbenchError('Recipe document names differ.','unavailable',409)
+@@ -1215,7 +1220,7 @@ class Pipelines:
+         try:
+             for name,raw in payloads.items():
+                 with (staging/name).open('xb') as handle:
+-                    handle.write(raw);handle.flush();os.fchmod(handle.fileno(),0o400);os.fsync(handle.fileno())
++                    recipe_contract.copy_payload(raw,handle);handle.flush();os.fchmod(handle.fileno(),0o400);os.fsync(handle.fileno())
+             _sync_directory(staging)
+             return {'document':document,'staging':staging,'graph':graph,'orphan':None,'reconcile_capture':False}
+         except BaseException:
+@@ -1240,7 +1245,7 @@ class Pipelines:
+             raise WorkbenchError('Retained built-in execution changed.', 'stale', 409)
+         captured={item['path']:read_owned_blob(self.material_path,sha,item['blob'],recipe_contract.CPU_CAPTURE_BYTES) for item in snapshot['capture_paths']}
+         expected=self.definition_identity(graph['recipe'])['definition_files']
+-        if {name:hashlib.sha256(raw).hexdigest() for name,raw in captured.items()}!=expected:
++        if {name:recipe_contract.file_digest(raw) for name,raw in captured.items()}!=expected:
+             raise WorkbenchError('Retained adapter source differs.', 'stale', 409)
+         return {'kind':'builtin','graph':graph,'validation':validation,
+                 'release':self.inspect_release(validation['release']['id'],private=True,recipe=graph['recipe']),
+@@ -1274,7 +1279,7 @@ class Pipelines:
+         for path,raw in captured.items():
+             if path.startswith('source/'):
+                 original=source_map.get(path[len('source/'):])
+-                if original is None or original['sha256']!=hashlib.sha256(raw).hexdigest() or original['bytes']!=len(raw):
++                if original is None or original['sha256']!=recipe_contract.file_digest(raw) or original['bytes']!=len(raw):
+                     raise WorkbenchError('Model and execution source inventories differ.','stale',409)
+         payloads={};paths=[]
+         for number,(path,raw) in enumerate(sorted(captured.items())):
+@@ -1330,18 +1335,22 @@ class Pipelines:
+             'captures':[item['blob'] for item in paths],'resource_envelope':envelope}
+         material=checked_json(material);sha=digest(material)
+         document={'ref':{'kind':'recipe_material','catalog_id':self.db.dataset_id,'id':sha,'sha256':sha},'material':material}
++        if 'capture_policy' in preflight['material']['recipe']:
++            needed = envelope['peak_staging_bytes'] + 1024**3
++            if shutil.disk_usage(self.material_path).free < needed:
++                raise WorkbenchError('Insufficient disk for retained capture and execution staging.', 'too_large', 409)
+         staging=Path(tempfile.mkdtemp(prefix='.recipe-',dir=self.material_path))
+         try:
+             for name,raw in payloads.items():
+                 with (staging/name).open('xb') as handle:
+-                    handle.write(raw);handle.flush();os.fchmod(handle.fileno(),0o400);os.fsync(handle.fileno())
++                    recipe_contract.copy_payload(raw,handle);handle.flush();os.fchmod(handle.fileno(),0o400);os.fsync(handle.fileno())
+             _sync_directory(staging)
+             if self.get(graph_id)!=graph:
+                 raise WorkbenchError('Recipe changed during capture.','stale',409)
+             orphan=None;target=self.material_path/sha
+             if reconcile_capture and target.exists():
+-                files={name:read_owned_blob(self.material_path,sha,blob(raw,name),recipe_contract.CPU_CAPTURE_BYTES,
+-                                           with_identity=True)[1] for name,raw in payloads.items()}
++                files={name:read_owned_blob(self.material_path,sha,blob(raw,name),recipe_contract.capture_limits(preflight['material']['recipe'])[2],
++                                           with_identity=True,stream='capture_policy' in preflight['material']['recipe'])[1] for name,raw in payloads.items()}
+                 orphan=owned_inventory(self.material_path,sha,payloads)
+                 if orphan['files']!=files:raise WorkbenchError('Orphan recipe changed after hashing.','unavailable',409)
+             return {'document':document,'staging':staging,'graph':graph,'orphan':orphan,'reconcile_capture':reconcile_capture}
+@@ -1400,6 +1409,8 @@ class Pipelines:
+     def recipe_material(self, ref, *, verify=False):
+         from model_definitions import read_owned_blob,retained_json,ModelDefinitions
+         value=self._recipe_material_record(ref);material=value['material']
++        capture_limit = recipe_contract.CPU_CAPTURE_BYTES
++        streamed = False
+         if material['trainer']['id'] in ('external_recipe_v1',recipe_contract.EVIDENCE_FORMAT):
+             # Current disclosure of retained captures follows all Run inputs,
+             # independently from their historical integrity and exact grant.
+@@ -1415,12 +1426,14 @@ class Pipelines:
+                     or preflight['material']['graph_execution_sha256']!=execution_digest(graph)):
+                 raise WorkbenchError('Retained input material binding differs.','unavailable',409)
+             recipe_contract.validate_material(preflight['material'])
++            capture_limit = recipe_contract.capture_limits(preflight['material']['recipe'])[2]
++            streamed = 'capture_policy' in preflight['material']['recipe']
+             from candidate_packages import authorize_material_inputs
+             authorize_material_inputs(self.dataset.runs,preflight['material'])
+             if evidence:self._retained_extension_static(value)
+         if verify:
+             inventory=[material['recipe_document'],material['resolved_profile'],*material['captures']]
+-            for item in inventory:read_owned_blob(self.material_path,ref['sha256'],item,recipe_contract.CPU_CAPTURE_BYTES)
++            for item in inventory:read_owned_blob(self.material_path,ref['sha256'],item,capture_limit,stream=streamed)
+             (getattr(self.dataset,'models',None) or ModelDefinitions(self.dataset)).material(material['model'],verify=True)
+         return value
+ 
+@@ -1462,7 +1475,9 @@ class Pipelines:
+             closed(item,('path','blob'))
+             if item['path'] in retained or item['blob'] not in material['captures']:
+                 raise WorkbenchError('Capture mapping differs.','unavailable',409)
+-            retained[item['path']]=read_owned_blob(self.material_path,ref['sha256'],item['blob'],recipe_contract.CPU_CAPTURE_BYTES)
++            retained[item['path']]=read_owned_blob(self.material_path,ref['sha256'],item['blob'],
++                recipe_contract.capture_limits(preflight['material']['recipe'])[2],
++                stream='capture_policy' in preflight['material']['recipe'])
+         if recipe_contract.is_bound_evidence(preflight['material']['recipe']):
+             recipe_contract.revalidate_bound_material(self.dataset.projects,preflight['material'],retained,
+                 getattr(self.dataset,'external_runtime_profile',None),releases=self.dataset.releases)
+diff --git a/projects.py b/projects.py
+index 7886954..4a55f85 100644
+--- a/projects.py
++++ b/projects.py
+@@ -447,16 +447,16 @@ class Projects:
+         return self._read_recipe_sources(project_id, sources, extensions=True)
+ 
+     @authorized('inspect', 'projects.read_data_reference')
+-    def read_data_reference(self, project_id, reference_id, expected_sha256, limit):
++    def read_data_reference(self, project_id, reference_id, expected_sha256, limit, *, stream=False):
+         """Capture a selected saved reference; source owners interpret its bytes."""
+         saved = self._saved(project_id, extensions=True)
+         return self._read_data_reference(project_id, reference_id, expected_sha256, limit,
+-                                         extensions=saved['manifest']['schema_version'] == 2)
++                                         extensions=saved['manifest']['schema_version'] == 2, stream=stream)
+ 
+-    def _read_data_reference(self, project_id, reference_id, expected_sha256, limit, *, extensions=False):
++    def _read_data_reference(self, project_id, reference_id, expected_sha256, limit, *, extensions=False, stream=False):
+         if not isinstance(expected_sha256, str) or not SHA.fullmatch(expected_sha256):
+             raise WorkbenchError('Import requires the observed source SHA256.')
+-        if type(limit) is not int or not 0 < limit <= DATA_LIMIT:
++        if type(stream) is not bool or type(limit) is not int or not 0 < limit <= (2**53 - 1 if stream else DATA_LIMIT):
+             raise WorkbenchError('Invalid bounded data read limit.')
+         saved = self._snapshot_saved(project_id)[0] if extensions else self._saved(project_id)
+         if not self._bound(saved):
+@@ -465,13 +465,24 @@ class Projects:
+         if ref is None:
+             raise WorkbenchError('Data reference not found.', 'not_found', 404)
+         try:
+-            if extensions:
++            if stream:
++                from capture_payloads import FilePayload
++                before = self._snapshot_identity(saved, ref['path'])
++                def guard():
++                    return self._snapshot_identity(saved, ref['path'])
++                with self._file(saved['root'], ref['path']) as (fd, _info):
++                    raw = FilePayload(fd, limit, expected_sha256=expected_sha256, guard=guard)
++                if before != guard():
++                    raw.close()
++                    raise WorkbenchError('Snapshot path changed during capture.', 'conflict', 409)
++            elif extensions:
+                 raw = self._read_snapshot_file(saved, ref['path'], limit)
+             else:
+                 raw = self._read(saved['root'], ref['path'], limit)
+         except OSError:
+             raise WorkbenchError('Data reference cannot be safely read.', 'unavailable', 409) from None
+-        digest = hashlib.sha256(raw).hexdigest()
++        from capture_payloads import payload_digest
++        digest = payload_digest(raw)
+         if digest != expected_sha256 or ref.get('sha256', digest) != digest:
+             raise WorkbenchError('Data changed or differs from its declared SHA256. Inspect again before importing.', 'conflict', 409)
+         if extensions:
+diff --git a/recipe_contract.py b/recipe_contract.py
+index 351d373..2c1f85f 100644
+--- a/recipe_contract.py
++++ b/recipe_contract.py
+@@ -10,6 +10,7 @@ import struct
+ from projects import closed, decode, relative_path
+ from recipe_process import CUDA_WALL_SECONDS_LIMIT
+ from workbench import WorkbenchError, encode
++from capture_payloads import FORMAT as STREAMED_CAPTURE, payload_digest, copy_payload
+ 
+ NAME = re.compile(r'[A-Za-z][A-Za-z0-9_-]{0,63}')
+ SHA = re.compile(r'[a-f0-9]{64}')
+@@ -18,6 +19,7 @@ MAX_CAPTURE_BYTES = 64 * 1024 * 1024
+ CPU_INPUT_BYTES = 256 * 1024 * 1024
+ CPU_CAPTURE_BYTES = 320 * 1024 * 1024
+ MAX_FILES = 128
++MAX_CONFIGURED_CAPTURE_BYTES = 2**53 - 1
+ RUNTIME_LIMIT = 512 * 1024 * 1024
+ TYPES = ('input', 'execute', 'output')
+ PORTS = {'input': (None, 'data'), 'execute': ('data', 'artifacts'), 'output': ('artifacts', None)}
+@@ -32,7 +34,7 @@ LARGE_OUTPUT_PROFILE = 'captured_cpu_large_outputs_v1'
+ INPUT_EVIDENCE = 'runtime-bootstrap/input-evidence.json'
+ CPU_DESCRIPTOR = 'runtime-bootstrap/snapshot.json'
+ CPU_BOOTSTRAP = 'runtime-bootstrap/recipe_process.py'
+-HOST_NAMES = ('recipe_contract.py', 'projects.py', 'pipeline.py', 'recipe_process.py')
++HOST_NAMES = ('recipe_contract.py', 'projects.py', 'pipeline.py', 'recipe_process.py', 'capture_payloads.py', 'model_definitions.py')
+ EVIDENCE_HOST_NAMES = (*HOST_NAMES, 'extension_evidence.py', 'field_evidence.py', 'scientific_fields.py', 'scientific_release.py')
+ INDEXED_POLICY_FORMAT = 'extension_field_policy_indexed_v1'
+ DIAGNOSTIC_HOST_NAMES = ('tuldok_extension_sdk/__init__.py', 'tuldok_extension_sdk/evidence.py', 'tuldok_extension_sdk/diagnostics.py')
+@@ -82,7 +84,7 @@ def digest(value):
+ 
+ 
+ def file_digest(raw):
+-    return hashlib.sha256(raw).hexdigest()
++    return payload_digest(raw)
+ 
+ 
+ def bounded_int(value, low, high, label):
+@@ -91,6 +93,24 @@ def bounded_int(value, low, high, label):
+     return value
+ 
+ 
++def capture_limits(definition):
++    """Explicit per-recipe byte budgets; omission preserves historical defaults."""
++    policy = definition.get('capture_policy')
++    if 'capture_policy' not in definition:
++        managed = definition['runtime'] in (CPU_PROFILE, TORCH_PROFILE)
++        return (40*1024**2, CPU_INPUT_BYTES if managed else MAX_CAPTURE_BYTES,
++                CPU_CAPTURE_BYTES if managed else MAX_CAPTURE_BYTES)
++    if definition['runtime'] != TORCH_PROFILE or is_evidence(definition):
++        raise WorkbenchError('Streamed inputs require an explicit managed Torch opaque recipe.', 'unsupported', 400)
++    closed(policy, ('format', 'max_input_file_bytes', 'max_input_bytes', 'max_capture_bytes'))
++    if policy['format'] != STREAMED_CAPTURE:
++        raise WorkbenchError('Unsupported input capture policy.')
++    total = bounded_int(policy['max_capture_bytes'], 1, MAX_CONFIGURED_CAPTURE_BYTES, 'Capture budget')
++    inputs = bounded_int(policy['max_input_bytes'], 1, total, 'Input aggregate budget')
++    per_file = bounded_int(policy['max_input_file_bytes'], 1, inputs, 'Input file budget')
++    return per_file, inputs, total
++
++
+ def named(value):
+     if not isinstance(value, str) or not NAME.fullmatch(value):
+         raise WorkbenchError('Recipe names must use bounded letters, digits, underscore or hyphen.')
+@@ -102,7 +122,7 @@ def decode_definition(raw):
+         raise WorkbenchError('Recipe definition exceeds 64 KiB.')
+     value = decode(raw)
+     closed(value, ('schema_version', 'format', 'id', 'name', 'version', 'runtime', 'sources', 'entrypoint',
+-                   'arguments', 'parameters', 'inputs', 'outputs', 'environment', 'resources'), ('native_sources','runtime_snapshot_sha256','runtime_device','model_evidence','extension_selection'))
++                   'arguments', 'parameters', 'inputs', 'outputs', 'environment', 'resources'), ('native_sources','runtime_snapshot_sha256','runtime_device','model_evidence','extension_selection','capture_policy'))
+     evidence = is_evidence(value)
+     bound = is_bound_evidence(value)
+     if bound != ('extension_selection' in value):
+@@ -134,6 +154,7 @@ def decode_definition(raw):
+             raise WorkbenchError('Managed Torch recipes require an explicit CPU or CUDA device.')
+     elif 'runtime_device' in value:
+         raise WorkbenchError('Only managed Torch recipes select a device.')
++    input_file_limit, _input_limit, _capture_limit = capture_limits(value)
+     sources = value['sources']
+     if not isinstance(sources, list) or not 1 <= len(sources) <= 64:
+         raise WorkbenchError('Declare 1–64 source files.')
+@@ -174,7 +195,7 @@ def decode_definition(raw):
+         raise WorkbenchError('Declare at most 32 named inputs.')
+     for key, rule in value['inputs'].items():
+         named(key); closed(rule, ('max_bytes',))
+-        bounded_int(rule['max_bytes'], 1, 40 * 1024 * 1024, 'Input bytes')
++        bounded_int(rule['max_bytes'], 1, input_file_limit, 'Input bytes')
+     argument_limit = 56 if value['runtime'] == CPU_PROFILE else 55 if value['runtime'] == TORCH_PROFILE else 59
+     if not isinstance(value['arguments'], list) or len(value['arguments']) > argument_limit:
+         raise WorkbenchError('Recipe arguments exceed the runtime argument bound.')
+@@ -742,7 +763,8 @@ def prepare(projects, graph, execution_sha256, profile=None, *, releases=None, r
+         else:
+             closed(binding, ('reference_id', 'expected_sha256'))
+             reader = projects.read_snapshot_data_reference if bound else projects.read_data_reference
+-            raw, receipt = reader(config['project_id'], binding['reference_id'], binding['expected_sha256'], definition['inputs'][name]['max_bytes'])
++            options = {'stream': True} if 'capture_policy' in definition else {}
++            raw, receipt = reader(config['project_id'], binding['reference_id'], binding['expected_sha256'], definition['inputs'][name]['max_bytes'], **options)
+         captured['input/' + name] = raw; inputs[name] = receipt
+     if canonical:
+         prefix={'catalog_id':projects.db.dataset_id,'recipe':definition,'inputs':inputs,
+@@ -750,8 +772,7 @@ def prepare(projects, graph, execution_sha256, profile=None, *, releases=None, r
+         validate_canonical_captures(prefix,captured)
+     if {'input_evidence': True} in definition['arguments']:
+         captured[INPUT_EVIDENCE] = encode(inputs).encode()
+-    capture_limit = CPU_CAPTURE_BYTES if definition['runtime'] in (CPU_PROFILE,TORCH_PROFILE) else MAX_CAPTURE_BYTES
+-    input_limit = CPU_INPUT_BYTES if definition['runtime'] in (CPU_PROFILE,TORCH_PROFILE) else MAX_CAPTURE_BYTES
++    _file_limit, input_limit, capture_limit = capture_limits(definition)
+     if sum(len(raw) for path,raw in captured.items() if path.startswith('input/')) > input_limit:
+         raise WorkbenchError('Captured inputs exceed the runtime profile byte bound.')
+     if len(captured) > MAX_FILES or sum(map(len,captured.values())) > capture_limit:
+@@ -936,8 +957,7 @@ def validate_material(material):
+                 raise WorkbenchError('Frozen input receipt and captured size differ.')
+         if path in generated and item['bytes'] != len(generated[path]): raise WorkbenchError('Generated native policy size differs.')
+         if item['sha256'] != expected[path]: raise WorkbenchError('Captured digest contradicts source/input identity.')
+-    capture_limit = CPU_CAPTURE_BYTES if definition['runtime'] in (CPU_PROFILE,TORCH_PROFILE) else MAX_CAPTURE_BYTES
+-    input_limit = CPU_INPUT_BYTES if definition['runtime'] in (CPU_PROFILE,TORCH_PROFILE) else MAX_CAPTURE_BYTES
++    _file_limit, input_limit, capture_limit = capture_limits(definition)
+     if total > capture_limit or input_total > input_limit:
+         raise WorkbenchError('Captured material exceeds runtime profile byte bound.')
+     runtime = material['runtime']
+@@ -958,7 +978,12 @@ def validate_material(material):
+     host_names = CANONICAL_EVIDENCE_HOST_NAMES if is_canonical_evidence(definition) else BOUND_EVIDENCE_HOST_NAMES if bound else EVIDENCE_HOST_NAMES if evidence else HOST_NAMES
+     if is_indexed_evidence(definition): host_names = (*host_names, *DIAGNOSTIC_HOST_NAMES)
+     if definition['runtime'] == TORCH_PROFILE: host_names = (*host_names, *TORCH_HOST_NAMES)
+-    if not isinstance(material['host_files'],dict) or set(material['host_files']) != set(host_names): raise WorkbenchError('Invalid retained host closure.')
++    allowed_names = [set(host_names)]
++    if 'capture_policy' not in definition:
++        # Both complete inventories were emitted by supported historical hosts.
++        allowed_names.append(set(host_names) - {'capture_payloads.py', 'model_definitions.py'})
++    if not isinstance(material['host_files'],dict) or set(material['host_files']) not in allowed_names:
++        raise WorkbenchError('Invalid retained host closure.')
+     for value in material['host_files'].values(): sha(value)
+     return material
+ 
+@@ -997,6 +1022,7 @@ def spec_for_material(material, staging, *, context=None):
+     if 'native_policies' in material or 'cpu_snapshot' in material: spec['native_loader_policy'] = NATIVE_POLICY
+     if 'cpu_snapshot' in material: spec['cpu_snapshot'] = material['cpu_snapshot']
+     if 'torch_runtime' in material: spec['torch_runtime'] = material['torch_runtime']
++    if 'capture_policy' in definition: spec['capture_policy'] = dict(definition['capture_policy'])
+     if 'profile' in definition['resources']: spec['resource_profile'] = definition['resources']['profile']
+     if is_evidence(definition):
+         spec['schema_version']=2
+@@ -1037,7 +1063,7 @@ def capture(preflight, captured, staging):
+     for relative, raw in captured.items():
+         path = staging/relative; path.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
+         with path.open('xb') as handle:
+-            handle.write(raw); handle.flush(); os.fchmod(handle.fileno(),0o400); os.fsync(handle.fileno())
++            copy_payload(raw, handle); handle.flush(); os.fchmod(handle.fileno(),0o400); os.fsync(handle.fileno())
+     for directory, _dirs, _files in os.walk(staging, topdown=False):
+         _sync_directory(directory)
+     _sync_directory(staging.parent)
+diff --git a/recipe_process.py b/recipe_process.py
+index a476f84..49694f1 100644
+--- a/recipe_process.py
++++ b/recipe_process.py
+@@ -166,16 +166,37 @@ TORCH_READY_SECONDS = 60
+ TORCH_VERIFY_SECONDS = 60
+ 
+ 
++def capture_policy(spec):
++    policy = spec.get('capture_policy', spec.get('recipe', {}).get('capture_policy'))
++    if 'capture_policy' not in spec and 'capture_policy' not in spec.get('recipe', {}):
++        return None
++    expected = {'format', 'max_input_file_bytes', 'max_input_bytes', 'max_capture_bytes'}
++    if (type(policy) is not dict or set(policy) != expected
++            or policy['format'] != 'streamed_project_inputs_v1'
++            or any(type(policy[n]) is not int for n in expected - {'format'})
++            or not 1 <= policy['max_input_file_bytes'] <= policy['max_input_bytes'] <= policy['max_capture_bytes'] <= 2**53-1):
++        raise ProcessError('Invalid streamed capture budget.')
++    return policy
++
++
++def streamed_verification_seconds(spec, minimum):
++    policy = capture_policy(spec)
++    if policy is None:
++        return minimum
++    # Record conservative disk-I/O allowance separately from training wall time.
++    return minimum + (policy['max_capture_bytes'] + 64*1024**2 - 1) // (64*1024**2)
++
++
+ def preparation_seconds(spec):
+     """Custody readiness budget; independent of the recipe's child wall time."""
+     if 'torch_runtime' in spec:
+-        return TORCH_READY_SECONDS
++        return streamed_verification_seconds(spec, TORCH_READY_SECONDS)
+     return CPU_READY_SECONDS if 'cpu_snapshot' in spec else READY_SECONDS
+ 
+ 
+ def verification_seconds(spec):
+     if 'torch_runtime' in spec:
+-        return TORCH_VERIFY_SECONDS
++        return streamed_verification_seconds(spec, TORCH_VERIFY_SECONDS)
+     return CPU_READY_SECONDS if 'cpu_snapshot' in spec else 0
+ 
+ 
+@@ -434,7 +455,7 @@ def _validate_spec(value, *, current):
+     if type(value) is not dict or type(value.get('schema_version')) is not int or value['schema_version'] not in (1,2):
+         raise ProcessError('Unsupported custody spec.')
+     if value['schema_version']==2:keys.add('model_evidence_context')
+-    if set(value)-{'native_loader_policy','cpu_snapshot','torch_runtime','resource_profile'}!=keys:
++    if set(value)-{'native_loader_policy','cpu_snapshot','torch_runtime','resource_profile','capture_policy'}!=keys:
+         raise ProcessError('Unsupported custody spec.')
+     if not isinstance(value['attempt_id'], str) or not ID.fullmatch(value['attempt_id']):
+         raise ProcessError('Invalid attempt identity.')
+@@ -463,6 +484,9 @@ def _validate_spec(value, *, current):
+     runtime = value['runtime_files']
+     if type(runtime) is not list or len(runtime)>10000:
+         raise ProcessError('Invalid runtime inventory.')
++    policy = capture_policy(value)
++    if policy is not None and ('torch_runtime' not in value or value['schema_version'] != 1):
++        raise ProcessError('Streamed inputs require managed Torch opaque execution.')
+     files = value['captured_files']
+     if type(files) is not list or len(files) > 128:
+         raise ProcessError('Invalid captured file inventory.')
+@@ -473,7 +497,9 @@ def _validate_spec(value, *, current):
+         if item['path'] in seen or type(item['sha256']) is not str or not HASH.fullmatch(item['sha256']):
+             raise ProcessError('Duplicate capture or invalid hash.')
+         seen.add(item['path'])
+-        if type(item['bytes']) is not int or not 0 <= item['bytes'] <= CAPTURE_FILE_LIMIT:
++        item_limit = (policy['max_input_file_bytes'] if policy is not None and item in files
++                      and Path(item['path']).parent == Path(value['cwd'])/'input' else CAPTURE_FILE_LIMIT)
++        if type(item['bytes']) is not int or not 0 <= item['bytes'] <= item_limit:
+             raise ProcessError('Invalid captured file size.')
+     if 'cpu_snapshot' in value:
+         descriptor = validate_cpu_snapshot_descriptor(value['cpu_snapshot'])
+@@ -518,7 +544,7 @@ def _validate_spec(value, *, current):
+     capture_limit = 64 * 1024 * 1024
+     if 'cpu_snapshot' in value or 'torch_runtime' in value:
+         # The complete descriptor/bootstrap contract above qualifies this profile.
+-        capture_limit = 320 * 1024 * 1024
++        capture_limit = policy['max_capture_bytes'] if policy else 320 * 1024 * 1024
+         input_root = Path(value['cwd']) / 'input'
+         input_bytes = 0
+         for item in files:
+@@ -526,10 +552,10 @@ def _validate_spec(value, *, current):
+             if relative is None or len(relative.parts) < 2 or relative.parts[0] not in ('source', 'input', 'native-policy', 'runtime-bootstrap'):
+                 raise ProcessError('CPU capture must use its contained source/input/runtime layout.')
+             if relative.parts[0] == 'input':
+-                if Path(item['path']).parent != input_root or item['bytes'] > 40 * 1024 * 1024:
++                if Path(item['path']).parent != input_root or item['bytes'] > (policy['max_input_file_bytes'] if policy else 40 * 1024 * 1024):
+                     raise ProcessError('CPU input must be a bounded named input file.')
+                 input_bytes += item['bytes']
+-        if input_bytes > 256 * 1024 * 1024:
++        if input_bytes > (policy['max_input_bytes'] if policy else 256 * 1024 * 1024):
+             raise ProcessError('CPU input aggregate exceeds its byte bound.')
+     if sum(item['bytes'] for item in files) > capture_limit or sum(item['bytes'] for item in runtime) > 512 * 1024 * 1024:
+         raise ProcessError('Runtime/source closure exceeds its byte bound.')
+@@ -613,6 +639,48 @@ def verify_model_context(spec):
+             if handle is not None:os.close(handle)
+ 
+ 
++def verify_streamed_capture(item, *, checkpoint=None):
++    """Hash without materializing a large captured file, retaining path custody."""
++    descriptors = []
++    before_dirs = []
++    directory = os.open('/', os.O_RDONLY|os.O_DIRECTORY)
++    descriptors.append(directory)
++    parts = Path(item['path']).parts[1:]
++    directory_identity = lambda x: (x.st_dev, x.st_ino, x.st_mode, x.st_uid, x.st_gid)
++    file_identity = lambda x: (x.st_dev, x.st_ino, x.st_mode, x.st_uid, x.st_gid,
++                               x.st_nlink, x.st_size, x.st_mtime_ns, x.st_ctime_ns)
++    try:
++        for part in parts[:-1]:
++            child = os.open(part, os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW, dir_fd=directory)
++            before_dirs.append((directory, part, directory_identity(os.fstat(child))))
++            descriptors.append(child)
++            directory = child
++        descriptor = os.open(parts[-1], os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK, dir_fd=directory)
++        descriptors.append(descriptor)
++        before = os.fstat(descriptor)
++        if not stat.S_ISREG(before.st_mode) or before.st_size != item['bytes']:
++            raise ProcessError('Captured input size or type changed.', 'stale')
++        measured = hashlib.sha256()
++        size = 0
++        while size < item['bytes']:
++            if checkpoint is not None: checkpoint()
++            chunk = os.read(descriptor, min(1024*1024, item['bytes'] - size))
++            if not chunk: raise ProcessError('Captured input truncated.', 'stale')
++            measured.update(chunk)
++            size += len(chunk)
++        if (file_identity(before) != file_identity(os.fstat(descriptor))
++                or file_identity(before) != file_identity(os.stat(parts[-1], dir_fd=directory, follow_symlinks=False))
++                or measured.hexdigest() != item['sha256']):
++            raise ProcessError('Captured input/source identity changed.', 'stale')
++        for parent, name, expected in before_dirs:
++            if directory_identity(os.stat(name, dir_fd=parent, follow_symlinks=False)) != expected:
++                raise ProcessError('Captured parent path changed.', 'stale')
++    except OSError as error:
++        raise ProcessError('Captured input path unavailable.', 'stale') from error
++    finally:
++        for descriptor in reversed(descriptors): os.close(descriptor)
++
++
+ def verify_captures(spec, *, checkpoint=None, include_cpu=True, include_torch=True,
+                     on_torch_inventory=None):
+     verify_model_context(spec)
+@@ -622,9 +690,12 @@ def verify_captures(spec, *, checkpoint=None, include_cpu=True, include_torch=Tr
+         verify_native_loader_policy(spec['trusted_install_owner_uid'])
+     for item in spec['captured_files']+spec['runtime_files']:
+         if checkpoint is not None: checkpoint()
+-        raw = read_regular(item['path'], item['bytes'])
+-        if len(raw) != item['bytes'] or digest(raw) != item['sha256']:
+-            raise ProcessError('Captured input/source identity changed.', 'stale')
++        if 'capture_policy' in spec:
++            verify_streamed_capture(item, checkpoint=checkpoint)
++        else:
++            raw = read_regular(item['path'], item['bytes'])
++            if len(raw) != item['bytes'] or digest(raw) != item['sha256']:
++                raise ProcessError('Captured input/source identity changed.', 'stale')
+     if 'torch_runtime' in spec:
+         owner = _torch_owner()
+         try:
+diff --git a/tests/test_streamed_payloads.py b/tests/test_streamed_payloads.py
+new file mode 100644
+index 0000000..8d6c987
+--- /dev/null
++++ b/tests/test_streamed_payloads.py
+@@ -0,0 +1,136 @@
++"""Large-file custody, bounded reads and mutation controls; no model execution."""
++import hashlib
++import os
++from pathlib import Path
++import tempfile
++from types import SimpleNamespace
++import unittest
++from unittest.mock import patch
++
++from capture_payloads import FilePayload, CHUNK_BYTES, copy_payload, payload_digest
++from model_definitions import blob, read_owned_blob
++from projects import Projects
++import recipe_process
++from workbench import WorkbenchError
++
++
++class StreamedPayloadTests(unittest.TestCase):
++    def setUp(self):
++        temporary = tempfile.TemporaryDirectory()
++        self.addCleanup(temporary.cleanup)
++        self.root = Path(temporary.name)
++        self.path = self.root/'input.bin'
++        digest = hashlib.sha256()
++        chunk = bytes(range(256))*4096
++        with self.path.open('wb') as handle:
++            for _ in range(41):
++                handle.write(chunk)
++                digest.update(chunk)
++        self.expected = digest.hexdigest()
++
++    def payload(self):
++        with self.path.open('rb') as handle:
++            raw = FilePayload(handle.fileno(), self.path.stat().st_size, expected_sha256=self.expected)
++        self.addCleanup(raw.close)
++        return raw
++
++    def test_hash_and_copy_above_old_file_cap_are_bounded_and_exact(self):
++        read = os.pread
++        sizes = []
++        def observed(fd, size, offset):
++            sizes.append(size)
++            return read(fd, size, offset)
++        with patch('capture_payloads.os.pread', side_effect=observed):
++            raw = self.payload()
++            self.assertEqual(payload_digest(raw), self.expected)
++            with (self.root/'copy.bin').open('wb') as destination:
++                copy_payload(raw, destination)
++        self.assertGreater(len(sizes), 3)
++        self.assertLessEqual(max(sizes), CHUNK_BYTES)
++        item = blob(raw, 'capture-0000.bin')
++        self.assertEqual(item['bytes'], self.path.stat().st_size)
++        recipe_process.verify_streamed_capture(dict(path=str(self.root/'copy.bin'),
++            bytes=item['bytes'], sha256=self.expected))
++
++    def test_same_size_rewrite_with_restored_mtime_is_rejected(self):
++        raw = self.payload()
++        before = self.path.stat()
++        with self.path.open('r+b') as handle:
++            handle.write(b'changed')
++        os.utime(self.path, ns=(before.st_atime_ns, before.st_mtime_ns))
++        with self.assertRaises(WorkbenchError): payload_digest(raw)
++
++    def test_truncation_and_wrong_hash_are_rejected(self):
++        raw = self.payload()
++        with self.path.open('r+b') as handle: handle.truncate(1)
++        with self.assertRaises(WorkbenchError): payload_digest(raw)
++        with self.path.open('rb') as handle, self.assertRaises(WorkbenchError):
++            FilePayload(handle.fileno(), 100, expected_sha256='0'*64)
++
++    def test_project_capture_retains_path_and_allows_unrelated_publication(self):
++        projects = Projects(SimpleNamespace(access=None, db=None, lock=None), {'fixture':self.root})
++        self.addCleanup(projects.close)
++        saved = dict(root='fixture', root_identity=projects.roots['fixture'][1],
++            manifest_sha256='a'*64, manifest=dict(data=[dict(id='sample', path='input.bin', sha256=self.expected)]))
++        with patch.object(projects, '_snapshot_saved', return_value=(saved,b'')):
++            raw, receipt = projects._read_data_reference('b'*32, 'sample', self.expected,
++                self.path.stat().st_size, extensions=True, stream=True)
++        self.addCleanup(raw.close)
++        self.assertIsInstance(raw, FilePayload)
++        self.assertEqual(receipt['measured_sha256'], self.expected)
++        (self.root/'independent').mkdir()
++        self.assertEqual(raw.digest(), self.expected)
++        self.path.rename(self.root/'previous.bin')
++        self.path.symlink_to(self.root/'previous.bin')
++        with self.assertRaises(WorkbenchError): raw.digest()
++
++    def test_owned_blob_streaming_and_replaced_file_are_checked(self):
++        owner = self.root/'materials'
++        directory = owner/('a'*64)
++        directory.mkdir(parents=True)
++        target = directory/'capture-0000.bin'
++        self.path.rename(target)
++        item = dict(name=target.name, bytes=target.stat().st_size, sha256=self.expected,
++            media_type='application/octet-stream')
++        raw = read_owned_blob(owner,'a'*64,item,item['bytes'],stream=True)
++        self.addCleanup(raw.close)
++        self.assertIsInstance(raw,FilePayload)
++        (owner/('b'*64)).mkdir()
++        self.assertEqual(raw.digest(),self.expected)
++        target.rename(directory/'previous.bin')
++        target.write_bytes(b'x')
++        with self.assertRaises(WorkbenchError): raw.digest()
++
++    def test_process_verification_rejects_symlink_parent_and_changed_content(self):
++        item = dict(path=str(self.path),bytes=self.path.stat().st_size,sha256=self.expected)
++        recipe_process.verify_streamed_capture(item)
++        alias = self.root/'alias'
++        alias.symlink_to(self.root, target_is_directory=True)
++        with self.assertRaises(recipe_process.ProcessError):
++            recipe_process.verify_streamed_capture(dict(item,path=str(alias/'input.bin')))
++        with self.path.open('r+b') as handle: handle.write(b'changed')
++        with self.assertRaises(recipe_process.ProcessError): recipe_process.verify_streamed_capture(item)
++
++    def test_process_verification_honors_cancellation_within_large_file(self):
++        calls = []
++        class Cancelled(Exception): pass
++        def checkpoint():
++            calls.append(True)
++            if len(calls)==2: raise Cancelled()
++        with self.assertRaises(Cancelled):
++            recipe_process.verify_streamed_capture(dict(path=str(self.path),
++                bytes=self.path.stat().st_size,sha256=self.expected),checkpoint=checkpoint)
++        self.assertEqual(len(calls),2)
++
++    def test_small_owned_shards_are_also_file_backed_in_streamed_mode(self):
++        owner=self.root/'small-materials';directory=owner/('a'*64)
++        directory.mkdir(parents=True)
++        target=directory/'capture-0000.bin';target.write_bytes(b'small shard')
++        item=blob(b'small shard',target.name)
++        raw=read_owned_blob(owner,'a'*64,item,1024,stream=True)
++        self.addCleanup(raw.close)
++        self.assertIsInstance(raw,FilePayload)
++        self.assertEqual(payload_digest(raw),item['sha256'])
++
++
++if __name__=='__main__': unittest.main()
+diff --git a/tests/test_streamed_recipe.py b/tests/test_streamed_recipe.py
+new file mode 100644
+index 0000000..c3c49d2
+--- /dev/null
++++ b/tests/test_streamed_recipe.py
+@@ -0,0 +1,151 @@
++"""Real Project/material/staging integration above both old byte bounds."""
++import copy
++import hashlib
++import json
++from pathlib import Path
++import unittest
++from unittest.mock import patch
++
++from capture_payloads import FilePayload
++from model_definitions import ModelDefinitions
++import recipe_contract as contract
++import recipe_process
++import test_recipe_contract as fixtures
++import test_torch_runtime as torch_fixtures
++import torch_runtime
++from workbench import WorkbenchError
++
++
++def sha_file(path):
++    h=hashlib.sha256()
++    with path.open('rb') as source:
++        while chunk:=source.read(1024**2): h.update(chunk)
++    return h.hexdigest()
++
++
++class StreamedRecipeTests(unittest.TestCase):
++    def setUp(self):
++        fixtures.RecipePipelineTests.setUp(self)
++        torch_fixtures.InstalledAssets.setUp(self)
++        manifest=torch_runtime.inventory(self.config)
++        self.runtime_raw=torch_runtime.encoded(manifest)
++        identity=hashlib.sha256(self.runtime_raw).hexdigest()
++        self.descriptor=dict(schema_version=1,profile=torch_runtime.PROFILE,
++            catalog_id=self.dataset.db.dataset_id,manifest_sha256=identity,
++            manifest_bytes=len(self.runtime_raw),file_count=len(manifest['files']),total_bytes=manifest['total_bytes'])
++        self.value.update(runtime=contract.TORCH_PROFILE,runtime_device='cuda',runtime_snapshot_sha256=identity,
++            capture_policy=dict(format='streamed_project_inputs_v1',max_input_file_bytes=300*1024**2,
++                max_input_bytes=300*1024**2,max_capture_bytes=400*1024**2))
++        self.value['inputs']['sample']['max_bytes']=300*1024**2
++
++    def graph(self, *, large=False):
++        if large:
++            self.value['capture_policy'].update(max_input_file_bytes=400*1024**2,
++                max_input_bytes=400*1024**2,max_capture_bytes=512*1024**2)
++            self.value['inputs']['sample']['max_bytes']=400*1024**2
++            with (self.project/'data.bin').open('wb') as handle: handle.truncate(350*1024**2)
++        self.recipe_raw=json.dumps(self.value).encode()
++        (self.project/'recipe.json').write_bytes(self.recipe_raw)
++        self.body['expected_sha256']=hashlib.sha256(self.recipe_raw).hexdigest()
++        self.body['inputs']['sample']['expected_sha256']=sha_file(self.project/'data.bin')
++        return self.dataset.pipelines.create_external(self.body)
++
++    def runtime(self):
++        return patch('torch_runtimes.TorchRuntimes.get',return_value=(self.descriptor,self.runtime_raw))
++
++    def test_large_project_retained_material_and_complete_execution_spec(self):
++        graph=self.graph(large=True)
++        with self.runtime(),patch('subprocess.Popen',side_effect=AssertionError('Capture launched code')):
++            preflight,captured=contract.prepare(self.dataset.projects,graph,__import__('pipeline').execution_digest(graph))
++            self.assertIsInstance(captured['input/sample'],FilePayload)
++            model_owner=ModelDefinitions(self.dataset)
++            draft=model_owner.create(dict(name='Stream capture fixture',kind='captured_source',
++                task=dict(kind='task',catalog_id=self.dataset.db.dataset_id,id='neutral.bytes',revision=1,sha256='a'*64),
++                specification=dict(format='capture_fixture_v1'),source_selector={k:self.body[k] for k in ('project_id','recipe_id','expected_sha256')},
++                preprocessing_policy=dict(kind='identity'),output_policy=dict(kind='exact_bytes')))
++            model=model_owner.publish(draft['id'],dict(revision=1))
++            prepared=self.dataset.pipelines.prepare_external_material(graph['id'],1,model['ref'])
++            with self.dataset.lock,self.dataset.db.transaction():
++                retained=self.dataset.pipelines._retain_material(prepared)
++            self.assertEqual(self.dataset.pipelines.recipe_material(retained['ref'],verify=True),retained)
++            stage=self.root/'large-stage'
++            execution=self.dataset.pipelines.capture_recipe_material(retained['ref'],stage)
++            spec=dict(execution['spec'],attempt_id='b'*32,request_sha256='c'*64)
++            recipe_process.validate_spec(spec)
++            recipe_process.verify_captures(spec,include_torch=False)
++            self.assertEqual(sha_file(stage/'input/sample'),self.body['inputs']['sample']['expected_sha256'])
++            self.assertEqual(spec['capture_policy'],self.value['capture_policy'])
++            self.assertIn('capture_payloads.py',preflight['material']['host_files'])
++            self.assertGreater(recipe_process.preparation_seconds(spec),60)
++            self.assertGreater(recipe_process.verification_seconds(spec),60)
++            self.assertEqual(self.dataset.runs.list(),[])
++            bad=copy.deepcopy(spec);bad.pop('capture_policy')
++            with self.assertRaises(recipe_process.ProcessError):recipe_process.validate_spec(bad)
++            (stage/'input/sample').chmod(0o600)
++            with (stage/'input/sample').open('r+b') as handle:handle.write(b'changed')
++            with self.assertRaises(recipe_process.ProcessError):recipe_process.verify_captures(spec,include_torch=False)
++
++    def test_configured_budgets_and_policy_identity_are_enforced(self):
++        for mutate in (
++            lambda v:v.update(runtime='system_python'),
++            lambda v:v['capture_policy'].update(max_input_bytes=True),
++            lambda v:v['capture_policy'].update(max_capture_bytes=-1),
++            lambda v:v['capture_policy'].update(max_input_file_bytes=500*1024**2),
++            lambda v:v['capture_policy'].update(format='unknown'),
++            lambda v:v.update(capture_policy=None),
++            lambda v:v['capture_policy'].update(unrecorded=True),
++        ):
++            value=copy.deepcopy(self.value);mutate(value)
++            with self.subTest(value=value),self.assertRaises(WorkbenchError):
++                contract.decode_definition(json.dumps(value).encode())
++        self.value['capture_policy'].update(max_input_file_bytes=5,max_input_bytes=5)
++        self.value['inputs']['sample']['max_bytes']=5
++        graph=self.graph()
++        with self.runtime(),self.assertRaises(WorkbenchError):self.dataset.pipelines.preflight_external(graph['id'],1)
++
++    def test_explicit_total_budget_failure_and_legacy_defaults(self):
++        old=copy.deepcopy(self.value);old.pop('capture_policy')
++        with self.assertRaises(WorkbenchError):contract.decode_definition(json.dumps(old).encode())
++        old['inputs']['sample']['max_bytes']=40*1024**2
++        contract.decode_definition(json.dumps(old).encode())
++        self.assertEqual(contract.capture_limits(old),(40*1024**2,256*1024**2,320*1024**2))
++        self.value['capture_policy'].update(max_input_file_bytes=12,max_input_bytes=12,max_capture_bytes=12)
++        self.value['inputs']['sample']['max_bytes']=12
++        graph=self.graph()
++        with self.runtime(),self.assertRaises(WorkbenchError):self.dataset.pipelines.preflight_external(graph['id'],1)
++
++    def test_old_host_inventory_remains_cold_readable(self):
++        self.value.pop('capture_policy');self.value['inputs']['sample']['max_bytes']=1024
++        graph=self.graph()
++        with self.runtime():material=self.dataset.pipelines.preflight_external(graph['id'],1)['material']
++        material['host_files'].pop('capture_payloads.py')
++        material['host_files'].pop('model_definitions.py')
++        with patch.object(Path,'read_bytes',side_effect=AssertionError('Cold validation read installed files')):
++            contract.validate_material(material)
++
++    def test_host_inventory_requires_one_complete_supported_layout(self):
++        self.value.pop('capture_policy');self.value['inputs']['sample']['max_bytes']=1024
++        graph=self.graph()
++        with self.runtime():material=self.dataset.pipelines.preflight_external(graph['id'],1)['material']
++        partial=copy.deepcopy(material)
++        partial['host_files'].pop('capture_payloads.py')
++        with self.assertRaises(WorkbenchError) as refused:
++            contract.validate_material(partial)
++        self.assertEqual(str(refused.exception),'Invalid retained host closure.')
++        unknown=copy.deepcopy(material)
++        unknown['host_files']['unregistered_host.py']='a'*64
++        with self.assertRaises(WorkbenchError) as refused:
++            contract.validate_material(unknown)
++        self.assertEqual(str(refused.exception),'Invalid retained host closure.')
++
++    def test_streamed_policy_cannot_use_the_legacy_host_layout(self):
++        graph=self.graph()
++        with self.runtime():material=self.dataset.pipelines.preflight_external(graph['id'],1)['material']
++        material['host_files'].pop('capture_payloads.py')
++        material['host_files'].pop('model_definitions.py')
++        with self.assertRaises(WorkbenchError) as refused:
++            contract.validate_material(material)
++        self.assertEqual(str(refused.exception),'Invalid retained host closure.')
++
++
++if __name__=='__main__':unittest.main()

@@ -1,0 +1,347 @@
+diff --git a/project_artifacts.py b/project_artifacts.py
+index 743ba5c..fe2a0ee 100644
+--- a/project_artifacts.py
++++ b/project_artifacts.py
+@@ -247,12 +247,34 @@ class ProjectArtifacts:
+             self._ensure_open()
+             try:
+                 with self.store.root_directory() as root:
+-                    try:
+-                        with self._source(root, declaration) as source:
+-                            return _observe(source, declaration)
+-                    except _Missing:
+-                        return dict(state='missing', expected_sha256=declaration['sha256'], expected_bytes=declaration['bytes'],
+-                                    observed_sha256=None, observed_bytes=None)
++                    return self._status_at(root, declaration)
++            except OSError as error:
++                _io(error)
++
++    def _status_at(self, root, declaration):
++        try:
++            with self._source(root, declaration) as source:
++                return _observe(source, declaration)
++        except _Missing:
++            return dict(state='missing', expected_sha256=declaration['sha256'], expected_bytes=declaration['bytes'],
++                        observed_sha256=None, observed_bytes=None)
++
++    def status_many(self, declarations):
++        """Hash each explicit artifact under one before/after-verified root.
++
++        Unlike presence inspection, these observations verify present payload
++        hashes. An unchanged canonical closure is proved for the entire group;
++        every individual file retains its anchored source-location checks.
++        """
++        if type(declarations) is not list:
++            _fail('Artifact status groups must be explicit finite lists.')
++        declarations = [validate_declaration(value) for value in declarations]
++        with self._mutex:
++            self._ensure_open()
++            try:
++                with self.store.root_directory(verify_after=True) as root:
++                    result = [self._status_at(root, value) for value in declarations]
++                return result
+             except OSError as error:
+                 _io(error)
+ 
+@@ -327,36 +349,74 @@ class ProjectArtifacts:
+         snapshot = None
+         try:
+             with self.store.root_directory() as root:
+-                local = staging = None
+-                try:
+-                    with self._source(root, declaration) as source:
+-                        local = _directory(root, '.tuldok-local', create=True)
+-                        staging = _directory(local, 'artifact-snapshots', create=True)
+-                        temporary = '.snapshot-' + uuid.uuid4().hex + '.tmp'
+-                        output = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC,
+-                                         0o600, dir_fd=staging)
+-                        try:
+-                            _verified(_observe(source, declaration, output=output))
+-                            os.fchmod(output, 0o400)
+-                            os.fsync(output)
+-                        finally:
+-                            os.close(output)
+-                        snapshot = os.open(temporary, FILE_FLAGS, dir_fd=staging)
+-                        _info(snapshot, rooted=True)
+-                        os.unlink(temporary, dir_fd=staging)
+-                except _Missing as error:
+-                    raise ProjectArtifactError('Required artifact bytes are missing.', 'unavailable', 404) from error
+-                finally:
+-                    if staging is not None:
+-                        os.close(staging)
+-                    if local is not None:
+-                        os.close(local)
++                snapshot = self._snapshot_at(root, declaration)
+             return snapshot
+         except BaseException:
+             if snapshot is not None:
+                 os.close(snapshot)
+             raise
+ 
++    def _snapshot_at(self, root, declaration):
++        snapshot = None
++        try:
++            local = staging = None
++            try:
++                with self._source(root, declaration) as source:
++                    local = _directory(root, '.tuldok-local', create=True)
++                    staging = _directory(local, 'artifact-snapshots', create=True)
++                    temporary = '.snapshot-' + uuid.uuid4().hex + '.tmp'
++                    output = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC,
++                                     0o600, dir_fd=staging)
++                    try:
++                        _verified(_observe(source, declaration, output=output))
++                        os.fchmod(output, 0o400)
++                        os.fsync(output)
++                    finally:
++                        os.close(output)
++                    snapshot = os.open(temporary, FILE_FLAGS, dir_fd=staging)
++                    _info(snapshot, rooted=True)
++                    os.unlink(temporary, dir_fd=staging)
++            except _Missing as error:
++                raise ProjectArtifactError('Required artifact bytes are missing.', 'unavailable', 404) from error
++            finally:
++                if staging is not None:
++                    os.close(staging)
++                if local is not None:
++                    os.close(local)
++            return snapshot
++        except BaseException:
++            if snapshot is not None:
++                os.close(snapshot)
++            raise
++
++    def copy_many_to(self, destination, declarations):
++        """Copy a finite inventory with one before/after-verified source root.
++
++        Each payload uses its own verified unlinked snapshot and ordinary atomic
++        destination publication. Only one temporary payload is retained at once.
++        A later failure can leave earlier verified destination blobs inert; the
++        caller owns publication of the complete destination project.
++        """
++        if not isinstance(destination, ProjectArtifacts) or destination is self:
++            _fail('Artifact copying requires a distinct destination owner.')
++        if type(declarations) is not list:
++            _fail('Artifact copy groups must be explicit finite lists.')
++        declarations = [validate_declaration(value) for value in declarations]
++        first, second = sorted((self, destination), key=id)
++        with first._mutex, second._mutex:
++            self._ensure_open()
++            destination._ensure_open()
++            try:
++                with self.store.root_directory(verify_after=True) as root:
++                    for declaration in declarations:
++                        snapshot = self._snapshot_at(root, declaration)
++                        try:
++                            destination.publish_fd(snapshot, declaration, maximum_bytes=declaration['bytes'])
++                        finally:
++                            os.close(snapshot)
++            except OSError as error:
++                _io(error)
++
+     @contextmanager
+     def open_verified(self, declaration, *, maximum_bytes=None):
+         """Borrow a verified unlinked read-only snapshot, not a mutable source fd."""
+diff --git a/project_fork.py b/project_fork.py
+index ff75fec..959dde8 100644
+--- a/project_fork.py
++++ b/project_fork.py
+@@ -353,8 +353,10 @@ def publish_fork(source_store, source_artifacts, trusted_root_fd, relative, *, r
+                 _fail('Fork must retain the source payload inventory without regenerating bytes.')
+             plan = _artifact_plan(candidate['artifacts'], declarations)
+             copied, missing = [], []
+-            for identity in sorted(plan):
+-                status = source_artifacts.status(declarations[identity])['state']
++            identities = sorted(plan)
++            observations = source_artifacts.status_many([declarations[identity] for identity in identities])
++            for identity, observation in zip(identities, observations):
++                status = observation['state']
+                 if status == 'corrupt':
+                     _fail('Source fork payload is corrupt.', 'invalid', 400)
+                 if status == 'missing':
+@@ -374,10 +376,7 @@ def publish_fork(source_store, source_artifacts, trusted_root_fd, relative, *, r
+             validate_candidate(copy.deepcopy(records), destination_id)
+             _source_current(source_store, source)
+             artifacts = ProjectArtifacts(staged)
+-            for identity in copied:
+-                value = declarations[identity]
+-                with source_artifacts.open_verified(value, maximum_bytes=value['bytes']) as source_fd:
+-                    artifacts.publish_fd(source_fd, value, maximum_bytes=value['bytes'])
++            source_artifacts.copy_many_to(artifacts, [declarations[identity] for identity in copied])
+             # Ordinary authored files are explicitly adopted text. Only a new
+             # task-owned fork stage materializes them; Open never calls this.
+             from project_files import materialize_captured
+diff --git a/tests/test_project_artifacts.py b/tests/test_project_artifacts.py
+index ecd8158..2a68497 100644
+--- a/tests/test_project_artifacts.py
++++ b/tests/test_project_artifacts.py
+@@ -57,6 +57,105 @@ class _ArtifactFixture:
+         return self.store.commit(records, self.store.snapshot()['checkpoint'], key, request(records))
+ 
+ class ProjectArtifactTests(_ArtifactFixture, unittest.TestCase):
++    def test_copy_group_keeps_exact_independent_snapshots_with_two_source_closure_checks(self):
++        raws = [b'first exact output', b'second exact output']
++        values = [declaration(raw) for raw in raws]
++        for raw, value in zip(raws, values):
++            self.artifacts.publish_bytes(raw, value)
++        self.commit(values)
++        target = self.path / 'copy'
++        with ProjectStore.create(target, 'Copy', 'copy', 'b' * 64) as store, ProjectArtifacts(store) as destination:
++            publish = destination.publish_fd
++            def mutate_source_after_snapshot(fd, value, **options):
++                # A mutable original source must not be the fd consumed by the
++                # destination. Its already-verified snapshot stays independent.
++                original = self.payload(value)
++                original.unlink()
++                original.write_bytes(b'changed after verified capture')
++                return publish(fd, value, **options)
++            with patch.object(destination, 'publish_fd', side_effect=mutate_source_after_snapshot):
++                with patch.object(self.store, 'snapshot', wraps=self.store.snapshot) as checks:
++                    self.artifacts.copy_many_to(destination, values)
++            self.assertEqual(checks.call_count, 2)
++            for raw, value in zip(raws, values):
++                copied = target / 'artifacts/sha256' / value['sha256']
++                self.assertEqual(copied.read_bytes(), raw)
++                self.assertEqual(copied.stat().st_nlink, 1)
++                self.assertNotEqual(copied.stat().st_ino, self.payload(value).stat().st_ino)
++
++    def test_copy_group_rejects_source_canonical_corruption_before_success(self):
++        value = declaration(b'present')
++        self.artifacts.publish_bytes(b'present', value)
++        self.commit([value])
++        manifest = json.loads((self.project / '.tuldok/project.json').read_bytes())
++        record = self.project / '.tuldok' / manifest['inventory'][0]['path']
++        with ProjectStore.create(self.path / 'copy', 'Copy', 'copy', 'b' * 64) as store, ProjectArtifacts(store) as destination:
++            publish = destination.publish_fd
++            def corrupt_after_copy(*args, **options):
++                result = publish(*args, **options)
++                record.write_bytes(b'{"corrupt":true}\n')
++                return result
++            with patch.object(destination, 'publish_fd', side_effect=corrupt_after_copy):
++                self.assert_code('stale', self.artifacts.copy_many_to, destination, [value])
++
++    def test_copy_group_prevalidates_inventory_and_preserves_missing_payload_failure(self):
++        value, missing = declaration(b'present'), declaration(b'missing')
++        self.artifacts.publish_bytes(b'present', value)
++        self.commit([value, missing])
++        with ProjectStore.create(self.path / 'copy', 'Copy', 'copy', 'b' * 64) as store, ProjectArtifacts(store) as destination:
++            with patch.object(destination, 'publish_fd', wraps=destination.publish_fd) as publish:
++                self.assert_code('invalid', self.artifacts.copy_many_to, destination, [value, dict(missing, bytes=True)])
++                publish.assert_not_called()
++            self.assert_code('unavailable', self.artifacts.copy_many_to, destination, [value, missing])
++            self.assertEqual(destination.status(value)['state'], 'verified')
++            self.assertEqual(destination.status(missing)['state'], 'missing')
++
++    def test_status_group_retains_exact_hash_observations_with_two_closure_checks(self):
++        values = [declaration(b'present'), declaration(b'missing'), declaration(b'correct')]
++        self.artifacts.publish_bytes(b'present', values[0])
++        self.artifacts.publish_bytes(b'correct', values[2])
++        self.commit(values)
++        self.payload(values[2]).unlink()
++        self.payload(values[2]).write_bytes(b'changed')
++        expected = [self.artifacts.status(value) for value in values]
++        with patch.object(self.store, 'snapshot', wraps=self.store.snapshot) as checks:
++            actual = self.artifacts.status_many(values)
++        self.assertEqual(actual, expected)
++        self.assertEqual([item['state'] for item in actual], ['verified', 'missing', 'corrupt'])
++        self.assertEqual(checks.call_count, 2)
++        self.assertEqual(actual[0]['observed_sha256'], values[0]['sha256'])
++        self.assertEqual(actual[2]['observed_sha256'], hashlib.sha256(b'changed').hexdigest())
++
++    def test_status_group_rejects_canonical_corruption_during_observation(self):
++        value = declaration(b'present')
++        self.artifacts.publish_bytes(b'present', value)
++        self.commit([value])
++        manifest = json.loads((self.project / '.tuldok/project.json').read_bytes())
++        record = self.project / '.tuldok' / manifest['inventory'][0]['path']
++        original = self.artifacts._source
++        @contextmanager
++        def corrupt_after_observation(*args):
++            with original(*args) as source:
++                yield source
++            record.write_bytes(b'{"corrupt":true}\n')
++        with patch.object(self.artifacts, '_source', side_effect=corrupt_after_observation):
++            self.assert_code('stale', self.artifacts.status_many, [value])
++
++    def test_status_group_rejects_checkpoint_change_and_unsafe_aliases(self):
++        value = declaration(b'present')
++        self.artifacts.publish_bytes(b'present', value)
++        self.commit([value])
++        original = self.artifacts._source
++        @contextmanager
++        def change_checkpoint(*args):
++            with original(*args) as source:
++                yield source
++            self.commit([], key='new-checkpoint')
++        with patch.object(self.artifacts, '_source', side_effect=change_checkpoint):
++            self.assert_code('stale', self.artifacts.status_many, [value])
++        os.link(self.payload(value), self.path / 'outside-alias')
++        self.assert_code('invalid', self.artifacts.status_many, [value])
++
+     def test_presence_batch_matches_individual_observations_with_two_closure_checks(self):
+         values=[declaration(b'present'),declaration(b'missing'),declaration(b'other')]
+         self.artifacts.publish_bytes(b'present',values[0])
+diff --git a/tests/test_project_fork.py b/tests/test_project_fork.py
+index 946f8b7..6241c89 100644
+--- a/tests/test_project_fork.py
++++ b/tests/test_project_fork.py
+@@ -120,6 +120,59 @@ class ForkFilesystemTests(unittest.TestCase):
+         self.assert_code('conflict', self.fork, 'unrelated')
+         self.assertEqual((other / '.tuldok/project.json').read_bytes(), unrelated)
+ 
++    def test_missing_runtime_inventory_does_not_repeat_full_source_closure_per_entry(self):
++        # Each snapshot validates the complete canonical file closure. Missing
++        # runtime declarations must not multiply that work by inventory length.
++        snapshot = self.source.snapshot
++        with patch.object(self.source, 'snapshot', wraps=snapshot) as scans:
++            self.fork('small-inventory')
++        baseline = scans.call_count
++        records = copy.deepcopy(self.original['records'])
++        runtime = set()
++        for index in range(32):
++            raw = ('unmaterialized runtime dependency %d' % index).encode()
++            sha = hashlib.sha256(raw).hexdigest()
++            runtime.add(sha)
++            records.append(dict(family='project_artifact', id=sha,
++                document=dict(format='project_artifact_v1', sha256=sha, bytes=len(raw))))
++        self.original = self.source.commit(records, self.original['checkpoint'],
++            'larger-runtime-inventory', body(records))
++        def candidate(source, destination):
++            value = self.candidate(source, destination)
++            for edge in value['artifacts']:
++                if edge['declaration']['sha256'] in runtime:
++                    edge['preservation'] = 'regenerable'
++            return value
++        with patch.object(self.source, 'snapshot', wraps=snapshot) as scans:
++            result = self.fork('large-inventory', build_candidate=candidate)
++        self.assertEqual(set(result['fork']['artifacts']['missing_regenerable']), runtime)
++        self.assertLessEqual(scans.call_count, baseline + 4,
++            'Full source closure scans must stay bounded when missing runtime inventory grows')
++
++    def test_present_payload_copy_does_not_repeat_full_source_closure_per_file(self):
++        snapshot = self.source.snapshot
++        with patch.object(self.source, 'snapshot', wraps=snapshot) as scans:
++            self.fork('small-payload-set')
++        baseline = scans.call_count
++        records = copy.deepcopy(self.original['records'])
++        payloads = {}
++        for index in range(8):
++            raw = ('retained unique output %d' % index).encode()
++            sha = hashlib.sha256(raw).hexdigest()
++            value = dict(format='project_artifact_v1', sha256=sha, bytes=len(raw))
++            self.artifacts.publish_bytes(raw, value)
++            records.append(dict(family='project_artifact', id=sha, document=value))
++            payloads[sha] = raw
++        self.original = self.source.commit(records, self.original['checkpoint'],
++            'larger-payload-set', body(records))
++        with patch.object(self.source, 'snapshot', wraps=snapshot) as scans:
++            result = self.fork('large-payload-set')
++        for sha, raw in payloads.items():
++            self.assertIn(sha, result['fork']['artifacts']['copied'])
++            self.assertEqual((self.root / 'large-payload-set/artifacts/sha256' / sha).read_bytes(), raw)
++        self.assertLessEqual(scans.call_count, baseline + 4,
++            'Full source closure scans must stay bounded when present payload count grows')
++
+     def test_quiescence_checkpoint_overlap_and_symlink_guards_precede_publication(self):
+         before = self.canonical_bytes()
+         self.assert_code('busy', self.fork, quiescent=False)

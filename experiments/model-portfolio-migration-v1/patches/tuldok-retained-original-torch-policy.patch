@@ -1,0 +1,148 @@
+From 7f841a6e63eb16cca4d4b4f7aef209ab4ddd2adc Mon Sep 17 00:00:00 2001
+From: MrScripty <TheEnvironmentGuy@protonmail.com>
+Date: Sat, 24 Oct 2026 09:01:34 -0700
+Subject: [PATCH] Validate original Torch material policy only through retained
+ Run specifications
+
+---
+ recipe_contract.py          | 42 ++++++++++++++++++++++++++++++++++++-
+ runs.py                     |  2 +-
+ tests/test_torch_runtime.py | 33 +++++++++++++++++++++++++++++
+ 3 files changed, 75 insertions(+), 2 deletions(-)
+
+diff --git a/recipe_contract.py b/recipe_contract.py
+index 2c1f85fc..2c3de494 100644
+--- a/recipe_contract.py
++++ b/recipe_contract.py
+@@ -830,8 +830,23 @@ def prepare(projects, graph, execution_sha256, profile=None, *, releases=None, r
+             'graph_revision':graph['revision'], 'execution_sha256':execution_sha256}, captured
+ 
+ 
++def _legacy_torch_policy(material):
++    return (material['schema_version']==1 and material['recipe']['schema_version']==1
++            and material['recipe']['runtime']==TORCH_PROFILE
++            and material['environment']=={'LANG':'C.UTF-8'})
++
++
+ def validate_material(material):
+     """Cold structural custody checks; no filesystem access or current-code comparison."""
++    return _validate_material(material, retained=False)
++
++
++def validate_retained_material(material):
++    """Validate current and original schema1 execution facts without admission."""
++    return _validate_material(material, retained=True)
++
++
++def _validate_material(material, *, retained):
+     closed(material, ('schema_version', 'catalog_id', 'project', 'graph_execution_sha256', 'recipe',
+                       'parameters', 'inputs', 'captures', 'runtime', 'host_files', 'permissions', 'environment', 'resources'), ('native_policies','cpu_snapshot','torch_runtime','extension_binding'))
+     if type(material['schema_version']) is not int or material['schema_version'] not in (1,2,3) or not isinstance(material['catalog_id'], str) or not material['catalog_id']:
+@@ -856,7 +871,11 @@ def validate_material(material):
+         raise WorkbenchError('Material leaves no generated context capacity.')
+     if encode(validate_parameters(definition, material['parameters'])) != encode(material['parameters']):
+         raise WorkbenchError('Retained parameters must include every typed value.')
+-    if material['resources'] != definition['resources'] or material['environment'] != ({} if definition['runtime']==TORCH_PROFILE else {'LANG':'C.UTF-8'}) or material['permissions'] != {'filesystem':'trusted-local', 'network':'not_isolated'}:
++    expected_environment = {} if definition['runtime']==TORCH_PROFILE else {'LANG':'C.UTF-8'}
++    legacy_environment = retained and _legacy_torch_policy(material)
++    if (material['resources'] != definition['resources']
++            or material['environment'] != expected_environment and not legacy_environment
++            or material['permissions'] != {'filesystem':'trusted-local', 'network':'not_isolated'}):
+         raise WorkbenchError('Material execution policy is inconsistent.')
+     if not isinstance(material['inputs'], dict) or set(material['inputs']) != set(definition['inputs']): raise WorkbenchError('Material input inventory differs.')
+     expected = {'source/'+item['path']:item['sha256'] for item in definition['sources']}
+@@ -991,6 +1010,10 @@ def validate_material(material):
+ def spec_for_material(material, staging, *, context=None):
+     """Pure reconstruction: retained approvals never depend on current source/runtime."""
+     validate_material(material)
++    return _spec_for_material(material, staging, context=context)
++
++
++def _spec_for_material(material, staging, *, context=None):
+     staging = Path(staging).absolute()
+     output = staging/'output'
+     definition = material['recipe']; runtime = material['runtime']
+@@ -1041,6 +1064,23 @@ def validate_spec(material, spec, staging, *, context=None):
+     if is_evidence(material['recipe']) and context is None:
+         raise WorkbenchError('Final model-evidence specification requires authoritative attempt context.')
+     expected = spec_for_material(material, staging, context=context)
++    return _validate_spec(expected, spec)
++
++
++def validate_retained_spec(material, spec, staging, *, context=None):
++    """Prove an exact historical spec; never select this path for new work."""
++    validate_retained_material(material)
++    if is_evidence(material['recipe']) and context is None:
++        raise WorkbenchError('Final model-evidence specification requires authoritative attempt context.')
++    expected = _spec_for_material(material, staging, context=context)
++    if _legacy_torch_policy(material):
++        # This original policy predates descriptor duplication in the spec.
++        # Its descriptor remains mandatory in the exact retained material.
++        expected.pop('torch_runtime')
++    return _validate_spec(expected, spec)
++
++
++def _validate_spec(expected, spec):
+     actual = {key:value for key,value in spec.items() if key not in ('attempt_id', 'request_sha256')}
+     if encode(actual) != encode(expected):
+         raise WorkbenchError('Execution specification differs from the approved material.', 'conflict', 409)
+diff --git a/runs.py b/runs.py
+index 8d8a9398..c4cfcfc7 100644
+--- a/runs.py
++++ b/runs.py
+@@ -193,7 +193,7 @@ def validate_retained_run(run, *, catalog_id, run_id, request_key, request_sha25
+                     or Path(declared).parent.name != 'workspace-runs'):
+                 raise ValueError('Invalid retained external staging location.')
+             admitted_context=extension_context
+-            recipe_contract.validate_spec(run['material'], run['spec'], declared,context=admitted_context)
++            recipe_contract.validate_retained_spec(run['material'], run['spec'], declared,context=admitted_context)
+             if (run['graph'].get('recipe') != 'external_recipe'
+                     or run['material']['catalog_id'] != catalog_id
+                     or digest(run['material']) != run['material_sha256']
+diff --git a/tests/test_torch_runtime.py b/tests/test_torch_runtime.py
+index 03fe4089..73beb56c 100644
+--- a/tests/test_torch_runtime.py
++++ b/tests/test_torch_runtime.py
+@@ -130,6 +130,39 @@ class InstalledAssets(unittest.TestCase):
+ class TorchRecipe(unittest.TestCase):
+     setUp=fixtures.RecipePipelineTests.setUp
+ 
++    def test_retained_language_policy_keeps_exact_spec_and_cannot_enter_current_admission(self):
++        InstalledAssets.setUp(self)
++        manifest=runtime.inventory(self.config);raw=runtime.encoded(manifest)
++        identity=runtime.sha(raw)
++        descriptor=dict(schema_version=1,profile=runtime.PROFILE,catalog_id=self.dataset.db.dataset_id,
++                        manifest_sha256=identity,manifest_bytes=len(raw),file_count=len(manifest['files']),
++                        total_bytes=manifest['total_bytes'])
++        self.value.update(runtime=runtime.PROFILE,runtime_device='cuda',runtime_snapshot_sha256=identity)
++        self.recipe_raw=json.dumps(self.value).encode();(self.project/'recipe.json').write_bytes(self.recipe_raw)
++        self.body['expected_sha256']=runtime.sha(self.recipe_raw)
++        graph=self.dataset.pipelines.create_external(self.body)
++        with patch('torch_runtimes.TorchRuntimes.get',return_value=(descriptor,raw)), \
++             patch('subprocess.Popen',side_effect=AssertionError('Retained validation executes no source')):
++            preflight=self.dataset.pipelines.preflight_external(graph['id'],1)
++            captured=self.dataset.pipelines.capture_external(graph['id'],1,preflight['material_sha256'],self.root/'capture')
++        material=copy.deepcopy(captured['material']);spec=copy.deepcopy(captured['spec'])
++        material['environment']={'LANG':'C.UTF-8'};spec['env']={'LANG':'C.UTF-8'}
++        descriptor_in_current_spec=spec.pop('torch_runtime')
++        original_material=copy.deepcopy(material);original_spec=copy.deepcopy(spec)
++        with self.assertRaises(WorkbenchError):contract.validate_material(material)
++        with self.assertRaises(WorkbenchError):contract.spec_for_material(material,self.root/'capture')
++        with patch('subprocess.Popen',side_effect=AssertionError('Retained spec is inert')):
++            self.assertEqual(contract.validate_retained_spec(material,spec,self.root/'capture'),spec)
++        self.assertEqual(material,original_material);self.assertEqual(spec,original_spec)
++        with self.assertRaises(WorkbenchError):contract.validate_spec(material,spec,self.root/'capture')
++        for changed_env in ({'LANG':'elsewhere'},{'LANG':'C.UTF-8','PYTHONPATH':'/unsafe'}):
++            bad=copy.deepcopy(material);bad['environment']=changed_env
++            with self.assertRaises(WorkbenchError):contract.validate_retained_spec(bad,spec,self.root/'capture')
++        bad=copy.deepcopy(spec);bad['env']={}
++        with self.assertRaises(WorkbenchError):contract.validate_retained_spec(material,bad,self.root/'capture')
++        bad=copy.deepcopy(spec);bad['torch_runtime']=descriptor_in_current_spec
++        with self.assertRaises(WorkbenchError):contract.validate_retained_spec(material,bad,self.root/'capture')
++
+     def test_capture_binds_manifest_bootstrap_and_explicit_device(self):
+         InstalledAssets.setUp(self)
+         manifest=runtime.inventory(self.config)
+-- 
+2.43.0
+

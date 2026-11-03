@@ -1,0 +1,1487 @@
+From c64b3a9d02a01f92ea1756ca995cc7a99a423750 Mon Sep 17 00:00:00 2001
+From: MrScripty <TheEnvironmentGuy@protonmail.com>
+Date: Fri, 23 Oct 2026 12:26:05 -0700
+Subject: [PATCH] feat(project): inspect retained scientific fields in native
+ projects
+
+Share the existing numeric field inspector between workbench and native project readers. Pin native slices to the selected project checkpoint and source content, and clear cancelled or superseded reads without importing execution authority.
+---
+ agent_api.py                        |   2 +
+ app.py                              |   2 +
+ docs/contracts/scientific-fields.md |  36 ++
+ project_data.py                     |   8 +
+ project_dispatch.py                 |   4 +-
+ static/project-files.html           |   3 +
+ static/project-files.js             | 524 +++++++++++++++-------------
+ static/scientific-fields.js         |  86 +----
+ static/scientific-inspector.css     |   2 +
+ static/scientific-inspector.js      |  84 +++++
+ static/workbench.css                |   2 -
+ static/workbench.html               |   6 +-
+ tests/browser_scientific_fields.cjs |   2 +-
+ tests/test_project_files_clients.py |  12 +
+ tests/test_project_files_m2_http.py |  33 +-
+ tests/test_project_sources.py       |  24 ++
+ tuldok_client.py                    |   4 +
+ 17 files changed, 502 insertions(+), 332 deletions(-)
+ create mode 100644 static/scientific-inspector.css
+ create mode 100644 static/scientific-inspector.js
+
+diff --git a/agent_api.py b/agent_api.py
+index 818a38b2..2da06bbd 100644
+--- a/agent_api.py
++++ b/agent_api.py
+@@ -868,6 +868,8 @@ _project_file_operation('definitions', 'GET', '/definitions')
+ # Actual data and its authored histories. Inline source imports retain the
+ # existing decoded-byte bound; compound sources use their existing parsers.
+ _project_file_operation('data_query', 'GET', '/data', domain='data.query')
++_project_file_operation('data_scientific', 'GET', '/data/{record_id}/scientific',
++    {'content_hash': SHA}, domain='data.scientific')
+ _project_file_operation('data_get', 'GET', '/data/{record_id}', {'record_id': ID})
+ _project_file_operation('data_availability', 'GET', '/data/{record_id}/availability', {'record_id': ID})
+ for _action, _suffix in [('data_history', 'history'), ('data_responses', 'responses'),
+diff --git a/app.py b/app.py
+index c7b7d25e..5bc42e31 100644
+--- a/app.py
++++ b/app.py
+@@ -899,6 +899,8 @@ def make_handler(dataset, observer=None, *, transfer_controller=None):
+                     '/pointclouds.js': ('pointclouds.js', 'text/javascript'),
+                     '/volume-editor.js': ('volume-editor.js', 'text/javascript'),
+                     '/scientific-fields.js': ('scientific-fields.js', 'text/javascript'),
++                    '/scientific-inspector.js': ('scientific-inspector.js', 'text/javascript'),
++                    '/scientific-inspector.css': ('scientific-inspector.css', 'text/css'),
+                     '/audio-editor.js': ('audio-editor.js', 'text/javascript'),
+                     '/audio-editor.css': ('audio-editor.css', 'text/css'),
+                     '/meshes.css': ('meshes.css', 'text/css'),
+diff --git a/docs/contracts/scientific-fields.md b/docs/contracts/scientific-fields.md
+index b176215a..cf31a01a 100644
+--- a/docs/contracts/scientific-fields.md
++++ b/docs/contracts/scientific-fields.md
+@@ -158,3 +158,39 @@ and restart, rollback custody, changed/FIFO source refusal, and real HTTP
+ project import and slice inspection. Native producer observations and independent
+ NumPy qualification are recorded separately; these tests are not physics,
+ training, or model acceptance.
++
++## Native external-project inspection
++
++`project_files.data_scientific/1` reads the same bounded numeric slice through
++the native project session. It requires the current `binding`, canonical
++`checkpoint`, `record_id` and exact `content_hash`; `frame`, `field`, `axis` and
++`index` retain the existing inspector's selection grammar. ProjectData checks
++current inspect authority, the project session and source identity before using
++ScientificAssets. The scientific owner verifies retained artifact bytes and
++metadata. Stale bindings/checkpoints, changed content, missing/corrupt artifacts
++and revoked credentials refuse; no source-path or cached-array fallback runs.
++The read changes no project records and grants no execution authority.
++
++The native project explorer mounts the same `ScientificFieldInspector` used by
++the workbench. That module owns slice validation, numeric probing, display-only
++grayscale rendering and cancellation. Each page supplies its authoritative
++selection predicate and slice reader; the workbench separately owns its source
++download and review-note editor. The native project reader uses negotiated
++project operations rather than the legacy workbench URLs. Native project
++annotation stays with its existing data-note owner.
++
++Changing the selected record, project/checkpoint or session clears the native
++view and aborts pending reads. A superseded reply cannot repaint it. Page teardown
++also aborts reads. Hidden or loading canvases do not display old pixels. Field
++units, producer stage, original clock and grid coordinates remain explicit;
++opening a scientific data record does not qualify its physical meaning or turn
++an authored diagnostic into an accepted model result.
++
++`test_project_sources` covers exact content and cold projection reads without
++the original source root. `test_project_files_m2_http` covers real selected
++transport, stale/refused reads and artifact corruption. The existing
++`browser_scientific_fields.cjs` exercises the shared module through the original
++workbench with its browser sandbox enabled. Lab qualification additionally
++inspects unchanged retained pressure fields through native project operations
++and independent relocated cold Open. Scalar Run comparisons and Experiment
++progression remain separately owned interfaces.
+diff --git a/project_data.py b/project_data.py
+index 69c86914..4a48dd38 100644
+--- a/project_data.py
++++ b/project_data.py
+@@ -1168,6 +1168,14 @@ class ProjectData:
+         return self._read('workbench.query', lambda: self.workbench.query(options or {}))
+     def get(self, record_id):
+         return self._read('workbench.get', lambda: self.workbench.get(record_id), record_id)
++    def scientific(self, record_id, content_hash, **selection):
++        sha(content_hash)
++        def inspect():
++            record = self.workbench.get(record_id)
++            if record['content_hash'] != content_hash:
++                fail('Scientific source differs from the selected content hash.', 'conflict', 409)
++            return self.workbench.scientific.inspect(record_id, **selection)
++        return self._read('scientific_fields.inspect', inspect, record_id)
+     def history(self, record_id):
+         return self._read('workbench.history', lambda: self.workbench.history(record_id), record_id)
+     def responses(self, record_id):
+diff --git a/project_dispatch.py b/project_dispatch.py
+index d12eb3f9..a437405b 100644
+--- a/project_dispatch.py
++++ b/project_dispatch.py
+@@ -12,7 +12,7 @@ from workbench import WorkbenchError
+ 
+ 
+ _BOUND_FIELDS = frozenset(('binding', 'checkpoint', 'expected_checkpoint', 'request_key'))
+-_DATA_ACTIONS = frozenset(('data_query', 'data_get', 'data_availability', 'data_history',
++_DATA_ACTIONS = frozenset(('data_query', 'data_get', 'data_scientific', 'data_availability', 'data_history',
+     'data_responses', 'data_response_history', 'data_preferences', 'data_preference_history',
+     'data_import_text', 'data_import_image', 'data_import_audio', 'data_import_mesh',
+     'data_import_pointcloud', 'data_import_volume', 'data_import_sequence', 'data_import_scientific',
+@@ -104,6 +104,8 @@ def _data(projection, action, a):
+     data = projection.data
+     if action == 'data_query': return data.query(_body(a))
+     if action == 'data_get': return data.get(a['record_id'])
++    if action == 'data_scientific': return data.scientific(a['record_id'], a['content_hash'],
++        **{key: a[key] for key in ('frame', 'field', 'axis', 'index') if key in a})
+     if action == 'data_availability': return data.availability(a['record_id'])
+     if action == 'data_history': return _page(data.history(a['record_id']), a, default=1)
+     if action == 'data_responses': return _page(data.responses(a['record_id'])['responses'], a)
+diff --git a/static/project-files.html b/static/project-files.html
+index 59a847a0..4738a772 100644
+--- a/static/project-files.html
++++ b/static/project-files.html
+@@ -7,7 +7,9 @@
+   <link rel="icon" href="data:,">
+   <link rel="stylesheet" href="/auth.css">
+   <link rel="stylesheet" href="/project-files.css">
++  <link rel="stylesheet" href="/scientific-inspector.css">
+   <script defer src="/auth.js"></script>
++  <script defer src="/scientific-inspector.js"></script>
+   <script defer src="/project-files.js"></script>
+ </head>
+ <body>
+@@ -173,6 +175,7 @@
+         <div><ul id="project-explore-list" class="project-fact-list"></ul></div>
+         <div>
+           <h3 id="project-detail-title" tabindex="-1">Choose a saved record</h3>
++          <section id="scientific-inspection" hidden aria-label="Scientific field inspection"></section>
+           <div id="project-detail-facts" class="project-facts"></div>
+           <label id="project-disclosure-label" hidden>Reason for held-out disclosure<input id="project-disclosure-reason" maxlength="500"></label>
+           <div class="actions"><button id="project-detail-history" type="button" hidden>Load saved revisions</button><button id="project-detail-availability" type="button" hidden>Check source availability</button><button id="project-run-evidence" type="button" hidden>Verify retained scientific evidence</button><button id="project-run-document" type="button" hidden>Download exact retained Run document</button><button id="project-run-disclose" type="button" hidden>Allow held-out disclosure on this installation</button></div>
+diff --git a/static/project-files.js b/static/project-files.js
+index 4357888c..3f25cec3 100644
+--- a/static/project-files.js
++++ b/static/project-files.js
+@@ -35,6 +35,7 @@
+   "project_files.data_response_save": "fa5b92afe529520fe8206d629bd88085a68f4f9b399cd40dd05fd3948d3592f0",
+   "project_files.data_responses": "3e0c009244cad04fca4356cf3647bfd2b42cfc0d6a2ac31bb8de25cdb3c60ec8",
+   "project_files.data_rights": "ead16cca68b03533daa81bf06148e1918ce40dbc823ee060bd9908581f788653",
++  "project_files.data_scientific": "c954a680440fdb822a0f895f7e14b90e05dca82535478b1271dfb33cfbfdada9",
+   "project_files.data_source_delete": "457618e618cca92a71b668ffb9f68b0db87e51c417c2e5f41dcde76d71a23985",
+   "project_files.data_source_save": "0d50c45d445b2ce1014a696c3bc95965f0b548ded939f4a650f985f34e1ce849",
+   "project_files.definitions": "3516fcf8764382780c7da699218a05ff1f811634656cc81722ef547f21159698",
+@@ -165,623 +166,628 @@
+ {
+   "project_files.artifact_resolve": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/artifacts/resolve",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/artifacts/resolve"
+   },
+   "project_files.artifact_status": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/artifacts/status",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/artifacts/status"
+   },
+   "project_files.artifacts": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/artifacts",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/artifacts"
+   },
+   "project_files.candidate": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/candidates/{candidate_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/candidates/{candidate_id}"
+   },
+   "project_files.candidate_select": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies/{study_id}/candidates",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies/{study_id}/candidates"
+   },
+   "project_files.data_annotate": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}"
+   },
+   "project_files.data_availability": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/availability",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/availability"
+   },
+   "project_files.data_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}"
+   },
+   "project_files.data_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/history"
+   },
+   "project_files.data_import_audio": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-audio",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-audio"
+   },
+   "project_files.data_import_image": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-image",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-image"
+   },
+   "project_files.data_import_mesh": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-mesh",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-mesh"
+   },
+   "project_files.data_import_pointcloud": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-pointcloud",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-pointcloud"
+   },
+   "project_files.data_import_scientific": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-scientific",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-scientific"
+   },
+   "project_files.data_import_sequence": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-sequence",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-sequence"
+   },
+   "project_files.data_import_text": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-text",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-text"
+   },
+   "project_files.data_import_volume": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/import-volume",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/import-volume"
+   },
+   "project_files.data_preference_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/preferences/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/preferences/delete"
+   },
+   "project_files.data_preference_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/preference-history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/preference-history"
+   },
+   "project_files.data_preference_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/preferences",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/preferences"
+   },
+   "project_files.data_preferences": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/preferences",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/preferences"
+   },
+   "project_files.data_query": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data"
+   },
+   "project_files.data_response_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/response-history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/response-history"
+   },
+   "project_files.data_response_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/responses",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/responses"
+   },
+   "project_files.data_responses": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/data/{record_id}/responses",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/responses"
+   },
+   "project_files.data_rights": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}/rights",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}/rights"
++  },
++  "project_files.data_scientific": {
++    "method": "GET",
++    "mutation": false,
++    "path": "/api/workspace/project-files/data/{record_id}/scientific"
+   },
+   "project_files.data_source_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}/source/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}/source/delete"
+   },
+   "project_files.data_source_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/data/{record_id}/source",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/data/{record_id}/source"
+   },
+   "project_files.definitions": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/definitions",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/definitions"
+   },
+   "project_files.dependencies": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}/dependencies",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/dependencies"
+   },
+   "project_files.evidence": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/evidence",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/evidence"
+   },
+   "project_files.execution_approve_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/approvals",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/approvals"
+   },
+   "project_files.execution_cancel": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/runs/{run_id}/cancel",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/runs/{run_id}/cancel"
+   },
+   "project_files.execution_generation_resume": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/generation/{producer_id}/resume",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/generation/{producer_id}/resume"
+   },
+   "project_files.execution_grounded_review": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/grounded/{producer_id}/review",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/grounded/{producer_id}/review"
+   },
+   "project_files.execution_health": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/execution",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/execution"
+   },
+   "project_files.execution_preflight_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/preflight",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/execution/preflight"
+   },
+   "project_files.execution_producer_cancel": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/producers/{producer_id}/cancel",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/producers/{producer_id}/cancel"
+   },
+   "project_files.execution_producer_decide": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/producers/{producer_id}/decide",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/producers/{producer_id}/decide"
+   },
+   "project_files.execution_producer_health": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/execution/producers/health",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/execution/producers/health"
+   },
+   "project_files.execution_producer_start": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/producers",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/producers"
+   },
+   "project_files.execution_reconcile_current": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/reconcile-current",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/reconcile-current"
+   },
+   "project_files.execution_study_abandon_preparation": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/abandon",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/abandon"
+   },
+   "project_files.execution_study_admit": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/runs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/runs"
+   },
+   "project_files.execution_study_approve": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/approvals",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/approvals"
+   },
+   "project_files.execution_study_continue": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/continue",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/continue"
+   },
+   "project_files.execution_study_prepare_package": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/packages",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/packages"
+   },
+   "project_files.execution_study_prepare_verifier": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/verifiers",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/verifiers"
+   },
+   "project_files.execution_study_reconcile_preparation": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/reconcile",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/preparations/reconcile"
+   },
+   "project_files.execution_study_stop": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/studies/{study_id}/stop",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/studies/{study_id}/stop"
+   },
+   "project_files.execution_submit_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/runs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/runs"
+   },
+   "project_files.expose_holdout": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/disclose",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/runs/{run_id}/disclose"
+   },
+   "project_files.file_adopt": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/files/adopt",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/files/adopt"
+   },
+   "project_files.file_adopt_deletion": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/files/adopt-deletion",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/files/adopt-deletion"
+   },
+   "project_files.file_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/files/{file_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/files/{file_id}"
+   },
+   "project_files.file_history": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/files/{file_id}/history",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/files/{file_id}/history"
+   },
+   "project_files.files_inspect": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/files",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/files"
+   },
+   "project_files.fork_info": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/fork",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/fork"
+   },
+   "project_files.graph_clone": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs/{graph_id}/clone",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs/{graph_id}/clone"
+   },
+   "project_files.graph_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs"
+   },
+   "project_files.graph_create_external": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs/external",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs/external"
+   },
+   "project_files.graph_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/graphs/{graph_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/graphs/{graph_id}"
+   },
+   "project_files.graph_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/graphs/{graph_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/graphs/{graph_id}"
+   },
+   "project_files.graphs": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/graphs",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/graphs"
+   },
+   "project_files.lineage": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/lineage",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/lineage"
+   },
+   "project_files.lineage_record": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/lineage",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/lineage"
+   },
+   "project_files.material_intent": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/material-intents/{family}/{definition_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/material-intents/{family}/{definition_id}"
+   },
+   "project_files.material_intent_capabilities": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/material-intents/capabilities",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/material-intents/capabilities"
+   },
+   "project_files.material_intents": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/material-intents",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/material-intents"
+   },
+   "project_files.materials": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/materials",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials"
+   },
+   "project_files.model_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/models",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/models"
+   },
+   "project_files.model_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/models/{model_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/models/{model_id}"
+   },
+   "project_files.model_material": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/model",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/model"
+   },
+   "project_files.model_publish": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/models/{model_id}/publish",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/models/{model_id}/publish"
+   },
+   "project_files.model_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/models/{model_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/models/{model_id}"
+   },
+   "project_files.models": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/models",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/models"
+   },
+   "project_files.native_preflight": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/preflight",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/preflight"
+   },
+   "project_files.native_reconcile": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/phases/{phase_id}/reconcile",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/phases/{phase_id}/reconcile"
+   },
+   "project_files.native_retry": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/runs/{run_id}/retry",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/runs/{run_id}/retry"
+   },
+   "project_files.native_submit": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/execution/native/runs",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/execution/native/runs"
+   },
+   "project_files.package_state": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/candidates/{candidate_id}/package-state",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/candidates/{candidate_id}/package-state"
+   },
+   "project_files.policies": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/policies",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/policies"
+   },
+   "project_files.policy": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/policies/get",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/policies/get"
+   },
+   "project_files.producer": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/producers/{origin_catalog_id}/{producer_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/producers/{origin_catalog_id}/{producer_id}"
+   },
+   "project_files.producers": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/producers",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/producers"
+   },
+   "project_files.publication_result": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}/publication-result",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/publication-result"
+   },
+   "project_files.recipe_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/recipes",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/recipes"
+   },
+   "project_files.recipe_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/recipes/{recipe_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/recipes/{recipe_id}"
+   },
+   "project_files.recipe_material": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/recipe",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/recipe"
+   },
+   "project_files.recipe_prepare": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/recipes/{graph_id}/prepare",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/recipes/{graph_id}/prepare"
+   },
+   "project_files.recipe_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/recipes/{recipe_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/recipes/{recipe_id}"
+   },
+   "project_files.recipes": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/recipes",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/recipes"
+   },
+   "project_files.release_freeze": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/releases/freeze",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/releases/freeze"
+   },
+   "project_files.release_preview": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/releases/preview",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/releases/preview"
+   },
+   "project_files.retained_analysis": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/analysis",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/analysis"
+   },
+   "project_files.retained_analysis_export": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runs/{run_id}/analysis/export",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/analysis/export"
+   },
+   "project_files.run": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}"
+   },
+   "project_files.run_document_segment": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs/{run_id}/document-segment",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs/{run_id}/document-segment"
+   },
+   "project_files.runs": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runs",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runs"
+   },
+   "project_files.runtime_abandon": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runtime/abandon",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/runtime/abandon"
+   },
+   "project_files.runtime_capture": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/runtime/capture",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/runtime/capture"
+   },
+   "project_files.runtime_inspect": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runtime/inspect",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runtime/inspect"
+   },
+   "project_files.runtime_material": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/runtime",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/runtime"
+   },
+   "project_files.runtime_sources": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runtime/sources",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runtime/sources"
+   },
+   "project_files.runtime_status": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/runtime/status",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/runtime/status"
+   },
+   "project_files.save_as": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/save-as",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/save-as"
+   },
+   "project_files.search_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/searches",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/searches"
+   },
+   "project_files.search_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/searches/{search_id}/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/searches/{search_id}/delete"
+   },
+   "project_files.search_rename": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/searches/{search_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/searches/{search_id}"
+   },
+   "project_files.searches": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/searches",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/searches"
+   },
+   "project_files.selection_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/selections",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/selections"
+   },
+   "project_files.selection_delete": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/selections/{selection_id}/delete",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/selections/{selection_id}/delete"
+   },
+   "project_files.selection_get": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/selections/{selection_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/selections/{selection_id}"
+   },
+   "project_files.selection_rename": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/selections/{selection_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/selections/{selection_id}"
+   },
+   "project_files.selections": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/selections",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/selections"
+   },
+   "project_files.snapshot": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/materials/snapshot",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/materials/snapshot"
+   },
+   "project_files.source_references": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/sources/{project_id}/references",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/sources/{project_id}/references"
+   },
+   "project_files.source_register": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/sources/register",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/sources/register"
+   },
+   "project_files.studies": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/studies",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/studies"
+   },
+   "project_files.study": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/studies/{study_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/studies/{study_id}"
+   },
+   "project_files.study_create": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies"
+   },
+   "project_files.study_save": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies/{study_id}",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies/{study_id}"
+   },
+   "project_files.trial": {
+     "method": "GET",
+-    "path": "/api/workspace/project-files/trials/{trial_id}",
+-    "mutation": false
++    "mutation": false,
++    "path": "/api/workspace/project-files/trials/{trial_id}"
+   },
+   "project_files.trial_prepare": {
+     "method": "POST",
+-    "path": "/api/workspace/project-files/studies/{study_id}/trials",
+-    "mutation": true
++    "mutation": true,
++    "path": "/api/workspace/project-files/studies/{study_id}/trials"
+   }
+ }
+ /* PROJECT_FILES_ROUTES_END */;
+@@ -801,6 +807,18 @@
+   const m2HistoryActions=new Set(['data_history','data_response_history','data_preference_history']);
+   const dirty=()=>importDirty||annotationDirty||m2Dirty;
+   const checkpoint=()=>state?.project?.checkpoint??null;
++  let scientificEpoch=null;
++  const projectScientific=window.ScientificFieldInspector({
++    root:$('scientific-inspection'),
++    isCurrent:record=>scientificEpoch===epoch&&!blocked&&state?.state==='open'&&explored?.category==='data_query'&&explored.id===record.id&&explored.value.content_hash===record.content_hash&&explored.checkpoint===checkpoint(),
++    async readSlice(record,selection,signal){
++      const result=await m2Request('data_scientific',{record_id:record.id,content_hash:record.content_hash,...selection},epoch,{signal});
++      if(result===null)throw new DOMException('Project selection changed.','AbortError');
++      return result;
++    }
++  });
++  function clearScientific(){scientificEpoch=null;projectScientific.clear();}
++  window.addEventListener('pagehide',clearScientific);
+   const exact=(value,keys)=>value!==null&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.hasOwn(value,key));
+   const str=(value,max,empty=false)=>typeof value==='string'&&Array.from(value).length<=max&&(empty||/\S/u.test(value));
+   const id=value=>typeof value==='string'&&/^[a-f0-9]{32}$/.test(value);
+@@ -1055,6 +1073,7 @@
+   }
+   const m2Allowed=action=>!busy&&!blocked&&state?.state==='open'&&selectedContracts.has('project_files.'+action);
+   function m2Controls(){
++    if(blocked||state?.state!=='open'||scientificEpoch!==null&&(scientificEpoch!==epoch||explored?.checkpoint!==checkpoint()))clearScientific();
+     const action=$('project-explore-kind').value;
+     $('project-explore-load').disabled=!m2Allowed(action);
+     $('project-explore-more').disabled=!m2Allowed(action);
+@@ -1074,6 +1093,7 @@
+     for(const button of $('project-explore-list').querySelectorAll('button'))button.disabled=busy||blocked;
+   }
+   function clearExploration(){
++    clearScientific();
+     explored=null;exploreOffset=0;exploreTotal=0;historyOffset=0;historyTotal=0;
+     $('project-explore-list').replaceChildren();$('project-detail-facts').replaceChildren();$('project-detail-history-list').replaceChildren();
+     $('project-detail-title').textContent='Choose a saved record';$('project-explore-summary').textContent='';
+@@ -1125,7 +1145,7 @@
+       for(const item of page.items)if(!exact(item,['family','source_id','source_revision','destination_id'])||!safeText(item.family,80)||!safeText(item.source_id,512)||!(item.source_revision===null||positive(item.source_revision))||!safeText(item.destination_id,512))invalid();
+     }
+   }
+-  async function m2Request(action,arguments_,ticket){
++  async function m2Request(action,arguments_,ticket,{signal}={}){
+     const operation='project_files.'+action,definition=m2Operations[operation];
+     if(!definition||!selectedContracts.has(operation))throw Error('This operation is unavailable for the selected project.');
+     const binding=state.binding,cp=checkpoint(),project=state.project.project_id;
+@@ -1133,7 +1153,7 @@
+     let path=definition.path;
+     for(const [name,value] of Object.entries(values))path=path.replace('{'+name+'}',encodeURIComponent(value));
+     const remaining=Object.fromEntries(Object.entries(values).filter(([name])=>!definition.path.includes('{'+name+'}')));
+-    const options={method:definition.method,cache:'no-store',headers:{'Tuldok-Operation-Contract':selectedHeader(operation)}};
++    const options={method:definition.method,cache:'no-store',signal,headers:{'Tuldok-Operation-Contract':selectedHeader(operation)}};
+     if(definition.method==='GET')path+='?'+new URLSearchParams(remaining);
+     else{
+       if(definition.mutation&&!['execution_reconcile_current','execution_study_reconcile_preparation','native_reconcile'].includes(action)){
+@@ -1160,7 +1180,7 @@
+     }
+     let response,value;
+     try{response=await window.TuldokAuth.fetch(path,options);value=await response.json();}
+-    catch(_){const failure=Error(definition.mutation?'Acknowledgement unavailable; this change may already be saved. Keep your edits and refresh project status.':'Saved history is unavailable. Refresh project status.');failure.code='transport';throw failure;}
++    catch(problem){if(problem.name==='AbortError')throw problem;const failure=Error(definition.mutation?'Acknowledgement unavailable; this change may already be saved. Keep your edits and refresh project status.':'Saved history is unavailable. Refresh project status.');failure.code='transport';throw failure;}
+     if(ticket!==epoch)return null;
+     if(!response.ok){
+       const failure=Error(str(value?.error,1000)?value.error:'Unsupported project error response.');failure.code=value?.code??'transport';failure.status=response.status;
+@@ -1224,6 +1244,7 @@
+     if(category==='models')$('project-model-publish').hidden=false;
+     if(entry.saveAction&&origin===state.project.project_id){$('project-metadata-form').hidden=false;$('project-metadata-name').value=entry.value.name??'';}
+     if(category==='data_query'){
++      if(entry.value.kind==='field_sequence'){scientificEpoch=ticket;projectScientific.show(entry.value);}
+       $('project-detail-history').hidden=false;$('project-detail-availability').hidden=false;$('project-rights-form').hidden=false;$('project-selection-form').hidden=false;
+       $('project-rights-note').value=entry.value.provenance?.rights_note_correction?.note??entry.value.provenance?.rights??'unknown';
+       const key=entry.value.task?.endsWith('_classification')?'label':entry.value.task==='image_caption'?'caption':entry.value.task==='text_corpus'||['sequence','mesh','pointcloud','volume','field_sequence'].includes(entry.value.kind)?'note':null;
+@@ -1233,6 +1254,7 @@
+     controls();$('project-detail-title').focus();
+   }
+   function clearExplorationDetail(){
++    clearScientific();
+     explored=null;historyOffset=0;historyTotal=0;$('project-detail-facts').replaceChildren();$('project-detail-history-list').replaceChildren();
+     for(const name of ['project-metadata-form','project-data-note-form','project-rights-form','project-selection-form','project-detail-history','project-detail-history-more','project-detail-availability','project-run-evidence','project-run-document','project-run-disclose','project-disclosure-label','project-model-publish','project-artifact-status','project-artifact-resolve-form'])$(name).hidden=true;
+   }
+diff --git a/static/scientific-fields.js b/static/scientific-fields.js
+index 0e4477e8..68f27f3b 100644
+--- a/static/scientific-fields.js
++++ b/static/scientific-fields.js
+@@ -1,76 +1,16 @@
+ 'use strict';
+-let scientificGeneration=0,scientificController=null,scientificSlice=null;
+-function scientificShape(record,field) {
+-  const shape=[...record.field_sequence.manifest.grid.shape_xyz];
+-  if(field.centering.startsWith('face_'))shape['xyz'.indexOf(field.centering.slice(5))]++;
+-  return shape.reverse();
+-}
+-function decodeScientificSlice(value,record,request) {
+-  const manifest=record.field_sequence.manifest,field=manifest.fields.find(item=>item.id===request.field),shape=scientificShape(record,field);
+-  const dimensions={z:shape[0],y:shape[1],x:shape[2]},[row,column]={z:['y','x'],y:['z','x'],x:['z','y']}[request.axis];
+-  const vector=v=>Array.isArray(v)&&v.length===3&&v.every(n=>typeof n==='number'&&Number.isFinite(n));
+-  if(!value||value.id!==record.id||value.content_hash!==record.content_hash||value.frame!==request.frame||value.field!==request.field||
+-    value.axis!==request.axis||value.index!==request.index||value.time!==manifest.frames[request.frame].time||value.time_units!==manifest.time_units||
+-    value.units!==field.units||value.stage!==field.stage||value.centering!==field.centering||value.dtype!==field.dtype||
+-    !value.grid||value.grid.units!==manifest.grid.units||!Array.isArray(value.shape_zyx)||value.shape_zyx.length!==3||!shape.every((n,i)=>value.shape_zyx[i]===n)||value.row_axis!==row||value.column_axis!==column||
+-    !['physical_origin','physical_row_step','physical_column_step'].every(key=>vector(value[key]))||
+-    !Array.isArray(value.values)||value.values.length!==dimensions[row]||!value.values.every(values=>Array.isArray(values)&&values.length===dimensions[column]&&values.every(n=>typeof n==='number'&&Number.isFinite(n))))throw Error('Invalid scientific field slice response.');
+-  return value;
+-}
+-function scientificProbe() {
+-  if(!scientificSlice)return;
+-  const row=Number($('scientific-row').value),column=Number($('scientific-column').value),value=scientificSlice;
+-  if(!Number.isInteger(row)||!Number.isInteger(column)||row<0||column<0||row>=value.values.length||column>=value.values[0].length){$('scientific-probe').textContent='Choose an in-bounds row and column.';return;}
+-  const physical=value.physical_origin.map((n,i)=>n+row*value.physical_row_step[i]+column*value.physical_column_step[i]);
+-  $('scientific-probe').textContent=`Row ${row}, column ${column}: ${Object.is(value.values[row][column],-0)?'-0':String(value.values[row][column])} ${value.units} · physical (${physical.join(', ')}) ${value.grid.units}.`;
+-}
+-function drawScientificSlice(value) {
+-  scientificSlice=value;
+-  const canvas=$('scientific-canvas'),rows=value.values.length,columns=value.values[0].length;
+-  canvas.width=columns;canvas.height=rows;
+-  let low=Infinity,high=-Infinity;for(const row of value.values)for(const number of row){low=Math.min(low,number);high=Math.max(high,number);}
+-  const scale=Math.max(Math.abs(low),Math.abs(high)),range=scale?high/scale-low/scale:0;
+-  const ctx=canvas.getContext('2d'),pixels=ctx.createImageData(columns,rows);
+-  for(let row=0;row<rows;row++)for(let column=0;column<columns;column++){
+-    const gray=range?Math.round(255*(value.values[row][column]/scale-low/scale)/range):128;pixels.data.set([gray,gray,gray,255],(row*columns+column)*4);
+-  }
+-  ctx.putImageData(pixels,0,0);canvas.hidden=false;
+-  canvas.setAttribute('aria-label',`Scientific index slice ${value.axis} ${value.index}; rows +${value.row_axis}, columns +${value.column_axis}; display-only grayscale range ${low} to ${high} ${value.units}.`);
+-  $('scientific-status').textContent=`Frame ${value.frame} · time ${value.time} ${value.time_units} · ${value.centering} · ${value.dtype} · ${value.units}. Producer-declared stage: ${value.stage}.`;
+-  $('scientific-coordinates').textContent=`${value.axis.toUpperCase()} index ${value.index}; rows +${value.row_axis}, columns +${value.column_axis}. Sample origin (${value.physical_origin.join(', ')}) ${value.grid.units}; row step (${value.physical_row_step.join(', ')}), column step (${value.physical_column_step.join(', ')}). Display range ${low} to ${high}; original floats stay unchanged.`;
+-  $('scientific-row').max=String(rows-1);$('scientific-column').max=String(columns-1);
+-  $('scientific-row').value='0';$('scientific-column').value='0';scientificProbe();
+-}
+-function scientificShown(record) {
+-  const generation=++scientificGeneration;scientificController?.abort();scientificController=null;scientificSlice=null;
+-  $('scientific-inspection').hidden=record.kind!=='field_sequence';$('scientific-canvas').hidden=true;$('scientific-probe').textContent='';$('scientific-coordinates').textContent='';
+-  if(record.kind!=='field_sequence')return;
+-  const manifest=record.field_sequence.manifest;
+-  $('scientific-note').value=record.annotation?.note||'';$('scientific-metadata').textContent=JSON.stringify(record.field_sequence,null,2);
+-  $('scientific-download').href='/api/workbench/asset/'+record.id;$('scientific-download').download=record.id+'.zip';
+-  for(const [id,items] of [['scientific-frame',manifest.frames.map((frame,i)=>({value:String(i),label:`${i} · ${frame.time} ${manifest.time_units}`}))],['scientific-field',manifest.fields.map(field=>({value:field.id,label:field.label}))]]){
+-    $(id).replaceChildren();for(const item of items){const option=document.createElement('option');option.value=item.value;option.textContent=item.label;$(id).append(option);}
+-  }
+-  $('scientific-axis').value='z';$('scientific-index').value='0';
+-  const load=async reset=>{
+-    scientificController?.abort();const controller=new AbortController();scientificController=controller;scientificSlice=null;
+-    const field=manifest.fields.find(item=>item.id===$('scientific-field').value),shape=scientificShape(record,field),axis=$('scientific-axis').value;
+-    $('scientific-index').max=String(shape['zyx'.indexOf(axis)]-1);if(reset||Number($('scientific-index').value)>Number($('scientific-index').max))$('scientific-index').value='0';
+-    const request={frame:Number($('scientific-frame').value),field:field.id,axis,index:Number($('scientific-index').value)};
+-    const owns=()=>generation===scientificGeneration&&scientificController===controller&&current?.id===record.id&&current.content_hash===record.content_hash;
+-    $('scientific-canvas').hidden=true;$('scientific-status').textContent='Loading exact numeric slice…';$('scientific-probe').textContent='';$('scientific-coordinates').textContent='';
+-    try{
+-      const response=await (globalThis.TuldokAuth?.fetch || fetch)('/api/workbench/records/'+record.id+'/scientific?'+new URLSearchParams(request),{signal:controller.signal}),raw=await response.json();
+-      if(!response.ok)throw Error(raw.error||'Scientific slice unavailable.');
+-      const value=decodeScientificSlice(raw,record,request);if(owns())drawScientificSlice(value);
+-    }catch(error){if(owns()&&error.name!=='AbortError')$('scientific-status').textContent=error.message;}
+-    finally{if(scientificController===controller)scientificController=null;}
+-  };
+-  for(const id of ['scientific-frame','scientific-field','scientific-axis','scientific-index']){
+-    $(id).oninput=event=>event.stopPropagation();
+-    $(id).onchange=event=>{event.stopPropagation();load(id==='scientific-field'||id==='scientific-axis');};
++// Workbench transport and editor ownership for the shared field inspector.
++const scientificInspector=window.ScientificFieldInspector({
++  root:document.getElementById('scientific-inspection'),
++  isCurrent:record=>current?.id===record.id&&current.content_hash===record.content_hash,
++  downloadURL:record=>'/api/workbench/asset/'+record.id,
++  async readSlice(record,selection,signal){
++    const response=await (globalThis.TuldokAuth?.fetch||fetch)('/api/workbench/records/'+record.id+'/scientific?'+new URLSearchParams(selection),{signal});
++    const value=await response.json();if(!response.ok)throw Error(value.error||'Scientific slice unavailable.');return value;
+   }
+-  for(const id of ['scientific-row','scientific-column'])$(id).oninput=event=>{event.stopPropagation();scientificProbe();};
+-  load(true);
++});
++function scientificShown(record){
++  scientificInspector.show(record);
++  if(record.kind==='field_sequence')$('scientific-note').value=record.annotation?.note||'';
+ }
+-window.addEventListener('pagehide',()=>{++scientificGeneration;scientificController?.abort();scientificController=null;});
++window.addEventListener('pagehide',()=>scientificInspector.clear());
+diff --git a/static/scientific-inspector.css b/static/scientific-inspector.css
+new file mode 100644
+index 00000000..f8cc9799
+--- /dev/null
++++ b/static/scientific-inspector.css
+@@ -0,0 +1,2 @@
++.scientific-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.scientific-controls label{min-width:0}#scientific-canvas{display:block;max-width:100%;width:420px;image-rendering:pixelated;background:#eee}#scientific-status,#scientific-coordinates,#scientific-probe{font-size:12px;overflow-wrap:anywhere}
++#scientific-canvas[hidden]{display:none}
+diff --git a/static/scientific-inspector.js b/static/scientific-inspector.js
+new file mode 100644
+index 00000000..e0427888
+--- /dev/null
++++ b/static/scientific-inspector.js
+@@ -0,0 +1,84 @@
++'use strict';
++function scientificShape(record,field) {
++  const shape=[...record.field_sequence.manifest.grid.shape_xyz];
++  if(field.centering.startsWith('face_'))shape['xyz'.indexOf(field.centering.slice(5))]++;
++  return shape.reverse();
++}
++function decodeScientificSlice(value,record,request) {
++  const manifest=record.field_sequence.manifest,field=manifest.fields.find(item=>item.id===request.field),shape=scientificShape(record,field);
++  const dimensions={z:shape[0],y:shape[1],x:shape[2]},[row,column]={z:['y','x'],y:['z','x'],x:['z','y']}[request.axis];
++  const vector=v=>Array.isArray(v)&&v.length===3&&v.every(n=>typeof n==='number'&&Number.isFinite(n));
++  if(!value||value.id!==record.id||value.content_hash!==record.content_hash||value.frame!==request.frame||value.field!==request.field||
++    value.axis!==request.axis||value.index!==request.index||value.time!==manifest.frames[request.frame].time||value.time_units!==manifest.time_units||
++    value.units!==field.units||value.stage!==field.stage||value.centering!==field.centering||value.dtype!==field.dtype||
++    !value.grid||value.grid.units!==manifest.grid.units||!Array.isArray(value.shape_zyx)||value.shape_zyx.length!==3||!shape.every((n,i)=>value.shape_zyx[i]===n)||value.row_axis!==row||value.column_axis!==column||
++    !['physical_origin','physical_row_step','physical_column_step'].every(key=>vector(value[key]))||
++    !Array.isArray(value.values)||value.values.length!==dimensions[row]||!value.values.every(values=>Array.isArray(values)&&values.length===dimensions[column]&&values.every(n=>typeof n==='number'&&Number.isFinite(n))))throw Error('Invalid scientific field slice response.');
++  return value;
++}
++
++window.ScientificFieldInspector=function({root,isCurrent,readSlice,downloadURL}){
++  const $=id=>id==='scientific-inspection'?root:root.querySelector('#'+id);
++  let scientificGeneration=0,scientificController=null,scientificSlice=null;
++  const content=document.createElement('div');
++  content.innerHTML="<a id=\"scientific-download\">Download original scientific bundle</a><div class=\"scientific-controls\"><label>Frame<select id=\"scientific-frame\"></select></label><label>Field<select id=\"scientific-field\"></select></label><label>Index axis<select id=\"scientific-axis\"><option value=\"z\">Z</option><option value=\"y\">Y</option><option value=\"x\">X</option></select></label><label>Slice index<input id=\"scientific-index\" type=\"number\" min=\"0\" value=\"0\" step=\"1\"></label></div><p id=\"scientific-status\" role=\"status\"></p><canvas id=\"scientific-canvas\" role=\"img\" hidden></canvas><p id=\"scientific-coordinates\"></p><div class=\"scientific-controls\"><label>Probe row<input id=\"scientific-row\" type=\"number\" min=\"0\" value=\"0\" step=\"1\"></label><label>Probe column<input id=\"scientific-column\" type=\"number\" min=\"0\" value=\"0\" step=\"1\"></label></div><p id=\"scientific-probe\" role=\"status\"></p><details><summary>Native fields, geometry and declared provenance</summary><pre id=\"scientific-metadata\"></pre></details>";
++  root.prepend(content);
++function scientificProbe() {
++  if(!scientificSlice)return;
++  const row=Number($('scientific-row').value),column=Number($('scientific-column').value),value=scientificSlice;
++  if(!Number.isInteger(row)||!Number.isInteger(column)||row<0||column<0||row>=value.values.length||column>=value.values[0].length){$('scientific-probe').textContent='Choose an in-bounds row and column.';return;}
++  const physical=value.physical_origin.map((n,i)=>n+row*value.physical_row_step[i]+column*value.physical_column_step[i]);
++  $('scientific-probe').textContent=`Row ${row}, column ${column}: ${Object.is(value.values[row][column],-0)?'-0':String(value.values[row][column])} ${value.units} · physical (${physical.join(', ')}) ${value.grid.units}.`;
++}
++function drawScientificSlice(value) {
++  scientificSlice=value;
++  const canvas=$('scientific-canvas'),rows=value.values.length,columns=value.values[0].length;
++  canvas.width=columns;canvas.height=rows;
++  let low=Infinity,high=-Infinity;for(const row of value.values)for(const number of row){low=Math.min(low,number);high=Math.max(high,number);}
++  const scale=Math.max(Math.abs(low),Math.abs(high)),range=scale?high/scale-low/scale:0;
++  const ctx=canvas.getContext('2d'),pixels=ctx.createImageData(columns,rows);
++  for(let row=0;row<rows;row++)for(let column=0;column<columns;column++){
++    const gray=range?Math.round(255*(value.values[row][column]/scale-low/scale)/range):128;pixels.data.set([gray,gray,gray,255],(row*columns+column)*4);
++  }
++  ctx.putImageData(pixels,0,0);canvas.hidden=false;
++  canvas.setAttribute('aria-label',`Scientific index slice ${value.axis} ${value.index}; rows +${value.row_axis}, columns +${value.column_axis}; display-only grayscale range ${low} to ${high} ${value.units}.`);
++  $('scientific-status').textContent=`Frame ${value.frame} · time ${value.time} ${value.time_units} · ${value.centering} · ${value.dtype} · ${value.units}. Producer-declared stage: ${value.stage}.`;
++  $('scientific-coordinates').textContent=`${value.axis.toUpperCase()} index ${value.index}; rows +${value.row_axis}, columns +${value.column_axis}. Sample origin (${value.physical_origin.join(', ')}) ${value.grid.units}; row step (${value.physical_row_step.join(', ')}), column step (${value.physical_column_step.join(', ')}). Display range ${low} to ${high}; original floats stay unchanged.`;
++  $('scientific-row').max=String(rows-1);$('scientific-column').max=String(columns-1);
++  $('scientific-row').value='0';$('scientific-column').value='0';scientificProbe();
++}
++function show(record) {
++  const generation=++scientificGeneration;scientificController?.abort();scientificController=null;scientificSlice=null;
++  $('scientific-inspection').hidden=record.kind!=='field_sequence';$('scientific-canvas').hidden=true;$('scientific-probe').textContent='';$('scientific-coordinates').textContent='';
++  if(record.kind!=='field_sequence')return;
++  const manifest=record.field_sequence.manifest;
++  $('scientific-metadata').textContent=JSON.stringify(record.field_sequence,null,2);
++  const url=downloadURL?.(record);$('scientific-download').hidden=!url;if(url){$('scientific-download').href=url;$('scientific-download').download=record.id+'.zip';}
++  for(const [id,items] of [['scientific-frame',manifest.frames.map((frame,i)=>({value:String(i),label:`${i} · ${frame.time} ${manifest.time_units}`}))],['scientific-field',manifest.fields.map(field=>({value:field.id,label:field.label}))]]){
++    $(id).replaceChildren();for(const item of items){const option=document.createElement('option');option.value=item.value;option.textContent=item.label;$(id).append(option);}
++  }
++  $('scientific-axis').value='z';$('scientific-index').value='0';
++  const load=async reset=>{
++    scientificController?.abort();const controller=new AbortController();scientificController=controller;scientificSlice=null;
++    const field=manifest.fields.find(item=>item.id===$('scientific-field').value),shape=scientificShape(record,field),axis=$('scientific-axis').value;
++    $('scientific-index').max=String(shape['zyx'.indexOf(axis)]-1);if(reset||Number($('scientific-index').value)>Number($('scientific-index').max))$('scientific-index').value='0';
++    const request={frame:Number($('scientific-frame').value),field:field.id,axis,index:Number($('scientific-index').value)};
++    const owns=()=>generation===scientificGeneration&&scientificController===controller&&isCurrent(record);
++    $('scientific-canvas').hidden=true;$('scientific-status').textContent='Loading exact numeric slice…';$('scientific-probe').textContent='';$('scientific-coordinates').textContent='';
++    try{
++      const raw=await readSlice(record,request,controller.signal);
++      const value=decodeScientificSlice(raw,record,request);if(owns())drawScientificSlice(value);
++    }catch(error){if(owns()&&error.name!=='AbortError')$('scientific-status').textContent=error.message;}
++    finally{if(scientificController===controller)scientificController=null;}
++  };
++  for(const id of ['scientific-frame','scientific-field','scientific-axis','scientific-index']){
++    $(id).oninput=event=>event.stopPropagation();
++    $(id).onchange=event=>{event.stopPropagation();load(id==='scientific-field'||id==='scientific-axis');};
++  }
++  for(const id of ['scientific-row','scientific-column'])$(id).oninput=event=>{event.stopPropagation();scientificProbe();};
++  load(true);
++}
++
++  function clear(){++scientificGeneration;scientificController?.abort();scientificController=null;scientificSlice=null;root.hidden=true;$('scientific-canvas').hidden=true;$('scientific-status').textContent='';$('scientific-probe').textContent='';$('scientific-coordinates').textContent='';}
++  return {show,clear};
++};
+diff --git a/static/workbench.css b/static/workbench.css
+index aab05af2..7afb5fc5 100644
+--- a/static/workbench.css
++++ b/static/workbench.css
+@@ -33,5 +33,3 @@
+ #mesh-projections{display:flex;flex-wrap:wrap;gap:.7rem}#mesh-projections figure{flex:1 1 180px;margin:0;min-width:0}#mesh-projections svg{display:block;width:100%;max-height:240px;background:#f4f6fa;border:1px solid #ccd4df}#mesh-projections polygon{fill:none;stroke:#28598b;stroke-width:1.2}#mesh-metadata{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+ 
+ #pumas-gateway-panel {margin-block:1rem;} #pumas-gateway-metadata {max-height:24rem;overflow:auto;}
+-
+-.scientific-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.scientific-controls label{min-width:0}#scientific-canvas{display:block;max-width:100%;width:420px;image-rendering:pixelated;background:#eee}#scientific-status,#scientific-coordinates,#scientific-probe{font-size:12px;overflow-wrap:anywhere}
+diff --git a/static/workbench.html b/static/workbench.html
+index e00c8ec2..5fa0887a 100644
+--- a/static/workbench.html
++++ b/static/workbench.html
+@@ -1,8 +1,8 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tuldok · Dataset workbench</title><link rel="stylesheet" href="/workbench.css"><link rel="stylesheet" href="/meshes.css"><link rel="stylesheet" href="/audio-editor.css"><link rel="stylesheet" href="/workbench-layout.css"><link rel="stylesheet" href="/auth.css"><script src="/auth.js"></script></head><body>
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tuldok · Dataset workbench</title><link rel="stylesheet" href="/workbench.css"><link rel="stylesheet" href="/scientific-inspector.css"><link rel="stylesheet" href="/meshes.css"><link rel="stylesheet" href="/audio-editor.css"><link rel="stylesheet" href="/workbench-layout.css"><link rel="stylesheet" href="/auth.css"><script src="/auth.js"></script></head><body>
+ <header><div><a href="/workspaces">Dataset workspaces · M1 preview</a> · <a href="/">← Corner studio</a><h1>Dataset workbench</h1><p>Real assets, explicit targets, reproducible releases.</p></div><span class="badge">Development workspace</span></header>
+ <p id="notice" role="status" aria-live="polite">Loading collection…</p>
+ <main><section class="collection"><h2>Collection</h2><form id="filters"><label>Search<input id="query" placeholder="Text, filename, label or group"></label><div class="row"><label>Type<select id="kind"><option value="">All assets</option><option value="image">Images</option><option value="text">Text</option><option value="sequence">Simulation sequence</option><option value="mesh">Static mesh</option><option value="pointcloud">Point cloud</option><option value="volume">Volume</option><option value="field_sequence">Scientific fields</option><option value="audio">Audio</option></select></label><label>Task<select id="task-filter"><option value="">All tasks</option><option value="image_detection">Image detection</option><option value="image_classification">Image classification</option><option value="image_caption">Image caption</option><option value="text_classification">Text classification</option><option value="text_entities">Text entities</option><option value="text_corpus">Text corpus</option><option value="sequence_transport">Sequence transport</option><option value="mesh_geometry">Mesh geometry</option><option value="pointcloud_geometry">Point cloud inspection</option><option value="volume_grid">Volume inspection</option><option value="field_sequence_fields">Scientific field inspection</option><option value="audio_timed">Audio timed annotation</option></select></label><label>Review<select id="review-filter"><option value="">All states</option><option value="draft">Draft</option><option value="human_reviewed">Human reviewed</option><option value="programmatically_verified">Programmatically verified</option></select></label><label>Sort<select id="sort"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="name">Name</option><option value="review">Review</option></select></label></div><label>Exact filter entry<select id="exact-filter-format" aria-describedby="metadata-filter-help"><option value="text">Plain text</option><option value="json">JSON strings · preserves line breaks</option></select></label><div class="row"><label>Target label (exact)<input id="label-filter" maxlength="160" placeholder="Any target label"></label><label>Protected source/group (exact)<input id="group-filter" maxlength="240" placeholder="Any stored group ID"></label></div><label>Rights note (exact)<input id="rights-filter" maxlength="2000" placeholder="Any note; enter unknown for missing notes" aria-describedby="metadata-filter-help"></label><p id="metadata-filter-help">Exact, case-sensitive values; leave blank for any. For values with line breaks, choose JSON strings and enter double-quoted values: &quot;first\nsecond&quot; for LF, \r for CR and \r\n for CRLF. Escape literal backslashes as \\ and quotes as \&quot;. Groups match IDs stored on the record, not all related sources. Rights notes are metadata, not permission decisions. Missing notes appear as unknown. Filtered results are dynamic; saved fixed membership and release selection stay separate.</p><button>Search collection</button></form><p id="analysis"></p><div class="row"><button id="select-page">Select page</button><button id="clear-selection">Clear selection</button></div><details id="saved-search-panel"><summary>Saved searches · dynamic results</summary><p>Save the entered search and filters. Open explicitly to search the current collection; new matching records can appear. Fixed selections, editor drafts and review decisions stay separate. Up to 100 searches. Search text is single-line; exact metadata values may contain line breaks.</p><form id="save-search-form"><label>Search name<input id="search-name" maxlength="120" required></label><button id="save-search">Save entered filters</button></form><label>Saved dynamic search<select id="saved-search"><option value="">Choose a saved dynamic search</option></select></label><div class="row"><button id="open-search">Open dynamic search</button><button id="cancel-search-open" hidden>Cancel opening</button><button id="refresh-searches">Refresh searches</button></div><form id="rename-search-form"><label>New search name<input id="search-rename" maxlength="120" required></label><button id="rename-search">Rename search</button></form><button id="delete-search">Delete saved search</button><p id="saved-search-status" role="status" aria-live="polite"></p></details><details open id="saved-selection-panel"><summary>Saved fixed selections</summary><p>Save the chosen records at their exact revisions. Searches and filters stay separate; saving or opening never approves annotations.</p><form id="save-selection-form"><label>Selection name<input id="selection-name" maxlength="120" required></label><button id="save-selection">Save selected records as a new set</button></form><label>Saved set<select id="saved-selection"><option value="">Choose a saved selection</option></select></label><div class="row"><button id="load-selection">Open fixed selection</button><button id="cancel-selection-load" hidden>Cancel opening</button><button id="refresh-selections">Refresh saved sets</button></div><form id="rename-selection-form"><label>New name<input id="selection-rename" maxlength="120" required></label><button>Rename saved set</button></form><button id="delete-selection">Delete saved set</button><p id="saved-selection-status" role="status" aria-live="polite"></p><ul id="saved-selection-issues"></ul></details><details open id="curation-panel"><summary>Curation diagnostics</summary><p>Inspect current metadata in all applied collection results or exact selected IDs. Selection revision pairs stay fixed. Counts describe metadata, not permission or model quality. Missing sources means deleted source records; file integrity is checked during release.</p><label>Scope<select id="curation-scope"><option value="filtered">All applied collection results</option><option value="selected">Exact selected IDs · current facts</option></select></label><label>Diagnostic<select id="curation-category"><option value="duplicates">Exact decoded-content duplicates</option><option value="unlabeled">Unlabeled · no annotation</option><option value="missing_sources">Missing source records</option><option value="unknown_rights">Unknown rights notes</option><option value="references">Stale / unavailable selected references</option></select></label><button id="curation-refresh" type="button">Refresh diagnostics</button><p id="curation-status" role="status" aria-live="polite">Refresh to inspect current metadata.</p><p id="curation-counts"></p><ol id="curation-results"></ol><div class="row"><button id="curation-previous" type="button" disabled>Previous diagnostic page</button><span id="curation-page"></span><button id="curation-next" type="button" disabled>Next diagnostic page</button></div></details><div id="records"></div><div class="row"><button id="previous">Previous</button><span id="page"></span><button id="next">Next</button></div></section>
+-<section class="editor"><h2>Annotate & review</h2><details id="pumas-gateway-panel"><summary>Find Pumas for annotation</summary><p>Inspect a local gateway before choosing it for a proposal. Build features describe the compiled program; they do not prove model readiness. Gateway details are advertised, without authentication of library ownership. Existing manual gateway URLs remain available.</p><button type="button" id="pumas-gateway-scan">Scan advertised gateways</button><label>Advertised gateway<select id="pumas-gateway-choice"></select></label><label>Use gateway for<select id="pumas-gateway-target"><option value="caption">Image caption proposal</option><option value="classification">Text label proposal</option><option value="rewrite">Grounded rewrite proposal</option></select></label><button type="button" id="pumas-gateway-use" disabled>Use selected gateway</button><p id="pumas-gateway-status" role="status" aria-live="polite">Scan reads local advertisements. Choosing a gateway starts no model request.</p><details><summary>Advertised identity and observation hash</summary><pre id="pumas-gateway-metadata" hidden></pre></details></details><p id="empty-editor">Open a record to inspect its source and define its target.</p><form id="editor" hidden><h3 id="record-name"></h3><div id="image-frame"><img id="asset-image" alt="Selected annotation source" hidden><svg id="box-overlay" aria-hidden="true"></svg></div><pre id="asset-text" tabindex="0" hidden></pre><section id="audio-inspection" hidden><h4>Listen · mark · review</h4><p id="audio-metadata"></p><p>Original playback: all source channels. Timed annotations and interval playback use the selected source channel.</p><audio id="audio-player" controls preload="metadata" aria-label="Play original audio, all channels"></audio><a id="audio-download">Download original WAV</a><svg id="audio-waveform" viewBox="0 0 600 96" role="img" aria-label="Audio waveform"></svg><p id="audio-status" role="status" aria-live="polite"></p><p id="audio-empty">No intervals yet. Add a transcript or class label before review.</p><ol id="audio-segments"></ol><label>Source channel<select id="audio-channel"></select></label><div class="audio-fields"><label>Start frame (included)<input id="audio-start" type="number" min="0" step="1" value="0"></label><label>End frame (excluded)<input id="audio-end" type="number" min="1" step="1" value="1"></label></div><p id="audio-time-hint"></p><div class="audio-actions"><button id="audio-play-interval" type="button">Play interval / channel</button><button id="audio-stop" type="button">Pause playback</button></div><label>Human transcript<textarea id="audio-transcript" rows="2" maxlength="4000" placeholder="What you heard in this interval"></textarea></label><div class="audio-fields"><label>Class label (optional)<input id="audio-label" maxlength="80" placeholder="e.g. impact"></label><label>Speaker (optional)<input id="audio-speaker" maxlength="120" placeholder="Human-assigned speaker"></label></div><div class="audio-actions"><button id="audio-add" type="button">Add interval</button><button id="audio-clear-fields" type="button">Clear interval fields</button></div><p>Save targets below, then explicitly mark human reviewed. One reviewed labelled interval can use the local audio classification recipe. ASR, cropping and resampling are unavailable.</p></section><section id="sequence-inspection" hidden><p>Whole accepted-state trajectory. Contract checks leave data unreviewed. Transport-only data has no qualified training consumer. Pressure describes the last accepted interval projection.</p><a id="sequence-download">Download original run.json + frames.jsonl bundle</a><details open><summary>Metadata and frame index</summary><pre id="sequence-metadata"></pre></details><label>Human review note<textarea id="sequence-note" maxlength="4000" rows="3"></textarea></label></section><section id="pointcloud-inspection" hidden><a id="pointcloud-download">Download original PLY + sidecar bundle</a><p id="pointcloud-preview-status" role="status" aria-live="polite"></p><div id="pointcloud-preview"></div><details><summary>Native metadata and declared provenance</summary><pre id="pointcloud-metadata"></pre></details><label>Human point cloud review note<textarea id="pointcloud-note" maxlength="4000" rows="3"></textarea></label></section><section id="scientific-inspection" hidden><a id="scientific-download">Download original scientific bundle</a><div class="scientific-controls"><label>Frame<select id="scientific-frame"></select></label><label>Field<select id="scientific-field"></select></label><label>Index axis<select id="scientific-axis"><option value="z">Z</option><option value="y">Y</option><option value="x">X</option></select></label><label>Slice index<input id="scientific-index" type="number" min="0" value="0" step="1"></label></div><p id="scientific-status" role="status"></p><canvas id="scientific-canvas" role="img" hidden></canvas><p id="scientific-coordinates"></p><div class="scientific-controls"><label>Probe row<input id="scientific-row" type="number" min="0" value="0" step="1"></label><label>Probe column<input id="scientific-column" type="number" min="0" value="0" step="1"></label></div><p id="scientific-probe" role="status"></p><details><summary>Native fields, geometry and declared provenance</summary><pre id="scientific-metadata"></pre></details><label>Whole-sequence review note<textarea id="scientific-note" maxlength="4000" rows="3"></textarea></label></section><section id="volume-inspection" hidden><a id="volume-download">Download original NPY + sidecar bundle</a><p id="volume-preview-status" role="status" aria-live="polite"></p><div id="volume-preview"></div><details><summary>Native metadata and declared provenance</summary><pre id="volume-metadata"></pre></details><label>Human volume review note<textarea id="volume-note" maxlength="4000" rows="3"></textarea></label></section><section id="mesh-inspection" hidden><p>Original geometry stays unchanged. Imports start as drafts; human review remains explicit. Units and frame are source declarations, not physics validation.</p><a id="mesh-download">Download original PLY + sidecar bundle</a><p id="mesh-preview-status" role="status" aria-live="polite"></p><div id="mesh-projections"></div><details><summary>Geometry metadata and declared provenance</summary><pre id="mesh-metadata"></pre></details><label>Human geometry review note<textarea id="mesh-note" maxlength="4000" rows="3"></textarea></label></section><label>Task<select id="task"></select></label><label id="label-control">Class / target label<input id="label" maxlength="80" value="object"></label><div id="corpus-controls" hidden><label>Corpus review note<textarea id="corpus-note" rows="4" maxlength="8000" aria-describedby="corpus-review-help"></textarea></label><p id="corpus-review-help">Review this whole document for plain-text training and leave a note (up to 4,000 Unicode code points). Explicitly choose Human reviewed when saving. Classification/entity approval does not approve corpus use. Canonical NFC/LF text stays unchanged.</p></div><div id="caption-controls" hidden><label>Accepted caption<textarea id="caption" rows="5" maxlength="8000" aria-describedby="caption-help"></textarea></label><p id="caption-help">Describe the visible image in up to 4,000 Unicode code points. Check objects, counts, colors, composition and style. A generation prompt stays in source provenance and is never copied into this caption.</p></div><p>Each record has one current task. Saving a different task replaces its current target; earlier targets remain in revision history.</p><div id="classification-help">One class label for this record.</div><div id="detection-controls" hidden><p>Drag a box on the image, or enter pixel-edge coordinates. Right and bottom edges are exclusive.</p><div class="row"><label>X<input id="box-x" type="number" min="0" value="0"></label><label>Y<input id="box-y" type="number" min="0" value="0"></label><label>Width<input id="box-width" type="number" min="1" value="10"></label><label>Height<input id="box-height" type="number" min="1" value="10"></label></div><button type="button" id="add-box">Add box</button></div><div id="entity-controls" hidden><p>Select text above, then add its span. Offsets count Unicode code points.</p><button type="button" id="add-span">Add selected span</button><div class="row"><label>Start<input id="span-start" type="number" min="0" value="0"></label><label>End<input id="span-end" type="number" min="1" value="1"></label><button type="button" id="add-offset-span">Add offsets</button></div></div><ol id="targets"></ol><label>Protected groups (one per line)<textarea id="groups" rows="2" required></textarea></label><label>Review state<select id="record-review"><option value="draft">Draft</option><option value="human_reviewed">I reviewed this annotation</option></select></label><p id="record-provenance"></p><div class="row"><button id="save">Save annotation</button><button type="button" id="reload">Discard edits / reload</button><button type="button" id="history">Revision history</button></div><pre id="history-output" hidden></pre></form><details id="caption-proposal-panel" hidden><summary>Propose a caption for this image</summary><p>Choose Pumas typed v1 for an advertised Image→Text model/profile, or use a separately compatible vision endpoint. Availability is a live observation; it does not qualify model accuracy.</p><p>One selected image, one model request. A served listing does not prove vision or JSON compatibility. Incompatible requests fail without fallback. Captions remain proposals until you explicitly apply a draft, then separately review it.</p><p>For reload recovery, this tab temporarily retains the request ID, image revisions, gateway/model, guidance and seed until the server outcome is reconciled. No image bytes or model responses are stored in the browser. Requests never replay automatically.</p><form id="caption-proposal-form"><label>Gateway API<select id="caption-proposal-protocol"><option value="legacy">Compatible API</option><option value="pumas_typed_v1">Pumas typed v1</option></select></label><label>Exact Pumas profile (optional)<input id="caption-proposal-profile" maxlength="128" placeholder="Resolve selected profile"></label><button id="caption-proposal-capabilities" type="button">Inspect selected capabilities</button><details><summary>Selected capability observation</summary><pre id="caption-proposal-capability-metadata" hidden></pre></details><label>Pumas-compatible gateway URL<input id="caption-proposal-url" type="url" value="http://127.0.0.1:8765" required></label><button id="caption-proposal-models" type="button">List served models</button><label>Model<select id="caption-proposal-model" required></select></label><label>Caption guidance<textarea id="caption-proposal-guidance" maxlength="4000" required>Describe only what is visible in this image.</textarea></label><label>Requested seed<input id="caption-proposal-seed" type="number" min="0" max="4294967295" value="42" required></label><p>The original image stays local; this explicit request sends an oriented JPEG copy, at most 1600 pixels on its longest side, to the selected endpoint. Requested seeds do not guarantee model reproducibility.</p><button id="caption-proposal-submit">Request caption proposal</button></form><button id="caption-proposal-refresh" type="button">Refresh caption requests</button><p id="caption-proposal-status" role="status" aria-live="polite"></p><div id="caption-proposal-jobs"></div></details><details id="text-classification-proposal-panel" hidden><summary>Propose a class for this unannotated text</summary><p>One existing unannotated text, one model request. Define the exact labels first. The model must choose one offered label or explicitly abstain; unknown or malformed outputs fail without a fallback. Apply creates a draft for your separate review.</p><form id="text-classification-proposal-form"><label>Gateway API<select id="text-classification-proposal-protocol"><option value="legacy">Compatible API</option><option value="pumas_typed_v1">Pumas typed v1</option></select></label><label>Exact Pumas profile (optional)<input id="text-classification-proposal-profile" maxlength="128" placeholder="Resolve selected model profile"></label><button type="button" id="text-classification-proposal-capabilities">Inspect selected capabilities</button><p>Typed v1 sends finite requests. Text messages only; seed is unavailable. Generation runs until completion, failure or cancellation. Capability inspection has a separate bounded discovery budget.</p><pre id="text-classification-proposal-capability-metadata" hidden></pre><label>Pumas-compatible gateway URL<input id="text-classification-proposal-url" type="url" value="http://127.0.0.1:8765" required></label><button id="text-classification-proposal-models" type="button">List served text models</button><label>Model<select id="text-classification-proposal-model" required></select></label><label>Exact label choices · JSON array<textarea id="text-classification-proposal-labels" rows="4" maxlength="30000" required aria-describedby="text-classification-proposal-label-help">[]</textarea></label><p id="text-classification-proposal-label-help">Enter 1–30 unique strings, for example ["schedule", "cancel"]. Each label has 1–80 Unicode code points and no leading or trailing whitespace. JSON preserves exact internal whitespace and Unicode; no label is trimmed or guessed. Choices are frozen per request.</p><label>Classification guidance<textarea id="text-classification-proposal-guidance" rows="3" maxlength="4000" required>Choose one exact offered label only when supported by the source text; otherwise abstain.</textarea></label><label>Requested seed<input id="text-classification-proposal-seed" type="number" min="0" max="4294967295" value="42" required></label><p>This explicit request sends the exact captured text, guidance and labels to the selected endpoint. Requested seeds do not guarantee reproducibility. Keep the frozen choices and request settings unchanged when applying; inspect evidence to restore them after reload.</p><button id="text-classification-proposal-submit">Request classification proposal</button></form><button id="text-classification-proposal-refresh" type="button">Refresh classification requests</button><button id="text-classification-proposal-restore" type="button">Restore pending request settings</button><button id="text-classification-proposal-open-pending" type="button">Open pending source</button><pre id="text-classification-proposal-pending-evidence" hidden></pre><p id="text-classification-proposal-status" role="status" aria-live="polite"></p><div id="text-classification-proposal-jobs"></div></details><details id="rights-note-panel" hidden open><summary>Correct rights note</summary><p>This note is metadata, not a permission decision. Saving changes the record revision and history; original source evidence and annotation review stay unchanged. Saved sets keep their old revisions. Reselect current records before release.</p><form id="rights-note-form"><label>Entry format<select id="rights-note-format"><option value="text">Plain text</option><option value="json">JSON string · preserves CR/LF</option></select></label><label>Current rights note<textarea id="rights-note-value" rows="4" maxlength="2000"></textarea></label><p>Up to 1,000 Unicode code points. Blank means unknown. Save or discard annotation edits first. JSON strings preserve existing carriage returns; plain text preserves line feeds.</p><div class="row"><button id="rights-note-save">Save rights note</button><button type="button" id="rights-note-cancel">Cancel note edit</button></div></form><p id="rights-note-status" role="status" aria-live="polite"></p></details><details id="preferences-panel" hidden open><summary>Comparative judgments</summary><p>Choose two distinct answers to this prompt, then explicitly judge them. Answer order, model scores and answer review never decide preference. Judgment review is independent.</p><button id="preference-new" type="button">New judgment</button><button id="preference-refresh" type="button">Refresh judgments &amp; answers</button><p id="preference-status" role="status" aria-live="polite"></p><div id="preference-list"></div><form id="preference-form" hidden><label>Left answer<select id="preference-left" required></select></label><pre id="preference-left-text" tabindex="0"></pre><label>Right answer<select id="preference-right" required></select></label><pre id="preference-right-text" tabindex="0"></pre><label>Comparative outcome<select id="preference-outcome" required><option value="">Choose outcome explicitly</option><option value="left">Prefer left answer</option><option value="right">Prefer right answer</option><option value="tie">Tie · no chosen/rejected row</option><option value="abstain">Abstain · no chosen/rejected row</option></select></label><label>Rationale<textarea id="preference-rationale" rows="3" maxlength="8000"></textarea></label><label>Judgment review<select id="preference-review"><option value="draft">Draft judgment</option><option value="human_reviewed">I reviewed this exact comparison</option></select></label><button id="preference-save">Save judgment</button><button id="preference-cancel" type="button">Cancel judgment edit</button><button id="preference-history" type="button">Judgment history</button><button id="preference-delete" type="button" hidden>Delete judgment</button><p id="preference-editor-status" role="status" aria-live="polite"></p></form><pre id="preference-history-output" hidden></pre></details><details id="responses-panel" hidden open><summary>Instruction answers</summary><p>Author independent answers to the text above. Answers have their own revisions and review; existing classes and entity spans stay intact.</p><div class="row"><button id="response-new" type="button">Add answer</button><button id="response-refresh" type="button">Refresh answers</button></div><div id="response-list"></div><form id="response-form" hidden><label>Entry format<select id="response-entry-format"><option value="text">Plain text · LF newlines</option><option value="json">JSON string · exact CR and CRLF</option></select></label><label>Completion<textarea id="response-completion" rows="6" aria-describedby="response-help"></textarea></label><p id="response-help">Up to 200,000 Unicode code points. Spaces and Unicode are preserved. Use JSON string entry to retain carriage returns. Editing resets this answer's review to draft.</p><label>Answer review<select id="response-review"><option value="draft">Draft</option><option value="human_reviewed">I reviewed this exact answer</option></select></label><div class="row"><button id="response-save">Save answer</button><button id="response-cancel" type="button">Cancel answer edit</button><button id="response-history" type="button">Answer history</button></div><p id="response-editor-status" role="status" aria-live="polite"></p><pre id="response-history-output" hidden></pre></form><p id="response-status" role="status" aria-live="polite"></p></details></section>
++<section class="editor"><h2>Annotate & review</h2><details id="pumas-gateway-panel"><summary>Find Pumas for annotation</summary><p>Inspect a local gateway before choosing it for a proposal. Build features describe the compiled program; they do not prove model readiness. Gateway details are advertised, without authentication of library ownership. Existing manual gateway URLs remain available.</p><button type="button" id="pumas-gateway-scan">Scan advertised gateways</button><label>Advertised gateway<select id="pumas-gateway-choice"></select></label><label>Use gateway for<select id="pumas-gateway-target"><option value="caption">Image caption proposal</option><option value="classification">Text label proposal</option><option value="rewrite">Grounded rewrite proposal</option></select></label><button type="button" id="pumas-gateway-use" disabled>Use selected gateway</button><p id="pumas-gateway-status" role="status" aria-live="polite">Scan reads local advertisements. Choosing a gateway starts no model request.</p><details><summary>Advertised identity and observation hash</summary><pre id="pumas-gateway-metadata" hidden></pre></details></details><p id="empty-editor">Open a record to inspect its source and define its target.</p><form id="editor" hidden><h3 id="record-name"></h3><div id="image-frame"><img id="asset-image" alt="Selected annotation source" hidden><svg id="box-overlay" aria-hidden="true"></svg></div><pre id="asset-text" tabindex="0" hidden></pre><section id="audio-inspection" hidden><h4>Listen · mark · review</h4><p id="audio-metadata"></p><p>Original playback: all source channels. Timed annotations and interval playback use the selected source channel.</p><audio id="audio-player" controls preload="metadata" aria-label="Play original audio, all channels"></audio><a id="audio-download">Download original WAV</a><svg id="audio-waveform" viewBox="0 0 600 96" role="img" aria-label="Audio waveform"></svg><p id="audio-status" role="status" aria-live="polite"></p><p id="audio-empty">No intervals yet. Add a transcript or class label before review.</p><ol id="audio-segments"></ol><label>Source channel<select id="audio-channel"></select></label><div class="audio-fields"><label>Start frame (included)<input id="audio-start" type="number" min="0" step="1" value="0"></label><label>End frame (excluded)<input id="audio-end" type="number" min="1" step="1" value="1"></label></div><p id="audio-time-hint"></p><div class="audio-actions"><button id="audio-play-interval" type="button">Play interval / channel</button><button id="audio-stop" type="button">Pause playback</button></div><label>Human transcript<textarea id="audio-transcript" rows="2" maxlength="4000" placeholder="What you heard in this interval"></textarea></label><div class="audio-fields"><label>Class label (optional)<input id="audio-label" maxlength="80" placeholder="e.g. impact"></label><label>Speaker (optional)<input id="audio-speaker" maxlength="120" placeholder="Human-assigned speaker"></label></div><div class="audio-actions"><button id="audio-add" type="button">Add interval</button><button id="audio-clear-fields" type="button">Clear interval fields</button></div><p>Save targets below, then explicitly mark human reviewed. One reviewed labelled interval can use the local audio classification recipe. ASR, cropping and resampling are unavailable.</p></section><section id="sequence-inspection" hidden><p>Whole accepted-state trajectory. Contract checks leave data unreviewed. Transport-only data has no qualified training consumer. Pressure describes the last accepted interval projection.</p><a id="sequence-download">Download original run.json + frames.jsonl bundle</a><details open><summary>Metadata and frame index</summary><pre id="sequence-metadata"></pre></details><label>Human review note<textarea id="sequence-note" maxlength="4000" rows="3"></textarea></label></section><section id="pointcloud-inspection" hidden><a id="pointcloud-download">Download original PLY + sidecar bundle</a><p id="pointcloud-preview-status" role="status" aria-live="polite"></p><div id="pointcloud-preview"></div><details><summary>Native metadata and declared provenance</summary><pre id="pointcloud-metadata"></pre></details><label>Human point cloud review note<textarea id="pointcloud-note" maxlength="4000" rows="3"></textarea></label></section><section id="scientific-inspection" hidden><label>Whole-sequence review note<textarea id="scientific-note" maxlength="4000" rows="3"></textarea></label></section><section id="volume-inspection" hidden><a id="volume-download">Download original NPY + sidecar bundle</a><p id="volume-preview-status" role="status" aria-live="polite"></p><div id="volume-preview"></div><details><summary>Native metadata and declared provenance</summary><pre id="volume-metadata"></pre></details><label>Human volume review note<textarea id="volume-note" maxlength="4000" rows="3"></textarea></label></section><section id="mesh-inspection" hidden><p>Original geometry stays unchanged. Imports start as drafts; human review remains explicit. Units and frame are source declarations, not physics validation.</p><a id="mesh-download">Download original PLY + sidecar bundle</a><p id="mesh-preview-status" role="status" aria-live="polite"></p><div id="mesh-projections"></div><details><summary>Geometry metadata and declared provenance</summary><pre id="mesh-metadata"></pre></details><label>Human geometry review note<textarea id="mesh-note" maxlength="4000" rows="3"></textarea></label></section><label>Task<select id="task"></select></label><label id="label-control">Class / target label<input id="label" maxlength="80" value="object"></label><div id="corpus-controls" hidden><label>Corpus review note<textarea id="corpus-note" rows="4" maxlength="8000" aria-describedby="corpus-review-help"></textarea></label><p id="corpus-review-help">Review this whole document for plain-text training and leave a note (up to 4,000 Unicode code points). Explicitly choose Human reviewed when saving. Classification/entity approval does not approve corpus use. Canonical NFC/LF text stays unchanged.</p></div><div id="caption-controls" hidden><label>Accepted caption<textarea id="caption" rows="5" maxlength="8000" aria-describedby="caption-help"></textarea></label><p id="caption-help">Describe the visible image in up to 4,000 Unicode code points. Check objects, counts, colors, composition and style. A generation prompt stays in source provenance and is never copied into this caption.</p></div><p>Each record has one current task. Saving a different task replaces its current target; earlier targets remain in revision history.</p><div id="classification-help">One class label for this record.</div><div id="detection-controls" hidden><p>Drag a box on the image, or enter pixel-edge coordinates. Right and bottom edges are exclusive.</p><div class="row"><label>X<input id="box-x" type="number" min="0" value="0"></label><label>Y<input id="box-y" type="number" min="0" value="0"></label><label>Width<input id="box-width" type="number" min="1" value="10"></label><label>Height<input id="box-height" type="number" min="1" value="10"></label></div><button type="button" id="add-box">Add box</button></div><div id="entity-controls" hidden><p>Select text above, then add its span. Offsets count Unicode code points.</p><button type="button" id="add-span">Add selected span</button><div class="row"><label>Start<input id="span-start" type="number" min="0" value="0"></label><label>End<input id="span-end" type="number" min="1" value="1"></label><button type="button" id="add-offset-span">Add offsets</button></div></div><ol id="targets"></ol><label>Protected groups (one per line)<textarea id="groups" rows="2" required></textarea></label><label>Review state<select id="record-review"><option value="draft">Draft</option><option value="human_reviewed">I reviewed this annotation</option></select></label><p id="record-provenance"></p><div class="row"><button id="save">Save annotation</button><button type="button" id="reload">Discard edits / reload</button><button type="button" id="history">Revision history</button></div><pre id="history-output" hidden></pre></form><details id="caption-proposal-panel" hidden><summary>Propose a caption for this image</summary><p>Choose Pumas typed v1 for an advertised Image→Text model/profile, or use a separately compatible vision endpoint. Availability is a live observation; it does not qualify model accuracy.</p><p>One selected image, one model request. A served listing does not prove vision or JSON compatibility. Incompatible requests fail without fallback. Captions remain proposals until you explicitly apply a draft, then separately review it.</p><p>For reload recovery, this tab temporarily retains the request ID, image revisions, gateway/model, guidance and seed until the server outcome is reconciled. No image bytes or model responses are stored in the browser. Requests never replay automatically.</p><form id="caption-proposal-form"><label>Gateway API<select id="caption-proposal-protocol"><option value="legacy">Compatible API</option><option value="pumas_typed_v1">Pumas typed v1</option></select></label><label>Exact Pumas profile (optional)<input id="caption-proposal-profile" maxlength="128" placeholder="Resolve selected profile"></label><button id="caption-proposal-capabilities" type="button">Inspect selected capabilities</button><details><summary>Selected capability observation</summary><pre id="caption-proposal-capability-metadata" hidden></pre></details><label>Pumas-compatible gateway URL<input id="caption-proposal-url" type="url" value="http://127.0.0.1:8765" required></label><button id="caption-proposal-models" type="button">List served models</button><label>Model<select id="caption-proposal-model" required></select></label><label>Caption guidance<textarea id="caption-proposal-guidance" maxlength="4000" required>Describe only what is visible in this image.</textarea></label><label>Requested seed<input id="caption-proposal-seed" type="number" min="0" max="4294967295" value="42" required></label><p>The original image stays local; this explicit request sends an oriented JPEG copy, at most 1600 pixels on its longest side, to the selected endpoint. Requested seeds do not guarantee model reproducibility.</p><button id="caption-proposal-submit">Request caption proposal</button></form><button id="caption-proposal-refresh" type="button">Refresh caption requests</button><p id="caption-proposal-status" role="status" aria-live="polite"></p><div id="caption-proposal-jobs"></div></details><details id="text-classification-proposal-panel" hidden><summary>Propose a class for this unannotated text</summary><p>One existing unannotated text, one model request. Define the exact labels first. The model must choose one offered label or explicitly abstain; unknown or malformed outputs fail without a fallback. Apply creates a draft for your separate review.</p><form id="text-classification-proposal-form"><label>Gateway API<select id="text-classification-proposal-protocol"><option value="legacy">Compatible API</option><option value="pumas_typed_v1">Pumas typed v1</option></select></label><label>Exact Pumas profile (optional)<input id="text-classification-proposal-profile" maxlength="128" placeholder="Resolve selected model profile"></label><button type="button" id="text-classification-proposal-capabilities">Inspect selected capabilities</button><p>Typed v1 sends finite requests. Text messages only; seed is unavailable. Generation runs until completion, failure or cancellation. Capability inspection has a separate bounded discovery budget.</p><pre id="text-classification-proposal-capability-metadata" hidden></pre><label>Pumas-compatible gateway URL<input id="text-classification-proposal-url" type="url" value="http://127.0.0.1:8765" required></label><button id="text-classification-proposal-models" type="button">List served text models</button><label>Model<select id="text-classification-proposal-model" required></select></label><label>Exact label choices · JSON array<textarea id="text-classification-proposal-labels" rows="4" maxlength="30000" required aria-describedby="text-classification-proposal-label-help">[]</textarea></label><p id="text-classification-proposal-label-help">Enter 1–30 unique strings, for example ["schedule", "cancel"]. Each label has 1–80 Unicode code points and no leading or trailing whitespace. JSON preserves exact internal whitespace and Unicode; no label is trimmed or guessed. Choices are frozen per request.</p><label>Classification guidance<textarea id="text-classification-proposal-guidance" rows="3" maxlength="4000" required>Choose one exact offered label only when supported by the source text; otherwise abstain.</textarea></label><label>Requested seed<input id="text-classification-proposal-seed" type="number" min="0" max="4294967295" value="42" required></label><p>This explicit request sends the exact captured text, guidance and labels to the selected endpoint. Requested seeds do not guarantee reproducibility. Keep the frozen choices and request settings unchanged when applying; inspect evidence to restore them after reload.</p><button id="text-classification-proposal-submit">Request classification proposal</button></form><button id="text-classification-proposal-refresh" type="button">Refresh classification requests</button><button id="text-classification-proposal-restore" type="button">Restore pending request settings</button><button id="text-classification-proposal-open-pending" type="button">Open pending source</button><pre id="text-classification-proposal-pending-evidence" hidden></pre><p id="text-classification-proposal-status" role="status" aria-live="polite"></p><div id="text-classification-proposal-jobs"></div></details><details id="rights-note-panel" hidden open><summary>Correct rights note</summary><p>This note is metadata, not a permission decision. Saving changes the record revision and history; original source evidence and annotation review stay unchanged. Saved sets keep their old revisions. Reselect current records before release.</p><form id="rights-note-form"><label>Entry format<select id="rights-note-format"><option value="text">Plain text</option><option value="json">JSON string · preserves CR/LF</option></select></label><label>Current rights note<textarea id="rights-note-value" rows="4" maxlength="2000"></textarea></label><p>Up to 1,000 Unicode code points. Blank means unknown. Save or discard annotation edits first. JSON strings preserve existing carriage returns; plain text preserves line feeds.</p><div class="row"><button id="rights-note-save">Save rights note</button><button type="button" id="rights-note-cancel">Cancel note edit</button></div></form><p id="rights-note-status" role="status" aria-live="polite"></p></details><details id="preferences-panel" hidden open><summary>Comparative judgments</summary><p>Choose two distinct answers to this prompt, then explicitly judge them. Answer order, model scores and answer review never decide preference. Judgment review is independent.</p><button id="preference-new" type="button">New judgment</button><button id="preference-refresh" type="button">Refresh judgments &amp; answers</button><p id="preference-status" role="status" aria-live="polite"></p><div id="preference-list"></div><form id="preference-form" hidden><label>Left answer<select id="preference-left" required></select></label><pre id="preference-left-text" tabindex="0"></pre><label>Right answer<select id="preference-right" required></select></label><pre id="preference-right-text" tabindex="0"></pre><label>Comparative outcome<select id="preference-outcome" required><option value="">Choose outcome explicitly</option><option value="left">Prefer left answer</option><option value="right">Prefer right answer</option><option value="tie">Tie · no chosen/rejected row</option><option value="abstain">Abstain · no chosen/rejected row</option></select></label><label>Rationale<textarea id="preference-rationale" rows="3" maxlength="8000"></textarea></label><label>Judgment review<select id="preference-review"><option value="draft">Draft judgment</option><option value="human_reviewed">I reviewed this exact comparison</option></select></label><button id="preference-save">Save judgment</button><button id="preference-cancel" type="button">Cancel judgment edit</button><button id="preference-history" type="button">Judgment history</button><button id="preference-delete" type="button" hidden>Delete judgment</button><p id="preference-editor-status" role="status" aria-live="polite"></p></form><pre id="preference-history-output" hidden></pre></details><details id="responses-panel" hidden open><summary>Instruction answers</summary><p>Author independent answers to the text above. Answers have their own revisions and review; existing classes and entity spans stay intact.</p><div class="row"><button id="response-new" type="button">Add answer</button><button id="response-refresh" type="button">Refresh answers</button></div><div id="response-list"></div><form id="response-form" hidden><label>Entry format<select id="response-entry-format"><option value="text">Plain text · LF newlines</option><option value="json">JSON string · exact CR and CRLF</option></select></label><label>Completion<textarea id="response-completion" rows="6" aria-describedby="response-help"></textarea></label><p id="response-help">Up to 200,000 Unicode code points. Spaces and Unicode are preserved. Use JSON string entry to retain carriage returns. Editing resets this answer's review to draft.</p><label>Answer review<select id="response-review"><option value="draft">Draft</option><option value="human_reviewed">I reviewed this exact answer</option></select></label><div class="row"><button id="response-save">Save answer</button><button id="response-cancel" type="button">Cancel answer edit</button><button id="response-history" type="button">Answer history</button></div><p id="response-editor-status" role="status" aria-live="polite"></p><pre id="response-history-output" hidden></pre></form><p id="response-status" role="status" aria-live="polite"></p></details></section>
+ <aside><details id="audio-import-panel"><summary>Import WAV audio</summary><p>Original PCM signed 16-bit WAV, mono or stereo, 8–96 kHz. Up to 8 MiB and 120 seconds. No inferred transcript or training.</p><form id="audio-import-form"><label>Original WAV<input id="audio-file" type="file" accept=".wav,audio/wav" required></label><label>Protected recording/session group<input id="audio-group" maxlength="120" placeholder="same-session-01"></label><label>Rights / permission note<input id="audio-rights" value="unknown" maxlength="1000"></label><button>Import original WAV</button><p id="audio-import-status" role="status" aria-live="polite"></p></form></details><details open><summary>Import real assets</summary><form id="import-form"><label>Name<input id="import-name" value="Text record"></label><label>Protected source/group<input id="import-group" required placeholder="document-01 or shoot-01"></label><label>Rights / permission note<input id="rights" value="unknown"></label><label>Text<textarea id="import-text" rows="4" placeholder="Paste a text record, or choose an image below"></textarea></label><label>Image<input id="import-image" type="file" accept="image/png,image/jpeg,image/webp"></label><button>Import record</button></form></details><details open id="bulk-panel"><summary>Import a real corpus</summary><form id="bulk-form"><p>Choose a UTF-8 JSONL manifest and its referenced images. Each row creates one raw draft asset; annotate and review afterward.</p><label>Manifest<input id="bulk-manifest" type="file" accept=".jsonl,application/x-ndjson" required></label><label>Referenced images<input id="bulk-images" type="file" multiple accept="image/png,image/jpeg,image/webp"></label><p>Up to 1,000 physical lines and 8 MiB per manifest. Image references must match exactly one selected filename; directories and URLs are not accepted.</p><details><summary>Row examples</summary><pre>{"kind":"text","name":"Note","text":"A real note","groups":["document-01"],"rights":"Authored"}
+ {"kind":"image","file":"photo.png","groups":["shoot-01"],"rights":"Permission granted"}</pre><p>Optional name, parents and rights use the existing record fields. Supplied annotations, review states and provenance are rejected. Parents must be existing record IDs.</p></details><div class="row"><button id="bulk-start">Import rows</button><button id="bulk-stop" type="button" disabled>Stop after current row</button></div></form><p id="bulk-status" role="status" aria-live="polite">Ready to import raw assets.</p><p>Valid rows stay imported when another row fails. Stop prevents the next admission; an in-flight row may finish. Duplicates are rejected without updating existing records.</p><ol id="bulk-results"></ol><button id="bulk-check" type="button" disabled>Check pending row</button><button id="bulk-dismiss" type="button" disabled>Dismiss pending check</button></details><details id="pointcloud-import-panel"><summary>Import point cloud</summary><form id="pointcloud-import-form"><label>points.ply (2 MiB)<input id="pointcloud-file" type="file" required></label><label>points.json (32 KiB)<input id="pointcloud-manifest" type="file" accept=".json" required></label><label>Name<input id="pointcloud-name" value="Local point cloud" maxlength="200" required></label><label>Rights / permission note<input id="pointcloud-rights" value="unknown" maxlength="1000"></label><button>Validate &amp; import whole point cloud</button><p id="pointcloud-import-status" role="status" aria-live="polite"></p></form></details><details id="volume-import-panel"><summary>Import volume</summary><form id="volume-import-form"><label>volume.npy (2 MiB + header)<input id="volume-file" type="file" required></label><label>volume.json (32 KiB)<input id="volume-manifest" type="file" accept=".json" required></label><label>Name<input id="volume-name" value="Local volume" maxlength="200" required></label><label>Rights / permission note<input id="volume-rights" value="unknown" maxlength="1000"></label><button>Validate &amp; import whole volume</button><p id="volume-import-status" role="status" aria-live="polite"></p></form></details><details id="mesh-import-panel"><summary>Import static triangle mesh</summary><p>Select mesh.ply (ASCII PLY 1.0 triangles, xyz and optional normals) and its mesh.json sidecar declaring units, coordinate frame and provenance. Raw files stay unchanged; whole geometry families stay together. 20,000 vertices / 40,000 triangles maximum.</p><form id="mesh-import-form"><label>mesh.ply (2 MiB)<input id="mesh-ply" type="file" accept=".ply" required></label><label>mesh.json (32 KiB)<input id="mesh-manifest" type="file" accept=".json,application/json" required></label><label>Name<input id="mesh-name" value="Static triangle mesh" maxlength="200" required></label><label>Additional protected source/group (optional)<input id="mesh-group" maxlength="120"></label><label>Rights / permission note<input id="mesh-rights" value="unknown" maxlength="1000"></label><button>Validate &amp; import whole mesh</button><p id="mesh-import-status" role="status" aria-live="polite"></p></form></details><details id="sequence-import-panel"><summary>Import Rheon simulation sequence</summary><p>Select the complete run.json and frames.jsonl from Rheon draft PR 20's pinned transport fixture. One 16×8×4 trajectory, constructor plus eight accepted steps. Named MAC fields stay intact. Whole trajectory and initial family stay together in splits.</p><form id="sequence-import-form"><label>run.json (64 KiB)<input id="sequence-run" type="file" accept=".json,application/json" required></label><label>frames.jsonl (2 MiB)<input id="sequence-frames" type="file" accept=".jsonl" required></label><label>Name<input id="sequence-name" value="Rheon transport sequence" maxlength="200" required></label><label>Additional protected source/group (optional)<input id="sequence-group" maxlength="120"></label><label>Rights / permission note<input id="sequence-rights" value="unknown" maxlength="1000"></label><button id="sequence-import-start">Validate & import whole trajectory</button><p id="sequence-import-status" role="status" aria-live="polite"></p></form></details><details id="sequence-batch-panel"><summary>Import a folder of Rheon trajectories</summary><p>Select a folder containing only one subfolder per trajectory, each with run.json and frames.jsonl. Up to 32 complete pairs and 40 MiB of selected raw files. Each uses the pinned fee7b4a transport contract: 16×8×4, constructor plus eight accepted steps.</p><form id="sequence-batch-form"><label>Trajectory folder<input id="sequence-batch-folder" type="file" webkitdirectory multiple required></label><label>Shared protected group (optional; keeps all imported runs together)<input id="sequence-batch-group" maxlength="120"></label><label>Rights / permission note<input id="sequence-batch-rights" value="unknown" maxlength="1000"></label><div class="row"><button id="sequence-batch-start">Import whole trajectories</button><button id="sequence-batch-stop" type="button" disabled>Stop before next trajectory</button></div></form><p id="sequence-batch-status" role="status" aria-live="polite">Ready to import complete trajectories.</p><p>Successful items remain imported as drafts. An in-flight item may complete after Stop or departure. Unknown responses pause without replay. Progress is held in this page; after reload, inspect the collection. Saved-result confirmation proves admission only; source integrity and human review are separate. This is transport import, not qualified simulation training data.</p><ol id="sequence-batch-results"></ol><div class="row"><button id="sequence-batch-check" type="button" disabled>Check pending trajectory</button><button id="sequence-batch-dismiss" type="button" disabled>Dismiss pending check</button></div></details><details id="native-detection-import-panel"><summary>Import native detection release</summary><p>Choose a detection-only canonical_v1 ZIP with 1–100 images (8 MiB). Oriented PNGs and boxes become new drafts requiring your review; rights start unknown. Exported partitions and declared family links are retained. The archive omits upstream originals and unselected family members.</p><form id="native-detection-form"><label>Native detection ZIP<input id="native-detection-archive" type="file" accept=".zip,application/zip" required></label><div class="row"><button id="native-detection-start">Import detection drafts</button><button id="native-detection-stop" type="button" disabled>Stop before next record</button></div></form><p id="native-detection-status" role="status" aria-live="polite">Ready to import native detection records.</p><p>Successful records remain imported. In-flight work may complete after Stop or departure. Uncertain responses pause without replay; progress stays in this page. After reload, inspect the collection.</p><ul id="native-detection-results"></ul><div class="row"><button id="native-detection-check" disabled>Check uncertain saved result</button><button id="native-detection-dismiss" disabled>Dismiss pending check</button></div></details><details id="native-text-import-panel"><summary>Import native text-classification release</summary><p>Choose a frozen canonical_v1 ZIP. Imports its exported text and labels as new drafts. Exported text becomes the new source input; upstream original text cannot be recovered. Historical review, rights and splits grant no local approval or permission.</p><form id="native-text-form"><label>Native release ZIP<input id="native-text-archive" type="file" accept=".zip,application/zip" required></label><div class="row"><button id="native-text-start">Import classification drafts</button><button id="native-text-stop" type="button" disabled>Stop before next record</button></div></form><p id="native-text-status" role="status" aria-live="polite"></p><div class="row"><button id="native-text-check" disabled>Check uncertain saved result</button><button id="native-text-dismiss" disabled>Dismiss pending check</button></div><ul id="native-text-results"></ul></details>
+-<details open id="caption-import-panel"><summary>Import a frozen caption corpus</summary><form id="caption-form"><p>Choose an expanded Tuldok image-caption v1 release folder with manifest.json and train/val/test metadata and PNGs.</p><label>Caption release folder<input id="caption-folder" type="file" webkitdirectory multiple required></label><p>Captions become drafts for your review. Existing split assignments and protected families are retained. Source identity is recorded as origin evidence; existing records are never updated.</p><div class="row"><button id="caption-start">Import draft captions</button><button id="caption-stop" type="button" disabled>Stop after current row</button></div></form><p id="caption-status" role="status" aria-live="polite">Ready to import native caption records.</p><ol id="caption-results"></ol><button id="caption-check" type="button" disabled>Check pending caption</button><button id="caption-dismiss" type="button" disabled>Dismiss pending check</button><p>Successful rows remain imported. Stop prevents the next admission. Batch progress stays in this page; inspect the collection after reload.</p></details><details open><summary>Generate offline</summary><form id="generate-form"><label>Recipe<select id="recipe"><option value="rectangles-v1">Rectangle detection scenes</option><option value="intent-requests-v1">Scheduling intent requests</option></select></label><div class="row"><label>Seed<input id="seed" type="number" value="42" min="0" max="4294967295"></label><label>Count<input id="count" type="number" value="12" min="1" max="100"></label></div><p>Known targets from authored scene or template state. These recipes demonstrate reproducible production; they do not establish real-world model quality. Pumas image generation remains in the corner studio.</p><button>Generate candidates</button></form></details><details open><summary>Grounded model candidates</summary><form id="grounded-form"><label>Gateway API<select id="grounded-protocol"><option value="legacy">Compatible API</option><option value="pumas_typed_v1">Pumas typed v1</option></select></label><label>Exact Pumas profile (optional)<input id="grounded-profile" maxlength="128" placeholder="Resolve selected model profile"></label><button type="button" id="grounded-capabilities">Inspect selected capabilities</button><p>Typed v1 sends finite requests. Text messages only; seed is unavailable. Generation runs until completion, failure or cancellation. Capability inspection has a separate bounded discovery budget.</p><pre id="grounded-capability-metadata" hidden></pre><p>Open a human-reviewed text-classification source. Generate class-preserving rewrite proposals using your Pumas gateway; the captured source text is sent to the selected server.</p><label>Pumas gateway URL<input id="grounded-url" type="url" value="http://127.0.0.1:8080" required></label><button type="button" id="grounded-models">Refresh served models</button><label>Served text model<select id="grounded-model" required><option value="">Refresh models first</option></select></label><label>Variation instruction<textarea id="grounded-instruction" rows="3" maxlength="2000" required>Rewrite clearly for varied phrasing while preserving every fact, intent and class.</textarea></label><div class="row"><label>Count<input id="grounded-count" type="number" min="1" max="10" value="3"></label><label>Seed<input id="grounded-seed" type="number" min="0" max="4294967295" value="42"></label></div><button>Generate grounded proposals</button></form><p>Schema and exact source quotes are checked; semantic correctness is not. Admitting a candidate creates a draft that still needs annotation review before export. Requested seeds do not guarantee reproducibility across models.</p><button id="grounded-refresh">Refresh proposal requests</button><div id="grounded-jobs" aria-live="polite"></div></details><details open><summary>Freeze selected release</summary><form id="release-form"><label>Export format<select id="release-format"><option value="canonical_v1">Canonical mixed-task release</option><option value="image_caption_v1">Image captions · train/val/test</option><option value="text_classification_v1">Text classification · local TF-IDF / Naive Bayes</option><option value="audio_classification_v1">Audio classification · local features / logistic regression</option><option value="image_classification_v1">Image classes · Chapter 8 trainer</option><option value="text_corpus_v1">Text corpus · Chapter 11 byte transformer</option></select></label><p id="caption-export-help" hidden>Choose only human-reviewed image-caption records. All three splits must be nonempty. PNGs and metadata.jsonl use the pinned chapter-26 imagefolder contract; validation is exported as val. Exact pixel duplicates are rejected. Images below 512 pixels produce warnings.</p><p id="classification-export-help" hidden>For the pinned Chapter 8 image classifier (Torch 2.8 / torchvision 0.23). Select human-reviewed single-class images. The trainer needs at least two classes and each class in train, validation and test. Safe opaque folders preserve exact labels through the manifest mapping. Related sources and pixel repeats stay in one split; repeats are retained with a warning. Review class coverage below before freezing.</p><p id="corpus-export-help" hidden>Choose human-reviewed text corpus records with review notes. Exports train.txt, validation.txt and test.txt as canonical UTF-8, ordered by record ID, adding exactly two LF bytes after every document including the last; existing trailing newlines remain. All three connected-family splits must be nonempty. Reference context 128 needs train &gt;128 bytes; validation/test need ≥2 bytes. Allocation counts documents, not bytes. The 256-value raw-byte reader uses shifted windows that can cross document and UTF-8 character boundaries. Separators are not EOS or attention resets. Review byte/document/family counts below. Maximum 5,000 records and 40 MiB for the complete logical archive including duplicated assets and metadata.</p><p id="selection">0 selected</p><div class="row"><label>Train %<input id="train" type="number" value="80" min="0" max="100"></label><label>Validation %<input id="validation" type="number" value="10" min="0" max="100"></label><label>Test %<input id="test" type="number" value="10" min="0" max="100"></label></div><label>Split seed<input id="split-seed" type="number" value="42" min="0" max="4294967295"></label><p>Only reviewed targets can be released. Related sources stay together, including unselected lineage bridges. Whole groups can prevent exact ratios.</p><button type="button" id="preview-release" disabled>Preview selected release</button><p id="release-preview-status" role="status" aria-live="polite">Select records to preview a release.</p><div id="release-preview"></div><button id="freeze-release" disabled>Freeze & export ZIP</button><p id="release-result"></p></form></details><details id="response-release-panel" open><summary>Freeze selected answers</summary><p>Answer selection is separate from record selection and collection filters. Select individual answer revisions; edits and newly added answers never replace these fixed pairs.</p><p id="response-selection-count">0 answers selected</p><ul id="response-selected-list"></ul><button id="response-clear" type="button">Clear answer selection</button><button id="response-selection-save" type="button">Download fixed answer selection</button><a id="response-selection-download" hidden download="tuldok-answer-selection.json">Download selection JSON</a><label>Open fixed answer selection<input id="response-selection-file" type="file" accept=".json,application/json"></label><p id="response-selection-status" role="status" aria-live="polite"></p><form id="response-release-form"><div class="row"><label>Train %<input id="response-train" type="number" value="100" min="0" max="100"></label><label>Validation %<input id="response-validation" type="number" value="0" min="0" max="100"></label><label>Test %<input id="response-test" type="number" value="0" min="0" max="100"></label></div><label>Answer split seed<input id="response-seed" type="number" value="42" min="0" max="4294967295"></label><p>Whole source families stay together. Percentages weight examples, including multiple answers to one prompt. Draft or stale selections block export. The complete archive is bounded to 40 MiB.</p><button id="response-preview" type="button" disabled>Preview selected answers</button><p id="response-preview-status" role="status" aria-live="polite">Select exact reviewed answers to preview.</p><pre id="response-preview-output"></pre><button id="response-freeze" disabled>Freeze answers &amp; export ZIP</button><p id="response-release-result"></p></form></details><details id="preference-release-panel" open><summary>Freeze selected preference pairs</summary><p>Selections retain exact stored judgment, prompt and answer revisions. Reviewed ties and abstentions are excluded with reasons. Stale, draft or conflicting current directional judgments block export. Refresh/rejudge deliberately after edits.</p><button id="preference-clear" type="button">Clear selected judgments</button><ol id="preference-selected-list"></ol><form id="preference-release-form"><div class="row"><label>Train %<input id="preference-train" type="number" min="0" max="100" value="100"></label><label>Validation %<input id="preference-validation" type="number" min="0" max="100" value="0"></label><label>Test %<input id="preference-test" type="number" min="0" max="100" value="0"></label></div><label>Preference split seed<input id="preference-seed" type="number" min="0" max="4294967295" value="42"></label><p>Whole source families stay together. Percentages weight emitted pairs; ties and abstentions do not weight splits. 5,000 judgments and 40 MiB per release.</p><button id="preference-preview" type="button" disabled>Preview selected judgments</button><pre id="preference-preview-output" role="status" aria-live="polite"></pre><button id="preference-freeze" disabled>Freeze preference pairs &amp; export ZIP</button><p id="preference-release-result"></p></form></details></aside></main><script src="/pumas-typed.js"></script><script src="/workbench.js"></script><script src="/saved-selections.js"></script><script src="/saved-searches.js"></script><script src="/bulk-import.js"></script><script src="/caption-import.js"></script><script src="/curation.js"></script><script src="/rights-note.js"></script><script src="/instruction-responses.js"></script><script src="/preferences.js"></script><script src="/native-text-import.js"></script><script src="/native-detection-import.js"></script><script src="/caption-proposals.js"></script><script src="/text-classification-proposals.js"></script><script src="/sequences.js"></script><script src="/sequence-batch.js"></script><script src="/meshes.js"></script><script src="/pointclouds.js"></script><script src="/volume-editor.js"></script><script src="/scientific-fields.js"></script><script src="/pumas-gateways.js" defer></script><script src="/audio-editor.js"></script><script src="/workspaces-data.js"></script><script src="/workbench-layout.js"></script></body></html>
++<details open id="caption-import-panel"><summary>Import a frozen caption corpus</summary><form id="caption-form"><p>Choose an expanded Tuldok image-caption v1 release folder with manifest.json and train/val/test metadata and PNGs.</p><label>Caption release folder<input id="caption-folder" type="file" webkitdirectory multiple required></label><p>Captions become drafts for your review. Existing split assignments and protected families are retained. Source identity is recorded as origin evidence; existing records are never updated.</p><div class="row"><button id="caption-start">Import draft captions</button><button id="caption-stop" type="button" disabled>Stop after current row</button></div></form><p id="caption-status" role="status" aria-live="polite">Ready to import native caption records.</p><ol id="caption-results"></ol><button id="caption-check" type="button" disabled>Check pending caption</button><button id="caption-dismiss" type="button" disabled>Dismiss pending check</button><p>Successful rows remain imported. Stop prevents the next admission. Batch progress stays in this page; inspect the collection after reload.</p></details><details open><summary>Generate offline</summary><form id="generate-form"><label>Recipe<select id="recipe"><option value="rectangles-v1">Rectangle detection scenes</option><option value="intent-requests-v1">Scheduling intent requests</option></select></label><div class="row"><label>Seed<input id="seed" type="number" value="42" min="0" max="4294967295"></label><label>Count<input id="count" type="number" value="12" min="1" max="100"></label></div><p>Known targets from authored scene or template state. These recipes demonstrate reproducible production; they do not establish real-world model quality. Pumas image generation remains in the corner studio.</p><button>Generate candidates</button></form></details><details open><summary>Grounded model candidates</summary><form id="grounded-form"><label>Gateway API<select id="grounded-protocol"><option value="legacy">Compatible API</option><option value="pumas_typed_v1">Pumas typed v1</option></select></label><label>Exact Pumas profile (optional)<input id="grounded-profile" maxlength="128" placeholder="Resolve selected model profile"></label><button type="button" id="grounded-capabilities">Inspect selected capabilities</button><p>Typed v1 sends finite requests. Text messages only; seed is unavailable. Generation runs until completion, failure or cancellation. Capability inspection has a separate bounded discovery budget.</p><pre id="grounded-capability-metadata" hidden></pre><p>Open a human-reviewed text-classification source. Generate class-preserving rewrite proposals using your Pumas gateway; the captured source text is sent to the selected server.</p><label>Pumas gateway URL<input id="grounded-url" type="url" value="http://127.0.0.1:8080" required></label><button type="button" id="grounded-models">Refresh served models</button><label>Served text model<select id="grounded-model" required><option value="">Refresh models first</option></select></label><label>Variation instruction<textarea id="grounded-instruction" rows="3" maxlength="2000" required>Rewrite clearly for varied phrasing while preserving every fact, intent and class.</textarea></label><div class="row"><label>Count<input id="grounded-count" type="number" min="1" max="10" value="3"></label><label>Seed<input id="grounded-seed" type="number" min="0" max="4294967295" value="42"></label></div><button>Generate grounded proposals</button></form><p>Schema and exact source quotes are checked; semantic correctness is not. Admitting a candidate creates a draft that still needs annotation review before export. Requested seeds do not guarantee reproducibility across models.</p><button id="grounded-refresh">Refresh proposal requests</button><div id="grounded-jobs" aria-live="polite"></div></details><details open><summary>Freeze selected release</summary><form id="release-form"><label>Export format<select id="release-format"><option value="canonical_v1">Canonical mixed-task release</option><option value="image_caption_v1">Image captions · train/val/test</option><option value="text_classification_v1">Text classification · local TF-IDF / Naive Bayes</option><option value="audio_classification_v1">Audio classification · local features / logistic regression</option><option value="image_classification_v1">Image classes · Chapter 8 trainer</option><option value="text_corpus_v1">Text corpus · Chapter 11 byte transformer</option></select></label><p id="caption-export-help" hidden>Choose only human-reviewed image-caption records. All three splits must be nonempty. PNGs and metadata.jsonl use the pinned chapter-26 imagefolder contract; validation is exported as val. Exact pixel duplicates are rejected. Images below 512 pixels produce warnings.</p><p id="classification-export-help" hidden>For the pinned Chapter 8 image classifier (Torch 2.8 / torchvision 0.23). Select human-reviewed single-class images. The trainer needs at least two classes and each class in train, validation and test. Safe opaque folders preserve exact labels through the manifest mapping. Related sources and pixel repeats stay in one split; repeats are retained with a warning. Review class coverage below before freezing.</p><p id="corpus-export-help" hidden>Choose human-reviewed text corpus records with review notes. Exports train.txt, validation.txt and test.txt as canonical UTF-8, ordered by record ID, adding exactly two LF bytes after every document including the last; existing trailing newlines remain. All three connected-family splits must be nonempty. Reference context 128 needs train &gt;128 bytes; validation/test need ≥2 bytes. Allocation counts documents, not bytes. The 256-value raw-byte reader uses shifted windows that can cross document and UTF-8 character boundaries. Separators are not EOS or attention resets. Review byte/document/family counts below. Maximum 5,000 records and 40 MiB for the complete logical archive including duplicated assets and metadata.</p><p id="selection">0 selected</p><div class="row"><label>Train %<input id="train" type="number" value="80" min="0" max="100"></label><label>Validation %<input id="validation" type="number" value="10" min="0" max="100"></label><label>Test %<input id="test" type="number" value="10" min="0" max="100"></label></div><label>Split seed<input id="split-seed" type="number" value="42" min="0" max="4294967295"></label><p>Only reviewed targets can be released. Related sources stay together, including unselected lineage bridges. Whole groups can prevent exact ratios.</p><button type="button" id="preview-release" disabled>Preview selected release</button><p id="release-preview-status" role="status" aria-live="polite">Select records to preview a release.</p><div id="release-preview"></div><button id="freeze-release" disabled>Freeze & export ZIP</button><p id="release-result"></p></form></details><details id="response-release-panel" open><summary>Freeze selected answers</summary><p>Answer selection is separate from record selection and collection filters. Select individual answer revisions; edits and newly added answers never replace these fixed pairs.</p><p id="response-selection-count">0 answers selected</p><ul id="response-selected-list"></ul><button id="response-clear" type="button">Clear answer selection</button><button id="response-selection-save" type="button">Download fixed answer selection</button><a id="response-selection-download" hidden download="tuldok-answer-selection.json">Download selection JSON</a><label>Open fixed answer selection<input id="response-selection-file" type="file" accept=".json,application/json"></label><p id="response-selection-status" role="status" aria-live="polite"></p><form id="response-release-form"><div class="row"><label>Train %<input id="response-train" type="number" value="100" min="0" max="100"></label><label>Validation %<input id="response-validation" type="number" value="0" min="0" max="100"></label><label>Test %<input id="response-test" type="number" value="0" min="0" max="100"></label></div><label>Answer split seed<input id="response-seed" type="number" value="42" min="0" max="4294967295"></label><p>Whole source families stay together. Percentages weight examples, including multiple answers to one prompt. Draft or stale selections block export. The complete archive is bounded to 40 MiB.</p><button id="response-preview" type="button" disabled>Preview selected answers</button><p id="response-preview-status" role="status" aria-live="polite">Select exact reviewed answers to preview.</p><pre id="response-preview-output"></pre><button id="response-freeze" disabled>Freeze answers &amp; export ZIP</button><p id="response-release-result"></p></form></details><details id="preference-release-panel" open><summary>Freeze selected preference pairs</summary><p>Selections retain exact stored judgment, prompt and answer revisions. Reviewed ties and abstentions are excluded with reasons. Stale, draft or conflicting current directional judgments block export. Refresh/rejudge deliberately after edits.</p><button id="preference-clear" type="button">Clear selected judgments</button><ol id="preference-selected-list"></ol><form id="preference-release-form"><div class="row"><label>Train %<input id="preference-train" type="number" min="0" max="100" value="100"></label><label>Validation %<input id="preference-validation" type="number" min="0" max="100" value="0"></label><label>Test %<input id="preference-test" type="number" min="0" max="100" value="0"></label></div><label>Preference split seed<input id="preference-seed" type="number" min="0" max="4294967295" value="42"></label><p>Whole source families stay together. Percentages weight emitted pairs; ties and abstentions do not weight splits. 5,000 judgments and 40 MiB per release.</p><button id="preference-preview" type="button" disabled>Preview selected judgments</button><pre id="preference-preview-output" role="status" aria-live="polite"></pre><button id="preference-freeze" disabled>Freeze preference pairs &amp; export ZIP</button><p id="preference-release-result"></p></form></details></aside></main><script src="/pumas-typed.js"></script><script src="/workbench.js"></script><script src="/saved-selections.js"></script><script src="/saved-searches.js"></script><script src="/bulk-import.js"></script><script src="/caption-import.js"></script><script src="/curation.js"></script><script src="/rights-note.js"></script><script src="/instruction-responses.js"></script><script src="/preferences.js"></script><script src="/native-text-import.js"></script><script src="/native-detection-import.js"></script><script src="/caption-proposals.js"></script><script src="/text-classification-proposals.js"></script><script src="/sequences.js"></script><script src="/sequence-batch.js"></script><script src="/meshes.js"></script><script src="/pointclouds.js"></script><script src="/volume-editor.js"></script><script src="/scientific-inspector.js"></script><script src="/scientific-fields.js"></script><script src="/pumas-gateways.js" defer></script><script src="/audio-editor.js"></script><script src="/workspaces-data.js"></script><script src="/workbench-layout.js"></script></body></html>
+diff --git a/tests/browser_scientific_fields.cjs b/tests/browser_scientific_fields.cjs
+index 85d42245..7e6e37f4 100644
+--- a/tests/browser_scientific_fields.cjs
++++ b/tests/browser_scientific_fields.cjs
+@@ -32,7 +32,7 @@ const serverArgs=port=>['-u','app.py','--port',String(port),'--data',path.join(t
+   const port=await until(()=>{if(server.exitCode!==null)throw Error('Project server exited: '+serverErrors);return output.match(/127\.0\.0\.1:(\d+)/)?.[1];});
+   const base='http://127.0.0.1:'+port;
+   await fixtureAuth.register('http://127.0.0.1:'+port,path.join(temporary,'data'),root);
+-  const browser=launch(process.env.BROWSER||'/usr/bin/chromium',['--headless','--no-sandbox','--disable-gpu','--no-first-run','--no-default-browser-check','--remote-debugging-port=0','--window-size=1440,900','--user-data-dir='+path.join(temporary,'browser'),'about:blank'],{stdio:['ignore','ignore','ignore'],env:{...process.env,XDG_CONFIG_HOME:temporary,XDG_CACHE_HOME:temporary}});
++  const browser=launch(process.env.BROWSER||'/usr/bin/chromium',['--headless','--disable-gpu','--no-first-run','--no-default-browser-check','--remote-debugging-port=0','--window-size=1440,900','--user-data-dir='+path.join(temporary,'browser'),'about:blank'],{stdio:['ignore','ignore','ignore'],env:{...process.env,XDG_CONFIG_HOME:temporary,XDG_CACHE_HOME:temporary}});
+   const debugPort=await waitForDebugger(browser,path.join(temporary,'browser','DevToolsActivePort'));
+   const tabs=await(await fetch('http://127.0.0.1:'+debugPort+'/json')).json(),target=tabs.find(tab=>tab.type==='page'&&tab.url==='about:blank');assert.ok(target);
+   ws=new WebSocket(target.webSocketDebuggerUrl);await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject;});
+diff --git a/tests/test_project_files_clients.py b/tests/test_project_files_clients.py
+index 65e57a1c..e692dc45 100644
+--- a/tests/test_project_files_clients.py
++++ b/tests/test_project_files_clients.py
+@@ -72,6 +72,18 @@ def client(reply, *, owner=False):
+ 
+ 
+ class M2Contracts(unittest.TestCase):
++    def test_scientific_slice_request_requires_project_checkpoint_and_exact_content(self):
++        arguments=dict(binding=BINDING,checkpoint=CHECKPOINT,record_id=RECORD,
++                       content_hash=OTHER,frame=1,field='pressure',axis='z',index=2)
++        method,path,body=api.project_request('project_files.data_scientific',arguments)
++        self.assertEqual(method,'GET');self.assertIsNone(body)
++        self.assertTrue(path.startswith('/api/workspace/project-files/data/'+RECORD+'/scientific?'))
++        for key in ('binding','checkpoint','record_id','content_hash'):
++            with self.subTest(missing=key),self.assertRaises(api.AgentAPIError):
++                api.validate_arguments('project_files.data_scientific',{k:v for k,v in arguments.items() if k!=key})
++        with self.assertRaises(api.AgentAPIError):
++            api.validate_arguments('project_files.data_scientific',dict(arguments,execute=True))
++
+     def test_fixed_consumers_cover_all_m2_operations_and_preserve_m1(self):
+         sdk = ProjectFilesClient(Mock())
+         cli = project_cli.parser()
+diff --git a/tests/test_project_files_m2_http.py b/tests/test_project_files_m2_http.py
+index 1234fc13..6a92ed91 100644
+--- a/tests/test_project_files_m2_http.py
++++ b/tests/test_project_files_m2_http.py
+@@ -34,7 +34,9 @@ RIGHTS = 'Owned synthetic source; corrected by M2 acceptance café 山.'
+ SOURCE_FILES = ('app.py','agent_api.py','access.py','project_workspace.py','project_dispatch.py',
+     'project_projection.py','project_data.py','project_sources.py','project_material.py',
+     'project_history.py','project_producers.py','project_session.py','project_store.py',
+-    'static/project-files.js','static/project-files.html','tuldok_client.py','project_cli.py','mcp_stdio.py')
++    'static/project-files.js','static/project-files.html','tuldok_client.py','project_cli.py','mcp_stdio.py',
++    'static/scientific-inspector.js','static/scientific-inspector.css','static/scientific-fields.js',
++    'static/workbench.html','static/workbench.css')
+ 
+ 
+ def subject_hashes():
+@@ -265,6 +267,35 @@ class ProjectFilesM2HTTP(unittest.TestCase):
+             document={'name':'Unpinned but explicitly measured source','groups':['m2-unpinned'],'rights':'Owned authored data'})
+         self.assertEqual(row['source_sha256'],item['observed_sha256'])
+ 
++    def test_native_scientific_slice_refuses_stale_selection_and_changed_artifact(self):
++        self.create();_manifest,raw=authored_source(self.external)
++        registered=self.call('source_register',root='fixture',manifest_path='source-project.json')
++        snapshot={key:registered[key] for key in ('origin_catalog_id','project_id','manifest_sha256')}
++        row=self.call('data_import_scientific',snapshot=snapshot,reference_id='fields',
++            expected_sha256=hashlib.sha256(raw).hexdigest(),
++            document={'name':'Native slice source','groups':['m2-slice'],'rights':'Owned fixture'})
++        arguments=self.arguments('data_scientific',record_id=row['id'],content_hash=row['content_hash'],
++            frame=1,field='scalar',axis='z',index=2)
++        before=m1.canonical_bytes(self.external/'alpha')
++        status,value=self.transport('data_scientific',arguments)
++        self.assertEqual(status,200,value)
++        self.assertEqual(value['value']['values'][1][2],1212+2**-45)
++        for change in ({'checkpoint':'0'*64},{'binding':'0'*32},{'content_hash':'0'*64}):
++            status,error=self.transport('data_scientific',dict(arguments,**change))
++            self.assertEqual(status,409,error)
++        with self.owner.bound(self.workspace):
++            credential=self.workspace.access.issue({'label':'Revoked slice inspection','scopes':['inspect']})
++            self.workspace.access.revoke(credential['identity']['credential_id'])
++        self.assertEqual(self.transport('data_scientific',arguments,token=credential['token'])[0],401)
++        self.assertEqual(m1.canonical_bytes(self.external/'alpha'),before)
++        path=self.external/'alpha/artifacts/sha256'/row['content_hash']
++        self.assertEqual(path.read_bytes(),raw)
++        path.chmod(0o600) # Deliberate external corruption of this disposable fixture.
++        path.write_bytes(b'x'*len(raw))
++        self.assertNotEqual(self.transport('data_scientific',arguments)[0],200)
++        path.unlink()
++        self.assertNotEqual(self.transport('data_scientific',arguments)[0],200)
++
+     @unittest.skipUnless(importlib.util.find_spec('mcp'),'Requires pinned real MCP optional dependencies')
+     def test_real_sdk_cli_mcp_roles_lost_reply_and_stale_binding(self):
+         import anyio
+diff --git a/tests/test_project_sources.py b/tests/test_project_sources.py
+index ca7b3556..5156e3f0 100644
+--- a/tests/test_project_sources.py
++++ b/tests/test_project_sources.py
+@@ -179,6 +179,30 @@ class SourceAdapterTests(unittest.TestCase):
+         with self.assertRaises(WorkbenchError):adapter.import_scientific(forged,projection.session.snapshot['checkpoint'],'foreign-unbound')
+         self.assertEqual(self.store.snapshot(),canonical)
+ 
++    def test_scientific_slice_read_pins_content_and_survives_cold_open_without_source_root(self):
++        body=self.import_body(self.register())
++        row=self.adapter.import_scientific(body,self.session.snapshot['checkpoint'],'slice-source')
++        before=self.store.snapshot()
++        expected=self.projection.data.scientific(row['id'],row['content_hash'],frame=1,field='scalar',axis='z',index=2)
++        self.assertEqual(expected['values'][1][2],1212+2**-45)
++        projection,_adapter=self.project('cold-slice-without-roots',{})
++        self.assertEqual(projection.data.scientific(row['id'],row['content_hash'],frame=1,field='scalar',axis='z',index=2),expected)
++        for changes in ({'frame':2},{'index':4},{'field':'absent'}):
++            selection=dict(frame=0,field='scalar',axis='z',index=0)
++            selection.update(changes)
++            with self.subTest(changes=changes),self.assertRaises(WorkbenchError):
++                projection.data.scientific(row['id'],row['content_hash'],**selection)
++        with self.assertRaises(WorkbenchError) as caught:
++            projection.data.scientific(row['id'],'0'*64)
++        self.assertEqual(caught.exception.code,'conflict')
++        token=self.access.issue(dict(label='Revoked inspection',scopes=['inspect']))
++        with self.access.bind(token['token']):
++            with self.access.bind(self.token):
++                self.access.revoke(token['identity']['credential_id'])
++            with self.assertRaises(AccessError):
++                projection.data.scientific(row['id'],row['content_hash'])
++        self.assertEqual(self.store.snapshot(),before)
++
+     def test_deferred_sql_failure_retains_snapshot_receipt_and_explicit_cold_replay_rebinds(self):
+         self.db.execute("CREATE FUNCTION fixture_refuse_source() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'controlled source SQL failure' USING ERRCODE='23514'; END; $$")
+         self.db.execute('CREATE CONSTRAINT TRIGGER fixture_source_failure AFTER INSERT ON workspace_projects DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION fixture_refuse_source()')
+diff --git a/tuldok_client.py b/tuldok_client.py
+index d18ba547..11efd24d 100644
+--- a/tuldok_client.py
++++ b/tuldok_client.py
+@@ -278,6 +278,10 @@ class ProjectFilesClient:
+         """data get; exact selected project checkpoint, existing domain validation, no execution."""
+         return self._call('data_get', arguments)
+ 
++    def data_scientific(self, **arguments):
++        """Inspect an exact scientific field slice in the selected project."""
++        return self._call('data_scientific', arguments)
++
+     def data_history(self, **arguments):
+         """data history; exact selected project checkpoint, existing domain validation, no execution."""
+         return self._call('data_history', arguments)
+-- 
+2.43.0
+

@@ -1,0 +1,57 @@
+From 2354d0188b9c97b81cd267d79dc45b195ff496d7 Mon Sep 17 00:00:00 2001
+From: MrScripty <TheEnvironmentGuy@protonmail.com>
+Date: Sat, 24 Oct 2026 09:06:53 -0700
+Subject: [PATCH] Skip surrogate scans for proven ASCII JSON strings
+
+---
+ agent_api.py            |  2 +-
+ tests/test_agent_api.py | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/agent_api.py b/agent_api.py
+index 64e6e0bf..ee23b2b5 100644
+--- a/agent_api.py
++++ b/agent_api.py
+@@ -1994,7 +1994,7 @@ def _finite(value, depth=0, *, nul_path=None, _path=()):
+     if depth > DEPTH_LIMIT:
+         raise AgentAPIError('JSON nesting exceeds the transport bound.')
+     if isinstance(value, str):
+-        if any(0xD800 <= ord(ch) <= 0xDFFF for ch in value) or ('\x00' in value and _path != nul_path):
++        if (not str.isascii(value) and any(0xD800 <= ord(ch) <= 0xDFFF for ch in value)) or ('\x00' in value and _path != nul_path):
+             raise AgentAPIError('Text contains an invalid code point.')
+     elif isinstance(value, float) and not math.isfinite(value):
+         raise AgentAPIError('JSON numbers must be finite.')
+diff --git a/tests/test_agent_api.py b/tests/test_agent_api.py
+index 7ccee78f..2c9c1f70 100644
+--- a/tests/test_agent_api.py
++++ b/tests/test_agent_api.py
+@@ -50,6 +50,26 @@ def sample(schema):
+ 
+ 
+ class RegistryTests(unittest.TestCase):
++    def test_ascii_shortcut_preserves_unicode_and_scoped_nul_rejection(self):
++        for codepoint in range(128):
++            value=chr(codepoint)
++            if codepoint==0:
++                with self.assertRaises(api.AgentAPIError):api.decode(json.dumps(value))
++            else:
++                self.assertEqual(api.decode(json.dumps(value)),value)
++        for codepoint in range(0xd800,0xe000):
++            with self.assertRaises(api.AgentAPIError):api.decode(json.dumps(chr(codepoint)))
++        for codepoint in (0x80,0x7ff,0x800,0xd7ff,0xe000,0xffff,0x10000,0x10ffff):
++            value=chr(codepoint)
++            self.assertEqual(api.decode(json.dumps(value,ensure_ascii=False)),value)
++        allowed={'entry':'left\x00right'}
++        self.assertEqual(api.decode(json.dumps(allowed),nul_path=('entry',)),allowed)
++        for denied in ({'entry':'ok','other':'\x00'},{'\x00':'ok'}):
++            with self.assertRaises(api.AgentAPIError):api.decode(json.dumps(denied),nul_path=('entry',))
++        class FalseAscii(str):
++            def isascii(self):return True
++        with self.assertRaises(api.AgentAPIError):api._finite(FalseAscii('\ud800'))
++
+     def test_discovery_is_stdlib_only_in_cold_process(self):
+         code = 'import sys;sys.path.insert(0,sys.argv[1]);import agent_api;agent_api.discovery();assert not any(x in sys.modules for x in ("jsonschema","app","workbench","mcp","psycopg"))'
+         subprocess.run([sys.executable, '-I', '-S', '-c', code, str(Path(api.__file__).parent)], check=True, capture_output=True, timeout=10)
+-- 
+2.43.0
+

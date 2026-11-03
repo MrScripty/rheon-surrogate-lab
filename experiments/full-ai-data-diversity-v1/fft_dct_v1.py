@@ -1,0 +1,101 @@
+"""Generic orthonormal DCT-II/III via pinned double-precision CUDA FFTs.
+
+There are no physical coefficients, eigenvalues or learned parameters here.
+"""
+import ctypes as C
+import math
+from pathlib import Path
+import torch
+from support import digest
+
+LIBRARY = Path('/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages/nvidia/cu13/lib/libcufft.so.12')
+LIBRARY_SHA256 = '0a71f34c0ad96d3b4c051d6fcb6197d4ad6d1f15ff2007a5082a2bf3eff06f56'
+
+
+class FFTDCT:
+    def __init__(self):
+        if digest(LIBRARY) != LIBRARY_SHA256:
+            raise ValueError('Pinned cuFFT runtime changed')
+        self.library = C.CDLL(str(LIBRARY))
+        version = C.c_int()
+        self.library.cufftGetVersion.argtypes = [C.POINTER(C.c_int)]
+        if self.library.cufftGetVersion(C.byref(version)) != 0:
+            raise ValueError('cuFFT runtime version query failed')
+        mapped = {Path(line.split()[-1]) for line in Path('/proc/self/maps').read_text().splitlines()
+                  if 'libcufft.so.' in line and line.split()[-1].startswith('/')}
+        if not mapped or any(digest(p) != LIBRARY_SHA256 for p in mapped):
+            raise ValueError('Actual loaded cuFFT differs from pinned runtime')
+        cache = torch.backends.cuda.cufft_plan_cache[torch.cuda.current_device()]
+        if cache.max_size < 256:
+            raise ValueError('Plan cache cannot retain the frozen finite transform population')
+        self.identity = dict(library=str(LIBRARY), library_sha256=LIBRARY_SHA256,
+                             cufft_version=version.value, torch_version=torch.__version__,
+                             cuda_version=torch.version.cuda, plan_cache_max_size=cache.max_size,
+                             real_dtype='float64', complex_dtype='complex128',
+                             physical_coefficients=False, learned_parameters=False)
+        self.axes = {}
+        self.prepared = set()
+        self.setup_observations = []
+
+    def prepare(self, shape):
+        shape = tuple(shape)
+        if shape in self.prepared:
+            return
+        if len(shape) != 3 or any(n < 1 for n in shape) or torch.cuda.is_current_stream_capturing():
+            raise ValueError('Three positive dimensions must be prepared outside capture')
+        for n in shape:
+            if n not in self.axes:
+                angle = torch.arange(n, device='cuda', dtype=torch.float64)*(math.pi/(2*n))
+                phase = torch.complex(torch.cos(angle), -torch.sin(angle))
+                scale = torch.full((n,), math.sqrt(2/n)/2, device='cuda', dtype=torch.float64)
+                scale[0] = math.sqrt(1/n)/2
+                self.axes[n] = phase, scale, scale.reciprocal()
+        # Warm exact lengths/batches/strides before any graph capture or timing.
+        dummy = torch.zeros(shape, device='cuda', dtype=torch.float64)
+        for _ in range(2):
+            self.inverse(self.forward(dummy))
+        torch.cuda.synchronize()
+        self.prepared.add(shape)
+        cache = torch.backends.cuda.cufft_plan_cache[torch.cuda.current_device()]
+        self.setup_observations.append(dict(shape_zyx=list(shape), actual_cached_plans=cache.size,
+                                            cache_max_size=cache.max_size, warmups=2))
+
+    def axis(self, value, axis, inverse):
+        if value.device.type != 'cuda' or value.dtype != torch.float64 or value.ndim != 3:
+            raise ValueError('Complete three-dimensional CUDA double field required')
+        n = value.shape[axis]
+        if n not in self.axes:
+            raise ValueError('Prepare transform constants before execution')
+        phase, scale, inverse_scale = self.axes[n]
+        work = value.movedim(axis, -1).contiguous()
+        if inverse:
+            leading = (work*inverse_scale)*phase.conj()
+            spectrum = torch.cat((leading, torch.zeros_like(leading[..., :1])), dim=-1)
+            output = torch.fft.irfft(spectrum, n=2*n, dim=-1, norm='backward')[..., :n]
+        else:
+            extended = torch.cat((work, work.flip((-1,))), dim=-1)
+            spectrum = torch.fft.rfft(extended, dim=-1, norm='backward')
+            output = (spectrum[..., :n]*phase).real*scale
+        return output.movedim(-1, axis).contiguous()
+
+    def forward(self, value):
+        for axis in (0, 1, 2):
+            value = self.axis(value, axis, False)
+        return value
+
+    def inverse(self, value):
+        for axis in (2, 1, 0):
+            value = self.axis(value, axis, True)
+        return value
+
+    def pressure(self, core, value, counts):
+        shape = tuple(reversed(counts))
+        if shape not in self.prepared or tuple(value.shape) != (1, 1, *shape):
+            raise ValueError('Prepare complete batch-one pressure transform first')
+        coefficients = self.forward(value.reshape(shape))
+        # This divisor is generated by the existing managed-restored learned
+        # response. This module never constructs a numerical pressure inverse.
+        coefficients = coefficients/core.divisors['g'+'_'.join(map(str, shape))]
+        coefficients[:1, :1, :1].zero_()
+        output = self.inverse(coefficients).reshape_as(value)
+        return output-output[:, :, :1, :1, :1]

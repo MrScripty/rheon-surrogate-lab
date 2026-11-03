@@ -1,0 +1,282 @@
+diff --git a/backup_metadata.py b/backup_metadata.py
+index 0407bfcc..17745495 100644
+--- a/backup_metadata.py
++++ b/backup_metadata.py
+@@ -112,10 +112,61 @@ def tree_modes(path, expected):
+     return result
+ 
+ 
+-def copy_tree(source, target, expected):
++def _linked_backup_copy(source, target, anchor, entry, mode):
++    """Verify both contents before sharing an inode inside a private backup.
++
++    The caller owns the fresh target tree exclusively. No link ever names an
++    original source file; all anchors were independently copied into this tree.
++    """
++    def verified(path):
++        before = path.lstat()
++        descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
++        try:
++            opened = os.fstat(descriptor)
++            if (not stat.S_ISREG(opened.st_mode) or before != opened
++                    or stat.S_IMODE(opened.st_mode) != mode):
++                raise StorageTransferError('Backup copy source identity or permissions changed.')
++            result = hashlib.sha256()
++            for chunk in iter(lambda: os.read(descriptor, 1024 * 1024), b''):
++                result.update(chunk)
++            after = os.fstat(descriptor)
++            fields = lambda info: (info.st_dev, info.st_ino, info.st_mode, info.st_size,
++                                   info.st_mtime_ns, info.st_ctime_ns, info.st_nlink)
++            if (fields(opened) != fields(after) or fields(path.lstat()) != fields(after)
++                    or after.st_size != entry['bytes'] or result.hexdigest() != entry['sha256']):
++                raise StorageTransferError('Backup copy source bytes or binding changed.')
++            return descriptor, after
++        except BaseException:
++            os.close(descriptor)
++            raise
++
++    source_fd, original = verified(source)
++    anchor_fd = None
++    try:
++        anchor_fd, copied = verified(anchor)
++        if (original.st_dev, original.st_ino) == (copied.st_dev, copied.st_ino):
++            raise StorageTransferError('Backup anchor must be independent of the original source.')
++        os.link(anchor, target, follow_symlinks=False)
++        linked = target.lstat()
++        if (not stat.S_ISREG(linked.st_mode) or
++                (linked.st_dev, linked.st_ino) != (copied.st_dev, copied.st_ino)):
++            raise StorageTransferError('Backup anchor changed during link publication.')
++        # The already-durable copied inode is unchanged; linking changes only
++        # its link count/ctime. The containing directories are synced by copy_tree.
++        os.fsync(anchor_fd)
++    finally:
++        os.close(source_fd)
++        if anchor_fd is not None:
++            os.close(anchor_fd)
++
++
++def copy_tree(source, target, expected, *, deduplicate=False):
+     """Preserve bytes and permissions, refusing changed or contradictory staging."""
+     source, target = Path(source), Path(target)
++    if deduplicate and target.exists():
++        raise StorageTransferError('Deduplicated backup requires an absent destination tree.')
+     modes = tree_modes(source, expected)
++    copies = {}
+     target.mkdir(parents=True, exist_ok=True)
+     for name, mode in modes.items():
+         directory = target / name
+@@ -135,10 +186,13 @@ def copy_tree(source, target, expected):
+             target_file.mkdir(parents=True, exist_ok=True)
+         else:
+             target_file.parent.mkdir(parents=True, exist_ok=True)
++            content_key = (entry['sha256'], entry['bytes'], modes[name])
+             if target_file.exists():
+                 if (not target_file.is_file() or file_hash(target_file) != entry['sha256']
+                         or stat.S_IMODE(target_file.stat().st_mode) != modes[name]):
+                     raise StorageTransferError('Staged artifact bytes or permissions differ: ' + name)
++            elif deduplicate and content_key in copies:
++                _linked_backup_copy(source_file, target_file, copies[content_key], entry, modes[name])
+             else:
+                 # Never widen read-only staging permissions to force a retry.
+                 if not target_file.parent.stat().st_mode & stat.S_IWUSR:
+@@ -169,6 +223,8 @@ def copy_tree(source, target, expected):
+                     os.rename(temporary, target_file)
+                 finally:
+                     temporary.unlink(missing_ok=True)
++            if deduplicate:
++                copies.setdefault(content_key, target_file)
+     if tree_modes(source, expected) != modes:
+         raise StorageTransferError('Source permissions changed during copy.')
+     directories = [name for name, entry in expected.items() if entry['kind'] == 'directory']
+@@ -340,7 +396,7 @@ def backup_catalog(path, backup, *, dsn=None, quiesced=False):
+             before = tree_manifest(path)
+             tables = read_catalog(metadata)
+             sequences = read_sequences(metadata)
+-            copy_tree(path, temporary / 'catalog', before)
++            copy_tree(path, temporary / 'catalog', before, deduplicate=True)
+             if (before != tree_manifest(path) or before != tree_manifest(temporary / 'catalog')
+                     or tree_modes(path, before) != tree_modes(temporary / 'catalog', before)):
+                 raise StorageTransferError('Artifacts changed during backup. Keep all writers stopped.')
+diff --git a/docs/contracts/project-files.md b/docs/contracts/project-files.md
+index ae88676a..7959d37d 100644
+--- a/docs/contracts/project-files.md
++++ b/docs/contracts/project-files.md
+@@ -37,6 +37,17 @@ the index size before staging immutable records. This format is unchanged;
+ older installations with the former 16 MiB index limit cannot open larger
+ checkpoints and must be upgraded before consuming them.
+ 
++Verified stopped-source backups and ordinary catalog backups share identical
++file contents only inside their fresh private backup tree, and only when byte
++count, SHA256 and POSIX permission mode all match. The first copy has an
++independent inode; no original source file is hard-linked into the backup.
++Both source and copied content are verified before a duplicate link is made,
++and the complete tree/hash/mode checks still run before backup publication.
++The existing backup format remains a complete ordinary-file tree. Restore
++copies every path into an independent file, preserving bytes and modes without
++introducing writable aliases into the restored catalog. Backup trees are
++immutable custody and must not be edited as working catalogs.
++
+ Each inventory entry identifies a rooted immutable file
+ `.tuldok/records/<family>/<record-id>/<sha256>.json`, its format, namespace,
+ byte count and SHA256. Original `workbench_text_v1` preserves original source, current
+diff --git a/project_transfer.py b/project_transfer.py
+index 1507e71e..932d0963 100644
+--- a/project_transfer.py
++++ b/project_transfer.py
+@@ -297,7 +297,7 @@ def _verified_backup(source,parent_fd,directory):
+     path=Path('/proc/self/fd')/str(parent_fd)/stage
+     tables,sequences,fingerprint=_snapshot(source)
+     before=tree_manifest(source.root_path)
+-    copy_tree(source.root_path,path/'catalog',before)
++    copy_tree(source.root_path,path/'catalog',before,deduplicate=True)
+     metadata=dict(format_version=1,schema_version=source.db.schema_version,dataset_id=source.db.dataset_id,tables=tables,sequences=sequences)
+     from backup_metadata import write_json,file_hash
+     write_json(path/'metadata.json',metadata)
+diff --git a/tests/test_backup_storage.py b/tests/test_backup_storage.py
+new file mode 100644
+index 00000000..87f721b2
+--- /dev/null
++++ b/tests/test_backup_storage.py
+@@ -0,0 +1,83 @@
++"""Independent original files, compact backup storage and independent restores."""
++import os
++from pathlib import Path
++import tempfile
++import unittest
++from unittest.mock import patch
++
++from backup_metadata import StorageTransferError, copy_tree, tree_manifest, tree_modes
++
++
++class BackupStorageTests(unittest.TestCase):
++    def setUp(self):
++        self.temporary = tempfile.TemporaryDirectory()
++        self.addCleanup(self.temporary.cleanup)
++        self.root = Path(self.temporary.name)
++        self.source = self.root / 'source'
++        self.source.mkdir()
++        for name in ('first.bin', 'nested/second.bin', 'other-mode.bin'):
++            path = self.source / name
++            path.parent.mkdir(parents=True, exist_ok=True)
++            path.write_bytes(b'Exact captured training data\x00\xff' * 100)
++            path.chmod(0o444 if name == 'other-mode.bin' else 0o644)
++        (self.source / 'empty-directory').mkdir()
++        self.expected = tree_manifest(self.source)
++
++    def test_backup_shares_only_own_equal_bytes_and_modes_and_restores_independently(self):
++        before = {p: (p.stat().st_ino, p.stat().st_ctime_ns, p.stat().st_nlink)
++                  for p in self.source.rglob('*') if p.is_file()}
++        backup = self.root / 'backup'
++        copy_tree(self.source, backup, self.expected, deduplicate=True)
++        self.assertEqual(tree_manifest(backup), self.expected)
++        self.assertEqual(tree_modes(backup, self.expected), tree_modes(self.source, self.expected))
++        first, second = backup/'first.bin', backup/'nested/second.bin'
++        self.assertEqual(first.stat().st_ino, second.stat().st_ino)
++        self.assertNotEqual(first.stat().st_ino, (backup/'other-mode.bin').stat().st_ino)
++        self.assertEqual(before, {p: (p.stat().st_ino, p.stat().st_ctime_ns, p.stat().st_nlink)
++                                  for p in before})
++        self.assertTrue(all((backup/p.relative_to(self.source)).stat().st_ino != p.stat().st_ino
++                            for p in before))
++        restored = self.root / 'restored'
++        copy_tree(backup, restored, self.expected)
++        self.assertEqual(tree_manifest(restored), self.expected)
++        self.assertEqual(tree_modes(restored, self.expected), tree_modes(self.source, self.expected))
++        files = [p for p in restored.rglob('*') if p.is_file()]
++        self.assertEqual(len({p.stat().st_ino for p in files}), len(files))
++        self.assertTrue(all(p.stat().st_nlink == 1 for p in files))
++        (restored/'first.bin').write_bytes(b'Later independent working file')
++        self.assertEqual((restored/'nested/second.bin').read_bytes(), second.read_bytes())
++        self.assertEqual(tree_manifest(self.source), self.expected)
++        self.assertEqual(tree_manifest(backup), self.expected)
++
++    def test_changed_duplicate_source_is_not_replaced_with_anchor_bytes(self):
++        path = self.source / 'nested/second.bin'
++        path.write_bytes(b'Wrong source data with a declared original hash')
++        with self.assertRaisesRegex(StorageTransferError, 'source bytes or binding changed'):
++            copy_tree(self.source, self.root/'backup', self.expected, deduplicate=True)
++        self.assertFalse((self.root/'backup/nested/second.bin').exists())
++
++    def test_changed_anchor_during_link_is_rejected_without_following_it(self):
++        sentinel = self.root/'outside.bin'
++        sentinel.write_bytes(b'Untouched outside file')
++        link = os.link
++        def replace_anchor(source, destination, **kwargs):
++            Path(source).unlink()
++            Path(source).symlink_to(sentinel)
++            return link(source, destination, **kwargs)
++        with patch('backup_metadata.os.link', side_effect=replace_anchor):
++            with self.assertRaisesRegex(StorageTransferError, 'anchor changed during link publication'):
++                copy_tree(self.source, self.root/'backup', self.expected, deduplicate=True)
++        self.assertEqual(sentinel.read_bytes(), b'Untouched outside file')
++        self.assertEqual(tree_manifest(self.source), self.expected)
++
++    def test_existing_target_cannot_be_used_as_an_external_anchor(self):
++        target = self.root/'backup'
++        target.mkdir()
++        (target/'first.bin').write_bytes(b'Untrusted existing data')
++        with self.assertRaisesRegex(StorageTransferError, 'absent destination tree'):
++            copy_tree(self.source, target, self.expected, deduplicate=True)
++        self.assertEqual((target/'first.bin').read_bytes(), b'Untrusted existing data')
++
++
++if __name__ == '__main__':
++    unittest.main()
+diff --git a/tests/test_metadata_migration.py b/tests/test_metadata_migration.py
+index ab154455..6040f62c 100644
+--- a/tests/test_metadata_migration.py
++++ b/tests/test_metadata_migration.py
+@@ -423,6 +423,8 @@ class PostgreSQLTransfers(unittest.TestCase):
+ 
+     def test_complete_backup_restore_preserves_identity_metadata_artifacts_and_retries(self):
+         fixture(self.root / 'source', all_tables=True)
++        for name in ('duplicate-a.bin', 'duplicate-b.bin'):
++            (self.root / 'source' / name).write_bytes(b'Identical captured payload\x00\xff')
+         self.migrate()
+         before = tree_manifest(self.root / 'dest')
+         metadata = Metadata(self.root / 'dest', create=False)
+@@ -431,6 +433,11 @@ class PostgreSQLTransfers(unittest.TestCase):
+         sequences = read_sequences(metadata)
+         metadata.close()
+         receipt = backup_catalog(self.root / 'dest', self.root / 'pg-backup', quiesced=True)
++        compact = self.root / 'pg-backup/catalog'
++        self.assertEqual((compact/'duplicate-a.bin').stat().st_ino,
++                         (compact/'duplicate-b.bin').stat().st_ino)
++        self.assertNotEqual((compact/'duplicate-a.bin').stat().st_ino,
++                            (self.root/'dest/duplicate-a.bin').stat().st_ino)
+         metadata = Metadata(self.root / 'dest', create=False)
+         try:
+             # Existing catalogs are not valid restore destinations, even with the same identity.
+@@ -448,6 +455,10 @@ class PostgreSQLTransfers(unittest.TestCase):
+         finally:
+             restored.close()
+         self.assertEqual(tree_manifest(self.root / 'restored', ('.restore-receipt-' + digest(receipt) + '.json',)), before)
++        self.assertNotEqual((self.root/'restored/duplicate-a.bin').stat().st_ino,
++                            (self.root/'restored/duplicate-b.bin').stat().st_ino)
++        self.assertTrue(all((self.root/'restored'/name).stat().st_nlink==1
++                            for name in ('duplicate-a.bin','duplicate-b.bin')))
+         self.assertEqual(restore_catalog(self.root / 'pg-backup', self.root / 'restored'), result)
+         self.assertEqual(tree_manifest(self.root / 'dest'), before)
+         # Tampering any artifact makes the complete backup unusable, before writes.
+diff --git a/tests/test_project_transfer.py b/tests/test_project_transfer.py
+index b3bf4848..efb639b4 100644
+--- a/tests/test_project_transfer.py
++++ b/tests/test_project_transfer.py
+@@ -80,6 +80,18 @@ class ProjectTransferTests(unittest.TestCase):
+             with self.dataset._project_request():pass
+         with self.assertRaises(WorkbenchError):self.dataset.stop_for_project_extraction(self.parent_fd,'retry-backup')
+ 
++    def test_native_stop_backup_deduplicates_copies_without_linking_originals(self):
++        original=[self.dataset.path/name for name in ('duplicate-a.bin','duplicate-b.bin')]
++        for path in original:path.write_bytes(b'Exact original payload' * 1000)
++        before=[(p.stat().st_ino,p.stat().st_ctime_ns,p.stat().st_nlink) for p in original]
++        source=self.stop()
++        copied=[self.root/'verified-backup/catalog'/p.name for p in original]
++        self.assertEqual(copied[0].stat().st_ino,copied[1].stat().st_ino)
++        self.assertTrue(all(p.stat().st_ino!=c.stat().st_ino for p,c in zip(original,copied)))
++        self.assertEqual(before,[(p.stat().st_ino,p.stat().st_ctime_ns,p.stat().st_nlink) for p in original])
++        self.assertEqual(tree_manifest(self.root/'verified-backup/catalog'),source.backup_receipt['files'])
++        _assert_unchanged(source)
++
+     def test_live_preview_reports_domain_refusal_before_source_stop(self):
+         from project_projection import ProjectProjection
+         record=self.text();self.selection['roots']['records']=[record['id']]

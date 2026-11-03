@@ -74,9 +74,9 @@ def relative_square(value, reference):
     return value.flatten(1).square().sum(1) / reference.flatten(1).square().sum(1).clamp_min(1e-300)
 
 
-def loss(model, network, sample, normalization, criterion=None, *, final_feedback=None):
+def loss(model, network, sample, normalization, criterion=None, *, final_feedback=None, intermediates=None):
     import physical_residual
-    pressures = []
+    pressures = [] if intermediates is None else intermediates
     prediction = physical_residual.predict_pressure(network, sample, normalization, model.owner,
                         {'activation': 'linear', 'steps': SPEC['training_passes']}, pressures)
     canonical = model.pressure_loss(prediction, sample, normalization) if criterion is None else criterion(prediction)

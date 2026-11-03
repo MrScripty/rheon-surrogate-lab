@@ -1,0 +1,82 @@
+diff --git a/app.py b/app.py
+index b7a59bb..87c6c9a 100644
+--- a/app.py
++++ b/app.py
+@@ -486,9 +486,15 @@ def make_handler(dataset, observer=None, *, transfer_controller=None):
+             except (ValueError, workbench.WorkbenchError):
+                 raise access.AccessError('Access requests require a bounded JSON object.', 'invalid', 400) from None
+ 
++        def _catalog_busy(self):
++            return self.reply({'error': 'Tuldok is busy completing another operation. Try again after it finishes.',
++                               'code': 'storage'}, 503)
++
+         def _access_error(self, error):
+             try:
+                 dataset.access.denial(error, 'http.request', urlsplit(self.path).path[:512], anonymous=True)
++            except CatalogBusy:
++                return self._catalog_busy()
+             except CommitOutcomeUnknown:
+                 return self.reply({'error': 'Commit outcome is unknown; inspect state before retrying.', 'code': 'commit_unknown'}, 503)
+             except psycopg.Error:
+@@ -583,6 +589,8 @@ def make_handler(dataset, observer=None, *, transfer_controller=None):
+                 return self.reply({'error': str(error), 'code': error.code}, error.status)
+             except access.AccessError as error:
+                 return self._access_error(error)
++            except CatalogBusy:
++                return self._catalog_busy()
+             except CommitOutcomeUnknown:
+                 return self.reply({'error': 'Commit outcome is unknown; inspect state before retrying.', 'code': 'commit_unknown'}, 503)
+             except psycopg.Error:
+@@ -633,6 +641,8 @@ def make_handler(dataset, observer=None, *, transfer_controller=None):
+                 return self.reply({'error': str(error), 'code': error.code}, error.status)
+             except access.AccessError as error:
+                 return self._access_error(error)
++            except CatalogBusy:
++                return self._catalog_busy()
+             except CommitOutcomeUnknown:
+                 return self.reply({'error': 'Commit outcome is unknown; inspect state before retrying.', 'code': 'commit_unknown'}, 503)
+             except psycopg.Error:
+diff --git a/tests/test_access_http.py b/tests/test_access_http.py
+index cb9e536..9f73fe3 100644
+--- a/tests/test_access_http.py
++++ b/tests/test_access_http.py
+@@ -4,6 +4,7 @@ import tempfile
+ import threading
+ import unittest
+ import uuid
++from unittest.mock import patch
+ from http.server import ThreadingHTTPServer
+ from urllib.error import HTTPError
+ from urllib.request import Request, urlopen
+@@ -67,6 +68,31 @@ class AccessHTTP(unittest.TestCase):
+         status, body, _ = self.request('/api/access/session', headers={'Authorization': 'Bearer'})
+         self.assertEqual((status, body['code']), (503, 'storage'))
+ 
++    def test_busy_catalog_authentication_returns_json_and_keeps_login_code_usable(self):
++        code = self.dataset.access._local_owner_token()
++        held, release = threading.Event(), threading.Event()
++        def hold_catalog():
++            with self.dataset.access.lock:
++                held.set()
++                release.wait(5)
++        holder = threading.Thread(target=hold_catalog)
++        holder.start()
++        try:
++            self.assertTrue(held.wait(2))
++            with patch('metadata.CATALOG_LOCAL_TIMEOUT', .05):
++                for body, headers in (({'token':code}, {'Origin':self.root}), (None, self.owner.headers),
++                                      (None, {'Authorization':'Bearer'}),
++                                      ({'token':code}, {'Origin':'http://elsewhere.invalid'})):
++                    status, value, _ = self.request('/api/access/session', body, headers)
++                    self.assertEqual((status, value['code']), (503, 'storage'))
++                    self.assertIn('busy completing another operation', value['error'])
++        finally:
++            release.set()
++            holder.join(5)
++        self.assertFalse(holder.is_alive())
++        status, identity, _ = self.request('/api/access/session', {'token':code}, {'Origin':self.root})
++        self.assertEqual((status, identity['kind']), (200, 'owner'))
++
+     def test_agent_review_and_execution_denied_before_mutation(self):
+         with self.owner.bound(self.dataset):
+             agent = self.dataset.access.issue({'label': 'Editor', 'scopes': ['inspect', 'edit', 'execute']})

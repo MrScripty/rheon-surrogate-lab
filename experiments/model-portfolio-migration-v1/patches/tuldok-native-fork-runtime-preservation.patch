@@ -1,0 +1,138 @@
+diff --git a/project_fork_composition.py b/project_fork_composition.py
+index 7551d66..ee13410 100644
+--- a/project_fork_composition.py
++++ b/project_fork_composition.py
+@@ -71,21 +71,23 @@ def artifact_plan(records):
+                 mark(edge['blob']['sha256'],record,edge['role'],edge['name'],edge['blob']['bytes'],
+                      policy='regenerable' if runtime_file else 'unique')
+ 
+-        # Run outputs, exact execution captures, publication proofs and measured
+-        # host module bytes remain unique regardless of a weaker edge label.
+-        from project_history import declarations as run_declarations
++        # The history owner distinguishes recorded runtime dependencies from
++        # outputs/proofs/host sources; a weaker payload label alone grants none.
++        from project_history import declarations as run_declarations, fork_preservation
+         for record in records:
+             if record['family'] not in ('run_history', 'run_observation'): continue
+             doc = (record['document']['observation'] if record['family'] == 'run_observation'
+                    else record['document'])
+             by_sha = {edge['blob']['sha256']:edge['name'] for edge in doc['payloads']}
+             publication = doc['publication']
++            preservation = fork_preservation(doc)
+             if publication is not None:
+                 for name in ('source','result'):
+                     if publication[name] is not None: by_sha[publication[name]['sha256']] = 'publication.'+name
+             for declaration in run_declarations(dict(family='run_history', id=record['id'], document=doc)):
+                 blob = declaration['document']
+-                mark(blob['sha256'],record,'run_payload',by_sha[blob['sha256']],blob['bytes'])
++                mark(blob['sha256'],record,'run_payload',by_sha[blob['sha256']],blob['bytes'],
++                     policy=preservation[blob['sha256']])
+             run = doc['run']
+             if run.get('execution_kind') == 'external_recipe':
+                 for name, sha in run['material']['host_files'].items():
+diff --git a/project_history.py b/project_history.py
+index 6180850..2fec680 100644
+--- a/project_history.py
++++ b/project_history.py
+@@ -289,6 +289,37 @@ def declarations(record):
+     return list(values.values())
+ 
+ 
++def fork_preservation(document):
++    """Copy obligations for an already decoded historical Run document.
++
++    A payload label alone cannot weaken custody. Only an explicitly regenerable
++    historical runtime payload with the exact hash/count in this Run's recorded
++    runtime inventory may remain absent. Outputs, publication proofs and measured
++    host sources override that classification when they share the same bytes.
++    This projects copy policy; it does not rewrite the original retained facts.
++    """
++    run=document['run'];runtime=set();protected={item['sha256'] for item in run.get('artifacts',[])}
++    if run.get('execution_kind')=='external_recipe':
++        material=run['material']
++        for item in material.get('runtime',{}).get('files',{}).values():
++            _sha(item['sha256']);natural(item['bytes'],'Historical runtime file bytes')
++            runtime.add((item['sha256'],item['bytes']))
++        protected.update(material['host_files'].values())
++        protected.update(item['sha256'] for item in material.get('captures',{}).values())
++    result={}
++    for edge in document['payloads']:
++        blob=edge['blob'];digest=blob['sha256']
++        regenerative=(edge.get('role')=='historical_runtime' and edge.get('preservation')=='regenerable'
++                      and (blob['sha256'],blob['bytes']) in runtime)
++        policy='regenerable' if regenerative else 'unique'
++        if result.get(digest)!='unique':result[digest]=policy
++    publication=document['publication']
++    if publication is not None:
++        protected.update(publication[name]['sha256'] for name in ('source','result') if publication[name] is not None)
++    for digest in protected:result[digest]='unique'
++    return result
++
++
+ class HistoryFacts:
+     def __init__(self):
+         self.studies={};self.trials={};self.runs={};self.candidates={};self.policies={};self.reservations={};self.observations={}
+diff --git a/tests/test_project_fork_composition.py b/tests/test_project_fork_composition.py
+index 34c7fb2..b5fcf83 100644
+--- a/tests/test_project_fork_composition.py
++++ b/tests/test_project_fork_composition.py
+@@ -140,6 +140,59 @@ class ArtifactDispositionTests(unittest.TestCase):
+         self.assertEqual(caught.exception.code,'missing_unique')
+         self.assertEqual(caught.exception.missing_unique,[dict(family='run_history',id=record['id'],role='host_source',name='recipe_process.py',sha256=missing,bytes=None)])
+ 
++    def test_imported_historical_runtime_keeps_its_verified_regenerable_disposition(self):
++        blob=dict(sha256='a'*64,bytes=12)
++        edge=dict(name='runtime-files/0',blob=blob,population='unknown',role='historical_runtime',
++                  preservation='regenerable',required_for=['scientific_inspection','execution_proof'])
++        doc=dict(payloads=[edge],publication=None,run=dict(execution_kind='external_recipe',material=dict(
++            runtime=dict(files={'/historical/runtime/dependency.py':copy.deepcopy(blob)}),host_files={})))
++        record=dict(family='run_history',id=self.catalog+'.'+uuid.uuid4().hex,document=doc)
++        policy=self.policies([declaration(blob['sha256'],blob['bytes']),record])
++        self.assertEqual(policy[blob['sha256']],'regenerable')
++
++    def test_historical_runtime_requires_its_exact_recorded_inventory_and_role(self):
++        blob=dict(sha256='a'*64,bytes=12)
++        for mutation in ('missing-inventory','different-hash','different-bytes','different-role','explicit-unique'):
++            edge=dict(name='runtime-files/0',blob=copy.deepcopy(blob),population='unknown',role='historical_runtime',
++                      preservation='regenerable',required_for=['scientific_inspection','execution_proof'])
++            runtime=copy.deepcopy(blob)
++            if mutation=='different-hash':runtime['sha256']='b'*64
++            if mutation=='different-bytes':runtime['bytes']+=1
++            if mutation=='different-role':edge['role']='checkpoint'
++            if mutation=='explicit-unique':edge['preservation']='unique'
++            doc=dict(payloads=[edge],publication=None,run=dict(execution_kind='external_recipe',material=dict(
++                runtime=dict(files={} if mutation=='missing-inventory' else {'/historical/file':runtime}),host_files={})))
++            record=dict(family='run_history',id=self.catalog+'.'+uuid.uuid4().hex,document=doc)
++            with self.subTest(mutation=mutation):
++                self.assertEqual(self.policies([declaration(blob['sha256'],blob['bytes']),record])[blob['sha256']],'unique')
++
++    def test_historical_runtime_alias_cannot_weaken_outputs_captures_proofs_or_host_sources(self):
++        blob=dict(sha256='a'*64,bytes=12)
++        for use in ('output','capture','publication','host','other-payload-first','other-payload-last'):
++            edge=dict(name='runtime-files/0',blob=copy.deepcopy(blob),population='unknown',role='historical_runtime',
++                      preservation='regenerable',required_for=['scientific_inspection','execution_proof'])
++            doc=dict(payloads=[edge],publication=None,run=dict(execution_kind='external_recipe',artifacts=[],material=dict(
++                runtime=dict(files={'/historical/file':copy.deepcopy(blob)}),host_files={},captures={})))
++            if use=='output':doc['run']['artifacts']=[dict(name=edge['name'],**blob)]
++            if use=='capture':doc['run']['material']['captures']={'capture.txt':copy.deepcopy(blob)}
++            if use=='publication':doc['publication']=dict(source=copy.deepcopy(blob),result=None)
++            if use=='host':doc['run']['material']['host_files']={'owned.py':blob['sha256']}
++            if use.startswith('other-payload'):
++                other=dict(copy.deepcopy(edge),name='weights.bin',role='checkpoint')
++                doc['payloads'].insert(0 if use.endswith('first') else 1,other)
++            record=dict(family='run_history',id=self.catalog+'.'+uuid.uuid4().hex,document=doc)
++            with self.subTest(use=use):
++                self.assertEqual(self.policies([declaration(blob['sha256'],blob['bytes']),record])[blob['sha256']],'unique')
++
++    def test_retained_run_observation_preserves_the_same_historical_runtime_policy(self):
++        blob=dict(sha256='a'*64,bytes=12)
++        edge=dict(name='runtime-files/0',blob=blob,population='unknown',role='historical_runtime',
++                  preservation='regenerable',required_for=['scientific_inspection','execution_proof'])
++        doc=dict(payloads=[edge],publication=None,run=dict(execution_kind='external_recipe',material=dict(
++            runtime=dict(files={'/historical/file':copy.deepcopy(blob)}),host_files={})))
++        record=dict(family='run_observation',id='b'*64,document=dict(observation=doc))
++        self.assertEqual(self.policies([declaration(blob['sha256'],blob['bytes']),record])[blob['sha256']],'regenerable')
++
+     def test_native_measured_bytes_win_over_regenerable_runtime_alias_and_missing_declaration_blocks(self):
+         sha=hashlib.sha256(b'').hexdigest()
+         records,_,_=runtime_records(self.catalog,shared_sha=sha,shared_bytes=0)

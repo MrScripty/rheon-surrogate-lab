@@ -1,0 +1,103 @@
+diff --git a/project_extraction.py b/project_extraction.py
+index a4b5376..bc27b2a 100644
+--- a/project_extraction.py
++++ b/project_extraction.py
+@@ -379,10 +379,14 @@ class _Capture:
+         if len(matches) != 1:
+             _missing('An exact selected project snapshot is not available in this pinned source.')
+         saved = matches[0]
+-        root = self.source.roots.get(saved['root'])
+-        if root is None or list(root[1]) != saved['root_identity']:
+-            _missing('The retained registration has no matching current explicit source-root capability.')
+-        raw = self.source.read_root(saved['root'], saved['manifest_path'], 65536)
++        # Explicitly recovered bytes retain the original registration as inert
++        # history. Its former directory/inode is not current read authority.
++        raw = self.source.read_bound_payload(sha, maximum_bytes=65536)
++        if raw is None:
++            root = self.source.roots.get(saved['root'])
++            if root is None or list(root[1]) != saved['root_identity']:
++                _missing('The retained registration has no matching current explicit source-root capability.')
++            raw = self.source.read_root(saved['root'], saved['manifest_path'], 65536)
+         if hashlib.sha256(raw).hexdigest() != sha or manifest(decode_manifest(raw)) != saved['manifest']:
+             raise WorkbenchError('Original registered manifest bytes differ.', 'corrupt_payload', 409)
+         blob = self.raw(key, raw, 'project_manifest')
+diff --git a/project_transfer.py b/project_transfer.py
+index 932d096..10a6b43 100644
+--- a/project_transfer.py
++++ b/project_transfer.py
+@@ -226,6 +226,18 @@ class SourceView:
+         raw=self.read_root(location['root'],location['relative'],MAX_SOURCE_FILE)
+         if len(raw)!=size or digest(raw)!=sha256:fail('External source payload differs from its declaration.')
+         return raw
++    def read_bound_payload(self,sha256,*,maximum_bytes=MAX_SOURCE_FILE):
++        """Read exact operator-bound bytes; None means no explicit binding.
++
++        Historical paths or root identities never create this capability. A
++        changed, oversized or unavailable bound file remains an error, even if
++        another working file exists at the original historical location.
++        """
++        self.require();sha(sha256)
++        location=self._payload_locations.get(sha256)
++        if location is None:return None
++        if location['bytes']>maximum_bytes:fail('Bound original source exceeds its owner bound.','too_large',413)
++        return self.resolve_payload(sha256,location['bytes'])
+     @contextmanager
+     def payload_fd(self,sha256,size):
+         sha(sha256)
+diff --git a/tests/test_project_extraction.py b/tests/test_project_extraction.py
+index e4ce169..368fbb8 100644
+--- a/tests/test_project_extraction.py
++++ b/tests/test_project_extraction.py
+@@ -127,6 +127,52 @@ class LegacyCapture(unittest.TestCase):
+              patch('runs.Runs.__init__', side_effect=AssertionError('Extraction constructed Runs')):
+             return capture_legacy(source, selection)
+ 
++    def bind_manifest_copy(self, source):
++        recovered = self.root / 'recovered-original'
++        recovered.mkdir()
++        path = recovered / 'manifest.json'
++        path.write_bytes(self.manifest_raw)
++        descriptor = os.open(recovered, os.O_RDONLY | os.O_DIRECTORY)
++        info = os.fstat(descriptor)
++        source.roots['recovered'] = descriptor, [info.st_dev, info.st_ino]
++        source.bind_payload(hashlib.sha256(self.manifest_raw).hexdigest(), len(self.manifest_raw),
++                            'recovered', 'manifest.json')
++        return path
++
++    def test_explicit_original_manifest_binding_keeps_history_without_old_root_authority(self):
++        source = self.view()
++        self.bind_manifest_copy(source)
++        descriptor, _ = source.roots.pop('fixture')
++        os.close(descriptor)
++        captured = self.capture(source, {})
++        self.assertEqual(captured['blockers'], [])
++        snapshot = next(row['document'] for row in captured['records'] if row['family'] == 'project_snapshot')
++        self.assertEqual(snapshot['value']['root'], 'fixture')
++        self.assertEqual(snapshot['value']['manifest'], self.manifest)
++        declaration = next(row['document'] for row in captured['records'] if row['family'] == 'project_artifact')
++        self.assertEqual(source.artifacts.read_blob(declaration), self.manifest_raw)
++        self.assertNotIn('fixture', source.roots)
++
++    def test_explicit_original_manifest_bytes_do_not_read_changed_working_manifest(self):
++        source = self.view()
++        self.bind_manifest_copy(source)
++        changed = b'{"unrelated_current_working_file":true}\n'
++        (self.project_root / 'source.json').write_bytes(changed)
++        captured = self.capture(source, {})
++        self.assertEqual(captured['blockers'], [])
++        declaration = next(row['document'] for row in captured['records'] if row['family'] == 'project_artifact')
++        self.assertEqual(source.artifacts.read_blob(declaration), self.manifest_raw)
++        self.assertEqual((self.project_root / 'source.json').read_bytes(), changed)
++
++    def test_changed_explicit_manifest_binding_blocks_instead_of_using_working_file(self):
++        source = self.view()
++        recovered = self.bind_manifest_copy(source)
++        recovered.write_bytes(b'changed after explicit binding')
++        captured = self.capture(source, {})
++        self.assertTrue(any(row['code'] == 'stale_source' for row in captured['blockers']))
++        self.assertFalse(any(row['family'] == 'project_snapshot' for row in captured['records']))
++        self.assertEqual((self.project_root / 'source.json').read_bytes(), self.manifest_raw)
++
+     def test_text_responses_history_and_unrelated_inventory_are_read_only(self):
+         selected = self.text();unrelated = self.text('Unrelated original data')
+         response_id = uuid.uuid4().hex

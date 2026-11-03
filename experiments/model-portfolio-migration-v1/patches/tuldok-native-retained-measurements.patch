@@ -1,0 +1,1534 @@
+diff --git a/agent_api.py b/agent_api.py
+index d7b29b83ee3ef4d39499bcc5b2d1fabe93c6e403..4bcd9ce6a3d15d7cc1eaae867ea07ab3ee40dc69 100644
+--- a/agent_api.py
++++ b/agent_api.py
+@@ -885,6 +885,73 @@ _project_file_operation('data_import_scientific', 'POST', '/data/import-scientif
+     'snapshot': obj({'origin_catalog_id': ID, 'project_id': ID, 'manifest_sha256': SHA}),
+     'reference_id': REF, 'expected_sha256': SHA,
+     'document': obj(OPTIONAL_META, required=['groups'])}, mutation=True)
++# Retained scalar packets use their own fixed native owner. Definitions and
++# original JSON evidence stay producer-authored data, never executable specs.
++_MEASUREMENT_ID = {'type':'string','pattern':'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$'}
++_MEASUREMENT_SCALAR = {'type':['string','number','boolean','null']}
++_MEASUREMENT_DIMENSIONS = {'type':'object','maxProperties':32,'additionalProperties':_MEASUREMENT_SCALAR}
++_MEASUREMENT_REF = obj({'source_id':_MEASUREMENT_ID,'pointer':{'oneOf':[text(512,True),_NULL]}})
++_MEASUREMENT_DEFINITION = obj(dict(_MEASUREMENT_REF['properties'],sha256=SHA))
++_MEASUREMENT_SCOPE = obj({'id':_MEASUREMENT_ID,'label':text(240),
++    'population':{'enum':['training','consumed','independent','reserved','unknown']},'definition':_MEASUREMENT_DEFINITION})
++_MEASUREMENT_METRIC = obj({'id':_MEASUREMENT_ID,'label':text(240),
++    'units':text(120),'definition':_MEASUREMENT_DEFINITION})
++_MEASUREMENT_SUBJECT = obj({'id':_MEASUREMENT_ID,'label':text(240),
++    'dimensions':_MEASUREMENT_DIMENSIONS,'reference':_MEASUREMENT_REF})
++_MEASUREMENT_CASE = obj({'id':_MEASUREMENT_ID,'dimensions':_MEASUREMENT_DIMENSIONS,'reference':_MEASUREMENT_REF})
++_MEASUREMENT_STATE = {'enum':['measured','failed','unsupported','unavailable']}
++_MEASUREMENT_OBSERVATION = obj({'id':_MEASUREMENT_ID,'subject_id':_MEASUREMENT_ID,
++    'case_id':_MEASUREMENT_ID,'metric_id':_MEASUREMENT_ID,'state':_MEASUREMENT_STATE,
++    'value':{'type':['number','null']},'reason':{'oneOf':[text(1000),_NULL]},
++    'dimensions':_MEASUREMENT_DIMENSIONS,'reference':_MEASUREMENT_REF})
++_MEASUREMENT_CAPTURE = obj({'origin_catalog_id':ID,'project_id':ID,'manifest_sha256':SHA,
++    'reference_id':REF,'path':text(512),'measured_sha256':SHA})
++_MEASUREMENT_SOURCE = obj({'format':const('project_measurement_source_v1'),'origin_catalog_id':ID,
++    'id':SHA,'title':text(240),'blob':obj({'sha256':SHA,'bytes':integer(1,32*1024*1024)}),
++    'source':_MEASUREMENT_CAPTURE,'actor_id':ID,'imported_at':text(80)})
++_MEASUREMENT_AVAILABILITY = obj({'state':{'enum':['unverified','missing']},
++    'expected_sha256':SHA,'expected_bytes':SAFE_NAT,'observed_sha256':const(None),
++    'observed_bytes':{'oneOf':[SAFE_NAT,_NULL]}})
++_MEASUREMENT_SOURCE_ITEM = obj(dict(_MEASUREMENT_SOURCE['properties'],availability=_MEASUREMENT_AVAILABILITY))
++_MEASUREMENT_HEADER = obj({'format':const('retained_measurements_v1'),'packet_sha256':SHA,'title':text(240),
++    'scope':_MEASUREMENT_SCOPE,'scope_definition':{'type':'object'},
++    'dimensions':array(obj({'id':_MEASUREMENT_ID,'label':text(240),'type':{'enum':['string','number','integer','boolean']},
++        'units':{'oneOf':[text(120),_NULL]},'scope':{'enum':['subject','case','observation']}}),32),
++    'metrics':array(_MEASUREMENT_METRIC,32),'subject_count':integer(1,100000),'case_count':integer(1,4096),
++    'observation_count':integer(1,100000),'source_count':integer(1,256)})
++_MEASUREMENT_SUMMARY = obj({'subject_id':_MEASUREMENT_ID,'count':SAFE_NAT,
++    'states':obj({state:SAFE_NAT for state in ('measured','failed','unsupported','unavailable')}),
++    'maximum':{'oneOf':[obj({'id':_MEASUREMENT_ID,'case_id':_MEASUREMENT_ID,'value':{'type':'number'}}),_NULL]}})
++_MEASUREMENT_QUERY = obj({'format':const('retained_measurement_query_v1'),'packet_sha256':SHA,
++    'scope':_MEASUREMENT_SCOPE,'metric':_MEASUREMENT_METRIC,'scope_definition':{'type':'object'},'definition':{'type':'object'},
++    'filters':_MEASUREMENT_DIMENSIONS,'subject_ids':array(_MEASUREMENT_ID,100000,1),
++    'summary':array(_MEASUREMENT_SUMMARY,100000),'rows':array(_MEASUREMENT_OBSERVATION,100),
++    'total':SAFE_NAT,'offset':SAFE_NAT,'limit':integer(1,100),'sampling':const('none')})
++_MEASUREMENT_EVIDENCE = obj({'reference':_MEASUREMENT_REF,'source_sha256':SHA,
++    'state':{'enum':['included','opaque','exceeds_inspection_bound']},'value':{}})
++_MEASUREMENT_INSPECTION = obj({'packet_sha256':SHA,'observation':_MEASUREMENT_OBSERVATION,
++    'case':_MEASUREMENT_CASE,'subject':_MEASUREMENT_SUBJECT,'metric':_MEASUREMENT_METRIC,
++    'scope':_MEASUREMENT_SCOPE,'scope_definition':{'type':'object'},'case_evidence':_MEASUREMENT_EVIDENCE,
++    'scalar_evidence':_MEASUREMENT_EVIDENCE,'source':obj({'id':_MEASUREMENT_ID,'label':text(240),
++        'kind':{'enum':['json','opaque']},'bytes':integer(1,8*1024*1024),'sha256':SHA})})
++_MEASUREMENT_SELECTION = {'origin_catalog_id':ID,'packet_sha256':SHA}
++_MEASUREMENT_BOUND = lambda value:obj({'source':_MEASUREMENT_SOURCE,'value':value})
++_project_file_operation('measurement_import','POST','/measurements/import',
++    {'snapshot':obj({'origin_catalog_id':ID,'project_id':ID,'manifest_sha256':SHA}),
++     'reference_id':REF,'expected_sha256':SHA},mutation=True,output=_MEASUREMENT_SOURCE)
++_project_file_operation('measurement_sources','GET','/measurements',_PROJECT_FILES_PAGE_INPUT,required=[],
++    output=obj({'items':array(_MEASUREMENT_SOURCE_ITEM,40),'offset':SAFE_NAT,'limit':integer(1,40),'total':SAFE_NAT}))
++_project_file_operation('measurement_metadata','GET','/measurements/{packet_sha256}',_MEASUREMENT_SELECTION,
++    output=_MEASUREMENT_BOUND(_MEASUREMENT_HEADER))
++_project_file_operation('measurement_subjects','GET','/measurements/{packet_sha256}/subjects',
++    dict(_MEASUREMENT_SELECTION,**_PROJECT_FILES_PAGE_INPUT),required=list(_MEASUREMENT_SELECTION),
++    output=_MEASUREMENT_BOUND(obj({'items':array(_MEASUREMENT_SUBJECT,40),'offset':SAFE_NAT,'limit':integer(1,40),'total':SAFE_NAT})))
++_project_file_operation('measurement_query','POST','/measurements/{packet_sha256}/query',
++    dict(_MEASUREMENT_SELECTION,metric_id=_MEASUREMENT_ID,subject_ids=array(_MEASUREMENT_ID,100000,1),
++        filters=_MEASUREMENT_DIMENSIONS,offset=SAFE_NAT,limit=integer(1,100)),
++    required=[*list(_MEASUREMENT_SELECTION),'metric_id'],output=_MEASUREMENT_BOUND(_MEASUREMENT_QUERY))
++_project_file_operation('measurement_inspect','GET','/measurements/{packet_sha256}/observations/{observation_id}',
++    dict(_MEASUREMENT_SELECTION,observation_id=_MEASUREMENT_ID),output=_MEASUREMENT_BOUND(_MEASUREMENT_INSPECTION))
+ _project_file_operation('data_annotate', 'POST', '/data/{record_id}', {
+     'record_id': ID, 'revision': SAFE_POS, 'source_revision': SAFE_POS,
+     'task': {'enum': list(ANNOTATIONS)}, 'annotation': JSON_OBJECT,
+@@ -1689,8 +1756,6 @@ def contract(name, version=1):
+ def capabilities(catalog_id, profile='catalog'):
+     if type(catalog_id) is not str or not re.fullmatch('[a-f0-9]{32}', catalog_id):
+         raise AgentAPIError('Invalid capability catalog identity.', 'registry_invalid', 503)
+-    if len(_CONTRACTS) > MAX_OPERATIONS:
+-        raise AgentAPIError('Operation registry exceeds its capability bound.', 'registry_invalid', 503)
+     if profile not in ('catalog','project'):
+         raise AgentAPIError('Unsupported capability profile.','registry_invalid',503)
+     operations = []
+@@ -1698,6 +1763,11 @@ def capabilities(catalog_id, profile='catalog'):
+         if (profile=='catalog' and name.startswith('project_files.')
+                 or profile=='project' and not name.startswith(('project_files.','project_transfer.')) and name not in ('context.get','identity.get')):
+             continue
++        # The protocol bound applies to this advertised profile, just as the
++        # receiver checks its one manifest. Disjoint catalog/project contracts
++        # are not all transmitted together. Keep the installed 256-op limit.
++        if len(operations) >= MAX_OPERATIONS:
++            raise AgentAPIError('Operation profile exceeds its capability bound.', 'registry_invalid', 503)
+         if not 1 <= len(versions) <= MAX_CONTRACTS:
+             raise AgentAPIError('Contract version count exceeds its bound.', 'registry_invalid', 503)
+         operations.append({'id': name, 'contracts': [contract(name, version) for version in sorted(versions)],
+@@ -2762,6 +2832,8 @@ class AgentClient:
+                             or len(segment) != min(page['limit'], page['bytes'] - page['offset'])
+                             or page['next_offset'] != (end if end < page['bytes'] else None)):
+                         raise AgentAPIError('Retained Run document segment differs from its exact selection.', 'transport', 502)
++                if action.startswith('measurement_'):
++                    _validate_measurement_selection(action,page,arguments,value['project_id'])
+                 target_key = {'data_get': 'record_id', 'model_get': 'model_id', 'graph_get': 'graph_id',
+                     'recipe_get': 'recipe_id', 'trial': 'trial_id'}.get(op['operation_id'].split('.')[1])
+                 if target_key and page.get('id') != arguments[target_key]:
+@@ -2949,6 +3021,42 @@ class ProjectTransferOwnerClient(AgentClient):
+         return result
+ 
+ 
++def _validate_measurement_selection(action, page, arguments, project_id):
++    """Correlate fixed scalar replies; scientific validity remains upstream."""
++    def refuse():
++        raise AgentAPIError('Retained measurements differ from the selected source or continuation.', 'transport', 502)
++    if action=='measurement_sources':
++        offset,limit=arguments.get('offset',0),arguments.get('limit',40)
++        keys=[(d['origin_catalog_id'],d['id']) for d in page['items']]
++        if (page['offset']!=offset or page['limit']!=limit or keys!=sorted(set(keys))
++                or len(keys)!=min(limit,max(0,page['total']-offset))):refuse()
++        return
++    if action=='measurement_import':
++        source=page['source']
++        if (page['origin_catalog_id']!=project_id or page['id']!=arguments['expected_sha256']
++                or page['blob']['sha256']!=page['id'] or source['measured_sha256']!=page['id']
++                or source['reference_id']!=arguments['reference_id']
++                or any(source[k]!=v for k,v in arguments['snapshot'].items())):refuse()
++        return
++    source,result=page['source'],page['value']
++    if (source['origin_catalog_id']!=arguments['origin_catalog_id'] or source['id']!=arguments['packet_sha256']
++            or source['blob']['sha256']!=source['id'] or source['source']['measured_sha256']!=source['id']):refuse()
++    if action!='measurement_subjects' and result['packet_sha256']!=source['id']:refuse()
++    if action=='measurement_inspect' and result['observation']['id']!=arguments['observation_id']:refuse()
++    if action=='measurement_metadata' and result['title']!=source['title']:refuse()
++    if action in ('measurement_query','measurement_subjects'):
++        offset,limit=arguments.get('offset',0),arguments.get('limit',50 if action=='measurement_query' else 40)
++        rows=result['rows' if action=='measurement_query' else 'items']
++        if (result['offset']!=offset or result['limit']!=limit
++                or len(rows)!=min(limit,max(0,result['total']-offset))):refuse()
++    if action=='measurement_query':
++        subjects=result['subject_ids']
++        if (result['metric']['id']!=arguments['metric_id'] or result['filters']!=arguments.get('filters',{})
++                or 'subject_ids' in arguments and subjects!=arguments['subject_ids']
++                or len(subjects)!=len(set(subjects)) or [s['subject_id'] for s in result['summary']]!=subjects
++                or any(r['metric_id']!=arguments['metric_id'] or r['subject_id'] not in subjects for r in result['rows'])):refuse()
++
++
+ class PublicationOwnerClient(AgentClient):
+     """Explicit owner publication actions only; ordinary AgentClient stays agent-only."""
+     OPERATIONS = frozenset(('runs.publication_status', 'runs.recover_publication', 'runs.cancel_publication',
+diff --git a/project_dispatch.py b/project_dispatch.py
+index 49ce82c5cd3d4f09b6fb50e7e3723847007a6a8d..bdbdc2504b37cb007f2fd389c309ef89c03dc834 100644
+--- a/project_dispatch.py
++++ b/project_dispatch.py
+@@ -36,9 +36,11 @@ _EXECUTION_ACTIONS = frozenset(('native_preflight','native_submit','native_retry
+     'execution_producer_decide', 'execution_producer_cancel', 'execution_producer_health',
+     'execution_study_prepare_package','execution_study_prepare_verifier','execution_study_abandon_preparation','execution_study_reconcile_preparation'))
+ _RUNTIME_ACTIONS=frozenset(('runtime_sources','runtime_inspect','runtime_capture','runtime_status','runtime_abandon'))
++_MEASUREMENT_ACTIONS=frozenset(('measurement_import','measurement_sources','measurement_metadata',
++    'measurement_subjects','measurement_query','measurement_inspect'))
+ _M4_ACTIONS=frozenset(('files_inspect','file_get','file_history','file_adopt','file_adopt_deletion','material_intents','material_intent','material_intent_capabilities','fork_info'))
+ SUPPORTED_OPERATIONS = frozenset('project_files.' + action for action in
+-    _DATA_ACTIONS | _MATERIAL_ACTIONS | _HISTORY_ACTIONS | _OTHER_ACTIONS | _EXECUTION_ACTIONS | _M4_ACTIONS | _RUNTIME_ACTIONS)
++    _DATA_ACTIONS | _MATERIAL_ACTIONS | _HISTORY_ACTIONS | _OTHER_ACTIONS | _EXECUTION_ACTIONS | _M4_ACTIONS | _RUNTIME_ACTIONS | _MEASUREMENT_ACTIONS)
+ 
+ 
+ def _body(arguments, *omit):
+@@ -401,6 +403,7 @@ def dispatch(projection, name, arguments):
+         raise WorkbenchError('Unsupported external-project operation.', 'unsupported', 409)
+     action = name.split('.')[1]
+     projection.session.access.require('inspect', name)
++    if action in _MEASUREMENT_ACTIONS:return _measurements(projection,action,arguments)
+     if action in _RUNTIME_ACTIONS:return _runtime(projection,action,arguments)
+     if action in _M4_ACTIONS:return _m4(projection,action,arguments)
+     if action in _EXECUTION_ACTIONS: return _execution(projection, action, arguments)
+@@ -428,3 +431,16 @@ def dispatch(projection, name, arguments):
+         projection.session.access.require('edit', 'project_files.source_register', owner_only=True)
+         return projection.source_adapter.register(_body(arguments), arguments['expected_checkpoint'], arguments['request_key'])
+     raise AssertionError('Closed project dispatch is incomplete.')
++
++
++def _measurements(projection,action,a):
++    owner=projection.measurements
++    if action=='measurement_import':
++        return projection.source_adapter.import_measurements(_body(a),a['expected_checkpoint'],a['request_key'])
++    if action=='measurement_sources':return owner.sources(offset=a.get('offset',0),limit=a.get('limit',40))
++    origin,packet=a['origin_catalog_id'],a['packet_sha256']
++    if action=='measurement_metadata':return owner.metadata(origin,packet)
++    if action=='measurement_subjects':return owner.subjects(origin,packet,offset=a.get('offset',0),limit=a.get('limit',40))
++    if action=='measurement_query':return owner.query(origin,packet,**_body(a,'origin_catalog_id','packet_sha256'))
++    if action=='measurement_inspect':return owner.inspect(origin,packet,a['observation_id'])
++    raise AssertionError('Closed measurement dispatch is incomplete.')
+diff --git a/project_fork_composition.py b/project_fork_composition.py
+index 6c72643f9f6825bbd1ea06f0366025e8305fcb74..7551d665865ef69b1f41f63c1a3c2d85b0f87c10 100644
+--- a/project_fork_composition.py
++++ b/project_fork_composition.py
+@@ -98,6 +98,14 @@ def artifact_plan(records):
+             for edge in record['document']['payloads']:
+                 mark(edge['blob']['sha256'],record,edge['role'],edge['name'],edge['blob']['bytes'])
+ 
++        # Scalar sources are immutable original evidence, including when the
++        # same bytes are also declared by a regenerable runtime dependency.
++        from project_measurements import decode_records as measurement_records, FAMILY as MEASUREMENT_FAMILY
++        for locator, doc in measurement_records(records).items():
++            blob = doc['blob']
++            mark(blob['sha256'], dict(family=MEASUREMENT_FAMILY, id=locator),
++                 'measurement_packet', 'measurements.json', blob['bytes'])
++
+         # Existing pure getter covers the four producer families, entry history
+         # payload maps, and variation prompt-batch request/response observations.
+         from project_producers import FAMILIES as PRODUCER_FAMILIES, _referenced_artifacts
+diff --git a/project_measurements.py b/project_measurements.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..b97bca5610110e43f45d3c3a304472bce4bb3bd1
+--- /dev/null
++++ b/project_measurements.py
+@@ -0,0 +1,200 @@
++"""Native custody and current access for immutable retained scalar packets.
++
++The scalar owner interprets the packet. ProjectArtifacts owns bytes and
++ProjectSession owns publication/receipts. Retained source paths are facts only;
++reads after Open need no current source registration or producer execution.
++"""
++import copy
++from datetime import datetime
++
++from project_artifacts import validate_declaration
++from project_material import decode_records as material_records
++from projects import ID, NAME, SHA, relative_path
++from retained_measurements import MeasurementTable, MAX_BYTES, MAX_RESPONSE_BYTES, encode, text
++from workbench import WorkbenchError, timestamp
++
++
++FAMILY = 'measurement_source'
++FORMAT = 'project_measurement_source_v1'
++FIELDS = {'format', 'origin_catalog_id', 'id', 'title', 'blob', 'source', 'actor_id', 'imported_at'}
++
++
++def _closed(value, fields):
++    if type(value) is not dict or set(value) != set(fields):
++        raise WorkbenchError('Invalid native measurement source fields.')
++
++
++def _identity(value, pattern):
++    if type(value) is not str or not pattern.fullmatch(value):
++        raise WorkbenchError('Invalid native measurement source identity.')
++    return value
++
++
++def declaration(blob):
++    return validate_declaration(dict(format='project_artifact_v1', **blob))
++
++
++def _document(value):
++    _closed(value, FIELDS)
++    if value['format'] != FORMAT:
++        raise WorkbenchError('Unsupported native measurement source format.', 'unsupported', 409)
++    for key in ('origin_catalog_id', 'actor_id'):
++        _identity(value[key], ID)
++    _identity(value['id'], SHA)
++    text(value['title'])
++    _closed(value['blob'], ('sha256', 'bytes'))
++    blob = declaration(value['blob'])
++    if not 0 < blob['bytes'] <= MAX_BYTES or blob['sha256'] != value['id']:
++        raise WorkbenchError('Measurement packet identity or byte bound differs.')
++    source = value['source']
++    _closed(source, ('origin_catalog_id', 'project_id', 'manifest_sha256', 'reference_id', 'path', 'measured_sha256'))
++    for key in ('origin_catalog_id', 'project_id'):
++        _identity(source[key], ID)
++    for key in ('manifest_sha256', 'measured_sha256'):
++        _identity(source[key], SHA)
++    _identity(source['reference_id'], NAME)
++    relative_path(source['path'])
++    if source['measured_sha256'] != blob['sha256']:
++        raise WorkbenchError('Measurement source capture hash differs from its packet.')
++    try:
++        if type(value['imported_at']) is not str or len(value['imported_at']) > 80:
++            raise ValueError()
++        if datetime.fromisoformat(value['imported_at']).utcoffset() is None:
++            raise ValueError()
++    except ValueError:
++        raise WorkbenchError('Measurement import requires an attributed timestamp.') from None
++    return value
++
++
++def decode_records(records, *, artifacts=None):
++    """Validate candidate closure, including exact available packet bytes.
++
++    Missing payloads remain discoverable as missing. They never yield numerical
++    results. Present payloads must pass custody and scalar-source validation.
++    """
++    declarations = {item['id']: item['document'] for item in records if item['family'] == 'project_artifact'}
++    snapshots = material_records(records)
++    result = {}
++    for item in records:
++        if item['family'] != FAMILY:
++            continue
++        doc = _document(item['document'])
++        identity = doc['origin_catalog_id'] + '.' + doc['id']
++        if item['id'] != identity or identity in result:
++            raise WorkbenchError('Duplicate or inconsistent native measurement identity.')
++        if declarations.get(doc['blob']['sha256']) != declaration(doc['blob']):
++            raise WorkbenchError('Measurement artifact declaration is missing or inconsistent.')
++        source = doc['source']
++        snapshot = snapshots.get(('project_snapshot', source['origin_catalog_id'] + '.' + source['manifest_sha256']))
++        if snapshot is None or snapshot['value']['id'] != source['project_id']:
++            raise WorkbenchError('Measurement source snapshot is missing or inconsistent.')
++        reference = next((r for r in snapshot['value']['manifest']['data'] if r['id'] == source['reference_id']), None)
++        if (reference is None or reference['path'] != source['path']
++                or reference.get('sha256', source['measured_sha256']) != source['measured_sha256']):
++            raise WorkbenchError('Measurement capture differs from its retained source reference.')
++        if artifacts is not None and artifacts.inspect(declaration(doc['blob']))['state'] != 'missing':
++            table = MeasurementTable(artifacts.read_blob(doc['blob'], maximum_bytes=MAX_BYTES))
++            if table.metadata()['title'] != doc['title']:
++                raise WorkbenchError('Measurement title differs from the exact retained packet.')
++        result[identity] = copy.deepcopy(doc)
++    return result
++
++
++def validate_operation_result(operation, result, records=None):
++    if operation != 'measurements.import':
++        return False
++    _document(result)
++    if records is not None:
++        identity = result['origin_catalog_id'] + '.' + result['id']
++        if decode_records(records).get(identity) != result:
++            raise WorkbenchError('Measurement receipt has no exact retained source.')
++    return True
++
++
++class ProjectMeasurements:
++    def __init__(self, session):
++        self.session, self.artifacts = session, session.artifacts
++        self.access, self.db = session.access, session.db
++
++    def _documents(self):
++        return decode_records(self.session.snapshot['records'])
++
++    def import_packet(self, raw, source, expected_checkpoint, key):
++        """Called only after SourceAdapter's explicit current rooted capture."""
++        with self.access.lock, self.session.lock, self.db.lock:
++            actor = self.access.require('edit', 'measurements.import')
++            self.session.check()
++            table = MeasurementTable(raw)
++            blob = dict(sha256=table.sha256, bytes=len(raw))
++            origin = self.session.snapshot['project_id']
++            request = dict(blob=blob, source=copy.deepcopy(source))
++
++            def invoke():
++                prior = self._documents().get(origin + '.' + table.sha256)
++                if prior is not None:
++                    if prior['source'] != source:
++                        raise WorkbenchError('This packet already has different retained capture facts.', 'conflict', 409)
++                    return prior
++                self.artifacts.publish_bytes(raw, declaration(blob), maximum_bytes=MAX_BYTES)
++                return dict(format=FORMAT, origin_catalog_id=origin, id=table.sha256,
++                    title=table.metadata()['title'], blob=blob, source=copy.deepcopy(source),
++                    actor_id=actor.actor_id, imported_at=timestamp())
++
++            def capture(result, before):
++                return dict(records=[dict(family='project_artifact', id=table.sha256, document=declaration(blob)),
++                    dict(family=FAMILY, id=origin + '.' + table.sha256, document=result)], result=result)
++
++            return self.session.mutate('measurements.import', table.sha256, request, expected_checkpoint, key, invoke, capture)
++
++    def sources(self, *, offset=0, limit=40):
++        if type(offset) is not int or not 0 <= offset <= 2**53-1 or type(limit) is not int or not 1 <= limit <= 40:
++            raise WorkbenchError('Invalid measurement source page.')
++        with self.access.lock, self.session.lock, self.db.lock:
++            self.access.require('inspect', 'measurements.sources')
++            self.session.check()
++            docs = sorted(self._documents().values(), key=lambda d: (d['origin_catalog_id'], d['id']))
++            items = [dict(doc, availability=self.artifacts.inspect(declaration(doc['blob'])))
++                     for doc in docs[offset:offset+limit]]
++            self.session.check()
++            self.access.require('inspect', 'measurements.sources')
++            return self._bounded(dict(items=items, total=len(docs), offset=offset, limit=limit))
++
++    @staticmethod
++    def _bounded(value):
++        if len(encode(value)) > MAX_RESPONSE_BYTES:
++            raise WorkbenchError('Measurement response exceeds its bound; select a smaller page.', 'too_large', 413)
++        return value
++
++    def _read(self, origin_catalog_id, packet_sha256, action, select):
++        _identity(origin_catalog_id, ID)
++        _identity(packet_sha256, SHA)
++        target = origin_catalog_id + '.' + packet_sha256
++        with self.access.lock, self.session.lock, self.db.lock:
++            self.access.require('inspect', action, target)
++            self.session.check()
++            doc = self._documents().get(target)
++            if doc is None:
++                raise WorkbenchError('Measurement source is unavailable.', 'not_found', 404)
++            raw = self.artifacts.read_blob(doc['blob'], maximum_bytes=MAX_BYTES)
++            table = MeasurementTable(raw)
++            if table.metadata()['title'] != doc['title']:
++                raise WorkbenchError('Measurement title differs from the exact retained packet.')
++            value = self._bounded(dict(source=doc, value=select(table)))
++            self.session.check()
++            self.access.require('inspect', action, target)
++            return value
++
++    def metadata(self, origin_catalog_id, packet_sha256):
++        return self._read(origin_catalog_id, packet_sha256, 'measurements.metadata', lambda table: table.metadata())
++
++    def subjects(self, origin_catalog_id, packet_sha256, *, offset=0, limit=40):
++        return self._read(origin_catalog_id, packet_sha256, 'measurements.subjects',
++                          lambda table: table.subjects(offset=offset, limit=limit))
++
++    def query(self, origin_catalog_id, packet_sha256, metric_id, **selection):
++        return self._read(origin_catalog_id, packet_sha256, 'measurements.query',
++                          lambda table: table.query(metric_id, **selection))
++
++    def inspect(self, origin_catalog_id, packet_sha256, observation_id):
++        return self._read(origin_catalog_id, packet_sha256, 'measurements.inspect',
++                          lambda table: table.inspect(observation_id))
+diff --git a/project_projection.py b/project_projection.py
+index b3f05b298bd781e7e0cb0c5af95418653b667275..e8a81a40e72cc4164b00621e0138d2465c09ea38 100644
+--- a/project_projection.py
++++ b/project_projection.py
+@@ -31,6 +31,9 @@ from project_runtime import ProjectRuntime, validate_operation_result as validat
+ from project_native_execution import FAMILY as NATIVE_FAMILY, decode_records as decode_native_records
+ from project_native_preparation import ProjectNativePreparation, validate_operation_result as validate_preparation_result
+ from project_sources import SourceAdapter, validate_operation_result as validate_source_result
++from project_measurements import ProjectMeasurements, FAMILY as MEASUREMENT_FAMILY
++from project_measurements import decode_records as decode_measurement_records
++from project_measurements import validate_operation_result as validate_measurement_result
+ from workbench import WorkbenchError
+ from workbench import timestamp
+ 
+@@ -76,6 +79,7 @@ class ProjectProjection:
+             self.producers = ProjectProducers(self.session)
+             self.data = ProjectData(self.session, generation_entries=self.producers.generation_jobs)
+             self.materials = ProjectMaterial(self.session)
++            self.measurements = ProjectMeasurements(self.session)
+             self.history = ProjectHistory(self.session, materials=self.materials,
+                                           authorize_disclosure=self.authorize_disclosure)
+             if restore:
+@@ -125,7 +129,7 @@ class ProjectProjection:
+ 
+     def validate_records(self, records, *, project_id=None):
+         project_id = self.project_id if project_id is None else project_id
+-        claimed = {'workbench_text', 'project_artifact', 'project_operation', 'project_file', 'project_fork', 'project_extraction', NATIVE_FAMILY} | set(DATA_FAMILIES) | set(
++        claimed = {'workbench_text', 'project_artifact', 'project_operation', 'project_file', 'project_fork', 'project_extraction', NATIVE_FAMILY, MEASUREMENT_FAMILY} | set(DATA_FAMILIES) | set(
+             MATERIAL_FAMILIES) | set(HISTORY_FAMILIES) | set(PRODUCER_FAMILIES)
+         identities = set()
+         declarations = {}
+@@ -159,12 +163,14 @@ class ProjectProjection:
+                                     artifacts=self.artifacts, check=lambda: None)
+         decode_producer_records(records, artifacts=self.artifacts)
+         decode_history_records(records, materials=ProjectMaterial(candidate), artifacts=self.artifacts)
++        decode_measurement_records(records, artifacts=self.artifacts)
+         for receipt in operation_documents(records):
+             operation, result = receipt['operation'], receipt['result']
+             if (validate_data_result(operation, result, records)
+                     or validate_material_result(operation, result, records)
+                     or validate_history_result(operation, result, records)
+                     or validate_source_result(operation, result, records)
++                    or validate_measurement_result(operation, result, records)
+                     or validate_execution_result(operation, result, records)
+                     or validate_producer_result(operation, receipt['target'], result, records)
+                     or validate_file_result(operation, result, records)
+diff --git a/project_sources.py b/project_sources.py
+index 8aef085f8b19670cb17ed71b201f17a5a39bc761..08939eba1f37e4a748672439f712d3b38c051219 100644
+--- a/project_sources.py
++++ b/project_sources.py
+@@ -184,15 +184,40 @@ class SourceAdapter:
+         with self.access.lock,self.session.lock,self.db.lock:
+             self.access.require('edit','source.import_scientific',snapshot['project_id'])
+             self.session.check()
+-            historical=self.materials.snapshot_ref(snapshot['project_id'],snapshot['manifest_sha256'],
+-                catalog_id=snapshot['origin_catalog_id'])
+-            current,_raw=self.sources.read_snapshot_manifest(snapshot['project_id'],snapshot['manifest_sha256'])
+-            if current['manifest']!=historical['manifest']:
+-                raise WorkbenchError('Current source differs from the selected retained snapshot.','stale',409)
+-            raw,source=self.sources.read_snapshot_data_reference(snapshot['project_id'],body['reference_id'],
+-                                                               body['expected_sha256'],DATA_LIMIT)
+-            if source['manifest_sha256']!=snapshot['manifest_sha256']:
+-                raise WorkbenchError('Current source snapshot changed during capture.','stale',409)
++            raw,source=self._capture_reference(snapshot,body['reference_id'],body['expected_sha256'],DATA_LIMIT)
+             # ProjectData owns the one canonical mutation and native parser;
+             # current rooted reads above never become an imported capability.
+             return self.data.import_scientific(raw,copy.deepcopy(body['document']),source,expected_checkpoint,key)
++
++    def _capture_reference(self,snapshot,reference_id,expected_sha256,maximum_bytes):
++        """One rooted capture policy shared by the two fixed native consumers.
++
++        Caller holds current access/session/database locks and authorizes the
++        action before any source read. Returned paths remain historical facts.
++        """
++        historical=self.materials.snapshot_ref(snapshot['project_id'],snapshot['manifest_sha256'],
++            catalog_id=snapshot['origin_catalog_id'])
++        current,_raw=self.sources.read_snapshot_manifest(snapshot['project_id'],snapshot['manifest_sha256'])
++        if current['manifest']!=historical['manifest']:
++            raise WorkbenchError('Current source differs from the selected retained snapshot.','stale',409)
++        raw,source=self.sources.read_snapshot_data_reference(snapshot['project_id'],reference_id,
++                                                           expected_sha256,maximum_bytes)
++        if source['manifest_sha256']!=snapshot['manifest_sha256']:
++            raise WorkbenchError('Current source snapshot changed during capture.','stale',409)
++        self.session.check()
++        return raw,source
++
++    def import_measurements(self,body,expected_checkpoint,key):
++        self._mutation_identity(expected_checkpoint,key)
++        _closed(body,('snapshot','reference_id','expected_sha256'))
++        snapshot=self._snapshot_reference(body['snapshot'])
++        _identity(body['reference_id'],NAME,'data reference')
++        _identity(body['expected_sha256'],SHA,'data SHA256')
++        from retained_measurements import MAX_BYTES
++        with self.access.lock,self.session.lock,self.db.lock:
++            self.access.require('edit','source.import_measurements',snapshot['project_id'])
++            self.session.check()
++            raw,source=self._capture_reference(snapshot,body['reference_id'],body['expected_sha256'],MAX_BYTES)
++            source=dict(source,origin_catalog_id=snapshot['origin_catalog_id'])
++            self.access.require('edit','source.import_measurements',snapshot['project_id'])
++            return self.projection.measurements.import_packet(raw,source,expected_checkpoint,key)
+diff --git a/project_store.py b/project_store.py
+index 11e3c09d75c8f6240c7974c462b585d45f9286c6..0531b8ea884670154acf15c65fe4fad905119f88 100644
+--- a/project_store.py
++++ b/project_store.py
+@@ -43,6 +43,7 @@ SUPPORTED_FORMATS = {
+     'model_material': 'retained_model_material_v1',
+     'recipe_material': 'retained_recipe_material_v1',
+     'project_snapshot': 'retained_project_snapshot_v1',
++    'measurement_source': 'project_measurement_source_v1',
+     'runtime_material': 'retained_runtime_material_v1',
+     'study_history': 'project_study_history_v1',
+     'trial_history': 'project_trial_history_v1',
+diff --git a/retained_measurements.py b/retained_measurements.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..1118880207ebbbceed48bc22da652bac55d2af9a
+--- /dev/null
++++ b/retained_measurements.py
+@@ -0,0 +1,350 @@
++"""Finite retained scalar tables, exact source bindings and explicit missingness.
++
++This owner validates data representation and performs fixed selections/reductions.
++Producers own metric definitions, comparison scope and scientific interpretation.
++It reads no paths, runs no producer and grants no evidence/disclosure authority.
++"""
++import base64
++import binascii
++import copy
++from decimal import Decimal
++import hashlib
++import json
++import math
++import re
++import struct
++
++from workbench import WorkbenchError
++
++
++FORMAT = 'retained_measurements_v1'
++MAX_BYTES = 32 * 1024 * 1024
++MAX_SOURCE_BYTES = 8 * 1024 * 1024
++MAX_SOURCE_TOTAL = 16 * 1024 * 1024
++MAX_RESPONSE_BYTES = 256 * 1024
++MAX_ROWS = 100000
++STATES = ('measured', 'failed', 'unsupported', 'unavailable')
++ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$')
++SHA = re.compile(r'^[a-f0-9]{64}$')
++
++
++def fail(message, code='invalid', status=400):
++    raise WorkbenchError('Retained measurements: ' + message, code, status)
++
++
++def exact(value, fields):
++    if type(value) is not dict or set(value) != set(fields):
++        fail('Object fields differ from schema 1.')
++
++
++def text(value, maximum=240):
++    if (type(value) is not str or not value.strip() or len(value) > maximum
++            or any(ord(c) < 32 or 127 <= ord(c) <= 159 for c in value)):
++        fail('Bounded nonempty display text required.')
++    try:
++        value.encode('utf-8')
++    except UnicodeError:
++        fail('Text must contain valid Unicode scalars.')
++    return value
++
++
++def identifier(value):
++    if type(value) is not str or not ID.fullmatch(value):
++        fail('Invalid declared identity.')
++    return value
++
++
++def number(value):
++    return (type(value) is int and abs(value) <= 2**53-1
++            or type(value) is float and math.isfinite(value))
++
++
++def encode(value):
++    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode('utf-8')
++
++
++def digest(value):
++    return hashlib.sha256(encode(value)).hexdigest()
++
++
++def decode(raw):
++    def pairs(items):
++        result = {}
++        for key, value in items:
++            if key in result:
++                fail('Duplicate JSON key.')
++            result[key] = value
++        return result
++    def floating(value):
++        result = float(value)
++        if not math.isfinite(result) or result == 0 and Decimal(value) != 0:
++            fail('JSON number exceeds finite binary64 range.')
++        return result
++    def constant(_value):
++        fail('Nonfinite JSON constants are unsupported.')
++    try:
++        value = json.loads(raw.decode('utf-8'), object_pairs_hook=pairs,
++                           parse_float=floating, parse_constant=constant)
++        pending = [(value, 0)]
++        while pending:
++            item, depth = pending.pop()
++            if depth > 24:
++                fail('JSON nesting exceeds the supported bound.', 'too_large', 413)
++            if type(item) is dict:
++                pending.extend((v, depth+1) for v in item.values())
++                for key in item:
++                    key.encode('utf-8')
++            elif type(item) is list:
++                pending.extend((v, depth+1) for v in item)
++            elif type(item) is str:
++                item.encode('utf-8')
++        return value
++    except (ValueError, UnicodeError, RecursionError):
++        fail('Unique-key finite UTF-8 JSON required.')
++
++
++def collection(values, maximum):
++    if type(values) is not list or not values:
++        fail('Nonempty declared collection required.')
++    if len(values) > maximum:
++        fail('Declared collection exceeds its supported bound.', 'too_large', 413)
++    result = {}
++    for value in values:
++        if type(value) is not dict:
++            fail('Declared entries must be objects.')
++        identity = identifier(value.get('id'))
++        if identity in result:
++            fail('Duplicate declared identity.')
++        result[identity] = value
++    return result
++
++
++def cell(kind, value):
++    if value is None:
++        return True
++    if kind == 'string':
++        return type(value) is str and len(value) <= 256
++    if kind == 'boolean':
++        return type(value) is bool
++    if kind == 'integer':
++        return type(value) is int and abs(value) <= 2**53-1
++    return kind == 'number' and number(value)
++
++
++class MeasurementTable:
++    """Own an immutable input snapshot; returned projections are independent."""
++    def __init__(self, raw):
++        if type(raw) is not bytes or not 0 < len(raw) <= MAX_BYTES:
++            fail('A bounded complete byte snapshot is required.', 'too_large', 413)
++        self.sha256 = hashlib.sha256(raw).hexdigest()
++        doc = decode(raw)
++        exact(doc, ('format', 'schema_version', 'title', 'scope', 'dimensions', 'subjects',
++                    'cases', 'metrics', 'observations', 'sources'))
++        if doc['format'] != FORMAT or type(doc['schema_version']) is not int or doc['schema_version'] != 1:
++            fail('Unsupported measurement schema.', 'unsupported', 409)
++        text(doc['title'])
++        self._doc = doc
++        self._sources = collection(doc['sources'], 256)
++        self._json = {}
++        total = 0
++        for identity, source in self._sources.items():
++            exact(source, ('id', 'label', 'kind', 'bytes', 'sha256', 'data_base64'))
++            text(source['label'])
++            if source['kind'] not in ('json', 'opaque'):
++                fail('Unsupported retained source kind.', 'unsupported', 409)
++            if type(source['bytes']) is not int or not 0 < source['bytes'] <= MAX_SOURCE_BYTES:
++                fail('Source byte declaration exceeds its bound.', 'too_large', 413)
++            total += source['bytes']
++            if total > MAX_SOURCE_TOTAL:
++                fail('Source collection exceeds its decoded byte bound.', 'too_large', 413)
++            if type(source['sha256']) is not str or not SHA.fullmatch(source['sha256']):
++                fail('Source requires an exact SHA256.')
++            value = source['data_base64']
++            if type(value) is not str or len(value) != 4*((source['bytes']+2)//3):
++                fail('Source encoding differs from its byte declaration.')
++            try:
++                payload = base64.b64decode(value, validate=True)
++            except (ValueError, binascii.Error):
++                fail('Invalid source base64.')
++            if (len(payload) != source['bytes'] or hashlib.sha256(payload).hexdigest() != source['sha256']
++                    or base64.b64encode(payload).decode('ascii') != value):
++                fail('Retained source bytes differ from their declaration.')
++            if source['kind'] == 'json':
++                self._json[identity] = decode(payload)
++        scope = doc['scope']
++        exact(scope, ('id', 'label', 'population', 'definition'))
++        identifier(scope['id']);text(scope['label'])
++        if scope['population'] not in ('training', 'consumed', 'independent', 'reserved', 'unknown'):
++            fail('Unsupported declared population.', 'unsupported', 409)
++        self._definition(scope, ('id', 'label', 'population'))
++        if type(doc['dimensions']) is not list or len(doc['dimensions']) > 32:
++            fail('Invalid dimension collection.')
++        self._dimensions = collection(doc['dimensions'], 32) if doc['dimensions'] else {}
++        for dimension in self._dimensions.values():
++            exact(dimension, ('id', 'label', 'type', 'units', 'scope'))
++            text(dimension['label'])
++            if dimension['scope'] not in ('subject', 'case', 'observation'):
++                fail('Unsupported dimension owner.', 'unsupported', 409)
++            if dimension['type'] not in ('string', 'number', 'integer', 'boolean'):
++                fail('Unsupported dimension type.', 'unsupported', 409)
++            if dimension['units'] is not None:
++                text(dimension['units'], 120)
++        self._subjects = collection(doc['subjects'], MAX_ROWS)
++        self._cases = collection(doc['cases'], 4096)
++        self._metrics = collection(doc['metrics'], 32)
++        expected = len(self._subjects)*len(self._cases)*len(self._metrics)
++        if expected > MAX_ROWS:
++            fail('Complete subject/case/metric matrix exceeds its row bound.', 'too_large', 413)
++        for subject in self._subjects.values():
++            exact(subject, ('id', 'label', 'dimensions', 'reference'));text(subject['label']);self._reference(subject['reference'])
++            self._dimension_values('subject',subject['dimensions'])
++        for case in self._cases.values():
++            exact(case, ('id', 'dimensions', 'reference'))
++            self._dimension_values('case',case['dimensions'])
++            self._reference(case['reference'])
++        for metric in self._metrics.values():
++            exact(metric, ('id', 'label', 'units', 'definition'));text(metric['label']);text(metric['units'], 120)
++            self._definition(metric, ('id', 'label', 'units'))
++        observations = doc['observations']
++        if type(observations) is not list or len(observations) != expected:
++            fail('Every subject/case/metric needs one explicit result, including missing or failed results.')
++        self._observations = collection(observations, MAX_ROWS)
++        pairs = set()
++        for observation in observations:
++            exact(observation, ('id', 'subject_id', 'case_id', 'metric_id', 'state', 'value', 'reason', 'dimensions', 'reference'))
++            self._dimension_values('observation',observation['dimensions'])
++            identity = observation['subject_id'], observation['case_id'], observation['metric_id']
++            for value in identity:
++                identifier(value)
++            if (identity in pairs or identity[0] not in self._subjects or identity[1] not in self._cases
++                    or identity[2] not in self._metrics):
++                fail('Duplicate or unresolved measurement identity.')
++            pairs.add(identity)
++            if observation['state'] not in STATES:
++                fail('Unsupported observation state.', 'unsupported', 409)
++            source_value = self._reference(observation['reference'])
++            if observation['state'] == 'measured':
++                value = observation['value']
++                if (not number(value) or not number(source_value) or observation['reason'] is not None
++                        or struct.pack('!d', float(value)) != struct.pack('!d', float(source_value))):
++                    fail('Measured scalar differs from its exact retained source value.')
++            else:
++                if observation['value'] is not None:
++                    fail('Unmeasured results require an explicit null value.')
++                text(observation['reason'], 1000)
++
++    def _dimension_values(self,scope,values):
++        columns={k:d for k,d in self._dimensions.items() if d['scope']==scope}
++        if type(values) is not dict or set(values)!=set(columns):
++            fail('Dimension values differ from their declared owner and columns.')
++        if any(not cell(columns[k]['type'],v) for k,v in values.items()):
++            fail('Dimension value differs from its declared type.')
++
++    def _row_dimensions(self,row):
++        return {**self._subjects[row['subject_id']]['dimensions'],
++                **self._cases[row['case_id']]['dimensions'],**row['dimensions']}
++
++    def _reference(self, reference, *, hashed=False):
++        exact(reference, ('source_id', 'pointer', 'sha256') if hashed else ('source_id', 'pointer'))
++        source = self._sources.get(identifier(reference['source_id']))
++        if source is None:
++            fail('Source reference is unresolved.')
++        pointer = reference['pointer']
++        if pointer is None and not hashed:
++            return None
++        if (type(pointer) is not str or len(pointer) > 512 or pointer and not pointer.startswith('/')
++                or re.search(r'~(?:[^01]|$)', pointer) or source['kind'] != 'json'):
++            fail('A bounded existing JSON pointer is required.')
++        value = self._json[source['id']]
++        try:
++            for part in pointer[1:].split('/') if pointer else ():
++                part = part.replace('~1', '/').replace('~0', '~')
++                if type(value) is dict:
++                    value = value[part]
++                elif type(value) is list and re.fullmatch(r'0|[1-9][0-9]*', part):
++                    value = value[int(part)]
++                else:
++                    fail('Source pointer does not identify a retained value.')
++        except (KeyError, IndexError):
++            fail('Source pointer does not identify a retained value.')
++        if hashed and reference['sha256'] != digest(value):
++            fail('Declared definition digest differs from its retained source.')
++        return value
++
++    def _definition(self, descriptor, fields):
++        value = self._reference(descriptor['definition'], hashed=True)
++        if type(value) is not dict or len(encode(value)) > 16384 or any(value.get(k) != descriptor[k] for k in fields):
++            fail('Definition metadata differs from its exact retained document.')
++        return value
++
++    def metadata(self):
++        return copy.deepcopy({'format': FORMAT, 'packet_sha256': self.sha256, 'title': self._doc['title'],
++            'scope': self._doc['scope'], 'scope_definition':self._definition(self._doc['scope'],('id','label','population')),
++            'dimensions': self._doc['dimensions'], 'metrics': self._doc['metrics'],
++            'subject_count':len(self._subjects),'case_count': len(self._cases),
++            'observation_count': len(self._observations),'source_count':len(self._sources)})
++
++    def subjects(self, *, offset=0, limit=40):
++        if type(offset) is not int or not 0<=offset<=2**53-1 or type(limit) is not int or not 1<=limit<=40:
++            fail('Invalid subject page bounds.')
++        return copy.deepcopy({'items':list(self._subjects.values())[offset:offset+limit],
++                              'offset':offset,'limit':limit,'total':len(self._subjects)})
++
++    def query(self, metric_id, *, subject_ids=None, filters=None, offset=0, limit=50):
++        identifier(metric_id)
++        if metric_id not in self._metrics:
++            fail('Metric is unavailable.', 'not_found', 404)
++        selected = list(self._subjects) if subject_ids is None else subject_ids
++        if (type(selected) is not list or not selected or len(selected)>MAX_ROWS or any(type(v) is not str for v in selected)
++                or len(set(selected)) != len(selected) or any(v not in self._subjects for v in selected)):
++            fail('Choose existing unique subjects.')
++        filters = {} if filters is None else filters
++        if (type(filters) is not dict or any(k not in self._dimensions or not cell(self._dimensions[k]['type'],v)
++                                          for k,v in filters.items())):
++            fail('Filters must use declared dimensions and typed scalar values.')
++        if type(offset) is not int or not 0<=offset<=2**53-1 or type(limit) is not int or not 1<=limit<=100:
++            fail('Page bounds must be explicit finite integers.')
++        rows = [v for v in self._doc['observations'] if v['metric_id']==metric_id
++                and v['subject_id'] in selected
++                and all(self._row_dimensions(v)[k]==wanted for k,wanted in filters.items())]
++        summaries = []
++        for identity in selected:
++            own = [v for v in rows if v['subject_id']==identity]
++            counts = {state:sum(v['state']==state for v in own) for state in STATES}
++            measured = [v for v in own if v['state']=='measured']
++            maximum = max(measured, key=lambda v:v['value']) if measured else None
++            summaries.append({'subject_id':identity,'count':len(own),'states':counts,
++                'maximum':None if maximum is None else {k:maximum[k] for k in ('id','case_id','value')}})
++        result = {'format':'retained_measurement_query_v1','packet_sha256':self.sha256,
++            'scope':copy.deepcopy(self._doc['scope']),'metric':copy.deepcopy(self._metrics[metric_id]),
++            'scope_definition':copy.deepcopy(self._definition(self._doc['scope'],('id','label','population'))),
++            'definition':copy.deepcopy(self._definition(self._metrics[metric_id],('id','label','units'))),
++            'filters':copy.deepcopy(filters),'subject_ids':list(selected),'summary':summaries,
++            'rows':[dict(copy.deepcopy(v),dimensions=copy.deepcopy(self._row_dimensions(v)))
++                    for v in rows[offset:offset+limit]],
++            'total':len(rows),'offset':offset,'limit':limit,'sampling':'none'}
++        if len(encode(result)) > MAX_RESPONSE_BYTES:
++            fail('Selected response exceeds its bound; choose a smaller page.', 'too_large', 413)
++        return result
++
++    def inspect(self, observation_id):
++        identifier(observation_id)
++        observation = self._observations.get(observation_id)
++        if observation is None:
++            fail('Observation is unavailable.', 'not_found', 404)
++        reference = observation['reference'];source = self._sources[reference['source_id']]
++        return copy.deepcopy({'packet_sha256':self.sha256,'observation':observation,
++            'case':self._cases[observation['case_id']],'subject':self._subjects[observation['subject_id']],
++            'metric':self._metrics[observation['metric_id']],'scope':self._doc['scope'],
++            'scope_definition':self._definition(self._doc['scope'],('id','label','population')),
++            'case_evidence':self._inspection_reference(self._cases[observation['case_id']]['reference']),
++            'scalar_evidence':self._inspection_reference(reference),
++            'source':{k:v for k,v in source.items() if k!='data_base64'}})
++
++    def _inspection_reference(self,reference):
++        value=self._reference(reference)
++        state='opaque' if reference['pointer'] is None else 'included'
++        if state=='included' and len(encode(value))>16384:
++            state='exceeds_inspection_bound';value=None
++        return {'reference':copy.deepcopy(reference),'source_sha256':self._sources[reference['source_id']]['sha256'],
++                'state':state,'value':value}
+diff --git a/static/project-files.js b/static/project-files.js
+index 8f168dc0dc52d485e46d233f4da1edfaa8f09e85..fc148da58fd9285abdf6027959772912834e3239 100644
+--- a/static/project-files.js
++++ b/static/project-files.js
+@@ -142,7 +142,13 @@
+   "project_files.study_create": "8d2aac7c073a6a7b3ebb41227b5b466cf03606625404f93a59b325038a4ad7a1",
+   "project_files.study_save": "5bf3fb814588fd7d9c35836e9d964a64481b3cc4169caf76cad6ce776ff0fe15",
+   "project_files.trial": "79afa4bed6d0907f3d4116cc04cb784e94e5a24ab89725ec24f5d7bce70e869f",
+-  "project_files.trial_prepare": "e1f6973536fd4c356c4a92fc674d6766f7df0d8a113b8ee71bb05d0adc40b04f"
++  "project_files.trial_prepare": "e1f6973536fd4c356c4a92fc674d6766f7df0d8a113b8ee71bb05d0adc40b04f",
++  "project_files.measurement_import": "c8e500396138fc60a31fc916c441bb95454f410231a6508609a7ebba5cd31f18",
++  "project_files.measurement_sources": "7805e9c5a6b2e2ab566ca134c18697116c89e08a1991b5192b0b5c152a34041d",
++  "project_files.measurement_metadata": "5a92ed5259f8876a3c5b8fd1886a9e0f44f0aea8e53d7f63902ac765ddac0de7",
++  "project_files.measurement_subjects": "37bd3f717c7158e34b9c221bfa1dbce79490b9d55248803d13dab2ea17b35ea5",
++  "project_files.measurement_query": "65b1456a6870dd6d4b7499669777a2c66157142ccc27cac1864a995664220e1c",
++  "project_files.measurement_inspect": "fcbe9846ca49c3da4713b54a3cb4a8237189d8eea5799f275d33992ef268914f"
+ }
+ /* PROJECT_FILES_CONTRACTS_END */;
+   // Generated fixed operation routes from agent_api; remote schemas are never executed.
+@@ -800,6 +806,36 @@
+     "method": "POST",
+     "path": "/api/workspace/project-files/studies/{study_id}/trials",
+     "mutation": true
++  },
++  "project_files.measurement_import": {
++    "method": "POST",
++    "path": "/api/workspace/project-files/measurements/import",
++    "mutation": true
++  },
++  "project_files.measurement_inspect": {
++    "method": "GET",
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}/observations/{observation_id}",
++    "mutation": false
++  },
++  "project_files.measurement_metadata": {
++    "method": "GET",
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}",
++    "mutation": false
++  },
++  "project_files.measurement_query": {
++    "method": "POST",
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}/query",
++    "mutation": false
++  },
++  "project_files.measurement_sources": {
++    "method": "GET",
++    "path": "/api/workspace/project-files/measurements",
++    "mutation": false
++  },
++  "project_files.measurement_subjects": {
++    "method": "GET",
++    "path": "/api/workspace/project-files/measurements/{packet_sha256}/subjects",
++    "mutation": false
+   }
+ }
+ /* PROJECT_FILES_ROUTES_END */;
+diff --git a/tests/test_project_files_m2_http.py b/tests/test_project_files_m2_http.py
+index 63db21a44529ffcee9567456d9e8cb6c5f5bb401..ec3e431e5405924f8b8b3c99ed657311b2c4a7f6 100644
+--- a/tests/test_project_files_m2_http.py
++++ b/tests/test_project_files_m2_http.py
+@@ -37,6 +37,7 @@ SOURCE_FILES = ('app.py','agent_api.py','access.py','project_workspace.py','proj
+     'static/project-files.js','static/project-files.html','tuldok_client.py','project_cli.py','mcp_stdio.py',
+     'static/scientific-inspector.js','static/scientific-inspector.css','static/scientific-fields.js',
+     'static/workbench.html','static/workbench.css')
++SOURCE_FILES+=('project_measurements.py','retained_measurements.py','project_fork_composition.py')
+ 
+ 
+ def subject_hashes():
+@@ -385,4 +386,64 @@ class ProjectFilesM2HTTP(unittest.TestCase):
+         self.assertEqual(status,409,error);self.assertEqual(m1.canonical_bytes(self.external/'adapters'),committed)
+ 
+ 
++    def test_retained_measurement_import_query_permissions_and_independent_cold_copy(self):
++        from retained_measurements import MeasurementTable,encode
++        from test_retained_measurements import fixture
++        self.create()
++        raw=encode(fixture());digest=hashlib.sha256(raw).hexdigest()
++        (self.external/'measurements.json').write_bytes(raw)
++        manifest=dict(schema_version=1,id=uuid.uuid4().hex,name='Exact native scalar source',
++            data=[dict(id='measurements',label='Retained scalars',path='measurements.json',sha256=digest)],
++            recipes=[],evidence=[],requirements=[])
++        (self.external/'measurement-source.json').write_text(json.dumps(manifest))
++        registered=self.call('source_register',root='fixture',manifest_path='measurement-source.json')
++        snapshot={k:registered[k] for k in ('origin_catalog_id','project_id','manifest_sha256')}
++        import_args=self.arguments('measurement_import',snapshot=snapshot,reference_id='measurements',expected_sha256=digest)
++        status,admitted=self.transport('measurement_import',import_args)
++        self.assertEqual(status,200,admitted)
++        origin=admitted['project_id'];selection=dict(origin_catalog_id=origin,packet_sha256=digest)
++        canonical=m1.canonical_bytes(self.external/'alpha')
++        self.assertEqual(self.transport('measurement_import',import_args)[1],admitted)
++        self.assertEqual(m1.canonical_bytes(self.external/'alpha'),canonical)
++        metadata=self.call('measurement_metadata',**selection)
++        self.assertEqual(metadata['value'],MeasurementTable(raw).metadata())
++        self.assertEqual(self.call('measurement_sources')['items'][0]['id'],digest)
++        self.assertEqual(self.call('measurement_subjects',**selection,offset=1,limit=1)['value']['items'][0]['id'],'b')
++        query_args=self.arguments('measurement_query',**selection,metric_id='error',filters={'cpm':16})
++        expected=self.call('measurement_query',**selection,metric_id='error',filters={'cpm':16})
++        self.assertEqual(expected['value'],MeasurementTable(raw).query('error',filters={'cpm':16}))
++        row=self.call('measurement_inspect',**selection,observation_id='a-case1-error')
++        self.assertEqual(row['value']['scalar_evidence']['value'],1e-17)
++        timing=self.call('measurement_query',**selection,metric_id='latency')['value']
++        self.assertTrue(all(s['maximum'] is None for s in timing['summary']))
++        status,error=self.transport('measurement_query',dict(query_args,checkpoint='0'*64))
++        self.assertEqual(status,409,error)
++        status,error=self.transport('measurement_query',dict(query_args,filters={'expression':'never execute'}))
++        self.assertEqual(status,400,error)
++        with self.owner.bound(self.workspace):
++            inspector=self.workspace.access.issue(dict(label='Scalar HTTP inspector',scopes=['inspect']))
++        status,value=self.transport('measurement_query',query_args,token=inspector['token'])
++        self.assertEqual(status,200,value)
++        denied=self.arguments('measurement_import',snapshot=snapshot,reference_id='measurements',expected_sha256=digest)
++        self.assertEqual(self.transport('measurement_import',denied,token=inspector['token'])[0],403)
++        with self.owner.bound(self.workspace):
++            self.workspace.access.revoke(inspector['identity']['credential_id'])
++        self.assertEqual(self.transport('measurement_query',query_args,token=inspector['token'])[0],401)
++        self.assertEqual(m1.canonical_bytes(self.external/'alpha'),canonical)
++        self.action('save');self.action('close')
++        coldroot=self.path/'scalar-cold';coldroot.mkdir()
++        shutil.copytree(self.external/'alpha',coldroot/'copied')
++        self.assertEqual(m1.canonical_bytes(coldroot/'copied'),canonical)
++        for name in canonical:
++            self.assertNotEqual((self.external/'alpha'/name).stat().st_ino,(coldroot/'copied'/name).stat().st_ino)
++        self.select_host(self.path/'scalar-cold-control',{'fixture':coldroot})
++        self.action('open',root='fixture',directory='copied')
++        self.assertEqual(self.workspace._projection.db.execute('SELECT count(*) FROM workspace_projects').fetchone()[0],0)
++        self.assertEqual(self.call('measurement_query',**selection,metric_id='error',filters={'cpm':16}),expected)
++        self.assertEqual(self.call('measurement_inspect',**selection,observation_id='a-case1-error'),row)
++        self.assertEqual(self.transport('measurement_query',query_args)[0],409)
++        self.action('save');self.action('close')
++        self.assertEqual(m1.canonical_bytes(coldroot/'copied'),canonical)
++
++
+ if __name__=='__main__':unittest.main()
+diff --git a/tests/test_project_measurements.py b/tests/test_project_measurements.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..22af6480cb847dbf411d929e6e8d34b97d72a95e
+--- /dev/null
++++ b/tests/test_project_measurements.py
+@@ -0,0 +1,226 @@
++"""Native scalar custody, publication, current access and independent Open.
++
++Only fixture JSON is imported. No neural or simulation runtime is involved.
++"""
++import copy
++from functools import partial
++import hashlib
++import json
++import os
++from pathlib import Path
++import shutil
++import tempfile
++import unittest
++from unittest.mock import patch
++import uuid
++
++from access import Access, AccessError
++from metadata import Metadata, connection_info
++from project_fork import active_records, publish_fork
++from project_fork_composition import build_candidate
++from project_measurements import FAMILY, validate_operation_result
++from project_projection import ProjectProjection
++from project_store import ProjectStore, DIR_FLAGS
++from retained_measurements import MeasurementTable, encode
++from test_retained_measurements import fixture
++from workbench import WorkbenchError, timestamp
++
++
++@unittest.skipUnless(os.environ.get('TULDOK_DATABASE_URL'), 'Requires disposable PostgreSQL')
++class ProjectMeasurementTests(unittest.TestCase):
++    def setUp(self):
++        self.tmp = tempfile.TemporaryDirectory(prefix='tuldok-measurements-')
++        self.root = Path(self.tmp.name)
++        self.addCleanup(self.tmp.cleanup)
++        self.resources, self.schemas = [], []
++        self.addCleanup(self.cleanup)
++        self.host = self.metadata('host')
++        self.access = Access(self.host, self.host.path)
++        self.owner_token = self.access.exchange(self.access._local_owner_token())['token']
++        self.enterContext(self.access.bind(self.owner_token))
++        self.source_root = self.root / 'source'
++        self.source_root.mkdir()
++        self.raw = encode(fixture())
++        self.digest = hashlib.sha256(self.raw).hexdigest()
++        (self.source_root / 'measurements.json').write_bytes(self.raw)
++        self.manifest = dict(schema_version=1, id='a'*32, name='Scalar source fixture',
++            data=[dict(id='measurements', label='Exact scalar fixture', path='measurements.json', sha256=self.digest)],
++            recipes=[], evidence=[], requirements=[])
++        (self.source_root / 'source.json').write_text(json.dumps(self.manifest))
++        self.store = ProjectStore.create(self.root / 'project', 'Native scalar fixture', 'new-scalars', 'a'*64)
++        self.resources.append(self.store)
++        self.projection = self.project(self.store, 'projection', {'fixture': self.source_root})
++        self.session = self.projection.session
++        self.measurements = self.projection.measurements
++        self.registration = self.projection.source_adapter.register(
++            dict(root='fixture', manifest_path='source.json'), self.checkpoint, 'register-source')
++        self.body = dict(snapshot={k:self.registration[k] for k in ('origin_catalog_id', 'project_id', 'manifest_sha256')},
++            reference_id='measurements', expected_sha256=self.digest)
++        self.origin = self.session.snapshot['project_id']
++
++    @property
++    def checkpoint(self):
++        return self.session.snapshot['checkpoint']
++
++    def metadata(self, name, *, project_id=None):
++        kwargs = dict(dataset_id=project_id, projection_id=uuid.uuid4().hex) if project_id else {}
++        db = Metadata(self.root / name, **kwargs)
++        self.resources.append(db)
++        self.schemas.append(db.schema)
++        return db
++
++    def project(self, store, name, roots):
++        db = self.metadata(name, project_id=store.snapshot()['project_id'])
++        projection = ProjectProjection(store, db, self.access, roots)
++        self.resources.append(projection)
++        return projection
++
++    def cleanup(self):
++        import psycopg
++        from psycopg import sql
++        for resource in reversed(self.resources):
++            resource.close()
++        with psycopg.connect(connection_info(), autocommit=True) as db:
++            for schema in self.schemas:
++                db.execute(sql.SQL('DROP SCHEMA IF EXISTS {} CASCADE').format(sql.Identifier(schema)))
++
++    def admit(self, *, body=None, key='import-measurements', checkpoint=None):
++        return self.projection.source_adapter.import_measurements(
++            body or self.body, self.checkpoint if checkpoint is None else checkpoint, key)
++
++    def test_native_import_retains_one_exact_packet_and_no_fabricated_history(self):
++        with patch('subprocess.Popen', side_effect=AssertionError('No producer process')):
++            result = self.admit()
++            query = self.measurements.query(self.origin, self.digest, 'error')['value']
++        records = self.store.snapshot()['records']
++        self.assertEqual(len([r for r in records if r['family'] == FAMILY]), 1)
++        self.assertEqual({r['family'] for r in records},
++                         {'project_snapshot', 'project_artifact', 'project_operation', FAMILY})
++        self.assertEqual(self.projection.artifacts.read_blob(result['blob']), self.raw)
++        self.assertTrue(validate_operation_result('measurements.import', result, records))
++        self.assertEqual(result['actor_id'], self.access._context().actor_id)
++        self.assertEqual(query, MeasurementTable(self.raw).query('error'))
++        self.assertEqual([s['maximum']['value'] for s in query['summary']], [2e-15, 0.02])
++        missing = self.measurements.query(self.origin, self.digest, 'latency')['value']
++        self.assertTrue(all(s['maximum'] is None for s in missing['summary']))
++        self.assertEqual(missing['summary'][1]['states']['failed'], 1)
++        self.assertEqual(self.measurements.sources()['items'][0]['availability']['state'], 'unverified')
++        row = self.measurements.inspect(self.origin, self.digest, 'a-case1-error')['value']
++        self.assertEqual(row['scalar_evidence']['value'], 1e-17)
++        self.assertEqual(self.measurements.subjects(self.origin, self.digest, offset=1, limit=1)['value']['items'][0]['id'], 'b')
++
++    def test_replay_is_exact_and_stale_or_changed_requests_do_not_publish(self):
++        original_cp = self.checkpoint
++        result = self.admit()
++        canonical = self.store.snapshot()
++        self.assertEqual(self.admit(checkpoint=original_cp), result)
++        self.assertEqual(self.store.snapshot(), canonical)
++        with self.assertRaises(WorkbenchError) as error:
++            self.admit(key='stale-import', checkpoint=original_cp)
++        self.assertEqual(error.exception.code, 'stale_project')
++        different = copy.deepcopy(self.body)
++        different['expected_sha256'] = 'f'*64
++        with self.assertRaises(WorkbenchError):
++            self.admit(body=different)
++        self.assertEqual(self.store.snapshot(), canonical)
++
++    def test_permission_precedes_source_or_artifact_reads(self):
++        self.admit()
++        inspector = self.access.issue(dict(label='Scalar inspector', scopes=['inspect']))
++        with self.access.bind(inspector['token']):
++            self.assertEqual(self.measurements.metadata(self.origin, self.digest)['value']['case_count'], 2)
++            with patch.object(self.projection.sources, 'read_snapshot_manifest', side_effect=AssertionError('Denied before source I/O')):
++                with self.assertRaises(AccessError):
++                    self.admit(key='not-an-editor')
++        with self.access.bind(inspector['token']):
++            with self.access.bind(self.owner_token):
++                self.access.revoke(inspector['identity']['credential_id'])
++            with patch.object(self.projection.artifacts, 'read_blob', side_effect=AssertionError('Denied before artifact I/O')):
++                with self.assertRaises(AccessError):
++                    self.measurements.query(self.origin, self.digest, 'error')
++
++    def test_current_revocation_during_selection_prevents_return(self):
++        self.admit()
++        inspector = self.access.issue(dict(label='Revoked during selection', scopes=['inspect']))
++        original = MeasurementTable.query
++        def revoke(table, *args, **kwargs):
++            value = original(table, *args, **kwargs)
++            with self.access.bind(self.owner_token):
++                self.access.revoke(inspector['identity']['credential_id'])
++            return value
++        with self.access.bind(inspector['token']), patch.object(MeasurementTable, 'query', revoke):
++            with self.assertRaises(AccessError):
++                self.measurements.query(self.origin, self.digest, 'error')
++
++    def test_cold_independent_copy_reads_without_restoring_source_bindings(self):
++        result = self.admit()
++        expected = self.measurements.query(self.origin, self.digest, 'error', filters={'cpm':16})
++        copied = self.root / 'relocated-project'
++        shutil.copytree(self.root / 'project', copied)
++        for path in (self.root / 'project').rglob('*'):
++            if path.is_file():
++                self.assertNotEqual(path.stat().st_ino, (copied / path.relative_to(self.root / 'project')).stat().st_ino)
++        store = ProjectStore.open(copied)
++        self.resources.append(store)
++        cold = self.project(store, 'cold-projection', {})
++        shutil.rmtree(self.source_root)
++        self.assertEqual(cold.db.execute('SELECT count(*) FROM workspace_projects').fetchone()[0], 0)
++        self.assertEqual(cold.measurements.query(self.origin, self.digest, 'error', filters={'cpm':16}), expected)
++        self.assertEqual(cold.artifacts.read_blob(result['blob']), self.raw)
++        self.assertEqual(cold.measurements.metadata(self.origin, self.digest)['value']['observation_count'], 8)
++
++    def test_fork_preserves_origin_scoped_packet_without_fabricating_new_capture(self):
++        result = self.admit()
++        before = self.store.snapshot()
++        root_fd = os.open(self.root, DIR_FLAGS)
++        try:
++            publish_fork(self.store, self.projection.artifacts, root_fd, 'fork', root_path=self.root,
++                name='Independent scalar fork', expected_checkpoint=before['checkpoint'], request_key='fork-scalars',
++                quiescent=True, build_candidate=partial(build_candidate, created_at=timestamp(),
++                    id_factory=lambda _family, _source_id, _revision: uuid.uuid4().hex),
++                validate_candidate=lambda records, identity:self.projection.validate_records(records, project_id=identity))
++        finally:
++            os.close(root_fd)
++        store = ProjectStore.open(self.root / 'fork')
++        self.resources.append(store)
++        cold = self.project(store, 'fork-projection', {})
++        self.assertNotEqual(store.snapshot()['project_id'], self.origin)
++        records = active_records(store.snapshot()['records'], project_id=store.snapshot()['project_id'])
++        self.assertEqual(next(r['document'] for r in records if r['family'] == FAMILY), result)
++        self.assertEqual(cold.measurements.inspect(self.origin, self.digest, 'a-case1-error')['value']['observation']['value'], 1e-17)
++
++    def test_candidate_cross_reference_receipt_and_title_forgery_are_refused(self):
++        result = self.admit()
++        canonical = self.store.snapshot()
++        for mutation in ('declaration', 'snapshot', 'source-path', 'title', 'receipt'):
++            records = copy.deepcopy(canonical['records'])
++            doc = next(r['document'] for r in records if r['family'] == FAMILY)
++            if mutation == 'declaration':
++                records = [r for r in records if not (r['family'] == 'project_artifact' and r['id'] == self.digest)]
++            if mutation == 'snapshot':
++                records = [r for r in records if r['family'] != 'project_snapshot']
++            if mutation == 'source-path':
++                doc['source']['path'] = 'other.json'
++            if mutation == 'title':
++                doc['title'] = 'Different retained title'
++            if mutation == 'receipt':
++                receipt = next(r['document'] for r in records if r['family'] == 'project_operation' and r['document']['operation'] == 'measurements.import')
++                receipt['result']['title'] = 'Forged result'
++            with self.subTest(mutation=mutation), self.assertRaises(WorkbenchError):
++                self.projection.validate_records(records)
++        self.assertEqual(self.store.snapshot(), canonical)
++        result['title'] = 'Detached caller mutation'
++        self.assertNotEqual(self.measurements.sources()['items'][0]['title'], result['title'])
++
++    def test_changed_source_packet_fails_before_canonical_import(self):
++        before = self.store.snapshot()
++        changed = fixture()
++        changed['observations'][0]['value'] = 0.5
++        (self.source_root / 'measurements.json').write_bytes(encode(changed))
++        with self.assertRaises(WorkbenchError):
++            self.admit()
++        self.assertEqual(self.store.snapshot(), before)
++
++
++if __name__ == '__main__':
++    unittest.main()
+diff --git a/tests/test_project_measurements_clients.py b/tests/test_project_measurements_clients.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..bc4153138b66799f6cfcad469d26827e7bd41eda
+--- /dev/null
++++ b/tests/test_project_measurements_clients.py
+@@ -0,0 +1,88 @@
++"""Closed scalar selections and exact thin-client response correlation."""
++import copy
++import unittest
++from unittest.mock import patch
++
++import agent_api as api
++from retained_measurements import MeasurementTable, encode
++from test_project_files_clients import BINDING, PROJECT, CHECKPOINT, OTHER, bound, client
++from test_retained_measurements import fixture
++from tuldok_client import ProjectFilesClient
++
++
++class MeasurementContracts(unittest.TestCase):
++    def setUp(self):
++        self.table=MeasurementTable(encode(fixture()))
++        self.source=dict(format='project_measurement_source_v1',origin_catalog_id=PROJECT,
++            id=self.table.sha256,title=self.table.metadata()['title'],blob=dict(sha256=self.table.sha256,bytes=len(encode(fixture()))),
++            source=dict(origin_catalog_id=PROJECT,project_id='a'*32,manifest_sha256=OTHER,
++                reference_id='measurements',path='measurements.json',measured_sha256=self.table.sha256),
++            actor_id='d'*32,imported_at='2026-10-23T00:00:00+00:00')
++        self.args=dict(binding=BINDING,checkpoint=CHECKPOINT,origin_catalog_id=PROJECT,packet_sha256=self.table.sha256)
++
++    def sdk(self,value):
++        return ProjectFilesClient(client({'status':200,'result':dict(binding=BINDING,project_id=PROJECT,
++            checkpoint=CHECKPOINT,value=value)}))
++
++    def test_capability_bound_applies_to_the_actual_advertised_profile(self):
++        sizes={profile:len(api.capabilities(PROJECT,profile=profile)['operations']) for profile in ('catalog','project')}
++        maximum=max(sizes.values())
++        with patch.object(api,'MAX_OPERATIONS',maximum):
++            for profile in sizes:
++                manifest=api.capabilities(PROJECT,profile=profile)
++                self.assertLess(len(api.encoded(manifest)),api.CAPABILITIES_LIMIT)
++                self.assertEqual(len(manifest['operations']),sizes[profile])
++        with patch.object(api,'MAX_OPERATIONS',maximum-1),self.assertRaises(api.AgentAPIError) as caught:
++            api.capabilities(PROJECT,profile=max(sizes,key=sizes.get))
++        self.assertEqual(caught.exception.code,'registry_invalid')
++
++    def test_typed_read_routes_pin_packet_selection_and_never_accept_execution(self):
++        arguments=dict(self.args,metric_id='error',filters={'cpm':16},subject_ids=['a'],limit=2)
++        method,path,body=api.project_request('project_files.measurement_query',arguments)
++        self.assertEqual(method,'POST')
++        self.assertEqual(body['filters'],{'cpm':16})
++        self.assertIn(self.table.sha256,path)
++        self.assertFalse(api.operation('project_files.measurement_query')['side_effects'])
++        for change in ({'script':'never.py'},{'execute':True},{'packet_sha256':'not-a-hash'},{'limit':101}):
++            with self.subTest(change=change),self.assertRaises(api.AgentAPIError):
++                api.validate_arguments('project_files.measurement_query',dict(arguments,**change))
++        for missing in ('origin_catalog_id','packet_sha256','binding','checkpoint','metric_id'):
++            with self.subTest(missing=missing),self.assertRaises(api.AgentAPIError):
++                api.validate_arguments('project_files.measurement_query',{k:v for k,v in arguments.items() if k!=missing})
++
++    def test_exact_query_and_inspection_reply_is_accepted_and_changed_selection_refused(self):
++        query=self.table.query('error',subject_ids=['a'],filters={'cpm':16},limit=2)
++        value=dict(source=self.source,value=query)
++        args=dict(self.args,metric_id='error',subject_ids=['a'],filters={'cpm':16},limit=2)
++        self.assertEqual(self.sdk(value).measurement_query(**args)['value'],value)
++        for key,replacement in (('packet_sha256',OTHER),('filters',{}),('offset',1),('subject_ids',['b'])):
++            changed=copy.deepcopy(value);changed['value'][key]=replacement
++            with self.subTest(key=key),self.assertRaises(api.AgentAPIError):
++                self.sdk(changed).measurement_query(**args)
++        changed=copy.deepcopy(value);changed['source']['origin_catalog_id']='f'*32
++        with self.assertRaises(api.AgentAPIError):self.sdk(changed).measurement_query(**args)
++        row=dict(source=self.source,value=self.table.inspect('a-case1-error'))
++        self.assertEqual(self.sdk(row).measurement_inspect(**self.args,observation_id='a-case1-error')['value'],row)
++        with self.assertRaises(api.AgentAPIError):
++            self.sdk(row).measurement_inspect(**self.args,observation_id='a-case2-error')
++
++    def test_header_subject_and_source_pages_and_import_keep_exact_identity(self):
++        header=dict(source=self.source,value=self.table.metadata())
++        self.assertEqual(self.sdk(header).measurement_metadata(**self.args)['value'],header)
++        header['value']['title']='Different retained title'
++        with self.assertRaises(api.AgentAPIError):self.sdk(header).measurement_metadata(**self.args)
++        subjects=dict(source=self.source,value=self.table.subjects(offset=1,limit=1))
++        self.assertEqual(self.sdk(subjects).measurement_subjects(**self.args,offset=1,limit=1)['value'],subjects)
++        with self.assertRaises(api.AgentAPIError):self.sdk(subjects).measurement_subjects(**self.args,offset=0,limit=1)
++        availability=dict(state='unverified',expected_sha256=self.table.sha256,expected_bytes=self.source['blob']['bytes'],
++            observed_sha256=None,observed_bytes=self.source['blob']['bytes'])
++        page=dict(items=[dict(self.source,availability=availability)],offset=0,limit=40,total=1)
++        self.assertEqual(self.sdk(page).measurement_sources(binding=BINDING,checkpoint=CHECKPOINT)['value'],page)
++        request=dict(bound(),snapshot={k:self.source['source'][k] for k in ('origin_catalog_id','project_id','manifest_sha256')},
++            reference_id='measurements',expected_sha256=self.table.sha256)
++        self.assertEqual(self.sdk(self.source).measurement_import(**request)['value'],self.source)
++        with self.assertRaises(api.AgentAPIError):
++            self.sdk(dict(self.source,id=OTHER)).measurement_import(**request)
++
++
++if __name__=='__main__':unittest.main()
+diff --git a/tests/test_retained_measurements.py b/tests/test_retained_measurements.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..a56a19d643bb05f386ede17c0905dfaa8ef7b4a2
+--- /dev/null
++++ b/tests/test_retained_measurements.py
+@@ -0,0 +1,154 @@
++"""Source-bound scalar, complete-denominator and closed-query decisions."""
++import base64
++import copy
++import hashlib
++import json
++from pathlib import Path
++import struct
++import sys
++import unittest
++
++sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
++from retained_measurements import MeasurementTable, decode, digest, encode
++from workbench import WorkbenchError
++
++
++def source(identity,value,kind='json'):
++    raw=encode(value) if kind=='json' else value
++    return {'id':identity,'label':identity,'kind':kind,'bytes':len(raw),
++            'sha256':hashlib.sha256(raw).hexdigest(),'data_base64':base64.b64encode(raw).decode('ascii')}
++
++
++def ref(pointer,hashed=None):
++    result={'source_id':'context','pointer':pointer}
++    if hashed is not None:result['sha256']=digest(hashed)
++    return result
++
++
++def fixture():
++    scope={'id':'consumed','label':'Retained consumed diagnostics','population':'consumed',
++           'task':'Fixture measurements, not scientific acceptance'}
++    metrics=[{'id':'error','label':'Declared error ratio','units':'1','description':'Exact retained scalar'},
++             {'id':'latency','label':'Complete-call latency','units':'ms','description':'No qualified timing available'}]
++    context={'scope':scope,'metrics':metrics,'values':[1e-17,2e-15,0.01,0.02],'latency_claim':False}
++    doc={'format':'retained_measurements_v1','schema_version':1,'title':'Finite comparison fixture',
++         'scope':{k:scope[k] for k in ('id','label','population')},
++         'dimensions':[{'id':'cpm','label':'Cells per metre','type':'number','units':'cells/m','scope':'case'},
++                       {'id':'grid_x','label':'Domain X cells','type':'integer','units':'cells','scope':'case'},
++                       {'id':'device','label':'Device','type':'string','units':None,'scope':'subject'},
++                       {'id':'passes','label':'Actual work','type':'integer','units':'passes','scope':'observation'}],
++         'subjects':[{'id':i,'label':i,'dimensions':{'device':'GPU' if i=='a' else 'CPU'},'reference':ref('')} for i in ('a','b')],
++         'cases':[{'id':'case1','dimensions':{'cpm':16,'grid_x':8},'reference':ref('')},
++                  {'id':'case2','dimensions':{'cpm':8,'grid_x':16},'reference':ref('')}],
++         'metrics':[{**{k:m[k] for k in ('id','label','units')},'definition':ref('/metrics/'+str(i),m)} for i,m in enumerate(metrics)],
++         'observations':[],'sources':[source('context',context),source('failure',b'Original failed timing attempt','opaque')]}
++    doc['scope']['definition']=ref('/scope',scope)
++    index=0
++    for subject in ('a','b'):
++        for case in ('case1','case2'):
++            doc['observations'].append({'id':subject+'-'+case+'-error','subject_id':subject,'case_id':case,'metric_id':'error',
++                'state':'measured','value':context['values'][index],'reason':None,'dimensions':{'passes':1 if subject=='a' else 2},'reference':ref('/values/'+str(index))})
++            failed=subject=='b' and case=='case2'
++            doc['observations'].append({'id':subject+'-'+case+'-latency','subject_id':subject,'case_id':case,'metric_id':'latency',
++                'state':'failed' if failed else 'unavailable','value':None,
++                'reason':'Retained failure' if failed else 'No qualified timing',
++                'dimensions':{'passes':1 if subject=='a' else 2},
++                'reference':{'source_id':'failure','pointer':None} if failed else ref('/latency_claim')})
++            index+=1
++    return doc
++
++
++class RetainedMeasurementTests(unittest.TestCase):
++    def test_exact_tiny_values_density_and_grid_filters_and_detached_results(self):
++        doc=fixture();table=MeasurementTable(encode(doc));query=table.query('error')
++        self.assertEqual(query['total'],4);self.assertEqual(query['sampling'],'none')
++        self.assertEqual([r['maximum']['value'] for r in query['summary']],[2e-15,0.02])
++        row=table.inspect('a-case1-error')
++        self.assertEqual(struct.pack('!d',row['observation']['value']),struct.pack('!d',1e-17))
++        self.assertEqual(row['scalar_evidence']['value'],1e-17)
++        self.assertEqual(row['case_evidence']['state'],'included')
++        self.assertEqual(table.query('error',filters={'cpm':16})['rows'][0]['dimensions']['grid_x'],8)
++        self.assertEqual(table.query('error',filters={'grid_x':16})['rows'][0]['dimensions']['cpm'],8)
++        self.assertEqual(table.query('error',filters={'device':'CPU'})['total'],2)
++        self.assertEqual(table.query('error',filters={'passes':1})['summary'][1]['count'],0)
++        query['rows'][0]['value']=999;row['subject']['label']='wrong'
++        self.assertEqual(table.inspect('a-case1-error')['observation']['value'],1e-17)
++        self.assertEqual(table.subjects()['items'][0]['label'],'a')
++        self.assertEqual(table.subjects(offset=1,limit=1)['items'][0]['id'],'b')
++        self.assertEqual(table.subjects(offset=2)['items'],[])
++        self.assertEqual(table.metadata()['subject_count'],2)
++
++    def test_missing_and_failed_timings_are_explicit_not_zero_or_dropped(self):
++        table=MeasurementTable(encode(fixture()));query=table.query('latency',offset=1,limit=2)
++        self.assertEqual(query['total'],4);self.assertEqual(len(query['rows']),2)
++        self.assertTrue(all(v['maximum'] is None and v['count']==2 for v in query['summary']))
++        self.assertEqual(query['summary'][1]['states'],{'measured':0,'failed':1,'unsupported':0,'unavailable':1})
++        self.assertEqual(table.inspect('b-case2-latency')['source']['kind'],'opaque')
++        self.assertEqual(table.inspect('b-case2-latency')['scalar_evidence']['state'],'opaque')
++
++    def test_missing_duplicate_and_unresolved_matrix_members_are_refused(self):
++        for mutation in ('missing','duplicate','unknown','malformed'):
++            doc=fixture()
++            if mutation=='missing':doc['observations'].pop()
++            if mutation=='duplicate':doc['observations'][-1]=copy.deepcopy(doc['observations'][0]);doc['observations'][-1]['id']='new-id'
++            if mutation=='unknown':doc['observations'][0]['case_id']='outside'
++            if mutation=='malformed':doc['observations'][0]['case_id']=[]
++            with self.subTest(mutation=mutation),self.assertRaises(WorkbenchError):MeasurementTable(encode(doc))
++
++    def test_measured_value_source_hash_and_definition_changes_are_refused(self):
++        for mutation in ('value','hash','definition','units','pointer','source-type','boolean','huge-integer'):
++            doc=fixture()
++            if mutation=='value':doc['observations'][0]['value']=0.5
++            if mutation=='hash':doc['sources'][0]['sha256']='f'*64
++            if mutation=='definition':doc['metrics'][0]['definition']['sha256']='f'*64
++            if mutation=='units':doc['metrics'][0]['units']='s'
++            if mutation=='pointer':doc['observations'][0]['reference']['pointer']='/values/099'
++            if mutation=='source-type':doc['observations'][0]['reference']['source_id']=[]
++            if mutation=='boolean':doc['observations'][0]['value']=True
++            if mutation=='huge-integer':doc['observations'][0]['value']=10**400
++            with self.subTest(mutation=mutation),self.assertRaises(WorkbenchError):MeasurementTable(encode(doc))
++
++    def test_null_status_reason_and_dimension_contracts_are_not_inferred(self):
++        for mutation in ('null-measured','non-null-missing','empty-reason','boolean-dimension','extra-dimension'):
++            doc=fixture()
++            if mutation=='null-measured':doc['observations'][0]['value']=None
++            if mutation=='non-null-missing':doc['observations'][1]['value']=0
++            if mutation=='empty-reason':doc['observations'][1]['reason']=''
++            if mutation=='boolean-dimension':doc['cases'][0]['dimensions']['grid_x']=True
++            if mutation=='extra-dimension':doc['cases'][0]['dimensions']['unexpected']=1
++            with self.subTest(mutation=mutation),self.assertRaises(WorkbenchError):MeasurementTable(encode(doc))
++
++    def test_nonfinite_underflow_duplicate_keys_and_unicode_are_refused(self):
++        for raw in (b'{"a":1,"a":2}',b'{"a":NaN}',b'{"a":1e999}',b'{"a":1e-999}',b'{"a":"\\ud800"}'):
++            with self.subTest(raw=raw),self.assertRaises(WorkbenchError):decode(raw)
++        self.assertEqual(struct.pack('!d',decode(b'{"a":5e-324}')['a']),struct.pack('!d',5e-324))
++
++    def test_query_rejects_unknown_selectors_and_never_executes_expressions(self):
++        table=MeasurementTable(encode(fixture()))
++        for args in ({'metric_id':[]},{'metric_id':'outside'},{'metric_id':'error','filters':{'grid_x':True}},
++                     {'metric_id':'error','filters':{'expression':'a > 0'}},{'metric_id':'error','subject_ids':['a','a']},
++                     {'metric_id':'error','offset':True},{'metric_id':'error','limit':101}):
++            with self.subTest(args=args),self.assertRaises(WorkbenchError):table.query(**args)
++        with self.assertRaises(WorkbenchError):table.inspect([])
++
++    def test_source_scalar_sign_and_pointer_escape_are_exact(self):
++        doc=fixture();original=json.loads(base64.b64decode(doc['sources'][0]['data_base64']))
++        original['a/b~c']=-0.0;doc['sources'][0]=source('context',original)
++        doc['observations'][0]['value']=-0.0;doc['observations'][0]['reference']=ref('/a~1b~0c')
++        table=MeasurementTable(encode(doc))
++        self.assertEqual(struct.pack('!d',table.inspect('a-case1-error')['observation']['value']),struct.pack('!d',-0.0))
++        doc['observations'][0]['value']=0.0
++        with self.assertRaisesRegex(WorkbenchError,'scalar'):MeasurementTable(encode(doc))
++
++    def test_source_and_complete_matrix_limits_refuse_before_expansion(self):
++        doc=fixture();doc['sources'][0]['bytes']=8*1024*1024+1
++        with self.assertRaises(WorkbenchError) as error:MeasurementTable(encode(doc))
++        self.assertEqual(error.exception.status,413)
++        doc=fixture();base=doc['subjects'][0]
++        doc['subjects']=[dict(copy.deepcopy(base),id='s'+str(i)) for i in range(128)]
++        base=doc['cases'][0];doc['cases']=[dict(copy.deepcopy(base),id='c'+str(i)) for i in range(1000)]
++        with self.assertRaises(WorkbenchError) as error:MeasurementTable(encode(doc))
++        self.assertEqual(error.exception.status,413)
++
++
++if __name__=='__main__':unittest.main()
+diff --git a/tuldok_client.py b/tuldok_client.py
+index c26e5489c1b2c88c3eceeb0b4d9de19fdbdd8a6c..76d09cc5bc6cdaa713aa76e37ffb2a5d988b3f5f 100644
+--- a/tuldok_client.py
++++ b/tuldok_client.py
+@@ -402,6 +402,24 @@ class ProjectFilesClient:
+         """Read a bounded saved Trial graph without execution or metric disclosure."""
+         return self._call('progression', arguments)
+ 
++    def measurement_import(self, **arguments):
++        return self._call('measurement_import', arguments)
++
++    def measurement_sources(self, **arguments):
++        return self._call('measurement_sources', arguments)
++
++    def measurement_metadata(self, **arguments):
++        return self._call('measurement_metadata', arguments)
++
++    def measurement_subjects(self, **arguments):
++        return self._call('measurement_subjects', arguments)
++
++    def measurement_query(self, **arguments):
++        return self._call('measurement_query', arguments)
++
++    def measurement_inspect(self, **arguments):
++        return self._call('measurement_inspect', arguments)
++
+     def model_create(self, **arguments):
+         """model create; exact selected project checkpoint, existing domain validation, no execution."""
+         return self._call('model_create', arguments)

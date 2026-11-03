@@ -1,0 +1,114 @@
+{
+  "status": "measured_reference_clock_gap_and_oracle_interior_limits",
+  "created_unix": 1792624323.8699698,
+  "scope": "First audited32cubed density8 continuous/stationary training master only. No independent-scene model qualification, new model fit, learned inference or speed measurement.",
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-01/results.json": "051f297e4d6fadc8a0e49415726acd0fa14e67fa43a40c97b1d25046ed447a88",
+    "runs/full-ai-data-diversity-v1/temporal-interior-diagnostic-01/results.json": "e4f1fd32354aa0c59abcc9a039bcf2b5d1d9e20563068b45f295f06f8454f9cf",
+    "runs/full-ai-data-diversity-v1/temporal-interior-diagnostic-02/results.json": "fe9975ea69e190351763d26be0fb9699459c6b5acfe0ebd7a2a45e01d699540e",
+    "runs/full-ai-data-diversity-v1/long-temporal-dataset-qualification-01/results.json": "7f32712a02d951531eb895d8d0ecbf8e77eb22a53f5fbac3e012cb4feebe6026"
+  },
+  "reference_clock_comparison": {
+    "selected_training_rate_per_s": 240,
+    "comparison_rate_per_s": 480,
+    "matched_start_times_s": [
+      0,
+      12,
+      19.866666666666667
+    ],
+    "requested_lead_times_s": [
+      0.008333333333333333,
+      0.016666666666666666,
+      0.025,
+      0.03333333333333333,
+      0.05,
+      0.06666666666666667,
+      0.1,
+      0.13333333333333333
+    ],
+    "worst_relative_l2": {
+      "pressure": 0.0006963887112564233,
+      "velocity": 9.408004454333211e-05,
+      "tracer": 7.653767537499417e-05
+    },
+    "all_within_1e_minus5": false,
+    "global20second_convergence_proven": false,
+    "reference480_is_exact_ground_truth": false,
+    "interpretation": "Stable240reference labels differ from480local integrations beyond1e-5 on this scene. This is numerical reference sensitivity, not model error. It does not establish a floor on matching the chosen240reference or prove that480is converged."
+  },
+  "oracle_interior_comparison": {
+    "exact_endpoint_used_offline_only": true,
+    "linear_all_fields_full_population_worst_relative_l2": {
+      "pressure": 0.7500914240820994,
+      "velocity": 0.0013203855443927586,
+      "tracer": 0.0009607587069293817
+    },
+    "startup_and_later": [
+      {
+        "variant": "linear_all_fields",
+        "start_is_initial_state": true,
+        "interior_outputs": 18,
+        "worst_relative_l2": {
+          "pressure": 0.7500914240820994,
+          "velocity": 0.0013203855443927586,
+          "tracer": 0.0002717947605874783
+        }
+      },
+      {
+        "variant": "linear_all_fields",
+        "start_is_initial_state": false,
+        "interior_outputs": 144,
+        "worst_relative_l2": {
+          "pressure": 0.00130239045429247,
+          "velocity": 0.0010124794327946748,
+          "tracer": 0.0009607587069293817
+        }
+      },
+      {
+        "variant": "endpoint_pressure_linear_transport",
+        "start_is_initial_state": true,
+        "interior_outputs": 18,
+        "worst_relative_l2": {
+          "pressure": 0.0027696345191968457,
+          "velocity": 0.0013203855443927586,
+          "tracer": 0.0002717947605874783
+        }
+      },
+      {
+        "variant": "endpoint_pressure_linear_transport",
+        "start_is_initial_state": false,
+        "interior_outputs": 144,
+        "worst_relative_l2": {
+          "pressure": 0.05357399306202453,
+          "velocity": 0.0010124794327946748,
+          "tracer": 0.0009607587069293817
+        }
+      }
+    ],
+    "preserved_full_population_maxima": true,
+    "interpretation": "A pressure endpoint hold improves the artificial zero-pressure startup blend but worsens later pressure accuracy. Neither numeric interior rule meets1e-5 even with true endpoints. Learn pressure response separately with current state, known control path and predicted endpoint context; do not infer a lower bound for richer decoders."
+  },
+  "dataset_interface": {
+    "status": "passed_real_long_temporal_dataset_conditioning_and_label_isolation",
+    "checked_examples": 108,
+    "complete_target_outputs": 270,
+    "independent_masters_per_split": {
+      "train": 1
+    },
+    "all12_temporal_cases": true,
+    "future_reference_fields_excluded_from_inputs": true,
+    "full36_dataset_ready": false,
+    "GPU_control_execution_qualified": false
+  },
+  "next_actions": [
+    "Complete and audit remaining3pilot masters; preserve any native rejections.",
+    "Repeat matched reference-clock checks across remaining force/density/geometry conditions before broad capture. Keep240chosen rate and preserve the discrepancy; do not silently replace it with480orrelax metrics.",
+    "Expand the same temporal data interface to audited broad independent scenes before training; target time views do not increase independent scene counts.",
+    "Compare direct endpoint plus learned interior corrections using predicted endpoints during deployable testing. Oracle diagnostics remain separate.",
+    "Keep all new latency profiling/qualification deferred until user-reported resource contention ends."
+  ],
+  "new_parameter_fits": 0,
+  "learned_inference_calls": 0,
+  "reserved52_references_opened": 0,
+  "full_generator_target_pass": false
+}

@@ -1,0 +1,95 @@
+{
+  "commands": [
+    {
+      "id": "owner-ready-control",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/owner_ready.py"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "managed-b2-provisional-control",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_provisional_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b2-provisional-control-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b2-provisional-control-pair-01"
+      ],
+      "timeout": 3300
+    },
+    {
+      "id": "evaluate-control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_coupled.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-provisional-control-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/temporal-provisional-evaluation-01/b2-provisional-control"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "diagnose-control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/diagnose_coupled.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-provisional-control-pair-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/temporal-provisional-fitting-control-01.json"
+      ],
+      "timeout": 900
+    },
+    {
+      "id": "owner-ready-aux",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/owner_ready.py"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "managed-b2-provisional-aux",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_provisional_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b2-provisional-aux-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b2-provisional-aux-pair-01"
+      ],
+      "timeout": 3300
+    },
+    {
+      "id": "evaluate-aux",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_coupled.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-provisional-aux-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/temporal-provisional-evaluation-01/b2-provisional-aux"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "diagnose-aux",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/diagnose_coupled.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-provisional-aux-pair-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/temporal-provisional-fitting-aux-01.json"
+      ],
+      "timeout": 900
+    }
+  ],
+  "automatic_retry": false,
+  "scope": "Two matched4000-update full-state continuations, exact CPU restores, all8development/every-horizon/own240 evaluation",
+  "reserved_scenes_consumed": false
+}

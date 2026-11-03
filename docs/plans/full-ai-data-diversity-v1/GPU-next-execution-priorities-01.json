@@ -1,0 +1,52 @@
+{
+  "status": "prepared_after_causal64repair_before_new_execution_variants",
+  "created_unix": 1792562446.6507502,
+  "requires": "Finish currently running full24development accuracy qualification and inspect every failure before new acceptance timings.",
+  "maximum_new_execution_variants": 3,
+  "maximum_error": 1e-05,
+  "maximum_ms_per_generated_step": 1.2,
+  "allK": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "timing_denominator": "Divide complete block time byKonly; include every required internal advance and complete physical output.",
+  "current_selected_candidate": "experiments/full-ai-data-diversity-v1/debug/cube64_layout_transform_candidate_v1.py:Cube64LayoutTransformCandidate",
+  "current_backend_latency_verified": false,
+  "baseline_profile": "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-04/results.json",
+  "static_sampler_div_rn_f64_instructions": 6,
+  "static_PTX_is_not_dynamic_timing": true,
+  "priorities": [
+    {
+      "id": 1,
+      "change": "Investigate reusing one correctly rounded reciprocal of known spacing across six scalar divisions, with residual/refinementFMAs and standard-division fallbacks.",
+      "why": "Current sampler has six div.rn.f64 instructions per output element and dominates the requiredN8cost. No performance benefit assumed before actual profiling.",
+      "primary_reference": "https://www.cl.cam.ac.uk/~jrh13/slides/tphols-15aug00/slides.pdf",
+      "reference_scope": "Harrison2000slide6states the final two-FMA correction theorem requires a quotient estimate within1ulp and a nearest-rounded reciprocal. Extreme exponent cases require separate treatment.",
+      "unproven_before_implementation": "A preliminary multiply/correction pair may establish the final theorem prerequisite in a conservatively bounded normal range; prove the bounds or use standard division. Do not assume reciprocal multiplication alone preserves rounding.",
+      "primitive_gate": "Independent GPU__ddiv_rnbitcomparison on arbitrary normals, each registered density, zeros/signs, nextafter/binade boundaries and extreme fallback cases; no model admission or speed claims from primitive alone."
+    },
+    {
+      "id": 2,
+      "change": "Fuse generic restored learned CSR gathers with their adjacent affine casts/scales/adds/wall writes, while retaining weight values, summation order and cast boundaries.",
+      "why": "Current affine fusion still launches13learnedlinear calls per internal advance. Generic multi-head gather/readout composition may reduce measured launches and memory traffic."
+    },
+    {
+      "id": 3,
+      "change": "If still needed, qualify elimination of redundant poisoning for fully overwritten native transfer, known-packet and returned-copy allocations in the serialized GPU entrypoint.",
+      "why": "Graph-only poisoning removal left some per-call initialization and allocation work. Require explicit overwrite, byte-layout, ownership, error cleanup and process-setting restoration proofs; do not weaken deterministic algorithms."
+    }
+  ],
+  "gates": [
+    "Register exact new sources, finite populations and resource caps before execution",
+    "Primitive numerical/custody correctness before learned candidate evaluation",
+    "All960development blocks,15360legacy outputs and all24native-qualified complete histories must preserve registered physical accuracy; prefer exact baseline field hashes for execution-only changes",
+    "Only qualified changed execution variants get a finite balanced complete-call GPU study, without concurrent teacher/profiler/model jobs; preserve every maximum and report density/counts/internalNseparately",
+    "Additional managed seeds/exactCPUrestores, untouched52independent references, matched-aspect scaling and600stepsremain required"
+  ],
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false
+}

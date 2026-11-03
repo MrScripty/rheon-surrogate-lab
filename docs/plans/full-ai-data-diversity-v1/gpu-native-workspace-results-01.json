@@ -1,0 +1,48 @@
+{
+  "status": "passed_native_workspace_and_actual_model_bytes_ownership_qualification_timing_not_measured",
+  "created_unix": 1792555866.3132074,
+  "workspace": "experiments/full-ai-data-diversity-v1/cuda_native_workspace_v1.py:NativeStateWorkspace",
+  "model": "experiments/full-ai-data-diversity-v1/debug/cube128_exact_transform_candidate_v2.py:Cube128ExactTransformCandidate",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "learned_coefficients_unchanged": true,
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "execution_variant": 2,
+  "parent_experiment": "docs/plans/full-ai-data-diversity-v1/gpu-complete-graph-experiment-01.json",
+  "primitive": {
+    "path": "runs/full-ai-data-diversity-v1/cuda-native-workspace-qualification-01/results.json",
+    "status": "passed_native_workspace_bytes_ownership_stream_and_failure_recovery",
+    "native_cases": 26,
+    "byte_and_lifetime_checks": 520,
+    "guards": 26,
+    "maximum_prepared_pinned_bytes": 31703040,
+    "maximum_prepared_gpu_input_bytes": 6340608,
+    "observed_peak_rss_bytes": 1467076608
+  },
+  "blocks": {
+    "path": "runs/full-ai-data-diversity-v1/cuda-workspace-blocks-01/results.json",
+    "status": "passed_full_generator_workspace_integration",
+    "complete_outputs": 960,
+    "every_output_exact_to_native_qualified_baseline": true
+  },
+  "legacy": {
+    "path": "runs/full-ai-data-diversity-v1/cuda-workspace-legacy-01/results.json",
+    "status": "passed_full_generator_workspace_integration",
+    "complete_outputs": 15360,
+    "every_output_exact_to_native_qualified_baseline": true,
+    "own_history_without_teacher_resets": true
+  },
+  "ownership": "One synchronous transaction on construction stream; pinned input/output staging and GPUinput reused. Each returnedCPUcall owns fresh non-pinned storage. InputGPUviews are borrowed only during callback, never promised independently retained.",
+  "callbacks_and_recovery": "Caller CPU mutation after packing, changing fields, intermediate independence, retained actual model outputs, queued-callback failure recovery, invalid output count, reentrancy and wrong-stream rejection all qualified.",
+  "timing_claim": false,
+  "timing_not_executed_reason": "Accuracy-only qualification ran alongside streamed native-reference work. Complete-call timing is separately gated on all four fixed native histories and remains unmeasured.",
+  "next_timing_preparation": "docs/plans/full-ai-data-diversity-v1/gpu-workspace-entry-benchmark-plan-01.json",
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_targets_verified": false,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/cuda-native-workspace-qualification-01/results.json": "833c9b84fc51a33f8554b818096f603a8be23c1d66a075db5c2d68d7b57fd205",
+    "runs/full-ai-data-diversity-v1/cuda-workspace-blocks-01/results.json": "022c19cbe907dc8d9e0ebb465c1ef991bc7ce433c309c8ae09fe1e1c868c30d8",
+    "runs/full-ai-data-diversity-v1/cuda-workspace-legacy-01/results.json": "5697dca6ecf608a2a1040e165b6a9aa602f140d43a09c24c727abc2b9261e100"
+  }
+}

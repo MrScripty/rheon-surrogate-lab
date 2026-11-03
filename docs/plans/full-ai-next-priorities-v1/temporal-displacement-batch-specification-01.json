@@ -1,0 +1,38 @@
+{
+  "commands": [
+    {
+      "id": "authorized-owner-ready",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/owner_ready.py"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "b2-displacement-fit-and-CPU-restore",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_displacement_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b2-displacement-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b2-displacement-pair-01"
+      ],
+      "timeout": 3100
+    },
+    {
+      "id": "b2-displacement-development-and-own240",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_displacement.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-displacement-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/temporal-displacement-evaluation-01/b2-displacement"
+      ],
+      "timeout": 1800
+    }
+  ]
+}

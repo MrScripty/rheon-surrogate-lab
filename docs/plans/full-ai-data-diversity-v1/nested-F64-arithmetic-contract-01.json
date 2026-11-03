@@ -1,0 +1,14 @@
+{
+  "status": "frozen_before_compile_single_nested_F64_candidate",
+  "created_unix": 1792582710.4305403,
+  "parent_plan": "docs/plans/full-ai-data-diversity-v1/GPU-sampler-interpolation-plan-01.json",
+  "maximum_candidates": 1,
+  "arithmetic": "Sevennestedlerps: fourX,twoY,oneZ. Lerp returnsaiff==0,biff==1,otherwiseRNFMA(f,RNsubtract(b,a),a). Coordinates,physicalunits,donorindexing,learnedpoint/gate/mix,clippingandwallpoliciesunchanged. No globalFMAcontraction; onlyexplicitF64intrinsicinsidegenericlerp.",
+  "supported": "FiniteF32donors(includingsubnormals),fractionsin[0,1]. F32donorsconverttoF64exactly. Differencecannotexceed2*maxF32 andcannotF64overflow. CoordinateNaNpropagatesbeforeindexing; infinitiesclampasbefore. Nonfinite donors or invalid fractions use original ordered weighted program.",
+  "boundary": "Exactlerpendpoints avoid cancellationlosingasmallendpoint. Donorclipafterinterpolationunchanged. Signedzerodifferencesfromchangedarithmeticmayoccurandarecounted; no bitwiseequivalenceclaimed. Normalvelocitywallsstilloriginalpositivezero.",
+  "analytic_control": "ForM>0,unitroundoffu=2^-53: eachfiniteendpoint-awarelerp incurs <=4u*MplusnegligibleF64underflow; threelevelsboundedconservativelyby64u*M. Originalweightedprogramcheckedagainst512u*M. Genericexact-rationalcontrolsverifyselectedcomputedGPUoutputs, includingclippedvalues. This is a bounded arithmetic investigation, not a formal whole-model error theorem.",
+  "model_admission": "OriginalN1pathusesoriginalbuild12. OnlyN8usesnew interpolationmodule. All148regimes/splitsremain; complete native-scoredEq/P/V/T<=1e-5andfull240intermediatesrequired. Changedroundingmayfailmodelaccuracydespitesmallscalarerrors.",
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "expanded_reserved52_references_opened": 0
+}

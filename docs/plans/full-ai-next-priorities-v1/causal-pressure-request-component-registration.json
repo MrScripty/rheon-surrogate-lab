@@ -1,0 +1,50 @@
+{
+  "status": "architecture_objective_and_data_qualified_before_managed_trainer_capture",
+  "registered_unix": 1792441543.290593,
+  "component_only": true,
+  "temporal_candidate": false,
+  "model": "Learned linear and bilinear/absolute-product local request predictor",
+  "horizons_supported": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "initial_fit_horizon": 1,
+  "source_sha256": {
+    "pressure_request_model.py": "82558df5d01a5a608f770c7b26cc7577697bf4f7de629311bc6cfb2e7d0807c1",
+    "pressure_request_objective.py": "1426b0cba7eb9eb9cc61148c5e33c62ecc3066f03f5526260876a3ef0796a110",
+    "pressure_request_data.py": "4128be0c71682d77440160f526d4e5228845a0b9c70c7675602d3c50c343e3cc",
+    "qualify_pressure_request.py": "c4f01c38d55da395efec5573a3df6a4fcb297ebb73a7037f1f2082b7b22a67ed",
+    "temporal_features_v2.py": "d64da548837aa7c9ed34b2991316a234879df82d48ef377abcea571c32b4280a",
+    "temporal_data.py": "7f215a720f4b03ed3e15c43bfa73e0cbe5d99b572d549b8dc33cf9fe27b1036b",
+    "temporal_codec.py": "64a17a42559497a04c75b5a4ca7988e899a5cb8690e28dd348b4fee0ac1cf6c4"
+  },
+  "qualified_devices": {
+    "cpu": "dfd70fc3cf96072d6e6fe414f2f3958dd2a00f6b7e52bc8acc49c0e5f7f50f39",
+    "cuda": "aaf4f4425ed6901821c6dd28d51fad40ba8ade0ad166b0c4e471b0f494d3f0d1"
+  },
+  "data_manifest_sha256": "0fb750c39884ff3662da54646c5319e5b78d253ec680ace78df1d54bc73a518d",
+  "normalization_sha256": "0d0e32e6777a2e0d8a264c7f32cd5da5423ae7faab8c5e102dff08e50e3ed503",
+  "future_RHS": "Offline labels only",
+  "analytical_inverse": "Offline loss only; absent from model forward",
+  "updates": 10000,
+  "initialization_seed": 2026101994,
+  "sampling_seed": 2026101995,
+  "learning_rate": 0.003,
+  "schedule": [
+    {
+      "update": 6001,
+      "learning_rate": 0.001
+    },
+    {
+      "update": 9001,
+      "learning_rate": 0.0003
+    }
+  ],
+  "gradient_norm_cap": 1.0,
+  "sampling": "Uniform16parents;25percentstep0,25percentsteps1..8,50percentsteps9..120",
+  "selection": "Final update10000; no checkpoint reselection on development",
+  "reserved_scenes_consumed": false,
+  "trainer_capture_and_qualification": "Required before managed admission"
+}

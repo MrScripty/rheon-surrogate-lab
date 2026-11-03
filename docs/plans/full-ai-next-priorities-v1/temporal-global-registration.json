@@ -1,0 +1,68 @@
+{
+  "schema": "rheon-temporal-global-capacity-comparison-v1",
+  "status": "frozen_before_capture_and_fit",
+  "registered_unix": 1792434963.7763083,
+  "identifier": "b1-global",
+  "hypothesis": "The compact pooled pressure-only representation limits fitting; increase shared spatial/global capacity for all fields",
+  "trigger": "All four primary models and controlled K1 relative-MSE fit fail accuracy; warm training pressure errors remain7to8percent",
+  "architecture": {
+    "width": 12,
+    "global_blocks": 2,
+    "cosine_modes_per_axis": 8,
+    "global_channel_mixing": "Learned per-mode12by12 matrices plus learned geometry/frequency conditioned neural matrices",
+    "shared_spatial_encoder": true,
+    "joint_future_outputs": true,
+    "parameters_K1": 170728,
+    "parameters_K2": 170874,
+    "parameters_K3": 171050,
+    "parameters_K4": 171256
+  },
+  "candidate_numerical_pressure_solve": false,
+  "candidate_corrective_projection": false,
+  "analytical_inverse_at_inference": false,
+  "initialization": "Seed2026101921; zero output head; full initial prediction function bitwise matches original persistence baseline for everyK andfourgridgroups",
+  "changed_factor": "Model capacity/representation; same original log objective, data, sampling stream, normalization and training curriculum",
+  "updates": 10000,
+  "single_block_updates": 2000,
+  "learning_rate": 0.001,
+  "schedule": [
+    {
+      "update": 6001,
+      "learning_rate": 0.0003
+    },
+    {
+      "update": 9001,
+      "learning_rate": 0.0001
+    }
+  ],
+  "sampling_seed": 2026101922,
+  "model_forwards": 18000,
+  "physical_states_K1": 18000,
+  "work_matching": "Same sampled requests and optimizer updates; increased parameters/arithmetic are explicitly not FLOP matched",
+  "data": "Existing16train scenes only;8development scenes for full evaluation;8reserved remain unopened",
+  "wall_seconds": 1800,
+  "memory_bytes": 4294967296,
+  "CPU_inference": "One thread, batch1; full causal encoding and all reconstructed outputs; untrained feasibility excluded from frontier",
+  "followup": "First K1 feasibility fit. If fitting improves, qualify K2/3/4 at same data/work before any finalist replication or reserved capture. No horizon removed from original objective.",
+  "qualification": {
+    "temporal-global-cpu-qualification-01.json": "8c10f1e0e6658ea9e4c7f1106da2953cbb67dd18ed75e5a2794837016baa276c",
+    "temporal-global-cuda-qualification-01.json": "1a9ad7a893db62f7cfa5d81b33d86617145ecab979a72ced4288567ff41636ff",
+    "temporal-global-active-cpu-qualification-01.json": "bb2dba338ea913c795c06c875da6bcd9861a020b64dc28062a79cac605e236b8",
+    "temporal-global-active-cuda-qualification-01.json": "1fa9442a3d732f9463841312d356a540049f83cc93e821befb775ad539a45c1a"
+  },
+  "feasibility_profile_sha256": "ef9385fa4dd36dc31dd5d6ccadc8ec2d4e523c0d5b77ba36cd6d6f8af66310cf",
+  "reserved_scenes_consumed": false,
+  "source_sha256": {
+    "learned_global.py": "099078b789e728fa8b14acb63327e9942ed90b2daeea4a2c79af2ad3dde26c9b",
+    "bundle_model_global.py": "44528675b4a3ee6ce126959d23cdd2792136923ec098a6034bc3050934def5f0",
+    "temporal_train_global.py": "cf2b191950cb1a5c557673879fc8cdaa4985539e37ae32e1fd9cd725a6beece4",
+    "prepare_temporal_global.py": "0146902cd16d7145b02638af679f324634763798a82899fb6a7d2df175cd3eea",
+    "run_temporal_global_pair.py": "92e10784417444885160f443e9b651ae728ed2491382d5b74c32467f847a959d",
+    "qualify_temporal_global.py": "709694be64152cbdfb92996a85ba95122e8b989ab1055196d80481461b67658b",
+    "qualify_active_global.py": "d5b4b5a0a1d81eb642991e2c738dbc55e47e192418a77e11a7ab873a8ff2f81a",
+    "profile_temporal_global.py": "7b974a02193aad8c8c42ed623cfc21e2f6248d6ad05c2ae1f8f99d377d2ac98d",
+    "global_evaluation_support.py": "a57d35c964b92205c4ee5b719cbcf8263a55acf596e994a2c8066321a06be3e5",
+    "evaluate_temporal_global.py": "c4c0a835445b50c3d03d0621dc2bd3874bfd69a0c0f62f14d813fb4c8f5b14c7",
+    "diagnose_temporal_global.py": "495eb179c45dca5da039914a2aef18e8e3db251d9dd161b6abd649da55d68b1f"
+  }
+}

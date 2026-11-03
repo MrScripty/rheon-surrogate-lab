@@ -1,0 +1,927 @@
+{
+  "status": "completed_loss_conditioned_fit_CPUrestore_and_native_GPU_checks_no_improvement",
+  "created_unix": 1792612364.033247,
+  "managed_pair": "runs/full-ai-data-diversity-v1/internal-residual-s2-pair-01/receipt.json",
+  "training_run_id": "acb748bc23a54a1d88ae11a0c9848d09",
+  "restore_run_id": "80df5879ae2a48059a3cab25d08116af",
+  "training_scenes": 148,
+  "active_scenes": 29,
+  "fixed_control_scenes": 119,
+  "active_samples_per_epoch": 783,
+  "fixed_control_windows": 1071,
+  "epochs": 2,
+  "optimizer_updates": 1566,
+  "parameters": 10876,
+  "intervention": "Only explicit metric loss weights change from S1; initialization, architecture, data, ordering, seed, optimizer and two-epoch schedule remain fixed.",
+  "gradient_diagnostic": "runs/full-ai-data-diversity-v1/internal-residual-metric-gradients-01/results.json",
+  "per_metric_initial_full_objective_gradient_norm": {
+    "equation": 1.1329965379237166e-06,
+    "pressure": 6.437277650812234e-06,
+    "velocity": 9.483230535531333e-11,
+    "tracer": 4.737203418491411e-11
+  },
+  "metric_weights": {
+    "equation": 0.3686505980368089,
+    "pressure": 0.7769568475978544,
+    "velocity": 13044.418167693124,
+    "tracer": 3922.417978570662
+  },
+  "selection": "Minimum complete148scene weighted training objective including initial state; earlier epoch wins ties.",
+  "selected_epoch": 0,
+  "selected_weights_are_initial_zero_residual": true,
+  "initial_full148scene_weighted_objective": 1.9138810975032417e-05,
+  "selected_full148scene_weighted_objective": 1.9138810975032417e-05,
+  "epoch_scores": [
+    {
+      "epoch": 1,
+      "objective": 2.2256849881244585e-05,
+      "active_metric_means": {
+        "equation": 6.82848791608743e-05,
+        "pressure": 3.993788610589861e-05,
+        "velocity": 2.5272191286553045e-09,
+        "tracer": 6.225064116648472e-09
+      },
+      "original_local_worst": {
+        "equation": 0.07658061680315126,
+        "pressure": 0.08538728351146294,
+        "velocity": 0.0005867396780042335,
+        "tracer": 0.0009281837898565624
+      },
+      "by_density_and_shape": {
+        "50@16x40x24": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            16,
+            40,
+            24
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.004747288921453073,
+            "pressure": 0.003201922211829269,
+            "velocity": 0.0005867396780042335,
+            "tracer": 7.690263173721223e-05
+          }
+        },
+        "100@16x40x24": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            16,
+            40,
+            24
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.006876542625651945,
+            "pressure": 0.004534288560004302,
+            "velocity": 0.00039298427173985266,
+            "tracer": 0.00015739917012814634
+          }
+        },
+        "50@11x9x11": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            11,
+            9,
+            11
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.005837154838202669,
+            "pressure": 0.004346975185039285,
+            "velocity": 0.0004112424917025732,
+            "tracer": 6.925094174720432e-05
+          }
+        },
+        "100@11x9x11": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            11,
+            9,
+            11
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.007996157817020304,
+            "pressure": 0.006518076179288731,
+            "velocity": 0.0002791460102045057,
+            "tracer": 0.00019345932918186869
+          }
+        },
+        "8@64x48x32": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.003829038534505534,
+            "pressure": 0.000986083619645594,
+            "velocity": 7.026545845679508e-05,
+            "tracer": 8.961375272729784e-06
+          }
+        },
+        "10@64x48x32": {
+          "cells_per_metre": 10,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.005151729406165579,
+            "pressure": 0.0011179570429515758,
+            "velocity": 9.6667512428744e-05,
+            "tracer": 1.1179373507129137e-05
+          }
+        },
+        "16@64x48x32": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.008996757651221444,
+            "pressure": 0.0025946078539131868,
+            "velocity": 0.00014607468841771904,
+            "tracer": 2.3797507769711758e-05
+          }
+        },
+        "25@64x48x32": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011217094041136832,
+            "pressure": 0.0040416527562476086,
+            "velocity": 0.000131461931882753,
+            "tracer": 4.026152934272016e-05
+          }
+        },
+        "50@64x48x32": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.014661625459926345,
+            "pressure": 0.007761715622798546,
+            "velocity": 0.00010899716616701424,
+            "tracer": 0.0001715977368271685
+          }
+        },
+        "100@64x48x32": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.023943862094998054,
+            "pressure": 0.012512475175368808,
+            "velocity": 0.0002328312769261976,
+            "tracer": 0.00038805874885138047
+          }
+        },
+        "16@32x32x32": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.0033932921715711913,
+            "pressure": 0.0013272911701644756,
+            "velocity": 0.0001756624265826014,
+            "tracer": 1.655954268848429e-05
+          }
+        },
+        "25@32x32x32": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 54,
+          "worst": {
+            "equation": 0.07310210130870111,
+            "pressure": 0.08538728351146294,
+            "velocity": 0.000322498561641314,
+            "tracer": 3.220417972551865e-05
+          }
+        },
+        "50@32x32x32": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 54,
+          "worst": {
+            "equation": 0.029138940113698577,
+            "pressure": 0.012251400760106857,
+            "velocity": 0.0002856322248262957,
+            "tracer": 8.467078114909064e-05
+          }
+        },
+        "100@32x32x32": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 54,
+          "worst": {
+            "equation": 0.02043241758725439,
+            "pressure": 0.010495541259274564,
+            "velocity": 0.00024448666133744073,
+            "tracer": 0.00020031661339353155
+          }
+        },
+        "100@16x16x16": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            16,
+            16,
+            16
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.07658061680315126,
+            "pressure": 0.047815755643962954,
+            "velocity": 0.0005075049853848799,
+            "tracer": 9.34418663126194e-05
+          }
+        },
+        "8@24x32x48": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.01116684471470946,
+            "pressure": 0.012723364072935055,
+            "velocity": 6.481675190293972e-05,
+            "tracer": 7.69846614897793e-05
+          }
+        },
+        "10@24x32x48": {
+          "cells_per_metre": 10,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011184778882690599,
+            "pressure": 0.011843166565307308,
+            "velocity": 5.5250516057943714e-05,
+            "tracer": 0.0001134606179159763
+          }
+        },
+        "16@24x32x48": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.0112398369612856,
+            "pressure": 0.0100297466231824,
+            "velocity": 9.108768532460897e-05,
+            "tracer": 0.00017517223758377887
+          }
+        },
+        "25@24x32x48": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.01132473896502576,
+            "pressure": 0.009552136044347122,
+            "velocity": 0.0001781813509398333,
+            "tracer": 0.00020558290268770255
+          }
+        },
+        "50@24x32x48": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011584602454654465,
+            "pressure": 0.009804778908213569,
+            "velocity": 0.0001915081564535213,
+            "tracer": 0.000521642445842123
+          }
+        },
+        "100@24x32x48": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.017233974291732453,
+            "pressure": 0.011800843667228281,
+            "velocity": 0.00024172765494297652,
+            "tracer": 0.0009281837898565624
+          }
+        },
+        "50@15x6x8": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            15,
+            6,
+            8
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.010379472700807331,
+            "pressure": 0.008426243227955078,
+            "velocity": 0.0003160204444188314,
+            "tracer": 0.00016973789673828328
+          }
+        },
+        "100@15x6x8": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            15,
+            6,
+            8
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.016451024067991402,
+            "pressure": 0.014437654742242685,
+            "velocity": 0.00034406568589149525,
+            "tracer": 0.0003184978452532932
+          }
+        },
+        "25@64x64x64": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            64,
+            64,
+            64
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.04525321519853866,
+            "pressure": 0.01815703992698975,
+            "velocity": 0.0005837409803128,
+            "tracer": 6.954528868037798e-06
+          }
+        },
+        "50@64x64x64": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            64,
+            64,
+            64
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.04518536471032923,
+            "pressure": 0.017729170867795116,
+            "velocity": 0.0004154337985094654,
+            "tracer": 2.17730088950259e-05
+          }
+        },
+        "100@64x64x64": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            64,
+            64,
+            64
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.04511390498651578,
+            "pressure": 0.017053136207771366,
+            "velocity": 0.0001795558975878442,
+            "tracer": 4.245821201536542e-05
+          }
+        }
+      },
+      "fixed_objective": {
+        "per_metric_scene_sum": {
+          "equation": 2.073785329177134e-25,
+          "pressure": 3.150898583744425e-31,
+          "velocity": 7.134325279694893e-30,
+          "tracer": 0.0
+        },
+        "objective": 1.1453620762433688e-27,
+        "scenes": 119,
+        "windows": 1071,
+        "parameter_derivative": 0.0
+      },
+      "training_scenes": 148,
+      "local_samples": 783
+    },
+    {
+      "epoch": 2,
+      "objective": 1.923241943402138e-05,
+      "active_metric_means": {
+        "equation": 6.658063135817241e-05,
+        "pressure": 3.163777805044905e-05,
+        "velocity": 1.886722988729185e-09,
+        "tracer": 6.224292371714521e-09
+      },
+      "original_local_worst": {
+        "equation": 0.07648349811630854,
+        "pressure": 0.04802240686050989,
+        "velocity": 0.0003441400158380019,
+        "tracer": 0.0009281845478243201
+      },
+      "by_density_and_shape": {
+        "50@16x40x24": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            16,
+            40,
+            24
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.004768570719546978,
+            "pressure": 0.003162927146449277,
+            "velocity": 3.300857573047163e-05,
+            "tracer": 7.69056046058674e-05
+          }
+        },
+        "100@16x40x24": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            16,
+            40,
+            24
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.006885041403029855,
+            "pressure": 0.004538281587852524,
+            "velocity": 4.250612843933067e-05,
+            "tracer": 0.00015741870052690516
+          }
+        },
+        "50@11x9x11": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            11,
+            9,
+            11
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.005831785991232984,
+            "pressure": 0.004348284684538052,
+            "velocity": 5.4458415204597354e-05,
+            "tracer": 6.936684591180738e-05
+          }
+        },
+        "100@11x9x11": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            11,
+            9,
+            11
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.007996665926880614,
+            "pressure": 0.006521792891581282,
+            "velocity": 0.00010559808057139629,
+            "tracer": 0.00019352767276620693
+          }
+        },
+        "8@64x48x32": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.0038319964885453906,
+            "pressure": 0.0008524095679560336,
+            "velocity": 9.899237279429672e-06,
+            "tracer": 8.938696094563136e-06
+          }
+        },
+        "10@64x48x32": {
+          "cells_per_metre": 10,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.005157609117815429,
+            "pressure": 0.0011544663839310888,
+            "velocity": 1.5310241330850564e-05,
+            "tracer": 1.116196184917273e-05
+          }
+        },
+        "16@64x48x32": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.00899689132168232,
+            "pressure": 0.0025669745883357123,
+            "velocity": 3.028883135096289e-05,
+            "tracer": 2.3763981870150228e-05
+          }
+        },
+        "25@64x48x32": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.01121520235689763,
+            "pressure": 0.0040081607658418675,
+            "velocity": 4.8526058843377114e-05,
+            "tracer": 4.024084494590018e-05
+          }
+        },
+        "50@64x48x32": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.014658949544160652,
+            "pressure": 0.007748596043772283,
+            "velocity": 9.502310344808852e-05,
+            "tracer": 0.00017146839496439773
+          }
+        },
+        "100@64x48x32": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            64,
+            48,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.023942029820833325,
+            "pressure": 0.01249604426799773,
+            "velocity": 0.00023294985089632699,
+            "tracer": 0.00038809494573937973
+          }
+        },
+        "16@32x32x32": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.0032093301776403797,
+            "pressure": 0.0013532157144244758,
+            "velocity": 1.3742225996257063e-05,
+            "tracer": 1.6553993357463654e-05
+          }
+        },
+        "25@32x32x32": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 54,
+          "worst": {
+            "equation": 0.022302473534652836,
+            "pressure": 0.008964740624599154,
+            "velocity": 1.2480013120131708e-05,
+            "tracer": 3.220275471729453e-05
+          }
+        },
+        "50@32x32x32": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 54,
+          "worst": {
+            "equation": 0.020429851171162354,
+            "pressure": 0.009379990341376883,
+            "velocity": 7.493122270143313e-05,
+            "tracer": 8.467594691925007e-05
+          }
+        },
+        "100@32x32x32": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ],
+          "samples": 54,
+          "worst": {
+            "equation": 0.02043094753834191,
+            "pressure": 0.010501802293186334,
+            "velocity": 0.0002444895477854367,
+            "tracer": 0.0002002630123254031
+          }
+        },
+        "100@16x16x16": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            16,
+            16,
+            16
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.07648349811630854,
+            "pressure": 0.04802240686050989,
+            "velocity": 8.03249176706942e-05,
+            "tracer": 9.345497129070221e-05
+          }
+        },
+        "8@24x32x48": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011178893794791138,
+            "pressure": 0.012657824777661078,
+            "velocity": 1.2282832285661753e-05,
+            "tracer": 7.701233602436461e-05
+          }
+        },
+        "10@24x32x48": {
+          "cells_per_metre": 10,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011198966969569646,
+            "pressure": 0.011799201545594185,
+            "velocity": 1.596168869475984e-05,
+            "tracer": 0.0001135090510734189
+          }
+        },
+        "16@24x32x48": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011252392580313037,
+            "pressure": 0.010030595690077752,
+            "velocity": 2.7811111000229392e-05,
+            "tracer": 0.00017521081101631996
+          }
+        },
+        "25@24x32x48": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011333699248175544,
+            "pressure": 0.00955545048368908,
+            "velocity": 4.73309367069236e-05,
+            "tracer": 0.00020562313428942856
+          }
+        },
+        "50@24x32x48": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.011587509752462786,
+            "pressure": 0.009811297653742007,
+            "velocity": 0.00010945207961841766,
+            "tracer": 0.0005216547880558829
+          }
+        },
+        "100@24x32x48": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            24,
+            32,
+            48
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.017231232061022807,
+            "pressure": 0.011803775594469825,
+            "velocity": 0.0002417064163503681,
+            "tracer": 0.0009281845478243201
+          }
+        },
+        "50@15x6x8": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            15,
+            6,
+            8
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.01038178234996925,
+            "pressure": 0.008300161963059207,
+            "velocity": 0.00017448543964332906,
+            "tracer": 0.00016979884919653596
+          }
+        },
+        "100@15x6x8": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            15,
+            6,
+            8
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.016451956624031566,
+            "pressure": 0.014361179619712824,
+            "velocity": 0.0003441400158380019,
+            "tracer": 0.00031850162648279436
+          }
+        },
+        "25@64x64x64": {
+          "cells_per_metre": 25,
+          "counts_xyz": [
+            64,
+            64,
+            64
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.0451148863125108,
+            "pressure": 0.018303743997146488,
+            "velocity": 0.00011473589545011466,
+            "tracer": 6.94325620871654e-06
+          }
+        },
+        "50@64x64x64": {
+          "cells_per_metre": 50,
+          "counts_xyz": [
+            64,
+            64,
+            64
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.04511877470507746,
+            "pressure": 0.017796234642741517,
+            "velocity": 0.00010211544826402438,
+            "tracer": 2.177698381518517e-05
+          }
+        },
+        "100@64x64x64": {
+          "cells_per_metre": 100,
+          "counts_xyz": [
+            64,
+            64,
+            64
+          ],
+          "samples": 27,
+          "worst": {
+            "equation": 0.04507983659731774,
+            "pressure": 0.017134735854727443,
+            "velocity": 5.821417838397936e-05,
+            "tracer": 4.246076612407721e-05
+          }
+        }
+      },
+      "fixed_objective": {
+        "per_metric_scene_sum": {
+          "equation": 2.073785329177134e-25,
+          "pressure": 3.150898583744425e-31,
+          "velocity": 7.134325279694893e-30,
+          "tracer": 0.0
+        },
+        "objective": 1.1453620762433688e-27,
+        "scenes": 119,
+        "windows": 1071,
+        "parameter_derivative": 0.0
+      },
+      "training_scenes": 148,
+      "local_samples": 783
+    }
+  ],
+  "selected_objective_improvement_fraction": 0.0,
+  "last_trained_epoch_objective_fraction_worse": 0.00489102792807139,
+  "interpretation": "This two-epoch loss-conditioning trial did not improve its declared full training objective. It does not prove a representational ceiling. Selected native outputs are the initial four-stage zero-residual control, not a newly improved trained generator.",
+  "all_artifact_parity_and_exact_CPU_parameter_restore": true,
+  "cpu_model_forward": false,
+  "native_results": "runs/full-ai-data-diversity-v1/internal-residual-s2-native-blocks-01/results.json",
+  "native_outputs": 2120,
+  "native_failing_outputs": 1147,
+  "worst_native_relative": {
+    "equation": 0.015192717417219778,
+    "pressure": 0.0014376515525253198,
+    "velocity": 0.001332387475384852,
+    "tracer": 0.005209118467076204
+  },
+  "GPU_diagnostic_timing": "runs/full-ai-data-diversity-v1/internal-residual-s2-GPU-diagnostic-timing-01/results.json",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "GPU_measured_complete_calls": 260,
+  "branch_separated_results": {
+    "1": {
+      "native_outputs": 920,
+      "native_failing_outputs": 0,
+      "GPU_median_ms_per_generated_step_range": [
+        0.6974735,
+        1.175996
+      ],
+      "GPU_maximum_ms_per_generated_step": 2.197568
+    },
+    "8": {
+      "native_outputs": 1200,
+      "native_failing_outputs": 1147,
+      "GPU_median_ms_per_generated_step_range": [
+        15.965263,
+        17.417224
+      ],
+      "GPU_maximum_ms_per_generated_step": 20.790068
+    }
+  },
+  "density_and_domain_shape_reported_separately": true,
+  "all_previous_failure_and_latency_maxima_preserved": true,
+  "new_parameter_fits": 1,
+  "cumulative_expanded_program_fits": 5,
+  "expanded_reserved52_references_opened": 0,
+  "acceptance_latency_qualification": false,
+  "scientific_promotion": false,
+  "full_generator_target_pass": false,
+  "next_plan": "docs/plans/full-ai-data-diversity-v1/internal-residual-stable-training-next-plan-01.json"
+}

@@ -1,0 +1,88 @@
+{
+  "status": "native_subnormal_input_rejection_reproduced_capture_recovery_verified_native_rule_unfixed",
+  "created_unix": 1792635221.606493,
+  "source_sha256": {
+    "runs/full-ai-data-diversity-v1/native-initialization-repro-01/results.json": "5747a55e0dd29a9b49b6a0845d39feb41821b0bcbb168e1b88d3d6096dccae8c",
+    "runs/full-ai-data-diversity-v1/native-initialization-repro-02/results.json": "e7db6b0e1e965806472c7c59a0da272de2f2a876ff08eaa3c05ae8cc74e57c20",
+    "runs/full-ai-data-diversity-v1/native-initialization-repro-03/results.json": "995f32fdb43d212e09035684d1a28ce67a03cc8a61c1e5ad9ae14ac3867ac662",
+    "runs/full-ai-data-diversity-v1/native-viscosity-debug-build-01/build-receipt.json": "6ca5c4b27a6f1c21c0db374bda82d4099fb46b34218843623f60f603f3c95d0e",
+    "runs/full-ai-data-diversity-v1/long-reference-expanded-shard-01/bank.json": "6276b190eadb31813feb4f1e7feed4838b9a5727b9f2a4fa624b047a14dfa448",
+    "runs/full-ai-data-diversity-v1/long-reference-expanded-shard-03/bank.json": "69b02f53190c466e25e0a6b430d08f1b74ec8f0b3ff1602cbd0c7533f351511c",
+    "docs/plans/full-ai-data-diversity-v1/long-reference-expanded-shard-protocol-04.json": "289a7e0dab0c36c5422df61605ff4ef3c8417d9e07e976eaffe86a3ff0b7266c"
+  },
+  "minimal_reproducer": "experiments/full-ai-data-diversity-v1/reproduce_native_initialization_v2.py --protocol docs/plans/full-ai-data-diversity-v1/native-initialization-repro-protocol-02.json",
+  "minimal_loop": {
+    "restored_fine_step": 1,
+    "failed_next_fine_step": 2,
+    "elapsed_seconds": 0.3684658309794031,
+    "original_scene_and_fields_unchanged": true,
+    "native_stderr": "[DEBUG-native-visc] invalid-input d=2 p=[47, 47, 8] u=-3.7821e-41\nError: Newtonian box viscosity rejected operation: ArithmeticFailure\n"
+  },
+  "cause": {
+    "stage": "Native viscosity input validation, after advection and zero-pulse forcing.",
+    "velocity_component": 2,
+    "face_coordinates": [
+      47,
+      47,
+      8
+    ],
+    "value_m_per_s": -3.7821e-41,
+    "minimum_normal_float32": 1.1754943508222875e-38,
+    "guard": "u == 0.0 || u.is_normal()",
+    "arithmetic_error": "ArithmeticFailure",
+    "interpretation": "A finite subnormal velocity is rejected by the native contract. Snapshot at fine1 has finite normal velocities. With the pulse off, advection creates the tiny value before viscosity. This is separate from learned pressure error or a diffusion stability violation.",
+    "diffusion_stability_parameter": 7.8125e-06,
+    "diffusion_stability_limit": 0.25
+  },
+  "diagnostic_build": {
+    "path": "runs/full-ai-data-diversity-v1/native-viscosity-debug-build-01",
+    "original_source_and_binary_preserved": true,
+    "changes": "Tagged stderr at guard branches only; numerical operations and predicates unchanged.",
+    "all_build_probe_native_test_and_clippy_checks_pass": true,
+    "production_reference_changed": false
+  },
+  "capture_orchestration": {
+    "version": "experiments/full-ai-data-diversity-v1/capture_long_reference_v4.py",
+    "known_rejections": [
+      {
+        "identifier": "long-v1-regular_pulse-stationary-r1-cpm25",
+        "receipt": "runs/full-ai-data-diversity-v1/long-reference-expanded-shard-04/long-v1-regular_pulse-stationary-r1-cpm25/receipt.json",
+        "receipt_sha256": "4df6e2225add45f419e5ba3674fdc505d7b2c905d9d90e72941f868db53f5184",
+        "actual_advances": 1,
+        "attempted_advances": 2,
+        "status": "reference_rejected"
+      },
+      {
+        "identifier": "long-v1-regular_pulse-reflected_line-r2-cpm16",
+        "receipt": "runs/full-ai-data-diversity-v1/long-reference-expanded-shard-04/long-v1-regular_pulse-reflected_line-r2-cpm16/receipt.json",
+        "receipt_sha256": "0fc750dbbeec3beefb6f6e1d1e855774b0003f9ffd85c41d82a66d8ba3ff7135",
+        "actual_advances": 1,
+        "attempted_advances": 2,
+        "status": "reference_rejected"
+      }
+    ],
+    "subsequent_completed_masters_at_observation": [
+      "long-v1-irregular_pulse-stationary-r0-cpm25"
+    ],
+    "active_at_observation": {
+      "identifier": "long-v1-irregular_pulse-stationary-r2-cpm25",
+      "native_pid": 8,
+      "fine_step": 3360,
+      "physical_time_s": 14.0
+    },
+    "reaped_rejections_do_not_abort_remaining_independent_cases": true,
+    "unknown_errors_remain_fatal": true,
+    "no_scene_or_timestep_changes": true,
+    "no_subnormal_flushing_or_quality_rule_changes": true,
+    "rejected_receipts_cannot_supply_training_targets": true
+  },
+  "remaining": [
+    "Native numerical contract is still unchanged and both original cases lack qualified complete reference trajectories.",
+    "Investigate IEEE subnormal support or a separately qualified reference arithmetic policy without silently changing the selected 240-step clock or physical accuracy gates. Preserve original failures and require explicit new lineage and regression evidence.",
+    "Continue original independent captures and audits; do not replace difficult scenes with easy examples or count rejected attempts as training masters."
+  ],
+  "reference_cpu_policy": "docs/plans/full-ai-data-diversity-v1/reference-half-cpu-policy-02.json",
+  "new_parameter_fits": 0,
+  "reserved52_references_opened": 0,
+  "full_goal_pass": false
+}

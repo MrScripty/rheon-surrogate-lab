@@ -1,0 +1,17 @@
+{
+  "status": "planned_after_finite_S4_diagnostic_not_promoted",
+  "created_unix": 1792619530.8134146,
+  "observed_correction_loss_reduction": 0.027852174032353627,
+  "native_threshold": 1e-05,
+  "native_failures": 1151,
+  "interpretation": "A24iteration fit gives only modest correction learning and small native changes; it does not prove that extra optimization or this architecture can never work. Pure direct loss worsened mean physical diagnostics and did not resolve tracer corrections. Keep all artifacts; no promotion.",
+  "next_data_plan": "docs/plans/full-ai-data-diversity-v1/multirate-long-trajectory-data-plan-03.json",
+  "next_training_hypotheses": [
+    "After the matched multirate data pilot, compare normalized direct corrections plus normalized physical-output supervision against direct-only; predeclare weights on training statistics.",
+    "Assess predicted coarse pressure/velocity as additional current-state-only inputs to the compact residual network, retaining no future labels in features.",
+    "Distinguish optimization progress from local-input/capacity limitations; predeclare a finite continuation rather than treating24iterations as proof of convergence.",
+    "Keep diffusion as research or noise-training ablation until a deterministic correction baseline gives useful accuracy per millisecond."
+  ],
+  "new_fits_authorized_by_this_plan": 0,
+  "targets_verified": false
+}

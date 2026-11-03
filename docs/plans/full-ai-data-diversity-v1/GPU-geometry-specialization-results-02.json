@@ -1,0 +1,91 @@
+{
+  "status": "variant2_all_accuracy_bytes_pass_profile_measurement_gate_failed",
+  "created_unix": 1792567953.2940652,
+  "execution_plan": "docs/plans/full-ai-data-diversity-v1/GPU-geometry-specialization-plan-01.json",
+  "candidate": "experiments/full-ai-data-diversity-v1/debug/scalar_geometry_graph_v1.py:ScalarGeometryGraph",
+  "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-13",
+  "candidate_selected": false,
+  "primitive_arrays_exact": 832,
+  "complete_model_outputs_exact": 41280,
+  "profile_comparison": {
+    "1": {
+      "baseline": {
+        "sampler_ms": 0.5068470000000007,
+        "wrapper_ms": 1.223931,
+        "cpu_allocations": [
+          {
+            "name": "cudaHostAlloc",
+            "calls": 3,
+            "self_cpu_ms": 1.9793030000000007
+          },
+          {
+            "name": "cudaMalloc",
+            "calls": 2,
+            "self_cpu_ms": 0.1373420000000001
+          }
+        ]
+      },
+      "candidate": {
+        "sampler_ms": 0.42002600000000073,
+        "wrapper_ms": 1.563678,
+        "cpu_allocations": [
+          {
+            "name": "cudaHostAlloc",
+            "calls": 3,
+            "self_cpu_ms": 1.9931899999999996
+          },
+          {
+            "name": "cudaMalloc",
+            "calls": 2,
+            "self_cpu_ms": 0.5744629999999997
+          }
+        ]
+      }
+    },
+    "8": {
+      "baseline": {
+        "sampler_ms": 4.021341000000003,
+        "wrapper_ms": 7.700374999999999,
+        "cpu_allocations": [
+          {
+            "name": "cudaMalloc",
+            "calls": 1,
+            "self_cpu_ms": 0.42649299999999996
+          }
+        ]
+      },
+      "candidate": {
+        "sampler_ms": 4.143945999999998,
+        "wrapper_ms": 8.941339,
+        "cpu_allocations": [
+          {
+            "name": "cudaMalloc",
+            "calls": 1,
+            "self_cpu_ms": 0.1159910000000009
+          }
+        ]
+      }
+    }
+  },
+  "N8_reduction_gate_pass": false,
+  "N1_regression_gate_pass": false,
+  "complete_call_benchmark_executed": false,
+  "unexecuted_benchmark_source": "experiments/full-ai-data-diversity-v1/benchmark_execution_gpu_entry_v9.py",
+  "profile_repeated": false,
+  "static_code_diagnostic": "Power-of-two8cpmknownspacingremovesFP64divisions;100cpmN8retains6peractivecarrierpath. Fourcompiledcarrierpathsare24staticdivisioninstructionsnot24perthread.",
+  "causal_caveat": "ComparedhistoricalinstrumentedrangescontaintwoCPUcudaMalloccallswithdifferentcosts;newboundedallocation-custodydiagnosticisnotanadmissionrerunanddoesnotchangethesefailedgates.",
+  "source_reproduction": "docs/plans/full-ai-data-diversity-v1/GPU-geometry-source-reproduction-01.json",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/scalar-geometry-component-01/results.json": "270191cc2fe9cbc7b93e2bd3f7c28e016008d327b04dd284826775612363c37f",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-20/results.json": "467d04fbce7adc8be2277303afbd39cba123c092123cca14aad81764d3c34e37",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-20/results.json": "6f3094ef8cfd5aabe558efc17a84ffa2fbb1cb1286828eb2bae825c52862209d",
+    "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-10/results.json": "e9980a09e457a13c27c7a4c401b2c9dbdb23e691329e46f3887bb1a6fa75a48e",
+    "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-10/results.json": "42784931aa55f862e18826701510db4fb0412ee62e8296649ed1383653cfd050"
+  }
+}

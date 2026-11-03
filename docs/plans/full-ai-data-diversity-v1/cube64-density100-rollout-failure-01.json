@@ -1,0 +1,83 @@
+{
+  "status": "inherited_actual_full_history_failure_reproduced_source_unproven",
+  "created_unix": 1792560490.5286057,
+  "identifier": "diversity-development-g027-cpm100",
+  "counts_xyz": [
+    64,
+    64,
+    64
+  ],
+  "cells_per_metre": 100,
+  "internal_substeps": 1,
+  "rollout_steps": 240,
+  "horizons": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "complete_outputs": 960,
+  "failed_outputs": 760,
+  "maximum_error": 1e-05,
+  "worst_error": {
+    "equation": 0.0003446541069590097,
+    "pressure": 2.1684002610082737e-06,
+    "velocity": 1.1286821454917131e-07,
+    "tracer": 3.752047122309009e-08
+  },
+  "first_equation_failure_step": 18,
+  "first_native_nonidentical_fields": {
+    "pressure": 3,
+    "vx": 7,
+    "vy": 8,
+    "vz": 9,
+    "tracer": 17
+  },
+  "native_result": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-05/diversity-development-g027-cpm100/results.json",
+  "native_result_sha256": "1e8ed02593093767877768293d81b66a8d32dfd1df9b51d5300386983f773f47",
+  "native_process": {
+    "pid": 2006352,
+    "returncode": 0,
+    "reaped": true,
+    "graceful_protocol_complete": true
+  },
+  "every_existing_native_checkpoint_typed_byte_match": true,
+  "feedback_result": "runs/full-ai-data-diversity-v1/debug/cube64-density100-failure-01/reproduction-01/results.json",
+  "feedback_result_sha256": "c957f24e2ff1afdd67695aacb6d8ddc920487a112fc4a916b6a259d53e164849",
+  "feedback_expected_exit_code": 1,
+  "feedback_endpoint_step": 32,
+  "feedback_equation_error_by_model": {
+    "original_math": 0.00032523274047628815,
+    "affine_fused": 0.00032523274047628815
+  },
+  "every_original_and_optimized_replay_output_identical_to_full_failure": true,
+  "affine_optimization_introduced_this_failure": false,
+  "hypotheses_before_further_probes": [
+    {
+      "rank": 1,
+      "hypothesis": "Generic fixed-transform contraction order differs from native arithmetic at64cubed.",
+      "prediction": "Using the exact same native step2input and the same learned request, firstP3differences arise within a generic axis contraction; isolate each axis without supplying native response to candidate."
+    },
+    {
+      "rank": 2,
+      "hypothesis": "Learned response or generic feature evaluation precision differs from the native teacher.",
+      "prediction": "Identical transformed request differs at division/readout while contraction intermediates match; compare arbitrary restored coefficients and fixed feature bytes. Native response only in clearly separate debug oracle."
+    },
+    {
+      "rank": 3,
+      "hypothesis": "Other transport/force/gather arithmetic seeds the first velocity divergence.",
+      "prediction": "Matched-state first-pressure probes or first-velocity7probes show a different pre-pressure request or nonpressure stage, rather than a contraction difference."
+    },
+    {
+      "rank": 4,
+      "hypothesis": "The native-history equation diagnostic amplifies small trajectory differences relative to same-request pressure residual.",
+      "prediction": "Same-request residual remains near machine precision while the frozen native-history equation measure grows. Report both diagnostics; never replace or relax the registered acceptance criterion."
+    }
+  ],
+  "next": "Build matched-native-state2to3GPUdiagnostic and isolate learned request, restored-response evaluation and generic axis contraction differences. First pressure divergence3precedes firstvx7and first equation failure18. No new fits/timing before causal diagnosis.",
+  "expanded_reserved52_references_opened": 0,
+  "independent_confirmation": false,
+  "full_generator_target_verified": false,
+  "optimizer_updates": 0,
+  "cpu_model_forward": false
+}

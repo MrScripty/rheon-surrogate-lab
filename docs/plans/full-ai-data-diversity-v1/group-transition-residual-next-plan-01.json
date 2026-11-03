@@ -1,0 +1,38 @@
+{
+  "status": "next_causal_group_transition_diagnostic_not_yet_implemented_or_executed",
+  "created_unix": 1792597075.1885812,
+  "basis": "docs/plans/full-ai-data-diversity-v1/force-aware-capacity-results-01.json",
+  "priority": "Move correction inside grouped learned transitions; stop enlarging unchanged final-readout families.",
+  "next_experiment": "Build a diagnostic, not a fitted candidate, comparing isolated coarse width2/3 learned transitions with the corresponding2/3fine learned transitions from exactly the same current state and ordered known forces. Decompose transport, forced/viscous provisional fields, and pressure/projected velocity. Separately compare inherited coarse-state error with local grouping error.",
+  "finite_scope": {
+    "training_scenes": 29,
+    "current_starts": [
+      32,
+      96
+    ],
+    "coarse_group_widths": [
+      2,
+      2,
+      3
+    ],
+    "maximum_isolated_transition_pairs": 174,
+    "maximum_diagnostic_families": 1,
+    "maximum_wall_seconds": 1800,
+    "maximum_gpu_allocated_bytes": 8589934592,
+    "maximum_peak_rss_bytes": 4294967296
+  },
+  "inputs": "Only current consumed training states and already known ordered fine forces. Advance with restored learned transport/spatial/pressure maps. No future native fields or numerical pressure inverse in the diagnostic core. All reference teacher trajectories explicitly identified as learned fine-stage evidence.",
+  "controls": [
+    "Freeze source/data/normalization/scope before execution; one width1 fine/coarse equality control with everyphysical field exact.",
+    "Use same initial fields, force packets and physical group duration for both sides. Reset mutable dt/h transport configuration before each invocation; no fractional-step regeneration of known controls.",
+    "Preserve normalwalls,gauges,sourceweights,inputhashes, complete pressure/V/T outputs and every internaladvance; GPU-only learned inference.",
+    "Report absolute and frozen normalized field errors, CFL/displacement/force profiles, density and counts separately. Do not extrapolate local defect to a native rollout pass."
+  ],
+  "decision": "If local coarse provisional defects dominate, design a small shared nonlinear residual before each learned projection, conditioned on present flow/tracer, h/dt, current pressure and ordered forces. Subsequent fitting must be managedCUDA with exactCPUrestores, full148train retention, seed and split registration, native allK/intermediate/history/timing/independent/scaling checks. No fit is authorized by passing diagnostic controls alone.",
+  "retained_alternative": "Full compensated-sampler feasibility remains separate and unexecuted; no cheap complete rounding certificate established or disproven. Preserve previous guard/pair failures and timings; no unchanged retiming.",
+  "selected_model_unchanged": true,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "cpu_model_forward": false,
+  "full_generator_target_pass": false
+}

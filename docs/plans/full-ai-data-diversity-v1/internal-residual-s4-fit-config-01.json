@@ -1,0 +1,167 @@
+{
+  "identifier": "internal-residual-s4-direct-delta-LBFGS",
+  "role": "internal_group_nonlinear_residual_component",
+  "seed": 1729,
+  "optimizer": "full_batch_LBFGS",
+  "maximum_optimizer_iterations": 24,
+  "maximum_closure_evaluations": 60,
+  "initial_step_learning_rate": 1.0,
+  "subsequent_step_learning_rate": 1.0,
+  "selection": "minimum_full148scene_direct_delta_objective_over_initial_and_complete_closures_earlier_tie",
+  "qualified_initial_objective": 0.7665071603885028,
+  "qualified_initial_inventory": {
+    "input_rms": {
+      "shape": [
+        1,
+        42,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "03607579d061e0a3afb7037cc5e7bbf69985070dc0e4e3aefa0f29451a69108d"
+    },
+    "output_rms": {
+      "shape": [
+        4
+      ],
+      "dtype": "<f4",
+      "sha256": "f6dcc9570fba7f8d765ace2909fe76a00d84a802e25b8432ac2d523d5ecd0d87"
+    },
+    "conv1.weight": {
+      "shape": [
+        8,
+        42,
+        3,
+        3,
+        3
+      ],
+      "dtype": "<f4",
+      "sha256": "270298ab5a33aefa09e0463d5828d9d017de53c80dda340b757dcfbb84b8fd85"
+    },
+    "conv1.bias": {
+      "shape": [
+        8
+      ],
+      "dtype": "<f4",
+      "sha256": "7b3dfd86627f558c210b56cc6f458634643e8f30023b2e62c1c509f9fbec670c"
+    },
+    "conv2.weight": {
+      "shape": [
+        8,
+        8,
+        3,
+        3,
+        3
+      ],
+      "dtype": "<f4",
+      "sha256": "61a2a0174ef4d64ec6fae53e3cf179b66b3c25c4f6a49e308006a912840e215f"
+    },
+    "conv2.bias": {
+      "shape": [
+        8
+      ],
+      "dtype": "<f4",
+      "sha256": "6b4e6759f3b856c1f1fb3095db3e9d97dcde9748c8a3632e61c3a2582fab316b"
+    },
+    "velocity.0.weight": {
+      "shape": [
+        8,
+        1,
+        1,
+        1,
+        2
+      ],
+      "dtype": "<f4",
+      "sha256": "ddb564f517fc95076dfe0de99795a982743c7f8ae419f3d5ad33c4ddff2d22cf"
+    },
+    "velocity.0.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "bf0a2d788588181c6fbf94324ab97d41cbfa908ff4013f0f7734a4513fc9607d"
+    },
+    "velocity.1.weight": {
+      "shape": [
+        8,
+        1,
+        1,
+        2,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "bf0b7dfc52fe77a5831da48d43788f40091bf1ee2503880bd6bbf00081ecc535"
+    },
+    "velocity.1.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "356c75ddc004ee90e9f56efc0eb62b3a451173cfff5e625a05646c84879c20a2"
+    },
+    "velocity.2.weight": {
+      "shape": [
+        8,
+        1,
+        2,
+        1,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "b5be0eaf2defe41df7c3d8bee731865e16eba1a462e362be95454281fe56fffb"
+    },
+    "velocity.2.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "5cd606ead5f045b362651d20493041509020b77b7f7d0ec18425e2f9ea5708bb"
+    },
+    "tracer.weight": {
+      "shape": [
+        1,
+        8,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "e050a74b3abbb0682d0f55c9d16234887b8ed0fc0bec591a5f348aa11d6217ca"
+    },
+    "tracer.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "c5f48bd23b5f2bb9697c26b31548360b643a148c8e80f234e6a7d7e683e30517"
+    }
+  },
+  "qualified_initial_gradient_norms": {
+    "conv1.weight": 0.014344844964333943,
+    "conv1.bias": 8.793608542694665e-05,
+    "conv2.weight": 0.027295263879977428,
+    "conv2.bias": 0.0001023488575278503,
+    "velocity.0.weight": 0.01564564570092267,
+    "velocity.0.bias": 0.007132446393370628,
+    "velocity.1.weight": 0.13045994696089047,
+    "velocity.1.bias": 0.003620981937274337,
+    "velocity.2.weight": 0.09200242459700894,
+    "velocity.2.bias": 0.005964244250208139,
+    "tracer.weight": 0.0027318245620267466,
+    "tracer.bias": 0.0003040946612600237
+  },
+  "expected_cached_tensor_bytes": 13765858200,
+  "wall_seconds": 1800,
+  "maximum_peak_rss_bytes": 4294967296,
+  "maximum_gpu_allocated_bytes": 17179869184,
+  "maximum_gpu_reserved_bytes": 21474836480,
+  "scientific_intervention": "S3 exact warm start; directly supervise all four missing corrections with frozen per-head output RMS. Physical losses tracked separately; native gates unchanged; no architecture change.",
+  "native_accuracy_claim": false,
+  "latency_claim": false,
+  "full_generator_target_pass": false,
+  "objective_kind": "direct_normalized_delta_MSE",
+  "all148training_scenes_in_objective": true,
+  "active_correction_scenes": 29,
+  "fixed_exact_bypass_control_scenes": 119
+}

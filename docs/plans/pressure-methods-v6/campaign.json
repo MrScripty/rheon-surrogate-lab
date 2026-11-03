@@ -1,0 +1,81 @@
+{
+  "status": "active",
+  "tracks": [
+    {
+      "id": 1,
+      "name": "Cheaper local inference",
+      "required": [
+        "Boundary-equivalent fused native execution of the existing model",
+        "Train and compare a simpler learned stencil and separable filters",
+        "Independent representation tests and complete solver gates",
+        "Repeated total pressure and native-fluid timing"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Selective neural correction",
+      "required": [
+        "Fixed selected-iteration policy",
+        "Measured stagnation-triggered policy",
+        "Coarser-hierarchy neural application",
+        "Neural calls, saved hierarchy work and full solve cost including decisions"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Several-iteration training",
+      "required": [
+        "Matched tiny replay and multi-iteration managed fits",
+        "Same initial tensors, sampling sequence and optimizer schedule",
+        "Finite CPU/CUDA objective/backward checks and fresh CPU restores",
+        "Coverage and cost after frozen selection, with actual forward counts"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Adaptive correction reuse",
+      "required": [
+        "Cheaper retention and immutable shared basis storage",
+        "Deterministic admission based on expected savings, calibrated only on development",
+        "Cold, repeated, abrupt and context-reset independent tests",
+        "Fixed-zero/fixed-four/adaptive native work, cost and drift"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Longer and larger evaluation",
+      "required": [
+        "At least 256 consecutive requested timesteps on two independent scenes",
+        "Full-field pressure, staggered velocity and tracer drift against independent reference",
+        "Multiple new 256-cells-per-axis scenes",
+        "Independent grid-dimension and cells-per-metre comparisons",
+        "Use observed failures to decide whether rollout training or further architecture changes are justified"
+      ]
+    }
+  ],
+  "prior_publication_sha256": "bce205f5e842b110b3fb047bd2525066fe3a2f3066dca7b315899245a913d7a9",
+  "requested_scope_sha256": "ae8329e4329de46a254fcf55fc96bdcf86e72f73de73ba8dd505e3077335e560",
+  "application_drift_limits_deferred": true,
+  "promotion": false,
+  "fits": [
+    "v6-replay",
+    "v6-unrolled",
+    "v6-stencil",
+    "v6-separable"
+  ],
+  "updates_per_fit": 2400,
+  "small_updates": 1600,
+  "training_seed": 2026101910,
+  "sampling_seed": 2026101804,
+  "learning_rate": 0.001,
+  "schedule": [
+    {
+      "update": 1801,
+      "learning_rate": 0.0001
+    },
+    {
+      "update": 2251,
+      "learning_rate": 1e-05
+    }
+  ]
+}

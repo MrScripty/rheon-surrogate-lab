@@ -1,0 +1,49 @@
+{
+  "created_unix": 1792620262.1397753,
+  "status": "proposed_initial_expansion_after_measured_pilot",
+  "new_independent_master_trajectories": 36,
+  "training_trajectories": 24,
+  "development_trajectories": 12,
+  "construction": "Four forcing profiles times three motion families times three independent scenario replicas; two replicas for training and one for development in each family/motion cell. Each scenario has independently varied initial state and force parameters.",
+  "forcing_profiles": [
+    "continuous",
+    "continuous_varying",
+    "regular_pulse",
+    "irregular_pulse"
+  ],
+  "motion_families": [
+    "stationary",
+    "oscillating",
+    "reflected_line"
+  ],
+  "densities_cells_per_metre": [
+    8,
+    10,
+    16,
+    25,
+    50,
+    100
+  ],
+  "density_assignment": "Balance density margins within each split; audit joint density/shape/forcing coverage rather than claiming a full Cartesian product.",
+  "grid_assignment": "Retain small grids and distribute larger cubic/rectangular and rotated-aspect domains; pilot32cubed and moderate rectangular cases before expensive larger volumes.",
+  "initial_state_variation": [
+    "initial tracer distribution",
+    "initial velocity structure where native capture supports it",
+    "force amplitude, position, radius and motion path",
+    "pulse timing, duty and irregular events; continuous variance"
+  ],
+  "physical_duration_s": 20,
+  "reference_steps_per_s": 240,
+  "fine_updates_per_master": 4800,
+  "planned_total_fine_updates": 172800,
+  "pilot_trajectories": 4,
+  "pilot_is_subset_of36": true,
+  "pilot_fine_updates": 19200,
+  "split_unit": "physical_scenario_group_id: all timestep views, trajectory continuations, replicas of the same realization and related rescaled captures stay in the same split.",
+  "independent_seed_rule": "Replicas are independent physical realizations, not copies of one trajectory with different sample spacing.",
+  "counts_are_proposed_not_captured": true,
+  "resource_admission": "Measure capture time, memory and retained-window disk costs on the four-scene pilot; freeze the finite full manifest and storage budget from those measurements before broad capture.",
+  "regular_pulse_correction_gap": "Current29active correction scenes contain no regular-pulse examples. Expansion must supply informative temporal-correction windows across all four force families; unchanged controls are reported separately.",
+  "new_captures_executed": 0,
+  "new_fits_executed": 0
+}

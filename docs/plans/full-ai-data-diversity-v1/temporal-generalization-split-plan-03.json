@@ -1,0 +1,243 @@
+{
+  "created_unix": 1792621385.8206036,
+  "status": "scene_holdouts_for_all12_training_cases_with_separate_temporal_diagnostics",
+  "reference_rate_per_s": 240,
+  "master_duration_s": 20,
+  "target_rates_per_s": [
+    30,
+    60,
+    120
+  ],
+  "physical_timestep_and_lead_time_are_distinct": true,
+  "split_axes": [
+    {
+      "name": "new_scene_same_timestep",
+      "purpose": "Physical-scenario generalization.",
+      "scene_used_for_parameter_fitting": false,
+      "timestep_previously_used_for_fitting": true
+    },
+    {
+      "name": "familiar_scene_new_timestep",
+      "purpose": "Temporal transfer within familiar dynamics; diagnostic, not independent scene validation.",
+      "scene_used_for_parameter_fitting": true,
+      "timestep_previously_used_for_fitting": false
+    },
+    {
+      "name": "new_scene_new_timestep",
+      "purpose": "Combined scenario and temporal generalization.",
+      "scene_used_for_parameter_fitting": false,
+      "timestep_previously_used_for_fitting": false
+    }
+  ],
+  "multioutput_holdout_example": {
+    "training_base_rates_per_s": [
+      30,
+      120
+    ],
+    "training_K": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "training_output_lead_offsets_in_240ths": [
+      2,
+      4,
+      6,
+      8,
+      16,
+      24,
+      32
+    ],
+    "evaluation_base_rate_per_s": 60,
+    "evaluation_K4_output_offsets_in_240ths": [
+      4,
+      8,
+      12,
+      16
+    ],
+    "evaluation_output_overlap": [
+      {
+        "lead": 1,
+        "offset_in_240ths": 4,
+        "elapsed_s": 0.016666666666666666,
+        "previously_seen_as_training_output": true
+      },
+      {
+        "lead": 2,
+        "offset_in_240ths": 8,
+        "elapsed_s": 0.03333333333333333,
+        "previously_seen_as_training_output": true
+      },
+      {
+        "lead": 3,
+        "offset_in_240ths": 12,
+        "elapsed_s": 0.05,
+        "previously_seen_as_training_output": false
+      },
+      {
+        "lead": 4,
+        "offset_in_240ths": 16,
+        "elapsed_s": 0.06666666666666667,
+        "previously_seen_as_training_output": true
+      }
+    ],
+    "strictly_unseen_output_offsets_in_240ths": [
+      12
+    ],
+    "interpretation": "Holding out60as base cadence does not hold out every elapsed time:1/60and1/30already appear as K2/K4outputs at120. Only individually verified absent lead times may be called unseen horizons.",
+    "priority": "secondary_output_rate_transfer_diagnostic"
+  },
+  "strict_single_transition_probe": {
+    "training_K": [
+      1
+    ],
+    "training_lag_offsets_in_240ths": [
+      2,
+      8
+    ],
+    "evaluation_lag_offsets_in_240ths": [
+      4
+    ],
+    "training_base_rates_per_s": [
+      120,
+      30
+    ],
+    "evaluation_base_rate_per_s": [
+      60
+    ],
+    "purpose": "Isolate unseen elapsed-time prediction without hidden exposure through another output head.",
+    "separate_experiment_from_full_K1_to4_training": true,
+    "priority": "secondary_output_rate_transfer_diagnostic"
+  },
+  "required_exposure_ledger": [
+    "physical scenario group and trajectory ID",
+    "parameter-fitting versus diagnostic/development role",
+    "start fine-step index and endpoint fine-step index",
+    "base output dt and total block elapsed time",
+    "every supervised output lead time across every K head",
+    "every learned internal-stage local dt",
+    "endpoint-teacher, auxiliary correction and reconstruction label exposure"
+  ],
+  "reuse_rule": "Reuse a trajectory across timesteps within its assigned scene split. Familiar training scenes may support explicitly labeled temporal diagnostics; never count them again as independent test scenes.",
+  "pair_weighting": "Balance per physical scenario before rate/window/lead sampling; extra timestep pairs are correlated samples, not extra independent trajectories.",
+  "validation_rule": "Predeclare held-out times and scenario splits before fitting. Repeatedly consulted development cases remain development; preserve52reserved independent references for later independent verification.",
+  "model_selection": "Training objective selects fitted weights. Record any architecture tuning on development data; do not subsequently present that development data as untouched confirmation.",
+  "new_references_opened": 0,
+  "previous_plan": "docs/plans/full-ai-data-diversity-v1/temporal-generalization-split-plan-02.json",
+  "primary_evaluation_axes": [
+    "new_physical_scene_at_fixed_output_dt",
+    "longer_block_horizon_at_fixed_output_dt"
+  ],
+  "primary_output_dt_s": [
+    0.03333333333333333,
+    0.016666666666666666,
+    0.008333333333333333
+  ],
+  "longer_horizon_holdout": {
+    "status": "60cadence_example_only_of_separate_diagnostic_not_production_training",
+    "output_dt_s": 0.016666666666666666,
+    "training_K": [
+      1,
+      2
+    ],
+    "training_endpoint_lead_offsets_in_240ths": [
+      4,
+      8
+    ],
+    "evaluation_K": [
+      3,
+      4
+    ],
+    "evaluation_endpoint_lead_offsets_in_240ths": [
+      12,
+      16
+    ],
+    "training_supervised_output_lead_offsets_in_240ths": [
+      4,
+      8
+    ],
+    "evaluation_unseen_endpoint_durations_s": [
+      0.05,
+      0.06666666666666667
+    ],
+    "exposure_rule": "Exclude3/60and4/60 endpoint/auxiliary labels across every training source and output head. In this dedicated test do not also train30/120cadence examples that expose those elapsed times.",
+    "interpretation": "Tests reaching farther forward at unchanged60outputs/s. Production candidates still train allK1-4; report that separately."
+  },
+  "all_training_output_rates_per_s": [
+    30,
+    60,
+    120
+  ],
+  "all_training_K": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "production_training_covers_all12_cases": true,
+  "cross_cadence_holdouts_are_separate_diagnostic_fits": true,
+  "longer_horizon_holdouts_by_cadence": [
+    {
+      "output_steps_per_s": 30,
+      "training_K": [
+        1,
+        2
+      ],
+      "evaluation_K": [
+        3,
+        4
+      ],
+      "training_output_offsets_in_240ths": [
+        8,
+        16
+      ],
+      "evaluation_endpoint_offsets_in_240ths": [
+        24,
+        32
+      ],
+      "exposure_rule": "Separate diagnostic fit; exclude the evaluated endpoint durations across all heads, auxiliary losses and other cadence examples before calling them unseen."
+    },
+    {
+      "output_steps_per_s": 60,
+      "training_K": [
+        1,
+        2
+      ],
+      "evaluation_K": [
+        3,
+        4
+      ],
+      "training_output_offsets_in_240ths": [
+        4,
+        8
+      ],
+      "evaluation_endpoint_offsets_in_240ths": [
+        12,
+        16
+      ],
+      "exposure_rule": "Separate diagnostic fit; exclude the evaluated endpoint durations across all heads, auxiliary losses and other cadence examples before calling them unseen."
+    },
+    {
+      "output_steps_per_s": 120,
+      "training_K": [
+        1,
+        2
+      ],
+      "evaluation_K": [
+        3,
+        4
+      ],
+      "training_output_offsets_in_240ths": [
+        2,
+        4
+      ],
+      "evaluation_endpoint_offsets_in_240ths": [
+        6,
+        8
+      ],
+      "exposure_rule": "Separate diagnostic fit; exclude the evaluated endpoint durations across all heads, auxiliary losses and other cadence examples before calling them unseen."
+    }
+  ],
+  "temporal_holdout_interpretation": "Production candidates train all12cases and use independent-scene validation. A deliberately withheld cadence or horizon requires a separate diagnostic fit; do not claim unseen-duration generalization from cases included in main training."
+}

@@ -1,0 +1,28 @@
+{
+  "commands": [
+    {
+      "id": "point-fit-and-exact-restore",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_point_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/point-sampling-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/point-sampling-pair-01"
+      ],
+      "timeout": 3100
+    },
+    {
+      "id": "native-restored-coefficient-check",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_point_fit.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/point-sampling-pair-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/point-sampling-native-evaluation-01.json"
+      ],
+      "timeout": 300
+    }
+  ]
+}

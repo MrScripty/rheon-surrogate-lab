@@ -1,0 +1,129 @@
+{
+  "status": "proposed_architecture_and_dependency_ablation_not_implemented",
+  "created_unix": 1792620262.1400952,
+  "user_intent": "Save actual intermediate-step computation using an accurate predicted endpoint plus cheap precise partial guidance and a smaller interior-state predictor.",
+  "K": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "pipeline": [
+    "Encode current complete state, geometry, material properties and known control schedule once.",
+    "Predict the endpoint directly at K*output_dt; do not compute all Kfull states to obtain it.",
+    "Prepare only explicitly declared inexpensive guide signals at each requested physical time.",
+    "Decode all K-1interior complete states using shared features, current state, predicted endpoint, local elapsed time and available guides.",
+    "Use predicted endpoint and required learned history to continue the next block."
+  ],
+  "time_inputs": [
+    "output_dt_s",
+    "total_elapsed_s=K*output_dt_s",
+    "lead_elapsed_s=j*output_dt_s",
+    "normalized_phase=j/K"
+  ],
+  "guide_candidates": [
+    {
+      "name": "prescribed_controls",
+      "fields": [
+        "force position and amplitude over time",
+        "regular/irregular pulse schedule",
+        "known source/boundary motion and fixed geometry"
+      ],
+      "precision": "Exact relative to the declared externally prescribed schedule and its arithmetic; state-dependent feedback is not known in advance.",
+      "dependencies": [
+        "current time",
+        "declared control functions or events"
+      ],
+      "priority": 1,
+      "possible_benefit": "Supply temporally resolved known forcing to endpoint and interior heads without predicting it."
+    },
+    {
+      "name": "local_forcing_or_viscosity_update",
+      "fields": [
+        "forcing increment",
+        "local viscous contribution"
+      ],
+      "precision": "Conditional on the supplied velocity/state. Forcing can be prescribed; viscosity needs the evolving state, so a precise local calculation on a predicted state is not an exact reference field.",
+      "dependencies": [
+        "prescribed controls",
+        "predicted or known evolving velocity",
+        "cell spacing",
+        "local elapsed time"
+      ],
+      "priority": 2
+    },
+    {
+      "name": "tracer_transport",
+      "fields": [
+        "tracer concentration at interior times"
+      ],
+      "precision": "Exact reference transport requires the reference velocity history. Transport under an endpoint-interpolated or predicted velocity path is an approximate guide and must be scored.",
+      "dependencies": [
+        "current tracer",
+        "intermediate velocity path",
+        "transport operator"
+      ],
+      "priority": 3
+    },
+    {
+      "name": "divergence_or_pressure_RHS",
+      "fields": [
+        "divergence",
+        "pressure input/RHS"
+      ],
+      "precision": "Derived accurately only for the supplied velocity. These are not independent precise future observations when the velocity is predicted.",
+      "dependencies": [
+        "intermediate provisional velocity",
+        "grid geometry",
+        "elapsed time"
+      ],
+      "priority": 3
+    }
+  ],
+  "precision_contract": [
+    "Record every guide as prescribed-known, current-state-derived, or predicted-state-dependent.",
+    "Future reference states or RHS may create training targets or offline oracle bounds; they cannot enter the deployed generator.",
+    "A guide advertised as precise must include the cost and accuracy of every state it depends on.",
+    "A numerical-field-guide variant must identify those runtime numerical operations explicitly, alongside the learned components.",
+    "No full native pressure solve or full reference trajectory may be hidden inside the guide path."
+  ],
+  "ablation_order": [
+    {
+      "id": "A",
+      "candidate": "Existing sequential K-step GPU baseline",
+      "purpose": "Measure work and overhead without claiming temporal compute sharing."
+    },
+    {
+      "id": "B",
+      "candidate": "Shared encoder plus direct endpoint and small interior decoder, without new guides",
+      "purpose": "Test whether actual temporal compute can be removed."
+    },
+    {
+      "id": "C",
+      "candidate": "Bplus exact prescribed control-path guidance",
+      "purpose": "Measure the value and cost of cheaply available temporal anchors."
+    },
+    {
+      "id": "D",
+      "candidate": "Cplus one profiled physical-field guide",
+      "purpose": "Admit only after measuring its complete dependency cost and guide error; compare at equal full-state accuracy."
+    }
+  ],
+  "training": [
+    "Use scene-balanced multirate windows from the240reference trajectories; provide every Kphysical output as a target.",
+    "Train interior heads with model-predicted endpoints and deployment-available guides; disclose any true-endpoint teacher-forcing mixture.",
+    "If true endpoints or reference intermediate fields are used for an offline upper bound, label it oracle-only and exclude it from deployment results.",
+    "Retain coupled equation, pressure, velocity and tracer validation so a cheap guide does not optimize one field at another field's expense."
+  ],
+  "measurement": [
+    "Profile the existing GPU path first; do not select a field as cheapest from intuition or operation count alone.",
+    "Count encoder, direct endpoint prediction, guide computation and dependencies, interior decoding, all Kstate reconstructions, transfers and synchronization.",
+    "Report full block latency and divide only by Kphysical outputs for per-step latency.",
+    "Keep setup separate and retain medians, tails and observed maxima; mark every learned inference resultGPU.",
+    "Evaluate every output, causal forcing behavior and predicted-endpoint continuation; separate step size, lead time, K, density, domain shape and forcing family."
+  ],
+  "success": "Reduce measured actual computation and totalGPU latency at matched complete-state accuracy, rather than just batching sequential full updates.",
+  "new_fits": 0,
+  "new_inference_calls": 0,
+  "full_generator_target_pass": false
+}

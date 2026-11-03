@@ -1,0 +1,30 @@
+{
+  "status": "effective_user_authorized_reference_cpu_limit",
+  "created_unix": 1792631399.0371373,
+  "authority": "User: keep rheon simulation limited to half the cpu cors",
+  "available_physical_cores": 24,
+  "maximum_physical_cores": 12,
+  "allowed_logical_cpus": [
+    0,
+    1,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    2,
+    3
+  ],
+  "per_worker_threads": 1,
+  "existing_capture_workers": {
+    "1601": 5,
+    "95724": 6
+  },
+  "existing_workers_within_limit": false,
+  "scope": "Rheon reference simulations and native replay children only. New runs must use reference_cpu_budget_v1.py before invoking finite registered target. Existing workers already pinned5/6,singlethreaded;do not restart them. This is a ceiling,not a request to increase worker count.",
+  "launcher": "experiments/full-ai-data-diversity-v1/reference_cpu_budget_v1.py",
+  "launcher_sha256": "6889309b767bf929ec8c6dabf7e758b5fdb68c1f0c53ad3b398a47295a96c291"
+}

@@ -1,0 +1,34 @@
+{
+  "status": "registered_before_single_N8_F64_FFT_execution_candidate",
+  "created_unix": 1792587445.62693,
+  "plan": "docs/plans/full-ai-data-diversity-v1/GPU-next-major-execution-priorities-01.json",
+  "maximum_candidates": 1,
+  "parent": "experiments/full-ai-data-diversity-v1/cell_coordinate_pressure_graph_v1.py:CellCoordinatePressureNativeEntry",
+  "N1_original_unchanged": true,
+  "N8_sampler_F64_unchanged": true,
+  "arithmetic": "Orthonormal DCT-II from length2N even extension [x,flip(x)], backward-normalized rFFT, exp(-i*pi*k/(2N)) phase, scale0=1/(2sqrtN), scaleK=sqrt(2/N)/2. Inverse restores phase and reciprocal scale, appends zero Nyquist, and uses backward-normalized irFFT length2N, keeping firstN. Forward z/y/x; inverse x/y/z. F64/complex128 throughout.",
+  "learned_response": "Existing restored core.divisors field only. No native inverse, physical eigenvalues, handwritten physical coefficients or changed learned values.",
+  "graph_preparation": "Freeze cuFFT12 library hash. Initialize per-axis phase/scale constants and warm exact transforms outside graph; retain plan cache capacity>=256. Verify changed input after graph capture on every frozen shape before full-model qualification.",
+  "maximum_component_error": 2e-11,
+  "maximum_native_model_error": 1e-05,
+  "maximum_complete_call_studies": 1,
+  "ordered_gates": [
+    "Independent generic matrix forward/inverse, roundtrip and changed-input CUDA graph controls on all finite consumed shapes.",
+    "All1018 native-scored blocks including everyKintermediate and exactN1 bytes. Stop on any native criterion failure.",
+    "Fresh uninterrupted native240 scoring for changedN8 trajectories; all26expanded/16legacy actual histories before timing.",
+    "One balanced3840call GPU complete-call study if accuracy gates pass. Original independent/seed/restore/scaling/600output gates remain."
+  ],
+  "primary_sources": [
+    {
+      "url": "https://www.fftw.org/fftw3_doc/1d-Real_002deven-DFTs-_0028DCTs_0029.html",
+      "supports": "DCTII/III are shifted real-even Fourier transforms; raw inverse scale2N. Orthonormal FFT construction above is the tested implementation derivation."
+    },
+    {
+      "url": "https://docs.pytorch.org/docs/2.14/generated/torch.fft.irfft.html",
+      "supports": "Explicit inverse length and normalization must match forward FFT. Actual pinned runtime and graph behavior are verified locally."
+    }
+  ],
+  "new_parameter_fits": 0,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0
+}

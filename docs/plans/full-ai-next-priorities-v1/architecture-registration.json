@@ -1,0 +1,76 @@
+{
+  "schema": "rheon-full-ai-conditional-architecture-registration-v1",
+  "status": "frozen_before_architecture_fitting",
+  "registered_unix": 1792426183.5227456,
+  "primary_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574",
+  "trigger_sha256": "27f518b51e803eb3ad6f68de34b76c747f32ca09aef52c1ba37e54ffd8ef54f0",
+  "rationale": "All four continuation arms missed the original worst-error target",
+  "arms": {
+    "a-redistributed": {
+      "variant": "redistributed",
+      "updates": 1200,
+      "checkpoints": [
+        0,
+        600,
+        1200
+      ],
+      "pressure_stages": 2,
+      "encoder_widths": [
+        3,
+        8,
+        16,
+        20
+      ],
+      "bottleneck_width": 28,
+      "decoder_widths": [
+        20,
+        16,
+        8,
+        3
+      ],
+      "modes_per_axis": 4,
+      "schedule": [
+        {
+          "update": 901,
+          "learning_rate": 1e-05
+        }
+      ],
+      "initialization": "Explicit cyclic output duplication and split duplicated input coefficients; prune fine channels; map exact C107 tensors"
+    },
+    "a-one-stage": {
+      "variant": "one-stage-modes8",
+      "updates": 2400,
+      "checkpoints": [
+        0,
+        1200,
+        2400
+      ],
+      "pressure_stages": 1,
+      "modes_per_axis": 8,
+      "shape_head_hidden": 64,
+      "schedule": [
+        {
+          "update": 1801,
+          "learning_rate": 1e-05
+        }
+      ],
+      "initialization": "Keep exact C107 fine tensors and 63 old low modes; higher learned modes start at constant gain 1/8 on16cubed; no inverse eigenvalues"
+    }
+  },
+  "head_multiplier": 1.0,
+  "train_sampling": "Reuse frozen bounded train-only tail weights and paired uniform draws; repeat each base draw twice in one-stage arm",
+  "base_learning_rate": 3e-05,
+  "teacher_weight": 0.0,
+  "fine_encoder_forwards": 2400,
+  "work_caveat": "Same fine encoder forward count; global branch and optimizer work differ. One-stage arm jointly changes mode capacity and stage count.",
+  "targets": {
+    "median_cpu_ms": 4.0,
+    "worst_equation_error": 0.0007
+  },
+  "seed": 2026101907,
+  "sampling_seed": 2026101908,
+  "architecture_source_sha256": "52aa070f7e6e3b2836db61cdc92576eb8705e27ebfaa005b6fbf0b1bef827e10",
+  "initialization_source_sha256": "afa00e7fde8f82ed81fce291846893331a0155339b4c9cb37db0fcf824031cdd",
+  "development_or_reserved_added_to_training": false,
+  "model_promotion": false
+}

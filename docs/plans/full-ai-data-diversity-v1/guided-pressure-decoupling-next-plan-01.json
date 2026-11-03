@@ -1,0 +1,99 @@
+{
+  "status": "next_controlled_architecture_hypothesis_after_completed_fit_and_development",
+  "created_unix": 1792655244.65355,
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/guided-shared-fit-results-01.json": "9129924a9c6fd590106a08cf0ae6efffbad3728224e48a1bcbec1bd9b631db11",
+    "runs/full-ai-data-diversity-v1/guided-shared-managed-pair-01/restore/history.json": "ef7dd447441832bb15a9a12afbf4ceab5fcc867b563e210ec81e0517fde369b5",
+    "docs/plans/full-ai-data-diversity-v1/minimal-fine-readout-source-preparation-01.json": "59ae38d101faa3aa10fd5e05415975e20f1577770d703b1af3ab179d7b9381fb"
+  },
+  "observations": {
+    "mean_loss_reduction_percent": 0.006942495704942431,
+    "accepted_steps": [
+      3.307689211223932e-10,
+      1.63077540679357e-10,
+      2.729115175466071e-10,
+      1.3760210027030897e-10
+    ],
+    "first_probe_objective": 78337.59662631758,
+    "first_probe_worst_relative": {
+      "equation": 4242.482021533066,
+      "pressure": 18403.186486953393,
+      "velocity": 0.11209563266909758,
+      "tracer": 0.16502286946656158
+    },
+    "first_probe_worst_locations": {
+      "pressure": {
+        "identifier": "long-v1-regular_pulse-stationary-r0-cpm8",
+        "start_fine_step": 0,
+        "output_steps_per_s": 30,
+        "K": 4,
+        "lead": 2
+      },
+      "velocity": {
+        "identifier": "long-v1-continuous-reflected_line-r1-cpm100",
+        "start_fine_step": 2880,
+        "output_steps_per_s": 30,
+        "K": 4,
+        "lead": 4
+      },
+      "tracer": {
+        "identifier": "long-v1-continuous-reflected_line-r1-cpm100",
+        "start_fine_step": 120,
+        "output_steps_per_s": 30,
+        "K": 4,
+        "lead": 4
+      },
+      "equation": {
+        "identifier": "long-v1-regular_pulse-stationary-r0-cpm8",
+        "start_fine_step": 0,
+        "output_steps_per_s": 30,
+        "K": 4,
+        "lead": 2
+      }
+    },
+    "changed_parameter_tensors": [
+      "endpoint_velocity.0.weight",
+      "endpoint_velocity.0.bias",
+      "endpoint_velocity.1.weight",
+      "endpoint_velocity.1.bias",
+      "endpoint_velocity.2.weight",
+      "endpoint_velocity.2.bias",
+      "endpoint_tracer.weight",
+      "endpoint_tracer.bias",
+      "interior_velocity.0.weight",
+      "interior_velocity.0.bias",
+      "interior_velocity.1.weight",
+      "interior_velocity.1.bias",
+      "interior_velocity.2.weight",
+      "interior_velocity.2.bias",
+      "interior_tracer.weight",
+      "interior_tracer.bias"
+    ],
+    "shared_body_parameters_changed": false,
+    "native_development_selected_worst": {
+      "equation": 0.40034836185929484,
+      "pressure": 0.04961978783611425,
+      "velocity": 0.056601829942977314,
+      "tracer": 0.10234458675255508
+    },
+    "all_targets_remain_unmet": true
+  },
+  "next_order": [
+    "Finishrunning80335all240windowminimal-guidecompleteoutput/coarsecontextbyteparityandpairedGPUcost. Onlydiscardedcontrolreadoutsremoved;no learnedparameterchanges.",
+    "Implementonecontrollednewresidualvariantwithindependentpressurescalar/RHSheadandprojectedvelocityhead;retainsamefrozenguidesandall24traininglabels. Pressureoutputmustnolongerinheritallpressurefromvelocity-correctionprojection.",
+    "PreferpressureRHSunitsderivedfromrestoredlearnedflux/momentumactiononpredictedguidepressure,thenexistingfrozenlearnedglobalpressureresponse. NeverusetruefuturenativeRHS/fieldsasinferenceinput. Compareagainstdirectpressureheadonlyifneededasaseparatefinitevariant.",
+    "Normalizevelocitycorrectionusingper-headpredictedvelocitymagnitude;keeptracerdisplacementconditioningexplicit. Qualifyzeroheadexactbytesandfull24finitegradientsbeforeparameterupdates;do notchangefrozenlossfloors/metrics.",
+    "UsecapturedportablemodelsourceandactualCPUconstructorfortheextendedneuralheadarchitecture. Runoneboundedmanagedfitonlyaftermemory/diskbudgetsandtypedrestoreentrypointqualified.",
+    "All12nativedevelopmentandcompleteGPUcostafterfit;independentseed/scalingconfirmationbefore52reservedoutputs;600stepdriftstillgated."
+  ],
+  "hypothesis": "Thelargepressureeffectofdivergentvelocity-headupdatesforcesverytinydescentstepsandfreezesthesharedbody. Separatelyscaledpressurepredictionmayimproveconditioning;thisisnotyetprovedbyanactualnewmodel.",
+  "performance_notes": [
+    "Actualnewguidedmodelremains2.7msmedianperoutputacrossthisdevelopmentmix;thisisGPUcompletewallandnot32cube-onlyorCPUlatency.",
+    "Removing2K-1overwrittenlearnedpressurecallsisunderbyteproofnow;nopromisedspeedupbeforemeasurement.",
+    "Profilegloballearnedpressuretransforms/packingafteraccuracywork;preserveallslowprototypesandCPUreproductionarchive."
+  ],
+  "storage_note": "Afterthismanaged2.81GBinputcapture,anothercapturedoesnotcurrentlyfitthesame1GiBreserve. Beforeadmittinganotherfit,findsupportedstorage/cachecapacitywithoutdeletingboundscientificreferences/checkpoints. Thisdoesnotblocksourceimplementationorzero-updateGPUqualification.",
+  "new_parameter_fits": 0,
+  "model_promotion": false,
+  "goal_status": "active"
+}

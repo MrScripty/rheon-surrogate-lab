@@ -1,0 +1,31 @@
+{
+  "schema": "rheon-routed-neural-head-assembly-v1",
+  "status": "frozen_before_assembly",
+  "registered_unix": 1792433551.101839,
+  "trigger": "Three calibrated heads pass historical small-grid target but regress at128cubed",
+  "routing": {
+    "maximum_axis_cells_for_calibrated_head": 16,
+    "otherwise": "Original C107 learned head",
+    "inputs": "Observable integer grid counts only",
+    "threshold_basis": "Primary small-grid regime declared in original plan before fits"
+  },
+  "shared_fine_parameters": 92560,
+  "parameters_per_head": 1198,
+  "total_parameters": 94956,
+  "optimizer_updates": 0,
+  "managed_training_run_claimed": false,
+  "components": "Verified original C107 and calibrated head CPU restores; full tensor origin mapping",
+  "qualification": "Fresh CPU reload,196 requests, bitwise equality against selected component prediction; unchanged weights, gauge and finite output",
+  "candidate_numerical_pressure_solve": false,
+  "candidate_corrective_projection": false,
+  "reserved_scenes_consumed": false,
+  "execution_selection": "Eager on larger grids; compiled small-grid execution only after parity qualification and repeated timing",
+  "source_sha256": {
+    "routed_descriptor.py": "24217d1d3c593ab1cb2d1607cd47adcfaf12bb2bb4f186f326d2357b9d07c781",
+    "routed_pressure_model.py": "09348d81ff55ee247599ceb15dae34f7dc5eaaaf68263774fb743e8e2d355147",
+    "assemble_routed_pressure.py": "688ac18f5d018f641a647d00ad45eb0f11538cd866b8998b72413994a5c3801f",
+    "routed_inference.py": "8ca01490945adf804911f8ea29fe8cac19b9b9b3636b8881ed8f742c3985b886",
+    "qualify_routed_pressure.py": "1ebe12d32c01607080c410af11ba59b2fa8e94d5576e4a6ab6289c42552ea046",
+    "study_support.py": "e4370825eafa7b1cc824b54962c673f3f1cff086427adc28d7a9ab08379ff7dd"
+  }
+}

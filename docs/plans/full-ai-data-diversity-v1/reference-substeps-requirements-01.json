@@ -1,0 +1,45 @@
+{
+  "status": "next_reference_contract_to_implement_and_qualify",
+  "created_unix": 1792530773.030368,
+  "cause": "Native60Hz Courant limit, not a pressure-solve accuracy failure",
+  "reproduced_rejection": {
+    "expected_macro_step": 110,
+    "courant": 0.5010751759012539,
+    "unchanged_limit": 0.5,
+    "relative_pressure_residual": 2.924715757353421e-15,
+    "actual_divergence": 1.1175870895385742e-06
+  },
+  "proposed_reference_only_refinement": {
+    "macro_output_dt_s": 0.016666666666666666,
+    "substeps_to_test": [
+      2,
+      4,
+      8
+    ],
+    "start_with_known_failing_training_cases": true,
+    "preserve_actual_macro_output_times_and_all_scene_controls": true,
+    "prefer_one_frozen_teacher_substep_policy_for_comparability": true,
+    "full240_macro_steps_required_before_dataset_qualification": true,
+    "native_acceptance_gates_unchanged": true,
+    "failed60Hz_references_preserved": true
+  },
+  "required_implementation": [
+    "Separate isolated native build; replace engine DT uses with a qualified runtime reference dt, retaining legacy default",
+    "Parse reference_substeps as explicit metadata; native steps equal macro steps times substeps",
+    "Sample canonical macro controls at each fine step without exposing future physical states",
+    "Make native wire time, restore indices, pressure dt metadata and macro-client mapping agree",
+    "Preserve final fine-step RHS, pressure base and residual as labels with explicit reference timestep",
+    "Prove old substeps1 scenes, scheduled forcing and native restart remain byte-exact",
+    "Report refined reference timings separately; count all internal work in any model inference using fine steps"
+  ],
+  "scientific_requirements": [
+    "Preserve all224 reserved scene definitions and force ranges; do not silently drop the difficult high-density population",
+    "Keep52 reserved physical reference scenes untouched until model/source selection is frozen",
+    "Retain original own-history regression criteria and report new teacher timestep explicitly",
+    "Benchmark by density, exact dimensions, K and physical core set; no pooled pass over failed buckets",
+    "No local parameter fitting; all new model training remains managed CUDA with exact CPU restore"
+  ],
+  "source_sha256": {
+    "runs/full-ai-data-diversity-v1/native-rejection-replay-01/result.json": "9d5e2f33636211afa0890c1958cf841164f8aedd1c8ce065f5c8d5a191d927bd"
+  }
+}

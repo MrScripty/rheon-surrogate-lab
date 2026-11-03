@@ -1,0 +1,46 @@
+{
+  "status": "next_coupled_learned_correction_investigation_no_code_or_fit_yet",
+  "created_unix": 1792580059.1121607,
+  "basis": [
+    "docs/plans/full-ai-data-diversity-v1/macrostep-spatial-capacity-results-01.json",
+    "runs/full-ai-data-diversity-v1/grouped-macrostep-01/results.json"
+  ],
+  "objective": "Preserve fullAIK1-4<=1.2msperphysicaloutput and worstEq/P/V/T<=1e-5, all148training regimes, whole-group splits, independent/seed/scaling/600gates. No target redefinition.",
+  "scientific_reason": "Direct local pressure readouts miss global corrections: spatial/velocity-conditioned feature spans still leave worst computed equation residual0.00532. Aligning the last force time and aggregating all8known force inputs improves pressure but does not correct coupled transport error. Learn correction before the existing global learned pressure map, with coupled velocity/tracer supervision.",
+  "maximum_initial_architectures": 1,
+  "backbone": {
+    "grouped_fine_intervals": [
+      2,
+      2,
+      3,
+      1
+    ],
+    "actual_internal_learned_advances_per_physical_output": 4,
+    "known_fine_force_evaluations_per_physical_output": 8
+  },
+  "proposed_correction": "At the final fine stage, use only causal own intermediate fields and known controls to predict a small correction to provisional velocity and tracer. Then apply the restored learned flux, shared learned pressure response and learned momentum readout to emit a coupled complete state. No extra native projection/inverse; no targetRHSinput.",
+  "feature_direction": "Use cross-carrier stage differences on each target lattice, restored learned point-head projections, generic clamped local neighborhoods and state-dependent products. Direct pressure-only temporal/spatial readouts tested above are not repeated unchanged.",
+  "next_actions": [
+    "Implement differentiable CUDA execution of the relevant restored learned linear maps, preserving coefficient provenance and full output structure. Native equation action remains loss/scoring only. No numerical inverse or hand-assigned stencil.",
+    "Freeze exact feature ordering, causal inputs, trainable tensors/shapes, initialization, stage placement, normalization, boundaries and deployment precision before execution. Qualify zero-correction and fixed unfitted-vector controls against original grouped outputs and direct versus compressed loss norms.",
+    "Use a bounded training-only capacity/memory diagnostic before committing another fit. Start from one architecture; no repeated unchanged failed spatial bases. Keep all148scenes in any supervised fit including119fixedN1regimes.",
+    "Register finite managedCUDAfit/seed budgets, losses for equation/mean-free pressure/combinedvelocity/tracer, sample weighting and typed exactCPUartifactrestore. All learned forwards and qualification stayGPU.",
+    "After a viable fit: score every physicalKintermediate, native240ownhistory, smaller/N1regressions and separate density/domain findings; then one changed-source complete-call timing study. Seed/independent52/scaling/600steps remain gated."
+  ],
+  "resource_caps": {
+    "maximum_gpu_allocated_bytes": 8589934592,
+    "maximum_peak_rss_bytes": 4294967296,
+    "maximum_initial_diagnostic_wall_seconds": 1800
+  },
+  "latency_policy": "Count four internal learned advances, all correction/knowncontrol/transfer/reconstruction work; divide complete latency only byKphysicaloutputs. No timing or speedup inferred from stage count.",
+  "local_parameter_fitting": false,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "new_managed_fits_authorized_by_this_plan": 0,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  }
+}

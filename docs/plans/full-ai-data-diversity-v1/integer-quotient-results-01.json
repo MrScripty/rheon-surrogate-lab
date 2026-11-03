@@ -1,0 +1,125 @@
+{
+  "status": "integer_quotient_exact_modest_profile_reduction_below_gate_baseline_retained",
+  "created_unix": 1792576386.835843,
+  "candidate": "experiments/full-ai-data-diversity-v1/complete_native_entry_integer_quotient_v1.py:IntegerQuotientEntry",
+  "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-18",
+  "candidate_selected_for_development": false,
+  "candidate_retained_for_reproduction": true,
+  "selected_baseline": "experiments/full-ai-data-diversity-v1/complete_native_entry_geometry_v1.py:GeometryCompleteNativeEntry",
+  "selected_baseline_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-12",
+  "latency_entrypoint": "predict_native",
+  "prototype_not_promoted": true,
+  "scalar_qualification": {
+    "F64_bit_pairs": 2228224,
+    "exact_rational_quotient_checks": 3072,
+    "exact_rational_midpoint_comparisons": 6094,
+    "decisions": {
+      "initial": 1348332,
+      "adjacent": 392268,
+      "zero": 8820,
+      "fallback": 478804
+    },
+    "all_pass": true
+  },
+  "model_qualification": {
+    "component_outputs": 416,
+    "typed_arrays": 2080,
+    "custody_cases": 26,
+    "window_outputs": 960,
+    "legacy240_outputs": 15360,
+    "all26_full240_outputs": 24960,
+    "total_model_regression_outputs": 41280,
+    "all_complete_field_bytes_exact": true,
+    "learned_parameters_unchanged": true,
+    "independent_confirmation": false
+  },
+  "paired_profile": [
+    {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "K": 1,
+      "profiled_calls": 3,
+      "baseline_transport_instrumented_ms": 0.46022600000000013,
+      "candidate_transport_instrumented_ms": 0.43702199999999997,
+      "reduction_percent": 5.04187073307466,
+      "acceptance_latency_claim": false
+    },
+    {
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "K": 1,
+      "profiled_calls": 3,
+      "baseline_transport_instrumented_ms": 3.6500090000000003,
+      "candidate_transport_instrumented_ms": 3.488443,
+      "reduction_percent": 4.426454838878479,
+      "acceptance_latency_claim": false
+    }
+  ],
+  "profile_components_not_assumed_additive": true,
+  "full_study_gate": {
+    "required_N8_reduction_percent": 5,
+    "actual_N8_reduction_percent": 4.426454838878479,
+    "passed": false,
+    "unchanged_profile_repeated": false
+  },
+  "static_resources": {
+    "path": "runs/full-ai-data-diversity-v1/integer-quotient-resource-01/results.json",
+    "block_threads": 128,
+    "baseline_registers_per_thread": 52,
+    "candidate_registers_per_thread": 56,
+    "both_local_bytes_per_thread": 0,
+    "both_theoretical_max_active_blocks_per_SM": 9,
+    "causal_or_achieved_occupancy_claim": false
+  },
+  "finite_complete_call_timing_studies": 0,
+  "full_call_speed_measured": false,
+  "selection_reason": "N8transport instrumentedtime fell4.426percent, below the predeclared5percent rule for spending a full-call study. Preserve the positive result and all old maxima; retain the measured geometry baseline. Scalar program finished with one reproducible candidate.",
+  "precision": {
+    "pressure": "float64",
+    "carriers": "float32",
+    "interpolation_and_middle_samples": "original float64",
+    "quotient": "Exact integer-midpoint RN64 certificate, one adjacent candidate or original RN64 division",
+    "tf32": false,
+    "autocast": false,
+    "ftz": false
+  },
+  "next_plan": "docs/plans/full-ai-data-diversity-v1/GPU-macrostep-student-plan-01.json",
+  "next_evidence": "docs/plans/full-ai-data-diversity-v1/macrostep-controls-results-01.json",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "historical_CPU_latency_target_verified": false,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/integer-quotient-primitive-01/results.json": "29d6e4f027d3a2f8302640a44a826bd6aa307c3f3118ff79dca967fc6f0c9f6c",
+    "runs/full-ai-data-diversity-v1/integer-quotient-model-component-01/results.json": "3c629e7c41017aca3bf5fca9ceeaf7968c1603c6c81673776a29cb9572a5daeb",
+    "runs/full-ai-data-diversity-v1/integer-quotient-blocks-01/results.json": "eef65f00a417af591825ff740fafcfc331d36c1056a6950b45ae208c116894d7",
+    "runs/full-ai-data-diversity-v1/integer-quotient-legacy-01/results.json": "a01f41c0dfc01685975da1b28da44bc8f565e5f97cf8bce530d57c83eae40f59",
+    "runs/full-ai-data-diversity-v1/integer-quotient-histories-01/results.json": "77d6ff5f1b5a3743c4767a6fa7d011605b6a8913dc7fe6c1166102eb3925d0df",
+    "runs/full-ai-data-diversity-v1/integer-quotient-resource-01/results.json": "535a8393e4e37427512de2ee69d8da9896114a1122e7a468dbedc4800290cc2a",
+    "runs/full-ai-data-diversity-v1/integer-quotient-profile-01/results.json": "6b2b36375d72b3d9ee4e7e4e78d710d021431a9db05da5414bf9eb8c369e0c29",
+    "runs/full-ai-data-diversity-v1/cuda-fusion-build-18/receipt.json": "dbec372b5fe98307e7651ac412ea9e7b9e41fde667c704f2c6e30657a0db4354",
+    "docs/plans/full-ai-data-diversity-v1/integer-quotient-profile-protocol-01.json": "d674e77281affdbeb505a082d86497d609c344896f4b4f2b0d8fc1b8e2cd6c31",
+    "docs/plans/full-ai-data-diversity-v1/GPU-macrostep-student-plan-01.json": "ffe318a6658024d97191b60ee45b36d552e93aeb7ee50ce999e031bf334e6aba",
+    "docs/plans/full-ai-data-diversity-v1/macrostep-controls-results-01.json": "9b4ac71e799b2ed4230d91e3bc414d17404284e6049ca2c6809e10b5b845d967",
+    "docs/plans/full-ai-data-diversity-v1/macrostep-student-pilot-contract-draft-01.json": "6b1e16430e67813835c4fbf810838cefda48d081e5cd396f811bee5a15f2f676"
+  }
+}

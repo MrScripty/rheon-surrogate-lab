@@ -1,0 +1,22 @@
+{
+  "status": "registered_before_packed_pinned_transfer_execution",
+  "created_unix": 1792546668.8763962,
+  "bounded_experiment": "docs/plans/full-ai-data-diversity-v1/gpu-input-overhead-next-experiment-01.json",
+  "variant": 2,
+  "maximum_new_execution_variants": 2,
+  "source": "experiments/full-ai-data-diversity-v1/cuda_native_transfer_v1.py",
+  "measured_basis": "runs/full-ai-data-diversity-v1/fused-gpu-profile-02/results.json",
+  "change": "Pack one typed native byte upload in pinned storage; queue all typed native output downloads into an independently owned pinned allocation and synchronize once. Include packing, allocation, transfers and synchronization in full-call timing.",
+  "invariants": [
+    "Exact native float64 pressure and float32 carriers",
+    "All K outputs and retained output ownership",
+    "8/4-byte aligned field views including odd rectangular grids",
+    "Zero padding bytes",
+    "No fitted parameter, physical operation or learned arithmetic change"
+  ],
+  "primitive_test": "All24actual current development fields, four repeated states per call, five calls including mutation and delayed input lifetime; verify exact bytes for K1-4 and retained outputs.",
+  "physical_test": "All960expanded blocks and15360consumed240step physical outputs with unchanged1e-5gates, before any new target timing/heldout claim.",
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "reserved52_unopened": true
+}

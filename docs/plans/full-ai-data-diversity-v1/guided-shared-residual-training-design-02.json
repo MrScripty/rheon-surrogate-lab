@@ -1,0 +1,84 @@
+{
+  "status": "implemented_unqualified_guided_residual_generator_after_fullwindow_native_evidence",
+  "created_unix": 1792649658.872556,
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/temporal-control-guide-full-training-results-02.json": "423f1c4a3b8ed38e4234371f2d66d504106d2cab5c3c77948057dce76ce1b550",
+    "docs/plans/full-ai-data-diversity-v1/predicted-fine-readout-integration-results-01.json": "cd34792bcb78bdfff38db194edc32508d6a10fa61180c03c819b6583fae99c05",
+    "docs/plans/full-ai-data-diversity-v1/temporal-control-guide-decision-01.json": "675e65b8ce856f0ce57482d3d32aba6025703fb1301894fbff8e42e29d508f43",
+    "docs/plans/full-ai-data-diversity-v1/predicted-fine-readout-full-training-results-01.json": "f1716b20d70ad6eaad512a7e6405dac585922b9ae19a635f327ae0831675c83d"
+  },
+  "prerequisite": "Fullfinecomparison57662completedexit0. Foldedguideparity28787isrunning;waitforitscompleteall240windowbyteproof beforeGPUqualificationofthisgenerator.",
+  "hypothesis": "Train small final-state residuals around frozen teacher-free time-aware guides, rather than asking the residual to undo wholeblock force averaging and missing displacement. No evidence yet of target-level learned accuracy or speed.",
+  "data": {
+    "independent_training_masters": 24,
+    "independent_development_masters": 12,
+    "training_windows": 240,
+    "cadence_K_configurations": 12,
+    "training_blocks": 2880,
+    "training_physical_outputs": 7200,
+    "labels": "Original complete native states and matchingfineRHS at everyj/outputrate. Future fields labelsonly. Reusequalified2.81GBcapturedarchive;noextra prestate-label archive required for this design.",
+    "weighting": "Eachmaster1/24;each selectedwindow1/Nwindows(master);eachconfiguration1/12;eachhead1/K. Continuousscenes9windows,pulsescenes11. Do notpoolblocksasiftheywereindependentmasters."
+  },
+  "representation": {
+    "frozen_guides": "Onewholeblockforecast,explicitknownforceprefix/lastfinecontrols,teacher-freepredictedprestates,KoriginalN1historyfineadvances,andoptionalknowncontroldisplacementtracerguide. Alllearnedmapsaremanaged-restored;no nativepressure solver.",
+    "inputs": "OnlycurrentP,Vx,Vy,Vz,tracer;grid/density/material/timing;fullprescribedcontrolpathandexacteventmetadata;guidepredictionsderivedfromthoseinputs.",
+    "shared_encoder": "One shared26channelspatial/control/eventencoder. Currentfieldsand predictedfineendpointPVT; channel22replacesredundantwidth/32withcoarseforecasttracertoexposeanadditionalteacher-freefallback. Outputlead metadataunchanged.",
+    "outputs": "Existing1724/3432parameter width4/8 residual architectures. Perheadvelocitydelta scaledh/physicallead_dt; coupledpressure readoutuses1/240 explicitly. Finepressureinterval isnotoutputinterval. EveryheadfullPVTsupervised.",
+    "gradient_boundary": "Frozen guidegenerationunder no_grad; trainnew residual networkthrough qualifiedcoupled learnedresponse. NoCPUlearnedforwards.",
+    "initialization": "New correctionheads zero;require all240window/all12 zeroheadbyteparitybeforeupdates.",
+    "pressure_override_warning": "Do not train the earlier control-guide readout-override class unchanged; it replaces pressure afterthe oldnetworkandwoulddisconnect intendedcorrectiongradients.",
+    "frozen_guide": "FoldedFineReadoutGenerator, width4, exactzero16heads; old learnedmaps/controls/N1history retained. Certifyfoldagainstunfoldedbeforeuse."
+  },
+  "optimization": {
+    "status": "needs_profiling_and_managed_registration",
+    "first": "Portablecapturedsource/data full24 CUDA objective plus finitegradients withoutupdates, then frozen fullpopulation selection.",
+    "reason": "Bothpreviouswidth4/8streamedAdam1e-4runsworsenedallcompleteepochobjectives. This is evidence to control optimizerstep sizeandwholepopulationacceptance, not proof of capacity exhaustion.",
+    "proposal": "Beginwithone reducedwidth fit and predeclared finite fullobjective acceptance/backtracking or calibratedstep scaling. Setactualgradient/evaluation counts andmanagedwall/storagebudgetsfromnewmeasurements beforefit; do not silentlyreuseunqualified1740s/4epoch assumptions.",
+    "custody": "ManagedTuldokCUDAonly;allactualupdatescountasfits;typedCPUrestoresandcopiedGPUprobes,noCPUlearnedforward. Usepreviouslyauthorizedownersession/normalrenewalonly."
+  },
+  "latency": {
+    "strict_GPU_ms_per_physical_output": 0.2,
+    "larger_ceiling": ".2*max(1,V/32768)",
+    "current_guides_meet_target": false,
+    "scope": "Allcontrols,guides,trunk,heads,learnedprojections,fullownedPVToutputs,transfersandsync. DivideonlyK.",
+    "future_optimization": "After accuracy evidence, prove zero-head forecast folding and consider batched/fused shared projections. Retain exact full cost andoldslowprototypes. Do notassume moreCPUcoresorGPUalone guarantees speed."
+  },
+  "verification": [
+    "All12nativeP/V/tracer/equation metrics with separate density/gridcounts/aspectratio,forcefamily,motion,leadtime andstart summaries.",
+    "Independentdevelopmentandnewseedchecksafterselection;reserved52remainunopeneduntilfrozenconfirmation.",
+    "600physicalstepdriftat30/60remain gatedbyaccuracy/speed/scaling;do notstartitnow."
+  ],
+  "new_parameter_fits": 0,
+  "implementation_complete": true,
+  "model_promotion": false,
+  "full_generator_target_pass": false,
+  "supersedes": "docs/plans/full-ai-data-diversity-v1/guided-shared-residual-training-design-01.json",
+  "implementation_GPU_qualified": false,
+  "model_source": "experiments/full-ai-data-diversity-v1/guided_shared_residual_v1.py",
+  "broad_findings": {
+    "pressure_worst": 0.1572690439830323,
+    "velocity_worst": 0.11209480681022035,
+    "tracer_worst": 0.16502286946653344,
+    "equation_worst": 0.5728930377340852,
+    "scene_balanced_objective": 0.0003857275064314711,
+    "baseline_scene_balanced_objective": 0.01636148126497296,
+    "tracer_worst_regressed": true,
+    "pressure_outputs_improved": 6792,
+    "pressure_outputs_regressed": 2,
+    "velocity_outputs_improved": 6781,
+    "velocity_outputs_regressed": 13,
+    "tracer_outputs_improved": 5611,
+    "tracer_outputs_regressed": 650,
+    "independent_confirmation": false
+  },
+  "next": [
+    "Completefoldedbyteproof28787;do notoverlapGPUTimings.",
+    "Qualifynewgeneratorzeroheadoutputparity againstfoldedguideforall240windows/all12 andbothwidths; fullCUDAphysicalobjective/backward finitewithoutupdates.",
+    "Captureactualnewcode/assets/CPUrestoremetadata intoportablebundle;reuseoriginalfinal-labelcapturedarchive. Verifyzeroambientreads andexactportableobjective.",
+    "Profilefullobjective/gradientwall/memoryandcondition newstep-scale/line-acceptanceprotocol beforeone managedCUDAfit. Existingrecipe1800sCUDAceilingremains.",
+    "Preserve tracerregressions;nativeworstfieldmetrics andall12developmentdeterminepromotion,neveraveragelossalone."
+  ],
+  "source_sha256": {
+    "experiments/full-ai-data-diversity-v1/guided_shared_residual_v1.py": "f6431ed5ebe2835cf130b7b8835db63b21ad50efa47eb6f734748fd4c23f7af6"
+  }
+}

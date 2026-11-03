@@ -1,0 +1,36 @@
+{
+  "commands": [
+    {
+      "id": "build-independent-native-viscosity-probe",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/build_viscosity_teacher_v2.py",
+        "--output",
+        "runs/full-ai-next-priorities-v1/viscosity-teacher-build-02"
+      ],
+      "timeout": 360
+    },
+    {
+      "id": "qualify-viscosity-primitive-and-exact-labels",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/qualify_viscosity_teacher_v2.py",
+        "--output",
+        "runs/full-ai-next-priorities-v1/viscosity-teacher-qualification-02.json"
+      ],
+      "timeout": 300
+    },
+    {
+      "id": "separate-learned-transport-and-viscosity-errors",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/diagnose_displacement_components_v2.py",
+        "--pair",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/full-ai-next-priorities-v1/b2-displacement-pair-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/displacement-component-diagnosis-01.json"
+      ],
+      "timeout": 900
+    }
+  ]
+}

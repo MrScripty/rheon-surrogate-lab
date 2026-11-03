@@ -1,0 +1,77 @@
+{
+  "status": "next_bounded_shared_trunk_training_priority_after_closed_fit11_and_F64_head_qualification",
+  "created_unix": 1792680072.6913064,
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/guided-pressure-fit-results-01.json": "a9e332b6a43299608188fb3e379cc9969b820545e25fc5106fbafe326bcb246b",
+    "docs/plans/full-ai-data-diversity-v1/pressure-head-geometry-results-01.json": "d914799913f2e6a49b759b0b0d0211c9c42d3eacd953ebdcb6a5ca6f9fe7eee3",
+    "docs/plans/full-ai-data-diversity-v1/guided-pressure-F64-qualification-results-01.json": "ed7f1f469c789b9b5c43ac6b1801309509633d2e974db94a5d18fd1a1d2f1588"
+  },
+  "model_family": "guided_pressure_residual_v2",
+  "priority": "Give the shared trunk effective adaptive updates while retaining the complete broad training population. Do not infer an architecture limit from four tiny full-population ray steps.",
+  "proposed_fit": {
+    "proposed_parameter_fits": 1,
+    "hidden_width": 4,
+    "initialization": "Qualified original CUDA seed/zero heads; any nonzero initialization requires explicit captured lineage.",
+    "optimizer": "Adam with F64 moment accumulators and F32 stored model weights; new managed implementation and qualification required.",
+    "learning_rate": 0.001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-12,
+    "weight_decay": 0.0,
+    "epochs": 4,
+    "updates_per_epoch": 240,
+    "maximum_updates": 960,
+    "shuffle_seed": 104729,
+    "batch": "One selected window; accumulate all12 cadence/K configurations and all owned outputs with1/K weighting before a single update.",
+    "window_sampling": "Deterministic shuffle of all240 windows each epoch, loading each decoded window once. All24 scenes and all2880 blocks per epoch; do not randomly reread the archive separately for every block.",
+    "gradient_weight": "240 * scene_weight * window_weight * mean_over12_configs(loss); expectation over shuffled windows equals the frozen equal-scene/full-window objective.",
+    "full_population_audits": "Unchanged full24/all240/all12 objective and field worst errors at initialization and after every epoch.",
+    "checkpoint_selection": "Predeclare a per-field worst-error non-regression gate relative to training initialization, then rank maximum worst field error and mean. Retain initial, best mean, selected, last and complete epoch diagnostics; no development-based fitting.",
+    "wall_seconds_maximum": 1740,
+    "parameter_updates_must_be_managed": true
+  },
+  "qualification_before_admission": [
+    "Implement/capture the adaptive optimizer and extended-head entrypoint plus CPU restore; verify zero-update actual entrypoint, deterministic full data coverage and resource/output caps.",
+    "Keep all reference labels, original normalization/floors and1e-5 error/.2ms GPU targets unchanged.",
+    "Resolve capacity for the next managed captured bank without removing scientific references/checkpoints or lowering the1GiB admission reserve.",
+    "Completed/drained managed fit and all4 CPU typed restores before full development and complete GPU benchmark."
+  ],
+  "data": {
+    "training_masters": 24,
+    "development_masters": 12,
+    "selected_training_windows": 240,
+    "simulation_outputs_per_s": [
+      30,
+      60,
+      120
+    ],
+    "K": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "native_reference_updates_per_s": 240,
+    "reference_maximum_physical_cores": 12,
+    "reserved52_references_unopened": true
+  },
+  "conditional_followups": [
+    "If adaptive training still makes little progress, test training-only feature standardization folded into the shared mix layer, then additional width/spatial features with controlled comparisons.",
+    "Use measured joint pressure-head conditioning in a separate predeclared optimizer comparison if needed; fixed-trunk head fitting alone is not the primary accuracy path.",
+    "Profile complete GPU cost after a useful accuracy gain; do not promote a checkpoint solely for mean loss or a single scalar training maximum."
+  ],
+  "proposed_new_fit_admitted": false,
+  "adaptive_optimizer_implemented": false,
+  "new_parameter_fits": 0,
+  "model_promotion": false,
+  "goal_status": "active",
+  "storage": {
+    "repository_free_bytes_observed": 1209823232,
+    "temporary_free_bytes_observed": 14315548672,
+    "minimum_new_managed_capture_estimate_bytes": 4017959552,
+    "training_reserve_bytes": 1073741824,
+    "native_capture_floor_bytes": 2147483648
+  }
+}

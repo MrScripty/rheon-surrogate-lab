@@ -1,0 +1,75 @@
+{
+  "status": "registered_before_data_capture_and_optimizer_updates",
+  "registered_unix": 1792473136.409898,
+  "schema": "rheon-viscosity-calibration-v1",
+  "identifier": "viscosity-calibration-01",
+  "parameters": 243,
+  "updates": 1000,
+  "batch_size": 8,
+  "learning_rate": 0.25,
+  "seed": 2026102061,
+  "sampling_seed": 2026102062,
+  "data_seed": 2026102063,
+  "evaluation_seed": 2026102064,
+  "wall_seconds": 1200,
+  "double_tolerance": 1e-08,
+  "published_tolerance": 1e-06,
+  "train_patterns": 64,
+  "development_patterns": 16,
+  "evaluation_counts_xyz": [
+    [
+      16,
+      16,
+      16
+    ],
+    [
+      9,
+      11,
+      11
+    ],
+    [
+      15,
+      6,
+      8
+    ],
+    [
+      32,
+      32,
+      32
+    ]
+  ],
+  "evaluation_cases": 24,
+  "native_qualification_sha256": "465296c0df1082dd4cc030bac7e07b5a4fd4d473e5ecc014498121e0ba49a396",
+  "prior_component_diagnosis_sha256": "6fbf58c4788d0b7855228ef2191e1e05b16da5c4c860d32cc7029b382dbb691d",
+  "source_sha256": {
+    "viscosity_calibration_model.py": "32f0b82f0d653f86f4c519564f4a1f19bb9324b9d00410dda063c88aeb7f5c62",
+    "viscosity_calibration_train.py": "48395497fd5b939565da4c0020d4e760bf94e92502971c1872159ff029e85cca",
+    "prepare_viscosity_calibration_teacher.py": "03920383f9719504c23b8542c49e54f67bc682bcd546bd28b4faa90ee19c1639",
+    "prepare_viscosity_calibration_project.py": "695c2e59efcf7bebdbba38f236cfddcbfa1a8beb4c86369a3c83013b55ec5018",
+    "qualify_viscosity_calibration_fit.py": "5c01db301a1a1ba52d261f45ce81ba4b8a4388bf439a822bf18241864aeb59a3",
+    "run_viscosity_calibration_pair.py": "d3b4b83ddee387887fc00184d3c467ca801ee5123f1505c180b33ec4f7ddac79",
+    "evaluate_viscosity_calibration.py": "20444597de0ad1868660a92ee24a2483d4854d26e06d9c01f9b223d046edc856",
+    "viscosity_teacher_support_v2.py": "b64a33a16b9265016b93223c11b778592bd68a62ff7e1582845898d22c6c2836",
+    "managed_fit_artifacts.py": "8c62c1bfac2eb4eeeab78d726cc2957bddbf73a4687b70652169cd96b206075a",
+    "prepare_flux_teacher.py": "4fca00ccbacc33afac325dd48fe4deef5da3a7a863573593ce32070c5e0368a1",
+    "temporal_features_v2.py": "d64da548837aa7c9ed34b2991316a234879df82d48ef377abcea571c32b4280a"
+  },
+  "optimizer": "SGDfloat64",
+  "publication_dtype": "float32",
+  "input": "Quantized velocity in1/16 units on12cube, zero normal faces, replicate high padding",
+  "target": "(native viscosity update - input)/beta at beta1/64, with rho=mu=1; free physical face DOFs only",
+  "zero_initialization": true,
+  "analytic_coefficient_assignment": false,
+  "ordinary_managed_training_and_exact_CPU_restore_required": true,
+  "no_local_optimizer_updates": true,
+  "numerical_teacher_excluded_from_candidate_inference": true,
+  "model_composition_requires_native_component_pass": true,
+  "full_state_goal_interval": 240,
+  "full_state_error_target": 0.004,
+  "full_state_block_budgets_ms": {
+    "2": 4,
+    "3": 6,
+    "4": 8
+  },
+  "reserved_scenes_consumed": false
+}

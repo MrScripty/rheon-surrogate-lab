@@ -1,0 +1,31 @@
+{
+  "status": "negative_fits_and_completed_development_inform_next_zero_fit_ablation",
+  "created_unix": 1792646970.18961,
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/shared-temporal-dualwidth-training-results-01.json": "91793339f6165e107793b0c17db249a4d2e8666ae7f533a46dbfd0bc8ed166a7",
+    "runs/full-ai-data-diversity-v1/temporal-control-semantics-01/results.json": "e780cafc610fbeb074ec42dc872dbcd5f7d483167dd57cde1466f443e151469d"
+  },
+  "known_control_scalar_counts": {
+    "physical_outputs": 7200,
+    "last_off_whole_mean_on": 1077,
+    "cold_constant_force_pressure_ramp": 113,
+    "scalar_pressure_timing_mismatches": 3768,
+    "scalar_impulse_interpolation_mismatches": 2229
+  },
+  "limitations": [
+    "Scalar force diagnostic is not a fluidfield accuracy result and does not model movingforce geometry.",
+    "Wholecoarse transport causes independent velocity/tracer errors; correcting pressure timing alone cannot establish fullgenerator accuracy.",
+    "Fullobjective streamed clippedAdam updates were worse at every completeepoch for bothwidths; this is negative optimization evidence, not a proof that training cannot work."
+  ],
+  "ordered_work": [
+    "Run all24trainingmasters/all12cases atinitialstart to qualify guidedGPUentrypoint, rawparentwrapper parity and complete timing.",
+    "Then evaluate all240trainingwindows/all2880cases for each guide against the unchanged parent, keeping allforcefamilies/densities/shapes.",
+    "If guides improve pressure or impulse errors without hidden futuredata, expose their output as a new residualtraining representation; separately address nonlinear transport and optimization conditioning.",
+    "Do not spend additional parameterfits without measured representation or optimization evidence; use unchanged frozen targets, managedCUDAfit and typedCPUrestore.",
+    "Retain baseline and allfailedvariants; reserve52outputs until independentconfirmation; drift phase remains gated."
+  ],
+  "strict_GPU_ms_per_physical_output": 0.2,
+  "worst_all_field_relative_max": 1e-05,
+  "new_parameter_fits": 0,
+  "model_promotion": false
+}

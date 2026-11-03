@@ -1,0 +1,69 @@
+{
+  "status": "registered_before_qualification_or_fitting",
+  "scope": "Full-state pressure-expert endpoint/intermediate and retained-feature bundles",
+  "models": [
+    {
+      "horizons": 2,
+      "architecture": "endpoint"
+    },
+    {
+      "horizons": 3,
+      "architecture": "endpoint"
+    },
+    {
+      "horizons": 4,
+      "architecture": "endpoint"
+    },
+    {
+      "horizons": 2,
+      "architecture": "reuse"
+    },
+    {
+      "horizons": 3,
+      "architecture": "reuse"
+    },
+    {
+      "horizons": 4,
+      "architecture": "reuse"
+    }
+  ],
+  "first_bounded_fit": {
+    "horizons": 2,
+    "architecture": "endpoint",
+    "updates": 10000,
+    "single_block_updates": 2000
+  },
+  "width": 16,
+  "seed": 2026101921,
+  "sampling_seed": 2026101922,
+  "objective": "Existing increment-MSE with unchanged field/equation/physical coefficients",
+  "training_data": "All16 train-only full-state trajectories, original normalization and sampling",
+  "model_source_sha256": {
+    "bundle_model_pressure_expert.py": "9cc6527ccf6d273de4d37d8ccff2752159edf040789c74dc1ca85e4382588b75",
+    "temporal_train_pressure_expert.py": "56e3749c0bd87bb864dfa4b8abded09b1790ec7346b0621c0f5794e84de39255",
+    "frozen_temporal_pressure_core.py": "5e83b77ec90ea3709dab8a84975aa068a60c1acf9e364af0a2b8f545e3f49666",
+    "factored_request_model.py": "39577e2b6b275850f61f2e440e646ab435def01da1d16b5301fb5329e1fec6b5"
+  },
+  "pressure_expert": "One frozen a-tail8 call per complete block; qualified differentiable precise learned execution",
+  "request_initialization": "Managed factored request weights, prior accuracy failure retained; flux frozen and nonlinear tensors trainable",
+  "fluid_tracer_independent": true,
+  "current_pressure_input": false,
+  "velocity_readout": "Learned 3x3 convolution conditioned on model-predicted pressure; initialized at zero, no analytical gradient stencil or post-projection",
+  "known_force": "Prescribed per-step force increments are summed in physical reconstruction; all work timed",
+  "combined_block_budgets_ms": {
+    "2": 4,
+    "3": 6,
+    "4": 8
+  },
+  "worst_equation_and_field_limit": 0.004,
+  "own_history_steps": [
+    12,
+    48,
+    240
+  ],
+  "reserved_scene_gate": "No reserved capture until full-state development finalist qualifies",
+  "parent_pressure_confirmation_sha256": "93ab397f6932ac7cf009823e1bf56e902a3e92e2694560b1907249177a475c41",
+  "component_port_result_sha256": "e8a0ac018c7240483ed39c90d3421ff359bc926c3e01d45c0a66ba9d3e38857b",
+  "no_numerical_pressure_solve_at_inference": true,
+  "initialization_is_local_assembly_not_new_optimizer_fit": true
+}

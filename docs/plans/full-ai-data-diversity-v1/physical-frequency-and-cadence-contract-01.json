@@ -1,0 +1,58 @@
+{
+  "status": "prospective_frequency_and_cadence_clarification",
+  "created_unix": 1792531155.2267888,
+  "authority": "User clarifies rendering FPS differs from physical frequencies and requests accurate coverage of a wide frequency range",
+  "rendering_fps": "Presentation/output-frame rate, independent of the internal reference integration timestep",
+  "macro_output_timestep_s": 0.016666666666666666,
+  "physical_frequencies_hz": "Cycles per second of forcing amplitudes, emitter motion and resulting fluid signals; report each separately",
+  "current_frequency_coverage": {
+    "regular_pulse_hz": [
+      0.5,
+      5.0
+    ],
+    "emitter_oscillation_hz": [
+      0.05,
+      1.5
+    ],
+    "spatial_wave_temporal_base_hz": [
+      0.0,
+      4.0
+    ]
+  },
+  "prospective_frequency_bands_hz": [
+    [
+      0.1,
+      1.0
+    ],
+    [
+      1.0,
+      10.0
+    ],
+    [
+      10.0,
+      100.0
+    ]
+  ],
+  "frequency_limits_status": "Optional user clarification requested; these provisional bands are adjustable and are not passing coverage claims",
+  "reference_requirements": [
+    "Evaluate continuous force programs at actual internal reference times; repeating only coarse sampled controls is insufficient for a high-frequency reference claim",
+    "Freeze and test the reference timestep independently of rendering and output cadence",
+    "Test temporal convergence and native stability across frequency bands before using high-frequency scenes for model accuracy qualification",
+    "Record reference internal timestep, output timestep, force frequency, pulse duration/duty and motion frequency in each receipt",
+    "For any model, include all its required internal work in complete per-output-step latency"
+  ],
+  "preservation": "Existing immutable controls and captures remain valid as the explicitly sampled-control baseline; do not relabel them as high-frequency continuous-program truth",
+  "benchmark_group_keys": [
+    "cells_per_metre",
+    "Nx",
+    "Ny",
+    "Nz",
+    "force_profile",
+    "physical_frequency_band",
+    "motion_profile",
+    "output_dt_s",
+    "reference_dt_s",
+    "K",
+    "cpu_core_set"
+  ]
+}

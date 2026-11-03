@@ -1,0 +1,89 @@
+{
+  "status": "controlled_native_pulsephase_aliasing_confirmed_event_metadata_qualified",
+  "created_unix": 1792632579.3618307,
+  "diagnostic": "runs/full-ai-data-diversity-v1/pulse-phase-diagnostic-01/results.json",
+  "diagnostic_sha256": "7ade5237ecf3c2d5a68ecf401e946269c2cbd34bae3c3ddb9fa16ae9a1403fa2",
+  "native_advances": 960,
+  "native_runs": 20,
+  "physical_scene": {
+    "counts_xyz": [
+      12,
+      10,
+      8
+    ],
+    "cells_per_metre": 25,
+    "emitter": "stationary",
+    "swirl": 0,
+    "fluctuation": 0,
+    "initial_velocity": 0,
+    "acceleration_m_per_s2": 1,
+    "pulse_duration_s": 0.008333333333333333
+  },
+  "pulse_onset_fractions": [
+    0.05,
+    0.25,
+    0.5,
+    0.75,
+    0.95
+  ],
+  "all240_leftsampled_outputs_identical_despite_different_exact_event_times": true,
+  "intervalmean_variant_distinguishes_event_phase": true,
+  "matched_total_scalar_gate_impulse_all20runs": true,
+  "matched_prefix_gate_impulse_intervalmean_runs": true,
+  "clock240vs480_worst_relative_l2": {
+    "left_sampled": {
+      "pressure": 13178.254602713489,
+      "velocity": 1.0,
+      "tracer": 5.154026628805638e-05
+    },
+    "interval_mean": {
+      "pressure": 6589.167686662083,
+      "velocity": 2.4409527383631808e-05,
+      "tracer": 1.719381624061941e-05
+    }
+  },
+  "pressure_comparison_caveat": "Pressure at a retained endpoint is the final fineinterval projection pressure.240and480 use different final averaging intervals; an edge insideone interval andoutsideanother can create a largepressuregap even when fullintervalimpulses match. Keepallrelative/absoluteerrorsandnorms; this isnot neuralmodelaccuracy or proof of an inaccuratepressureinverse.",
+  "findings": [
+    "The fixed240sampledforcepath canlose distinctpulseeventtimes. No modeltrainedonlyonthatpathcanidentifythe lost eventoffset; addingdtalonecannotrestore it.",
+    "Exacteventmetadata suppliesmissingprescribedtiming. The currentteacherlabelsremainleftsampled240; betterinputsalone donotchange thoselabels.",
+    "Exactintervalmeangates correct scalarimpulse for stationaryunmodulatedforce,butadvection,viscosity,projection andtracertransportarestilldiscrete andoperateindifferentorder. Thisvariantdoesnotmeet1e-5 andisnotconvergedphysicaltruth.",
+    "Fullforcepathorder andeventoffset remain useful forcheaperlongendpoints/interiors; all expensiveguidance andlearnedcorrectionworkmustcounttoward under0.2msperphysicaloutput."
+  ],
+  "event_interface": {
+    "source": "experiments/full-ai-data-diversity-v1/long_temporal_dataset_v2.py",
+    "known_event_columns": [
+      "offset_s",
+      "normalized_offset",
+      "pulse_before",
+      "pulse_after",
+      "pulse_duration_s"
+    ],
+    "full240sampled_forcepath_retained": true,
+    "physical_future_fields_are_inputs": false,
+    "labels_unchanged": true
+  },
+  "audited_partial_data": {
+    "qualification": "runs/full-ai-data-diversity-v1/long-temporal-event-view-qualification-01/results.json",
+    "qualification_sha256": "a8d8d0648b11a33ba8d976d03767a480f337b262c82b0b52424ca00cbf6b27e6",
+    "index": "runs/full-ai-data-diversity-v1/long-temporal-event-view-qualification-01/index.json",
+    "independent_masters_per_split": {
+      "train": 9,
+      "development": 3
+    },
+    "window_metadata_checks": 1344,
+    "loaded_complete_examples": 12,
+    "loaded_complete_target_outputs": 48,
+    "not_full36_training_ready": true
+  },
+  "next": [
+    "Qualify an eventaligned finerreference diagnostic for pulseedges thatlieexactlyonitsclock,keepingcurrent240traininglineageunchanged. Separate pressureintervalsemantics fromintegratedcarrierconvergence.",
+    "Test exacteventconditioning withsharedlongendpoint/interiorarchitectureonfull24train12devset;keepregular/irregularedges,continuousforcing andmovingemitters incoverage.",
+    "Do not trainononlythesinglecontrolledscene orpromote intervalmean forcingasexactfluid integration."
+  ],
+  "reference_cpu_policy": "docs/plans/full-ai-data-diversity-v1/reference-half-cpu-policy-02.json",
+  "new_parameter_fits": 0,
+  "cumulative_managed_fits": 7,
+  "new_learned_forwards": 0,
+  "reserved52_references_opened": 0,
+  "full_goal_pass": false
+}

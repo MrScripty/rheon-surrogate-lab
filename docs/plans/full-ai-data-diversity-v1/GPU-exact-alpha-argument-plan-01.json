@@ -1,0 +1,37 @@
+{
+  "status": "registered_before_one_exact_scalar_reuse_candidate",
+  "created_unix": 1792592807.8487902,
+  "previous_program": "docs/plans/full-ai-data-diversity-v1/GPU-next-major-execution-priorities-03.json",
+  "previous_goal_turn_classification": "progress",
+  "feasibility_source": "docs/plans/full-ai-data-diversity-v1/GPU-learned-transport-next-feasibility-01.json",
+  "new_finding": "nested_F64_pressure_graph_v1.transport already receives/validates caller alpha=dt/h; learned_cuda_kernels_v20 recomputes dt/h in every generic/specialized output thread. PTX contains div.rn.f64 in transport. No existing alpha reuse candidate found.",
+  "decision": "Test exact reuse of existing known scalar before implementing approximate compensated arithmetic. This is a separate exact execution candidate; no error-bound guard or precision change is needed if RN64 bits agree.",
+  "maximum_candidates": 1,
+  "maximum_complete_call_studies": 1,
+  "maximum_diagnostic_profiles": 1,
+  "maximum_error": 1e-05,
+  "maximum_ms_per_generated_step": 1.2,
+  "reference_grid": [
+    32,
+    32,
+    32
+  ],
+  "arithmetic": "N8 kernel argument carries existing validated binary64 alpha instead of dt. h argument and all other operations/order/learned coefficients/coordinate clamps/7F64lerps/pressure/N1 stay unchanged. Caller computes no new learned CPU work or new scalar value; it already computed/validated alpha.",
+  "scalar_domain": "Existing configure_transport requires finite positive dt,h. Existing caller supplies its own dt/h; GPU division must match its RN64 bits, including scalar parameter ABI. Broad scalar controls also exercise normal/subnormal/overflow/underflow and zero numerator.",
+  "gates": [
+    "1048576CPU/GPU quotient bit comparisons,2048independent exact-rational rounds,24physical scalar launches,compiled parameter bytes,196608orderedpoint and393216gate/mix outputs;104actual/random/zero/nonfinite transport patterns across26consumed scenes.",
+    "All1018nativeblocks and everyKintermediate; require exact parent bytes for all N1 and N8.",
+    "All26expanded240 and16legacy240 actual outputs byte-identical to existing native-scored cell-coordinate parent histories. Changed N8 bytes are not allowed; no fresh teacher capture is necessary for proven every-output byte inheritance.",
+    "One balanced complete-call GPU study with same24scene/window/K/repeat populations and all maxima; optional one diagnostic profile."
+  ],
+  "original_seed_restore_independent_scaling_600output_gates_unchanged": true,
+  "new_parameter_fits": 0,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  }
+}

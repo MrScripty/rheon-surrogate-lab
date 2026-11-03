@@ -1,0 +1,27 @@
+{
+  "status": "qualified_training_view",
+  "manifest": "runs/pressure-methods-v1/teacher-half-training-view-01/manifest.json",
+  "manifest_sha256": "d9dfe51ad856103271de5203dacc064f12587ad90a27ea12bc8c334b19315170",
+  "parents": 16,
+  "snapshots": 32,
+  "shard_bytes": [
+    610710,
+    611446
+  ],
+  "cells_per_metre": [
+    8.0,
+    16.0
+  ],
+  "method": {
+    "experiment": "teacher_temporal_refinement",
+    "teacher_substeps": 2,
+    "model_dt_s": 0.016666666666666666,
+    "pressure_and_rhs_divisor": 2,
+    "initial_guess": "Matched coarse-trajectory pressure history for every arm",
+    "limitation": "Fine-trajectory instantaneous pressure requests at model dt; not an exact fine-integrated coarse transition target"
+  },
+  "worst_reference_relative_residual": 9.843268862405418e-09,
+  "worst_common_base_reconstruction_error": 6.5052130349130266e-18,
+  "optimizer_updates_executed": 0,
+  "source_sha256": "49ba3d827540a39eee07b414d6a3923b8706a6a5aec4422e9898339456be3cc9"
+}

@@ -1,0 +1,42 @@
+{
+  "status": "registered_before_CPU_timing",
+  "registered_unix": 1792465750.379519,
+  "source_sha256": "847dfc7a379d32733d0857a6dd876e87f1c920a7e7a13d439100967a9b3b2582",
+  "models": [
+    "b2-coupled",
+    "b2-provisional-control",
+    "b2-provisional-aux"
+  ],
+  "repeats": 5,
+  "balanced_serial": true,
+  "CPU": 23,
+  "threads": 1,
+  "batch_size": 1,
+  "starts": [
+    0,
+    8,
+    16,
+    32,
+    48,
+    64,
+    96,
+    120
+  ],
+  "total_cases_per_worker": 64,
+  "small_cases_per_worker": 48,
+  "extension_cases_per_worker": 16,
+  "variants": [
+    "full",
+    "tensor"
+  ],
+  "timed_requests": 1920,
+  "warmup": "One complete population before each scope and repeat",
+  "complete_block": "Physical encoding, known forcing, all neural updates and all physical fields for two horizons",
+  "amortized_budget_ms": 2,
+  "complete_block_budget_ms": 4,
+  "purpose": "Quantify actual CPU architecture costs and headroom even when accuracy fails; retain all failures and no combined success claim",
+  "prerequisites": "Both fits/restores/all8scene evaluations complete, owned children reaped, matched comparison audit passed",
+  "source_import_and_dense_map_setup": "Reported separately per fresh worker; excluded from warm latency",
+  "source_frozen_before_execution": true,
+  "reserved_scenes_consumed": false
+}

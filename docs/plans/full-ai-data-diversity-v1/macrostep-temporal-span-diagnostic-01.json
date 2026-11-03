@@ -1,0 +1,111 @@
+{
+  "status": "computed_QR_residuals_show_temporal_feature_span_limit",
+  "created_unix": 1792579205.682567,
+  "results": [
+    {
+      "stages": 3,
+      "per_metric": {
+        "equation": {
+          "maximum": 0.016050185797378227,
+          "exceeding_1e5": 58,
+          "worst_case": {
+            "identifier": "diversity-train-g003-cpm100",
+            "start": 96,
+            "metric": "equation",
+            "computed_orthogonal_residual": 0.016050185797378227
+          }
+        },
+        "pressure": {
+          "maximum": 0.0033291797691281546,
+          "exceeding_1e5": 52,
+          "worst_case": {
+            "identifier": "diversity-train-g008-cpm100",
+            "start": 32,
+            "metric": "pressure",
+            "computed_orthogonal_residual": 0.0033291797691281546
+          }
+        },
+        "velocity": {
+          "maximum": 0.0003933797744684878,
+          "exceeding_1e5": 32,
+          "worst_case": {
+            "identifier": "diversity-train-g003-cpm100",
+            "start": 96,
+            "metric": "velocity",
+            "computed_orthogonal_residual": 0.0003933797744684878
+          }
+        },
+        "tracer": {
+          "maximum": 0.0017924659152896642,
+          "exceeding_1e5": 37,
+          "worst_case": {
+            "identifier": "diversity-train-g007-cpm100",
+            "start": 96,
+            "metric": "tracer",
+            "computed_orthogonal_residual": 0.0017924659152896642
+          }
+        }
+      },
+      "factor_sha256": "5ae0f62067a0337ae407e95b46e3d5c9e7978864d1c292bd71f72904d435d288"
+    },
+    {
+      "stages": 4,
+      "per_metric": {
+        "equation": {
+          "maximum": 0.009893020302834109,
+          "exceeding_1e5": 58,
+          "worst_case": {
+            "identifier": "diversity-train-g003-cpm100",
+            "start": 96,
+            "metric": "equation",
+            "computed_orthogonal_residual": 0.009893020302834109
+          }
+        },
+        "pressure": {
+          "maximum": 0.0018265950495374161,
+          "exceeding_1e5": 49,
+          "worst_case": {
+            "identifier": "diversity-train-g008-cpm100",
+            "start": 96,
+            "metric": "pressure",
+            "computed_orthogonal_residual": 0.0018265950495374161
+          }
+        },
+        "velocity": {
+          "maximum": 0.0002368820163053139,
+          "exceeding_1e5": 26,
+          "worst_case": {
+            "identifier": "diversity-train-g003-cpm100",
+            "start": 96,
+            "metric": "velocity",
+            "computed_orthogonal_residual": 0.0002368820163053139
+          }
+        },
+        "tracer": {
+          "maximum": 0.001061686943516271,
+          "exceeding_1e5": 29,
+          "worst_case": {
+            "identifier": "diversity-train-g007-cpm100",
+            "start": 96,
+            "metric": "tracer",
+            "computed_orthogonal_residual": 0.001061686943516271
+          }
+        }
+      },
+      "factor_sha256": "97587f009b437dfe64cc4e2d14bac0d8887844b1f0385927d2a6c846732bf264"
+    }
+  ],
+  "interpretation": "For each computed full-grid augmented QR factor [D,target], the final diagonal component is residual outside the firstSorthogonal feature directions. This gives an optimistic per-example/per-metric least-squares residual floor in the computed design; the global shared readout has fewer freedoms. These residuals remain well above1e-5for many training pairs. No coefficient solution or local optimizer was computed.",
+  "limitations": "This is a computed F64 feature-space diagnostic, not an externally reviewed exact-arithmetic theorem or a native full-model qualification. Actual deployed outputs were separately scored against native labels. Changing the feature basis/coupled stages can change the limit.",
+  "CPU_generic_data_analysis_only": true,
+  "cpu_model_forward": false,
+  "local_coefficient_fitting": false,
+  "optimizer_updates": 0,
+  "expanded_reserved52_references_opened": 0,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/manifest.json": "9eac9364ba296075cbb39ff5a5ab073592e9e82797f624eade9574cf38f78cc6",
+    "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/readout-s3.npz": "5ae0f62067a0337ae407e95b46e3d5c9e7978864d1c292bd71f72904d435d288",
+    "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/readout-s4.npz": "97587f009b437dfe64cc4e2d14bac0d8887844b1f0385927d2a6c846732bf264",
+    "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/progress.json": "8a205ab6cb3af7ff7454735059eef0d3ca300645f4b599ab8f46502cc110f510"
+  }
+}

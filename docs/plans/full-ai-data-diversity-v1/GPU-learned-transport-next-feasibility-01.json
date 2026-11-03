@@ -1,0 +1,45 @@
+{
+  "status": "next_feasibility_work_not_an_executed_or_frozen_arithmetic_candidate",
+  "created_unix": 1792592281.343745,
+  "previous_completed_program": "docs/plans/full-ai-data-diversity-v1/GPU-next-major-execution-priorities-03.json",
+  "priority_reason": "Three F64 FFT execution candidates passed native accuracy but did not beat the same-study parent at32cubed-density100. Latest profile still records roughly0.98instrumentedms per physical output in learned_transport, the largest named kernel family.",
+  "evidence": [
+    "docs/plans/full-ai-data-diversity-v1/compact-FFT-pressure-results-01.json",
+    "docs/plans/full-ai-data-diversity-v1/FFT3D-pressure-results-01.json",
+    "docs/plans/full-ai-data-diversity-v1/FFT-pressure-results-01.json",
+    "docs/plans/full-ai-data-diversity-v1/paired-interpolator-results-02.json",
+    "docs/plans/full-ai-data-diversity-v1/guarded-middle-results-01.json"
+  ],
+  "research_parent": "experiments/full-ai-data-diversity-v1/cell_coordinate_pressure_graph_v1.py:CellCoordinatePressureNativeEntry",
+  "selected_baseline_unchanged": true,
+  "proposed_direction": "Investigate a complete N8 compensated-FP32-pair learned sampler with a cheap generic final-FP32-rounding certificate and original F64 learned-sampler fallback. Include coordinate/query/point/mix arithmetic, not only donor lerps. This is learned arithmetic precision, not a native pressure solver or teacher-error-selected correction.",
+  "distinguish_failed_work": [
+    "Donor-only compensated pairs changed four outputs, failed one native equation score, and yielded only small mixed timing changes. Do not merely add an expensive guard to that unchanged donor-only path.",
+    "Earlier guarded-middle FP32 accepted96.9percent of measuredN8 values yet regressed transport roughly76percent. High fast-path coverage alone is insufficient; avoid repeating costly pointwise F64 certification.",
+    "Pressure FFT variants retained for reproduction; no fourth unchanged-math FFT implementation is justified by a speculative few microseconds."
+  ],
+  "before_any_candidate_registration": [
+    "Derive conservative error bounds against the actual ordered parentF64 arithmetic, including exact restored coefficient representation errors, point/mix sums, phase/index formation, division where present, clamps, donor selection, scalar tails and final float32 rounding.",
+    "Certificate may accept only an unambiguous correctly rounded parent float32 output. Ambiguous cells/rounding, unsafe exponents, subnormals or nonfinite values take a predetermined numeric fallback to the original GPUF64 learned sampler. No scene lookup, native reference, future labels or teacher-error threshold in inference.",
+    "Establish whether the certificate can use cheap FP32/integer/static bounds rather than repeated pointwise F64 interval propagation; account for fallback, divergence, register pressure and spills. Compare operation count with the earlier guarded-middle source before investing in compilation.",
+    "Freeze exact algorithms, rounding/FMA/subnormal and signed-zero/endpoint policy, range guards and resource/trial caps. If a defensible inexpensive certificate cannot be derived, reject this direction and design a broader spatiotemporal-capacity study rather than repeating the12parameter failed readouts."
+  ],
+  "maximum_future_candidates_if_feasibility_passes": 1,
+  "maximum_latency_studies_per_candidate": 1,
+  "maximum_diagnostic_profiles_per_candidate": 1,
+  "mandatory_gates": [
+    "Independent exact-rational/F64 scalar controls including cancellation, wide exponent, ties, boundaries, endpoints and all consumed grid shapes; changed-input graphs.",
+    "All1018native blocks, unchangedoriginalN1, freshN8native240, all26expanded/16legacy regressions under unchanged1e-5.",
+    "One balanced complete-call GPU study only if accuracy qualifies; all K intermediate outputs, actual internal advances, transfers and maxima retained.",
+    "All original seed/managedCUDAtraining/exactCPUrestore/independent/scaling/600physicaloutput gates remain unchanged."
+  ],
+  "new_parameter_fits": 0,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  }
+}

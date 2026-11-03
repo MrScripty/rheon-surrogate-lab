@@ -1,0 +1,114 @@
+{
+  "status": "registered_before_new_full_state_optimizer_updates",
+  "models": [
+    "b1-fixed-viscosity",
+    "b2-fixed-viscosity",
+    "b3-fixed-viscosity",
+    "b4-fixed-viscosity"
+  ],
+  "config_sha256": {
+    "1": "308699687d13d9e72da6ad71a7b513ac35dc2487b886b1b8f5849fc76c39ce6d",
+    "2": "0f1efe9787a407b1af2fb352c42bdf72d7da46f82c315c97f7d744c67e7faa6c",
+    "3": "04b5c163cd051d41b177840e25c73e9dca5ff04b994e8a8e04bdf4748706ef2d",
+    "4": "fcc4f6878235735d0322e8cfc80ce10ddf5de53d68e9fe336999adf809fc58eb"
+  },
+  "qualification_sha256": {
+    "cpu": "329000858807f35d8bc167f58c0f31cd18fd7e463df59f29a66bd5fd3488a094",
+    "cuda": "9610df9b5865c338fd9de84a08d21b91264aa7f22e03ffb0900bd492a529e765"
+  },
+  "source_sha256": {
+    "bundle_model_coupled.py": "103a7fd05bfff77cca9db22390dcb86ed11eabf2438cdedce20297b9d42c4d01",
+    "bundle_model_decoder.py": "84825ec60584f94a0eab4d8afe6fe773374c490a48d3a662df8e73b6d663fb45",
+    "bundle_model_displacement.py": "75d352ef7a464da7d2a216e4f970cd0ab52244dc6ce75c5ab0c612968736c131",
+    "bundle_model_pressure_expert.py": "9cc6527ccf6d273de4d37d8ccff2752159edf040789c74dc1ca85e4382588b75",
+    "displacement_readout.py": "fd684b49468f1769fdd60d8ccb3e42d1983d6d171aba6ee6878ce3a84f822e1d",
+    "frozen_temporal_pressure_core.py": "5e83b77ec90ea3709dab8a84975aa068a60c1acf9e364af0a2b8f545e3f49666",
+    "full_learned_pressure_map.py": "a71dd3279eae019267334b113ba3e069f46149842c44ac7ea045e0ad55f20388",
+    "prepare_displacement_inputs.py": "5446f9e1a11b8d40c689ca0b6c3354bfc3d38c719bc083648cddb32f0cb9c9c9",
+    "qualify_displacement_training.py": "d08ed794554d0e8e68785a49313f0115982a8ecde64e6b904d5559fa6f0dd7e3",
+    "temporal_displacement_objective.py": "29f409f28c325bf35985440f391e75ce30b2c38df69aeacf930d71097e7d1022",
+    "temporal_train_coupled.py": "3f8465a23e83a07ae64f22936dc2a57d6370224c083cc293a5341c25fb30a89c",
+    "temporal_train_displacement.py": "73752b4cb01669739d369938d542a59e4668f507dd9e145d71b6e213abc52dd7",
+    "tied_momentum_readout.py": "589e4086ed8fca8b9b4df89efa6b2c8b5f59778bb2cbe96f6999f16473e8d53c",
+    "training_displacement_teacher.py": "bf620c6b177d66ac9e7fc6195173732c791e09cc55240237d5f13f87b8dd12ad",
+    "bundle_model_fixed_viscosity.py": "5b64ab447d40c19774bace1f246d3dff301534fa6c6f7c714376b1e3bdca6b33",
+    "temporal_train_fixed_viscosity.py": "5c8af4dca071a228402b8fea5460b3a6599bb5d290a76c81fa6edf5317471f17",
+    "prepare_fixed_viscosity_inputs.py": "3e81a55827b0a3b434cda4597086c9734387eeab54de5d856d3893d749813332",
+    "qualify_fixed_viscosity_training.py": "49dc9d947df1466c9b6f32e87adf36716c87c9546f5eeacf27588f098c1f2e7d",
+    "register_fixed_viscosity_fits.py": "4bdb61ddbc6231f04befbf69b46e69a609e8aaf07873d06a216a2b90c58e5c93",
+    "prepare_fixed_viscosity_project.py": "fe9fe1411f06e7ec515986b867a46d05fc2db31cea2c98a00b191bfb4ca086ce",
+    "run_fixed_viscosity_pair.py": "cb610a26ce941b2b1e211748a4e847fd1bb768210b79824fbfb304443f63887e",
+    "evaluate_fixed_viscosity.py": "f1f25040c92dad852f73c2e08ba76db933972e1dd5d541fca1d4c52c0ec448ce",
+    "fixed_viscosity_evaluation_support.py": "ecca077b92117bfcce6f54c155160c47d934e15191aef5f64ce55eeadd313293"
+  },
+  "work": [
+    {
+      "horizons": 1,
+      "optimizer_updates": 20000,
+      "single_block_updates": 4000,
+      "block_forwards": 36000,
+      "physical_state_targets": 36000,
+      "encoder_calls": 36000,
+      "matched_FLOPs": false,
+      "sampling_seed": 2026101922,
+      "initialization_seed": 2026102045
+    },
+    {
+      "horizons": 2,
+      "optimizer_updates": 10000,
+      "single_block_updates": 2000,
+      "block_forwards": 18000,
+      "physical_state_targets": 36000,
+      "encoder_calls": 18000,
+      "matched_FLOPs": false,
+      "sampling_seed": 2026101922,
+      "initialization_seed": 2026102045
+    },
+    {
+      "horizons": 3,
+      "optimizer_updates": 6667,
+      "single_block_updates": 1334,
+      "block_forwards": 12000,
+      "physical_state_targets": 36000,
+      "encoder_calls": 12000,
+      "matched_FLOPs": false,
+      "sampling_seed": 2026101922,
+      "initialization_seed": 2026102045
+    },
+    {
+      "horizons": 4,
+      "optimizer_updates": 5000,
+      "single_block_updates": 1000,
+      "block_forwards": 9000,
+      "physical_state_targets": 36000,
+      "encoder_calls": 9000,
+      "matched_FLOPs": false,
+      "sampling_seed": 2026101922,
+      "initialization_seed": 2026102045
+    }
+  ],
+  "constructor_protocol_sha256": "5b68da71fecc0b516fc2e66f1686fec9312d32ca58b331ad822c4eb0b0abdd58",
+  "inputs_receipt_sha256": "179b4ef9ff74ba3a41f0e1d06819be91ebfc7c0821c489816a997dfe8496c59f",
+  "bank_sha256": "9d5fe894d2e99feb5ef6dae738c91f765b4a8073802e63c6273c89434854090e",
+  "evaluation_implementation_sha256": "1214e8475b7073470b4c94d176dcf33d859429b75923ecc7c027e4beeec399d0",
+  "finite_batch_specification_sha256": "3f24e1cfd4b47a85409e2d86d72007e919202cf218ce894981e594ee636e60d0",
+  "original_plan_sha256": "dfea9510163f660ed83f0f1acbf290e73b6c1eaec42c1b854c8fd294be15d58c",
+  "original_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574",
+  "managed_CUDA_wall_limit_seconds": 1800,
+  "physical_target_states_per_fit": 36000,
+  "matched_FLOPs": false,
+  "viscosity_calibration_results_sha256": "fe0a17ff5d27fa81c5e5147a33ccfddb4f555701712e8fea664a2d43c489c8c8",
+  "viscosity_frozen_from_initialization": true,
+  "every_intermediate_P_V_T_required": true,
+  "own_history_steps": 240,
+  "accuracy_limit": 0.004,
+  "complete_block_budget_ms": {
+    "2": 4,
+    "3": 6,
+    "4": 8
+  },
+  "no_individual_stage_cap": true,
+  "reserved_scenes_consumed": false,
+  "optimizer_updates_executed": 0,
+  "goal_complete": false
+}

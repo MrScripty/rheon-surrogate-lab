@@ -1,0 +1,70 @@
+{
+  "schema": "rheon-pressure-methods-campaign-v1",
+  "status": "completed_bounded_experiments",
+  "objective": "Complete and test all eight requested cohorts, follow up promising results, record evidence.",
+  "request_sha256": "3db479b70f71e74296f13ede8a735f227aa32b7cc6437a2e7d3ecee4ba02f0b8",
+  "config_sha256": "be954c8401479a068aeff8e7c3e35307a22d0ce65f1b7d89cd86e3104a25097c",
+  "cohorts": [
+    {
+      "id": 1,
+      "name": "larger-training-domains",
+      "status": "completed_and_tested",
+      "evidence": "native-pilots-execution.json",
+      "qualification": "domain-model-qualification.json",
+      "view": "domain-training-view.json",
+      "training_custody": "domain-control-training-custody.json",
+      "outcome": "Mixed: strong 32/64 cube gains; small and larger-rectangular regressions"
+    },
+    {
+      "id": 2,
+      "name": "frozen-model-numerical-correction",
+      "status": "completed_and_tested",
+      "results": "cohort-02-results.json",
+      "followup": "followup-execution.json",
+      "outcome": "Promising: C53 before-six, C44 before/after-seven and C37 before/after-ten qualify all standard requests"
+    },
+    {
+      "id": 3,
+      "name": "finer-teacher-timesteps",
+      "status": "completed_and_tested",
+      "evidence": "native-pilots-results.json",
+      "outcome": "Small matched improvement at half-step; no monotonic quarter-step improvement and no gain over original C53 at eight passes"
+    },
+    {
+      "id": 4,
+      "name": "numerical-coarse-neural-fine",
+      "status": "completed_and_tested",
+      "outcome": "Promising: 103/128 at four passes, 128/128 at five; eight-pass worst residual about 9.07e-10"
+    },
+    {
+      "id": 5,
+      "name": "sparse-numerical-anchors",
+      "status": "completed_and_tested",
+      "outcome": "No general advantage from this exact-anchor construction; standard and large-grid regressions remain"
+    },
+    {
+      "id": 6,
+      "name": "revised-learned-coarse-fine",
+      "status": "completed_and_tested",
+      "outcome": "Positive gated low-mode branch is finite and trainable; Improved standard-request worst residual"
+    },
+    {
+      "id": 7,
+      "name": "spacing-training-and-conditioning",
+      "status": "completed_and_tested",
+      "evidence": "native-pilots-results.json",
+      "outcome": "Explicit spacing does not improve independent-spacing worst error over its matched zero-feature control"
+    },
+    {
+      "id": 8,
+      "name": "periodic-numerical-correction",
+      "status": "completed_and_tested",
+      "evidence": "followup-execution.json",
+      "outcome": "Eight-pass periodic policies remain below declared drift limits over the tested horizons; periodic correction does not rescue rejected four-pass requests"
+    }
+  ],
+  "request_copy": "request.txt",
+  "next_required_work": null,
+  "results": "results.json",
+  "summary": "results.md"
+}

@@ -1,0 +1,500 @@
+{
+  "status": "managed_expanded_shared_pressure_component_passed_all24development_scenes",
+  "created_unix": 1792542505.690801,
+  "logical_model_id": "expanded-shared-spectral-01",
+  "role": "Pressure component for the next full-state model; this is not the previous complete prototype at higher densities.",
+  "architecture": {
+    "trainable_parameters": 4,
+    "description": "One native-data-trained linear response on four fixed generic modal features, shared across all shapes/densities; fixed DCT pressure readout with learned division.",
+    "model_source": "experiments/full-ai-data-diversity-v1/shared_spectral_model_v1.py",
+    "numerical_pressure_solver_in_candidate": false,
+    "physical_operator_coefficients_or_analytical_inverse_assigned": false
+  },
+  "supervision": {
+    "training_scenes": 148,
+    "training_groups": 26,
+    "training_geometries": 19,
+    "source_requests_considered": 1184,
+    "nonzero_requests_used": 1046,
+    "training_mode_rows": 535394,
+    "equal_scene_weighting": true,
+    "native_same_request_labels": true,
+    "future_transition_lineages_pooled": false,
+    "development_or_reserved_used_for_fit": false,
+    "fixed_preprocessing_seconds": 23.18832066899631
+  },
+  "managed_learning": {
+    "training_run_id": "a529f0706382449391c0a0a60c3b4c43",
+    "restore_run_id": "8b3823d79c2149179b29128c5a9dd7c8",
+    "optimizer_step_calls": 160,
+    "actual_parameter_changed_steps": 12,
+    "closure_evaluations": 328,
+    "final_training_objective": 2.9623043795351706e-18,
+    "gpu_training": true,
+    "both_owners_completed_and_drained": true,
+    "typed_cpu_restore_exact": true,
+    "cpu_model_forward_executed": false,
+    "restored_weights_gpu_probe_bitwise_verified": true
+  },
+  "development": {
+    "scenes": 24,
+    "complete_pressure_fields": 192,
+    "states": [
+      1,
+      3,
+      5,
+      17,
+      65,
+      129,
+      193,
+      240
+    ],
+    "worst_pressure_error": 1.5260349342168947e-13,
+    "worst_equation_error": 3.1319097063380545e-13,
+    "all_pressure_and_equation_pass": true,
+    "shapes_xyz": [
+      [
+        16,
+        24,
+        40
+      ],
+      [
+        32,
+        24,
+        48
+      ],
+      [
+        32,
+        32,
+        32
+      ],
+      [
+        64,
+        64,
+        64
+      ]
+    ],
+    "unseen_training_shapes_xyz": [
+      [
+        16,
+        24,
+        40
+      ],
+      [
+        32,
+        24,
+        48
+      ]
+    ],
+    "summaries_by_density": [
+      {
+        "cells_per_metre": 8,
+        "development_scenes": 4,
+        "complete_pressure_fields": 32,
+        "worst_pressure_error": 1.5219732806292568e-13,
+        "worst_equation_error": 3.1319097063380545e-13,
+        "all_pressure_and_equation_pass": true
+      },
+      {
+        "cells_per_metre": 10,
+        "development_scenes": 4,
+        "complete_pressure_fields": 32,
+        "worst_pressure_error": 1.5220043491975644e-13,
+        "worst_equation_error": 3.091340999004408e-13,
+        "all_pressure_and_equation_pass": true
+      },
+      {
+        "cells_per_metre": 16,
+        "development_scenes": 4,
+        "complete_pressure_fields": 32,
+        "worst_pressure_error": 1.520838672727956e-13,
+        "worst_equation_error": 3.106886896146503e-13,
+        "all_pressure_and_equation_pass": true
+      },
+      {
+        "cells_per_metre": 25,
+        "development_scenes": 4,
+        "complete_pressure_fields": 32,
+        "worst_pressure_error": 1.523834796573853e-13,
+        "worst_equation_error": 3.1116378652428415e-13,
+        "all_pressure_and_equation_pass": true
+      },
+      {
+        "cells_per_metre": 50,
+        "development_scenes": 4,
+        "complete_pressure_fields": 32,
+        "worst_pressure_error": 1.5238118691134768e-13,
+        "worst_equation_error": 3.120678360354077e-13,
+        "all_pressure_and_equation_pass": true
+      },
+      {
+        "cells_per_metre": 100,
+        "development_scenes": 4,
+        "complete_pressure_fields": 32,
+        "worst_pressure_error": 1.5260349342168947e-13,
+        "worst_equation_error": 3.0551555710760374e-13,
+        "all_pressure_and_equation_pass": true
+      }
+    ],
+    "summaries_by_density_and_grid": [
+      {
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.5219732806292568e-13,
+        "worst_equation_error": 1.548696666077952e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 9.435752010694569e-14,
+        "worst_equation_error": 1.2578427604851516e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.4216453568028448e-13,
+        "worst_equation_error": 1.3667632895548457e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.2391429048315895e-13,
+        "worst_equation_error": 3.1319097063380545e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.5220043491975644e-13,
+        "worst_equation_error": 1.5492117740903323e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 9.444604083648716e-14,
+        "worst_equation_error": 1.2578707260991543e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.4245971413023712e-13,
+        "worst_equation_error": 1.3720310117744145e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.2401063849737477e-13,
+        "worst_equation_error": 3.091340999004408e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.520838672727956e-13,
+        "worst_equation_error": 1.5471863023647985e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 9.435038240316575e-14,
+        "worst_equation_error": 1.2557977782263636e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.4215444460803014e-13,
+        "worst_equation_error": 1.3715553273877398e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.2445334195449326e-13,
+        "worst_equation_error": 3.106886896146503e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.523834796573853e-13,
+        "worst_equation_error": 1.5489527991747315e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 9.450093354630678e-14,
+        "worst_equation_error": 1.2547402760123945e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.422245272040884e-13,
+        "worst_equation_error": 1.362733781737804e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.2502409590189458e-13,
+        "worst_equation_error": 3.1116378652428415e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.5238118691134768e-13,
+        "worst_equation_error": 1.5474790263607264e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 9.448899606805955e-14,
+        "worst_equation_error": 1.2504701397501406e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.4221429127802187e-13,
+        "worst_equation_error": 1.3651156382469096e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.263162755693314e-13,
+        "worst_equation_error": 3.120678360354077e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.5260349342168947e-13,
+        "worst_equation_error": 1.547257661375307e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 9.447638083726121e-14,
+        "worst_equation_error": 1.2678012911658878e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": false
+      },
+      {
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.418490706514171e-13,
+        "worst_equation_error": 1.3619923921003714e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      },
+      {
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "pressure_fields": 8,
+        "worst_pressure_error": 1.2819618399046913e-13,
+        "worst_equation_error": 3.0551555710760374e-13,
+        "all_pressure_and_equation_pass": true,
+        "shape_seen_in_training": true
+      }
+    ]
+  },
+  "scope_limits": [
+    "Native same-request RHS is the pressure-component input. A full generator must create that input from its own predicted history.",
+    "Velocity/tracer predictions and full-state K1-4 own-history rollouts at expanded densities/shapes have not yet been evaluated.",
+    "Development data is for model selection;52expanded reserved references remain unopened.",
+    "Recorded GPU times are pressure-component latency only. They are not complete-step latency or verification of historical CPU timing targets."
+  ],
+  "gpu": {
+    "device": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "inference_device": "cuda",
+    "pressure_dtype": "float64",
+    "tf32": false,
+    "amp": false,
+    "minimum_request_median_component_event_ms": 0.2938559949398041,
+    "maximum_request_median_component_event_ms": 1.5099200010299683
+  },
+  "cpu_support": {
+    "status": "portable_weights_and_definition_archived_cpu_execution_unported",
+    "checkpoint": "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/restore/weights.npz",
+    "dtype": "float64",
+    "parameter_count": 4,
+    "recipe_policy": "docs/plans/full-ai-data-diversity-v1/cpu-backend-reproduction-01.json",
+    "old_cpu_snapshot_unchanged": true
+  },
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "expanded_full_state_accuracy_verified": false,
+  "phase600steps_started": false,
+  "expanded_reserved_references_opened": 0,
+  "next": "Integrate this restored pressure head into a GPU complete-state successor, respecting the1/8substep native lineages; evaluate mature full-state blocks and own histories with separate density/shape results.",
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/shared-spectral-component-design-01.json": "2cb46efdf764f2f379c14a22f1e67e516f967f6c87ce36ad983d8af13f0c15fe",
+    "docs/plans/full-ai-data-diversity-v1/shared-spectral-fit-registration-01.json": "8474955052c453c0afbc027d6c2c9bbda72fba4675d7f88eb3ca79bddc992415",
+    "runs/full-ai-data-diversity-v1/shared-spectral-view-01/manifest.json": "3c79350355a3b4d7d0a7f501d982944b9362b2d3269f43e14798f57c70c049d9",
+    "runs/full-ai-data-diversity-v1/shared-spectral-view-01/normalization.json": "d2dba4c0de661230cf8e6c3e22d0f153cd4809616927563dd23d0c78286e74cf",
+    "runs/full-ai-data-diversity-v1/shared-spectral-qualification-01.json": "3c14d37eada692ce2ac8b9e65b21a6ef5ec6811572b1b59f62ac6385fe5982c4",
+    "runs/full-ai-data-diversity-v1/shared-spectral-project-01/assembly.json": "010236fe424500fef077ee345fc23198e2036c2ede4157d8f7f2a26a64323434",
+    "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/receipt.json": "fc4c775bfb422959ce4acb99b6389408e63fe3c379f7ac41ce28d7496633313f",
+    "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/train/history.json": "98548a1e63853e19e6410e01e488794cd122b467025be57d563fccab5d28c030",
+    "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/train/receipt.json": "9c914f77b1f2ec811e269ea9d50157e882883540ef19c9806b130a00f4db7beb",
+    "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/restore/receipt.json": "8a2eb235b9f2656ae7bc71b293651c9991dfba5751f348e240ed50834dea382e",
+    "runs/full-ai-data-diversity-v1/shared-spectral-development-01/results.json": "020859c480af7b90e1058b0afeea97e070c89bbd4b2f552f0a9599ca23beee49"
+  }
+}

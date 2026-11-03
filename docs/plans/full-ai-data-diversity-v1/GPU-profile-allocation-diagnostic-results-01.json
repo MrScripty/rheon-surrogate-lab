@@ -1,0 +1,306 @@
+{
+  "status": "actual_entry_warmup_and_output_clone_allocation_effect_observed_no_admission",
+  "created_unix": 1792568195.5423682,
+  "protocol": "docs/plans/full-ai-data-diversity-v1/GPU-profile-allocation-diagnostic-protocol-01.json",
+  "raw_results": "runs/full-ai-data-diversity-v1/GPU-profile-allocation-diagnostic-01/results.json",
+  "raw_sha256": "79ff20cb8f5cd8fcc87637fecd2b23533e01de80d87f811cf87d4ed12644f21b",
+  "rows": [
+    {
+      "model": "baseline",
+      "warmup": "resident_single",
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "allocations": [
+        {
+          "name": "cudaMalloc",
+          "self_cpu_ms": 0.0706279999999997,
+          "ancestors": [
+            "aten::empty_strided",
+            "aten::clone",
+            "diagnostic_generator"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.007384000000000015,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_download"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.8768649999999998,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.008342999999999847,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaMalloc",
+          "self_cpu_ms": 0.072692,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        }
+      ],
+      "generator_cudaMalloc_calls": 1,
+      "generator_cudaMalloc_self_cpu_ms": 0.0706279999999997,
+      "generator_instrumented_ms": 1.2344430000000006,
+      "sampler_instrumented_ms": 0.5069980000000005,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "all_actual_outputs_exact": true
+    },
+    {
+      "model": "geometry",
+      "warmup": "full_entry_double",
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "allocations": [
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.008088999999999942,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        }
+      ],
+      "generator_cudaMalloc_calls": 0,
+      "generator_cudaMalloc_self_cpu_ms": 0,
+      "generator_instrumented_ms": 1.1363279999999996,
+      "sampler_instrumented_ms": 0.45913699999999996,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "all_actual_outputs_exact": true
+    },
+    {
+      "model": "baseline",
+      "warmup": "full_entry_single",
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "allocations": [
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.8082399999999997,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.007123999999999796,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaMalloc",
+          "self_cpu_ms": 0.07332600000000002,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        }
+      ],
+      "generator_cudaMalloc_calls": 0,
+      "generator_cudaMalloc_self_cpu_ms": 0,
+      "generator_instrumented_ms": 1.2185730000000001,
+      "sampler_instrumented_ms": 0.508466,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "all_actual_outputs_exact": true
+    },
+    {
+      "model": "geometry",
+      "warmup": "resident_single",
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "allocations": [
+        {
+          "name": "cudaMalloc",
+          "self_cpu_ms": 0.471269,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.005119999999999891,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_download"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.7781340000000002,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.006666999999999916,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaMalloc",
+          "self_cpu_ms": 0.06986199999999962,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        }
+      ],
+      "generator_cudaMalloc_calls": 0,
+      "generator_cudaMalloc_self_cpu_ms": 0,
+      "generator_instrumented_ms": 1.160192,
+      "sampler_instrumented_ms": 0.4592009999999996,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "all_actual_outputs_exact": true
+    },
+    {
+      "model": "baseline",
+      "warmup": "full_entry_double",
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "allocations": [
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.008006000000000313,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        }
+      ],
+      "generator_cudaMalloc_calls": 0,
+      "generator_cudaMalloc_self_cpu_ms": 0,
+      "generator_instrumented_ms": 1.1862329999999999,
+      "sampler_instrumented_ms": 0.5069339999999996,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "all_actual_outputs_exact": true
+    },
+    {
+      "model": "geometry",
+      "warmup": "full_entry_single",
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "allocations": [
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.8190010000000002,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaHostAlloc",
+          "self_cpu_ms": 0.006940000000000055,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        },
+        {
+          "name": "cudaMalloc",
+          "self_cpu_ms": 1.4426219999999998,
+          "ancestors": [
+            "aten::empty",
+            "diagnostic_native_upload"
+          ]
+        }
+      ],
+      "generator_cudaMalloc_calls": 0,
+      "generator_cudaMalloc_self_cpu_ms": 0,
+      "generator_instrumented_ms": 1.1683779999999997,
+      "sampler_instrumented_ms": 0.46086300000000024,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "all_actual_outputs_exact": true
+    }
+  ],
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "warmup_outputs_verified": 30,
+  "profiled_outputs_verified": 18,
+  "all_complete_field_hashes_exact": true,
+  "conclusions": [
+    "Baseline resident-only warmup left one generator cudaMalloc under aten::clone/empty_strided. Baseline full-entry single and double warmups had none. This is a concrete allocation-custody effect at the actual call seam.",
+    "Geometry resident-only also had no generator allocation in this diagnostic, so two-buffer under-warmup is not a universal or sole explanation of all earlier ranges.",
+    "Full-entry double warmup removed all observed cudaMalloc calls for both backends; fresh CPU pinned allocation still appeared. Upload-only allocation and generator allocation are distinct scopes.",
+    "Geometry sampler remained about9percent lower instrumented time across all three interventions; its N1generator range regression did not recur in this paired diagnostic. This does not establish acceptance latency or explain scalarN8regression.",
+    "All old source-specific failed gates remain failed. Neither retained source is promoted from this diagnostic; no historical profile or latency artifact changed."
+  ],
+  "next_causal_change": "A complete-native-entry caller immediately downloads every model output. Avoiding intermediate GPUoutputclones inside a serialized borrow-and-download transaction can remove actual allocation/copy work without weakening ownership of returnedCPUstates.",
+  "past_failed_gates_unchanged": true,
+  "latency_acceptance_claim": false,
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false
+}

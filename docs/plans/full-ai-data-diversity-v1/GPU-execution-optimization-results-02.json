@@ -1,0 +1,43 @@
+{
+  "status": "integer_address_variant_byte_identical_no_observed_profile_benefit_not_selected",
+  "created_unix": 1792559306.9000323,
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "pressure_dtype": "float64",
+  "carrier_dtype": "float32",
+  "accuracy_gates": [
+    {
+      "path": "runs/full-ai-data-diversity-v1/fused-generator-blocks-11/results.json",
+      "status": "completed_expanded_cuda_full_state_block_evaluation",
+      "outputs": 960,
+      "sha256": "673aa8e55bafcd87b3dc04c68ee76fa4e1d44b247438e04cc6738effbf9ec979"
+    },
+    {
+      "path": "runs/full-ai-data-diversity-v1/fused-legacy-rollout-11/results.json",
+      "status": "completed_expanded_head_cuda_own_history_regression",
+      "outputs": 15360,
+      "sha256": "3a473d5aabb696dd19cf2bc9d0ee07293855c43ea8ce784e15c2aeb6cd9f7789"
+    },
+    {
+      "path": "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-02/results.json",
+      "status": "passed_all_four_GPU_own_history_byte_equivalence",
+      "outputs": 3840,
+      "sha256": "0c90999885badab6bedfb6ea922577e6b4efc26564b05435e08ad90338a0ed76"
+    }
+  ],
+  "profile_before": "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-02/results.json",
+  "profile_after": "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-03/results.json",
+  "observed_instrumented_transport_ms_for_three_N8_calls": {
+    "allocation_fill_only": 4.0132790000000025,
+    "integer_address": 4.067292000000001
+  },
+  "profile_is_not_acceptance_benchmark": true,
+  "additional_complete_call_timing_study_executed": false,
+  "reason": "Exact byte gates pass but instrumented transport cost and activity count did not improve; spend next finite variant on generic affine/cast/wall fusion.",
+  "preferred_working_execution": "experiments/full-ai-data-diversity-v1/debug/no_scratch_fill_graph_v1.py:NoScratchFillGraph",
+  "optimizer_updates": 0,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false
+}

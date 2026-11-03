@@ -1,0 +1,23 @@
+{
+  "status": "frozen_before_derived_data_packing",
+  "registered_unix": 1792440058.4558835,
+  "source_sha256": "7b1555d0fb2ee0aa26fc4c8fed5dbc36efc4b36d1cee48d5d230ed1f1fd88097",
+  "bank_sha256": "a63e981ee48fb87a18cd231f5d4d0f5b618c180dab955993680b3868d549c47b",
+  "scenes": "All16original whole training scenes, all129states per scene",
+  "derived_fields": [
+    "vx",
+    "vy",
+    "vz",
+    "q"
+  ],
+  "velocity_precision": "Original lossless float32 transport",
+  "q_precision": "Native float64 RHS*(rho/h) converted float32; relative quantization<=1e-6; lossless float32 XOR/byte-plane transport",
+  "normalization": "All original training states only; unchanged velocity normalization; new training-only q RMS",
+  "candidate_inputs": "Only current velocities, geometry, scalar physics and known forcing; future q remains target only",
+  "current_or_future_reference_pressure_input": false,
+  "development_or_reserved_used": false,
+  "training_updates": 0,
+  "temporal_candidate": false,
+  "purpose": "Causal pressure-request component diagnostic, followed by full-state endpoint and retained-feature comparisons",
+  "resource_limit": "256MiB managed input budget with6MiB source/metadata reserve; retain failure before redesign"
+}

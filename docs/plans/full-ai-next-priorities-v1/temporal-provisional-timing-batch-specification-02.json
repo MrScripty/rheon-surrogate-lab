@@ -1,0 +1,18 @@
+{
+  "commands": [
+    {
+      "id": "balanced-complete-CPU-block-timing",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/benchmark_provisional_v2.py",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/temporal-provisional-timing-02"
+      ],
+      "timeout": 2400
+    }
+  ],
+  "automatic_retry": false,
+  "scope": "Five balanced serial repeats for parent/control/auxiliary; complete blocks and tensor scope, separate32cube; no accuracy target relaxation",
+  "recovery": "Completed failed stdout setup retained;0timed repeats;all workers reaped;no training or evaluation repeated"
+}

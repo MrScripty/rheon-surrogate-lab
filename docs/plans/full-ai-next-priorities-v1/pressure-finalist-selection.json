@@ -1,0 +1,62 @@
+{
+  "status": "frozen_before_reserved_capture",
+  "frozen_unix": 1792433744.9089832,
+  "models": [
+    {
+      "id": "C107",
+      "entry_path": "runs/pressure-methods-v4/entries/v4-student50-control.json",
+      "entry_sha256": "3ac6a0d3727d26119839fa9035814eb9abca7e681aed5bfdc7b1db5abe4d8a8e",
+      "role": "baseline"
+    },
+    {
+      "id": "a-head-calibration-routed",
+      "entry_path": "runs/full-ai-next-priorities-v1/entries/a-head-calibration-routed.json",
+      "entry_sha256": "170d561d027147bf1d75cde99ea51d60b6a447bc44521dc0ce037fb771cd768e",
+      "role": "replicated_finalist",
+      "historical_worst_equation_error": 0.0004681170223419707,
+      "qualification_path": "runs/full-ai-next-priorities-v1/a-head-calibration-routed-qualification-01.json",
+      "qualification_sha256": "7ccda6049125316b9b8e90ecd907f8aa0fbdfd7ff0b4f6dd2d40f886de6b04bc"
+    },
+    {
+      "id": "a-head-calibration-s2-routed",
+      "entry_path": "runs/full-ai-next-priorities-v1/entries/a-head-calibration-s2-routed.json",
+      "entry_sha256": "8c0a6f78d2cb5023f509a8446c6756a025b3609690a4b37e9b904cdb26a7d6c1",
+      "role": "replicated_finalist",
+      "historical_worst_equation_error": 0.00044639441983483635,
+      "qualification_path": "runs/full-ai-next-priorities-v1/a-head-calibration-s2-routed-qualification-01.json",
+      "qualification_sha256": "4648b2950534021e2f655d7c8fdbd5a92d6c9c07c8489f6b0eaf3c2d85ed2aff"
+    },
+    {
+      "id": "a-head-calibration-s3-routed",
+      "entry_path": "runs/full-ai-next-priorities-v1/entries/a-head-calibration-s3-routed.json",
+      "entry_sha256": "2aacb359f9bc2d517739c13cc2fe7dfb120fb01d60cbc0828fd2b28ac3e7bbeb",
+      "role": "replicated_finalist",
+      "historical_worst_equation_error": 0.00047026322989251893,
+      "qualification_path": "runs/full-ai-next-priorities-v1/a-head-calibration-s3-routed-qualification-01.json",
+      "qualification_sha256": "dc6eb17940c4d2171d61cf105732240ab0916b3f58dabdd058268116350078d5"
+    }
+  ],
+  "primary_model": "a-head-calibration-s2-routed",
+  "selection_rule": "Lowest historical worst equation error among qualified seed replications",
+  "scene_reservation_sha256": "5ecdb67d729958b2de61cdc13960ae6b3eaeb521e9e134a2c68d59fefcd00031",
+  "execution": "Original eager CPU float32 fine network and learned head; all stages and reconstruction included",
+  "compiled_execution_decision": "Retain as diagnostic: qualified but timing gain inconsistent across seeds; eager larger-grid component equivalence retained",
+  "compiled_timing_sha256": "f64d1887d043a203ddacad7b8eebf3ec0e277dca47622bc2b33d4893be7b98f1",
+  "qualification_batch_sha256": "2ed197b72646ef65d75cc2bd325bf504967d2f49a298da3adf5495fc29278c14",
+  "candidate_numerical_pressure_solve": false,
+  "candidate_corrective_projection": false,
+  "reserved_temporal_scenes_consumed": false,
+  "source_sha256": {
+    "fresh_pressure_data.py": "90e1ec2c2fa337fc7cf285cc6d939ea314c001357bac1dd3fd1cda8d146ef7fa",
+    "evaluate_fresh_pressure.py": "0d0d7143a7943d53c81650b8411a93fd7e1c337a2c1db76369fd7a052a6f0cac",
+    "benchmark_fresh_pressure.py": "fbda5d2c75df4cc0d45f58f8828b86d2ced597082dd7fc4d3d5d5002a1847ac2",
+    "capture_pressure_fresh.py": "af174c0f58e91613672b87194b2cf21de109cb3323a990f7ab932c174365a652",
+    "freeze_pressure_finalists.py": "fe149d22651202da027b6ba5f8bd2df7325e0c60a3cef1e045b280fb0869fe66",
+    "routed_inference.py": "8ca01490945adf804911f8ea29fe8cac19b9b9b3636b8881ed8f742c3985b886",
+    "study_support.py": "e4370825eafa7b1cc824b54962c673f3f1cff086427adc28d7a9ab08379ff7dd"
+  },
+  "prepared_request_evaluation": "All1024 requests:768small and25632cubed; populations reported separately",
+  "cpu_timing": "Five balanced serial repeats, every scene at steps1,16,32,64; one thread CPU23 batch1",
+  "native_evaluation": "All16scenes,64steps requested, original acceptance gates, stop on rejection, no fallback",
+  "interpretation": "Reserved outcomes are reporting evidence; no refitting or seed reselection based on them"
+}

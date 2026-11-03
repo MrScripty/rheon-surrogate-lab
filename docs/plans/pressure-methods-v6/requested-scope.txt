@@ -1,0 +1,10 @@
+
+1. Cheaper local inference. The 648-parameter model still spends substantial time applying convolutions across the grid. Test fused native execution, simpler learned stencils, and separable filters, preserving boundary behavior and accuracy checks.
+2. Use the network more selectively. Compare applying it only on selected solver iterations, when numerical convergence stalls, or on coarser hierarchy levels. Measure whether each neural call saves more time than it costs.
+3. Train the tiny model across several solver iterations. It currently learns a correction after one coarse cycle. Training against the residuals encountered later in the actual solve could improve convergence. This is promising, but previous full-model solver-aware training showed mixed results.
+4. Make correction reuse adaptive. Reuse reduced hierarchy work by about 13% on the blind trajectories, but sometimes increased runtime. Test cheaper retention and a policy that enables reuse only when its expected savings justify the overhead.
+5. Extend coupled drift tests and larger-grid evaluation. Test hundreds of timesteps and multiple 256³ scenes, varying grid dimensions and cells per metre independently. Use observed failures to decide whether rollout training or further architecture changes are warranted.
+
+I would give additional wavelength examples and repeated training with the same recipe lower priority: this pilot showed little extra benefit from wavelength augmentation.
+
+For context, the optimized tiny model took 5.75 seconds per fluid step versus 8.84 seconds for the previous hybrid in the matched 128³ four-step test. The spectral control took 3.28 seconds, so meaningful headroom remains.

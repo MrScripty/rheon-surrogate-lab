@@ -1,0 +1,26 @@
+{
+  "commands": [
+    {
+      "id": "five-balanced-primary-replica-and-sequential-B1-costs",
+      "runtime": "torch",
+      "timeout": 7200,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/benchmark_fixed_viscosity_replicas.py",
+        "--registry",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-deployments-01/qualified-models.json",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-timing-01"
+      ]
+    },
+    {
+      "id": "publish-actual-primary-replica-costs-and-accuracy",
+      "runtime": "torch",
+      "timeout": 180,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/report_fixed_viscosity_replica_cost.py"
+      ]
+    }
+  ]
+}

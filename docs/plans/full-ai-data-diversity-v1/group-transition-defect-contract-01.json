@@ -1,0 +1,22 @@
+{
+  "status": "registered_before_local_group_transition_diagnostic",
+  "created_unix": 1792597475.6172752,
+  "plan": "docs/plans/full-ai-data-diversity-v1/group-transition-residual-next-plan-01.json",
+  "scope": "Same full29active N8training scenes, starts32/96. Three width2/2/3 isolated coarse/fine transition pairs perwindow,174pairs; preserve finalwidth1 to form full8fine/4coarse endpoints in58windows.",
+  "reference": "Restored learned fine stages only; no new native labels, solver, inverse or fitted parameters. Do not claim native equation/pressure/V/T or latency qualification.",
+  "comparison": "For each group, compare coarse transition from exact fine start versus corresponding fine steps; also compare actual rolling coarse transition to isolated coarse result. Normalize all local/inherited/total differences to same learned fine-end field norms with frozen training floors. Pressuremeanfree, combined staggered V, scalartracer.",
+  "velocity_decomposition": "Accumulate actual F64differences between F32current->transport->forced->viscous->projected carriers over every fine step. Coarse uses same total duration and left-associated sum of same ordered integratedforces. Differenceofaccumulatedincrements must telescope to local coarse/fine velocitydefect. This includes F32rounding; transport terms include intermediate pressure/force effects and are not independent causal attributions.",
+  "controls": "First qualify new advance helper against existing GroupedMacroBackbone.feature_states_grouped for exact full8fine/4coarse internalphysicalstates on odd11x9x11/32cubed/64cubed training geometries. AllP/V/Tstatebits exact, includingwidth1path. Checkfinite complete outputs, normalwalls, unchangedinput/control hashes/restoredweights and additiveclosure. Configuregeometry/transport h/dt at everycall.",
+  "preservation": "Full fine8 and rollingcoarse4 endpoint arrays saved for every58window; all174group errors/field hashes and contribution norms retained. No missing-case removal or changed thresholds.",
+  "maximum_additive_closure_error": 2e-11,
+  "maximum_qualification_runs": 1,
+  "maximum_diagnostic_runs": 1,
+  "maximum_gpu_allocated_bytes": 8589934592,
+  "maximum_peak_rss_bytes": 4294967296,
+  "maximum_output_bytes": 2147483648,
+  "maximum_wall_seconds": 1800,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "cpu_model_forward": false,
+  "full_generator_target_pass": false
+}

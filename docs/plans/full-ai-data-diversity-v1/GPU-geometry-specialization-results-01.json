@@ -1,0 +1,58 @@
+{
+  "status": "variant1_all_accuracy_bytes_pass_profile_measurement_gate_failed",
+  "created_unix": 1792567037.8466496,
+  "execution_plan": "docs/plans/full-ai-data-diversity-v1/GPU-geometry-specialization-plan-01.json",
+  "candidate": "experiments/full-ai-data-diversity-v1/debug/geometry_specialized_graph_v1.py:GeometrySpecializedGraph",
+  "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-12",
+  "candidate_selected": false,
+  "primitive_arrays_exact": 832,
+  "complete_model_outputs_exact": 41280,
+  "profile_comparison": {
+    "1": {
+      "baseline": {
+        "sampler_ms": 0.5068470000000007,
+        "wrapper_ms": 1.223931
+      },
+      "candidate": {
+        "sampler_ms": 0.4598720000000003,
+        "wrapper_ms": 1.5809270000000006
+      }
+    },
+    "8": {
+      "baseline": {
+        "sampler_ms": 4.021341000000003,
+        "wrapper_ms": 7.700374999999999
+      },
+      "candidate": {
+        "sampler_ms": 3.6516819999999988,
+        "wrapper_ms": 7.30624
+      }
+    }
+  },
+  "N8_reduction_gate_pass": true,
+  "N1_regression_gate_pass": false,
+  "complete_call_benchmark_executed": false,
+  "unexecuted_benchmark_source": "experiments/full-ai-data-diversity-v1/benchmark_execution_gpu_entry_v8.py",
+  "profile_repeated": false,
+  "regression_cause": "Unproven; preserve recorded range and sampler costs. No causal attribution or timing claim from instrumented measurements.",
+  "follow_up": "Second planned variant exposes exact external spacing/timestep literals; current candidate insufficient for adoption because measurement gate failed.",
+  "static_PTX": {
+    "original_sampler_local_bytes": 160,
+    "specialized_sampler_local_bytes": 0,
+    "specialized_dynamic_scalar_divisions_per_active_carrier_path": 6,
+    "static_total24_divisions_are_four_cloned_paths_not_24perthread": true
+  },
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/geometry-specialization-component-01/results.json": "3b9a97fbf2ae55c0438bbf27ffd5164e0c6b8d38c64bf0eec810f43480c2ca4f",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-19/results.json": "ee2f4ee3f7e478bdcfe382ee2009ba6aec2af2d35c36be0a9e650275367c36d3",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-19/results.json": "584cdbcae62e84d0461c1467afbcbe999d04d7edac6a5e7b26a4c55cba348e2c",
+    "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-09/results.json": "b35fc0924eaf07ae871e7bf76535870b1bb13f0c94b8c32377570986184e37b6",
+    "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-09/results.json": "eb04273571290fdaa0b53d2405daff20f99971f77c4657e3f5b8044aee4dd6fe"
+  }
+}

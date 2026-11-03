@@ -1,0 +1,21 @@
+{
+  "status": "timing_qualification_deferred_user_reports_resource_contention",
+  "created_unix": 1792623490.1398253,
+  "authority": "User: timing is not accurate right now because system resources are tied up.",
+  "applies_to_current_new_development_measurements": true,
+  "affected_observation": "runs/full-ai-data-diversity-v1/long-reference-cost-diagnostic-01/results.json",
+  "interpretation": "Observed wall times are contention-affected operational diagnostics, not representative CPU/GPU performance or acceptance evidence. Preserve raw observations and all prior maxima.",
+  "execution": "Continue correctness checks and the already registered single-core numerical reference capture. Do not launch additional performance profiling or qualifying inference timing while contention persists.",
+  "capture_wall_time": "Record actual wall time and registered deadlines for job custody; do not extrapolate uncontended capture throughput or set benchmark conclusions from these measurements.",
+  "unaffected_checks": [
+    "Exact native state/label comparisons",
+    "Physical timestamps and output horizons",
+    "Scene split and sample coverage",
+    "Finite-state/stability quality checks",
+    "Stored byte counts and integrity checks"
+  ],
+  "future_timing": "Reconfirm resource availability before a newly registered benchmark. Label device, precision, complete transaction scope, setup, and median/p95/maximum observations. Do not replace a prior failure with an unqualified timing.",
+  "goal_paused": false,
+  "model_targets_changed": false,
+  "new_runs_launched_by_notice": 0
+}

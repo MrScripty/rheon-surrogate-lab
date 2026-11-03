@@ -1,0 +1,50 @@
+{
+  "status": "frozen_before_managed_admission",
+  "registered_unix": 1792443875.4235938,
+  "project_sha256": "c09b85c474aab13556b9556fca962a86f9f806af71038e7c94435ac48bdc8c02",
+  "assembly_sha256": "c613f8e7df9e14fc6bc8e7e5f1ca14d9707a1fd469b64f62d0e9bce66577c8e7",
+  "config": {
+    "schema": "rheon-causal-request-fit-v1",
+    "identifier": "b1-causal-request",
+    "horizons": 1,
+    "updates": 10000,
+    "learning_rate": 0.003,
+    "schedule": [
+      {
+        "update": 6001,
+        "learning_rate": 0.001
+      },
+      {
+        "update": 9001,
+        "learning_rate": 0.0003
+      }
+    ],
+    "seed": 2026101994,
+    "sampling_seed": 2026101995,
+    "gradient_norm_cap": 1.0,
+    "wall_seconds": 1800,
+    "component_only": true,
+    "future_request_input": false,
+    "current_pressure_input": false,
+    "physical_context": {
+      "dt_s": 0.016666666666666666,
+      "rho_kg_m3": 1000.0,
+      "mu_pa_s": 0.001,
+      "boundaries": "closed regular grid"
+    },
+    "registration_sha256": "aced7a26cfe84968f267005de1da10fc3b96e9560745a11c46f8956999a7db85",
+    "selection": "Final update10000; checkpoints0/2000/10000retained; no development checkpoint reselection",
+    "analytical_inverse": "Offline objective only; no inverse in model inference"
+  },
+  "CPU_qualification_sha256": "79bc3a3a1ecbcc329c6bececfcafb9a3dce358ecaa48cf516436698e43e06f4f",
+  "CUDA_qualification_sha256": "e17a5e7f308c5990894fc66441b8bfe66c0cb0f77be7af4baebc6952cc5d262d",
+  "controller_sha256": "5d2dc27a3fed04d68c3bacb30d4eaceb70666819fa76d77ccc745b49f89caa45",
+  "trainer_sha256": "c4259a1ae76c3615cf7f6007e182301f55e6fdea164a98aeb014267cdea66778",
+  "artifact_helpers_sha256": "8c62c1bfac2eb4eeeab78d726cc2957bddbf73a4687b70652169cd96b206075a",
+  "specification_sha256": "6aea61986812bb508ecad5afc3327b4253327c407f6ddb4de7d1a1dc4bbbefe7",
+  "selection": "Final10000update; snapshots0/2000/10000retained",
+  "evaluation": "All240development starts on8scenes, plus fixed train fitting diagnostics; reference history only; separate in-training-time and later-time windows",
+  "component_only": true,
+  "full_state_temporal_candidate": false,
+  "reserved_scenes_consumed": false
+}

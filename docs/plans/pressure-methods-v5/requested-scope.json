@@ -1,0 +1,8 @@
+{
+  "objective": "1. Train a lightweight model specifically for the multilevel solver. Teach it to correct the residual left after the coarse solve. The existing multilevel/CNN hybrid already reduced fluid-step time by about 25% on the matched 128\u00b3 test; its network was trained for a different correction process.\n2. Reuse useful corrections between timesteps. Our GCR implementation currently discards its direction space after each pressure solve. Retaining a small useful subspace has precedent in pressure-Poisson solvers, and remains untested here.\n3. Target the actual failure modes in training. Explicitly vary spatial wavelengths and rectangular geometry. On one failing rectangular case, 99.6% of pressure-error energy was in the lowest spatial modes.\n4. Optimize inference and solver execution together. Channels-last alone saved about 12% on the matched 128\u00b3 test. Repeated operators, allocations and runtime exchange deserve profiling next.",
+  "thread_id": "01a14ff1-6462-7152-bcf8-0a06f37055f8",
+  "created_at": 1792388195,
+  "scope": "All four numbered objectives remain required; a negative experimental result does not establish an improvement.",
+  "status": "active",
+  "objective_sha256": "4fd93204d3df25e518ea46bf3dc32d2e76a691076009fd2b8f9e6eb500e077c8"
+}

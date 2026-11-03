@@ -1,0 +1,27 @@
+{
+  "status": "registered_before_offline_local_teacher_target_gradient_qualification",
+  "created_unix": 1792597886.5361679,
+  "motivation": "runs/full-ai-data-diversity-v1/group-transition-defect-01/results.json",
+  "scope": "All174isolated learned group transitions in29active N8training scenes at starts32/96; widths2/2/3. Teacher-derived correction supplied only in this offline qualification, never inside any deployed model.",
+  "algebra": "Let M(P) be restored learned negative pressure-gradient momentum map with normalwalls and scale1/(rho*h). Fine endpoint arose from lastfineprovisional + dtfine*M(Pfine), followed by F32carrier cast. Define coarseprovisional_target=lastfineprovisional+(dtfine-dtcoarse)*M(Pfine). A learned residual would approximate this target from current/known inputs, but this diagnostic injects the teacher-derived delta only to check compatible coupled P/V/T supervision. Tracertarget=fineendpointT.",
+  "controls": [
+    "Reconstruct lastfineprovisional from F32carrier minus actual recorded F64pressureincrement; independently rerun lastfine transport/force/viscosity and require exact arrays.",
+    "Uncorrected local CoupledMacroBackbonev2.emit must match all coarse complete outputbits at each groupdt.",
+    "Teacherinjection through actual restored pressure map must reproduce fineP/V/T within unchanged1e-5normalized field tolerance. This is not a model/nativeaccuracy claim and does not include native equation verification.",
+    "Backpropagate actual unrounded coupled P/V/Tloss through scalar amplitude of all4corrections atzero; compare centeredfinite difference epsilon1e-3. Finite descending nonzerogradient where loss>1e-20, tolerance relative2e-6+absolute1e-20. No optimizer or coefficient solve."
+  ],
+  "maximum_qualification_runs": 1,
+  "maximum_training_pairs": 174,
+  "maximum_wall_seconds": 1800,
+  "maximum_gpu_allocated_bytes": 8589934592,
+  "maximum_peak_rss_bytes": 4294967296,
+  "maximum_teacher_injected_relative_error": 1e-05,
+  "gradient_control_epsilon": 0.001,
+  "maximum_gradient_relative_error": 2e-06,
+  "gradient_absolute_tolerance": 1e-20,
+  "gradient_nonzero_loss_floor": 1e-20,
+  "new_parameter_fits": 0,
+  "cpu_model_forward": false,
+  "reserved52_references_opened": 0,
+  "full_generator_target_pass": false
+}

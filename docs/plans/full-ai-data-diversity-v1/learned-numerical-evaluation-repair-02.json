@@ -1,0 +1,66 @@
+{
+  "status": "late_transport_rounding_failure_reproduced_and_versioned_sampler_fix_passed_actual_regressions_broad_revalidation_live",
+  "created_unix": 1792552669.9398584,
+  "supersedes_limited_fix": "docs/plans/full-ai-data-diversity-v1/learned-numerical-evaluation-repair-01.json",
+  "original_repaired104_full240": {
+    "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-02/diversity-high-volume-train-g00-cpm100/results.json",
+    "sha256": "0e6071f660b49e282df362e87b5c497502f72b109579095758b0955c4833501d",
+    "physical_outputs": 960,
+    "accuracy_failing_outputs": 512,
+    "first_failure_step": 113,
+    "worst": {
+      "equation": 4.340618486492077e-05,
+      "pressure": 6.08989037244701e-08,
+      "velocity": 9.745021002778706e-08,
+      "tracer": 3.6530049723759454e-08
+    },
+    "native_process": {
+      "pid": 784973,
+      "returncode": 0,
+      "reaped": true,
+      "graceful_protocol_complete": true
+    }
+  },
+  "observed_first_pressure_velocity_divergence_step": 103,
+  "diagnosis": {
+    "transport_native_reference_primitive": "Onevy float32 differs by1.862645149230957e-9 at flat index254176, xyz[0,71,21]. It survives force substitution and a native-pressure-only oracle.",
+    "force": "GPU andCPUknown external providers produce same candidate mismatch; native force preview exactly matches entering velocities given same advected inputs.",
+    "viscosity": "GPU learned viscosity and native primitive exactly match on the same entering velocities.",
+    "pressure": "First pressure error is downstream of transport. Stable learned response and precise timestep fix from prior repair are retained.",
+    "native_stage_tie": "Extracted native transport/force/viscosity plus native pressure through unchanged GPU learned momentum reconstruct exact actual native103velocity bytes."
+  },
+  "source_change": {
+    "kernel": "experiments/full-ai-data-diversity-v1/learned_cuda_kernels_v5.cu",
+    "core": "experiments/full-ai-data-diversity-v1/fused_cuda_generator_v3.py",
+    "entry": "experiments/full-ai-data-diversity-v1/complete_cuda_graph_v3.py",
+    "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-05",
+    "meaning": "Use known physical spacing and timestep in fixed interpolation coordinates, domain clamping, and conversion to source-lattice coordinates; all learned coefficients remain unchanged and evaluated onGPU.",
+    "cpu_learned_forward": false,
+    "native_oracles_in_candidate": false,
+    "optimizer_updates": 0
+  },
+  "evidence": {
+    "unminimized_red": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/reproduction-01/results.json",
+    "minimal_actual_first_threshold_red": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/reproduction-minimized-02/results.json",
+    "original_native_stages": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/native-primitives-01/results.json",
+    "repaired_native_stages": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/native-primitives-02/results.json",
+    "repaired_first_threshold": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/physical-regression-01/results.json",
+    "repaired_unminimized0_to128": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/physical-full128-regression-01/results.json"
+  },
+  "regressions": {
+    "original102_to113_equation_error": 1.063197000121552e-05,
+    "repaired102_to113_equation_error": 2.4733883251911793e-13,
+    "repaired0_to128_equation_error": 1.6217671270955308e-13,
+    "repaired_pressure_velocity_tracer_error_at_both_endpoints": 0.0
+  },
+  "remaining": [
+    "All24development blocks now running",
+    "All16consumed240step legacy scenes",
+    "All4fixed streamed full240 histories including both original large-grid failures",
+    "Persistent transfer timing work and full independent/scaling gates"
+  ],
+  "reserved52_references_consumed": 0,
+  "full_generator_targets_verified": false,
+  "gpu_latency_target_requalified": false,
+  "latency_claim": false
+}

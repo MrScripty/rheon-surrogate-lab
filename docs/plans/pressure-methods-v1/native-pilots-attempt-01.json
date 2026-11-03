@@ -1,0 +1,45 @@
+{
+  "status": "stopped",
+  "active": "fixture-large-train-32-cpm8",
+  "workers": [
+    {
+      "name": "native-build",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-methods-v1/native_prepare.py",
+        "build",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-methods-v1/native-01"
+      ],
+      "pid": 3,
+      "returncode": 0,
+      "reaped": true,
+      "elapsed_s": 26.582377768005244,
+      "log": "runs/pressure-methods-v1/native-build.log",
+      "log_sha256": "14edf5f250db88450509a812881136c0b1ddfbcc2d8e1dda1459064a7d332896"
+    },
+    {
+      "name": "fixture-large-train-32-cpm8",
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/pressure-methods-v1/capture_native.py",
+        "--build",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-methods-v1/native-01",
+        "--output",
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-methods-v1/native-pilots/fixture/large-train-32-cpm8",
+        "--trajectory",
+        "large-train-32-cpm8",
+        "--fixture"
+      ],
+      "pid": 660,
+      "returncode": 1,
+      "reaped": true,
+      "elapsed_s": 0.11414107901509851,
+      "log": "runs/pressure-methods-v1/fixture-large-train-32-cpm8.log",
+      "log_sha256": "fbc36bee021d64fb8ab16ca77bb3be8e2e5c0bfc3e8b2e7570e8171f6e1dd8dd"
+    }
+  ],
+  "source_sha256": "f0f671cd373d6ce3aece631b1af3aa93fe4d4e8e1113be297084750c782e36a5",
+  "config_sha256": "be954c8401479a068aeff8e7c3e35307a22d0ce65f1b7d89cd86e3104a25097c",
+  "reused": [],
+  "active_pid": null,
+  "error": "Native worker failed; inspect /media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-methods-v1/fixture-large-train-32-cpm8.log"
+}

@@ -1,0 +1,164 @@
+{
+  "commands": [
+    {
+      "id": "authorized-owner-ready",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/owner_ready.py"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "b2-fixed-viscosity-capture",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/prepare_fixed_viscosity_project.py",
+        "--identifier",
+        "b2-fixed-viscosity",
+        "--horizons",
+        "2"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "b3-fixed-viscosity-capture",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/prepare_fixed_viscosity_project.py",
+        "--identifier",
+        "b3-fixed-viscosity",
+        "--horizons",
+        "3"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "b4-fixed-viscosity-capture",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/prepare_fixed_viscosity_project.py",
+        "--identifier",
+        "b4-fixed-viscosity",
+        "--horizons",
+        "4"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "b1-fixed-viscosity-capture",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/prepare_fixed_viscosity_project.py",
+        "--identifier",
+        "b1-fixed-viscosity",
+        "--horizons",
+        "1"
+      ],
+      "timeout": 120
+    },
+    {
+      "id": "b2-fixed-viscosity-fit-and-exact-CPU-restore",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_fixed_viscosity_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b2-fixed-viscosity-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b2-fixed-viscosity-pair-01"
+      ],
+      "timeout": 3100
+    },
+    {
+      "id": "b2-fixed-viscosity-development-and-own240",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_fixed_viscosity.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-fixed-viscosity-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-evaluation-01/b2-fixed-viscosity"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "b3-fixed-viscosity-fit-and-exact-CPU-restore",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_fixed_viscosity_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b3-fixed-viscosity-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b3-fixed-viscosity-pair-01"
+      ],
+      "timeout": 3100
+    },
+    {
+      "id": "b3-fixed-viscosity-development-and-own240",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_fixed_viscosity.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b3-fixed-viscosity-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-evaluation-01/b3-fixed-viscosity"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "b4-fixed-viscosity-fit-and-exact-CPU-restore",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_fixed_viscosity_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b4-fixed-viscosity-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b4-fixed-viscosity-pair-01"
+      ],
+      "timeout": 3100
+    },
+    {
+      "id": "b4-fixed-viscosity-development-and-own240",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_fixed_viscosity.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b4-fixed-viscosity-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-evaluation-01/b4-fixed-viscosity"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "b1-fixed-viscosity-fit-and-exact-CPU-restore",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/run_fixed_viscosity_pair.py",
+        "--project",
+        "runs/full-ai-next-priorities-v1/b1-fixed-viscosity-project-01",
+        "--output",
+        "runs/full-ai-next-priorities-v1/b1-fixed-viscosity-pair-01"
+      ],
+      "timeout": 3100
+    },
+    {
+      "id": "b1-fixed-viscosity-development-and-own240",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_fixed_viscosity.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b1-fixed-viscosity-pair-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-evaluation-01/b1-fixed-viscosity"
+      ],
+      "timeout": 1800
+    }
+  ]
+}

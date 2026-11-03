@@ -1,0 +1,89 @@
+{
+  "status": "raw_GPU_coverage_observations_preserved_after_diagnostic_harness_failures",
+  "created_unix": 1792573446.9218862,
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "latency_claim": false,
+  "production_qualification": false,
+  "new_arithmetic_candidate": false,
+  "observations": [
+    {
+      "status": "observed_before_population_assertion",
+      "identifier": "diversity-development-g024-cpm8",
+      "counters": {
+        "total": 128000,
+        "accepted": 124523,
+        "invalid_fraction": 0,
+        "nonfinite_donor": 0,
+        "zero_magnitude": 0,
+        "magnitude_outside_guard": 449,
+        "zero_endpoint": 0,
+        "different_endpoint_bits": 3028
+      },
+      "internal_substeps": 1,
+      "K": 1,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "all_actual_output_hashes_exact": true,
+      "observed_fast_path_fraction": 0.9728359375
+    },
+    {
+      "status": "observed_before_population_assertion",
+      "identifier": "diversity-development-g024-cpm100",
+      "counters": {
+        "total": 1024000,
+        "accepted": 992841,
+        "invalid_fraction": 0,
+        "nonfinite_donor": 0,
+        "zero_magnitude": 0,
+        "magnitude_outside_guard": 2868,
+        "zero_endpoint": 0,
+        "different_endpoint_bits": 28291
+      },
+      "internal_substeps": 8,
+      "K": 1,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "all_actual_output_hashes_exact": true,
+      "observed_fast_path_fraction": 0.9695712890625
+    }
+  ],
+  "observations_sha256": {
+    "runs/full-ai-data-diversity-v1/guarded-terminal-coverage-02/observations.json": "dc10b03fe8652214adce725688c01917566817ff99c3c08a8e7216a358e46209",
+    "runs/full-ai-data-diversity-v1/guarded-terminal-coverage-03/observations.json": "20234067d840cf3158372e17b0e70a046c96870d5fbdef9618a660bc4f1c55fd"
+  },
+  "original_diagnostic_processes": [
+    {
+      "session": 96762,
+      "exit_code": 1,
+      "reason": "Expected population incorrectly included prescribed zero wall faces; no raw observation file emitted."
+    },
+    {
+      "session": 53621,
+      "exit_code": 1,
+      "reason": "Same population assertion; raw first-case counters and exact complete-output check preserved."
+    },
+    {
+      "session": 11662,
+      "exit_code": 1,
+      "reason": "Both corrected population assertions, output byte checks, weight inventory and source checks passed; final report mkdir failed because the earlier observation write had already created the output directory."
+    }
+  ],
+  "correction": {
+    "path": "experiments/full-ai-data-diversity-v1/diagnose_guarded_terminal_coverage_v4.py",
+    "syntax_checked": true,
+    "executed": false,
+    "change": "Correct expected terminal count excludes normal wall faces; final mkdir accepts existing diagnostic directory; observations saved separately for each case."
+  },
+  "interpretation": "Counters describe two consumed 32cubed inputs at start96 and K1, N1/N8 only. First observation is the preserved first-case run; second is the final run second-case observation. They are not a completed all-case diagnostic suite or timing result. Repeated first-case raw counts were identical. No inference rerun solely to repair final serialization.",
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "expanded_reserved52_references_opened": 0
+}

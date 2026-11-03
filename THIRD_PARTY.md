@@ -1,5 +1,14 @@
 # Dependency provenance
 
+The unchanged research paper *Flow Reasoning Models: Turning Flows Into Efficient
+Recurrent Reasoners*, by Alec Helbling, Andrey Bryutkin, Mauro Martino, Duen Horng
+Chau, Nima Dehmamy and Hendrik Strobelt, is included under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as identified by its
+[arXiv v3 record](https://arxiv.org/abs/2606.29150v3). Its
+[local research note](docs/plans/flow-reasoning-assessment/research.md#included-paper)
+links the PDF and records the source, version and checksum. The paper retains
+its own license.
+
 Author: Puma. Project license: Apache-2.0, supplied by the owner in the public
 repository's initial commit `8cb010dd060317bc160694e1e1a8d3bf11cac253` and retained
 unchanged as [LICENSE](LICENSE). This source repository does not redistribute compiled binaries or a vendored

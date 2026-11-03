@@ -1,0 +1,83 @@
+{
+  "schema": "rheon-neural-head-calibration-v1",
+  "status": "frozen_before_fitting",
+  "registered_unix": 1792429349.0748181,
+  "primary_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574",
+  "bounded_followup_to_original_scope": true,
+  "trigger": "All four continuation fits and both bounded architecture fits missed the original pressure accuracy target",
+  "architecture_results": [
+    {
+      "identifier": "a-redistributed",
+      "update": 600,
+      "worst_error": 0.0032814964884575015
+    },
+    {
+      "identifier": "a-redistributed",
+      "update": 1200,
+      "worst_error": 0.0020977060213455564
+    },
+    {
+      "identifier": "a-one-stage",
+      "update": 1200,
+      "worst_error": 0.013288791977693004
+    },
+    {
+      "identifier": "a-one-stage",
+      "update": 2400,
+      "worst_error": 0.012876178082275648
+    }
+  ],
+  "initial_checkpoint": "Exact C107",
+  "parameters": 93758,
+  "trainable_parameters": 1198,
+  "frozen_parameters": 92560,
+  "pressure_stages": 2,
+  "updates": 10000,
+  "batch_size": 384,
+  "teacher_small_examples_per_batch": 256,
+  "teacher_large_examples_per_batch": 128,
+  "learning_rate": 0.001,
+  "schedule": [
+    {
+      "update": 6001,
+      "learning_rate": 0.0003
+    },
+    {
+      "update": 9001,
+      "learning_rate": 0.0001
+    }
+  ],
+  "seed": 2026101953,
+  "sampling_seed": 2026101954,
+  "wall_seconds": 1800,
+  "objective": "Mean squared log-gain-fraction error plus0.1 times the mean per-example maximum squared mode error",
+  "inference": "Unchanged C107 neural graph; no numerical inverse, teacher, projection or pressure solve added",
+  "dataset": "Offline modal teacher only; whole-geometry teacher train/development split; no physical validation fields",
+  "teacher_manifest_sha256": "4480cd73a33a981d30399d3ab781c948873c2a9c22ebcb60ffd78d69e7f6cecb",
+  "teacher_qualification_sha256": "f1f67574632a295cbf368ad68cc1db547177e8a0e5081ecea16cc30711fbbc23",
+  "analytical_control_sha256": "676d1927ce553d8a066222aa9324d48e16c65e332591f3251b8cb408a4ce540a",
+  "train_work": "Head forwards and optimizer updates only; zero fine spatial forwards during fitting. Not work-matched to the earlier physical fits.",
+  "checkpoints": [
+    0,
+    10000
+  ],
+  "selection": "Final update; actual pressure errors and complete CPU timings required, not teacher-label loss alone",
+  "targets": {
+    "median_cpu_ms": 4.0,
+    "worst_equation_error": 0.0007
+  },
+  "replicas": "Two additional seeds if the learned recipe improves the frontier; freeze before any reserved evaluation",
+  "reserved_scenes_consumed": false,
+  "model_promotion": false,
+  "source_sha256": {
+    "head_calibration_model.py": "4a224850603d94d138e9e5001246ad7275196ad847936636eec86f49943418f9",
+    "head_descriptor.py": "3581afb32f0772df9d1a94791ee2983cb4c31bc7233bd661561f20840e2bf40f",
+    "head_objective.py": "1d3e6cc26496e69b388b9bdb430543087c22f84be628a522ed6a25d391a54798",
+    "head_utils.py": "066b58bf36d675a343e0663151ac2489addec3e1322189d2b5c5c75e351d0bf4",
+    "head_train.py": "3b7ec07366c6ed308c2cbc29f679f4fd7a803218e70e5f47b29225a2113b2524",
+    "prepare_head_project.py": "e206087fd67ea46dd343c3cc7f33dd09c6b42c393a7fc8706666e9e985b71a64",
+    "qualify_head_fit.py": "1208f6bd2a7820bb2bd47b3a0bb58e78d9e71d267c0c80d37ff891b2fe357290",
+    "run_head_pair.py": "b35dded3b855420f3468dc99e7470ff24f0e22baa86a5f07ad64434d1ffd9abb",
+    "freeze_head_entry.py": "4c0fa3481b93474de49c27d3232a1d3aa14624db327e373b86cc0f4775ca3e59"
+  }
+}

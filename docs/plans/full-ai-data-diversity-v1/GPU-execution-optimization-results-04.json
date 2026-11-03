@@ -1,0 +1,64 @@
+{
+  "status": "sampler_table_elimination_exact_but_not_selected_after_instrumented_N8_cost_regression",
+  "created_unix": 1792560162.8362606,
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "pressure_dtype": "float64",
+  "carrier_dtype": "float32",
+  "accuracy_gates": [
+    {
+      "path": "runs/full-ai-data-diversity-v1/fused-generator-blocks-13/results.json",
+      "status": "completed_expanded_cuda_full_state_block_evaluation",
+      "complete_outputs": 960,
+      "sha256": "a871710b2f16c7e252d9b11b4c4f474599477c06a7d96342e64f2e113946bed7"
+    },
+    {
+      "path": "runs/full-ai-data-diversity-v1/fused-legacy-rollout-13/results.json",
+      "status": "completed_expanded_head_cuda_own_history_regression",
+      "complete_outputs": 15360,
+      "sha256": "0a430465ac2d322ff5340bb142b37721c7fb58256aecbd1903483d564aa311d1"
+    },
+    {
+      "path": "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-04/results.json",
+      "status": "passed_all_four_GPU_own_history_byte_equivalence",
+      "complete_outputs": 3840,
+      "sha256": "29603664556ad34f07dfcb937c1346e9f6347c8c96a8ab347ec023e5384a824b"
+    }
+  ],
+  "profile_before": "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-04/results.json",
+  "profile_after": "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-05/results.json",
+  "instrumented_N8_transport_ms_for_three_calls": {
+    "affine_fused": 4.014040000000002,
+    "local_table_free": 5.267217999999998
+  },
+  "PTX_local_table_bytes_before_after": [
+    160,
+    0
+  ],
+  "PTX_static_local_loads_before_after": [
+    92,
+    0
+  ],
+  "driver_resource_probe": "runs/full-ai-data-diversity-v1/CUDA-kernel-resources-01/results.json",
+  "driver_registers_per_transport_thread_before_after": [
+    64,
+    64
+  ],
+  "theoretical_active_threads_per_SM_before_after": [
+    1024,
+    1024
+  ],
+  "driver_resource_change_does_not_prove_timing_cause": true,
+  "cause_of_profile_regression_unproven": true,
+  "additional_complete_call_timing_study_executed": false,
+  "profile_is_not_acceptance_benchmark": true,
+  "selected_working_execution": "experiments/full-ai-data-diversity-v1/debug/affine_generator_graph_v2.py:AffineGeneratorGraph",
+  "selected_working_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-07",
+  "bounded_execution_program_variants_exhausted": 4,
+  "full_generator_target_verified": false,
+  "independent_confirmation_verified": false,
+  "expanded_reserved52_references_opened": 0,
+  "optimizer_updates": 0,
+  "cpu_model_forward": false
+}

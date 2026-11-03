@@ -1,0 +1,292 @@
+{
+  "status": "authorized_data_expansion_in_progress",
+  "created_unix": 1792529831.0492249,
+  "authority": "User requests larger and rectangular training grids, broader stationary/moving and continuous/varying/regular/irregular forcing, densities10/25/50/100, and density-separated benchmarks",
+  "prospective_sequence_amendment": "Begin these broader densities and grid-data collection now while tighter reference targets remain unmet; original scientific registrations and completed evidence are immutable",
+  "full_ai_requirement": "No numerical pressure solver or native physics at candidate inference; numerical native/spectral routines are offline reference and training-label tools only",
+  "current_joint_targets": {
+    "maximum_error_each_equation_pressure_velocity_tracer": 1e-05,
+    "base_grid_counts": [
+      32,
+      32,
+      32
+    ],
+    "base_maximum_ms_per_generated_step": 1.2,
+    "K": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "complete_intermediate_fields_required": true,
+    "cpu_physical_core_allowance": 4,
+    "single_core_primary_efficiency_metric": true
+  },
+  "larger_grid_maximum_ms_per_step": "1.2 * Nx*Ny*Nz / 32768 for larger voxel counts; retain1.2ms cap for smaller grids",
+  "densities_cells_per_metre": [
+    8,
+    10,
+    16,
+    25,
+    50,
+    100
+  ],
+  "retained_regression_densities": [
+    8,
+    16
+  ],
+  "initial_shape_limits": {
+    "minimum_axis": 5,
+    "maximum_axis": 128,
+    "maximum_voxels": 262144,
+    "training_shapes_include": [
+      [
+        8,
+        8,
+        8
+      ],
+      [
+        16,
+        16,
+        16
+      ],
+      [
+        32,
+        32,
+        32
+      ],
+      [
+        64,
+        64,
+        64
+      ]
+    ],
+    "rectangles_include": [
+      [
+        40,
+        24,
+        16
+      ],
+      [
+        48,
+        32,
+        24
+      ],
+      [
+        64,
+        48,
+        32
+      ],
+      [
+        128,
+        24,
+        12
+      ],
+      [
+        64,
+        64,
+        12
+      ]
+    ],
+    "axis_permutations": true,
+    "unseen_random_aspect_test_shapes": true
+  },
+  "large_volume_pilot": {
+    "counts": [
+      [
+        104,
+        112,
+        120
+      ],
+      [
+        128,
+        128,
+        128
+      ]
+    ],
+    "density": [
+      50,
+      100
+    ],
+    "steps": 8,
+    "purpose": "Measure cost and stability before registering additional all-above-density full training scenes; existing initial volume cap does not cover this eventual goal",
+    "status": "all_planned_large_volume_pilots_completed",
+    "full_training_anchors": {
+      "counts": [
+        [
+          104,
+          112,
+          120
+        ],
+        [
+          128,
+          128,
+          128
+        ]
+      ],
+      "densities": [
+        50,
+        100
+      ],
+      "actual_steps": 240,
+      "new_training_scenes": 4,
+      "new_reserved_scenes": 4
+    }
+  },
+  "force_families": [
+    "continuous",
+    "continuous_varying",
+    "regular_pulse",
+    "irregular_pulse"
+  ],
+  "motion_families": [
+    "stationary",
+    "oscillating",
+    "reflected_line"
+  ],
+  "force_ranges": {
+    "magnitude_m_s2": [
+      0.02,
+      2.0
+    ],
+    "location_normalized": [
+      0.03,
+      0.97
+    ],
+    "radius_fraction_minimum_extent": [
+      0.1,
+      0.45
+    ],
+    "swirl": [
+      -1.0,
+      1.0
+    ],
+    "spatial_fluctuation": [
+      0.0,
+      0.8
+    ],
+    "pulse_frequency_hz": [
+      0.5,
+      5.0
+    ],
+    "regular_pulse_duty": [
+      0.15,
+      0.85
+    ],
+    "irregular_on_duration_s": [
+      0.05,
+      0.5
+    ],
+    "irregular_off_duration_s": [
+      0.05,
+      0.75
+    ],
+    "motion_speed_domain_lengths_s": [
+      0.05,
+      0.8
+    ]
+  },
+  "splits": {
+    "reservation": "docs/plans/full-ai-data-diversity-v1/scene-reservation-03.json",
+    "training_scenes": 148,
+    "development_scenes": 24,
+    "reserved_scenes": 52,
+    "independent_groups": 40,
+    "all_density_variants_share_one_split": true,
+    "reserved_references_before_frozen_model_selection": false,
+    "every_profile_motion_has_both_small_and_above32_axis_training_cases": true,
+    "unsupported_unseen_shapes_are_failures_not_dropped": true
+  },
+  "collection": {
+    "actual_steps_per_scene": 240,
+    "selected_one_step_training_sources": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      96,
+      128,
+      192,
+      239
+    ],
+    "preserve_both_source_and_target_fields": true,
+    "complete_physical_fields": [
+      "pressure",
+      "vx",
+      "vy",
+      "vz",
+      "tracer"
+    ],
+    "native_reference_rhs_and_residual_are_labels_only": true,
+    "save_quality_for_every_advanced_step": true,
+    "maximum_capture_bytes": 25769803776,
+    "minimum_free_disk_bytes": 12884901888,
+    "serialized_native_workers": 1,
+    "pilot_before_bulk": true,
+    "maximum_train_capture_bytes": 21474836480,
+    "maximum_development_capture_bytes": 2147483648,
+    "pilot_actual_bytes": 1901859273
+  },
+  "benchmarks": {
+    "group_key": [
+      "cells_per_metre",
+      "Nx",
+      "Ny",
+      "Nz",
+      "K",
+      "cpu_core_set",
+      "implementation",
+      "simulation_dt"
+    ],
+    "report_each_group": [
+      "scene_count",
+      "voxel_count",
+      "physical_extent_m",
+      "aspect_ratio",
+      "worst_equation_error",
+      "worst_pressure_error",
+      "worst_velocity_error",
+      "worst_tracer_error",
+      "block_latency_median_p95_max",
+      "amortized_step_latency_median_p95_max",
+      "unsupported_or_failed_scenes"
+    ],
+    "density_averages_must_not_hide_failed_buckets": true,
+    "paired_density_groups_allow_same_geometry_and_program_at_different_spacing": true,
+    "separate_matched_physical_extent_experiments_required_for_scaling_conclusions": true
+  },
+  "learning": {
+    "managed_Tuldok_CUDA_only": true,
+    "exact_typed_CPU_restore": true,
+    "qualify_and_register_actual_objective_before_any_new_fit": true,
+    "no_new_fits_until_expanded_data_contract_qualified": true,
+    "current_shape_specific_pressure_tables_do_not_prove_unseen_shape_generalization": true,
+    "next_architecture_must_evaluate_shared_shape_and_spacing_conditioning": true
+  },
+  "next": [
+    "Qualify strict external-force generation against native previews and old scene compatibility",
+    "Capture short pilots across six densities, rectangular grids and larger volumes",
+    "Freeze measured bulk-capture budget and capture training and development groups; keep48 reserved references untouched",
+    "Train and validate broad-shape models with explicit per-density/per-shape reports and prior regression failures retained",
+    "Continue accuracy and CPU work for allK, then complete the larger-density target phase and600-step30/60Hz work"
+  ],
+  "source_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/scene-reservation-02.json": "999121441c72fbe3cd0b6cf25369c2e414331d4d7a03d33f80fac04ca7e219a4",
+    "docs/plans/full-ai-data-diversity-v1/native-forcing-build-protocol-02.json": "cda75c937caccd96f625c87c3ffacb49d1ef8fd752ee25269591c4b234e6016d",
+    "experiments/full-ai-data-diversity-v1/force_program.py": "dfbd26e48f0c8a08bbe59b62433ab7508491998d1657449223422024bcca0727",
+    "docs/plans/full-ai-data-diversity-v1/pilot-capture-protocol-01.json": "c67e201ab1f4bfae04c0cdb8cada412fc2ae8dc68f4439b9dbcd5411a25d9a71",
+    "docs/plans/full-ai-data-diversity-v1/scene-reservation-03.json": "eacdb77b5c91dd78040705c06e70529cbb69f926713ba499d3ec608dfd9aa411",
+    "docs/plans/full-ai-data-diversity-v1/pilot-and-coverage-results-01.json": "e7bfb1ac9049105dfd742c63092560ccbf5b7a20dfdfc87d8866eac5ebc92d0e",
+    "experiments/full-ai-data-diversity-v1/reserve_high_volume.py": "f7a1f412008ba1a867d0b22114b19775ecbbd1d514f8dd38b2d64e8a240a5027"
+  },
+  "supersedes": "docs/plans/full-ai-data-diversity-v1/plan-02.json",
+  "pilot_capture_protocol": "docs/plans/full-ai-data-diversity-v1/pilot-capture-protocol-01.json",
+  "qualified_force_comparisons": 1296,
+  "capture_reference_and_forcing_qualified": true,
+  "benchmark_normalization_rule": "Freeze training-only scales and near-zero absolute tolerances before fitting; retain original normalization and criteria on prior regression populations, and report absolute errors so broader forces cannot hide small-signal failures",
+  "high_volume_anchor_pilots_passed": true
+}

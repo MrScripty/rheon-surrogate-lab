@@ -1,0 +1,75 @@
+{
+  "status": "frozen_before_reserved_capture",
+  "frozen_unix": 1792442624.5194821,
+  "models": [
+    {
+      "id": "C107",
+      "entry_path": "runs/pressure-methods-v4/entries/v4-student50-control.json",
+      "entry_sha256": "3ac6a0d3727d26119839fa9035814eb9abca7e681aed5bfdc7b1db5abe4d8a8e",
+      "role": "baseline",
+      "qualification_path": "runs/full-ai-next-priorities-v1/precise-pressure-family-qualification-01/C107-v2/qualification.json",
+      "qualification_sha256": "3fc4dda9f4c259cf059a5bfcc8416a1e61d2980bff966571003f9f6781e4d837"
+    },
+    {
+      "id": "a-tail8",
+      "entry_path": "runs/full-ai-next-priorities-v1/entries/a-tail8.json",
+      "entry_sha256": "9a6042a453287f32f471797c27bf3894c8b6dfb15ead00ff944be0d3ca996dad",
+      "role": "primary",
+      "qualification_path": "runs/full-ai-next-priorities-v1/precise-routed-pressure-qualification-01/a-tail8.json",
+      "qualification_sha256": "6cb47fb5143480a736c28645a10e9580be95af9914001f3ab87db6cce8dd84b9"
+    },
+    {
+      "id": "a-tail8-s2",
+      "entry_path": "runs/full-ai-next-priorities-v1/entries/a-tail8-s2.json",
+      "entry_sha256": "407f775b997eb29c00733c48987ada20667df848c6bbf0b78da8cf824c84142f",
+      "role": "continuation_replica",
+      "qualification_path": "runs/full-ai-next-priorities-v1/precise-pressure-family-qualification-01/a-tail8-s2/qualification.json",
+      "qualification_sha256": "aa15fb15ce0f6359580d0e3b5f2efeac120eff58ce76c364b1bf2fe38a273418"
+    },
+    {
+      "id": "a-tail8-s3",
+      "entry_path": "runs/full-ai-next-priorities-v1/entries/a-tail8-s3.json",
+      "entry_sha256": "b8e2dbdd1368d8e8f7518c18676dd3c5718e0caa13feecb5024a0fc2cb27673d",
+      "role": "continuation_replica",
+      "qualification_path": "runs/full-ai-next-priorities-v1/precise-pressure-family-qualification-01/a-tail8-s3/qualification.json",
+      "qualification_sha256": "8204fb720a2f43c35444c130d68fa1734517357c31e1aad123132c55eb1ad0b2"
+    }
+  ],
+  "primary_model": "a-tail8",
+  "primary_decision_sha256": "b9b7c938a915d32a0d54947e3e451b229dd5fa988be90e112542d8ffb8eb754b",
+  "primary_selection": "Original successful tail seed remains primary; no post-confirmation reselection",
+  "scene_reservation_sha256": "425b5ccc898af70584dcc6460086067c46778c05694f8d70bc3a074aa3db902f",
+  "source_sha256": {
+    "pressure_family_execution.py": "2750ac5bb2b352b0ff3b6417d32c2b5426a7657e2183bb9007ba3c27e0879f2e",
+    "precise_routed_baseline_pressure.py": "8cca38154179c70353f0e8ebfda2ca32cb7a756e11114c98724e9fe7b3607986",
+    "precise_routed_tail_pressure.py": "027ae32b23a73e788cdb32a374786a564ec8af6ea086c39445d63e2f6a880943",
+    "materialized_fine.py": "d09bc908efed52506dd475a5122450f043ae4a6b5827aee4bd030a6fbee17c6c",
+    "materialized_fine_precise.py": "dc90630610c96526d10c06de9383c9f256e1ea660d4ec8d78fc47745d99a7cba",
+    "whole_pressure_trace.py": "d03ffc4ace0cf3ba74e33526a8b303f829419b1a02695cbaaf0dc2712a0fa2b7",
+    "tail_whole_pressure.py": "62e2221ffe055c4ab7af226c783a5b635b147365fb8983ac228bf75ca0d7da32",
+    "capture_precise_pressure_confirmation.py": "a1610041cb068cbe5389c2e4c85a969db44597d90d7cfe4db5aef0ed972f8fd9",
+    "capture_pressure_fresh.py": "af174c0f58e91613672b87194b2cf21de109cb3323a990f7ab932c174365a652",
+    "evaluate_precise_pressure_confirmation.py": "5d0272e09d8ad39dcb1cafb9dd4d1d951a2c1d8aa2feba4ed33375a96abaaa00",
+    "benchmark_precise_pressure_confirmation.py": "837fefbaf1c8cb24ec7154ce4bc9bab4132c5bda8f0f53ba21ffab038c92e73c",
+    "fresh_pressure_data.py": "90e1ec2c2fa337fc7cf285cc6d939ea314c001357bac1dd3fd1cda8d146ef7fa",
+    "native_client.py": "e4f901cbb484ad6393cfae7f9613617f92a182d9c1f7295d66e37fe98f4677a0",
+    "study_support.py": "e4370825eafa7b1cc824b54962c673f3f1cff086427adc28d7a9ab08379ff7dd",
+    "freeze_precise_pressure_finalists.py": "9998b830bd2b61a31d6b56e0c31ba78df61593e3bc04debc7fce064ca3c404f7"
+  },
+  "weights": "Verified managed CUDA fits and exact CPU restores; zero evaluation updates",
+  "execution": "Same precise learned fine policy for C107 and tail models; dense<=2048cells, compiled CNN above, eagerabove16",
+  "numerical_tolerance": {
+    "pressure_relative": 1e-06,
+    "equation_absolute": 1e-07,
+    "equation_relative": 0.0001
+  },
+  "targets": {
+    "median_CPU_ms": 4.0,
+    "worst_equation_error": 0.0007
+  },
+  "populations": "768small+25632cubedpreparedrequests; fullnative64stepsattemptedoneveryscene; nofallback",
+  "timing": "Five balanced serial repeats, steps1/16/32/64eachscene; fullvalidation andprediction; coldsetupseparate",
+  "candidate_numerical_pressure_solve": false,
+  "model_promotion": false,
+  "reserved_temporal_scenes_consumed": false
+}

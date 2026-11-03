@@ -1,0 +1,73 @@
+{
+  "status": "authorized_next_model_after_current_prototype_characterization",
+  "registered_unix": 1792536308.1081874,
+  "authority": "User: when you are done with this prototype, use the expanded set for the next model",
+  "current_prototype": "docs/plans/full-ai-data-diversity-v1/learned-divisor-selection-02.json",
+  "handoff_trigger": [
+    "Complete frozen independent K1-4 all-field accuracy evaluation",
+    "Finish reference capture workers before measuring CPU latency",
+    "Characterize complete block and amortized per-step latency at1,2,4physical cores; preserve prototype results even if target fails"
+  ],
+  "next_model_data_reservation": "docs/plans/full-ai-data-diversity-v1/scene-reservation-03.json",
+  "next_model_data_reservation_sha256": "eacdb77b5c91dd78040705c06e70529cbb69f926713ba499d3ec608dfd9aa411",
+  "scene_counts_by_split": {
+    "train": 148,
+    "development": 24,
+    "reserved": 52
+  },
+  "densities_cells_per_metre": [
+    8,
+    10,
+    16,
+    25,
+    50,
+    100
+  ],
+  "not_in_current_expansion_cells_per_metre": [
+    32,
+    64,
+    128
+  ],
+  "grid_dimensions_are_separate_from_cells_per_metre": true,
+  "scope": "Use qualified expanded training scenes including rectangles, axes permutations, above32grids and registered high-volume anchors; retain original small-grid regressions. Do not shrink successor back to original72scene population.",
+  "data_readiness": [
+    "Audit every registered train and development scene as qualified or explicitly rejected/incomplete; no silently excluded difficult force scenes",
+    "Recover rejected reference scenes using declared time-refinement lineage with unchanged native quality gates",
+    "Record output timestep, native substeps, physical forcing frequencies and control evaluation semantics independently",
+    "Do not silently mix macro-held coarse and refined references as identical transition targets; freeze teacher/cadence contract for successor",
+    "Keep whole forcing/scene groups together across density variants and splits",
+    "Keep all52expanded reserved references untouched until the successor and evaluator are frozen"
+  ],
+  "architecture_requirement": "Support explicit cell spacing and registered grid dimensions; include untrained reserved shapes as failures if unsupported, rather than treating geometry-specific tables as generalization. Select successor architecture and finite managed CUDA fit budget after prototype profile and data audit.",
+  "learning": "Managed Tuldok CUDA fitting and exact typed CPU restore; no local CPU fitting",
+  "candidate": "Full AI complete-state generators forK1,2,3,4; numerical/native solvers confined to offline references",
+  "evaluation_group_keys": [
+    "K",
+    "cells_per_metre",
+    "counts_xyz"
+  ],
+  "metrics": [
+    "Worst equation error",
+    "Worst pressure error",
+    "Worst velocity error",
+    "Worst tracer error",
+    "Every intermediate complete state",
+    "Autonomous own-history errors",
+    "Complete block CPU latency",
+    "Block latency divided byK",
+    "Single-core efficiency plus2/4physical-core results"
+  ],
+  "targets": {
+    "maximum_worst_error": 1e-05,
+    "reference_grid_counts_xyz": [
+      32,
+      32,
+      32
+    ],
+    "maximum_ms_per_generated_step": 1.2,
+    "larger_grid_ceiling": "1.2 * max(1, Nx*Ny*Nz / 32768) ms per generated step",
+    "no_joint_target_claim_without_independent_accuracy_and_observed_maximum_latency": true
+  },
+  "long600_step_phase_started": false,
+  "new_parameter_fits_executed": 0
+}

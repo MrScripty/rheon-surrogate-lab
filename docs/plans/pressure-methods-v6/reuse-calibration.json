@@ -1,0 +1,87 @@
+{
+  "status": "frozen_from_consumed_development",
+  "point": {
+    "identifier": "v6-separable",
+    "entry": "runs/pressure-methods-v6/entries/v6-separable.json",
+    "variant": "all",
+    "local_execution": "torch",
+    "channels_last": true,
+    "numerical": false,
+    "method": "gcr"
+  },
+  "bands": [
+    {
+      "cells": 2097152,
+      "counts_xyz": [
+        128,
+        128,
+        128
+      ],
+      "steps": 8,
+      "baseline_iterations": 4.0,
+      "saved_fraction": 0.1875,
+      "cycle_seconds_per_cell": 2.1292240388831994e-07,
+      "overhead_seconds_per_cell": 1.595634469553353e-07,
+      "fresh_total_cycles": 32,
+      "cached_total_cycles": 26,
+      "profile": "Full native step input and solver work; median marginal tail-cycle cost and measured cached-space overhead."
+    },
+    {
+      "cells": 32768,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "steps": 32,
+      "baseline_iterations": 3.0,
+      "saved_fraction": 0.061855670103092786,
+      "cycle_seconds_per_cell": 2.1415921808995514e-07,
+      "overhead_seconds_per_cell": 6.787902862015471e-08,
+      "fresh_total_cycles": 97,
+      "cached_total_cycles": 91,
+      "profile": "Full native step input and solver work; median marginal tail-cycle cost and measured cached-space overhead."
+    },
+    {
+      "cells": 262144,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "steps": 32,
+      "baseline_iterations": 3.0,
+      "saved_fraction": 0.020618556701030927,
+      "cycle_seconds_per_cell": 1.4977783277609633e-07,
+      "overhead_seconds_per_cell": 1.2341190314124617e-07,
+      "fresh_total_cycles": 97,
+      "cached_total_cycles": 95,
+      "profile": "Full native step input and solver work; median marginal tail-cycle cost and measured cached-space overhead."
+    }
+  ],
+  "minimum_cosine": 0.9,
+  "overhead_margin": 1.15,
+  "evidence": {
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-128x128x128-fresh/receipt.json": "02cd3a46ea3ad804c84d403a639bc0c222672b58fa4b056bf7f7de033884aca0",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-128x128x128-pressure4/receipt.json": "7db55302fcc3751c8062df14c745174af4b272d9ea55380988571a415e98bf13",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-128x128x128-coefficient4/receipt.json": "3ff8617ce66ca3795d1bf4846a9e74b0a68e5d161fa2047128633cd3551e0d0c",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-32x32x32-fresh/receipt.json": "57fdefecbdcfae0720525e68c43fe115bff1f837a1eef27b52b6921cd3f4d797",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-32x32x32-pressure4/receipt.json": "184af706114346e6f86bcfbcb6805ce73332dc8a27c779b764163989db5a3c73",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-32x32x32-coefficient4/receipt.json": "f91499820f8edf166f9c976daa7341f277c55e6cf7235928a0f892e1314c5515",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-64x64x64-fresh/receipt.json": "896389406893e0fd2f912cb5766a4988c95a71f7e059efd8cd1d2f8432ebcda5",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-64x64x64-pressure4/receipt.json": "6e056197dd54ec5a8f277615d5735e0bfa8793e3aced4dedb969fb8078a23f16",
+    "runs/pressure-methods-v6/quiet-reuse-cost/v6-cost-64x64x64-coefficient4/receipt.json": "4b6fd77966c6f44d40ee78344e67311b2942f866f98269403f5eee7202998e81"
+  },
+  "preselection_sha256": "46c9211302cb1a152cf8300352d04ea92ab8cccf23d9a3ff1aa1d4fbc7b86067",
+  "reservation_sha256": "77b21c1b7f95f64576d50c5adf1012b98a19dedd5d55fd09899627b1845ffa22",
+  "source_sha256": "14b228ba96084890668a78513bcd8b9710e7d9e5606bcfd8962385289299e88a",
+  "adaptive_source_sha256": "7b97b21d48f3c229d421f10da6bf81b593661e342833277feea12b99eec1ccda",
+  "solver_source_sha256": "8755842876a9d37cd8cc0f4c9ef688cd0be2b6818baea542e7d7baf26c5ad359",
+  "inference": "Expected saved cycles from paired development totals; recent fresh-solve work is tracked. Removing a numerical-only tail does not claim savings from earlier neural calls.",
+  "limitations": [
+    "Cost extrapolation to other cell counts is a hypothesis",
+    "Single calibration episode per grid/method; final repeated timing remains independent",
+    "Paired independently advanced trajectories do not provide identical later pressure equations"
+  ],
+  "promotion": false
+}

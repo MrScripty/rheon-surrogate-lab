@@ -1,0 +1,86 @@
+{
+  "status": "prepared_next_guarded_interpolation_research_and_primitive_program_not_executed",
+  "created_unix": 1792570788.628229,
+  "basis": "docs/plans/full-ai-data-diversity-v1/complete-native-entry-results-02.json",
+  "selected_generator": "experiments/full-ai-data-diversity-v1/complete_native_entry_geometry_v1.py:GeometryCompleteNativeEntry",
+  "selected_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-12",
+  "latency_entrypoint": "predict_native",
+  "maximum_new_arithmetic_candidates": 2,
+  "why": "Entry and copy changes yielded modest gains. The learned sampler remains the largest instrumented component. Investigate its generic interpolation arithmetic while preserving learned values and complete physical outputs. Instrumented costs are not lower bounds on uninstrumented latency, and theoretical throughput does not prove the runtime bottleneck.",
+  "primary_references": [
+    {
+      "url": "https://andrewthall.org/papers/df64_qf128.pdf",
+      "role": "Paired FP32 expansions, TwoSum versus FastTwoSum prerequisites, and FMA residual building blocks. Approximately 48 significand bits do not equal IEEE binary64; historical GPU timings do not predict this device."
+    },
+    {
+      "url": "https://docs.nvidia.com/cuda/archive/13.2.0/cuda-math-api/cuda_math_api/group__CUDA__MATH__INTRINSIC__SINGLE.html",
+      "role": "Explicit RN, FMA and directed-rounding intrinsics; subnormal behavior and FTZ control."
+    },
+    {
+      "url": "https://docs.nvidia.com/cuda/archive/13.2.0/cuda-c-best-practices-guide/index.html#arithmetic-instructions",
+      "role": "CC 12 theoretical native arithmetic throughputs and execution limits: an opportunity to investigate, not a measured speed claim."
+    }
+  ],
+  "priorities": [
+    {
+      "id": 1,
+      "change": "Investigate paired FP32 approximation with a conservative enclosure for the terminal trilinear sample, which is immediately stored as F32. Accept the fast path only if both enclosure endpoints round to identical F32 bits. Otherwise execute the original F64 sample.",
+      "math_gate": "Derive and record finite-exponent guards and error bounds covering fraction conversion, compensated operations, the ordered reference F64 weights/products/sum, clipping, cancellation and underflow. Use TwoSum unless the FastTwoSum magnitude condition is proved. Do not guess a bound or equate paired FP32 with F64.",
+      "preserved": "Keep middle F64 samples, query coordinates, restored CSR/gate/mix values, the pressure transform and physical scalars unchanged. Change only how terminal stored F32 rounding is certified."
+    },
+    {
+      "id": 2,
+      "requires": "Candidate 1 proof, primitive evidence and sampler profiling justify further work.",
+      "change": "If worthwhile, approximate middle samples and propagate bounds through restored mix weights, physical clamps and final query/interpolation. Bound the reference RN program. Uncertain cells, neighborhoods, rounding, ranges or ownership use the original complete F64 transport.",
+      "math_gate": "Bound the reference floating-point program, not just real interpolation. Include lattice boundaries, signed zero, NaN/infinity and underflow. Do not read native future fields or reference labels inside the candidate."
+    }
+  ],
+  "primitive_gate": {
+    "maximum_scalar_or_sample_pairs": 8000000,
+    "actual_consumed_cases": 26,
+    "required_populations": [
+      "normal/subnormal/exponentedgesandfallbacks",
+      "randomfinitepositive/negativeandcancellation",
+      "signedzeroandnonfinitepropagation",
+      "cellfaces/edges/cornersandnextaftermidpoints",
+      "allregisteredactualgrid/density/inputcases"
+    ],
+    "oracle": "Original generic CUDA F64 sampling under identical precise compiler flags, with independent exact rational checks where applicable. No native physical solver in the candidate.",
+    "required": "Every accepted fast result and every fallback must match reference F32 bits. Retain counterexamples. Record the actual fast-path/fallback coverage and input scope. Any discrepancy fails the primitive gate before model admission."
+  },
+  "model_gates": [
+    "Register exact sources, mathematical guards and derivation, finite populations and resource caps before execution.",
+    "Preserve all 416 actual/arbitrary native-entry component outputs and 26 ownership cases, plus 960 windows, 15,360 legacy outputs and 24,960 complete-history outputs. Require exact complete-field hashes. Retain every K intermediate and every required internal advance.",
+    "Keep pressure/output dtypes, learned weights and uniform deployment precision unchanged. No TF32, autocast, global fast math or FTZ. Explicit F32 FMA operations belong only to the registered arithmetic primitive. Clearly label guarded internal precision in GPU reports.",
+    "Run at most one paired profile at the real complete-entry seam and one finite balanced complete-call study per qualified changed candidate. Include all transfers, controls, CPU output work, maxima and grid/density/N/K strata. Do not resample unchanged studies for favorable results."
+  ],
+  "resource_caps": {
+    "maximum_gpu_allocated_bytes": 8589934592,
+    "maximum_peak_rss_bytes": 4294967296,
+    "maximum_primitive_wall_seconds": 600,
+    "maximum_model_gate_wall_seconds": 1800,
+    "maximum_timing_wall_seconds": 1800,
+    "maximum_compiled_artifact_bytes": 33554432
+  },
+  "independent_and_later_gates": "Additional managed seeds with exact CPU restores, 52 unopened independent references, matched-aspect/density voxel scaling, and 600 physical outputs at dt=1/60 and dt=1/30 remain required in order.",
+  "maximum_ms_per_generated_step": 1.2,
+  "maximum_error": 1e-05,
+  "reference_counts_xyz": [
+    32,
+    32,
+    32
+  ],
+  "horizons": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "no_new_fits": true,
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false,
+  "proposal_status": "The interpolation filter is our proposed application of the cited arithmetic building blocks. Those sources do not establish our bounds, output equivalence, or speed. No guarded interpolation code has run."
+}

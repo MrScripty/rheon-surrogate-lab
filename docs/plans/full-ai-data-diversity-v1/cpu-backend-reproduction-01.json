@@ -1,0 +1,171 @@
+{
+  "status": "preserved_cpu_optimized_backend_with_reproduction_recipe",
+  "created_unix": 1792541553.0255928,
+  "authority": "User: maintain separate CPU/GPU versions while avoiding heavy ongoing CPU support; retain how to reproduce CPU-optimized execution during GPU-centered development.",
+  "approach": "One logical trained model and shared learned weights/configuration, with separate device-specific execution backends. Avoid a separate ongoing CPU training track.",
+  "current_cpu_snapshot": {
+    "repo": "runs/full-ai-data-diversity-v1/cpu-backend-snapshot-01/repo",
+    "manifest": "runs/full-ai-data-diversity-v1/cpu-backend-snapshot-01/manifest.json",
+    "manifest_sha256": "1a2ee263ab340bc443595b1cf9821e02ee3d549e2a7385b6838f534c817aab6e",
+    "files": 5154,
+    "total_bytes": 1529793419,
+    "reference_state_archives": 3856,
+    "independent_copy_or_reflink": true,
+    "hard_links": false,
+    "includes": [
+      "CPU implementation and native-kernel source/binaries",
+      "typed restored learned weights and custody/provenance",
+      "CPU benchmark protocols and historical measurements",
+      "complete16scene native confirmation reference data",
+      "pinned external-runtime manifest and hardware/build metadata"
+    ]
+  },
+  "snapshot_verification": {
+    "result": "runs/full-ai-data-diversity-v1/cpu-backend-snapshot-integrity-01.json",
+    "sha256": "2675fe752a4993bba2fd2483fc29e248e0db64744b37e1346e2bddf7abd63126",
+    "all5154archived_files_hash_verified": true,
+    "external_fftw_hash_verified": true,
+    "external_runtime_paths_present": true,
+    "all_external_runtime_files_rehashed": false,
+    "cpu_model_forward_executed": false
+  },
+  "cpu_backend": "experiments/full-ai-data-diversity-v1/divisor_generator.py:load_model",
+  "gpu_backend": "experiments/full-ai-data-diversity-v1/cuda_graph_divisor_v2.py:CudaGraphDivisorGeneratorV2",
+  "common_model_contract": {
+    "fields": [
+      "pressure_float64",
+      "vx_float32",
+      "vy_float32",
+      "vz_float32",
+      "tracer_float32"
+    ],
+    "steps_per_pass": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "every_intermediate_required": true,
+    "causal_own_history": true,
+    "current_known_shapes_xyz": [
+      [
+        16,
+        16,
+        16
+      ],
+      [
+        9,
+        11,
+        11
+      ],
+      [
+        15,
+        6,
+        8
+      ],
+      [
+        32,
+        32,
+        32
+      ]
+    ],
+    "current_density_cells_per_metre": [
+      8,
+      16
+    ]
+  },
+  "cpu_optimization_recipe": [
+    "Restore the same typed managed learned weights; preserve model equations, tied-weight transforms, normalization and uniform deployment quantization.",
+    "Use the archived fused contiguous C++/AVX learned transport and spatial kernels; keep scalar/AVX interpolation donor/sum order and boundary behavior.",
+    "Preserve learned-divisor tensor pressure execution and causal learned pressure-history composition; no numerical solver or analytical inverse in the candidate.",
+    "Use qualified coordinate-table construction for known external scene/time inputs.",
+    "Compile with the archived compiler/flags: C++17, -O3, -fPIC, -shared, -ffp-contract=off, -fno-fast-math, -march=native. Do not enable FMA or fast-math without separate precision qualification.",
+    "For CPU verification, start with the registered one-core policy; optionally reproduce2/4cores separately. Preserve every measured intermediate output and verify accuracy of the actual timed bytes."
+  ],
+  "recorded_cpu_compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "build_protocol": {
+    "original_path": "docs/plans/full-ai-tight-targets-v1/recurrent-sampler-contiguous-build-protocol-03.json",
+    "sha256": "45c5006cf2c567f24ddc869d203b1f5f8040fca075d32ce0ce00f2a815886464",
+    "definition": {
+      "status": "registered_before_build_or_numeric_execution",
+      "kernel": "experiments/full-ai-tight-targets-v1/recurrent_sampler_contiguous_v3.cpp",
+      "binary_name": "librecurrent_sampler.so",
+      "compiler": "/usr/bin/g++",
+      "extra_flags": [
+        "-march=native"
+      ],
+      "source_sha256": {
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler.cpp": "1b5239d04f28c63d5ad88362038949a418c6333902d982b156e7eff39386786e",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_assets.py": "9e6d27dbe6fbf99a75a2351bcc2d8824283dcd7e6b46b869a22ba646524359a7",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_native.py": "c565ff1cbda7df41bb78790a92098fb0ff6cc15b5f59cd171e5c27718b830e05",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_model.py": "a23014b73b5ab81b40387699ede6c80e5e225d41245c0414587b7c0ff5528a86",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_reference.py": "4ecb5be62bfdc2bb147223a13471cf21714a15f60180babf78929c814f176df9",
+        "experiments/full-ai-tight-targets-v1/build_execution_kernel.py": "186075111e9d95a49bafcca11943e0bac1d5ff17e7c79281a68c4de2427ed0e5",
+        "experiments/full-ai-tight-targets-v1/build_factorized_force.py": "b8c77ddb985de57c6530ae9224323e6c698b0a3fe80db34d41a11a2e4051e195",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_integer_v2.cpp": "92f9b1ed760b380f6bbadd40ddad5c7ca433c25a7c785715a846864df26b3713",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_integer_v2.py": "9cf4f06a3c81de898c1b860bea3ccdfe0fd3d199c1a21b1e775b6252191c7949",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_contiguous_v3.cpp": "fd973ff780966c810a3f52f5f7cffda91f21370dd845f9d79e244c5a1a362eaf",
+        "experiments/full-ai-tight-targets-v1/recurrent_sampler_contiguous_v3.py": "955d56392e2d4745e97e6c55b4021df29e02114aff13ec7e212dd07341824e05",
+        "experiments/full-ai-tight-targets-v1/run_contiguous_sampler_v3.py": "b8c6171025fea4cf9d07598f3c7b5f758f7122b9a476ca6ab3d77b85e191e9df"
+      },
+      "role": "Untrained neural coordinate/sparse-stage execution prototype, no target claim",
+      "arithmetic": "AVX2 independent queries; strict floating-point order; raw staggered fields; learned CSR weights; no pressure inverse or native backtrace",
+      "prototype_initializers": [
+        "neutral zero gates and inherited learned mixing",
+        "seeded nonnative gates and perturbed inherited mixing"
+      ],
+      "parameter_learning_executed": 0,
+      "required_next_gate": "Tensor/native operator and inherited-weight quantization checks, then full K1/2/3/4 block latency before new fits.",
+      "implementation_change": "Separate proven consecutive sampler loads with scalar row addresses from irregular gathers; unchanged weights, donor order, multiplication/addition order, clipping and full guards"
+    }
+  },
+  "cpu_reproduction_commands": {
+    "artifact_check_from_main_repo": [
+      "python3 -B experiments/full-ai-data-diversity-v1/check_cpu_backend_snapshot_v1.py --manifest runs/full-ai-data-diversity-v1/cpu-backend-snapshot-01/manifest.json --output runs/full-ai-data-diversity-v1/cpu-backend-snapshot-integrity-repeat-01.json"
+    ],
+    "run_from_snapshot_repo": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/full-ai-data-diversity-v1/cpu-backend-snapshot-01/repo",
+    "benchmark": [
+      "python3 -B experiments/pressure-methods-v2/runtime.py --timeout 900 experiments/full-ai-data-diversity-v1/measure_divisor_generator_v3.py --protocol docs/plans/full-ai-data-diversity-v1/divisor-prototype-benchmark-protocols-01/prototype-benchmark-p1.json --output runs/cpu-reproduction/benchmark-p1-01"
+    ],
+    "verify_actual_timed_outputs": [
+      "python3 -B experiments/pressure-methods-v2/runtime.py --timeout 900 experiments/full-ai-data-diversity-v1/verify_divisor_measured_accuracy.py --protocol docs/plans/full-ai-data-diversity-v1/divisor-prototype-benchmark-protocols-01/prototype-benchmark-p1.json --measurement runs/cpu-reproduction/benchmark-p1-01/results.json --output runs/cpu-reproduction/measured-accuracy-p1-01.json"
+    ],
+    "fresh_outputs_required": true,
+    "run_serially": true,
+    "cpu_execution_intent": "These are explicit CPU reproduction commands, not routine GPU-development checks. They were recorded, not executed, during preservation."
+  },
+  "reproducibility_limits": [
+    "This is a source/weights/data/binary snapshot, not a self-contained runtime distribution. The external managed Python/Torch installation is not bundled; its copied manifest records versions, file hashes and absolute paths. Restore or requalify that environment when moving machines.",
+    "The archived native binary uses -march=native and the measured Intel Core Ultra9 275HX instruction set. Other CPU targets require a versioned rebuild, updated loader/build registration, accuracy checks and new timings; do not overwrite frozen artifacts or assume identical speed.",
+    "The existing system FFTW library is external and hash-pinned by the benchmark protocols.",
+    "This snapshot reproduces the current known-shape8/16cells-per-metre model. It does not establish CPU support for future architectures, expanded shapes or densities."
+  ],
+  "future_gpu_model_archive_requirements": [
+    "Save architecture/source/configuration and portable typed learned weights, normalization, units, state layout, precision and deployment transforms.",
+    "Retain mathematical definitions of GPU-specific fused stages and representative complete input/output fixtures, so a CPU implementation can be rebuilt later.",
+    "Track CPU status per architecture explicitly: frozen validated backend, export-ready but unported, or separately requalified. GPU accuracy alone does not establish CPU readiness.",
+    "Keep routine fitting, forward qualification, accuracy evaluations and design timing on GPU. CPU porting/optimization is selective work when a CPU version is needed; no automatic CPU benchmark for every GPU candidate.",
+    "When making a CPU release, export the selected shared checkpoint, implement/fuse/profile CPU hot paths, and requalify every field/intermediate and autonomous rollout before labeling it CPU validated."
+  ],
+  "result_identity_fields": [
+    "logical_model_id",
+    "learned_checkpoint_sha256",
+    "execution_backend_version",
+    "inference_device",
+    "device_hardware",
+    "precision",
+    "timing_scope",
+    "K",
+    "grid_counts_xyz",
+    "cells_per_metre"
+  ],
+  "separate_cpu_gpu_timing_series": true,
+  "no_new_cpu_inference_executed": true,
+  "new_training_runs": 0,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/cpu-backend-snapshot-01/manifest.json": "1a2ee263ab340bc443595b1cf9821e02ee3d549e2a7385b6838f534c817aab6e",
+    "runs/full-ai-data-diversity-v1/cpu-backend-snapshot-integrity-01.json": "2675fe752a4993bba2fd2483fc29e248e0db64744b37e1346e2bddf7abd63126",
+    "docs/plans/full-ai-data-diversity-v1/cpu-backend-preservation-protocol-01.json": "0d4466e8553c48ca4bd6c00737342badcd6a88207e1cd5f2ef3260077c5d4be0",
+    "docs/plans/full-ai-data-diversity-v1/gpu-baseline-characterization-01.json": "372a9e145db8da99f98bd82bdd82e43fef7fbb6c78d934c6a5449f3b28534ed2"
+  }
+}

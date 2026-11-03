@@ -1,0 +1,32 @@
+{
+  "commands": [
+    {
+      "id": "observe-existing-numerical-campaigns",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/await_float32_map_timing.py"
+      ],
+      "timeout": 36550
+    },
+    {
+      "id": "five-balanced-F64-versus-F32-map-repeats",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/benchmark_float32_map.py",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/float32-map-timing-01"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "publish-actual-F32-map-cost-and-accuracy",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/report_float32_map_cost.py"
+      ],
+      "timeout": 300
+    }
+  ]
+}

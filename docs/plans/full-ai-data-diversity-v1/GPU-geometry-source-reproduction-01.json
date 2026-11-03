@@ -1,0 +1,26 @@
+{
+  "status": "passed_exact_external_metadata_source_reproduction",
+  "created_unix": 1792567539.500048,
+  "renderer": "experiments/full-ai-data-diversity-v1/render_geometry_specialization_v1.py",
+  "renderer_sha256": "46e4213a5752030efcee610ad38bda7dd077746d730beb7c0026c6cd647edb09",
+  "source_sha256": {
+    "experiments/full-ai-data-diversity-v1/learned_cuda_kernels_v10.cu": "ca87014200c5e018a02b2bf77e3cfa23a77d1db6d5c46199e5800682e71ce5e6",
+    "experiments/full-ai-data-diversity-v1/learned_cuda_kernels_v12.cu": "305aee40a5f8fd59383494d46a75af6f3550be6b0e8c9f0b9de186d6360914cc",
+    "experiments/full-ai-data-diversity-v1/learned_cuda_kernels_v13.cu": "efcdc6be70a71571c3f1ff891771862b84127454dfb38f37f5c3ef199a3ce1c3"
+  },
+  "metadata_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/cuda-fusion-build-protocol-13.json": "f794ac2a4ac98af9894f7e72148980d9184af03257b1a77bd099e6bb1ecc11e5",
+    "docs/plans/full-ai-data-diversity-v1/cuda-fusion-build-protocol-14.json": "14daad97bf12e0b4e75ec959b46bad66a7110028ee4ee6cb81390f0e7cba0b4e",
+    "docs/plans/full-ai-data-diversity-v1/GPU-geometry-scalar-registry-01.json": "101d9aa41095fc96bad5f3a01e0bb6857c7d630c7fa4774e799a2f695e0ed5fb"
+  },
+  "exact_source_bytes_reproduced": true,
+  "geometry_shapes": 9,
+  "scalar_configurations": 32,
+  "scope": "CPU metadata and text generation only; no model forward, physical fields, reference labels or learned values. Same reviewed generic templates can render additional registered shapes/configurations before evaluation; not evidence those untested configurations qualify.",
+  "commands": [
+    "python3 -B experiments/full-ai-data-diversity-v1/render_geometry_specialization_v1.py --geometry-protocol docs/plans/full-ai-data-diversity-v1/cuda-fusion-build-protocol-13.json --verify experiments/full-ai-data-diversity-v1/learned_cuda_kernels_v12.cu",
+    "python3 -B experiments/full-ai-data-diversity-v1/render_geometry_specialization_v1.py --geometry-protocol docs/plans/full-ai-data-diversity-v1/cuda-fusion-build-protocol-14.json --scalar-registry docs/plans/full-ai-data-diversity-v1/GPU-geometry-scalar-registry-01.json --verify experiments/full-ai-data-diversity-v1/learned_cuda_kernels_v13.cu"
+  ],
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0
+}

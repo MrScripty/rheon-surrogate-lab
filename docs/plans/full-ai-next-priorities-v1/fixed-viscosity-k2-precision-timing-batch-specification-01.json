@@ -1,0 +1,26 @@
+{
+  "commands": [
+    {
+      "id": "five-balanced-corrected-K2-float64-float32-repeats",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/benchmark_fixed_viscosity_k2_precision.py",
+        "--registry",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-k2-precision-inputs-01/models.json",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-k2-precision-timing-01"
+      ],
+      "timeout": 2400
+    },
+    {
+      "id": "publish-actual-corrected-K2-cost-and-accuracy",
+      "runtime": "control",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/report_fixed_viscosity_k2_precision.py"
+      ],
+      "timeout": 120
+    }
+  ]
+}

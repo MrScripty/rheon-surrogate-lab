@@ -1,0 +1,46 @@
+{
+  "status": "experimental_finite_F32_reference_qualified_locally_two_full_recoveries_compatible_two_more_pending",
+  "created_unix": 1792639114.910111,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/native-ieee-red-build-01/build-receipt.json": "5da5d23bfbb0cac7a6dc53642c97985d8e1c2aaae0b46341e86d198e907e14f0",
+    "runs/full-ai-data-diversity-v1/native-ieee-build-01/build-receipt.json": "10369c41fa79c1daaa3b4dddc670d6d486d5eeb5c2e265f4154210123189c395",
+    "runs/full-ai-data-diversity-v1/native-initialization-repro-04/results.json": "a5ccb1f3fd4edf9ffd4ca12a7e41a3907661b30ef9cb2f962cd16107a7c859d8",
+    "runs/full-ai-data-diversity-v1/native-ieee-reference-qualification-01/results.json": "01a5ebb9ae0ecaa24ee6698a8bcd894d6d0c5538bd3323bb62a981b0b61486b6",
+    "runs/full-ai-data-diversity-v1/native-ieee-full-capture-audit-01/results.json": "ad29010ace96cf221602edec29ca25210413c3539fb15a91de0b6a56d43fef32",
+    "runs/full-ai-data-diversity-v1/native-ieee-full-capture-audit-02/results.json": "d53bce37c30f034cbd11e003ddfb988da5fab12bbfe6052f0c005c2d25061476",
+    "runs/full-ai-data-diversity-v1/finite-reference-model-compatibility-01/results.json": "b9e15466e241006a448775389f70ee945f27b179a4e21e29ab7e4533d648d7ed",
+    "runs/full-ai-data-diversity-v1/finite-reference-model-compatibility-02/results.json": "18c58df90af02590ff65eda92b4c3952bc06fe4cdcf722ffd355c213a9e067fe"
+  },
+  "original_policy": "F32 nonzero inputs/outputs must be normal and nonzero proposed values may not round to zero. Native F64 arithmetic, energy bookkeeping and stability limits otherwise accept the tiny finite state.",
+  "new_candidate_policy": "F32 input/output must be finite, allowing IEEE subnormals and standard rounded zero. No explicit flushing. Two representability predicates changed in isolated newbuild; originals untouched.",
+  "physical_quality_gates_unchanged": [
+    "finite F64 intermediates",
+    "viscosity energy identity and rounding budget",
+    "diffusion stability bound",
+    "pressure residual",
+    "divergence",
+    "boundaries",
+    "Courant quality"
+  ],
+  "selected_reference_steps_per_second": 240,
+  "duration_seconds": 20,
+  "temporal_convergence_proven": false,
+  "native_unit_regression_red": true,
+  "candidate_build_and_tests_pass": true,
+  "original23master_replay_complete_snapshots_exact": 920,
+  "original23master_late_replays": 46,
+  "qualification_actual_native_advances": 1664,
+  "original_rejections_preserved": [
+    "long-v1-regular_pulse-stationary-r1-cpm25",
+    "long-v1-regular_pulse-reflected_line-r2-cpm16",
+    "long-v1-irregular_pulse-stationary-r1-cpm8",
+    "long-v1-irregular_pulse-reflected_line-r2-cpm100"
+  ],
+  "full_audited_recoveries": 2,
+  "all12_GPU_compatibility_checks_per_recovery": 90,
+  "training_adopted": false,
+  "remaining": "Audit completed density25cube64candidate; finish/audit density100cube64candidate; unchangedGPUcompatibility; explicit full36epocheligibility decision.",
+  "new_parameter_fits": 0,
+  "reserved52_references_opened": 0,
+  "full_generator_target_pass": false
+}

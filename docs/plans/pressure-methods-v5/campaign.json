@@ -1,0 +1,85 @@
+{
+  "status": "complete",
+  "tracks": [
+    {
+      "id": 1,
+      "name": "Multilevel-conditioned lightweight model",
+      "requirements": [
+        "Three matched managed CUDA fits with fresh CPU restores",
+        "Tiny raw-residual and post-coarse controls with identical initial weights and native bank",
+        "Independent forward/objective qualification and deployed coarse-plus-fine parity",
+        "Full historical, new native and new spectral evaluation"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Timestep correction reuse",
+      "requirements": [
+        "Bounded recycled direction space with true-residual checks and geometry reset",
+        "Independent tests covering repeated, changed, unrelated, zero and invalid equations",
+        "Same-input sequence screen and independently advanced native rollouts",
+        "Fresh versus recycled work and repeated full-fluid timing"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Explicit spatial wavelengths and rectangular geometry",
+      "requirements": [
+        "Train/development/blind reservations before fitting",
+        "Controlled cosine mode bands with declared physical wavelengths and operator-verified labels",
+        "Native-only versus spectral-augmented training contrast retaining the original bank",
+        "Independent native and wavelength evaluations after frozen selection"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Inference and solver execution",
+      "requirements": [
+        "Profile CNN, hierarchy, operators and native exchange on real requests",
+        "Implement and qualify measured optimization candidates against unchanged operator",
+        "Repeated same-core pressure and native-fluid timing including conversions, gates and reuse maintenance",
+        "Report accepted coverage separately from rejected attempt timing"
+      ]
+    }
+  ],
+  "prior_publication_sha256": "8e2713227d2cb5cd6a37d92ca036d04ac2f0e8783f3797c6063c5c37acf08708",
+  "arms": [
+    "v5-raw",
+    "v5-multilevel",
+    "v5-spectrum"
+  ],
+  "updates_per_fit": 2400,
+  "small_updates": 1600,
+  "larger_updates": 800,
+  "shared_seed": 2026101908,
+  "shared_sampling_seed": 2026101804,
+  "learning_rate": 0.001,
+  "schedule": [
+    {
+      "update": 1801,
+      "learning_rate": 0.0001
+    },
+    {
+      "update": 2251,
+      "learning_rate": 1e-05
+    }
+  ],
+  "architecture": "Three bias-free linear 3\u00d73\u00d73 replicated convolutions, 1\u21924\u21924\u21921, plus fixed 1/8 Jacobi skip; 648 trainable parameters.",
+  "controls": [
+    "v3-native-vcycle-neural",
+    "v4-gcr-gcr-learned",
+    "numerical multilevel with/without GCR",
+    "spectral"
+  ],
+  "application_drift_limits_deferred": true,
+  "promotion": false,
+  "source_sha256": "bbe20f8be5662f793836bfc5cff263dd60c967d24531423bc1db6cab40178498",
+  "pre_admission_revision": {
+    "reason": "Zero-update entrypoint qualification enforced the existing Adam learning-rate cap of 0.001; no fit was admitted.",
+    "prior_campaign_sha256": "f796349ec4a662f69a19b554152433dde0438b8c2ead2e7a47af75e8af372e89"
+  },
+  "successful_fits": 3,
+  "successful_managed_runs": 6,
+  "optimizer_updates": 7200,
+  "completion_audit_sha256": "e3891fcfafb64a0e54a4d2ed3f49b249868b8a0e2ccb673524deeb60a41a34af"
+}

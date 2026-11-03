@@ -1,0 +1,48 @@
+{
+  "status": "registered_before_CPU_timing",
+  "registered_unix": 1792470420.147617,
+  "source_sha256": "2703b6317193289ea9fdaddd4a70d55639dd0e896daf9c202c37493ed2c4315b",
+  "models": [
+    "b2-displacement",
+    "b2-coupled",
+    "b2-provisional-aux"
+  ],
+  "repeats": 5,
+  "balanced_serial": true,
+  "CPU": 23,
+  "threads": 1,
+  "batch_size": 1,
+  "starts": [
+    0,
+    8,
+    16,
+    32,
+    48,
+    64,
+    96,
+    120
+  ],
+  "total_cases_per_worker": 64,
+  "small_cases_per_worker": 48,
+  "extension_cases_per_worker": 16,
+  "variants": [
+    "full",
+    "tensor"
+  ],
+  "timed_requests": 1920,
+  "bank_sha256": "9d5fe894d2e99feb5ef6dae738c91f765b4a8073802e63c6273c89434854090e",
+  "loader_sha256": {
+    "displacement_evaluation_support.py": "59846ef1a92d15c5cc0c364afccb9d0ebf84ff7eb47e85156f1ea8c419ae7faa",
+    "coupled_evaluation_support.py": "97ad9a715d5af53d5e1a4dbfcc488c71cfb42009066004e079a09d4f54450a70"
+  },
+  "warmup": "One complete population before each variant and repeat",
+  "complete_block": "Physical encoding, known forcing, all neural updates and physical reconstruction of every state",
+  "amortized_budget_ms": 2,
+  "complete_block_budget_ms": 4,
+  "prior_model_weights_unchanged": true,
+  "source_import_and_dense_map_setup": "Reported separately; warm latency excludes setup",
+  "prerequisites": "Completed fit/exactCPUrestore/all8sceneevaluation, owned-child reaping, source-bound full-state comparison audit",
+  "accuracy_failure_does_not_prevent_cost_measurement": true,
+  "sustained_application_timing_claim": false,
+  "reserved_scenes_consumed": false
+}

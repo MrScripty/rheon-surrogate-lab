@@ -1,0 +1,50 @@
+{
+  "status": "registered_before_qualification",
+  "source_sha256": "5e83b77ec90ea3709dab8a84975aa068a60c1acf9e364af0a2b8f545e3f49666",
+  "assets_receipt_sha256": "d3a9a08d25bfce560d3685c5fd1cce0b5fc6959e41a7cbd3d946bd35b246c544",
+  "pressure_relative_difference_tolerance": 1e-06,
+  "CPU_device_pressure_relative_tolerance": 1e-06,
+  "equation_absolute_tolerance": 1e-07,
+  "equation_relative_tolerance": 0.0001,
+  "homogeneous_gradient_relative_tolerance": 1e-05,
+  "scope": "Batched differentiable port of existing learned pressure component only; no temporal candidate or new fit",
+  "reference_input": "True native requests on eight consumed training parents only; offline component qualification",
+  "batch_sizes": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "grids_xyz": [
+    [
+      16,
+      16,
+      16
+    ],
+    [
+      9,
+      11,
+      11
+    ],
+    [
+      15,
+      6,
+      8
+    ],
+    [
+      32,
+      32,
+      32
+    ]
+  ],
+  "cells_per_metre": [
+    8,
+    16
+  ],
+  "optimizer_updates": 0,
+  "reserved_scenes_consumed": false,
+  "reference_execution": "Independently confirmed precise routed learned pressure parent, with float64 CNN unit-response maps for <=2048 cells",
+  "prior_attempt": "runs/full-ai-next-priorities-v1/temporal-pressure-core-port-attempt-01",
+  "prior_failure": "Float32 fine-CNN batching exceeded equation parity tolerance (1.41e-7 difference). Preserve first sources and failure. Use the confirmed precise parent execution without relaxing numerical tolerances.",
+  "dense_assets": "Generated at setup from learned unit responses only, not serialized static data; report setup/memory separately"
+}

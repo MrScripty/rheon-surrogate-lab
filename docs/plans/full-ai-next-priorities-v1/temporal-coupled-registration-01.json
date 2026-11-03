@@ -1,0 +1,55 @@
+{
+  "status": "registered_before_actual_constructor_qualification_and_fit",
+  "registered_unix": 1792460509.0535746,
+  "model_source_sha256": {
+    "bundle_model_coupled.py": "103a7fd05bfff77cca9db22390dcb86ed11eabf2438cdedce20297b9d42c4d01",
+    "temporal_train_coupled.py": "3f8465a23e83a07ae64f22936dc2a57d6370224c083cc293a5341c25fb30a89c",
+    "full_learned_pressure_map.py": "a71dd3279eae019267334b113ba3e069f46149842c44ac7ea045e0ad55f20388",
+    "frozen_temporal_pressure_core.py": "5e83b77ec90ea3709dab8a84975aa068a60c1acf9e364af0a2b8f545e3f49666",
+    "tied_momentum_readout.py": "589e4086ed8fca8b9b4df89efa6b2c8b5f59778bb2cbe96f6999f16473e8d53c",
+    "bundle_model_decoder.py": "84825ec60584f94a0eab4d8afe6fe773374c490a48d3a662df8e73b6d663fb45",
+    "bundle_model_pressure_expert.py": "9cc6527ccf6d273de4d37d8ccff2752159edf040789c74dc1ca85e4382588b75"
+  },
+  "architecture": "coupled",
+  "horizons": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "width": 12,
+  "first_bounded_fit": {
+    "horizons": 2,
+    "updates": 10000,
+    "single_block_updates": 2000
+  },
+  "initialization": "Seeded shared cell; zero transport/viscosity heads; inherited frozen learned pressure and1000-update flux calibration only",
+  "pressure_readout": "Complete learned unit-response map on three small geometries; original neural component at32cube",
+  "momentum_readout": "Negative spatial transpose of the same pretrained neural flux weights",
+  "transport": "Learned local bilinear/upwind/cubic features, contextual readout, learned linear viscosity branch; no native transport call",
+  "tracer": "Entering-velocity conditional neural convex weights with global motion gate; first tracer cannot use current/future force; zero entering velocity preserves first tracer exactly",
+  "deep_encoder_calls_per_block": 1,
+  "local_updates_and_neural_pressure_readouts_per_block": "K",
+  "internal_history": "Deployment-equivalent physical reconstruction and encoding between each internal step",
+  "qualification_cases_per_device": 64,
+  "CPU_device_max_abs_tolerance": 1e-05,
+  "constant_tracer_relative_tolerance": 2e-06,
+  "tracer_linearity_relative_tolerance": 2e-06,
+  "tracer_bounds_relative_tolerance": 1e-06,
+  "training": "Original16train scenes, normalization, sample stream, increment-MSE objective and10000-update schedule; architecture changes, no single-factor attribution",
+  "initial_cold_accuracy": "Diagnostic only; not a temporal target claim or selection gate",
+  "combined_block_budgets_ms": {
+    "2": 4,
+    "3": 6,
+    "4": 8
+  },
+  "every_equation_and_field_limit": 0.004,
+  "own_history_steps": [
+    12,
+    48,
+    240
+  ],
+  "reserved_scenes_consumed": false,
+  "no_numerical_pressure_solver_or_external_post_projection": true,
+  "pretrained_nonlinear_request_weights_used": false
+}

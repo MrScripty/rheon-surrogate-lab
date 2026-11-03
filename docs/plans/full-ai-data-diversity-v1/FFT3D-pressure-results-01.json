@@ -1,0 +1,5674 @@
+{
+  "status": "qualified_fused3DFFT_accuracy_pass_slower_complete_GPU_calls_retained_not_promoted",
+  "created_unix": 1792590809.910512,
+  "execution_program": "docs/plans/full-ai-data-diversity-v1/GPU-next-major-execution-priorities-02.json",
+  "generator": "experiments/full-ai-data-diversity-v1/fft3d_pressure_graph_v3.py:FFT3DPressureNativeEntry",
+  "transform": "experiments/full-ai-data-diversity-v1/fft3d_dct_v3.py:FFT3DDCT",
+  "layout_build": "runs/full-ai-data-diversity-v1/fft3d-layout-build-02",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "original_N1_unchanged": true,
+  "learned_coefficients_unchanged": true,
+  "no_native_oracle_in_candidate": true,
+  "new_parameter_fits": 0,
+  "cumulative_expanded_program_fits": 3,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "generic_matrix_roundtrip_controls": 78,
+  "changed_input_graph_controls": 13,
+  "maximum_component_discrepancy": 4.7679430624685856e-14,
+  "complete_native_block_outputs": 1018,
+  "native_block_outputs_exact_parent": 920,
+  "all_native_blocks_pass": true,
+  "worst_native_block_error": {
+    "equation": 6.385152061115321e-08,
+    "pressure": 4.003784276424839e-10,
+    "velocity": 3.3399824739899394e-10,
+    "tracer": 3.7360481722040517e-19
+  },
+  "fresh_native240_outputs": 960,
+  "fresh_native240_worst": {
+    "equation": 2.2187053251702513e-14,
+    "pressure": 4.879938338694518e-16,
+    "velocity": 7.457647961582277e-18,
+    "tracer": 8.65666581319595e-16
+  },
+  "fresh_native_process": {
+    "pid": 1851333,
+    "returncode": 0,
+    "reaped": true,
+    "graceful_protocol_complete": true
+  },
+  "expanded_full240_outputs": 24960,
+  "expanded_inherited_worst": {
+    "equation": 2.0341945803538324e-09,
+    "pressure": 7.782951871012653e-15,
+    "velocity": 2.4138605638406747e-15,
+    "tracer": 8.65666581319595e-16
+  },
+  "legacy_full240_outputs": 15360,
+  "legacy_all_output_bytes_exact": true,
+  "balanced_latency_studies": 1,
+  "diagnostic_profiles": 1,
+  "timed_complete_calls": 3840,
+  "timed_complete_outputs": 9600,
+  "warmup_complete_outputs": 11520,
+  "every_timed_and_warmup_output_hash_verified": true,
+  "reference32_density100_N8": [
+    {
+      "K": 1,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.225477510364726,
+        "p95_ms_per_generated_step": 2.3088771296897903,
+        "maximum_ms_per_generated_step": 2.3710280074737966,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.547399024479091,
+        "p95_ms_per_generated_step": 2.843269880395383,
+        "maximum_ms_per_generated_step": 3.2346679945476353,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.14465278243212,
+      "candidate_median_full_block_ms": 2.547399024479091,
+      "candidate_maximum_full_block_ms": 3.2346679945476353
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.071071503451094,
+        "p95_ms_per_generated_step": 2.699709651642479,
+        "maximum_ms_per_generated_step": 2.7121859893668443,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.397169271716848,
+        "p95_ms_per_generated_step": 3.0039511315408163,
+        "maximum_ms_per_generated_step": 3.020996489794925,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.15745365030727654,
+      "candidate_median_full_block_ms": 4.794338543433696,
+      "candidate_maximum_full_block_ms": 6.04199297958985
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.0343304980391013,
+        "p95_ms_per_generated_step": 2.3830285247337697,
+        "maximum_ms_per_generated_step": 2.430905995424837,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.3602328340833387,
+        "p95_ms_per_generated_step": 2.8482299123425037,
+        "maximum_ms_per_generated_step": 2.9095729890589914,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.16020127327313616,
+      "candidate_median_full_block_ms": 7.080698502250016,
+      "candidate_maximum_full_block_ms": 8.728718967176974
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.0189842471154407,
+        "p95_ms_per_generated_step": 2.404856278008083,
+        "maximum_ms_per_generated_step": 2.442500743200071,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.349177375435829,
+        "p95_ms_per_generated_step": 2.7534936234587803,
+        "maximum_ms_per_generated_step": 2.7543745090952143,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.16354418257207382,
+      "candidate_median_full_block_ms": 9.396709501743317,
+      "candidate_maximum_full_block_ms": 11.017498036380857
+    }
+  ],
+  "all_density_shape_K_comparisons": [
+    {
+      "K": 1,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3619104973040521,
+        "p95_ms_per_generated_step": 0.3707206662511453,
+        "maximum_ms_per_generated_step": 0.37077104207128286,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3622454823926091,
+        "p95_ms_per_generated_step": 0.4050541319884365,
+        "maximum_ms_per_generated_step": 1.079670968465507,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0009256020232968343,
+      "candidate_median_full_block_ms": 0.3622454823926091,
+      "candidate_maximum_full_block_ms": 1.079670968465507
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6116809963714331,
+        "p95_ms_per_generated_step": 0.7703215291257954,
+        "maximum_ms_per_generated_step": 1.6540020005777478,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6080024759285152,
+        "p95_ms_per_generated_step": 0.6706237734761095,
+        "maximum_ms_per_generated_step": 1.4314929721876979,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.006013788992529356,
+      "candidate_median_full_block_ms": 0.6080024759285152,
+      "candidate_maximum_full_block_ms": 1.4314929721876979
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5447034782264382,
+        "p95_ms_per_generated_step": 0.5997280240990226,
+        "maximum_ms_per_generated_step": 1.1547180474735796,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5448164884001017,
+        "p95_ms_per_generated_step": 0.6190758955199278,
+        "maximum_ms_per_generated_step": 1.4452890027314425,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.0002074709969384081,
+      "candidate_median_full_block_ms": 0.5448164884001017,
+      "candidate_maximum_full_block_ms": 1.4452890027314425
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5291204985696822,
+        "p95_ms_per_generated_step": 3.778322602738627,
+        "maximum_ms_per_generated_step": 4.895591991953552,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.565319493645802,
+        "p95_ms_per_generated_step": 4.760472022462636,
+        "maximum_ms_per_generated_step": 4.77595702977851,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.010257228420166076,
+      "candidate_median_full_block_ms": 3.565319493645802,
+      "candidate_maximum_full_block_ms": 4.77595702977851
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3792069910559803,
+        "p95_ms_per_generated_step": 0.3857485338812694,
+        "maximum_ms_per_generated_step": 0.39514503441751003,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3735249920282513,
+        "p95_ms_per_generated_step": 1.4919702138286084,
+        "maximum_ms_per_generated_step": 1.557751966174692,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.014983898403102547,
+      "candidate_median_full_block_ms": 0.3735249920282513,
+      "candidate_maximum_full_block_ms": 1.557751966174692
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6106730143073946,
+        "p95_ms_per_generated_step": 1.3794577418593692,
+        "maximum_ms_per_generated_step": 1.6672839992679656,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6055269914213568,
+        "p95_ms_per_generated_step": 0.8476360701024538,
+        "maximum_ms_per_generated_step": 1.5947739593684673,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.008426805778988466,
+      "candidate_median_full_block_ms": 0.6055269914213568,
+      "candidate_maximum_full_block_ms": 1.5947739593684673
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5556069954764098,
+        "p95_ms_per_generated_step": 0.572847542935051,
+        "maximum_ms_per_generated_step": 0.587051035836339,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5493154749274254,
+        "p95_ms_per_generated_step": 1.5551516058621928,
+        "maximum_ms_per_generated_step": 1.635323977097869,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.011323688506818863,
+      "candidate_median_full_block_ms": 0.5493154749274254,
+      "candidate_maximum_full_block_ms": 1.635323977097869
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6128300125710666,
+        "p95_ms_per_generated_step": 3.983095681178384,
+        "maximum_ms_per_generated_step": 4.744361969642341,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5746209614444524,
+        "p95_ms_per_generated_step": 3.8435090478742504,
+        "maximum_ms_per_generated_step": 4.854708968196064,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.01057593382297628,
+      "candidate_median_full_block_ms": 3.5746209614444524,
+      "candidate_maximum_full_block_ms": 4.854708968196064
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3914679982699454,
+        "p95_ms_per_generated_step": 0.4143354482948781,
+        "maximum_ms_per_generated_step": 0.555475999135524,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3778855025302619,
+        "p95_ms_per_generated_step": 1.3238015992101282,
+        "maximum_ms_per_generated_step": 1.4089519972912967,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.03469631183062227,
+      "candidate_median_full_block_ms": 0.3778855025302619,
+      "candidate_maximum_full_block_ms": 1.4089519972912967
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6131734990049154,
+        "p95_ms_per_generated_step": 0.6437204749090598,
+        "maximum_ms_per_generated_step": 0.756950001232326,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.601064006332308,
+        "p95_ms_per_generated_step": 0.6866358773550026,
+        "maximum_ms_per_generated_step": 1.7370679997839034,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.019748884601599848,
+      "candidate_median_full_block_ms": 0.601064006332308,
+      "candidate_maximum_full_block_ms": 1.7370679997839034
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5587460182141513,
+        "p95_ms_per_generated_step": 0.5725815950427204,
+        "maximum_ms_per_generated_step": 0.5799459759145975,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5504995060618967,
+        "p95_ms_per_generated_step": 0.6394476746208974,
+        "maximum_ms_per_generated_step": 1.678380009252578,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.014758963613936582,
+      "candidate_median_full_block_ms": 0.5504995060618967,
+      "candidate_maximum_full_block_ms": 1.678380009252578
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.592814493458718,
+        "p95_ms_per_generated_step": 3.933164844056592,
+        "maximum_ms_per_generated_step": 4.639107035472989,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.513595525873825,
+        "p95_ms_per_generated_step": 3.762658670893871,
+        "maximum_ms_per_generated_step": 4.75114700384438,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.022049278561173558,
+      "candidate_median_full_block_ms": 3.513595525873825,
+      "candidate_maximum_full_block_ms": 4.75114700384438
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.387910520657897,
+        "p95_ms_per_generated_step": 0.40241538372356445,
+        "maximum_ms_per_generated_step": 0.4258499830029905,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.38189798942767084,
+        "p95_ms_per_generated_step": 0.40122760692611337,
+        "maximum_ms_per_generated_step": 0.4058369668200612,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.015499789023584287,
+      "candidate_median_full_block_ms": 0.38189798942767084,
+      "candidate_maximum_full_block_ms": 0.4058369668200612
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6266825075726956,
+        "p95_ms_per_generated_step": 0.6453092239098623,
+        "maximum_ms_per_generated_step": 0.6990449619479477,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6228304991964251,
+        "p95_ms_per_generated_step": 0.6413625495042652,
+        "maximum_ms_per_generated_step": 0.6613610312342644,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.006146666501336329,
+      "candidate_median_full_block_ms": 0.6228304991964251,
+      "candidate_maximum_full_block_ms": 0.6613610312342644
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5524904991034418,
+        "p95_ms_per_generated_step": 0.61768920859322,
+        "maximum_ms_per_generated_step": 1.2899899738840759,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.553026475245133,
+        "p95_ms_per_generated_step": 0.6298100488493225,
+        "maximum_ms_per_generated_step": 1.3080159551464021,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.0009701092463327843,
+      "candidate_median_full_block_ms": 0.553026475245133,
+      "candidate_maximum_full_block_ms": 1.3080159551464021
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.595809976104647,
+        "p95_ms_per_generated_step": 3.8339654071023697,
+        "maximum_ms_per_generated_step": 4.744870995637029,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.596502501750365,
+        "p95_ms_per_generated_step": 4.548283779877238,
+        "maximum_ms_per_generated_step": 5.055807007011026,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0001925923923455919,
+      "candidate_median_full_block_ms": 3.596502501750365,
+      "candidate_maximum_full_block_ms": 5.055807007011026
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37064350908622146,
+        "p95_ms_per_generated_step": 0.4355172335635878,
+        "maximum_ms_per_generated_step": 1.4126910245977342,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.36914049996994436,
+        "p95_ms_per_generated_step": 0.5057049012975767,
+        "maximum_ms_per_generated_step": 0.5680039757862687,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.004055134055854892,
+      "candidate_median_full_block_ms": 0.36914049996994436,
+      "candidate_maximum_full_block_ms": 0.5680039757862687
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6156014860607684,
+        "p95_ms_per_generated_step": 0.7070294464938349,
+        "maximum_ms_per_generated_step": 1.5843820292502642,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6043784960638732,
+        "p95_ms_per_generated_step": 0.6672653020359582,
+        "maximum_ms_per_generated_step": 1.5647739637643099,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.01823093389314423,
+      "candidate_median_full_block_ms": 0.6043784960638732,
+      "candidate_maximum_full_block_ms": 1.5647739637643099
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5615509871859103,
+        "p95_ms_per_generated_step": 0.6161720928503203,
+        "maximum_ms_per_generated_step": 0.9542219922877848,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5572305235546082,
+        "p95_ms_per_generated_step": 1.6270211548544466,
+        "maximum_ms_per_generated_step": 1.6961080254986882,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": -0.007693804712112007,
+      "candidate_median_full_block_ms": 0.5572305235546082,
+      "candidate_maximum_full_block_ms": 1.6961080254986882
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5541015095077455,
+        "p95_ms_per_generated_step": 4.5772733457852155,
+        "maximum_ms_per_generated_step": 4.961060010828078,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5075024934485555,
+        "p95_ms_per_generated_step": 3.9734360965667297,
+        "maximum_ms_per_generated_step": 4.708282009232789,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.013111335153070502,
+      "candidate_median_full_block_ms": 3.5075024934485555,
+      "candidate_maximum_full_block_ms": 4.708282009232789
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.366888998541981,
+        "p95_ms_per_generated_step": 0.4419916367623963,
+        "maximum_ms_per_generated_step": 1.5201210044324398,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.36344199907034636,
+        "p95_ms_per_generated_step": 0.3768988011870534,
+        "maximum_ms_per_generated_step": 0.44624501606449485,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.009395210773103124,
+      "candidate_median_full_block_ms": 0.36344199907034636,
+      "candidate_maximum_full_block_ms": 0.44624501606449485
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6408535118680447,
+        "p95_ms_per_generated_step": 0.7312974135857084,
+        "maximum_ms_per_generated_step": 1.8911610241048038,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6395029777195305,
+        "p95_ms_per_generated_step": 0.6611862947465852,
+        "maximum_ms_per_generated_step": 0.6630719872191548,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0021073991536342263,
+      "candidate_median_full_block_ms": 0.6395029777195305,
+      "candidate_maximum_full_block_ms": 0.6630719872191548
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.225477510364726,
+        "p95_ms_per_generated_step": 2.3088771296897903,
+        "maximum_ms_per_generated_step": 2.3710280074737966,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.547399024479091,
+        "p95_ms_per_generated_step": 2.843269880395383,
+        "maximum_ms_per_generated_step": 3.2346679945476353,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.14465278243212,
+      "candidate_median_full_block_ms": 2.547399024479091,
+      "candidate_maximum_full_block_ms": 3.2346679945476353
+    },
+    {
+      "K": 1,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6016434896737337,
+        "p95_ms_per_generated_step": 4.046789911808447,
+        "maximum_ms_per_generated_step": 4.65862697456032,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5890254948753864,
+        "p95_ms_per_generated_step": 4.85204192227684,
+        "maximum_ms_per_generated_step": 5.050970008596778,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.003503399166109644,
+      "candidate_median_full_block_ms": 3.5890254948753864,
+      "candidate_maximum_full_block_ms": 5.050970008596778
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26525623979978263,
+        "p95_ms_per_generated_step": 0.2731258326093666,
+        "maximum_ms_per_generated_step": 0.27360700187273324,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2650732494657859,
+        "p95_ms_per_generated_step": 0.29750989197054906,
+        "maximum_ms_per_generated_step": 0.6692525057587773,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0006898625047796481,
+      "candidate_median_full_block_ms": 0.5301464989315718,
+      "candidate_maximum_full_block_ms": 1.3385050115175545
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47166799777187407,
+        "p95_ms_per_generated_step": 0.5508117435965688,
+        "maximum_ms_per_generated_step": 0.667476502712816,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47269274364225566,
+        "p95_ms_per_generated_step": 0.5344156699720773,
+        "maximum_ms_per_generated_step": 1.0344609909225255,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.002172599954252563,
+      "candidate_median_full_block_ms": 0.9453854872845113,
+      "candidate_maximum_full_block_ms": 2.068921981845051
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4218577378196642,
+        "p95_ms_per_generated_step": 0.47171323531074466,
+        "maximum_ms_per_generated_step": 0.6720820092596114,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42227325320709497,
+        "p95_ms_per_generated_step": 0.47947126149665575,
+        "maximum_ms_per_generated_step": 0.6355805089697242,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0009849656653884153,
+      "candidate_median_full_block_ms": 0.8445465064141899,
+      "candidate_maximum_full_block_ms": 1.2711610179394484
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.941606246167794,
+        "p95_ms_per_generated_step": 3.039142397756223,
+        "maximum_ms_per_generated_step": 3.603174991440028,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.988237247336656,
+        "p95_ms_per_generated_step": 3.7327887810533866,
+        "maximum_ms_per_generated_step": 3.774337994400412,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.01585222401183395,
+      "candidate_median_full_block_ms": 5.976474494673312,
+      "candidate_maximum_full_block_ms": 7.548675988800824
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27379050152376294,
+        "p95_ms_per_generated_step": 0.30043627775739906,
+        "maximum_ms_per_generated_step": 0.6598265026696026,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27140049496665597,
+        "p95_ms_per_generated_step": 0.2808938195812516,
+        "maximum_ms_per_generated_step": 0.2845955023076385,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.008729326049682351,
+      "candidate_median_full_block_ms": 0.5428009899333119,
+      "candidate_maximum_full_block_ms": 0.569191004615277
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4721389850601554,
+        "p95_ms_per_generated_step": 0.49969590181717655,
+        "maximum_ms_per_generated_step": 0.5583660094998777,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47154974890872836,
+        "p95_ms_per_generated_step": 0.48056710220407695,
+        "maximum_ms_per_generated_step": 0.4879884945694357,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0012480141866529904,
+      "candidate_median_full_block_ms": 0.9430994978174567,
+      "candidate_maximum_full_block_ms": 0.9759769891388714
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4255430103512481,
+        "p95_ms_per_generated_step": 0.43567605316638947,
+        "maximum_ms_per_generated_step": 0.4391350084915757,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4265829920768738,
+        "p95_ms_per_generated_step": 0.4408168781083077,
+        "maximum_ms_per_generated_step": 0.44276201515458524,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0024438933323502887,
+      "candidate_median_full_block_ms": 0.8531659841537476,
+      "candidate_maximum_full_block_ms": 0.8855240303091705
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.01187951117754,
+        "p95_ms_per_generated_step": 3.7442652916070074,
+        "maximum_ms_per_generated_step": 3.8266830088105053,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.960491750854999,
+        "p95_ms_per_generated_step": 3.7115885090315714,
+        "maximum_ms_per_generated_step": 3.7452375108841807,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.017061691920886357,
+      "candidate_median_full_block_ms": 5.920983501709998,
+      "candidate_maximum_full_block_ms": 7.490475021768361
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2769874990917742,
+        "p95_ms_per_generated_step": 0.29343258938752115,
+        "maximum_ms_per_generated_step": 0.3233495226595551,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27625700749922544,
+        "p95_ms_per_generated_step": 0.31945345253916463,
+        "maximum_ms_per_generated_step": 0.3724150010384619,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0026372727828657405,
+      "candidate_median_full_block_ms": 0.5525140149984509,
+      "candidate_maximum_full_block_ms": 0.7448300020769238
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47299175639636815,
+        "p95_ms_per_generated_step": 0.5379960537538867,
+        "maximum_ms_per_generated_step": 1.0540084913372993,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4721855075331405,
+        "p95_ms_per_generated_step": 0.49062420875998214,
+        "maximum_ms_per_generated_step": 0.5228810186963528,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.001704572759090639,
+      "candidate_median_full_block_ms": 0.944371015066281,
+      "candidate_maximum_full_block_ms": 1.0457620373927057
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42530075006652623,
+        "p95_ms_per_generated_step": 0.43467523209983483,
+        "maximum_ms_per_generated_step": 0.45271997805684805,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4274640086805448,
+        "p95_ms_per_generated_step": 0.5349833372747529,
+        "maximum_ms_per_generated_step": 0.9915030095726252,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.005086420876709408,
+      "candidate_median_full_block_ms": 0.8549280173610896,
+      "candidate_maximum_full_block_ms": 1.9830060191452503
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0035120144020766,
+        "p95_ms_per_generated_step": 3.7720401160186157,
+        "maximum_ms_per_generated_step": 3.835854004137218,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.966729996842332,
+        "p95_ms_per_generated_step": 3.726128666312434,
+        "maximum_ms_per_generated_step": 3.7572444998659194,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.012246336083681975,
+      "candidate_median_full_block_ms": 5.933459993684664,
+      "candidate_maximum_full_block_ms": 7.514488999731839
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27949048671871424,
+        "p95_ms_per_generated_step": 0.29071675817249343,
+        "maximum_ms_per_generated_step": 0.2947970060631633,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2800542570184916,
+        "p95_ms_per_generated_step": 0.4965540152625182,
+        "maximum_ms_per_generated_step": 0.640745012788102,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.002017135918993773,
+      "candidate_median_full_block_ms": 0.5601085140369833,
+      "candidate_maximum_full_block_ms": 1.281490025576204
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4817492444999516,
+        "p95_ms_per_generated_step": 0.6636995865846987,
+        "maximum_ms_per_generated_step": 1.0529349965509027,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.48269475519191474,
+        "p95_ms_per_generated_step": 0.5547217660932804,
+        "maximum_ms_per_generated_step": 0.7993330073077232,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.001962661494040452,
+      "candidate_median_full_block_ms": 0.9653895103838295,
+      "candidate_maximum_full_block_ms": 1.5986660146154463
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42459000542294234,
+        "p95_ms_per_generated_step": 0.44629613548750074,
+        "maximum_ms_per_generated_step": 0.6919020088389516,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42494900117162615,
+        "p95_ms_per_generated_step": 0.4404633669764735,
+        "maximum_ms_per_generated_step": 0.4469210107345134,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0008455115384220502,
+      "candidate_median_full_block_ms": 0.8498980023432523,
+      "candidate_maximum_full_block_ms": 0.8938420214690268
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9954262427054346,
+        "p95_ms_per_generated_step": 3.6332381001557223,
+        "maximum_ms_per_generated_step": 3.7164314999245107,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9563167336164042,
+        "p95_ms_per_generated_step": 3.296516546106432,
+        "maximum_ms_per_generated_step": 3.6960875149816275,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.013056408644436246,
+      "candidate_median_full_block_ms": 5.9126334672328085,
+      "candidate_maximum_full_block_ms": 7.392175029963255
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27043076988775283,
+        "p95_ms_per_generated_step": 0.27711767761502415,
+        "maximum_ms_per_generated_step": 0.28366647893562913,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27037173276767135,
+        "p95_ms_per_generated_step": 0.2783485659165308,
+        "maximum_ms_per_generated_step": 0.28380248113535345,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0002183077025812441,
+      "candidate_median_full_block_ms": 0.5407434655353427,
+      "candidate_maximum_full_block_ms": 0.5676049622707069
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4742562450701371,
+        "p95_ms_per_generated_step": 0.488098943606019,
+        "maximum_ms_per_generated_step": 0.4901974753011018,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47204374277498573,
+        "p95_ms_per_generated_step": 0.4917184036457911,
+        "maximum_ms_per_generated_step": 0.4921539803035557,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.004665204345014273,
+      "candidate_median_full_block_ms": 0.9440874855499715,
+      "candidate_maximum_full_block_ms": 0.9843079606071115
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42647001100704074,
+        "p95_ms_per_generated_step": 0.4718958196463067,
+        "maximum_ms_per_generated_step": 0.9613325237296522,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42795999615918845,
+        "p95_ms_per_generated_step": 0.46210416767280565,
+        "maximum_ms_per_generated_step": 0.681566511048004,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0034937630166054223,
+      "candidate_median_full_block_ms": 0.8559199923183769,
+      "candidate_maximum_full_block_ms": 1.363133022096008
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9574439977295697,
+        "p95_ms_per_generated_step": 3.715226710482966,
+        "maximum_ms_per_generated_step": 3.728692012373358,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.958750745165162,
+        "p95_ms_per_generated_step": 3.7177420032094233,
+        "maximum_ms_per_generated_step": 3.7482464977074414,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0004418502722605133,
+      "candidate_median_full_block_ms": 5.917501490330324,
+      "candidate_maximum_full_block_ms": 7.496492995414883
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26715600688476115,
+        "p95_ms_per_generated_step": 0.277372905111406,
+        "maximum_ms_per_generated_step": 0.28201701934449375,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26831025024876,
+        "p95_ms_per_generated_step": 0.2743511358858086,
+        "maximum_ms_per_generated_step": 0.27577849687077105,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.004320484414549242,
+      "candidate_median_full_block_ms": 0.53662050049752,
+      "candidate_maximum_full_block_ms": 0.5515569937415421
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4981662495993078,
+        "p95_ms_per_generated_step": 0.931943212344777,
+        "maximum_ms_per_generated_step": 1.0726614855229855,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.48757699551060796,
+        "p95_ms_per_generated_step": 0.5012992827687413,
+        "maximum_ms_per_generated_step": 0.5034040077589452,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.021256466284532816,
+      "candidate_median_full_block_ms": 0.9751539910212159,
+      "candidate_maximum_full_block_ms": 1.0068080155178905
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.071071503451094,
+        "p95_ms_per_generated_step": 2.699709651642479,
+        "maximum_ms_per_generated_step": 2.7121859893668443,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.397169271716848,
+        "p95_ms_per_generated_step": 3.0039511315408163,
+        "maximum_ms_per_generated_step": 3.020996489794925,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.15745365030727654,
+      "candidate_median_full_block_ms": 4.794338543433696,
+      "candidate_maximum_full_block_ms": 6.04199297958985
+    },
+    {
+      "K": 2,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9918795044068247,
+        "p95_ms_per_generated_step": 3.56672405032441,
+        "maximum_ms_per_generated_step": 3.692295984365046,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0050930072320625,
+        "p95_ms_per_generated_step": 3.778416999557521,
+        "maximum_ms_per_generated_step": 3.79249599063769,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0044164555443411135,
+      "candidate_median_full_block_ms": 6.010186014464125,
+      "candidate_maximum_full_block_ms": 7.58499198127538
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2385439972082774,
+        "p95_ms_per_generated_step": 0.25291357499857753,
+        "maximum_ms_per_generated_step": 0.3989206549401085,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23944450852771598,
+        "p95_ms_per_generated_step": 0.26071947262001555,
+        "maximum_ms_per_generated_step": 0.541757675819099,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.00377503240482846,
+      "candidate_median_full_block_ms": 0.718333525583148,
+      "candidate_maximum_full_block_ms": 1.6252730274572968
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4390255004788438,
+        "p95_ms_per_generated_step": 0.44394264890191454,
+        "maximum_ms_per_generated_step": 0.44463898908967775,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4383326643922677,
+        "p95_ms_per_generated_step": 0.48983723875911306,
+        "maximum_ms_per_generated_step": 0.7114643231034279,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0015781226507809443,
+      "candidate_median_full_block_ms": 1.314997993176803,
+      "candidate_maximum_full_block_ms": 2.1343929693102837
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3936214876982073,
+        "p95_ms_per_generated_step": 0.42313679587095987,
+        "maximum_ms_per_generated_step": 0.5801930092275143,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3915998386219144,
+        "p95_ms_per_generated_step": 0.39661070137905574,
+        "maximum_ms_per_generated_step": 0.39700401248410344,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.005136023157970904,
+      "candidate_median_full_block_ms": 1.1747995158657432,
+      "candidate_maximum_full_block_ms": 1.1910120374523103
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7797211660072207,
+        "p95_ms_per_generated_step": 3.300929039445085,
+        "maximum_ms_per_generated_step": 3.3910913431706526,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7911416740001487,
+        "p95_ms_per_generated_step": 3.21031158673577,
+        "maximum_ms_per_generated_step": 3.3170203290258846,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.004108508483724016,
+      "candidate_median_full_block_ms": 8.373425022000447,
+      "candidate_maximum_full_block_ms": 9.951060987077653
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24495200098802647,
+        "p95_ms_per_generated_step": 0.2534436323912815,
+        "maximum_ms_per_generated_step": 0.31383133803804714,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24599849712103605,
+        "p95_ms_per_generated_step": 0.2597855501032125,
+        "maximum_ms_per_generated_step": 0.4498973333587249,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.004272249782767634,
+      "candidate_median_full_block_ms": 0.7379954913631082,
+      "candidate_maximum_full_block_ms": 1.3496920000761747
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4384693262788157,
+        "p95_ms_per_generated_step": 0.8250376665576672,
+        "maximum_ms_per_generated_step": 0.8275203484420975,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4381383284150312,
+        "p95_ms_per_generated_step": 0.4656541452277452,
+        "maximum_ms_per_generated_step": 0.47280699557935196,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0007548940004391547,
+      "candidate_median_full_block_ms": 1.3144149852450937,
+      "candidate_maximum_full_block_ms": 1.418420986738056
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39465382966833806,
+        "p95_ms_per_generated_step": 0.6818353363390391,
+        "maximum_ms_per_generated_step": 0.7786529992396632,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3948256683846315,
+        "p95_ms_per_generated_step": 0.40423032575442147,
+        "maximum_ms_per_generated_step": 0.4191009987456103,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.00043541631519916635,
+      "candidate_median_full_block_ms": 1.1844770051538944,
+      "candidate_maximum_full_block_ms": 1.257302996236831
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7898100088350475,
+        "p95_ms_per_generated_step": 3.3288454287685454,
+        "maximum_ms_per_generated_step": 3.378804676079502,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.783648844342679,
+        "p95_ms_per_generated_step": 3.317621843113254,
+        "maximum_ms_per_generated_step": 3.3260866766795516,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0022084530748892606,
+      "candidate_median_full_block_ms": 8.350946533028036,
+      "candidate_maximum_full_block_ms": 9.978260030038655
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2465646733374645,
+        "p95_ms_per_generated_step": 0.25144632478865486,
+        "maximum_ms_per_generated_step": 0.27376500656828284,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24737533143100637,
+        "p95_ms_per_generated_step": 0.26402864799213926,
+        "maximum_ms_per_generated_step": 0.5343283410184085,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.00328781119601973,
+      "candidate_median_full_block_ms": 0.7421259942930192,
+      "candidate_maximum_full_block_ms": 1.6029850230552256
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43758099976306164,
+        "p95_ms_per_generated_step": 0.5025990074500442,
+        "maximum_ms_per_generated_step": 0.5728673228683571,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4374461714178324,
+        "p95_ms_per_generated_step": 0.4437595741668095,
+        "maximum_ms_per_generated_step": 0.4463796697867413,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0003081220283839281,
+      "candidate_median_full_block_ms": 1.3123385142534971,
+      "candidate_maximum_full_block_ms": 1.339139009360224
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3964088294499864,
+        "p95_ms_per_generated_step": 0.4015275151080762,
+        "maximum_ms_per_generated_step": 0.4219873420273264,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3927438228856772,
+        "p95_ms_per_generated_step": 0.41643113169508694,
+        "maximum_ms_per_generated_step": 0.660558328187714,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.009245522026828601,
+      "candidate_median_full_block_ms": 1.1782314686570317,
+      "candidate_maximum_full_block_ms": 1.981674984563142
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.783714997349307,
+        "p95_ms_per_generated_step": 3.285919402454359,
+        "maximum_ms_per_generated_step": 3.2956740081620715,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7854519915611795,
+        "p95_ms_per_generated_step": 3.2957182702375576,
+        "maximum_ms_per_generated_step": 3.2958503385695317,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0006239842130126849,
+      "candidate_median_full_block_ms": 8.356355974683538,
+      "candidate_maximum_full_block_ms": 9.887551015708596
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2487828314770013,
+        "p95_ms_per_generated_step": 0.2639722001428407,
+        "maximum_ms_per_generated_step": 0.434969668276608,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24898283299989998,
+        "p95_ms_per_generated_step": 0.25333161271798116,
+        "maximum_ms_per_generated_step": 0.2551420087305208,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0008039201166385457,
+      "candidate_median_full_block_ms": 0.7469484989997,
+      "candidate_maximum_full_block_ms": 0.7654260261915624
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4411360035495212,
+        "p95_ms_per_generated_step": 0.46762415634778665,
+        "maximum_ms_per_generated_step": 0.8122303406707942,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4413679998833686,
+        "p95_ms_per_generated_step": 0.4568391237019872,
+        "maximum_ms_per_generated_step": 0.48441666876897216,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0005259065956546571,
+      "candidate_median_full_block_ms": 1.3241039996501058,
+      "candidate_maximum_full_block_ms": 1.4532500063069165
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3947213408537209,
+        "p95_ms_per_generated_step": 0.4007624675674985,
+        "maximum_ms_per_generated_step": 0.43423033397023875,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3934950121523192,
+        "p95_ms_per_generated_step": 0.4348589010381452,
+        "maximum_ms_per_generated_step": 0.627010342820237,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0031068213812542878,
+      "candidate_median_full_block_ms": 1.1804850364569575,
+      "candidate_maximum_full_block_ms": 1.8810310284607112
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.787936498255779,
+        "p95_ms_per_generated_step": 3.1934472140468038,
+        "maximum_ms_per_generated_step": 3.2889386638998985,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7894076677815365,
+        "p95_ms_per_generated_step": 3.3700748482563845,
+        "maximum_ms_per_generated_step": 3.386367675072203,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.000527691189048829,
+      "candidate_median_full_block_ms": 8.36822300334461,
+      "candidate_maximum_full_block_ms": 10.15910302521661
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24230866498934725,
+        "p95_ms_per_generated_step": 0.2634070687539256,
+        "maximum_ms_per_generated_step": 0.5039863366012772,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24225967354141176,
+        "p95_ms_per_generated_step": 0.26267487458729516,
+        "maximum_ms_per_generated_step": 0.5214336755064627,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.00020218611636380057,
+      "candidate_median_full_block_ms": 0.7267790206242353,
+      "candidate_maximum_full_block_ms": 1.564301026519388
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43653683193648857,
+        "p95_ms_per_generated_step": 0.7151097505508612,
+        "maximum_ms_per_generated_step": 0.7752020028419793,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4361743340268731,
+        "p95_ms_per_generated_step": 0.4512718403323865,
+        "maximum_ms_per_generated_step": 0.5806779954582453,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0008303947870960116,
+      "candidate_median_full_block_ms": 1.3085230020806193,
+      "candidate_maximum_full_block_ms": 1.7420339863747358
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3958251715327302,
+        "p95_ms_per_generated_step": 0.40314387976347155,
+        "maximum_ms_per_generated_step": 0.40618167258799076,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3935395022078107,
+        "p95_ms_per_generated_step": 0.41912712234382854,
+        "maximum_ms_per_generated_step": 0.7472023329076668,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.005774441569920574,
+      "candidate_median_full_block_ms": 1.180618506623432,
+      "candidate_maximum_full_block_ms": 2.2416069987230003
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8266615020887302,
+        "p95_ms_per_generated_step": 3.2933671017720676,
+        "maximum_ms_per_generated_step": 3.511704329866916,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.764757674109812,
+        "p95_ms_per_generated_step": 3.196292885695584,
+        "maximum_ms_per_generated_step": 3.2921016681939363,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.021899979156745575,
+      "candidate_median_full_block_ms": 8.294273022329435,
+      "candidate_maximum_full_block_ms": 9.876305004581809
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24033800582401454,
+        "p95_ms_per_generated_step": 0.244958342712683,
+        "maximum_ms_per_generated_step": 0.2474536692413191,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23941166970568398,
+        "p95_ms_per_generated_step": 0.276182222296484,
+        "maximum_ms_per_generated_step": 0.507739333746334,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0038543055858126785,
+      "candidate_median_full_block_ms": 0.718235009117052,
+      "candidate_maximum_full_block_ms": 1.5232180012390018
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4479203295583526,
+        "p95_ms_per_generated_step": 0.4764343631298592,
+        "maximum_ms_per_generated_step": 0.5182793247513473,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4475041738866518,
+        "p95_ms_per_generated_step": 0.7357241032877937,
+        "maximum_ms_per_generated_step": 0.8232399898891648,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0009290841344734568,
+      "candidate_median_full_block_ms": 1.3425125216599554,
+      "candidate_maximum_full_block_ms": 2.4697199696674943
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.0343304980391013,
+        "p95_ms_per_generated_step": 2.3830285247337697,
+        "maximum_ms_per_generated_step": 2.430905995424837,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.3602328340833387,
+        "p95_ms_per_generated_step": 2.8482299123425037,
+        "maximum_ms_per_generated_step": 2.9095729890589914,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.16020127327313616,
+      "candidate_median_full_block_ms": 7.080698502250016,
+      "candidate_maximum_full_block_ms": 8.728718967176974
+    },
+    {
+      "K": 3,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.804900170303881,
+        "p95_ms_per_generated_step": 3.264715157759686,
+        "maximum_ms_per_generated_step": 3.313389664981514,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7916761658464866,
+        "p95_ms_per_generated_step": 3.274130833839687,
+        "maximum_ms_per_generated_step": 3.3300003463712833,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.004714607884230615,
+      "candidate_median_full_block_ms": 8.37502849753946,
+      "candidate_maximum_full_block_ms": 9.99000103911385
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22546175023308024,
+        "p95_ms_per_generated_step": 0.22775613178964704,
+        "maximum_ms_per_generated_step": 0.2283569920109585,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22615725174546242,
+        "p95_ms_per_generated_step": 0.23696417483733975,
+        "maximum_ms_per_generated_step": 0.35657249100040644,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0030847871608516986,
+      "candidate_median_full_block_ms": 0.9046290069818497,
+      "candidate_maximum_full_block_ms": 1.4262899640016258
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4172638728050515,
+        "p95_ms_per_generated_step": 0.4312769866373857,
+        "maximum_ms_per_generated_step": 0.5822175007779151,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4169792518950999,
+        "p95_ms_per_generated_step": 0.4225915559800342,
+        "maximum_ms_per_generated_step": 0.42529050551820546,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0006821125156085683,
+      "candidate_median_full_block_ms": 1.6679170075803995,
+      "candidate_maximum_full_block_ms": 1.7011620220728219
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37515811709454283,
+        "p95_ms_per_generated_step": 0.39027555249049345,
+        "maximum_ms_per_generated_step": 0.6014997488819063,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3738367522601038,
+        "p95_ms_per_generated_step": 0.37700642860727385,
+        "maximum_ms_per_generated_step": 0.3798217512667179,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0035221544576257147,
+      "candidate_median_full_block_ms": 1.4953470090404153,
+      "candidate_maximum_full_block_ms": 1.5192870050668716
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.686582251044456,
+        "p95_ms_per_generated_step": 3.0931938636058476,
+        "maximum_ms_per_generated_step": 3.1825340120121837,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.6997558670700528,
+        "p95_ms_per_generated_step": 3.0892351343936753,
+        "maximum_ms_per_generated_step": 3.0977779970271513,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0049034850954128295,
+      "candidate_median_full_block_ms": 10.799023468280211,
+      "candidate_maximum_full_block_ms": 12.391111988108605
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2301737476955168,
+        "p95_ms_per_generated_step": 0.23379753256449476,
+        "maximum_ms_per_generated_step": 0.233812490478158,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22857200383441523,
+        "p95_ms_per_generated_step": 0.23140364937717095,
+        "maximum_ms_per_generated_step": 0.23273650731425732,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.00695884685868009,
+      "candidate_median_full_block_ms": 0.9142880153376609,
+      "candidate_maximum_full_block_ms": 0.9309460292570293
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4166435028309934,
+        "p95_ms_per_generated_step": 0.4204628858133219,
+        "maximum_ms_per_generated_step": 0.4205985023872927,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.41518900252413005,
+        "p95_ms_per_generated_step": 0.42907050519716006,
+        "maximum_ms_per_generated_step": 0.5429327429737896,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0034909948120643852,
+      "candidate_median_full_block_ms": 1.6607560100965202,
+      "candidate_maximum_full_block_ms": 2.1717309718951583
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3775696168304421,
+        "p95_ms_per_generated_step": 0.3833340073470026,
+        "maximum_ms_per_generated_step": 0.3936700086342171,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37627875281032175,
+        "p95_ms_per_generated_step": 0.38200320705072954,
+        "maximum_ms_per_generated_step": 0.38408749969676137,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.00341887684437292,
+      "candidate_median_full_block_ms": 1.505115011241287,
+      "candidate_maximum_full_block_ms": 1.5363499987870455
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.698271498957183,
+        "p95_ms_per_generated_step": 3.0983762357209343,
+        "maximum_ms_per_generated_step": 3.1127255060710013,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.727572624280583,
+        "p95_ms_per_generated_step": 3.1927276817441452,
+        "maximum_ms_per_generated_step": 3.2216394902206957,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.010859220554612081,
+      "candidate_median_full_block_ms": 10.910290497122332,
+      "candidate_maximum_full_block_ms": 12.886557960882783
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23152950598159805,
+        "p95_ms_per_generated_step": 0.2638952071720269,
+        "maximum_ms_per_generated_step": 0.3373912477400154,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2312245051143691,
+        "p95_ms_per_generated_step": 0.23950929098646162,
+        "maximum_ms_per_generated_step": 0.328995258314535,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0013173304453609758,
+      "candidate_median_full_block_ms": 0.9248980204574764,
+      "candidate_maximum_full_block_ms": 1.31598103325814
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4166378785157576,
+        "p95_ms_per_generated_step": 0.45295406380319053,
+        "maximum_ms_per_generated_step": 0.6482184980995953,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.41687463090056553,
+        "p95_ms_per_generated_step": 0.4229171507176943,
+        "maximum_ms_per_generated_step": 0.42632575787138194,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0005682449844726101,
+      "candidate_median_full_block_ms": 1.6674985236022621,
+      "candidate_maximum_full_block_ms": 1.7053030314855278
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37655812775483355,
+        "p95_ms_per_generated_step": 0.3923466400010513,
+        "maximum_ms_per_generated_step": 0.6157180032460019,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37594263267237693,
+        "p95_ms_per_generated_step": 0.38239284403971396,
+        "maximum_ms_per_generated_step": 0.38377199962269515,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0016345287409580411,
+      "candidate_median_full_block_ms": 1.5037705306895077,
+      "candidate_maximum_full_block_ms": 1.5350879984907806
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7193054993404076,
+        "p95_ms_per_generated_step": 3.0960343312472105,
+        "maximum_ms_per_generated_step": 3.138633750495501,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7249252525507472,
+        "p95_ms_per_generated_step": 3.100290278234752,
+        "maximum_ms_per_generated_step": 3.1925359944580123,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.002066613409821949,
+      "candidate_median_full_block_ms": 10.899701010202989,
+      "candidate_maximum_full_block_ms": 12.77014397783205
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23248562501976267,
+        "p95_ms_per_generated_step": 0.2477475019986743,
+        "maximum_ms_per_generated_step": 0.47825550427660346,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23204024910228327,
+        "p95_ms_per_generated_step": 0.24653172658872805,
+        "maximum_ms_per_generated_step": 0.4269505006959662,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.001915713788504303,
+      "candidate_median_full_block_ms": 0.9281609964091331,
+      "candidate_maximum_full_block_ms": 1.7078020027838647
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4205161239951849,
+        "p95_ms_per_generated_step": 0.42926784153678454,
+        "maximum_ms_per_generated_step": 0.4532097518676892,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42057125392602757,
+        "p95_ms_per_generated_step": 0.42706192325567827,
+        "maximum_ms_per_generated_step": 0.43548698886297643,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.00013110063490295865,
+      "candidate_median_full_block_ms": 1.6822850157041103,
+      "candidate_maximum_full_block_ms": 1.7419479554519057
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3765831279451959,
+        "p95_ms_per_generated_step": 0.38873253797646623,
+        "maximum_ms_per_generated_step": 0.542058507562615,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37400599831016734,
+        "p95_ms_per_generated_step": 0.603106829657918,
+        "maximum_ms_per_generated_step": 0.693073496222496,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.006843454854418174,
+      "candidate_median_full_block_ms": 1.4960239932406694,
+      "candidate_maximum_full_block_ms": 2.772293984889984
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7122528772451915,
+        "p95_ms_per_generated_step": 3.08553114082315,
+        "maximum_ms_per_generated_step": 3.0980549927335232,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7271992585156113,
+        "p95_ms_per_generated_step": 3.1852955609792843,
+        "maximum_ms_per_generated_step": 3.2588409958407283,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.005510688695664845,
+      "candidate_median_full_block_ms": 10.908797034062445,
+      "candidate_maximum_full_block_ms": 13.035363983362913
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22761862783227116,
+        "p95_ms_per_generated_step": 0.24271646616398374,
+        "maximum_ms_per_generated_step": 0.4570737510221079,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22766824258724228,
+        "p95_ms_per_generated_step": 0.3572133879060858,
+        "maximum_ms_per_generated_step": 0.49743625277187675,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.00021797317488303491,
+      "candidate_median_full_block_ms": 0.9106729703489691,
+      "candidate_maximum_full_block_ms": 1.989745011087507
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4161446267971769,
+        "p95_ms_per_generated_step": 0.4198833506961819,
+        "maximum_ms_per_generated_step": 0.420555254095234,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4162812474532984,
+        "p95_ms_per_generated_step": 0.6789868559280876,
+        "maximum_ms_per_generated_step": 0.7424395007546991,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0003283009014751759,
+      "candidate_median_full_block_ms": 1.6651249898131937,
+      "candidate_maximum_full_block_ms": 2.9697580030187964
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37715087819378823,
+        "p95_ms_per_generated_step": 0.3886388964019716,
+        "maximum_ms_per_generated_step": 0.39744349487591535,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3772234995267354,
+        "p95_ms_per_generated_step": 0.4123691440327093,
+        "maximum_ms_per_generated_step": 0.4253487422829494,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0001925524694386116,
+      "candidate_median_full_block_ms": 1.5088939981069416,
+      "candidate_maximum_full_block_ms": 1.7013949691317976
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8498050014604814,
+        "p95_ms_per_generated_step": 3.0841764135402627,
+        "maximum_ms_per_generated_step": 3.0957792478147894,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7334089973010123,
+        "p95_ms_per_generated_step": 3.121574221586343,
+        "maximum_ms_per_generated_step": 3.204912500223145,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.040843497748027646,
+      "candidate_median_full_block_ms": 10.933635989204049,
+      "candidate_maximum_full_block_ms": 12.81965000089258
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2276974992128089,
+        "p95_ms_per_generated_step": 0.3594383451854811,
+        "maximum_ms_per_generated_step": 0.5334704910637811,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2257278756587766,
+        "p95_ms_per_generated_step": 0.25766208273125824,
+        "maximum_ms_per_generated_step": 0.3950242535211146,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.008650176487847383,
+      "candidate_median_full_block_ms": 0.9029115026351064,
+      "candidate_maximum_full_block_ms": 1.5800970140844584
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4228942489135079,
+        "p95_ms_per_generated_step": 0.4315017176850233,
+        "maximum_ms_per_generated_step": 0.4318667488405481,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42478038085391745,
+        "p95_ms_per_generated_step": 0.5858191936567892,
+        "maximum_ms_per_generated_step": 0.7225799927255139,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": 0.0044600557828708975,
+      "candidate_median_full_block_ms": 1.6991215234156698,
+      "candidate_maximum_full_block_ms": 2.8903199709020555
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.0189842471154407,
+        "p95_ms_per_generated_step": 2.404856278008083,
+        "maximum_ms_per_generated_step": 2.442500743200071,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.349177375435829,
+        "p95_ms_per_generated_step": 2.7534936234587803,
+        "maximum_ms_per_generated_step": 2.7543745090952143,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      "median_fraction_slower": 0.16354418257207382,
+      "candidate_median_full_block_ms": 9.396709501743317,
+      "candidate_maximum_full_block_ms": 11.017498036380857
+    },
+    {
+      "K": 4,
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "parent": {
+        "mode": "cell_coordinate_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.709162625251338,
+        "p95_ms_per_generated_step": 3.1134934346482623,
+        "maximum_ms_per_generated_step": 3.1300980044761673,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "candidate": {
+        "mode": "FFT3D_pressure_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.70460650062887,
+        "p95_ms_per_generated_step": 3.0807893876044545,
+        "maximum_ms_per_generated_step": 3.105990748736076,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      "median_fraction_slower": -0.0016817464481465594,
+      "candidate_median_full_block_ms": 10.81842600251548,
+      "candidate_maximum_full_block_ms": 12.423962994944304
+    }
+  ],
+  "profile_rows": [
+    {
+      "mode": "cell_coordinate_entry",
+      "identifier": "diversity-development-g024-cpm8",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 8,
+      "internal_substeps": 1,
+      "K": 1,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "families": {
+        "other_CUDA_activity": {
+          "calls": 57,
+          "instrumented_ms": 1.7000039999999979
+        },
+        "known_axes_dynamic": {
+          "calls": 3,
+          "instrumented_ms": 0.008096000000000003
+        },
+        "known_control_dynamic": {
+          "calls": 3,
+          "instrumented_ms": 0.046366999999999735
+        },
+        "learned_transport": {
+          "calls": 3,
+          "instrumented_ms": 0.4583190000000009
+        },
+        "learned_gather": {
+          "calls": 15,
+          "instrumented_ms": 0.1430989999999997
+        },
+        "fixed_axis_transform": {
+          "calls": 18,
+          "instrumented_ms": 0.1450190000000016
+        }
+      },
+      "cuda_activities_per_generated_output": 33.0,
+      "complete_entry_instrumented_ms": 1.4841070000000005,
+      "cpu_allocation_events": [],
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "top_CUDA_activities": [
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "instrumented_ms": 1.4841070000000005
+        },
+        {
+          "name": "geometry_transport_32_32_32",
+          "calls": 3,
+          "instrumented_ms": 0.4583190000000009
+        },
+        {
+          "name": "fixed_axis_transform",
+          "calls": 18,
+          "instrumented_ms": 0.1450190000000016
+        },
+        {
+          "name": "learned_gather_three_affine",
+          "calls": 9,
+          "instrumented_ms": 0.11078099999999949
+        },
+        {
+          "name": "Memcpy DtoH (Device -> Pinned)",
+          "calls": 15,
+          "instrumented_ms": 0.104795999999998
+        },
+        {
+          "name": "Memcpy HtoD (Pinned -> Device)",
+          "calls": 6,
+          "instrumented_ms": 0.06070199999999886
+        },
+        {
+          "name": "known_control_dynamic",
+          "calls": 3,
+          "instrumented_ms": 0.046366999999999735
+        },
+        {
+          "name": "learned_gather_ordered_rhs",
+          "calls": 3,
+          "instrumented_ms": 0.01964700000000039
+        },
+        {
+          "name": "affine_three",
+          "calls": 3,
+          "instrumented_ms": 0.017118999999999232
+        },
+        {
+          "name": "learned_gather_difference_scale",
+          "calls": 3,
+          "instrumented_ms": 0.012670999999999821
+        },
+        {
+          "name": "Memcpy DtoD (Device -> Device)",
+          "calls": 15,
+          "instrumented_ms": 0.012609000000000375
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>, false>(int, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.008704000000000633
+        },
+        {
+          "name": "known_axes_dynamic",
+          "calls": 3,
+          "instrumented_ms": 0.008096000000000003
+        },
+        {
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1})",
+          "calls": 3,
+          "instrumented_ms": 0.003391000000000531
+        },
+        {
+          "name": "sum_gauge",
+          "calls": 3,
+          "instrumented_ms": 0.0033279999999999746
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<unsigned char>, std::array<char*, 1ul>, false>(int, at::native::FillFunctor<unsigned char>, std::array<char*, 1ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.0032310000000006765
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::FillFunctor<double>, std::array<char*, 1ul>, false>(int, at::native::FillFunctor<double>, std::array<char*, 1ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.002016999999999371
+        }
+      ],
+      "every_actual_profile_and_fullentry_warmup_output_exact": true,
+      "top_CPU_activities": [
+        {
+          "name": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 2.111344
+        },
+        {
+          "name": "cudaStreamSynchronize",
+          "calls": 3,
+          "self_cpu_ms": 0.8898149999999987
+        },
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "self_cpu_ms": 0.8854300000000057
+        },
+        {
+          "name": "aten::fill_",
+          "calls": 12,
+          "self_cpu_ms": 0.308166000000002
+        },
+        {
+          "name": "aten::copy_",
+          "calls": 54,
+          "self_cpu_ms": 0.21078099999999403
+        },
+        {
+          "name": "cudaMemcpyAsync",
+          "calls": 36,
+          "self_cpu_ms": 0.1501630000000023
+        },
+        {
+          "name": "cudaGraphLaunch",
+          "calls": 3,
+          "self_cpu_ms": 0.09166100000000142
+        },
+        {
+          "name": "aten::empty",
+          "calls": 9,
+          "self_cpu_ms": 0.06642099999999618
+        },
+        {
+          "name": "cudaLaunchKernel",
+          "calls": 3,
+          "self_cpu_ms": 0.0536239999999998
+        },
+        {
+          "name": "aten::narrow",
+          "calls": 45,
+          "self_cpu_ms": 0.03539600000000246
+        },
+        {
+          "name": "aten::slice",
+          "calls": 45,
+          "self_cpu_ms": 0.02866700000000219
+        },
+        {
+          "name": "aten::view",
+          "calls": 90,
+          "self_cpu_ms": 0.024964999999996053
+        },
+        {
+          "name": "aten::reshape",
+          "calls": 45,
+          "self_cpu_ms": 0.020931999999998424
+        },
+        {
+          "name": "aten::_pin_memory",
+          "calls": 3,
+          "self_cpu_ms": 0.01719399999999814
+        },
+        {
+          "name": "cudaDeviceSynchronize",
+          "calls": 2,
+          "self_cpu_ms": 0.017072000000000115
+        }
+      ]
+    },
+    {
+      "mode": "FFT3D_pressure_entry",
+      "identifier": "diversity-development-g024-cpm8",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 8,
+      "internal_substeps": 1,
+      "K": 1,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "families": {
+        "other_CUDA_activity": {
+          "calls": 57,
+          "instrumented_ms": 1.7470609999999995
+        },
+        "known_axes_dynamic": {
+          "calls": 3,
+          "instrumented_ms": 0.008191999999999554
+        },
+        "known_control_dynamic": {
+          "calls": 3,
+          "instrumented_ms": 0.04643100000000049
+        },
+        "learned_transport": {
+          "calls": 3,
+          "instrumented_ms": 0.45925
+        },
+        "learned_gather": {
+          "calls": 15,
+          "instrumented_ms": 0.14233200000000126
+        },
+        "fixed_axis_transform": {
+          "calls": 18,
+          "instrumented_ms": 0.14450700000000186
+        }
+      },
+      "cuda_activities_per_generated_output": 33.0,
+      "complete_entry_instrumented_ms": 1.530777,
+      "cpu_allocation_events": [],
+      "actual_output_sha256": [
+        {
+          "pressure": "59af8e23b9fe86801539e179caea0259a36080b5154d03eb958f5a867ca80342",
+          "vx": "30b07c488eada93d758fbce078def060fcb5dddd52540212b76179366e77824d",
+          "vy": "41d8f889b8aa0415a53f5b811bf6edae26a2d78cffb57787f79e93ae6e361b9d",
+          "vz": "40d8a84c036fd344d58fe8e6a56e74e9fdf011cf5f0017038ac56a4670d41fd4",
+          "tracer": "00f887a0e6c0caac166d45914092c51440709896531b72261dddb6a06787cb73"
+        }
+      ],
+      "top_CUDA_activities": [
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "instrumented_ms": 1.530777
+        },
+        {
+          "name": "geometry_transport_32_32_32",
+          "calls": 3,
+          "instrumented_ms": 0.45925
+        },
+        {
+          "name": "fixed_axis_transform",
+          "calls": 18,
+          "instrumented_ms": 0.14450700000000186
+        },
+        {
+          "name": "learned_gather_three_affine",
+          "calls": 9,
+          "instrumented_ms": 0.11007800000000134
+        },
+        {
+          "name": "Memcpy DtoH (Device -> Pinned)",
+          "calls": 15,
+          "instrumented_ms": 0.09820500000000085
+        },
+        {
+          "name": "Memcpy HtoD (Pinned -> Device)",
+          "calls": 6,
+          "instrumented_ms": 0.06796700000000055
+        },
+        {
+          "name": "known_control_dynamic",
+          "calls": 3,
+          "instrumented_ms": 0.04643100000000049
+        },
+        {
+          "name": "learned_gather_ordered_rhs",
+          "calls": 3,
+          "instrumented_ms": 0.01958400000000029
+        },
+        {
+          "name": "affine_three",
+          "calls": 3,
+          "instrumented_ms": 0.01692800000000034
+        },
+        {
+          "name": "learned_gather_difference_scale",
+          "calls": 3,
+          "instrumented_ms": 0.012669999999999619
+        },
+        {
+          "name": "Memcpy DtoD (Device -> Device)",
+          "calls": 15,
+          "instrumented_ms": 0.012640000000000783
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>, false>(int, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.008703999999999268
+        },
+        {
+          "name": "known_axes_dynamic",
+          "calls": 3,
+          "instrumented_ms": 0.008191999999999554
+        },
+        {
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1})",
+          "calls": 3,
+          "instrumented_ms": 0.0033279999999999746
+        },
+        {
+          "name": "sum_gauge",
+          "calls": 3,
+          "instrumented_ms": 0.0033279999999995197
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<unsigned char>, std::array<char*, 1ul>, false>(int, at::native::FillFunctor<unsigned char>, std::array<char*, 1ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.0031989999999996145
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::FillFunctor<double>, std::array<char*, 1ul>, false>(int, at::native::FillFunctor<double>, std::array<char*, 1ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.001984999999999218
+        }
+      ],
+      "every_actual_profile_and_fullentry_warmup_output_exact": true,
+      "top_CPU_activities": [
+        {
+          "name": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 2.044973
+        },
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "self_cpu_ms": 0.6959310000000042
+        },
+        {
+          "name": "cudaStreamSynchronize",
+          "calls": 3,
+          "self_cpu_ms": 0.5957060000000002
+        },
+        {
+          "name": "aten::fill_",
+          "calls": 12,
+          "self_cpu_ms": 0.2560180000000009
+        },
+        {
+          "name": "aten::copy_",
+          "calls": 54,
+          "self_cpu_ms": 0.16521299999999792
+        },
+        {
+          "name": "cudaMemcpyAsync",
+          "calls": 36,
+          "self_cpu_ms": 0.13327300000000059
+        },
+        {
+          "name": "cudaGraphLaunch",
+          "calls": 3,
+          "self_cpu_ms": 0.07105699999999933
+        },
+        {
+          "name": "aten::empty",
+          "calls": 9,
+          "self_cpu_ms": 0.04053099999999904
+        },
+        {
+          "name": "cudaLaunchKernel",
+          "calls": 3,
+          "self_cpu_ms": 0.035907000000000154
+        },
+        {
+          "name": "aten::narrow",
+          "calls": 45,
+          "self_cpu_ms": 0.027717000000001463
+        },
+        {
+          "name": "aten::slice",
+          "calls": 45,
+          "self_cpu_ms": 0.026386000000002695
+        },
+        {
+          "name": "aten::reshape",
+          "calls": 45,
+          "self_cpu_ms": 0.020147999999995135
+        },
+        {
+          "name": "aten::view",
+          "calls": 90,
+          "self_cpu_ms": 0.018838000000000646
+        },
+        {
+          "name": "aten::_pin_memory",
+          "calls": 3,
+          "self_cpu_ms": 0.011999000000000705
+        },
+        {
+          "name": "cudaDeviceSynchronize",
+          "calls": 2,
+          "self_cpu_ms": 0.010282000000000152
+        }
+      ]
+    },
+    {
+      "mode": "FFT3D_pressure_entry",
+      "identifier": "diversity-development-g024-cpm100",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 100,
+      "internal_substeps": 8,
+      "K": 1,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "families": {
+        "other_CUDA_activity": {
+          "calls": 186,
+          "instrumented_ms": 9.894196000000013
+        },
+        "known_axes_dynamic": {
+          "calls": 24,
+          "instrumented_ms": 0.06332700000000067
+        },
+        "known_control_dynamic": {
+          "calls": 24,
+          "instrumented_ms": 0.37432099999999763
+        },
+        "learned_transport": {
+          "calls": 24,
+          "instrumented_ms": 2.9313080000000005
+        },
+        "learned_gather": {
+          "calls": 72,
+          "instrumented_ms": 2.050085000000012
+        },
+        "generic_DCT_layout_kernels": {
+          "calls": 96,
+          "instrumented_ms": 0.1586889999999971
+        },
+        "FFT_kernels": {
+          "calls": 144,
+          "instrumented_ms": 1.9434599999999909
+        }
+      },
+      "cuda_activities_per_generated_output": 190.0,
+      "complete_entry_instrumented_ms": 9.199089,
+      "cpu_allocation_events": [],
+      "actual_output_sha256": [
+        {
+          "pressure": "262077db50f85f49753121316cbe2834a7016f79f127de2b0190201790058d28",
+          "vx": "55e414a465b690542e0845acbcc318d4ef4dc18cd46feb7efe8bfaf83eeaa93c",
+          "vy": "50e2e92c93a77d553a17c8296957a5e7aab0bc06e3b1a36c33e6de6749b213fa",
+          "vz": "e46f82600415d2d71d9f8d1409cfbf0c2160f58dc9112f5e8b288bee6209c5db",
+          "tracer": "d4174bedd24d4539ca13068e031eae0aee4dcf200c6bb48162fc50b7d1d4308b"
+        }
+      ],
+      "top_CUDA_activities": [
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "instrumented_ms": 9.199089
+        },
+        {
+          "name": "geometry_transport_32_32_32",
+          "calls": 24,
+          "instrumented_ms": 2.9313080000000005
+        },
+        {
+          "name": "learned_gather_three_affine",
+          "calls": 48,
+          "instrumented_ms": 1.8930630000000082
+        },
+        {
+          "name": "void vector_fft<64u, EPT<8u>, 6u, 2u, (padding_t)70, (twiddle_t)0, (loadstore_modifier_t)2, (layout_t)0, unsigned int, double, HostConfigPlaceholder>(kernel_arguments_t<unsigned int>)",
+          "calls": 48,
+          "instrumented_ms": 0.6116640000000017
+        },
+        {
+          "name": "void regular_fft<64u, EPT<8u>, 32u, 4u, (padding_t)6, (twiddle_t)0, (loadstore_modifier_t)2, (layout_t)1, unsigned int, double, HostConfigPlaceholder>(kernel_arguments_t<unsigned int>)",
+          "calls": 48,
+          "instrumented_ms": 0.5721729999999947
+        },
+        {
+          "name": "void regular_fft_c2r<64u, EPT<8u>, 32u, 4u, (padding_t)6, (twiddle_t)0, (loadstore_modifier_t)2, (layout_t)1, unsigned int, double, HostConfigPlaceholder>(kernel_arguments_t<unsigned int>)",
+          "calls": 24,
+          "instrumented_ms": 0.4145789999999975
+        },
+        {
+          "name": "known_control_dynamic",
+          "calls": 24,
+          "instrumented_ms": 0.37432099999999763
+        },
+        {
+          "name": "void vector_fft_r2c<64u, EPT<8u>, 8u, 18u, (padding_t)14, (twiddle_t)0, (loadstore_modifier_t)2, (layout_t)0, unsigned int, double>(kernel_arguments_t<unsigned int>)",
+          "calls": 24,
+          "instrumented_ms": 0.34504399999999824
+        },
+        {
+          "name": "affine_three",
+          "calls": 24,
+          "instrumented_ms": 0.3357640000000033
+        },
+        {
+          "name": "learned_gather_ordered_rhs",
+          "calls": 24,
+          "instrumented_ms": 0.15702200000000355
+        },
+        {
+          "name": "Memcpy DtoH (Device -> Pinned)",
+          "calls": 15,
+          "instrumented_ms": 0.10025199999999997
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::AUnaryFunctor<double, double, double, at::native::binary_internal::MulFunctor<double> >, std::array<char*, 2ul>, false>(int, at::native::AUnaryFunctor<double, double, double, at::native::binary_internal::MulFunctor<double> >, std::array<char*, 2ul>)",
+          "calls": 48,
+          "instrumented_ms": 0.06915100000000302
+        },
+        {
+          "name": "Memcpy HtoD (Pinned -> Device)",
+          "calls": 6,
+          "instrumented_ms": 0.06678100000000087
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>, false>(int, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>)",
+          "calls": 24,
+          "instrumented_ms": 0.0645390000000009
+        },
+        {
+          "name": "known_axes_dynamic",
+          "calls": 24,
+          "instrumented_ms": 0.06332700000000067
+        },
+        {
+          "name": "dct_pack_inverse",
+          "calls": 24,
+          "instrumented_ms": 0.05331100000000128
+        },
+        {
+          "name": "dct_pack_even",
+          "calls": 24,
+          "instrumented_ms": 0.052127999999998564
+        },
+        {
+          "name": "dct_unpack_forward",
+          "calls": 24,
+          "instrumented_ms": 0.031488999999996846
+        },
+        {
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1})",
+          "calls": 24,
+          "instrumented_ms": 0.026812000000002167
+        },
+        {
+          "name": "dct_unpack_inverse",
+          "calls": 24,
+          "instrumented_ms": 0.021761000000000422
+        }
+      ],
+      "every_actual_profile_and_fullentry_warmup_output_exact": true,
+      "top_CPU_activities": [
+        {
+          "name": "cudaStreamSynchronize",
+          "calls": 3,
+          "self_cpu_ms": 7.979036999999998
+        },
+        {
+          "name": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 0.86593
+        },
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "self_cpu_ms": 0.6967040000000002
+        },
+        {
+          "name": "cudaGraphLaunch",
+          "calls": 3,
+          "self_cpu_ms": 0.41169300000000064
+        },
+        {
+          "name": "aten::fill_",
+          "calls": 12,
+          "self_cpu_ms": 0.2542029999999982
+        },
+        {
+          "name": "aten::copy_",
+          "calls": 54,
+          "self_cpu_ms": 0.16666800000000193
+        },
+        {
+          "name": "cudaMemcpyAsync",
+          "calls": 36,
+          "self_cpu_ms": 0.13582700000000228
+        },
+        {
+          "name": "aten::empty",
+          "calls": 9,
+          "self_cpu_ms": 0.055535999999999607
+        },
+        {
+          "name": "cudaLaunchKernel",
+          "calls": 3,
+          "self_cpu_ms": 0.035319999999999026
+        },
+        {
+          "name": "aten::narrow",
+          "calls": 45,
+          "self_cpu_ms": 0.0281470000000013
+        },
+        {
+          "name": "aten::slice",
+          "calls": 45,
+          "self_cpu_ms": 0.02521800000000667
+        },
+        {
+          "name": "aten::reshape",
+          "calls": 45,
+          "self_cpu_ms": 0.01965499999998974
+        },
+        {
+          "name": "aten::view",
+          "calls": 90,
+          "self_cpu_ms": 0.018413000000003423
+        },
+        {
+          "name": "cudaDeviceSynchronize",
+          "calls": 2,
+          "self_cpu_ms": 0.017749000000001614
+        },
+        {
+          "name": "aten::_pin_memory",
+          "calls": 3,
+          "self_cpu_ms": 0.011743000000001757
+        }
+      ]
+    },
+    {
+      "mode": "cell_coordinate_entry",
+      "identifier": "diversity-development-g024-cpm100",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 100,
+      "internal_substeps": 8,
+      "K": 1,
+      "profiled_calls": 3,
+      "warmup_calls": 5,
+      "families": {
+        "other_CUDA_activity": {
+          "calls": 162,
+          "instrumented_ms": 7.0968649999999975
+        },
+        "known_axes_dynamic": {
+          "calls": 24,
+          "instrumented_ms": 0.06255800000000067
+        },
+        "known_control_dynamic": {
+          "calls": 24,
+          "instrumented_ms": 0.37301100000000115
+        },
+        "learned_transport": {
+          "calls": 24,
+          "instrumented_ms": 2.9392050000000003
+        },
+        "learned_gather": {
+          "calls": 72,
+          "instrumented_ms": 0.8589199999999956
+        },
+        "fixed_axis_transform": {
+          "calls": 144,
+          "instrumented_ms": 1.153942999999988
+        }
+      },
+      "cuda_activities_per_generated_output": 150.0,
+      "complete_entry_instrumented_ms": 6.649071,
+      "cpu_allocation_events": [],
+      "actual_output_sha256": [
+        {
+          "pressure": "8c8873fa74a6232401e725deff162d4ed36518107ee3174e5555632ad11f78c9",
+          "vx": "55e414a465b690542e0845acbcc318d4ef4dc18cd46feb7efe8bfaf83eeaa93c",
+          "vy": "50e2e92c93a77d553a17c8296957a5e7aab0bc06e3b1a36c33e6de6749b213fa",
+          "vz": "e46f82600415d2d71d9f8d1409cfbf0c2160f58dc9112f5e8b288bee6209c5db",
+          "tracer": "d4174bedd24d4539ca13068e031eae0aee4dcf200c6bb48162fc50b7d1d4308b"
+        }
+      ],
+      "top_CUDA_activities": [
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "instrumented_ms": 6.649071
+        },
+        {
+          "name": "geometry_transport_32_32_32",
+          "calls": 24,
+          "instrumented_ms": 2.9392050000000003
+        },
+        {
+          "name": "fixed_axis_transform",
+          "calls": 144,
+          "instrumented_ms": 1.153942999999988
+        },
+        {
+          "name": "learned_gather_three_affine",
+          "calls": 48,
+          "instrumented_ms": 0.7025389999999964
+        },
+        {
+          "name": "known_control_dynamic",
+          "calls": 24,
+          "instrumented_ms": 0.37301100000000115
+        },
+        {
+          "name": "learned_gather_ordered_rhs",
+          "calls": 24,
+          "instrumented_ms": 0.1563809999999994
+        },
+        {
+          "name": "affine_three",
+          "calls": 24,
+          "instrumented_ms": 0.13484399999999938
+        },
+        {
+          "name": "Memcpy DtoH (Device -> Pinned)",
+          "calls": 15,
+          "instrumented_ms": 0.09519800000000353
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>, false>(int, at::native::BinaryFunctor<double, double, double, at::native::binary_internal::DivFunctor<double> >, std::array<char*, 3ul>)",
+          "calls": 24,
+          "instrumented_ms": 0.06940599999999722
+        },
+        {
+          "name": "Memcpy HtoD (Pinned -> Device)",
+          "calls": 6,
+          "instrumented_ms": 0.06355000000000018
+        },
+        {
+          "name": "known_axes_dynamic",
+          "calls": 24,
+          "instrumented_ms": 0.06255800000000067
+        },
+        {
+          "name": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::CUDAFunctor_add<double> >(at::TensorIteratorBase&, at::native::CUDAFunctor_add<double> const&)::{lambda(int)#1})",
+          "calls": 24,
+          "instrumented_ms": 0.027231999999998376
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::AUnaryFunctor<double, double, double, at::native::binary_internal::MulFunctor<double> >, std::array<char*, 2ul>, false>(int, at::native::AUnaryFunctor<double, double, double, at::native::binary_internal::MulFunctor<double> >, std::array<char*, 2ul>)",
+          "calls": 24,
+          "instrumented_ms": 0.02546999999999911
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<2, at::native::FillFunctor<double>, std::array<char*, 1ul>, false>(int, at::native::FillFunctor<double>, std::array<char*, 1ul>)",
+          "calls": 24,
+          "instrumented_ms": 0.016286000000000966
+        },
+        {
+          "name": "Memcpy DtoD (Device -> Device)",
+          "calls": 15,
+          "instrumented_ms": 0.012607999999999946
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<4, at::native::FillFunctor<unsigned char>, std::array<char*, 1ul>, false>(int, at::native::FillFunctor<unsigned char>, std::array<char*, 1ul>)",
+          "calls": 3,
+          "instrumented_ms": 0.003199999999999363
+        }
+      ],
+      "every_actual_profile_and_fullentry_warmup_output_exact": true,
+      "top_CPU_activities": [
+        {
+          "name": "cudaStreamSynchronize",
+          "calls": 3,
+          "self_cpu_ms": 5.433641
+        },
+        {
+          "name": "complete_native_entry_call",
+          "calls": 3,
+          "self_cpu_ms": 0.7236070000000031
+        },
+        {
+          "name": "cudaGraphLaunch",
+          "calls": 3,
+          "self_cpu_ms": 0.32804000000000016
+        },
+        {
+          "name": "cudaLaunchKernel",
+          "calls": 3,
+          "self_cpu_ms": 0.31162599999999996
+        },
+        {
+          "name": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 0.294954
+        },
+        {
+          "name": "aten::fill_",
+          "calls": 12,
+          "self_cpu_ms": 0.2590000000000013
+        },
+        {
+          "name": "aten::copy_",
+          "calls": 54,
+          "self_cpu_ms": 0.17224400000000173
+        },
+        {
+          "name": "cudaMemcpyAsync",
+          "calls": 36,
+          "self_cpu_ms": 0.1318470000000001
+        },
+        {
+          "name": "aten::empty",
+          "calls": 9,
+          "self_cpu_ms": 0.058059999999999376
+        },
+        {
+          "name": "aten::narrow",
+          "calls": 45,
+          "self_cpu_ms": 0.029358999999997876
+        },
+        {
+          "name": "aten::slice",
+          "calls": 45,
+          "self_cpu_ms": 0.02806300000000181
+        },
+        {
+          "name": "aten::reshape",
+          "calls": 45,
+          "self_cpu_ms": 0.021136000000003947
+        },
+        {
+          "name": "aten::view",
+          "calls": 90,
+          "self_cpu_ms": 0.019700999999993314
+        },
+        {
+          "name": "cudaDeviceSynchronize",
+          "calls": 2,
+          "self_cpu_ms": 0.015149999999999636
+        },
+        {
+          "name": "aten::_pin_memory",
+          "calls": 3,
+          "self_cpu_ms": 0.012101999999999748
+        }
+      ]
+    }
+  ],
+  "profile_interpretation": "N8 GPU activities190/output vs150parent, and486in prior axisFFT profile. Across3profiled calls, FFT kernels1.94346ms plus layout0.158689ms versus fixed-axis kernels1.153943ms. This trace supports expensive expanded FFT work despite fewer activities than prior FFT; it does not isolate all causes. Unchanged gather family timings also differ. Complete-native-call wrapper is included in CUDA event inventory, so family sums are not additive.",
+  "constructor_context_failure_preserved": true,
+  "flat_indexing_failure_preserved": true,
+  "repair_scope": "One mathematical candidate. Pre-numerical context initialization and isolated stride indexing repairs, all prior sources/artifacts retained; original full generic suite rerun only after changed source.",
+  "retained": true,
+  "promoted": false,
+  "latency_target_verified": false,
+  "independent_confirmation_verified": false,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/FFT3D-pressure-contract-01.json": "493e303282588603cc37d42674d4cbf830db4209a88d6fabdb81965052319505",
+    "docs/plans/full-ai-data-diversity-v1/FFT3D-runtime-context-diagnosis-01.json": "c7eadfdadcba7f5c03babe0fb056e08cd43eb47a2668e5d7678a225285b93196",
+    "docs/plans/full-ai-data-diversity-v1/FFT3D-runtime-layout-diagnosis-01.json": "71404d16677e5e4fcb30595d95537c8008ddd86e3c37c659c33490fb021eb29d",
+    "runs/full-ai-data-diversity-v1/FFT3D-DCT-primitive-02/results.json": "22dbf63f31a5eb97a28719f5351e48b85ae445a58aa1fcdbafdd7ca86e895862",
+    "runs/full-ai-data-diversity-v1/FFT3D-DCT-primitive-03/results.json": "c327a50b018bcb5be20d653c382b1e372b7b64d4dcae96e2a3bc25f27d7ba71f",
+    "runs/full-ai-data-diversity-v1/FFT3D-pressure-blocks-01/results.json": "cb4d3d6261f1be6b1d8f206734e11e809ae6dd4877438b2d4fe960d92b2e59cf",
+    "runs/full-ai-data-diversity-v1/FFT3D-pressure-native240-01/results.json": "47ad23248fcd3da74782a68ff109a3be158768d8660df772ac29ae5baa73d140",
+    "runs/full-ai-data-diversity-v1/FFT3D-pressure-histories-01/results.json": "d855f33d18fcaba0f3872147b7fbc372d114af6b064dae055eab72f67a283825",
+    "runs/full-ai-data-diversity-v1/FFT3D-pressure-legacy-01/results.json": "8a97fe409850786df00e295f34dcc6c86ec65e4668f3b4ed9104861f98cd310c",
+    "runs/full-ai-data-diversity-v1/FFT3D-pressure-benchmark-01/results.json": "5388b58d1c717e593827e75aa8ab2c9e2c53c1c3efb372b5751b137e0ccc0af7",
+    "runs/full-ai-data-diversity-v1/FFT3D-pressure-profile-01/results.json": "b988d4d01aa0cc17284f372dfbee70cdb470f7c731b83d06503dc8b43e58ae36"
+  },
+  "conclusion": "All registered native accuracy/regression gates pass, but every32cubed-density100 K median is14-16percent slower than same-study parent and all maxima exceed1.2ms. Fused3D even-extension FFT is retained for reproduction and possible future scaling work; no larger-domain speed advantage was measured. No unchanged candidate timing or profile rerun."
+}

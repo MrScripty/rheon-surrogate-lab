@@ -1,0 +1,108 @@
+{
+  "status": "reproduced_minimized_and_localized_larger_domain_equation_drift_no_fix_verified",
+  "created_unix": 1792550286.2713292,
+  "case": "diversity-high-volume-train-g00-cpm100",
+  "counts_xyz": [
+    104,
+    112,
+    120
+  ],
+  "cells_per_metre": 100,
+  "first_equation_failure_step": 46,
+  "maximum_allowed_error": 1e-05,
+  "original_native_checkpoints_typed_byte_equal": true,
+  "minimized_feedback": {
+    "protocol": "docs/plans/full-ai-data-diversity-v1/high-volume-equation-failure-reproduction-protocol-01.json",
+    "source": "experiments/full-ai-data-diversity-v1/debug/reproduce_high_volume_equation_v1.py",
+    "replay_actual_own_history_steps": 46,
+    "endpoint_bitwise_equal_original_failed_call": true,
+    "equation_error": 1.0653406181441396e-05,
+    "diagnostic_seconds_including_setup": 1.3672900819801725,
+    "expected_red_exit_code": 1,
+    "repeated_baseline_reproductions_bitwise_equal": true,
+    "real_feedback_seam": "All original GPU physical stages from actual native initial state0; fixed46native endpoint captured once and verified against uninterrupted teacher hashes. No teacher resets or future physical features enter the replay."
+  },
+  "hypotheses": [
+    {
+      "rank": 1,
+      "cause": "Known-force provider rounding",
+      "outcome": "Ruled out for the actual46step endpoint: CPU/native and GPU known-force providers produced identical complete endpoint fields.",
+      "endpoint_fields_bitwise_equal": true
+    },
+    {
+      "rank": 2,
+      "cause": "Fixed Fourier feature/cancellation arithmetic alone",
+      "outcome": "None of four predeclared evaluations removes the failure; all loaded coefficients remain unchanged.",
+      "outcomes": [
+        {
+          "mode": "baseline_gpu_cos",
+          "equation_error": 1.0653406181441396e-05,
+          "all_accuracy_pass": false
+        },
+        {
+          "mode": "cpu_fixed_cos",
+          "equation_error": 1.065944038922505e-05,
+          "all_accuracy_pass": false
+        },
+        {
+          "mode": "stable_gpu_trig",
+          "equation_error": 1.0628753961772668e-05,
+          "all_accuracy_pass": false
+        },
+        {
+          "mode": "stable_cpu_fixed_trig",
+          "equation_error": 1.063553651085526e-05,
+          "all_accuracy_pass": false
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "cause": "Pressure input or decoder arithmetic",
+      "outcome": "Exact native pressure at final projection removes the first velocity mismatch. GPU tensor timestep division makes first pressure RHS byte-exact native, but native-RHS-only still leaves velocity mismatch; decoder arithmetic remains implicated.",
+      "original_first_velocity_error": 1.2371961097008163e-10,
+      "native_pressure_oracle_first_velocity_error": 0.0,
+      "pressure_input_rounding": {
+        "old_scalar_division": {
+          "relative_l2": 4.965489348734174e-17,
+          "maximum_absolute": 2.117582368135751e-22,
+          "different_values": 123035
+        },
+        "gpu_tensor_division": {
+          "relative_l2": 0.0,
+          "maximum_absolute": 0.0,
+          "different_values": 0
+        },
+        "numpy_reference_division": {
+          "relative_l2": 0.0,
+          "maximum_absolute": 0.0,
+          "different_values": 0
+        }
+      },
+      "native_rhs_oracle_velocity_error": 1.23719613922416e-10
+    }
+  ],
+  "next_falsifiable_tests": [
+    "Compare fixed DCT forward/inverse accumulation boundaries with native CPU numerical teacher on the exact same pressure request; label any teacher oracle as diagnostic only.",
+    "Predeclare generic GPU sequential FP64 multiply-add/FMA transform evaluation variants if boundary evidence implicates matrix reduction order. Preserve all arbitrary learned coefficients, generic fixed bases and original criteria.",
+    "Require the actual0-46feedback loop to pass before promoting a change; then replay complete24scene blocks,16consumed240histories and full failed above100axis240run, with allKand every physical output."
+  ],
+  "no_candidate_fix_promoted": true,
+  "no_new_parameter_fits": true,
+  "all_learned_inference_on_gpu": true,
+  "diagnostic_native_oracles_not_candidate_inputs": true,
+  "raw_failure_observation_and_fixture_preserved": true,
+  "fixture_metadata_path_error": "Captured fields verified independently after helper relative-path receipt error; corrected helper versioned. Exact native process PID was not retained for that diagnostic fixture; original main native stream closed/reaped normally.",
+  "all_debug_probes_in_clearly_marked_debug_directory": true,
+  "no_production_debug_hooks_added": true,
+  "reserved52_references_opened": 0,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/reproduction-01/results.json": "b874586bf37b0970fbaedb09ed3b9def085087b87b3f9374e0152c2e0c3cb659",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/force-source-probe-01/results.json": "1dbdb3bc70b03b47c33c9067f86ddec2d1d4f384f09bba73385024c0149c5b05",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/response-precision-probe-01/results.json": "f9dcedcd864d11b2ebbb4775e953557afd78b5fe579bd388e2f6e12d7d4c01a0",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/first-step-stage-probe-01/results.json": "23ff2381223e1c8b2cda1ccfad4ef7b66f28597def5f1c8129d2cbca316dc303",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/rhs-rounding-probe-01/results.json": "5c5f7ec4dcf1fc4e44c1c37cf0abaa20bbe0389acb2a80dff2928e2977ad07d6",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/native-fixture-receipt-02.json": "69c13a1996e2b0a4d4abb11813a780a4b7d90a0a68d8b8d33239ae54660560bd",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-01/observation-manifest.json": "37ff098c7d83185a68edea2f1af09d00bfa820bfc9383be97c516e6969d6e0cd"
+  }
+}

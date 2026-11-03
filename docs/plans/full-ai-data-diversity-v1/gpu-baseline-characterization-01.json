@@ -1,0 +1,239 @@
+{
+  "status": "completed_current_regime_cuda_baseline_block_and_240step_accuracy_qualification",
+  "created_unix": 1792541256.2984314,
+  "execution_policy": "docs/plans/full-ai-data-diversity-v1/gpu-inference-policy-01.json",
+  "device": {
+    "display_label": "GPU (CUDA)",
+    "inference_device": "cuda",
+    "device_index": 0,
+    "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "gpu_uuid": "aac45fe6-fb2d-e3ca-e37f-10bfcbeb1aee",
+    "driver_version": "595.84",
+    "gpu_total_memory_bytes": 25122701312,
+    "torch_version": "2.14.0+cu132",
+    "cuda_version": "13.2",
+    "python_version": "3.14.7",
+    "pressure_dtype": "float64",
+    "carrier_dtype": "float32",
+    "autocast": false,
+    "tf32": false,
+    "host_cpu": 4,
+    "cpu_model_forward": false,
+    "batch_size": 1,
+    "warmup_blocks": 2,
+    "repetitions": 5
+  },
+  "candidate_entrypoint": "experiments/full-ai-data-diversity-v1/cuda_graph_divisor_v2.py:CudaGraphDivisorGeneratorV2",
+  "unchanged_learned_weights": true,
+  "optimizer_updates": 0,
+  "cpu_model_forward_executed": false,
+  "every_learned_stage_on_cuda": true,
+  "known_input_preparation": "Known scene/time force construction on host, then explicit upload; separately included in synchronized host-input/output timing.",
+  "steps_per_pass": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "fields": [
+    "pressure",
+    "vx",
+    "vy",
+    "vz",
+    "tracer"
+  ],
+  "current_regime_cells_per_metre": [
+    8,
+    16
+  ],
+  "current_regime_counts_xyz": [
+    [
+      16,
+      16,
+      16
+    ],
+    [
+      9,
+      11,
+      11
+    ],
+    [
+      15,
+      6,
+      8
+    ],
+    [
+      32,
+      32,
+      32
+    ]
+  ],
+  "gpu_block_qualification": {
+    "complete_scored_resident_outputs": 200,
+    "full_transfer_outputs_bitwise_match": true,
+    "all_accuracy_pass": true
+  },
+  "gpu_own_history_qualification": {
+    "scenes": 16,
+    "physical_steps_per_scene": 240,
+    "complete_scored_outputs": 15360,
+    "every_intermediate_output_scored": true,
+    "teacher_resets": false,
+    "all_accuracy_pass": true,
+    "worst_error": {
+      "equation": 1.2907161793162896e-13,
+      "pressure": 1.3240946952324678e-15,
+      "velocity": 1.704657507267621e-13,
+      "tracer": 0.0
+    },
+    "scope": "Previously consumed confirmation scenes, source-bound before GPU execution. This verifies GPU accuracy but is not new independent heldout evidence."
+  },
+  "measured_32cubed_gpu_eager_ms_per_step": {
+    "cuda_event": {
+      "minimum_group_median": 20.1777286529541,
+      "maximum_group_median": 24.104320526123047,
+      "maximum_observed": 24.202335357666016
+    },
+    "synchronized_resident_wall": {
+      "minimum_group_median": 20.203656051307917,
+      "maximum_group_median": 24.139110988471657,
+      "maximum_observed": 24.231006973423064
+    },
+    "synchronized_host_input_and_output_wall": {
+      "minimum_group_median": 21.7901740106754,
+      "maximum_group_median": 25.810102990362793,
+      "maximum_observed": 27.562404982745647
+    }
+  },
+  "measured_32cubed_gpu_graph_ms_per_step": {
+    "cuda_event": {
+      "minimum_group_median": 4.873311996459961,
+      "maximum_group_median": 5.257775783538818,
+      "maximum_observed": 6.185311794281006
+    },
+    "synchronized_resident_wall": {
+      "minimum_group_median": 4.904945002635941,
+      "maximum_group_median": 5.271352987620048,
+      "maximum_observed": 6.21658400632441
+    },
+    "synchronized_host_input_and_output_wall": {
+      "minimum_group_median": 6.196060014190152,
+      "maximum_group_median": 6.822249968536198,
+      "maximum_observed": 8.620188978966326
+    }
+  },
+  "timing_scope_caveat": "Resident blocks exclude host control generation and host/device transfers. The separately measured host-input/output scope includes all intermediate downloads. Both exclude one-time loading, geometry preparation, graph setup and warm-up.",
+  "graph_setup_observations": [
+    {
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cells_per_metre": 8,
+      "K": 1,
+      "graph_setup_ms": 278.4665219951421
+    },
+    {
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cells_per_metre": 8,
+      "K": 2,
+      "graph_setup_ms": 182.22665099892765
+    },
+    {
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cells_per_metre": 8,
+      "K": 3,
+      "graph_setup_ms": 265.08037000894547
+    },
+    {
+      "counts_xyz": [
+        16,
+        16,
+        16
+      ],
+      "cells_per_metre": 8,
+      "K": 4,
+      "graph_setup_ms": 348.14661799464375
+    },
+    {
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 16,
+      "K": 1,
+      "graph_setup_ms": 87.13755401549861
+    },
+    {
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 16,
+      "K": 2,
+      "graph_setup_ms": 173.8506740075536
+    },
+    {
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 16,
+      "K": 3,
+      "graph_setup_ms": 272.14509004261345
+    },
+    {
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 16,
+      "K": 4,
+      "graph_setup_ms": 386.8479739758186
+    }
+  ],
+  "cpu_gpu_latency_series_separate": true,
+  "historical_cpu_latency_target_verified": false,
+  "tighter_full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "higher_density_model_targets_verified": false,
+  "expanded_reserved52_references_consumed": 0,
+  "long600_step_phase_started": false,
+  "failed_attempts": [
+    {
+      "output": "runs/full-ai-data-diversity-v1/cuda-divisor-qualification-01",
+      "reason": "Device-restricted sandbox exposes no CUDA device; no CPU fallback or model forward executed."
+    },
+    {
+      "output": "runs/full-ai-data-diversity-v1/cuda-graph-divisor-qualification-01/results.json",
+      "reason": "Capture rejected fixed phase host-to-device copies; version2moves fixed phase setup before capture and uses basic wall slices."
+    }
+  ],
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/cuda-divisor-qualification-02/results.json": "ad6bdb8255c727e122d82cc8bc946c40b66e1e35781488802d61b00c00580e39",
+    "runs/full-ai-data-diversity-v1/cuda-graph-divisor-qualification-02/results.json": "4427ea48a2930104d24206eec76d21b9de4f51184838f0f81e7153b24c248633",
+    "runs/full-ai-data-diversity-v1/cuda-graph-rollout-01/results.json": "7031f1ac5f03ab32631367153ae1848f3924ca35f7ca765fd83e3fe6f47c09cd",
+    "runs/full-ai-data-diversity-v1/cuda-divisor-profile-01/results.json": "22f21630ac0ea0dcff142673852fd91e91fa2a0ad5de9b87f708a98680534668",
+    "runs/full-ai-data-diversity-v1/verified-expanded-bank-02/results.json": "14ecff2db20a09d988d89a1db9fd5e3b08b1d4c013c379e9231ab04bd423ec9a",
+    "runs/full-ai-data-diversity-v1/expanded-archive-integrity-02.json": "ffd27bd6d15b918ac5823108fd1aafd7dff47624d12d453f6215830c242531ed",
+    "runs/full-ai-data-diversity-v1/multistep-supplement-integrity-02.json": "45f656ffdd868efc5fc196f26b644358e0a4f8a6ecd520f473ad4c6ae0b955b0",
+    "runs/full-ai-data-diversity-v1/development-archive-integrity-01.json": "0577cdb82b1d94890fc6b21667e93196306dddff8474a367e8a81d4258b7ebd5"
+  }
+}

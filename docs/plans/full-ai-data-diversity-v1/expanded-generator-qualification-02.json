@@ -1,0 +1,210 @@
+{
+  "status": "passed_three_gpu_execution_variants_accuracy_strict_maximum_latency_gate_still_unmet",
+  "created_unix": 1792546380.1868637,
+  "logical_model_id": "expanded-full-state-shared-pressure-02",
+  "generator": "experiments/full-ai-data-diversity-v1/fused_cuda_graph_v1.py:FusedCudaGraphGenerator",
+  "generator_configuration": {
+    "pair": "runs/full-ai-tight-targets-v1/sampler-head-pair-01",
+    "shared_pair": "runs/full-ai-data-diversity-v1/shared-spectral-pair-01",
+    "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-01",
+    "fusion_mode": "transport_and_linear"
+  },
+  "known_control_generator": "experiments/full-ai-data-diversity-v1/cuda_known_controls_v2.py:CudaKnownControls",
+  "control_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-02",
+  "physical_state_outputs": [
+    "pressure_float64",
+    "vx_float32",
+    "vy_float32",
+    "vz_float32",
+    "tracer_float32"
+  ],
+  "steps_per_pass": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "inference_device": "cuda",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "gpu_uuid": "aac45fe6-fb2d-e3ca-e37f-10bfcbeb1aee",
+  "expanded_development_scenes": 24,
+  "expanded_complete_outputs": 960,
+  "consumed_regression_scenes": 16,
+  "consumed240step_complete_outputs": 15360,
+  "every_complete_output_bitwise_equal_corrected_control": true,
+  "all_accuracy_pass": true,
+  "worst_expanded_error": {
+    "equation": 1.996921176375766e-09,
+    "pressure": 2.991187549466026e-11,
+    "velocity": 1.0421191250821858e-10,
+    "tracer": 8.319468796160957e-15
+  },
+  "worst_consumed240step_error": {
+    "equation": 1.2755942586082583e-13,
+    "pressure": 4.3566815538966466e-14,
+    "velocity": 0.0,
+    "tracer": 0.0
+  },
+  "gpu_timing_summary": [
+    {
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "cells_per_metre": [
+        8,
+        10,
+        16,
+        25,
+        50
+      ],
+      "timing_by_scope": {
+        "cuda_event": {
+          "median_ms_per_published_step_range": [
+            0.38471999764442444,
+            0.4336960017681122
+          ],
+          "maximum_ms_per_published_step": 1.0033279657363892
+        },
+        "synchronized_resident_wall": {
+          "median_ms_per_published_step_range": [
+            0.39526924956589937,
+            0.5129339988343418
+          ],
+          "maximum_ms_per_published_step": 1.023777003865689
+        },
+        "synchronized_host_input_and_output_wall": {
+          "median_ms_per_published_step_range": [
+            0.7859595061745495,
+            1.182398002129048
+          ],
+          "maximum_ms_per_published_step": 1.494309981353581
+        },
+        "resident_state_with_known_control_generation_wall": {
+          "median_ms_per_published_step_range": [
+            0.5679757450707257,
+            0.7146749994717538
+          ],
+          "maximum_ms_per_published_step": 1.3575420016422868
+        }
+      }
+    },
+    {
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "cells_per_metre": [
+        8,
+        10,
+        16,
+        25,
+        50,
+        100
+      ],
+      "timing_by_scope": {
+        "cuda_event": {
+          "median_ms_per_published_step_range": [
+            1.8620905876159668,
+            2.27622389793396
+          ],
+          "maximum_ms_per_published_step": 2.9561920166015625
+        },
+        "synchronized_resident_wall": {
+          "median_ms_per_published_step_range": [
+            1.8687506671994925,
+            2.3618339910171926
+          ],
+          "maximum_ms_per_published_step": 2.976913994643837
+        },
+        "synchronized_host_input_and_output_wall": {
+          "median_ms_per_published_step_range": [
+            3.3719650091370568,
+            5.3164690034464
+          ],
+          "maximum_ms_per_published_step": 7.515741046518087
+        },
+        "resident_state_with_known_control_generation_wall": {
+          "median_ms_per_published_step_range": [
+            2.2010422544553876,
+            2.6472790050320327
+          ],
+          "maximum_ms_per_published_step": 4.0517810072439415
+        }
+      }
+    },
+    {
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "cells_per_metre": [
+        100
+      ],
+      "timing_by_scope": {
+        "cuda_event": {
+          "median_ms_per_published_step_range": [
+            2.977936029434204,
+            3.6498560905456543
+          ],
+          "maximum_ms_per_published_step": 4.15228796005249
+        },
+        "synchronized_resident_wall": {
+          "median_ms_per_published_step_range": [
+            2.9931509925518185,
+            3.6626330111175776
+          ],
+          "maximum_ms_per_published_step": 4.170019994489849
+        },
+        "synchronized_host_input_and_output_wall": {
+          "median_ms_per_published_step_range": [
+            4.629085000487976,
+            5.237773002590984
+          ],
+          "maximum_ms_per_published_step": 6.299737258814275
+        },
+        "resident_state_with_known_control_generation_wall": {
+          "median_ms_per_published_step_range": [
+            4.349720994165788,
+            5.100847512949258
+          ],
+          "maximum_ms_per_published_step": 5.797116027679294
+        }
+      }
+    }
+  ],
+  "maximum1200microsecond_complete_pipeline_gate_pass": false,
+  "timing_scope": "Provided-control CUDA-event timings exclude known-control generation. Resident-state-with-known-control timing includes CPU compact-table construction/upload, GPU forces and every learned stage. Full host I/O adds current-state upload and every intermediate download. All explicitly required internal substeps count; setup/capture/warm-up recorded separately.",
+  "original_gpu_compute_baseline": "runs/full-ai-data-diversity-v1/expanded-generator-blocks-02/results.json",
+  "cpu_backend": "Frozen independent original optimized snapshot, verified5154files/1.53GB without inference. Shared-head current model remains CPU-unported.",
+  "cpu_model_forward_executed": false,
+  "new_parameter_fits": 0,
+  "learned_weights_and_precisions_unchanged": true,
+  "newly_independent_holdout": false,
+  "expanded_reserved52_references_opened": 0,
+  "full240step_expanded_density_accuracy_verified": false,
+  "above100axis_count_full_state_accuracy_verified": false,
+  "matched_scaling_study_verified": false,
+  "historical_cpu_latency_target_verified": false,
+  "phase600steps_started": false,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/gpu-fusion-results-02.json": "0e5d206e7556eda5176c88709deb9de924f4ca2b3f43c42e910af19e7ade852b",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-09.json": "b9e87a060b2c8b94d267359781d67aef28bc70170db2920adcc651e20500b4ee",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-03/results.json": "c6fe64e496c8755119defeeed8f0092be26c27094308e9d136518b75f9b9b5ec",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-03/results.json": "b9dfddba542bbc6bc159c8a5133d3f8fe99c2f9653bc0770b67365056736db20",
+    "runs/full-ai-data-diversity-v1/cuda-known-controls-qualification-02/results.json": "84556661ddc0c5aa321e951d5244ceb7e2fc7f55c181b69f6ff84a72b1d6f40f",
+    "runs/full-ai-data-diversity-v1/cpu-backend-snapshot-integrity-02.json": "ad3e42017df9039f49592a7391b93c4288b7dbf2f473d6003c2b9865725fbd28"
+  }
+}

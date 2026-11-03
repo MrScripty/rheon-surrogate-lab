@@ -1,0 +1,107 @@
+{
+  "status": "planned_after_current_fixed_timestep_S4_experiment",
+  "created_unix": 1792619046.1208937,
+  "user_direction": "Generate fine reference trajectories, subsample matched target timesteps, and increase total reference steps to preserve sufficient simulated duration.",
+  "trajectory_duration_s": 20.0,
+  "duration_is_physical_not_wall_clock": true,
+  "target_simulation_rates_per_s": [
+    30,
+    60,
+    120
+  ],
+  "target_dt_s": [
+    0.03333333333333333,
+    0.016666666666666666,
+    0.008333333333333333
+  ],
+  "output_steps_by_rate": {
+    "30": 600,
+    "60": 1200,
+    "120": 2400
+  },
+  "reference_candidates": [
+    {
+      "rate_per_s": 240,
+      "dt_s": 0.004166666666666667,
+      "total_internal_steps": 4800,
+      "stride_by_target_rate": {
+        "30": 8,
+        "60": 4,
+        "120": 2
+      },
+      "qualification": "Requires timestep convergence and stability checks before replacing480 reference."
+    },
+    {
+      "rate_per_s": 480,
+      "dt_s": 0.0020833333333333333,
+      "total_internal_steps": 9600,
+      "stride_by_target_rate": {
+        "30": 16,
+        "60": 8,
+        "120": 4
+      },
+      "qualification": "Retain existing difficult-regime reference precision; convergence still not presumed."
+    }
+  ],
+  "starting_state_extra": true,
+  "block_lengths_K": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "training_example_contract": {
+    "inputs": [
+      "complete current physical state and required history",
+      "explicit physical elapsed time K*dt and requested output dt",
+      "grid counts, physical cell spacing and material parameters",
+      "known force/control path over the whole interval"
+    ],
+    "targets": [
+      "every requested intermediate output state at its exact physical timestamp",
+      "complete continuation state at the block endpoint",
+      "pressure and matching final fine-step reference RHS, velocity and tracer"
+    ],
+    "forbidden_inputs": [
+      "future reference physical states",
+      "future target RHS",
+      "scene IDs as shortcuts"
+    ],
+    "time_indexing": "Integer fine-step indices with exact integer stride; do not accumulate floating timestamps for sampling."
+  },
+  "scope_and_split": [
+    "Keep whole scenes and complete trajectories in one split before constructing overlapping windows.",
+    "Preserve existing broad density, cubic/rectangular grid, force-profile, force strength/location and stationary/moving scene coverage.",
+    "Report active correction-supervision coverage separately from unchanged N1 control coverage; add active regular-pulse examples if pilot qualifies.",
+    "Keep the52reserved independent references unopened during design and fitting."
+  ],
+  "reference_qualification": [
+    "Use a small force/geometry/density-stratified pilot before full recapture.",
+    "Compare240 and480 over equal physical durations; use a finer reference on pilot scenes if needed to assess convergence.",
+    "Check force pulse edges, continuous variance and motion at actual fine physical times; do not repeat a coarse force sample over skipped steps.",
+    "Record native stability quality and distinguish stable from sufficiently accurate.",
+    "Extend forcing schedules to the entire20seconds; do not replay a4second schedule."
+  ],
+  "capture_and_storage": [
+    "Measure wall time, GPU/CPU reference work, peak memory and compressed storage on pilot before broad capture.",
+    "Execute every fine integration step; stream selected multi-rate windows and required current/target states without storing every fine-grid snapshot.",
+    "Distribute windows across the full20seconds, include force transitions and late dynamics; keep scene-balanced sampling.",
+    "Reproducibly bind seeds, source versions, physical times, force programs, step sizes and trajectory identities."
+  ],
+  "model_changes_needed": [
+    "Remove fixed1/60 output and1/480 local-time assumptions throughout native capture, packet generation, phases, features and inference.",
+    "Keep explicit localdt and outputdt; the present correction input has only2/480 and3/480 training durations.",
+    "Replace the current maximum3 ordered forcing slots with an interval representation that retains the known forcing path at the larger durations.",
+    "Train mixed timestep transitions from fine-integrated targets, preserving all K physical outputs."
+  ],
+  "evaluation": [
+    "Separate accuracy and complete GPU latency by timestep, K, cell density, grid dimensions/aspect ratio and force family.",
+    "Test predicted-state continuation rather than resetting to true states each output.",
+    "Retain smaller-grid and quiescent regressions; compare all model variants against identical references.",
+    "Report matched-duration rollouts and requested600-step results separately:600steps represent20s at30/s,10s at60/s and5s at120/s."
+  ],
+  "current_S4_training_inputs_and_protocol_unchanged": true,
+  "new_captures_executed": 0,
+  "new_training_runs_submitted": 0,
+  "full_generator_target_pass": false
+}

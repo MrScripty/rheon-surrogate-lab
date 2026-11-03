@@ -1,0 +1,38 @@
+{
+  "status": "registered_before_expanded_component_fitting",
+  "created_unix": 1792541762.9541247,
+  "role": "Shape-capable learned pressure component for the expanded full-state successor, not a complete generator target claim.",
+  "authority": "User: use the expanded set for the next model; keep GPU-centered development with a reproducible CPU export path.",
+  "data": "All148expanded training scenes;24development scenes separate;52reserved references unopened.",
+  "architecture": {
+    "trainable_parameters": 4,
+    "embedding": [
+      "one",
+      "cos(pi*kx/Nx)",
+      "cos(pi*ky/Ny)",
+      "cos(pi*kz/Nz)"
+    ],
+    "mapping": "One unconstrained learned linear readout D(theta,embedding), shared across shapes and densities. Each theta initialized randomly on managedCUDA; no operator coefficients or per-mode oracle values assigned.",
+    "pressure_decode": "DCT-II(q), divide nonconstant coefficients by learned D, inverse DCT-II, fix pressure gauge. Constant mode excluded. Require finite positive learned response before deployment.",
+    "physical_operator_or_analytical_inverse_constructed": false,
+    "physical_eigenvalues_used_as_features": false
+  },
+  "objective": "Equal-scene weighted native coefficient residual: ((D(theta,embedding)*P_native-Q_native)/Q_native_request_RMS)^2. No target coefficient ratios or fitted CPU preprocessing.",
+  "pressure_equation_input": "Full native same-request rhs*1000*cells_per_metre; zero/fine/coarse future-transition targets are not mixed.",
+  "proposed_finite_fit": {
+    "seed": 2026102071,
+    "optimizer": "CUDA L-BFGS",
+    "maximum_optimizer_calls": 160,
+    "maximum_wall_seconds": 600,
+    "float_dtype": "float64",
+    "closed_form_cpu_fit": false
+  },
+  "qualifications_required": [
+    "Source-bound zero-update constructor/objective forward and backward onCUDA",
+    "All148scene input coverage and native request/pressure identity",
+    "ManagedCUDA fit with exact typed CPU weight restore and no CPU forward",
+    "Restored weights re-evaluated onCUDA;development component checks at every density/shape",
+    "Full-state successor and own-history evaluation before a complete model accuracy claim"
+  ],
+  "cpu_export": "Four typed float64 learned coefficients plus feature/basis/gauge definition, normalization and complete-state interface; future CPU inference remains selective."
+}

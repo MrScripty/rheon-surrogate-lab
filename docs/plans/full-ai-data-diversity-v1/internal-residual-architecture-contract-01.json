@@ -1,0 +1,74 @@
+{
+  "status": "registered_before_width8_architecture_qualification",
+  "created_unix": 1792598782.9372556,
+  "plan": "docs/plans/full-ai-data-diversity-v1/internal-nonlinear-residual-next-plan-01.json",
+  "architecture": {
+    "trainable_parameters": 10876,
+    "seed": 1729,
+    "input_channels": 42,
+    "hidden_channels": 8,
+    "trunk": "Two clamped-padding 3x3x3Conv3d layers withSiLU; three kernel2stride1ConvTranspose3d face lifts forVxyz and1x1x1tracerhead. All finalheadweights/biases zero initially. Learned forward CUDAF32 only; restored coupled projection/additionF64. Frozen positive RMSbuffers input42/output4,unitinitial scales forqualification. Actualtraining scales require separate gate."
+  },
+  "channels": [
+    "0:6 both adjacent faces peraxis ofcurrentV timesdt/h",
+    "6 meanfree currentP timesdt^2/(rho*h^2)",
+    "7 currenttracer",
+    "8:14 bothfaces ofcoarsetransportedV-currentV timesdt/h",
+    "14:20 bothfaces ofprovisionalV-advectedV timesdt/h",
+    "20 coarsetransportedtracer-currenttracer",
+    "21:39 ordered groupfineforces slots0/1/2 eachbothfaces peraxis timesdt/h; thirdslotzeros forwidth2",
+    "39 100*h",
+    "40 480*dt",
+    "41 width3mask"
+  ],
+  "forcing_units": "Known force fields are integrated velocity increments. Multiplication bydt/h only nondimensionalizes neuralfeatures; the frozen physical transition still adds each original increment exactly once.",
+  "inference": "Correction inside widths2/2/3, finalwidth1unchanged. Complete ownstate K1/2/3/4outputs. KnownreferenceN1branch bypassesnetwork and preserves119fixedtraining regimes. No teacher/RHS/nativeinverse/solver in candidateforward.",
+  "padding_gradient": "Forward clamped F.pad; deterministic backward fixed-order boundary folding byaxesx/y/z instead of atomic scatter. Check exact boundarygradientmultiplicities including singletonaxis.",
+  "qualification_scope": {
+    "active_identifiers": [
+      "diversity-train-g002-cpm100",
+      "diversity-train-g004-cpm100",
+      "diversity-train-g009-cpm100"
+    ],
+    "N1_identifiers": [
+      "diversity-train-g000-cpm8",
+      "diversity-train-g002-cpm8",
+      "diversity-train-g004-cpm8"
+    ],
+    "current_start": 32,
+    "local_offsets_widths": [
+      [
+        0,
+        2
+      ],
+      [
+        4,
+        3
+      ]
+    ],
+    "local_cases": 6,
+    "changed_force_graphs": 3,
+    "allKzero_control_states": 30,
+    "N1_control_states": 30
+  },
+  "controls": [
+    "Initialnetworkoutputs exactlyzero, allKcompletecoarsebaseline states exact andN1networkforbiddenbranch exact.",
+    "Bothfaces reconstructalloriginalcurrentV; pressuregauge and controlledpulse reversal identifycurrent-only representation. No futurefieldasinput.",
+    "Actual newnetworkzeroheadgradientnonzero,zero trunkgradientexpected atzeroheads. Separate fixedunfitted probeheads exercise actual trunk/parametergradients andchangedforceCUDAgraphs; fixedprobenotdeployable.",
+    "F32headoutput labelquantization probe throughF64coupledprojection must reproduceP/V/Tunder1e-5 on6localexamples; teacherinjectionisnottrained/nativeaccuracy.",
+    "No optimizer,weights unchangedinitial/probe/backbone, sourcehashes andcallerinputs immutable. Unitnormalization/6examples notfull148fitobjectivequalification."
+  ],
+  "probe": "Separate networkcopy, finalheadweightslinspace(-.001,.001),bias.0001. Parameterfinite-difference probe perturbsvelocityXbias +/-epsilon.001thenrestores; this isfixeddiagnostic arithmetic, notfitting.",
+  "maximum_architectures": 1,
+  "maximum_qualification_runs": 1,
+  "maximum_wall_seconds": 900,
+  "maximum_gpu_allocated_bytes": 8589934592,
+  "maximum_peak_rss_bytes": 4294967296,
+  "maximum_feature_control_error": 2e-11,
+  "maximum_graph_error": 2e-06,
+  "maximum_F32_parameter_gradient_error": 0.005,
+  "new_parameter_fits": 0,
+  "cpu_model_forward": false,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_pass": false
+}

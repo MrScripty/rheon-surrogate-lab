@@ -1,0 +1,1904 @@
+{
+  "status": "reference32cubed_warmed_gpu_development_latency_pass_allK_broader_ordered_targets_unverified",
+  "created_unix": 1792547368.0196278,
+  "previous_qualification": "docs/plans/full-ai-data-diversity-v1/expanded-generator-qualification-02.json",
+  "logical_model_id": "expanded-full-state-shared-pressure-02",
+  "selected_execution": "fused learned CUDA graph, all-GPU coordinate/phase/known-force construction, packed/pinned native upload and asynchronous native output download",
+  "generator": "experiments/full-ai-data-diversity-v1/fused_cuda_graph_v1.py:FusedCudaGraphGenerator",
+  "generator_configuration": {
+    "pair": "runs/full-ai-tight-targets-v1/sampler-head-pair-01",
+    "shared_pair": "runs/full-ai-data-diversity-v1/shared-spectral-pair-01",
+    "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-01",
+    "fusion_mode": "transport_and_linear"
+  },
+  "known_control_generator": "experiments/full-ai-data-diversity-v1/cuda_known_controls_v3.py:CudaKnownControls",
+  "control_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-03",
+  "transfer_adapter": "experiments/full-ai-data-diversity-v1/cuda_native_transfer_v1.py:upload_state,download_outputs",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "gpu_uuid": "aac45fe6-fb2d-e3ca-e37f-10bfcbeb1aee",
+  "pressure_dtype": "float64",
+  "carrier_dtype": "float32",
+  "tf32": false,
+  "autocast": false,
+  "host_cpu": 4,
+  "steps_per_pass": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "expanded_complete_output_accuracy_pass": true,
+  "expanded_outputs": 960,
+  "consumed_240step_outputs": 15360,
+  "every_physical_output_bitwise_equal_corrected_baseline": true,
+  "worst_expanded_error": {
+    "equation": 1.996921176375766e-09,
+    "pressure": 2.991187549466026e-11,
+    "velocity": 1.0421191250821858e-10,
+    "tracer": 8.319468796160957e-15
+  },
+  "worst_consumed240step_error": {
+    "equation": 1.2755942586082583e-13,
+    "pressure": 4.3566815538966466e-14,
+    "velocity": 0.0,
+    "tracer": 0.0
+  },
+  "balanced_entry_timing": {
+    "protocol": "docs/plans/full-ai-data-diversity-v1/gpu-complete-entry-benchmark-protocol-01.json",
+    "evidence": "runs/full-ai-data-diversity-v1/gpu-complete-entry-benchmark-01/results.json",
+    "timed_complete_calls": 3840,
+    "timed_complete_outputs": 9600,
+    "pre_warmup_and_warmup_complete_outputs": 11520,
+    "all_actual_output_hashes_verified": true,
+    "first_pre_warmup_calls_preserved": true,
+    "warmup_calls_per_adapter_and_K": 5,
+    "balanced_serial_repeats": 5,
+    "no_post_measurement_repeats": true,
+    "scope": "Complete current native NumPy fields -> CPU tensor views -> upload -> known scalar controls/GPU phase tables/forces -> all learned/internal stages -> independent K complete native CPU physical outputs. Pinned packing/allocation/copies and final synchronization included. Dataset reads, model/geometry/graph setup and explicitly recorded complete-entry warmups excluded.",
+    "reference_counts_xyz": [
+      32,
+      32,
+      32
+    ],
+    "reference_development_byK": [
+      {
+        "K": 1,
+        "cells_per_metre": [
+          8,
+          10,
+          16,
+          25,
+          50
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 100,
+        "median_ms_per_generated_step": 0.7062189979478717,
+        "maximum_ms_per_generated_step": 0.7888880209065974,
+        "maximum_full_block_ms": 0.7888880209065974,
+        "development_1200microsecond_warmed_maximum_pass": true
+      },
+      {
+        "K": 2,
+        "cells_per_metre": [
+          8,
+          10,
+          16,
+          25,
+          50
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 100,
+        "median_ms_per_generated_step": 0.5853872571606189,
+        "maximum_ms_per_generated_step": 1.1250149982515723,
+        "maximum_full_block_ms": 2.2500299965031445,
+        "development_1200microsecond_warmed_maximum_pass": true
+      },
+      {
+        "K": 3,
+        "cells_per_metre": [
+          8,
+          10,
+          16,
+          25,
+          50
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 100,
+        "median_ms_per_generated_step": 0.5457215011119843,
+        "maximum_ms_per_generated_step": 0.8852646569721401,
+        "maximum_full_block_ms": 2.65579397091642,
+        "development_1200microsecond_warmed_maximum_pass": true
+      },
+      {
+        "K": 4,
+        "cells_per_metre": [
+          8,
+          10,
+          16,
+          25,
+          50
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 100,
+        "median_ms_per_generated_step": 0.5278632452245802,
+        "maximum_ms_per_generated_step": 0.6967045046621934,
+        "maximum_full_block_ms": 2.7868180186487734,
+        "development_1200microsecond_warmed_maximum_pass": true
+      }
+    ],
+    "all_reference_N1_K_pass": true,
+    "every_density_grid_K_and_internal_substeps_stratum": [
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5551814683713019,
+        "maximum_ms_per_published_step": 0.5763659719377756,
+        "p95_ms_per_published_step": 0.5732329387683421,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7633490022271872,
+        "maximum_ms_per_published_step": 1.7224010080099106,
+        "p95_ms_per_published_step": 0.8454436348984025,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6942460022401065,
+        "maximum_ms_per_published_step": 0.7199160172604024,
+        "p95_ms_per_published_step": 0.7113916100934148,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.440537489950657,
+        "maximum_ms_per_published_step": 3.7214860203675926,
+        "p95_ms_per_published_step": 3.5799293575109914,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5463389970827848,
+        "maximum_ms_per_published_step": 0.5768379778601229,
+        "p95_ms_per_published_step": 0.5646343110129237,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7774400000926107,
+        "maximum_ms_per_published_step": 1.5820980188436806,
+        "p95_ms_per_published_step": 0.8604191069025552,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7009925320744514,
+        "maximum_ms_per_published_step": 0.7888880209065974,
+        "p95_ms_per_published_step": 0.7720084162428975,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.4176460176240653,
+        "maximum_ms_per_published_step": 4.320269974414259,
+        "p95_ms_per_published_step": 3.7066327087813993,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5620770098175853,
+        "maximum_ms_per_published_step": 0.5859839729964733,
+        "p95_ms_per_published_step": 0.5709027464035898,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7919844938442111,
+        "maximum_ms_per_published_step": 0.8464830461889505,
+        "p95_ms_per_published_step": 0.8305220952024683,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.702434015693143,
+        "maximum_ms_per_published_step": 0.7268760236911476,
+        "p95_ms_per_published_step": 0.7195657788543031,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.39257248560898,
+        "maximum_ms_per_published_step": 3.5581979900598526,
+        "p95_ms_per_published_step": 3.5099104716209695,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5568820342887193,
+        "maximum_ms_per_published_step": 0.58805599110201,
+        "p95_ms_per_published_step": 0.5704629962565377,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7493235170841217,
+        "maximum_ms_per_published_step": 0.7728649652563035,
+        "p95_ms_per_published_step": 0.7694250874919817,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7075034664012492,
+        "maximum_ms_per_published_step": 0.7259540143422782,
+        "p95_ms_per_published_step": 0.7245527813211083,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.4357984841335565,
+        "maximum_ms_per_published_step": 3.6942249862477183,
+        "p95_ms_per_published_step": 3.592291919630952,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5538609984796494,
+        "maximum_ms_per_published_step": 0.693687004968524,
+        "p95_ms_per_published_step": 0.6352667580358684,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7522520027123392,
+        "maximum_ms_per_published_step": 0.7786520291119814,
+        "p95_ms_per_published_step": 0.7725701027084142,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7301889709196985,
+        "maximum_ms_per_published_step": 0.7698720437474549,
+        "p95_ms_per_published_step": 0.7526627567131072,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.4362000005785376,
+        "maximum_ms_per_published_step": 3.623356984462589,
+        "p95_ms_per_published_step": 3.5929275560192764,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5637510039377958,
+        "maximum_ms_per_published_step": 0.6233709864318371,
+        "p95_ms_per_published_step": 0.5854261049535125,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.756483495933935,
+        "maximum_ms_per_published_step": 0.7973250467330217,
+        "p95_ms_per_published_step": 0.7767812785459682,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.70319199282676,
+        "maximum_ms_per_published_step": 4.702033998910338,
+        "p95_ms_per_published_step": 3.8595559715759014,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.39964049635455,
+        "maximum_ms_per_published_step": 3.6136790295131505,
+        "p95_ms_per_published_step": 3.569734891061671,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4619750106940046,
+        "maximum_ms_per_published_step": 0.48803951358422637,
+        "p95_ms_per_published_step": 0.4804129130207002,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6324294809019193,
+        "maximum_ms_per_published_step": 0.6915669946465641,
+        "p95_ms_per_published_step": 0.6522123090690002,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5766349931946024,
+        "maximum_ms_per_published_step": 0.599280494498089,
+        "p95_ms_per_published_step": 0.597413741343189,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.822068752720952,
+        "maximum_ms_per_published_step": 2.9489299922715873,
+        "p95_ms_per_published_step": 2.907800236425828,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.455322238849476,
+        "maximum_ms_per_published_step": 0.4758860159199685,
+        "p95_ms_per_published_step": 0.47145424323389307,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6424180028261617,
+        "maximum_ms_per_published_step": 0.6707244901917875,
+        "p95_ms_per_published_step": 0.6530564016429707,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.579417755943723,
+        "maximum_ms_per_published_step": 0.6148229876998812,
+        "p95_ms_per_published_step": 0.5951185768935829,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.8046884981449693,
+        "maximum_ms_per_published_step": 3.416258026845753,
+        "p95_ms_per_published_step": 3.4028596623102203,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.46500901225954294,
+        "maximum_ms_per_published_step": 0.47284699394367635,
+        "p95_ms_per_published_step": 0.4706871652160771,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6481717427959666,
+        "maximum_ms_per_published_step": 0.6752090121153742,
+        "p95_ms_per_published_step": 0.669130431197118,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5836097552673891,
+        "maximum_ms_per_published_step": 1.1250149982515723,
+        "p95_ms_per_published_step": 0.8536166220437738,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.795988752041012,
+        "maximum_ms_per_published_step": 2.931919996626675,
+        "p95_ms_per_published_step": 2.882057362876367,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.46579174522776157,
+        "maximum_ms_per_published_step": 0.48272250569425523,
+        "p95_ms_per_published_step": 0.4781054871273227,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6251262384466827,
+        "maximum_ms_per_published_step": 0.7599100063089281,
+        "p95_ms_per_published_step": 0.6474418682046236,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5865650018677115,
+        "maximum_ms_per_published_step": 0.6387664761859924,
+        "p95_ms_per_published_step": 0.607541402860079,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.822460504830815,
+        "maximum_ms_per_published_step": 3.460384003119543,
+        "p95_ms_per_published_step": 3.456266208377201,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.45854174823034555,
+        "maximum_ms_per_published_step": 0.4736119881272316,
+        "p95_ms_per_published_step": 0.47074772737687454,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6290612509474158,
+        "maximum_ms_per_published_step": 1.161491498351097,
+        "p95_ms_per_published_step": 0.6765849131625149,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6007430056342855,
+        "maximum_ms_per_published_step": 0.6299105007201433,
+        "p95_ms_per_published_step": 0.6192500703036785,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.806932490784675,
+        "maximum_ms_per_published_step": 3.3913695078808814,
+        "p95_ms_per_published_step": 2.9596310894703497,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4662852588808164,
+        "maximum_ms_per_published_step": 0.49202199443243444,
+        "p95_ms_per_published_step": 0.47807837108848616,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6295477360254154,
+        "maximum_ms_per_published_step": 0.6441194855142385,
+        "p95_ms_per_published_step": 0.6410248839529231,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.5232217487646267,
+        "maximum_ms_per_published_step": 3.6602244945243,
+        "p95_ms_per_published_step": 3.6051197617780417,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.788683254038915,
+        "maximum_ms_per_published_step": 2.928904490545392,
+        "p95_ms_per_published_step": 2.9081460583256558,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.43411667381102836,
+        "maximum_ms_per_published_step": 0.47022798874725896,
+        "p95_ms_per_published_step": 0.45760343588578206,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5913479932739089,
+        "maximum_ms_per_published_step": 0.6052979927820464,
+        "p95_ms_per_published_step": 0.6052859748403231,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5415781536915649,
+        "maximum_ms_per_published_step": 0.559842330403626,
+        "p95_ms_per_published_step": 0.5474479985423386,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.64460316975601,
+        "maximum_ms_per_published_step": 2.9691353362674513,
+        "p95_ms_per_published_step": 2.746925271155002,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4283581705143054,
+        "maximum_ms_per_published_step": 0.46591367572546005,
+        "p95_ms_per_published_step": 0.4420373249255742,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5982573396371057,
+        "maximum_ms_per_published_step": 0.9412453315841655,
+        "p95_ms_per_published_step": 0.6326131415941444,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5449814974175146,
+        "maximum_ms_per_published_step": 0.5524169925289849,
+        "p95_ms_per_published_step": 0.5520088064561909,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.6219984962760163,
+        "maximum_ms_per_published_step": 2.9728796798735857,
+        "p95_ms_per_published_step": 2.7463090926175937,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4353911693518361,
+        "maximum_ms_per_published_step": 0.458746663449953,
+        "p95_ms_per_published_step": 0.4451958627517646,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.6044738402124494,
+        "maximum_ms_per_published_step": 0.6436629919335246,
+        "p95_ms_per_published_step": 0.6400013905173789,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.543537336246421,
+        "maximum_ms_per_published_step": 0.5588430018785099,
+        "p95_ms_per_published_step": 0.550425355322659,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.6208371661293013,
+        "maximum_ms_per_published_step": 3.050865993524591,
+        "p95_ms_per_published_step": 2.775505641087269,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4338661674410105,
+        "maximum_ms_per_published_step": 0.45755600634341437,
+        "p95_ms_per_published_step": 0.45310492569115013,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5841706685411434,
+        "maximum_ms_per_published_step": 0.5934313327694932,
+        "p95_ms_per_published_step": 0.5914714866473029,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5489681692173083,
+        "maximum_ms_per_published_step": 0.8852646569721401,
+        "p95_ms_per_published_step": 0.574927227959658,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.6432240071396036,
+        "maximum_ms_per_published_step": 3.192451666109264,
+        "p95_ms_per_published_step": 3.083262140474593,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.43039248945812386,
+        "maximum_ms_per_published_step": 0.4391813223871092,
+        "p95_ms_per_published_step": 0.43870191342042136,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5855476677728196,
+        "maximum_ms_per_published_step": 0.6041340141867598,
+        "p95_ms_per_published_step": 0.5922558271170905,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5629415002961953,
+        "maximum_ms_per_published_step": 0.5784469928282002,
+        "p95_ms_per_published_step": 0.5735715977304304,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.6449449942447245,
+        "maximum_ms_per_published_step": 3.0203916636916497,
+        "p95_ms_per_published_step": 2.858877734009487,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4363034968264401,
+        "maximum_ms_per_published_step": 0.447924326484402,
+        "p95_ms_per_published_step": 0.4422661246887098,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5863531647870938,
+        "maximum_ms_per_published_step": 0.597830997624745,
+        "p95_ms_per_published_step": 0.5960329697700217,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.481433668639511,
+        "maximum_ms_per_published_step": 4.047122007856767,
+        "p95_ms_per_published_step": 3.7441350248021386,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.636728167999536,
+        "maximum_ms_per_published_step": 3.082369997476538,
+        "p95_ms_per_published_step": 2.7683202594441054,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.41763175249798223,
+        "maximum_ms_per_published_step": 0.470710001536645,
+        "p95_ms_per_published_step": 0.42860670946538454,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5727594980271533,
+        "maximum_ms_per_published_step": 0.6985452491790056,
+        "p95_ms_per_published_step": 0.5985658215649893,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5237620061961934,
+        "maximum_ms_per_published_step": 0.6497637514257804,
+        "p95_ms_per_published_step": 0.5410141617176124,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.5464394930168055,
+        "maximum_ms_per_published_step": 3.7931067490717396,
+        "p95_ms_per_published_step": 2.6750876117148445,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4135649942327291,
+        "maximum_ms_per_published_step": 0.5871657485840842,
+        "p95_ms_per_published_step": 0.44480207725428056,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5750836135121062,
+        "maximum_ms_per_published_step": 0.6754049973096699,
+        "p95_ms_per_published_step": 0.5995467814500445,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5266798762022518,
+        "maximum_ms_per_published_step": 0.6416139949578792,
+        "p95_ms_per_published_step": 0.5397198576247321,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.5552615043125115,
+        "maximum_ms_per_published_step": 4.028401992400177,
+        "p95_ms_per_published_step": 2.9129127055057333,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.419481257267762,
+        "maximum_ms_per_published_step": 0.6355585064738989,
+        "p95_ms_per_published_step": 0.4385892985737884,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5821234954055399,
+        "maximum_ms_per_published_step": 0.7137597567634657,
+        "p95_ms_per_published_step": 0.595090263959719,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5265765066724271,
+        "maximum_ms_per_published_step": 0.6375645025400445,
+        "p95_ms_per_published_step": 0.5577046576945578,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.5297523752669804,
+        "maximum_ms_per_published_step": 4.198820242891088,
+        "p95_ms_per_published_step": 2.947884946479463,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.41693537059472874,
+        "maximum_ms_per_published_step": 0.6615619931835681,
+        "p95_ms_per_published_step": 0.6377706711646169,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5640284944092855,
+        "maximum_ms_per_published_step": 0.6831162463640794,
+        "p95_ms_per_published_step": 0.6750227155862376,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5286437517497689,
+        "maximum_ms_per_published_step": 0.6422644946724176,
+        "p95_ms_per_published_step": 0.5511205490620342,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.5921281267073937,
+        "maximum_ms_per_published_step": 4.330996249336749,
+        "p95_ms_per_published_step": 2.9664578243682636,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4163529956713319,
+        "maximum_ms_per_published_step": 0.44211000204086304,
+        "p95_ms_per_published_step": 0.43440573645057157,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5685022551915608,
+        "maximum_ms_per_published_step": 0.6456804985646158,
+        "p95_ms_per_published_step": 0.5872989597264677,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5425216222647578,
+        "maximum_ms_per_published_step": 0.6967045046621934,
+        "p95_ms_per_published_step": 0.5579961769399234,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.5723288708832115,
+        "maximum_ms_per_published_step": 4.1387997480342165,
+        "p95_ms_per_published_step": 2.905474602448522,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.4212729982100427,
+        "maximum_ms_per_published_step": 0.4313789977459237,
+        "p95_ms_per_published_step": 0.42552890517981723,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.5698265013052151,
+        "maximum_ms_per_published_step": 0.6500330055132508,
+        "p95_ms_per_published_step": 0.5926477715547662,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": true
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.507705005176831,
+        "maximum_ms_per_published_step": 3.841518744593486,
+        "p95_ms_per_published_step": 3.8410791312344372,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 2.5475046277279034,
+        "maximum_ms_per_published_step": 3.9873137429822236,
+        "p95_ms_per_published_step": 2.932927519577789,
+        "provisional_voxel_scaled_ms_per_step_cap": 9.6,
+        "development_latency_cap_pass": true
+      }
+    ],
+    "failed_development_latency_strata": [
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7633490022271872,
+        "maximum_ms_per_published_step": 1.7224010080099106,
+        "p95_ms_per_published_step": 0.8454436348984025,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 0.7774400000926107,
+        "maximum_ms_per_published_step": 1.5820980188436806,
+        "p95_ms_per_published_step": 0.8604191069025552,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.3499999999999999,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.70319199282676,
+        "maximum_ms_per_published_step": 4.702033998910338,
+        "p95_ms_per_published_step": 3.8595559715759014,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.5232217487646267,
+        "maximum_ms_per_published_step": 3.6602244945243,
+        "p95_ms_per_published_step": 3.6051197617780417,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.481433668639511,
+        "maximum_ms_per_published_step": 4.047122007856767,
+        "p95_ms_per_published_step": 3.7441350248021386,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      },
+      {
+        "mode": "packed_pinned",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_published_step": 3.507705005176831,
+        "maximum_ms_per_published_step": 3.841518744593486,
+        "p95_ms_per_published_step": 3.8410791312344372,
+        "provisional_voxel_scaled_ms_per_step_cap": 1.2,
+        "development_latency_cap_pass": false
+      }
+    ],
+    "raw_prior_unwarmed_measurements_preserved": [
+      "runs/full-ai-data-diversity-v1/fused-generator-blocks-03/results.json",
+      "runs/full-ai-data-diversity-v1/fused-generator-blocks-04/results.json",
+      "runs/full-ai-data-diversity-v1/fused-generator-blocks-05/results.json"
+    ]
+  },
+  "strict_maximum_latency_verified_across_entire_expanded_development_population": false,
+  "new_independent_confirmation": false,
+  "expanded_reserved52_references_opened": 0,
+  "full240step_expanded_density_accuracy_verified": false,
+  "above100axis_count_full_state_accuracy_verified": false,
+  "matched_aspect_voxel_scaling_verified": false,
+  "smaller_grid_accuracy_regressions_retained": true,
+  "smaller_grid_balanced_maximum_latency_verified": false,
+  "historical_cpu_latency_target_verified": false,
+  "cpu_model_forward": false,
+  "current_shared_head_model_cpu_forward_status": "unported; raw portable weights and deployment quantization documented; original optimized CPU backend snapshot remains frozen",
+  "optimizer_updates": 0,
+  "learned_weights_and_precisions_unchanged": true,
+  "phase600steps_started": false,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/gpu-fusion-results-03.json": "8d613304ed9a5732783f866a313a16ff64fa2569faab92dfa3234be1c603c481",
+    "runs/full-ai-data-diversity-v1/gpu-complete-entry-benchmark-01/results.json": "345f5b0be987cff79b12d8c93c9a026e04e9fc1be5cf40f701f2815b80e1c639",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-05/results.json": "7f4c7966efc9d42347de7bbf5ffb21382b1549b0f3a79f53b2ac6ee1d0f0453e",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-05/results.json": "d3e25e66345f3097850dd2a82c5dbc70acb1e29ec4496702bfdcdbe8effebd7f",
+    "runs/full-ai-data-diversity-v1/cuda-known-controls-qualification-03/results.json": "b83c8e89ed53243bd44f63a4a2d20cddb89713f8cfb96920bb88467166714cd4",
+    "runs/full-ai-data-diversity-v1/cuda-native-transfer-qualification-01/results.json": "39e29ec604b8f7e28f8db00220582406b70b766f023054105141c82c6e570a8a"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "status": "physical_sampler_repair_passed_actual_failures_broad_blocks_legacy_and32cubed240_larger_retest_live",
+  "created_unix": 1792553032.9739835,
+  "previous_qualification": "docs/plans/full-ai-data-diversity-v1/expanded-generator-qualification-06.json",
+  "logical_model_id": "expanded-full-state-shared-pressure-02",
+  "generator": "experiments/full-ai-data-diversity-v1/complete_cuda_graph_v3.py:CompleteCudaGraphGeneratorV3",
+  "generator_configuration": {
+    "pair": "runs/full-ai-tight-targets-v1/sampler-head-pair-01",
+    "shared_pair": "runs/full-ai-data-diversity-v1/shared-spectral-pair-01",
+    "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-05",
+    "control_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-04"
+  },
+  "transfer_adapter": "experiments/full-ai-data-diversity-v1/cuda_native_transfer_v1.py",
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "gpu_uuid": "aac45fe6-fb2d-e3ca-e37f-10bfcbeb1aee",
+  "pressure_dtype": "float64",
+  "carrier_dtype": "float32",
+  "tf32": false,
+  "autocast": false,
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "learned_coefficients_and_deployment_quantization_unchanged": true,
+  "native_solver_or_oracle_in_candidate": false,
+  "numerical_repair": "docs/plans/full-ai-data-diversity-v1/learned-numerical-evaluation-repair-02.json",
+  "expanded_blocks": {
+    "path": "runs/full-ai-data-diversity-v1/fused-generator-blocks-08/results.json",
+    "status": "completed_expanded_cuda_full_state_block_evaluation",
+    "outputs": 960,
+    "all_accuracy_pass": true,
+    "worst": {
+      "equation": 2.1696601612935844e-11,
+      "pressure": 1.6134755279767649e-16,
+      "velocity": 5.945374624607194e-15,
+      "tracer": 0.0
+    },
+    "common_K_prefix_bitwise_equal": true,
+    "every_measured_output_hash_verified": true
+  },
+  "consumed_legacy_240": {
+    "path": "runs/full-ai-data-diversity-v1/fused-legacy-rollout-08/results.json",
+    "status": "completed_expanded_head_cuda_own_history_regression",
+    "outputs": 15360,
+    "all_accuracy_pass": true,
+    "worst": {
+      "equation": 1.28306927814049e-13,
+      "pressure": 8.51542132785477e-16,
+      "velocity": 0.0,
+      "tracer": 0.0
+    },
+    "newly_independent_holdout": false
+  },
+  "repaired_32cubed_240": [
+    {
+      "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-development-g024-cpm50/results.json",
+      "sha256": "758e14f09936011a408f474cc819110150cf0b150fb4655c16591f70a9f87332",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 50,
+      "internal_substeps": 1,
+      "status": "completed_streamed_expanded_gpu_240step_scene",
+      "outputs": 960,
+      "all_accuracy_pass": true,
+      "worst": {
+        "equation": 4.5385055705704487e-14,
+        "pressure": 9.885992996922547e-17,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "native_process": {
+        "pid": 998044,
+        "returncode": 0,
+        "reaped": true,
+        "graceful_protocol_complete": true
+      },
+      "newly_independent_holdout": false
+    },
+    {
+      "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-development-g024-cpm100/results.json",
+      "sha256": "8132c4645e188cae2b4a8a6bca01165017d4964ae44c69da03c7c4cbd503eb76",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 100,
+      "internal_substeps": 8,
+      "status": "completed_streamed_expanded_gpu_240step_scene",
+      "outputs": 960,
+      "all_accuracy_pass": true,
+      "worst": {
+        "equation": 6.412838724759034e-15,
+        "pressure": 1.270421995303554e-16,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "native_process": {
+        "pid": 1003927,
+        "returncode": 0,
+        "reaped": true,
+        "graceful_protocol_complete": true
+      },
+      "newly_independent_holdout": false
+    }
+  ],
+  "actual_large_scene_regressions": [
+    {
+      "path": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/physical-original46-regression-01/results.json",
+      "steps": 46,
+      "counts_xyz": [
+        104,
+        112,
+        120
+      ]
+    },
+    {
+      "path": "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/physical-full128-regression-01/results.json",
+      "steps": 128,
+      "counts_xyz": [
+        104,
+        112,
+        120
+      ]
+    }
+  ],
+  "live_large_history": {
+    "counts_xyz": [
+      128,
+      128,
+      128
+    ],
+    "cells_per_metre": 50,
+    "steps": 240,
+    "result": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-high-volume-train-g01-cpm50/results.json",
+    "session": 56770
+  },
+  "full_large240_repaired_verified": false,
+  "all24expanded_full240_verified": false,
+  "matched_aspect_voxel_scaling_verified": false,
+  "independent_confirmation_verified": false,
+  "expanded_reserved52_references_opened": 0,
+  "phase600steps_started": false,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "current_backend_balanced_GPU_latency_qualified": false,
+  "old_backend_balanced_timings_qualify_this_backend": false,
+  "historical_CPU_latency_target_verified": false,
+  "current_model_cpu_status": "New numerical/physical-coordinate GPU backend remains CPU-unported. Original optimized CPU backend and reproduction snapshot retained.",
+  "source_integrity_audit": "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-14.json",
+  "old_failures_retained": true,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-08/results.json": "b6e4c9fe01dcdb743ca4dff3b37b04b617c8e6932ee621541b16badc92d4f93f",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-08/results.json": "68397df2d935fab4321b53d017ed43392747fefb15b8462f1241f6042d13d51e",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-development-g024-cpm50/results.json": "758e14f09936011a408f474cc819110150cf0b150fb4655c16591f70a9f87332",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-development-g024-cpm100/results.json": "8132c4645e188cae2b4a8a6bca01165017d4964ae44c69da03c7c4cbd503eb76",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/physical-original46-regression-01/results.json": "bf987c09fe66a2784febd363191dd6b6d01666271e13f09b3c292b2b136e8530",
+    "runs/full-ai-data-diversity-v1/debug/high-volume-equation-failure-02/physical-full128-regression-01/results.json": "2ab9e4b450267378c1200ff922902cad1cf80f3f4f29a690ff5cc085f1143cb7",
+    "docs/plans/full-ai-data-diversity-v1/learned-numerical-evaluation-repair-02.json": "049f1273f4e354f0168024493ea39f793b58cd90238b039c8d041cc16848fb8a",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-14.json": "ea58a47abdbba1e2d2bee3242362f1e1a46048aa0065f2198261bcd871a2b096"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "commands": [
+    {
+      "id": "b1-fixed-viscosity-s2-fast-float64-exact-physical-execution",
+      "runtime": "torch",
+      "timeout": 1800,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/qualify_fixed_viscosity_replica_execution.py",
+        "--identifier",
+        "b1-fixed-viscosity-s2-fast-float64",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-execution-01/b1-fixed-viscosity-s2.json"
+      ]
+    },
+    {
+      "id": "b2-fixed-viscosity-s2-fast-float32-map-actual-float32-every-output-own240",
+      "runtime": "torch",
+      "timeout": 1800,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_application_policy.py",
+        "--specification",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-deployments-01/b2-fixed-viscosity-s2-fast-float32-map.json",
+        "--protocol",
+        "docs/plans/full-ai-next-priorities-v1/b2-fixed-viscosity-s2-fast-float32-map-evaluation-protocol-01.json",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-policy-evaluation-01/b2-fixed-viscosity-s2"
+      ]
+    },
+    {
+      "id": "b4-fixed-viscosity-s2-fast-float64-exact-physical-execution",
+      "runtime": "torch",
+      "timeout": 1800,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/qualify_fixed_viscosity_replica_execution.py",
+        "--identifier",
+        "b4-fixed-viscosity-s2-fast-float64",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-execution-01/b4-fixed-viscosity-s2.json"
+      ]
+    },
+    {
+      "id": "b1-fixed-viscosity-s3-fast-float64-exact-physical-execution",
+      "runtime": "torch",
+      "timeout": 1800,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/qualify_fixed_viscosity_replica_execution.py",
+        "--identifier",
+        "b1-fixed-viscosity-s3-fast-float64",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-execution-01/b1-fixed-viscosity-s3.json"
+      ]
+    },
+    {
+      "id": "b2-fixed-viscosity-s3-fast-float32-map-actual-float32-every-output-own240",
+      "runtime": "torch",
+      "timeout": 1800,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_application_policy.py",
+        "--specification",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-deployments-01/b2-fixed-viscosity-s3-fast-float32-map.json",
+        "--protocol",
+        "docs/plans/full-ai-next-priorities-v1/b2-fixed-viscosity-s3-fast-float32-map-evaluation-protocol-01.json",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-policy-evaluation-01/b2-fixed-viscosity-s3"
+      ]
+    },
+    {
+      "id": "b4-fixed-viscosity-s3-fast-float64-exact-physical-execution",
+      "runtime": "torch",
+      "timeout": 1800,
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/qualify_fixed_viscosity_replica_execution.py",
+        "--identifier",
+        "b4-fixed-viscosity-s3-fast-float64",
+        "--output",
+        "runs/full-ai-next-priorities-v1/fixed-viscosity-replication-execution-01/b4-fixed-viscosity-s3.json"
+      ]
+    }
+  ]
+}

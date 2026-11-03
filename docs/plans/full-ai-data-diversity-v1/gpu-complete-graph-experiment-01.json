@@ -1,0 +1,26 @@
+{
+  "status": "registered_before_complete_dynamic_control_graph_execution",
+  "created_unix": 1792547572.0495224,
+  "basis": "docs/plans/full-ai-data-diversity-v1/expanded-generator-qualification-03.json",
+  "profile": "runs/full-ai-data-diversity-v1/fused-gpu-profile-03/results.json",
+  "maximum_new_execution_variants": 2,
+  "variant_order": [
+    "Capture dynamic compact known-control packet -> GPU force construction -> complete learned model in one CUDA graph; retain input copies and owned complete output clones.",
+    "Only if measured allocation/transfer overhead justifies it, add bounded persistent pinned staging with independently owned returned outputs."
+  ],
+  "invariants": [
+    "No learned coefficients or deployment precision changes",
+    "Native finite1e-5physical accuracy gates unchanged",
+    "Every K intermediate P/V/T output",
+    "Dynamic force parameters, physical input state and scene changes must actually alter graph inputs",
+    "All candidate internal substeps count toward published-output latency",
+    "No numerical physical inverse/solver in candidate",
+    "GPU-only candidate inference; CPU native offline teacher permitted"
+  ],
+  "first_gate": "Same1488actual known-control tensor comparisons; unchanged1e-12relative/scaled-absolute bounds.",
+  "full_qualification": "All24expanded blocks and16consumed240step trajectories; actual output hashes and native criteria, plus asynchronous packet/output lifetime regression.",
+  "timing": "One finite five-balanced-repeat full-call study after qualification; preserve setup/warmup/cold measurements and all previous maxima.",
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "reserved52_unopened": true
+}

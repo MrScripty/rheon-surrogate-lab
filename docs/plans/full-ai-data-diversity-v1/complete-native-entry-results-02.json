@@ -1,0 +1,5229 @@
+{
+  "status": "geometry_native_entry_selected_for_development_all_accuracy_pass_latency_target_unmet",
+  "created_unix": 1792570788.6068106,
+  "execution_plan": "docs/plans/full-ai-data-diversity-v1/GPU-complete-native-entry-plan-01.json",
+  "second_variant_registration": "docs/plans/full-ai-data-diversity-v1/complete-native-entry-second-variant-registration-01.json",
+  "candidate": "experiments/full-ai-data-diversity-v1/complete_native_entry_geometry_v1.py:GeometryCompleteNativeEntry",
+  "candidate_selected_for_next_development": true,
+  "prototype_not_promoted": true,
+  "latency_entrypoint": "predict_native",
+  "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-12",
+  "selection_reason": "Every96registeredstratummedianlowerthanworkinggathercontrolinthesamedirectthree-pathstudy;allphysicaloutputsunchanged. Selectasdevelopmentbaselineonly:maximumlatency/independent/seed/scalinggatesnotmet.",
+  "complete_component_outputs_exact": 416,
+  "typed_component_arrays_exact": 2080,
+  "ownership_and_partial_D2H_failure_cases_passed": 26,
+  "complete_model_outputs_exact": 41280,
+  "full_history_cases": 26,
+  "allK": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "rollout_steps": 240,
+  "CPU_outputs_fresh_and_independent": true,
+  "normal_GPU_output_ownership_preserved": true,
+  "study": {
+    "path": "runs/full-ai-data-diversity-v1/complete-native-entry-benchmark-02/results.json",
+    "modes": [
+      "gather_fused",
+      "complete_native_entry",
+      "geometry_native_entry"
+    ],
+    "timed_calls": 5760,
+    "timed_complete_outputs": 14400,
+    "warmup_complete_outputs": 17280,
+    "all_actual_output_hashes_verified": true,
+    "all_six_mode_orders_observed": [
+      {
+        "order": [
+          "gather_fused",
+          "complete_native_entry",
+          "geometry_native_entry"
+        ],
+        "count": 320
+      },
+      {
+        "order": [
+          "gather_fused",
+          "geometry_native_entry",
+          "complete_native_entry"
+        ],
+        "count": 320
+      },
+      {
+        "order": [
+          "complete_native_entry",
+          "gather_fused",
+          "geometry_native_entry"
+        ],
+        "count": 320
+      },
+      {
+        "order": [
+          "complete_native_entry",
+          "geometry_native_entry",
+          "gather_fused"
+        ],
+        "count": 320
+      },
+      {
+        "order": [
+          "geometry_native_entry",
+          "gather_fused",
+          "complete_native_entry"
+        ],
+        "count": 320
+      },
+      {
+        "order": [
+          "geometry_native_entry",
+          "complete_native_entry",
+          "gather_fused"
+        ],
+        "count": 320
+      }
+    ],
+    "candidate_median_faster_than_working_strata": 96,
+    "strata": 96,
+    "median_baseline_to_candidate_stratum_median_ratio": 1.0478887164742439,
+    "failed_maximum_budget_strata": {
+      "gather_fused": 9,
+      "complete_native_entry": 10,
+      "geometry_native_entry": 10
+    },
+    "all_latency_summaries": [
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.36944900057278574,
+        "p95_ms_per_generated_step": 0.3888201666995883,
+        "maximum_ms_per_generated_step": 0.4008690011687577,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6199659837875515,
+        "p95_ms_per_generated_step": 0.6460298085585237,
+        "maximum_ms_per_generated_step": 0.6472989916801453,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5655504937749356,
+        "p95_ms_per_generated_step": 0.5948107922449709,
+        "maximum_ms_per_generated_step": 0.6804779986850917,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.673287486890331,
+        "p95_ms_per_generated_step": 4.656779239303432,
+        "maximum_ms_per_generated_step": 4.95877000503242,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.36518697743304074,
+        "p95_ms_per_generated_step": 0.38936090713832533,
+        "maximum_ms_per_generated_step": 0.46152103459462523,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6417680124286562,
+        "p95_ms_per_generated_step": 0.7102631876477978,
+        "maximum_ms_per_generated_step": 1.5265070251189172,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5631449748761952,
+        "p95_ms_per_generated_step": 0.7370492792688315,
+        "maximum_ms_per_generated_step": 1.3295509852468967,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.684805997181684,
+        "p95_ms_per_generated_step": 4.109659566893243,
+        "maximum_ms_per_generated_step": 4.792835039552301,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3654065076261759,
+        "p95_ms_per_generated_step": 0.3853793197777122,
+        "maximum_ms_per_generated_step": 0.4031499847769737,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6236725021153688,
+        "p95_ms_per_generated_step": 0.6485494261141866,
+        "maximum_ms_per_generated_step": 0.6537819863297045,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5638544971588999,
+        "p95_ms_per_generated_step": 0.6045162619557232,
+        "maximum_ms_per_generated_step": 0.6342189735732973,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.7186839908827096,
+        "p95_ms_per_generated_step": 4.965180752333254,
+        "maximum_ms_per_generated_step": 5.0996579811908305,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3681569651234895,
+        "p95_ms_per_generated_step": 0.4422739119036131,
+        "maximum_ms_per_generated_step": 1.5213770093396306,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6136924785096198,
+        "p95_ms_per_generated_step": 0.6698540382785725,
+        "maximum_ms_per_generated_step": 0.9748049778863788,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5815585027448833,
+        "p95_ms_per_generated_step": 0.6074317148886621,
+        "maximum_ms_per_generated_step": 0.6163560319691896,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6799324734602123,
+        "p95_ms_per_generated_step": 4.1707473748829225,
+        "maximum_ms_per_generated_step": 4.769405990373343,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37132450961507857,
+        "p95_ms_per_generated_step": 0.44959165679756624,
+        "maximum_ms_per_generated_step": 1.4292059931904078,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6285410199780017,
+        "p95_ms_per_generated_step": 1.397478036233224,
+        "maximum_ms_per_generated_step": 1.4207159983925521,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5922745040152222,
+        "p95_ms_per_generated_step": 1.4228518266463652,
+        "maximum_ms_per_generated_step": 1.5187420067377388,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.705843526404351,
+        "p95_ms_per_generated_step": 3.9827165892347702,
+        "maximum_ms_per_generated_step": 5.080529022961855,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.36932952934876084,
+        "p95_ms_per_generated_step": 0.39628414961043745,
+        "maximum_ms_per_generated_step": 0.3973700222559273,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6170354899950325,
+        "p95_ms_per_generated_step": 0.6475676753325388,
+        "maximum_ms_per_generated_step": 0.6548580131493509,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.664906991412863,
+        "p95_ms_per_generated_step": 2.822782919974998,
+        "maximum_ms_per_generated_step": 3.6764139658771455,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6866329901386052,
+        "p95_ms_per_generated_step": 3.877650387585163,
+        "maximum_ms_per_generated_step": 3.8832059944979846,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27441799466032535,
+        "p95_ms_per_generated_step": 0.2818149630911648,
+        "maximum_ms_per_generated_step": 0.2853575279004872,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4930320137646049,
+        "p95_ms_per_generated_step": 0.5155278049642221,
+        "maximum_ms_per_generated_step": 0.6961759936530143,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4452544962987304,
+        "p95_ms_per_generated_step": 0.4727896695840174,
+        "maximum_ms_per_generated_step": 0.7135990017559379,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0742797680431977,
+        "p95_ms_per_generated_step": 3.702647567843087,
+        "maximum_ms_per_generated_step": 3.8994985225144774,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.279903513728641,
+        "p95_ms_per_generated_step": 0.3060298797208816,
+        "maximum_ms_per_generated_step": 0.31531849526800215,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.509366494952701,
+        "p95_ms_per_generated_step": 0.7308322266908365,
+        "maximum_ms_per_generated_step": 1.0258874972350895,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4395465075504035,
+        "p95_ms_per_generated_step": 0.688166974578053,
+        "maximum_ms_per_generated_step": 1.0096085024997592,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0811550095677376,
+        "p95_ms_per_generated_step": 3.736530352034606,
+        "maximum_ms_per_generated_step": 3.8181515119504184,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2751397551037371,
+        "p95_ms_per_generated_step": 0.2834145212545991,
+        "maximum_ms_per_generated_step": 0.2855240018106997,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.49070350360125303,
+        "p95_ms_per_generated_step": 0.7221491279779004,
+        "maximum_ms_per_generated_step": 1.08229648321867,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.44247850019019097,
+        "p95_ms_per_generated_step": 0.6805361394071953,
+        "maximum_ms_per_generated_step": 0.8246439974755049,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.1028342491481453,
+        "p95_ms_per_generated_step": 3.7589025116176344,
+        "maximum_ms_per_generated_step": 3.811447008047253,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.27742299425881356,
+        "p95_ms_per_generated_step": 0.2920012106187642,
+        "maximum_ms_per_generated_step": 0.3413005033507943,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.49408899212721735,
+        "p95_ms_per_generated_step": 0.5072205254691653,
+        "maximum_ms_per_generated_step": 0.5084180156700313,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.45439149835146964,
+        "p95_ms_per_generated_step": 0.4652167554013431,
+        "maximum_ms_per_generated_step": 0.4656209785025567,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.1101522472454235,
+        "p95_ms_per_generated_step": 3.2456629021908157,
+        "maximum_ms_per_generated_step": 3.499368001939729,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2773849992081523,
+        "p95_ms_per_generated_step": 0.31047914526425335,
+        "maximum_ms_per_generated_step": 0.7404614880215377,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5005837447242811,
+        "p95_ms_per_generated_step": 0.5162112618563697,
+        "maximum_ms_per_generated_step": 0.5318149924278259,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4586654977174476,
+        "p95_ms_per_generated_step": 1.015559940424282,
+        "maximum_ms_per_generated_step": 1.1342139914631844,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0852757627144456,
+        "p95_ms_per_generated_step": 3.308796412602533,
+        "maximum_ms_per_generated_step": 3.6617960140574723,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2768827398540452,
+        "p95_ms_per_generated_step": 0.2871005199267529,
+        "maximum_ms_per_generated_step": 0.29163199360482395,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4922740045003593,
+        "p95_ms_per_generated_step": 0.5340177871403288,
+        "maximum_ms_per_generated_step": 0.9359590185340494,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.546836491092108,
+        "p95_ms_per_generated_step": 3.274248704838101,
+        "maximum_ms_per_generated_step": 3.3049375051632524,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.117638247204013,
+        "p95_ms_per_generated_step": 3.8800379130407237,
+        "maximum_ms_per_generated_step": 3.9470585179515183,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2492381609044969,
+        "p95_ms_per_generated_step": 0.2723568051199742,
+        "maximum_ms_per_generated_step": 0.6437270009579757,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4561768340257307,
+        "p95_ms_per_generated_step": 0.4848308599321174,
+        "maximum_ms_per_generated_step": 0.7521136625049015,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.41031850075038767,
+        "p95_ms_per_generated_step": 0.43297330945885454,
+        "maximum_ms_per_generated_step": 0.7607226531642178,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9388750068998584,
+        "p95_ms_per_generated_step": 3.3488229111147425,
+        "maximum_ms_per_generated_step": 3.4467726751851537,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24935600231401622,
+        "p95_ms_per_generated_step": 0.25504406172937405,
+        "maximum_ms_per_generated_step": 0.2557989985992511,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.46412916465972864,
+        "p95_ms_per_generated_step": 0.4746667031819622,
+        "maximum_ms_per_generated_step": 0.4891706630587578,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4105471695462863,
+        "p95_ms_per_generated_step": 0.42160765733569866,
+        "maximum_ms_per_generated_step": 0.46815734822303057,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.895013167290017,
+        "p95_ms_per_generated_step": 3.287996467164097,
+        "maximum_ms_per_generated_step": 3.3980913382644453,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2489239947559933,
+        "p95_ms_per_generated_step": 0.2733716391958298,
+        "maximum_ms_per_generated_step": 0.4989963296490411,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.45543533633463085,
+        "p95_ms_per_generated_step": 0.4827296070288869,
+        "maximum_ms_per_generated_step": 0.8148356573656201,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4109713384726395,
+        "p95_ms_per_generated_step": 0.43871810291117697,
+        "maximum_ms_per_generated_step": 0.6499049874643484,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9417210025712848,
+        "p95_ms_per_generated_step": 3.3856799777519577,
+        "maximum_ms_per_generated_step": 3.412583338407179,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24944349812964597,
+        "p95_ms_per_generated_step": 0.28086911770515144,
+        "maximum_ms_per_generated_step": 0.28802167313794297,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4535330129632106,
+        "p95_ms_per_generated_step": 0.47224692728680884,
+        "maximum_ms_per_generated_step": 0.6823033327236772,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4159533418715,
+        "p95_ms_per_generated_step": 0.44328035728540277,
+        "maximum_ms_per_generated_step": 0.5682059951747457,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9156644983838005,
+        "p95_ms_per_generated_step": 3.481476150530701,
+        "maximum_ms_per_generated_step": 3.486824318921814,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2507401610879848,
+        "p95_ms_per_generated_step": 0.28963883232791,
+        "maximum_ms_per_generated_step": 0.5422153238517543,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.45677634382930893,
+        "p95_ms_per_generated_step": 0.5270076653687286,
+        "maximum_ms_per_generated_step": 0.8486266791199645,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4190566736118247,
+        "p95_ms_per_generated_step": 0.4414338405088833,
+        "maximum_ms_per_generated_step": 0.5993333373529216,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.928625326603651,
+        "p95_ms_per_generated_step": 3.436721281226103,
+        "maximum_ms_per_generated_step": 3.4494500141590834,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24933617290419838,
+        "p95_ms_per_generated_step": 0.2692558957884711,
+        "maximum_ms_per_generated_step": 0.5659830057993531,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.454850165018191,
+        "p95_ms_per_generated_step": 0.4974857234628873,
+        "maximum_ms_per_generated_step": 0.7680280056471626,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.5183329998981208,
+        "p95_ms_per_generated_step": 2.997512616760408,
+        "maximum_ms_per_generated_step": 3.004959648630271,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.912784004972006,
+        "p95_ms_per_generated_step": 3.4614097356097773,
+        "maximum_ms_per_generated_step": 3.504370319812248,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.234556122450158,
+        "p95_ms_per_generated_step": 0.2516447544621771,
+        "maximum_ms_per_generated_step": 0.4524512478383258,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43541436753002927,
+        "p95_ms_per_generated_step": 0.4476645452086814,
+        "maximum_ms_per_generated_step": 0.44995974167250097,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39215200376929715,
+        "p95_ms_per_generated_step": 0.396586144779576,
+        "maximum_ms_per_generated_step": 0.3970924881286919,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8448822486097924,
+        "p95_ms_per_generated_step": 3.211707248556195,
+        "maximum_ms_per_generated_step": 3.295383241493255,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23518324451288208,
+        "p95_ms_per_generated_step": 0.2495945445843974,
+        "maximum_ms_per_generated_step": 0.4623669956345111,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4398383680381812,
+        "p95_ms_per_generated_step": 0.44361477630445734,
+        "maximum_ms_per_generated_step": 0.4440000047907233,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.392232250305824,
+        "p95_ms_per_generated_step": 0.3980230867455248,
+        "maximum_ms_per_generated_step": 0.4045274981763214,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8240436295163818,
+        "p95_ms_per_generated_step": 3.2359531222027726,
+        "maximum_ms_per_generated_step": 3.237769997213036,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23403875820804387,
+        "p95_ms_per_generated_step": 0.2364571060752496,
+        "maximum_ms_per_generated_step": 0.23684850020799786,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.435241250670515,
+        "p95_ms_per_generated_step": 0.4410967281728517,
+        "maximum_ms_per_generated_step": 0.4553320031845942,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39220412145368755,
+        "p95_ms_per_generated_step": 0.40430152585031465,
+        "maximum_ms_per_generated_step": 0.4350297531345859,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8667002479778603,
+        "p95_ms_per_generated_step": 3.245161761151394,
+        "maximum_ms_per_generated_step": 3.29629574844148,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23498675000155345,
+        "p95_ms_per_generated_step": 0.44996253418503335,
+        "maximum_ms_per_generated_step": 0.5108677578391507,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43659649963956326,
+        "p95_ms_per_generated_step": 0.644345714681549,
+        "maximum_ms_per_generated_step": 0.6668172427453101,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3948591256630607,
+        "p95_ms_per_generated_step": 0.45785230249748565,
+        "maximum_ms_per_generated_step": 0.4749722429551184,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8278855024836957,
+        "p95_ms_per_generated_step": 3.1920112436637282,
+        "maximum_ms_per_generated_step": 3.2031927403295413,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23462150420527905,
+        "p95_ms_per_generated_step": 0.24382837291341283,
+        "maximum_ms_per_generated_step": 0.3671455051517114,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4335563789936714,
+        "p95_ms_per_generated_step": 0.44470116117736325,
+        "maximum_ms_per_generated_step": 0.46596050378866494,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39811099850339815,
+        "p95_ms_per_generated_step": 0.5057923764979932,
+        "maximum_ms_per_generated_step": 0.5726035014959052,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.828670127200894,
+        "p95_ms_per_generated_step": 3.2886548833630513,
+        "maximum_ms_per_generated_step": 3.3278257469646633,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2341067447559908,
+        "p95_ms_per_generated_step": 0.24564072882640187,
+        "maximum_ms_per_generated_step": 0.3988610114902258,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43466437637107447,
+        "p95_ms_per_generated_step": 0.4960475424013567,
+        "maximum_ms_per_generated_step": 0.5866309948032722,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.480575247318484,
+        "p95_ms_per_generated_step": 2.93206304195337,
+        "maximum_ms_per_generated_step": 2.944304753327742,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.028055878530722,
+        "p95_ms_per_generated_step": 3.257911783293821,
+        "maximum_ms_per_generated_step": 3.3323115058010444,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37036946741864085,
+        "p95_ms_per_generated_step": 0.38503367977682507,
+        "maximum_ms_per_generated_step": 0.4741189768537879,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6230169965419918,
+        "p95_ms_per_generated_step": 1.5836575272260236,
+        "maximum_ms_per_generated_step": 1.7934080096893013,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5581869627349079,
+        "p95_ms_per_generated_step": 0.6201242067618296,
+        "maximum_ms_per_generated_step": 0.6683309911750257,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6278149927966297,
+        "p95_ms_per_generated_step": 4.178793312166818,
+        "maximum_ms_per_generated_step": 5.076073983218521,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3688595024868846,
+        "p95_ms_per_generated_step": 0.38055954792071134,
+        "maximum_ms_per_generated_step": 0.3836100222542882,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6389820191543549,
+        "p95_ms_per_generated_step": 0.6508082879008725,
+        "maximum_ms_per_generated_step": 0.6556780426762998,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5658985173795372,
+        "p95_ms_per_generated_step": 0.6353189586661756,
+        "maximum_ms_per_generated_step": 0.6573389982804656,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.604499506764114,
+        "p95_ms_per_generated_step": 3.9093138853786513,
+        "maximum_ms_per_generated_step": 3.9771029842086136,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3702675167005509,
+        "p95_ms_per_generated_step": 0.38743962650187314,
+        "maximum_ms_per_generated_step": 0.38902898086234927,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.61454699607566,
+        "p95_ms_per_generated_step": 0.6676165154203777,
+        "maximum_ms_per_generated_step": 1.2792170164175332,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5637564754579216,
+        "p95_ms_per_generated_step": 1.440786584862508,
+        "maximum_ms_per_generated_step": 1.6816029674373567,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.683877002913505,
+        "p95_ms_per_generated_step": 4.855998515267856,
+        "maximum_ms_per_generated_step": 4.955701995640993,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3665105323307216,
+        "p95_ms_per_generated_step": 0.38813026039861154,
+        "maximum_ms_per_generated_step": 0.5115970270708203,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6160414777696133,
+        "p95_ms_per_generated_step": 0.6315899809123948,
+        "maximum_ms_per_generated_step": 0.6525280186906457,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5790360155515373,
+        "p95_ms_per_generated_step": 0.6794048356823631,
+        "maximum_ms_per_generated_step": 1.775417011231184,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6324000102467835,
+        "p95_ms_per_generated_step": 3.949616421596148,
+        "maximum_ms_per_generated_step": 5.022173980250955,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.36630601971410215,
+        "p95_ms_per_generated_step": 0.3825094550848007,
+        "maximum_ms_per_generated_step": 0.3860710421577096,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6206060061231256,
+        "p95_ms_per_generated_step": 0.7147478318074728,
+        "maximum_ms_per_generated_step": 2.0405069808475673,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5785760004073381,
+        "p95_ms_per_generated_step": 0.6019908061716706,
+        "maximum_ms_per_generated_step": 0.6059769657440484,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6549525102600455,
+        "p95_ms_per_generated_step": 3.9028816274367273,
+        "maximum_ms_per_generated_step": 3.9980270084924996,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.370627996744588,
+        "p95_ms_per_generated_step": 0.38366951048374176,
+        "maximum_ms_per_generated_step": 0.3891129745170474,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6169100233819336,
+        "p95_ms_per_generated_step": 0.6999919685767968,
+        "maximum_ms_per_generated_step": 1.3717360561713576,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.6705920172389597,
+        "p95_ms_per_generated_step": 2.935504962806591,
+        "maximum_ms_per_generated_step": 3.9280460332520306,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6314234894234687,
+        "p95_ms_per_generated_step": 4.902653701719828,
+        "maximum_ms_per_generated_step": 5.0471999566070735,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.28547800320666283,
+        "p95_ms_per_generated_step": 0.29410249408101663,
+        "maximum_ms_per_generated_step": 0.3225550171919167,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.49706098798196763,
+        "p95_ms_per_generated_step": 0.5101361341075972,
+        "maximum_ms_per_generated_step": 0.5126654868945479,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4484730015974492,
+        "p95_ms_per_generated_step": 0.8166153362253682,
+        "maximum_ms_per_generated_step": 0.9538965241517872,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.084751500864513,
+        "p95_ms_per_generated_step": 3.8312148564727977,
+        "maximum_ms_per_generated_step": 3.9052740030456334,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2861989923985675,
+        "p95_ms_per_generated_step": 0.7887836254667492,
+        "maximum_ms_per_generated_step": 0.8695264987181872,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.508215234731324,
+        "p95_ms_per_generated_step": 0.5403352581197397,
+        "maximum_ms_per_generated_step": 0.6549295212607831,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4539162473520264,
+        "p95_ms_per_generated_step": 0.4628542737918906,
+        "maximum_ms_per_generated_step": 0.4648829926736653,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0853692442178726,
+        "p95_ms_per_generated_step": 3.690321071189828,
+        "maximum_ms_per_generated_step": 3.894135501468554,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2849242591764778,
+        "p95_ms_per_generated_step": 0.289745326153934,
+        "maximum_ms_per_generated_step": 0.29242149321362376,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.501963499118574,
+        "p95_ms_per_generated_step": 0.5203951688599774,
+        "maximum_ms_per_generated_step": 0.6990075053181499,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4558890068437904,
+        "p95_ms_per_generated_step": 0.5012579684262166,
+        "maximum_ms_per_generated_step": 0.7660510018467903,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0940862488932908,
+        "p95_ms_per_generated_step": 3.3173226693179463,
+        "maximum_ms_per_generated_step": 3.8292139943223447,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2856630162568763,
+        "p95_ms_per_generated_step": 0.5596805029199461,
+        "maximum_ms_per_generated_step": 0.8953159849625081,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4989680019207299,
+        "p95_ms_per_generated_step": 0.5139593442436308,
+        "maximum_ms_per_generated_step": 0.5142029840499163,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.46048275544308126,
+        "p95_ms_per_generated_step": 0.4966487089404838,
+        "maximum_ms_per_generated_step": 0.714458990842104,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0931575020076707,
+        "p95_ms_per_generated_step": 3.8057637721067294,
+        "maximum_ms_per_generated_step": 3.8099965022411197,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.284358742646873,
+        "p95_ms_per_generated_step": 0.2903429514844902,
+        "maximum_ms_per_generated_step": 0.2926410234067589,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5000547389499843,
+        "p95_ms_per_generated_step": 0.7207979928352871,
+        "maximum_ms_per_generated_step": 0.809280521934852,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4668924811994657,
+        "p95_ms_per_generated_step": 0.7203289802419024,
+        "maximum_ms_per_generated_step": 1.0310545039828867,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0742602393729612,
+        "p95_ms_per_generated_step": 3.791101320530288,
+        "maximum_ms_per_generated_step": 3.804170002695173,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2859330124920234,
+        "p95_ms_per_generated_step": 0.3476509256870488,
+        "maximum_ms_per_generated_step": 0.6827905017416924,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4981597448932007,
+        "p95_ms_per_generated_step": 0.5456689279526477,
+        "maximum_ms_per_generated_step": 1.1292429990135133,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.5478072493569925,
+        "p95_ms_per_generated_step": 3.295641584554687,
+        "maximum_ms_per_generated_step": 3.2997659873217344,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0749572470085695,
+        "p95_ms_per_generated_step": 3.2033715833676983,
+        "maximum_ms_per_generated_step": 3.6374659975990653,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26030116714537144,
+        "p95_ms_per_generated_step": 0.2634400880197063,
+        "maximum_ms_per_generated_step": 0.26430300204083323,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.46406867719876266,
+        "p95_ms_per_generated_step": 0.4711499253365522,
+        "maximum_ms_per_generated_step": 0.4726113402284682,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4217701692444583,
+        "p95_ms_per_generated_step": 0.4279322359555711,
+        "maximum_ms_per_generated_step": 0.42855101249491173,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9213500092737377,
+        "p95_ms_per_generated_step": 3.459704354948675,
+        "maximum_ms_per_generated_step": 3.563748653202007,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26043531640122336,
+        "p95_ms_per_generated_step": 0.5071537161711605,
+        "maximum_ms_per_generated_step": 0.6927846504064897,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4717411648016423,
+        "p95_ms_per_generated_step": 0.4981778620276603,
+        "maximum_ms_per_generated_step": 0.8489216755454739,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4205088383362939,
+        "p95_ms_per_generated_step": 0.4492421692702922,
+        "maximum_ms_per_generated_step": 0.7927466843587657,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8972381648297114,
+        "p95_ms_per_generated_step": 3.4608617871223637,
+        "maximum_ms_per_generated_step": 3.461332661875834,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.25996833574026823,
+        "p95_ms_per_generated_step": 0.49920348683372157,
+        "maximum_ms_per_generated_step": 0.6781863242698213,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4640664944114784,
+        "p95_ms_per_generated_step": 0.6262246567833548,
+        "maximum_ms_per_generated_step": 0.7475966704078019,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42193634241508937,
+        "p95_ms_per_generated_step": 0.440495817262369,
+        "maximum_ms_per_generated_step": 0.6375666707754135,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.898728494377186,
+        "p95_ms_per_generated_step": 3.4465779695892707,
+        "maximum_ms_per_generated_step": 3.679168992675841,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2600371760005752,
+        "p95_ms_per_generated_step": 0.26465128660978127,
+        "maximum_ms_per_generated_step": 0.2761643457536896,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.46383916439178086,
+        "p95_ms_per_generated_step": 0.6098098024570695,
+        "maximum_ms_per_generated_step": 0.8483319931353132,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42585632763803005,
+        "p95_ms_per_generated_step": 0.44675988610833883,
+        "maximum_ms_per_generated_step": 0.48180000158026814,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9224103297262145,
+        "p95_ms_per_generated_step": 3.321680262646017,
+        "maximum_ms_per_generated_step": 3.458282658054183,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2600808414475372,
+        "p95_ms_per_generated_step": 0.5947098388181379,
+        "maximum_ms_per_generated_step": 0.6326749959650139,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4662853413416694,
+        "p95_ms_per_generated_step": 0.4717923264252022,
+        "maximum_ms_per_generated_step": 0.4874353180639446,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4281716634674618,
+        "p95_ms_per_generated_step": 0.43484593722193193,
+        "maximum_ms_per_generated_step": 0.43517401597152156,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9253188404254615,
+        "p95_ms_per_generated_step": 3.4029221918899566,
+        "maximum_ms_per_generated_step": 3.4261246716293194,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2598898330082496,
+        "p95_ms_per_generated_step": 0.2662178526710098,
+        "maximum_ms_per_generated_step": 0.29151032989223796,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.46314599846179283,
+        "p95_ms_per_generated_step": 0.4721118893940002,
+        "maximum_ms_per_generated_step": 0.4730786701353888,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.540839826300119,
+        "p95_ms_per_generated_step": 3.06316611628669,
+        "maximum_ms_per_generated_step": 3.065087328044077,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9056399944238365,
+        "p95_ms_per_generated_step": 3.4200385047976547,
+        "maximum_ms_per_generated_step": 3.4308083316621683,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24784187553450465,
+        "p95_ms_per_generated_step": 0.5458631174406037,
+        "maximum_ms_per_generated_step": 0.5512567586265504,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4454251247807406,
+        "p95_ms_per_generated_step": 0.452334603323834,
+        "maximum_ms_per_generated_step": 0.4559654917102307,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.40281075052917004,
+        "p95_ms_per_generated_step": 0.40989546323544346,
+        "maximum_ms_per_generated_step": 0.4387414955999702,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.841660250851419,
+        "p95_ms_per_generated_step": 3.199602170207072,
+        "maximum_ms_per_generated_step": 3.2711405074223876,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.246000628976617,
+        "p95_ms_per_generated_step": 0.24749125441303477,
+        "maximum_ms_per_generated_step": 0.250412747845985,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.449737133749295,
+        "p95_ms_per_generated_step": 0.5019249008910267,
+        "maximum_ms_per_generated_step": 0.7512555021094158,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.40485162753611803,
+        "p95_ms_per_generated_step": 0.41176534214173444,
+        "maximum_ms_per_generated_step": 0.41247974149882793,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.810317004332319,
+        "p95_ms_per_generated_step": 3.1987434667826165,
+        "maximum_ms_per_generated_step": 3.2905602420214564,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24638549803057685,
+        "p95_ms_per_generated_step": 0.29020801957813097,
+        "maximum_ms_per_generated_step": 0.3864007449010387,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4460551208467223,
+        "p95_ms_per_generated_step": 0.4775185894686731,
+        "maximum_ms_per_generated_step": 0.7361767493421212,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.40463537152390927,
+        "p95_ms_per_generated_step": 0.41875894530676316,
+        "maximum_ms_per_generated_step": 0.5961419956292957,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.832569254678674,
+        "p95_ms_per_generated_step": 3.135988266876666,
+        "maximum_ms_per_generated_step": 3.1721645063953474,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24622499768156558,
+        "p95_ms_per_generated_step": 0.24903693338274024,
+        "maximum_ms_per_generated_step": 0.25046049267984927,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.44346174399834126,
+        "p95_ms_per_generated_step": 0.4502642521401867,
+        "maximum_ms_per_generated_step": 0.4510007565841079,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.40750799234956503,
+        "p95_ms_per_generated_step": 0.4110774250875693,
+        "maximum_ms_per_generated_step": 0.4112802416784689,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8403632531990297,
+        "p95_ms_per_generated_step": 3.306606817204738,
+        "maximum_ms_per_generated_step": 3.4609120048116893,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24597299488959834,
+        "p95_ms_per_generated_step": 0.2567168739915361,
+        "maximum_ms_per_generated_step": 0.3849740023724735,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4465993697522208,
+        "p95_ms_per_generated_step": 0.46591135105700254,
+        "maximum_ms_per_generated_step": 0.728868501028046,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4087671259185299,
+        "p95_ms_per_generated_step": 0.41252150695072487,
+        "maximum_ms_per_generated_step": 0.4137659998377785,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.869828873372171,
+        "p95_ms_per_generated_step": 3.258190138876671,
+        "maximum_ms_per_generated_step": 3.2844697416294366,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24701975053176284,
+        "p95_ms_per_generated_step": 0.27902369038201874,
+        "maximum_ms_per_generated_step": 0.38389774272218347,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.44683562737191096,
+        "p95_ms_per_generated_step": 0.5506660709215795,
+        "maximum_ms_per_generated_step": 0.7126802520360798,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.5031718687387183,
+        "p95_ms_per_generated_step": 2.8828373295255005,
+        "maximum_ms_per_generated_step": 2.9133339994587004,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8203038673382252,
+        "p95_ms_per_generated_step": 3.1920353285386227,
+        "maximum_ms_per_generated_step": 3.2831275020726025,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.35738450242206454,
+        "p95_ms_per_generated_step": 0.37039546004962176,
+        "maximum_ms_per_generated_step": 0.37103198701515794,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.598427519435063,
+        "p95_ms_per_generated_step": 0.7492341625038542,
+        "maximum_ms_per_generated_step": 1.8277919734828174,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5468669696711004,
+        "p95_ms_per_generated_step": 1.1571880546398463,
+        "maximum_ms_per_generated_step": 1.318860042374581,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6149384977761656,
+        "p95_ms_per_generated_step": 4.84849248023238,
+        "maximum_ms_per_generated_step": 4.87331603653729,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3598534967750311,
+        "p95_ms_per_generated_step": 0.3737759543582797,
+        "maximum_ms_per_generated_step": 0.37449703086167574,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6248544959817082,
+        "p95_ms_per_generated_step": 0.6883550056954851,
+        "maximum_ms_per_generated_step": 1.4162639854475856,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5468145245686173,
+        "p95_ms_per_generated_step": 0.5858792457729578,
+        "maximum_ms_per_generated_step": 0.6089689559303224,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5970550088677555,
+        "p95_ms_per_generated_step": 4.851324902847409,
+        "maximum_ms_per_generated_step": 4.872336983680725,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.35941251553595066,
+        "p95_ms_per_generated_step": 0.3751433308934793,
+        "maximum_ms_per_generated_step": 0.3758150269277394,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6026055198162794,
+        "p95_ms_per_generated_step": 0.6317982071777806,
+        "maximum_ms_per_generated_step": 0.6394209922291338,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5462855042424053,
+        "p95_ms_per_generated_step": 0.5890929111046717,
+        "maximum_ms_per_generated_step": 0.6207640399225056,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6101849982514977,
+        "p95_ms_per_generated_step": 4.827908970764838,
+        "maximum_ms_per_generated_step": 4.931895004119724,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.363583501894027,
+        "p95_ms_per_generated_step": 0.36973832466173917,
+        "maximum_ms_per_generated_step": 0.37217698991298676,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6032359960954636,
+        "p95_ms_per_generated_step": 0.682471890468151,
+        "maximum_ms_per_generated_step": 1.5001160209067166,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5613109678961337,
+        "p95_ms_per_generated_step": 0.6063046079361815,
+        "maximum_ms_per_generated_step": 1.0330180521123111,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.6157065187580884,
+        "p95_ms_per_generated_step": 4.855198954464868,
+        "maximum_ms_per_generated_step": 4.953409021254629,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.35822601057589054,
+        "p95_ms_per_generated_step": 0.5608533014310529,
+        "maximum_ms_per_generated_step": 1.339288952294737,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6017374980729073,
+        "p95_ms_per_generated_step": 0.72248607466463,
+        "maximum_ms_per_generated_step": 0.7317209965549409,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.5695410072803497,
+        "p95_ms_per_generated_step": 0.5962762341368945,
+        "maximum_ms_per_generated_step": 0.7125030388124287,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.5812654823530465,
+        "p95_ms_per_generated_step": 4.739382574916817,
+        "maximum_ms_per_generated_step": 4.768785962369293,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3626234829425812,
+        "p95_ms_per_generated_step": 0.37264636193867773,
+        "maximum_ms_per_generated_step": 0.3734700148925185,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.6005694740451872,
+        "p95_ms_per_generated_step": 0.6791675434215002,
+        "maximum_ms_per_generated_step": 1.670123019721359,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.556537976488471,
+        "p95_ms_per_generated_step": 3.7722779728937894,
+        "maximum_ms_per_generated_step": 3.808624984230846,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.603600518545136,
+        "p95_ms_per_generated_step": 4.903355488204397,
+        "maximum_ms_per_generated_step": 4.937717050779611,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26625099417287856,
+        "p95_ms_per_generated_step": 0.2772475578240119,
+        "maximum_ms_per_generated_step": 0.28294901130720973,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4748597420984879,
+        "p95_ms_per_generated_step": 0.49151308776345104,
+        "maximum_ms_per_generated_step": 0.5225515051279217,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.427775492426008,
+        "p95_ms_per_generated_step": 0.6501382653368638,
+        "maximum_ms_per_generated_step": 0.7788685034029186,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.015118752955459,
+        "p95_ms_per_generated_step": 3.6932621398591436,
+        "maximum_ms_per_generated_step": 3.845569008262828,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.266928764176555,
+        "p95_ms_per_generated_step": 0.5338855480658823,
+        "maximum_ms_per_generated_step": 0.6892209930811077,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4877107421634719,
+        "p95_ms_per_generated_step": 0.5328335580998104,
+        "maximum_ms_per_generated_step": 1.0346439958084375,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43436048144940287,
+        "p95_ms_per_generated_step": 0.45939543051645176,
+        "maximum_ms_per_generated_step": 0.6630269926972687,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.9982199775986373,
+        "p95_ms_per_generated_step": 3.7311836014850996,
+        "maximum_ms_per_generated_step": 3.7829990033060312,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2670027606654912,
+        "p95_ms_per_generated_step": 0.30078336858423466,
+        "maximum_ms_per_generated_step": 0.8275750151369721,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47322573664132506,
+        "p95_ms_per_generated_step": 0.4918290287605487,
+        "maximum_ms_per_generated_step": 0.49304598360322416,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42492576176300645,
+        "p95_ms_per_generated_step": 0.6546785662067123,
+        "maximum_ms_per_generated_step": 0.7292929803952575,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0288545094663277,
+        "p95_ms_per_generated_step": 3.749756010074634,
+        "maximum_ms_per_generated_step": 3.7554375012405217,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26983325369656086,
+        "p95_ms_per_generated_step": 0.7973726009367965,
+        "maximum_ms_per_generated_step": 0.8109215123113245,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4763902543345466,
+        "p95_ms_per_generated_step": 0.489124350133352,
+        "maximum_ms_per_generated_step": 0.4891590215265751,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4299432475818321,
+        "p95_ms_per_generated_step": 0.4583579502650538,
+        "maximum_ms_per_generated_step": 0.6570495024789125,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.0036972457310185,
+        "p95_ms_per_generated_step": 3.7772344920085743,
+        "maximum_ms_per_generated_step": 3.844570484943688,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2670087415026501,
+        "p95_ms_per_generated_step": 0.27286073309369385,
+        "maximum_ms_per_generated_step": 0.2756484900601208,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.47195474326144904,
+        "p95_ms_per_generated_step": 0.48148385394597426,
+        "maximum_ms_per_generated_step": 0.4834569990634918,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4424604994710535,
+        "p95_ms_per_generated_step": 0.4696884192526342,
+        "maximum_ms_per_generated_step": 0.7180169923231006,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 3.014731759321876,
+        "p95_ms_per_generated_step": 3.6990285152569413,
+        "maximum_ms_per_generated_step": 3.7563894875347614,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.26707048527896404,
+        "p95_ms_per_generated_step": 0.316158591886051,
+        "maximum_ms_per_generated_step": 0.33638550667092204,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4761852615047246,
+        "p95_ms_per_generated_step": 0.6877612788230183,
+        "maximum_ms_per_generated_step": 0.9608344989828765,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.419176758849062,
+        "p95_ms_per_generated_step": 3.1199558070511557,
+        "maximum_ms_per_generated_step": 3.1886749784462154,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.996315000928007,
+        "p95_ms_per_generated_step": 3.7690099838073365,
+        "maximum_ms_per_generated_step": 3.7847414787393063,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24012783736300963,
+        "p95_ms_per_generated_step": 0.25814934633672254,
+        "maximum_ms_per_generated_step": 0.4703353236739834,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43942933552898467,
+        "p95_ms_per_generated_step": 0.47100386097251157,
+        "maximum_ms_per_generated_step": 0.865358665275077,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39504816716847324,
+        "p95_ms_per_generated_step": 0.413451324372242,
+        "maximum_ms_per_generated_step": 0.604502682108432,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.821431999715666,
+        "p95_ms_per_generated_step": 3.332605806645006,
+        "maximum_ms_per_generated_step": 3.378088333799193,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.23966315590466064,
+        "p95_ms_per_generated_step": 0.2430695448614036,
+        "maximum_ms_per_generated_step": 0.266265997197479,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4470871645025909,
+        "p95_ms_per_generated_step": 0.4878007496396702,
+        "maximum_ms_per_generated_step": 0.6520259970178207,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39616983849555254,
+        "p95_ms_per_generated_step": 0.4070630306766058,
+        "maximum_ms_per_generated_step": 0.4292873200029135,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.835776162100956,
+        "p95_ms_per_generated_step": 3.3309846447082236,
+        "maximum_ms_per_generated_step": 3.345462338378032,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.239875332529967,
+        "p95_ms_per_generated_step": 0.2618295596524454,
+        "maximum_ms_per_generated_step": 0.5154460086487234,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4396713338792324,
+        "p95_ms_per_generated_step": 0.4773994694308691,
+        "maximum_ms_per_generated_step": 0.8127646675954262,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3947144917522868,
+        "p95_ms_per_generated_step": 0.4173153312876823,
+        "maximum_ms_per_generated_step": 0.6894396501593292,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8298839946122216,
+        "p95_ms_per_generated_step": 3.358727988476555,
+        "maximum_ms_per_generated_step": 3.529899016333123,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.2397513308096677,
+        "p95_ms_per_generated_step": 0.24256960411245626,
+        "maximum_ms_per_generated_step": 0.24287233827635646,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43904000388768816,
+        "p95_ms_per_generated_step": 0.5650549719575793,
+        "maximum_ms_per_generated_step": 0.5674926602902511,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.39844983257353306,
+        "p95_ms_per_generated_step": 0.422638473294986,
+        "maximum_ms_per_generated_step": 0.6469806539826095,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.799874171614647,
+        "p95_ms_per_generated_step": 3.3241217247753716,
+        "maximum_ms_per_generated_step": 3.4567493518504,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24011316903245944,
+        "p95_ms_per_generated_step": 0.24518430679260445,
+        "maximum_ms_per_generated_step": 0.24591200053691864,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43795117138264084,
+        "p95_ms_per_generated_step": 0.46757538026819656,
+        "maximum_ms_per_generated_step": 0.8671843291570743,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4049838365366062,
+        "p95_ms_per_generated_step": 0.7894321160468583,
+        "maximum_ms_per_generated_step": 0.7921259966678917,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8324546583462507,
+        "p95_ms_per_generated_step": 3.3431224418260777,
+        "maximum_ms_per_generated_step": 3.391631665484359,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.24022150319069624,
+        "p95_ms_per_generated_step": 0.2601728347751003,
+        "maximum_ms_per_generated_step": 0.4698283349474271,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.43798599896642065,
+        "p95_ms_per_generated_step": 0.4597682806585607,
+        "maximum_ms_per_generated_step": 0.7466733222827315,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.3776281644434976,
+        "p95_ms_per_generated_step": 2.8924668071946753,
+        "maximum_ms_per_generated_step": 2.8974789893254638,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.8188933307925863,
+        "p95_ms_per_generated_step": 3.2565855023373538,
+        "maximum_ms_per_generated_step": 3.333424664257715,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22627337602898479,
+        "p95_ms_per_generated_step": 0.238396669010399,
+        "maximum_ms_per_generated_step": 0.3654054889921099,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.41659212729427963,
+        "p95_ms_per_generated_step": 0.5504222586750985,
+        "maximum_ms_per_generated_step": 0.7148292497731745,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.37516300653805956,
+        "p95_ms_per_generated_step": 0.3851601402857341,
+        "maximum_ms_per_generated_step": 0.38827401294838637,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.715886745136231,
+        "p95_ms_per_generated_step": 3.098781425069319,
+        "maximum_ms_per_generated_step": 3.143838490359485,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22624411940341815,
+        "p95_ms_per_generated_step": 0.233377924450906,
+        "maximum_ms_per_generated_step": 0.23530499311164021,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.42491700151003897,
+        "p95_ms_per_generated_step": 0.501600975258043,
+        "maximum_ms_per_generated_step": 0.5367837438825518,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3759193714358844,
+        "p95_ms_per_generated_step": 0.38068305075285025,
+        "maximum_ms_per_generated_step": 0.38157224480528384,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.707594248931855,
+        "p95_ms_per_generated_step": 3.1406192276335787,
+        "maximum_ms_per_generated_step": 3.1458390003535897,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22545400133822113,
+        "p95_ms_per_generated_step": 0.22968716511968526,
+        "maximum_ms_per_generated_step": 0.2504382428014651,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4185078796581365,
+        "p95_ms_per_generated_step": 0.5573143294895999,
+        "maximum_ms_per_generated_step": 0.6071767420507967,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3764938737731427,
+        "p95_ms_per_generated_step": 0.38095975542091765,
+        "maximum_ms_per_generated_step": 0.3817295073531568,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.798300629365258,
+        "p95_ms_per_generated_step": 3.2181156340811867,
+        "maximum_ms_per_generated_step": 3.2330092508345842,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22571712906938046,
+        "p95_ms_per_generated_step": 0.22870841930853203,
+        "maximum_ms_per_generated_step": 0.22883999918121845,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.41684175084810704,
+        "p95_ms_per_generated_step": 0.4502614625380376,
+        "maximum_ms_per_generated_step": 0.697194249369204,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3811585047515109,
+        "p95_ms_per_generated_step": 0.4042260166897904,
+        "maximum_ms_per_generated_step": 0.41493774915579706,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.726794125919696,
+        "p95_ms_per_generated_step": 3.216895422519883,
+        "maximum_ms_per_generated_step": 3.4049797541229054,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22567125415662304,
+        "p95_ms_per_generated_step": 0.24421393900411223,
+        "maximum_ms_per_generated_step": 0.5062179989181459,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.41774625424295664,
+        "p95_ms_per_generated_step": 0.43718460292438976,
+        "maximum_ms_per_generated_step": 0.44339950545690954,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.3839012497337535,
+        "p95_ms_per_generated_step": 0.3907285201421473,
+        "maximum_ms_per_generated_step": 0.39109001227188855,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7400023755035363,
+        "p95_ms_per_generated_step": 3.1100094318389893,
+        "maximum_ms_per_generated_step": 3.142650253721513,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.22640574752585962,
+        "p95_ms_per_generated_step": 0.2515325752028732,
+        "maximum_ms_per_generated_step": 0.5175337573746219,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 0.4158186275162734,
+        "p95_ms_per_generated_step": 0.42042596542160027,
+        "maximum_ms_per_generated_step": 0.4204774886602536,
+        "voxel_budget_ms_per_generated_step": 1.3499999999999999,
+        "observed_latency_within_voxel_budget": true
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.3965964937815443,
+        "p95_ms_per_generated_step": 2.7474918599182274,
+        "maximum_ms_per_generated_step": 2.8223632543813437,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.7476933755679056,
+        "p95_ms_per_generated_step": 3.1078457504918333,
+        "maximum_ms_per_generated_step": 3.1106387468753383,
+        "voxel_budget_ms_per_generated_step": 9.6,
+        "observed_latency_within_voxel_budget": true
+      }
+    ],
+    "reference32_density100": [
+      {
+        "mode": "complete_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.664906991412863,
+        "p95_ms_per_generated_step": 2.822782919974998,
+        "maximum_ms_per_generated_step": 3.6764139658771455,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.546836491092108,
+        "p95_ms_per_generated_step": 3.274248704838101,
+        "maximum_ms_per_generated_step": 3.3049375051632524,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.5183329998981208,
+        "p95_ms_per_generated_step": 2.997512616760408,
+        "maximum_ms_per_generated_step": 3.004959648630271,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "complete_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.480575247318484,
+        "p95_ms_per_generated_step": 2.93206304195337,
+        "maximum_ms_per_generated_step": 2.944304753327742,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.6705920172389597,
+        "p95_ms_per_generated_step": 2.935504962806591,
+        "maximum_ms_per_generated_step": 3.9280460332520306,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.5478072493569925,
+        "p95_ms_per_generated_step": 3.295641584554687,
+        "maximum_ms_per_generated_step": 3.2997659873217344,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.540839826300119,
+        "p95_ms_per_generated_step": 3.06316611628669,
+        "maximum_ms_per_generated_step": 3.065087328044077,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "gather_fused",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.5031718687387183,
+        "p95_ms_per_generated_step": 2.8828373295255005,
+        "maximum_ms_per_generated_step": 2.9133339994587004,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.556537976488471,
+        "p95_ms_per_generated_step": 3.7722779728937894,
+        "maximum_ms_per_generated_step": 3.808624984230846,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.419176758849062,
+        "p95_ms_per_generated_step": 3.1199558070511557,
+        "maximum_ms_per_generated_step": 3.1886749784462154,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.3776281644434976,
+        "p95_ms_per_generated_step": 2.8924668071946753,
+        "maximum_ms_per_generated_step": 2.8974789893254638,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      },
+      {
+        "mode": "geometry_native_entry",
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "measured_calls": 20,
+        "median_ms_per_generated_step": 2.3965964937815443,
+        "p95_ms_per_generated_step": 2.7474918599182274,
+        "maximum_ms_per_generated_step": 2.8223632543813437,
+        "voxel_budget_ms_per_generated_step": 1.2,
+        "observed_latency_within_voxel_budget": false
+      }
+    ],
+    "scope": "Complete current native NumPy fields -> CPU tensor views -> native upload -> known-input construction and all GPU force/learned stages/internal advances -> all intermediate native CPU fields. All validation, staging/copies, synchronization and returned-output allocation/copy are included; both return independently owned complete native CPU fields. The two transaction modes borrow graph GPUoutputs exclusively until all D2Hcopies synchronize, avoiding intermediate GPUclones. The candidate additionally specializes integer geometry/carrier dispatch; learned arithmetic is unchanged. All native input validation/packing/upload, known controls, required learned advances, output allocation/copy and synchronization remain included. Dataset reads, model/geometry/graph setup and explicit warmups are separate.",
+    "unchanged_study_repeated": false,
+    "all_historical_maxima_preserved": true
+  },
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "pressure_dtype": "float64",
+  "carrier_dtype": "float32",
+  "internal_sampler_arithmetic": "float64",
+  "tf32": false,
+  "autocast": false,
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "historical_CPU_latency_target_verified": false,
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/complete-native-entry-component-02/results.json": "4efb5437712cf8047b46c316d045fd2cd26d388abace93062ef6cf7afd9aa473",
+    "runs/full-ai-data-diversity-v1/complete-native-entry-blocks-02/results.json": "81db5c479b65b9cd6f1255e60c0756ad23204c41faab1124cc42b38fa48574d9",
+    "runs/full-ai-data-diversity-v1/complete-native-entry-legacy-02/results.json": "88126fc5a535c0f989d143400a384b55f953b4bb6923cb249fcb8cc04d375631",
+    "runs/full-ai-data-diversity-v1/complete-native-entry-histories-02/results.json": "319f50bc8e2badd7a054b4c25692bf2e0769442027613654d91b27c6aff593bf",
+    "runs/full-ai-data-diversity-v1/complete-native-entry-profile-02/results.json": "2d9f19c4177979999125746968b0806c1a711536bdc9fc9fcc3d179ff8e56bc4",
+    "runs/full-ai-data-diversity-v1/complete-native-entry-benchmark-02/results.json": "f10a7ae6dca74d81f29473c2bcb6f11f45311c3f6dec5931a5c8fd4c50222acf"
+  }
+}

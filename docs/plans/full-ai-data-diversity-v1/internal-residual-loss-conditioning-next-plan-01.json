@@ -1,0 +1,25 @@
+{
+  "status": "next_scientific_priority_preparation_not_a_registered_additional_fit",
+  "created_unix": 1792607771.439065,
+  "evidence": "docs/plans/full-ai-data-diversity-v1/internal-residual-s1-results-01.json",
+  "finding": {
+    "training_objective_gain_fraction": 0.003607677785051999,
+    "initial_equation_and_pressure_objective_share": 0.9999170985186491,
+    "qualification": "Loss-value imbalance is measured. Gradient imbalance and the cause of weak learning still require controlled diagnosis; two epochs do not establish an architectural ceiling."
+  },
+  "sequence": [
+    "Measure per-metric gradients using the same frozen training-only inputs, exact normalization, activity gate and all148scene objective. No optimizer updates in this diagnosis.",
+    "If qualified, register one controlled loss-conditioned CUDA fit, preserving width8,seed1729,data coverage and two-epoch schedule. Freeze training-only weights/normalization before fitting. Compare against S1 with unchanged native physical accuracy gates.",
+    "Evaluate complete autonomous K1,2,3,4 outputs, including every intermediate state; report density and domain shape separately and preserve all failures. Keep52independent references unopened until a candidate merits independent confirmation.",
+    "Profile GPU execution separately; measure any CUDAgraph or fused feature-packing variant against bitwise-scored outputs. Existing eager timings do not prove a GPU speed limit.",
+    "Before another managed capture, verify actual direct-Run copy count and disk envelope. Version the controller if the conservative two-copy guard exceeds that workflow. Keep frozen evidence; avoid arbitrary small-input limits and uncontrolled duplicate archives."
+  ],
+  "unchanged_policies": {
+    "learned_inference_device": "cuda",
+    "CPUrestore": "typed weights only, no learned CPU forward",
+    "selected_baseline_unchanged": true,
+    "all_seed_independent_rollout_latency_scaling_gates_retained": true,
+    "goal_targets_unchanged": true
+  },
+  "new_fit_authorized_by_this_plan_alone": false
+}

@@ -1,0 +1,61 @@
+{
+  "status": "training_data_contract_before_broad_model_fit",
+  "created_unix": 1792630166.0876002,
+  "reservation": "docs/plans/full-ai-data-diversity-v1/long-scene-reservation-01.json",
+  "scene_counts": {
+    "train": 24,
+    "development": 12,
+    "reserved_independent_references_unopened": 52
+  },
+  "fit_must_use_complete_training_population": true,
+  "pilot_only_fit_allowed": false,
+  "model_definition": "experiments/full-ai-data-diversity-v1/temporal_residual_network_v1.py",
+  "frozen_runtime": "experiments/full-ai-data-diversity-v1/temporal_group_projector_v1.py",
+  "source_reference_steps_per_s": 240,
+  "source_is_selected_numerical_reference_not_proven_continuous_truth": true,
+  "primary_endpoint_tasks": {
+    "output_steps_per_s": [
+      30,
+      60,
+      120
+    ],
+    "K": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "all12_required": true,
+    "lead_indices": "For everycase include everyj=1..K; phase local duration isj/output_rate and reference endpoint index isstart+j*(240/output_rate).",
+    "physical_duration_overlap_does_not_make_cases_independent": true
+  },
+  "inputs": [
+    "Complete currentnativeP,Vx,Vy,Vz,T at the selected start",
+    "Explicit local physical duration,referencefine interval,grid spacing/counts/material metadata",
+    "All prescribed force-path rows up to requested lead",
+    "Coarse model-predicted pressure/velocity/context; no future native fields"
+  ],
+  "labels": [
+    "Native full-state target at each requested physical lead",
+    "Matching finalfine referenceRHS, target-side only",
+    "Optional teacher-derived missing-provisional/tracer correction where dense native fine states are available; this must not limit physical supervision to the3dense anchors"
+  ],
+  "physical_objective": [
+    "Frozen mean-freepressure,combinedvelocity,tracer and equation metrics on GPU",
+    "Scene weight first,then within-scene start,then12cases,then1/Kper requested lead; do not count timestep/Kviews as independent scenes",
+    "Use all retained windows distributed over20s,including force-edge windows; do not train only on the3dense teacher anchors"
+  ],
+  "weights": "1/Ntrain *1/Nstarts_for_scene *1/12 *1/K for each requested lead; report unchanged/fine controls and active corrections separately.",
+  "training_excludes": [
+    "Development or reserved labels in normalization,gradients or fitting",
+    "Scene identifiers or future truth as model input",
+    "Future true endpoint as an interior-decoder deployment input"
+  ],
+  "runtime_cost": "Each corrected coarse group currently uses2learned pressure projections; count both,all force/encoder/CNN/transport work and complete transfers. CurrentKgeneratoris sequential; a shared endpoint/interior variant is separate.",
+  "normalization": "Fixed input physical nondimensionalization/asinh currently qualified. Any fitted output/input scaling must use all training scenes only, be frozen before fit, and receive a new version/qualification.",
+  "fit_workflow": "ManagedTuldokCUDA training, exacttypedCPUparameter restore withoutCPUforwards, copiedGPUprobe parity; preserve7completed prior fits. Register actual finite optimizer/seed/resource budget after the broad view and complete objective qualification.",
+  "temporal_holdout": "Separate diagnosticfits; exclude heldout elapsed durations across all endpoint/interior heads and auxiliary teacherlabels. Production still trains all12cases.",
+  "readiness_gate": "All24train scene references and temporal targets must be completed/audited and train/dev scenario grouping checked before fitting. Full36capture and independent confirmation remain required; keep52reserved references unopened.",
+  "new_parameter_fits": 0,
+  "full_generator_target_pass": false
+}

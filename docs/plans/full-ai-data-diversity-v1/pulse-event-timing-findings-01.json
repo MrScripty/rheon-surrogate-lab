@@ -1,0 +1,135 @@
+{
+  "status": "confirmed_discrete_control_sampling_gap_with_matched_clock_evidence",
+  "created_unix": 1792631486.3455257,
+  "user_hypothesis": "Preserve the physical time of events inside an output interval, rather than treating all events as occurring at the next step boundary.",
+  "source_sha256": {
+    "runs/full-ai-data-diversity-v1/long-reference-pilot-02/long-v1-regular_pulse-reflected_line-r0-cpm16/receipt.json": "5bfa7ec11a8dd908cdbd50ac5d771239cbfa76d74a159f50ce6ae91a8585e8f3",
+    "experiments/full-ai-data-diversity-v1/long_reference_scene_v1.py": "1b5cfddca8fc183c31a9cf6c4d67b7b4f73503e9d001d0778b223e2baab67257",
+    "experiments/full-ai-data-diversity-v1/continuous_force_program.py": "26184cdc6a0869f7d27068b4cd28fcd207456d09524d4bba2612bf6b6f4d59b0",
+    "experiments/full-ai-data-diversity-v1/temporal_control_packets_v1.py": "ffe7a0a32c0d95579c4221f2cd7a8f133d1fc4c78da5c18e3696f6adf2cd0620",
+    "experiments/full-ai-data-diversity-v1/temporal_group_projector_v2.py": "5e40405e17a3e4dd3449552e748f147a488ec4cbe23b76f9ed3462913ea9b40e",
+    "experiments/full-ai-data-diversity-v1/temporal_residual_network_v1.py": "aced7dcba4480b55002bccbe8da9857f18ce097869014de865b1011cb3a67279",
+    "experiments/full-ai-data-diversity-v1/scheduled_forcing_long_controls_v1.rs": "36455730cac29927854b24e460a6a58d99c9ab94e7ed657e53b976fecf3820b8",
+    "runs/full-ai-data-diversity-v1/long-reference-build-01/rheon/src/diagnostic/engine.rs": "51ae0a4a609db2639436de10ebf7b334a38792dac3ae5bcef8cdd36f5b7d5679",
+    "runs/full-ai-data-diversity-v1/temporal-frozen-backbone-qualification-04/results.json": "a49259270a6aa1a903e70a8fc161eb98bd2aea9557a04ac1ebb86fffe956f5fa",
+    "runs/full-ai-data-diversity-v1/temporal-frozen-backbone-qualification-05/results.json": "b6963e3d36961a3df15d8ce81e1a4c9570a81d4d3b80660151edaa7b57bf26c8",
+    "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-03/results.json": "0b72c3fd91cf45a049db7873063c9044eb8b16492633a09902a462c540a1d4e1",
+    "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-04/results.json": "3647e738d93dacd3e38a405910c5ccc37e62c87d7fa2db4dd057d18405722b05",
+    "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-05/results.json": "325ce86e47fb775b87e9a8e955c0353db7fa4a4b42eb14e941931dff9ce74790",
+    "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-06/results.json": "9ba622e014014d266c9754175e7c023cfedad2b92d2aabf5f5feadd04de4579a"
+  },
+  "reference_semantics": {
+    "reference_rate_per_s": 240,
+    "fine_interval_s": 0.004166666666666667,
+    "controls_sampled_at": "left fine-step boundaries i/240; pulse amplitude and center held through that native advance",
+    "sharp_event_time_passed_to_native_solver": false,
+    "maximum_positive_edge_detection_delay_bound_s": 0.004166666666666667,
+    "output_interval_is_not_the_force_sampling_interval": true,
+    "pressure_semantics": "Pressure at the retained output is the projection pressure from the final native fine interval, whose force sample is endpoint-reference_dt; it is not separately recomputed instantaneouspressure exactlyatendpoint."
+  },
+  "model_input_semantics": {
+    "outputdt_K_blockdt_and_requested_lead_times_explicit": true,
+    "all_ordered_fine_force_samples_supplied": true,
+    "known_packet_has_absolute_sample_times_and_fine_dt": true,
+    "exact_between_sample_pulse_edge_offset_supplied_to_network": false,
+    "coarse_backbone_sums_force_increments": true,
+    "neural_force_encoder_retains_sample_order_as_a_finite_compressed_hypothesis": true,
+    "important_distinction": "Passingdtisnecessarybutcannotrecover event timestamps lost byreference/control sampling. Summed impulse also doesnotfullydescribe itsplacement relative toadvection/projection/tracertransport."
+  },
+  "concrete_regular_pulse_case": {
+    "pulse_off_time_s": 19.880244549534506,
+    "compared_output_time_s": 19.883333333333333,
+    "reference240_last_force_sample_time_s": 19.879166666666666,
+    "reference480_last_force_sample_time_s": 19.881249999999998,
+    "pulse_at240_final_sample": "on",
+    "pulse_at480_final_sample": "off",
+    "reference240_first_off_sample_time_s": 19.883333333333333,
+    "reference480_first_off_sample_time_s": 19.88125
+  },
+  "matched_clock_controls": [
+    {
+      "profile": "regular_pulse",
+      "endpoint_time_s": 19.883333333333333,
+      "physical_start_s": 19.866666666666667,
+      "matched_initial_state": true,
+      "original_comparison": "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-03/results.json",
+      "held_control_comparison": "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-05/results.json",
+      "same_endpoint_relative_l2": {
+        "pressure": {
+          "original": 22.59068735660207,
+          "held_pulse_and_position": 0.01942815824485426
+        },
+        "velocity": {
+          "original": 0.0021273268882042707,
+          "held_pulse_and_position": 0.0003378104587227836
+        },
+        "tracer": {
+          "original": 1.334540683652701e-06,
+          "held_pulse_and_position": 1.3488042295382125e-06
+        }
+      },
+      "pressure_discrepancy_reduction_factor": 1162.780695518858
+    },
+    {
+      "profile": "irregular_pulse",
+      "endpoint_time_s": 19.933333333333334,
+      "physical_start_s": 19.866666666666667,
+      "matched_initial_state": true,
+      "original_comparison": "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-04/results.json",
+      "held_control_comparison": "runs/full-ai-data-diversity-v1/long-reference-clock-comparison-06/results.json",
+      "same_endpoint_relative_l2": {
+        "pressure": {
+          "original": 1.8041812403475068,
+          "held_pulse_and_position": 0.020417709915493295
+        },
+        "velocity": {
+          "original": 0.0027081563017831863,
+          "held_pulse_and_position": 0.00040785441799331913
+        },
+        "tracer": {
+          "original": 4.936869285217397e-05,
+          "held_pulse_and_position": 4.930433485184958e-05
+        }
+      },
+      "pressure_discrepancy_reduction_factor": 88.36354555994863
+    }
+  ],
+  "what_is_and_is_not_established": [
+    "Sampling phase changes numericalreference labels materially near sharp events. This is reference timestep sensitivity, not itself neuralmodelpredictionerror.",
+    "The heldcontrol diagnostic changes both sampledpulse andemitterposition; it doesnot isolate pulse amplitude alone orprove it explains allremainingerror. Native temporal wave still samples itsactual480times.",
+    "A separate absolutepressure arithmetic problem atpulseoffwasfixedbyretainingpressurehistory. Finebaseline1200completeoutputs nowpass; coarsehalf/single trajectories remain inaccurate even with allknownsampledforces.",
+    "Simplyadding exacteventtimes whiletraining againstunchangedquantizedlabels doesnotmake those labels more physicallyaccurate. Event-aware reference andcandidate must haveexplicitconsistentlineage."
+  ],
+  "next_controlled_experiment": {
+    "priority": "Eventphase-aware reference/modelconditioning ablation beforeinterpreting coarsefailures solelyasnetworkcapacity.",
+    "baseline": "Preserve frozen240sampled reference andallcurrentcaptures unchanged.",
+    "controls": "Stationary emitter, disable independenttemporalwave/motion for initial pulse-only test, same initial state/totalimpulse/geometry/density.",
+    "event_phases_within_fine_interval": [
+      0.05,
+      0.25,
+      0.5,
+      0.75,
+      0.95
+    ],
+    "compare": [
+      "Current leftsampled finecontrols.",
+      "Exact interval-integrated pulseamplitude atfixed240step: impulse correction diagnosticonly; doesnotexactlyresolveadvection/projectionduringevent.",
+      "Separate event-split reference advancing exactlytobothpulseedges, then torequestedendpoint;requiresnewqualifiedvariabledt/timecontract.",
+      "Sampledpath-onlymodel versus explicit ordered eventoffsets/duration/amplitude/location conditioning; sameparameters/optimizerbudget/independentscenecoverage."
+    ],
+    "model_event_features": [
+      "offset_s=event_time-block_start_time",
+      "normalized_offset=offset_s/block_duration_s",
+      "on/off amplitude or amplitudechange",
+      "duration_s for finitepulse",
+      "sourceposition/path andforceparameters",
+      "explicitoutputdt,K,andrequestedphysicalleadtimes"
+    ],
+    "metrics": "Fullstate P/V/T,equation,velocityimpulse,tracerdisplacement,errorsbefore/at/afteredges; all12cadence/K; matchedphysicaltime; fullGPUcost. Reference physicalconvergence andmatchingchosenreference reported separately.",
+    "reference_cpu_policy": "docs/plans/full-ai-data-diversity-v1/reference-half-cpu-policy-01.json"
+  },
+  "new_native_advances": 0,
+  "new_parameter_fits": 0,
+  "reserved52_references_opened": 0,
+  "full_generator_target_pass": false
+}

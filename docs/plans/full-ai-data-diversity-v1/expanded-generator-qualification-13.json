@@ -1,0 +1,352 @@
+{
+  "status": "gather_fused_GPU_backend_selected_accuracy_verified_speed_and_independent_gates_pending",
+  "created_unix": 1792566364.5021517,
+  "previous_qualification": "docs/plans/full-ai-data-diversity-v1/expanded-generator-qualification-12.json",
+  "logical_model_id": "expanded-full-state-shared-pressure-02",
+  "generator": "experiments/full-ai-data-diversity-v1/debug/gather_fused_graph_v1.py:GatherFusedGraph",
+  "prototype_not_promoted": true,
+  "generator_configuration": {
+    "pair": "runs/full-ai-tight-targets-v1/sampler-head-pair-01",
+    "shared_pair": "runs/full-ai-data-diversity-v1/shared-spectral-pair-01",
+    "build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-10",
+    "control_build": "runs/full-ai-data-diversity-v1/cuda-fusion-build-04",
+    "fixed_transform_build": "runs/full-ai-data-diversity-v1/debug/cube64-density100-failure-01/dct-build-01"
+  },
+  "transfer_adapter": "experiments/full-ai-data-diversity-v1/cuda_native_transfer_v1.py",
+  "device": {
+    "display_label": "GPU (CUDA)",
+    "inference_device": "cuda",
+    "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "gpu_uuid": "aac45fe6-fb2d-e3ca-e37f-10bfcbeb1aee",
+    "device_index": 0,
+    "torch_version": "2.14.0+cu132",
+    "cuda_version": "13.2",
+    "driver_version": "595.84",
+    "pressure_dtype": "float64",
+    "carrier_dtype": "float32",
+    "tf32": false,
+    "autocast": false,
+    "host_cpu": 4,
+    "batch_size": 1
+  },
+  "inference_device": "cuda",
+  "display_label": "GPU (CUDA)",
+  "pressure_dtype": "float64",
+  "carrier_dtype": "float32",
+  "cpu_model_forward": false,
+  "learned_coefficients_and_uniform_deployment_precision_unchanged": true,
+  "new_parameter_fits": 0,
+  "native_numerical_oracle_in_candidate": false,
+  "numerical_diagnosis": "docs/plans/full-ai-data-diversity-v1/cube128-pressure-failure-diagnosis-01.json",
+  "original_full128_failure": {
+    "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-high-volume-train-g01-cpm50/results.json",
+    "outputs": 960,
+    "failures": 692,
+    "worst": {
+      "equation": 0.007852150117718793,
+      "pressure": 8.7439883600592e-06,
+      "velocity": 1.2117828555278964e-07,
+      "tracer": 2.2809096573656353e-08
+    },
+    "native_process": {
+      "pid": 1022485,
+      "returncode": 0,
+      "reaped": true,
+      "graceful_protocol_complete": true
+    }
+  },
+  "actual_original0_to25_regression": {
+    "path": "runs/full-ai-data-diversity-v1/debug/cube128-equation-failure-01/tail-candidate-regression-02/results.json",
+    "status": "passed_target",
+    "metrics": {
+      "relative": {
+        "pressure": 0.0,
+        "velocity": 0.0,
+        "tracer": 0.0,
+        "equation": 2.0341945803538324e-09
+      },
+      "absolute_rms": {
+        "pressure": 0.0,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "all_below_1e5": true
+    }
+  },
+  "expanded_blocks": {
+    "path": "runs/full-ai-data-diversity-v1/fused-generator-blocks-17/results.json",
+    "outputs": 960,
+    "all_accuracy_pass": true,
+    "every_actual_output_matches_native_qualified_baseline": true,
+    "timing_observations_skipped": true
+  },
+  "consumed_legacy240": {
+    "path": "runs/full-ai-data-diversity-v1/fused-legacy-rollout-17/results.json",
+    "outputs": 15360,
+    "all_accuracy_pass": true,
+    "all_baseline_bytes_exact": true,
+    "newly_independent_holdout": false
+  },
+  "all_four_streamed_full240_repaired_verified": true,
+  "all24expanded_full240_verified": true,
+  "current_backend_GPU_latency_qualified": false,
+  "old_backend_timings_qualify_this_backend": false,
+  "matched_aspect_voxel_scaling_verified": false,
+  "independent_confirmation_verified": false,
+  "expanded_reserved52_references_opened": 0,
+  "phase600steps_started": false,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "current_model_cpu_status": "Generic-transform GPU prototype remains CPU-unported; original optimized CPU snapshot/reproduction recipe retained.",
+  "historical_CPU_latency_target_verified": false,
+  "source_integrity_audit": "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-22.json",
+  "precision_control_scope": "Generic matrix arithmetic only. Native numerical response/pressure used solely in separate debug oracle scripts; candidate reads only restored learned response.",
+  "evidence_sha256": {
+    "docs/plans/full-ai-data-diversity-v1/cube128-pressure-failure-diagnosis-01.json": "2c3a9534d29eb383b9808ef10d140bca94508ecf8ef005149543e60768cbb87c",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-03/diversity-high-volume-train-g01-cpm50/results.json": "ae1c4d7d6abede3341cb37dbf86a4525c81365531eb66342f42ebb83fa43b82a",
+    "runs/full-ai-data-diversity-v1/debug/cube128-equation-failure-01/tail-candidate-regression-02/results.json": "aac80f206322f46289f9d0b7fd51c42e31fefec680cc19a25d612b01ec6f94a2",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-09/results.json": "b030a88cb12a829be9d7515937836cfa4c5ec953b9a01a2290536b13303cfac9",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-09/results.json": "dce9b27944f0bd61aea280193dbb1f976e9959c3bc8d9ec4a08c9a3a6fb1aeb7",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-15.json": "f89d63be978f740de5108c01832c53f1a5cbb6fd068ff96248a700631cf9da81",
+    "docs/plans/full-ai-data-diversity-v1/streamed-expanded-rollout-results-04.json": "9dafe743c444f5d3f2f13302012b54696594357e3d9723f849771108f1df5cc1",
+    "docs/plans/full-ai-data-diversity-v1/gpu-native-workspace-results-01.json": "b7b7b75aee3c63e65186e723738e70e9ae692c3841d406b9aa72bc16bcc7dcfc",
+    "docs/plans/full-ai-data-diversity-v1/gpu-workspace-entry-benchmark-plan-01.json": "39f5b01458eba67ce969ca4a478c1f7f13f516433eae4e33f7740815d2bb4903",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-16.json": "b5eaf4d47c548e4b322099f76e389da27a1917b0358ef973e0a0cfa664314657",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-development-g024-cpm50/results.json": "30aa2cabc30f51e84789717fb5088b2f006320710ee18215c5879bea07db4e2c",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-development-g024-cpm100/results.json": "8c267882753189ae730e19197219cb8b7ba23a805179761a8ba7125ebde29199",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-high-volume-train-g01-cpm50/results.json": "edea5d65cddbfab0729efb16d2205aa23902f031d428c34560f1c9ac4547b392",
+    "docs/plans/full-ai-data-diversity-v1/streamed-expanded-rollout-results-05.json": "704fc900ddc9cbf77f278fdb8f3ffa6be840ae731a9f4b39a8ed07a68b645a95",
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-01.json": "c488e79f4ef994aa8a1e2c575f4da89eefd9d6068417746369b5a4a527642a6a",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-17.json": "971251a24325e1b10d037bdfdced30a2f2af12b0bfe806799c940fdfd299f209",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-18.json": "18b24b3b933068a33b0a194f0654b83e7d7cd9c8c6aeead245588d285afeb76a",
+    "docs/plans/full-ai-data-diversity-v1/cube64-density100-rollout-failure-01.json": "0d8d84d80d3656b21210b090ef7150096eb0e87b7b467ef0b74fce8fb60e02f9",
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-03.json": "c1617f89c69737a74627e1451a2fdd5b298817c5a55b442047df98012bd24115",
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-04.json": "93961b52bd7a18eb4dda42c2659c1157fa7e7efcbd014d7e81987817fd316f2b",
+    "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-05/diversity-development-g027-cpm100/results.json": "1e8ed02593093767877768293d81b66a8d32dfd1df9b51d5300386983f773f47",
+    "runs/full-ai-data-diversity-v1/debug/cube64-density100-failure-01/reproduction-01/results.json": "c957f24e2ff1afdd67695aacb6d8ddc920487a112fc4a916b6a259d53e164849",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-20.json": "69e2d86b31e28c4802ac3d998862eb52e8226bade67c10e092d29aaace672db9",
+    "docs/plans/full-ai-data-diversity-v1/cube64-transform-repair-results-01.json": "1aa07f2cab41ca54ce903ca81bbfa87fd7ad0bb32b9d73eb7eb7742fe45b579a",
+    "docs/plans/full-ai-data-diversity-v1/development-full240-qualification-01.json": "8fe886fae56dd903037b825f09e43c6e2d2f876c9d93d7a39822c1d3d0872e09",
+    "docs/plans/full-ai-data-diversity-v1/GPU-next-execution-priorities-01.json": "f6cd79cf21d989055636301547dcd344c6ae984b0d70375504a27308ef8325dc",
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-05.json": "7ebe33a0c99c421cb3427b4dcc62aa761951c5bef2ea9605a937645950becb7b",
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-06.json": "d1c45668054d6daee27f07294c5b48bc4141a479201c2d35c390a066287d311c",
+    "docs/plans/full-ai-data-diversity-v1/GPU-next-execution-priorities-02.json": "7d4d8360f2a74976f257571e1f9a225254b71a34a480d2e7683cfdb0c9298c4e",
+    "docs/plans/full-ai-data-diversity-v1/GPU-geometry-specialization-plan-01.json": "3529df1e6238a6ddf1e3cfdb6f04424c8f6f916e4cd831a3ad449eab1b2e5c62",
+    "docs/plans/full-ai-data-diversity-v1/grid-descriptor-harness-observation-01.json": "714d2768e70edd87c344622e7533a87488a9f1e5cb9e832efd5c76a38051733d",
+    "docs/plans/full-ai-data-diversity-v1/source-integrity-audit-22.json": "5854a02e69a97420c435179d7b79603c46412499ddfda6391dc9d59ddf17b250",
+    "runs/full-ai-data-diversity-v1/shared-reciprocal-primitive-01/results.json": "30a60eba40498e4a5cf5a5409af12a6a634b3aa1b60029b2c54b0ae71a7cc3b0",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-16/results.json": "e4df6b5c019633f1344ac160afc4054e75434a4528e20b624946b38095eeba46",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-16/results.json": "424b7af7b8121f11ca721058b99dc9480fc413fb2a584c96435e186d3a00851b",
+    "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-06/results.json": "57b840b0718d55a6a0a8b9f2463d703e2030e666b7aacc5095f767ab3f4f4c1c",
+    "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-06/results.json": "7aec05a01a0c60f82126bdc9972e6bbc35e2bfd3c3cc0b7b027223255bf3cf64",
+    "runs/full-ai-data-diversity-v1/learned-gather-affine-component-01/results.json": "e1f6f9c1fc2d2d0f041e4a46f0b07755aaf785a84327da8c91ee49cead7ad74a",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-17/results.json": "a1906fd3c142dd75c47b877f8a5978e5d5add4aec8cbc71dae1577f6f269b0fe",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-17/results.json": "2f133dc82c9f2ae2953d47e8c9122af9da837fe352b3d45ea9d5c8264db5c930",
+    "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-07/results.json": "a9da5152569f09255b38cd4f4db98fd97481a41317892b2fb83c5b15354db62b",
+    "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-07/results.json": "d303e6a03a6c5f1a0c8fa452ee8aaea0ae7a226a2c217c5fe8888bb56e51597d",
+    "runs/full-ai-data-diversity-v1/GPU-execution-entry-benchmark-04/results.json": "b3808e2ccafc76ff7492baa5c006e2ff5ccddd3e44daa159f14f5d5adc05334f",
+    "runs/full-ai-data-diversity-v1/grid-descriptor-component-01/results.json": "cb5ab320af3015217bba3696de2f59d71962176e8112a9169cfe17cf42c04e7a",
+    "runs/full-ai-data-diversity-v1/fused-generator-blocks-18/results.json": "4991700b4b53a6f9766cd270d3b8f3e18b4e42a4b80e34a44b4cdab23be7967a",
+    "runs/full-ai-data-diversity-v1/fused-legacy-rollout-18/results.json": "d976473a4ed4e894a024d6c11dd4f6ba2e93403d6051c1c4fb6b466be5c5d918",
+    "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-08/results.json": "298988231b0bc212d530b0e2f5a47699803277553afd30ab3e8e3a67f177b530",
+    "runs/full-ai-data-diversity-v1/generic-GPU-entry-profile-08/results.json": "1ccd502e690216a029c79a9d135484b02c7a61d2ed913caa3f09a745da49a9a9",
+    "runs/full-ai-data-diversity-v1/GPU-execution-entry-benchmark-05/results.json": "561a5f9ec92d5b553fd6d8168714360760a3dd4b9dab207066e46f596e461962"
+  },
+  "streamed_full240_results": "docs/plans/full-ai-data-diversity-v1/streamed-expanded-rollout-results-05.json",
+  "completed_repaired_fixed_cases": [
+    {
+      "identifier": "diversity-development-g024-cpm50",
+      "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-development-g024-cpm50/results.json",
+      "sha256": "30aa2cabc30f51e84789717fb5088b2f006320710ee18215c5879bea07db4e2c",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 50,
+      "internal_substeps": 1,
+      "source_split": "development",
+      "status": "completed_streamed_expanded_gpu_240step_scene",
+      "complete_outputs": 960,
+      "all_accuracy_pass": true,
+      "worst": {
+        "equation": 4.5381804063338376e-14,
+        "pressure": 9.952334672203364e-17,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "native_process": {
+        "pid": 1380659,
+        "returncode": 0,
+        "reaped": true,
+        "graceful_protocol_complete": true
+      }
+    },
+    {
+      "identifier": "diversity-development-g024-cpm100",
+      "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-development-g024-cpm100/results.json",
+      "sha256": "8c267882753189ae730e19197219cb8b7ba23a805179761a8ba7125ebde29199",
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "cells_per_metre": 100,
+      "internal_substeps": 8,
+      "source_split": "development",
+      "status": "completed_streamed_expanded_gpu_240step_scene",
+      "complete_outputs": 960,
+      "all_accuracy_pass": true,
+      "worst": {
+        "equation": 6.411120284432997e-15,
+        "pressure": 1.0402876045204977e-16,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "native_process": {
+        "pid": 1382394,
+        "returncode": 0,
+        "reaped": true,
+        "graceful_protocol_complete": true
+      }
+    },
+    {
+      "identifier": "diversity-high-volume-train-g00-cpm100",
+      "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-high-volume-train-g00-cpm100/results.json",
+      "sha256": "b7917afbd647a7bc89e2c941fccd526bb249d6ddd1e9e07b6a75c270893ed748",
+      "counts_xyz": [
+        104,
+        112,
+        120
+      ],
+      "cells_per_metre": 100,
+      "internal_substeps": 1,
+      "source_split": "train",
+      "status": "completed_streamed_expanded_gpu_240step_scene",
+      "complete_outputs": 960,
+      "all_accuracy_pass": true,
+      "worst": {
+        "equation": 2.0391998908512475e-12,
+        "pressure": 0.0,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "native_process": {
+        "pid": 1427862,
+        "returncode": 0,
+        "reaped": true,
+        "graceful_protocol_complete": true
+      }
+    },
+    {
+      "identifier": "diversity-high-volume-train-g01-cpm50",
+      "path": "runs/full-ai-data-diversity-v1/streamed-expanded-rollout-04/diversity-high-volume-train-g01-cpm50/results.json",
+      "sha256": "edea5d65cddbfab0729efb16d2205aa23902f031d428c34560f1c9ac4547b392",
+      "counts_xyz": [
+        128,
+        128,
+        128
+      ],
+      "cells_per_metre": 50,
+      "internal_substeps": 1,
+      "source_split": "train",
+      "status": "completed_streamed_expanded_gpu_240step_scene",
+      "complete_outputs": 960,
+      "all_accuracy_pass": true,
+      "worst": {
+        "equation": 2.0341945803538324e-09,
+        "pressure": 0.0,
+        "velocity": 0.0,
+        "tracer": 0.0
+      },
+      "native_process": {
+        "pid": 1254867,
+        "returncode": 0,
+        "reaped": true,
+        "graceful_protocol_complete": true
+      }
+    }
+  ],
+  "remaining_live_repaired_fixed_cases": [],
+  "full128cubed_density50_allK240_accuracy_pass": true,
+  "full128cubed_density50_allK240_worst": {
+    "equation": 2.0341945803538324e-09,
+    "pressure": 0.0,
+    "velocity": 0.0,
+    "tracer": 0.0
+  },
+  "native_replay_transfer_adapter": "experiments/full-ai-data-diversity-v1/cuda_native_transfer_v1.py",
+  "qualified_additional_workspace": "experiments/full-ai-data-diversity-v1/cuda_native_workspace_v1.py:NativeStateWorkspace",
+  "workspace_qualification": "docs/plans/full-ai-data-diversity-v1/gpu-native-workspace-results-01.json",
+  "workspace_actual_block_outputs_exact": 960,
+  "workspace_actual_legacy240_outputs_exact": 15360,
+  "workspace_byte_and_ownership_checks": 520,
+  "workspace_latency_measured": true,
+  "complete_GPU_timing_preparation": "docs/plans/full-ai-data-diversity-v1/gpu-workspace-entry-benchmark-plan-01.json",
+  "complete_GPU_timing_harness": "experiments/full-ai-data-diversity-v1/benchmark_execution_gpu_entry_v3.py",
+  "workspace_selected_for_primary_inference": false,
+  "preferred_transfer": "packed",
+  "complete_GPU_execution_study": "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-03.json",
+  "allocation_fill_execution_variant_accuracy_exact": true,
+  "next_execution_variant": 2,
+  "next_execution_variant_status": "development_block_gate_running",
+  "selected_execution_variant": 3,
+  "selected_execution_results": "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-03.json",
+  "bounded_execution_program_variants_evaluated": 4,
+  "integer_variant_selected": false,
+  "local_table_free_variant_selected": false,
+  "new_inherited_failure": "docs/plans/full-ai-data-diversity-v1/cube64-density100-rollout-failure-01.json",
+  "new_inherited_failure_introduced_by_affine_fusion": false,
+  "all_required_accuracy_criteria_verified": false,
+  "full_generator_target_pass": false,
+  "remaining_development_rollout_protocol": "docs/plans/full-ai-data-diversity-v1/streamed-expanded-rollout-protocol-05.json",
+  "next_priority": "Pursue finite next execution program after all24accuracy success. Sampler scalar division reuse/precision gates first; retain every physical field, original error criteria and full timing scope. Managed seeds,52independent,matched scaling and600remain required.",
+  "generic64_numerical_repair_results": "docs/plans/full-ai-data-diversity-v1/cube64-transform-repair-results-01.json",
+  "current_full_development_qualification": "docs/plans/full-ai-data-diversity-v1/development-full240-qualification-01.json",
+  "development_full240_accuracy_verified": true,
+  "development_full240_complete_outputs": 23040,
+  "development_full240_worst": {
+    "equation": 2.5339753880525075e-10,
+    "pressure": 7.782951871012653e-15,
+    "velocity": 2.4138605638406747e-15,
+    "tracer": 0.0
+  },
+  "all24_native_processes_gracefully_reaped": true,
+  "original64_failure_preserved": true,
+  "current64_full240_failure_repaired": true,
+  "selected_numerical_repair": "generic64fixed_matrix_accumulation",
+  "next_execution_plan": "docs/plans/full-ai-data-diversity-v1/GPU-geometry-specialization-plan-01.json",
+  "four_original_full_histories_current_backend_proof": "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-05/results.json",
+  "current_backend_GPU_latency_measured": true,
+  "selected_backend_all26_full240": {
+    "path": "runs/full-ai-data-diversity-v1/GPU-full-history-equivalence-07/results.json",
+    "complete_outputs": 24960,
+    "all_actual_complete_field_bytes_exact": true,
+    "development_scenes": 24,
+    "additional_consumed_training_scenes": 2,
+    "accuracy_inheritance": "Every own-history output at allK/240matches the corresponding already-native-qualified baseline."
+  },
+  "execution_findings": [
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-05.json",
+    "docs/plans/full-ai-data-diversity-v1/GPU-execution-optimization-results-06.json"
+  ],
+  "selected_backend_latency_evidence": [
+    "runs/full-ai-data-diversity-v1/GPU-execution-entry-benchmark-04/results.json",
+    "runs/full-ai-data-diversity-v1/GPU-execution-entry-benchmark-05/results.json"
+  ],
+  "selected_backend_latency_modes": [
+    "gather_fused",
+    "gather_fused"
+  ],
+  "reference32_density100_selected_backend_median_ms_per_step_by_K_first_study": {
+    "1": 2.684967505047098,
+    "2": 2.5386342458659783,
+    "3": 2.535813332845767,
+    "4": 2.534425620979164
+  },
+  "all_timing_maxima_preserved": true
+}

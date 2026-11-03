@@ -1,0 +1,34 @@
+{
+  "status": "audited_current_contract_not_variable_output_timestep_qualified",
+  "created_unix": 1792618900.0034022,
+  "source_sha256": {
+    "experiments/full-ai-data-diversity-v1/internal_group_residual_v1.py": "9c890c890195c4a5bea709bf66d1208f70ead1c83343e6d001430a54e87f3771"
+  },
+  "physical_output_dt_s": [
+    0.016666666666666666
+  ],
+  "correction_group_dt_s": [
+    0.004166666666666667,
+    0.00625
+  ],
+  "uncorrected_final_group_dt_s": 0.0020833333333333333,
+  "network_timestep_channel_zero_based": 40,
+  "network_timestep_channel_expression": "480*phase.dt",
+  "network_timestep_channel_training_values": [
+    2,
+    3
+  ],
+  "network_spacing_channel_zero_based": 39,
+  "explicit_network_local_dt_input": true,
+  "runtime_arbitrary_output_dt_supported": false,
+  "trained_or_qualified_output_dt_1_over_30": false,
+  "trained_or_qualified_output_dt_1_over_120": false,
+  "forcing_frequency_distinct_from_output_cadence": true,
+  "proposed_followup": [
+    "Collect matched whole-scene trajectories at1/30,1/60,1/120 seconds, with known forcing evaluated at each actual physical time.",
+    "Thread explicit physical output_dt and local_dt through collector, force packet, phase, features, targets and inference without fixed60/480 assumptions.",
+    "Fit on mixed timesteps with explicitdt, report timestep separately from density/grid/forcing, and test untrained intermediate step sizes for interpolation.",
+    "Count physical outputs K separately from correction stages; score all pressure/velocity/tracer/intermediate states and rollouts."
+  ],
+  "current_S4_fit_unchanged": true
+}

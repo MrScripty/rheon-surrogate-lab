@@ -1,0 +1,26 @@
+{
+  "commands": [
+    {
+      "id": "actual-float32-map-every-output-and-own240",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/evaluate_float32_map.py",
+        "--pair",
+        "runs/full-ai-next-priorities-v1/b2-displacement-viscosity-assembly-01",
+        "--bank",
+        "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json",
+        "--output",
+        "runs/full-ai-next-priorities-v1/float32-map-evaluation-01"
+      ],
+      "timeout": 1800
+    },
+    {
+      "id": "publish-float32-map-actual-accuracy",
+      "runtime": "torch",
+      "arguments": [
+        "experiments/full-ai-next-priorities-v1/report_float32_map.py"
+      ],
+      "timeout": 300
+    }
+  ]
+}

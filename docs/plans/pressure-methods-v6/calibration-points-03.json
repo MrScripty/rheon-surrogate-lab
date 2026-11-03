@@ -1,0 +1,179 @@
+{
+  "status": "fixed_skip_control_reserved_before_quiet_timing_and_new_blind_data",
+  "points": [
+    {
+      "identifier": "v5-optimized",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-native",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "all",
+      "local_execution": "native",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-streaming",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "all",
+      "local_execution": "streaming",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-first",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "first",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-first2",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "first2",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-stagnation",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "stagnation",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-coarse1",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "coarse1",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "numerical",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": false,
+      "numerical": true,
+      "method": "gcr"
+    },
+    {
+      "identifier": "spectral",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": false,
+      "numerical": true,
+      "method": "spectral"
+    },
+    {
+      "identifier": "v6-replay",
+      "entry": "runs/pressure-methods-v6/entries/v6-replay.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-unrolled",
+      "entry": "runs/pressure-methods-v6/entries/v6-unrolled.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-stencil",
+      "entry": "runs/pressure-methods-v6/entries/v6-stencil.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-separable",
+      "entry": "runs/pressure-methods-v6/entries/v6-separable.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": true,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v5-streaming-first2",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "first2",
+      "local_execution": "streaming",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-replay-streaming",
+      "entry": "runs/pressure-methods-v6/entries/v6-replay.json",
+      "variant": "all",
+      "local_execution": "streaming",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-replay-streaming-first2",
+      "entry": "runs/pressure-methods-v6/entries/v6-replay.json",
+      "variant": "first2",
+      "local_execution": "streaming",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-unrolled-streaming",
+      "entry": "runs/pressure-methods-v6/entries/v6-unrolled.json",
+      "variant": "all",
+      "local_execution": "streaming",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "v6-unrolled-streaming-first2",
+      "entry": "runs/pressure-methods-v6/entries/v6-unrolled.json",
+      "variant": "first2",
+      "local_execution": "streaming",
+      "channels_last": false,
+      "numerical": false,
+      "method": "gcr"
+    },
+    {
+      "identifier": "fixed-jacobi",
+      "entry": "runs/pressure-methods-v5/entries/v5-spectrum.json",
+      "variant": "all",
+      "local_execution": "torch",
+      "channels_last": false,
+      "numerical": true,
+      "method": "gcr",
+      "fixed_jacobi": true
+    }
+  ],
+  "population": "Twenty consumed v5 native cold/warm requests; one whole-population warmup, three repeats per request.",
+  "note": "Preserves all18 prior configurations and adds the fixed q/8 skip with the same f32 conversion, without learned convolutions, to separate learning from numerical smoothing."
+}

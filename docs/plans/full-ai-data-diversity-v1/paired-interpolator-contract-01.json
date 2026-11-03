@@ -1,0 +1,24 @@
+{
+  "status": "registered_before_one_compensated_pair_source",
+  "created_unix": 1792588908.0303726,
+  "plan": "docs/plans/full-ai-data-diversity-v1/GPU-next-major-execution-priorities-02.json",
+  "maximum_candidates": 1,
+  "arithmetic": "High/lowFP32 pair; explicit RN two-sum, compensated addition, FMA product residual and cross/low products; lerp=a+(b-a)*f. F64 fraction split to twoFP32 components once per axis. Seven nested lerps. ExactF64 endpoint tests return original pair. Final zero low component returns high directly to preserve signed-zero endpoints; otherwise F64 high+low. Same F64 donor-bounds clipping.",
+  "numerical_guard": "All fractions finite in[0,1]; every donor either signedzero or magnitude in[2**-60,2**60]. Otherwise the unchanged qualified parentF64 interpolation is executed, including nonfinite/invalid behavior. Guard classification and exact parent output must be independently checked.",
+  "candidate_scalar_error_bound": "128*2**-48*maximum_abs_donor; generic conservative empirical/rational gate, not a native model accuracy claim.",
+  "reference_scalar_error_bound": "512*2**-53*maximum_abs_donor",
+  "scope": "N8 donor interpolation only. Coordinates, all exact restored learned weights/order, learned pressure response, originalN1, all actual advances and intermediate fields unchanged.",
+  "implicit_fma": false,
+  "fast_math": false,
+  "FTZ": false,
+  "maximum_native_error": 1e-05,
+  "maximum_complete_call_studies": 1,
+  "ordered_gates": [
+    "1572864 generic scalar cases,3072 independent exact-rational checks, parent fallback/signed-zero endpoints,212992 actual consumed-grid queries. Stop on any primitive failure.",
+    "All1018 native complete block outputs including eachK intermediate, unchanged N1 bytes and caller ownership. Stop on native failure before histories/timing.",
+    "If passing: fresh native240 for changedN8 bytes, all26expanded/16legacy histories, then one balanced complete GPU timing study."
+  ],
+  "cpu_model_forward": false,
+  "new_parameter_fits": 0,
+  "expanded_reserved52_references_opened": 0
+}

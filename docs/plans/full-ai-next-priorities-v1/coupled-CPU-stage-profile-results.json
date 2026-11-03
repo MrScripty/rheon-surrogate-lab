@@ -1,0 +1,173 @@
+{
+  "status": "completed",
+  "stage_summaries": [
+    {
+      "regime": "small",
+      "module": "fluid",
+      "median_inclusive_block_ms": 0.4523854877334088
+    },
+    {
+      "regime": "small",
+      "module": "left",
+      "median_inclusive_block_ms": 0.2467955055180937
+    },
+    {
+      "regime": "small",
+      "module": "right",
+      "median_inclusive_block_ms": 0.21867200848646462
+    },
+    {
+      "regime": "small",
+      "module": "local_update",
+      "median_inclusive_block_ms": 0.15201553469523787
+    },
+    {
+      "regime": "small",
+      "module": "transport_context",
+      "median_inclusive_block_ms": 0.06948545342311263
+    },
+    {
+      "regime": "small",
+      "module": "transport_head",
+      "median_inclusive_block_ms": 0.026114488719031215
+    },
+    {
+      "regime": "small",
+      "module": "viscous_head",
+      "median_inclusive_block_ms": 0.17150549683719873
+    },
+    {
+      "regime": "small",
+      "module": "tracer_readout",
+      "median_inclusive_block_ms": 1.079712004866451
+    },
+    {
+      "regime": "small",
+      "module": "flux",
+      "median_inclusive_block_ms": 0.19152503227815032
+    },
+    {
+      "regime": "small",
+      "module": "pressure_core",
+      "median_inclusive_block_ms": 0.7765329501125962
+    },
+    {
+      "regime": "small",
+      "module": "momentum",
+      "median_inclusive_block_ms": 0.17859699437394738
+    },
+    {
+      "regime": "small",
+      "module": "network",
+      "median_inclusive_block_ms": 4.213675012579188
+    },
+    {
+      "regime": "32cubed",
+      "module": "fluid",
+      "median_inclusive_block_ms": 22.32164953602478
+    },
+    {
+      "regime": "32cubed",
+      "module": "left",
+      "median_inclusive_block_ms": 7.504956534830853
+    },
+    {
+      "regime": "32cubed",
+      "module": "right",
+      "median_inclusive_block_ms": 7.7614589827135205
+    },
+    {
+      "regime": "32cubed",
+      "module": "local_update",
+      "median_inclusive_block_ms": 3.1321540009230375
+    },
+    {
+      "regime": "32cubed",
+      "module": "transport_context",
+      "median_inclusive_block_ms": 1.7553764628246427
+    },
+    {
+      "regime": "32cubed",
+      "module": "transport_head",
+      "median_inclusive_block_ms": 0.5989774654153734
+    },
+    {
+      "regime": "32cubed",
+      "module": "viscous_head",
+      "median_inclusive_block_ms": 3.4880365419667214
+    },
+    {
+      "regime": "32cubed",
+      "module": "tracer_readout",
+      "median_inclusive_block_ms": 36.912709969328716
+    },
+    {
+      "regime": "32cubed",
+      "module": "flux",
+      "median_inclusive_block_ms": 9.99207649147138
+    },
+    {
+      "regime": "32cubed",
+      "module": "pressure_core",
+      "median_inclusive_block_ms": 134.77818999672309
+    },
+    {
+      "regime": "32cubed",
+      "module": "momentum",
+      "median_inclusive_block_ms": 2.9389295377768576
+    },
+    {
+      "regime": "32cubed",
+      "module": "network",
+      "median_inclusive_block_ms": 245.9037659864407
+    }
+  ],
+  "input_forcing_and_output": [
+    {
+      "regime": "small",
+      "median_outside_network_ms": 0.9275530173908919
+    },
+    {
+      "regime": "32cubed",
+      "median_outside_network_ms": 3.779857506742701
+    }
+  ],
+  "preliminary_denormal_timings": [
+    {
+      "regime": "small",
+      "flush_denormal": false,
+      "median_block_ms": 5.2206150139681995
+    },
+    {
+      "regime": "small",
+      "flush_denormal": true,
+      "median_block_ms": 5.248483503237367
+    },
+    {
+      "regime": "32cubed",
+      "flush_denormal": false,
+      "median_block_ms": 238.6946225014981
+    },
+    {
+      "regime": "32cubed",
+      "flush_denormal": true,
+      "median_block_ms": 244.99864646350034
+    }
+  ],
+  "source_evidence": {
+    "runs/full-ai-next-priorities-v1/coupled-CPU-stage-profile-01.json": "2d35ae13bf2047bdc136f6849bb6234afea8fe5148d4460465e933bc7d3a2de1",
+    "docs/plans/full-ai-next-priorities-v1/coupled-CPU-stage-profile-protocol-01.json": "14c523d82057031cb0e446088d8873fa303ca9e47c9f86838add8028359a56d6",
+    "runs/full-ai-next-priorities-v1/b2-provisional-aux-pair-01/receipt.json": "9f64b5a3cb4993cccd4f42c43c9600449159b6eb6aab56653e6479f9d90feae9",
+    "runs/full-ai-next-priorities-v1/b2-provisional-aux-pair-01/restore/weights.npz": "1898f37c35264567988cc4b01021f432f7e1144c88676565a62e6710f5363db2",
+    "runs/full-ai-next-priorities-v1/coupled-CPU-stage-profile-batch-01/execution.json": "ef93d2e588ee69fa4f3405ca738cc6aaea6aa8d84c71ba1c7e17f72974d6fd0a"
+  },
+  "source_sha256": "70d99cb831f09065d31063c8aa8d3b4dba72bd33ab98dd59a239164ec1f48af8",
+  "denormal_variant_adopted": false,
+  "denormal_variant_full_qualification_not_triggered": true,
+  "interpretation": "No observed denormal-flush speed benefit; prioritize tracer readout, field/forcing work and measured stage costs",
+  "profile_overhead_is_not_benchmark_latency": true,
+  "candidate_frontier_point": false,
+  "new_optimizer_updates": 0,
+  "reserved_scenes_consumed": false,
+  "original_goal_complete": false
+}

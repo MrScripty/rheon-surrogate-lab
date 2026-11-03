@@ -1,0 +1,74 @@
+{
+  "status": "prepared_finite_fit_specification_entrypoint_and_Project_not_yet_implemented",
+  "created_unix": 1792651104.9842668,
+  "source_sha256": {
+    "experiments/full-ai-data-diversity-v1/guided_shared_residual_v3.py": "a216313469461f7746920318bc3bd0567c73624052bfb56de7bc75b2abc9d8cd",
+    "experiments/full-ai-data-diversity-v1/guided_shared_fit_core_v2.py": "9fd1c04d028bf02e7c98001d3fbb07e17c622dc98798b4767830704b51f1e667",
+    "experiments/full-ai-data-diversity-v1/guided_full_population_optimizer_v1.py": "e12f671afa30c556bbee05494a5aad43b7172a7902fece1becb2ec0435cfee41",
+    "docs/plans/full-ai-data-diversity-v1/guided-shared-qualification-results-01.json": "8a13aee1fb62502ba61560ffd4069d66424b4699c6e0b9dbdb4266ad012490d5"
+  },
+  "model": "experiments/full-ai-data-diversity-v1/guided_shared_residual_v3.py:GuidedSharedResidual",
+  "model_family": "Guide_RMSnormalizedsharedneuralresidualaroundfrozenteacher-freecompletefields",
+  "widths": [
+    4
+  ],
+  "new_parameter_fits_if_executed": 1,
+  "current_cumulative_parameter_fits": 9,
+  "independent_training_masters": 24,
+  "selected_training_windows": 240,
+  "configurations_per_window": 12,
+  "physical_outputs_per_complete_evaluation": 7200,
+  "data": "Reusequalifiedcaptured2.81GBnativefinal-labelarchive. Fullpopulationweights1/24scene,1/Nscene_windows,1/12configuration,1/Khead. Nofuturetruthinputs.",
+  "optimizer": {
+    "name": "full_population_normalized_descent_with_quadratic_probe",
+    "maximum_iterations": 4,
+    "probe_normalized_step": 0.001,
+    "maximum_full_gradient_evaluations": 4,
+    "maximum_additional_full_forward_scores": 8,
+    "gradient_accumulation": "F64sumofweightedperblockautograd;all24/all240/all12beforeeachparameterdirection.",
+    "trial": "SnapshotcurrentF32params;settheta+eps*(-g/||g||);scorefullpopulation;fitquadraticraycoefficient;proposecappednonnegativeoptimalstep;scoreit;acceptonlyactualfullobjectivedecrease,otherwiserestorecurrentstateandstop. Nopromotiononquadraticprediction.",
+    "observability": "Recordinitial/probe/proposed/acceptedlosses,allfieldcomponentsandper-outputmaxima;actualtrialparameterupdatesandacceptedstepsseparate. Gradientprobeandcandidateareonemodelfit,notseparateseeds.",
+    "selection": "Retaininitial,last-evaluated,bestmean,andbestworstrelative-fieldcheckpoints. Canonicalselectedweightsrankmaxofallper-outputEq/P/V/Trelativeerrors,thenmeanobjective; independentdevelopmentandspeedstillrequired."
+  },
+  "source_helpers_execution_qualified": false,
+  "managed_execution": {
+    "device": "cuda",
+    "host_cpu": 2,
+    "torch_threads": 1,
+    "child_wall_seconds": 1740,
+    "recipe_CUDA_wall_ceiling_seconds": 1800,
+    "maximum_gpu_allocated_bytes": 12884901888,
+    "proposed_GPU_reservation_bytes": 4294967296,
+    "host_peak_RSS_and_storage_reservations": "MeasurebeforeProjectadmission;retainexplicitstaging/newcopyspaceandoriginalreferencefloorpolicies.",
+    "authorization": "ExistingTuldokworkflow;previouslyauthorizedownersessionandnormalrenewalonly;nonewcredentialsearch."
+  },
+  "artifact_plan": {
+    "files": [
+      "weights.npz",
+      "best-mean-weights.npz",
+      "initial-weights.npz",
+      "last-evaluated-weights.npz",
+      "history.json",
+      "probe.npy",
+      "normalization.json",
+      "receipt.json"
+    ],
+    "probe": "Explicitlychoose32x32x32trainingcurrentstatebeforeoptimization;3GPUprobevectors(bestworst/bestmean/last),K4,allcompletePVTfields,preflightarray/filebytesbeforefits;neverusebank.windows[0]asimplicit32cube.",
+    "probe_payload_bytes": 16023552,
+    "probe_file_max_bytes": 25165824,
+    "per_file_max_bytes": 33554432,
+    "total_output_max_bytes": 67108864,
+    "history": "Writecompleteiterationselectionhistoryandallcheckpointssafelybeforeprobepackaging.",
+    "CPU_restore": "Restoreall4exacttypedF32checkpoints,copiedGPUprobeandhistory,zeroCPUlearnedforwards."
+  },
+  "next": [
+    "Addworstper-outputfielddiagnosticsandinternalGPUgradientreceiver to actualmanagedobjectivecore in a new version; unchanged math mustremainboundtoqualifiedcore.",
+    "ImplementactualCUDAfitandmetadataonlyCPUrestoreentrypoint,thenfinitezero-updateentrypointintegrationcheck.",
+    "Captureactualoptimizer/entrypointsourceandprepareProjectthroughsupportedlong-trainingroot. Checkdisk/RSS/resourcebudget andsavedownerAPIonlywhenready.",
+    "Runoneboundedmanagedfit;recoverterminalcustody,exactCPUrestore/probes,andall12nativedevelopmentbeforepromotion."
+  ],
+  "worst_error_limit": 1e-05,
+  "strict_GPU_ms_per_physical_output": 0.2,
+  "model_promotion": false,
+  "goal_complete": false
+}

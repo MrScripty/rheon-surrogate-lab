@@ -1,0 +1,2512 @@
+{
+  "status": "passed_corrected_gpu_full_state_block_and_consumed240step_regressions",
+  "created_unix": 1792544860.3506746,
+  "logical_model_id": "expanded-full-state-shared-pressure-02",
+  "generator": "experiments/full-ai-data-diversity-v1/expanded_cuda_graph_v2.py:ExpandedCudaGraphGeneratorV2",
+  "device": {
+    "display_label": "GPU (CUDA)",
+    "inference_device": "cuda",
+    "gpu_model": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "gpu_uuid": "aac45fe6-fb2d-e3ca-e37f-10bfcbeb1aee",
+    "device_index": 0,
+    "torch_version": "2.14.0+cu132",
+    "cuda_version": "13.2",
+    "driver_version": "595.84",
+    "pressure_dtype": "float64",
+    "carrier_dtype": "float32",
+    "tf32": false,
+    "autocast": false,
+    "host_cpu": 4,
+    "batch_size": 1
+  },
+  "learned_sources": "All148scene managed-CUDA-trained shared spectral head plus inherited managed-trained learned transport/spatial stages. Typed CPU restored raw artifacts unchanged.",
+  "deployment_precision": {
+    "kind": "uniform_absolute_quantization",
+    "step": 1.4551915228366852e-11,
+    "scope": "All four managed-restored learned double coefficients, onGPU before geometry preparation",
+    "maximum_absolute_change": 6.661338147750939e-13,
+    "raw_inventory": {
+      "coefficients": {
+        "dtype": "<f8",
+        "shape": [
+          4
+        ],
+        "sha256": "f5ce81cdd1a773d1e2e6da2bcf4a3f98a2ec181060ef4a6b4c121e200f3a1bd0"
+      }
+    },
+    "deployed_inventory": {
+      "coefficients": {
+        "dtype": "<f8",
+        "shape": [
+          4
+        ],
+        "sha256": "8e9b88d9d2687e3436fc3ea6e1e7bbeb56a479118e51a535a30096f88fa673d1"
+      }
+    },
+    "raw_managed_artifacts_unchanged": true,
+    "optimizer_updates": 0,
+    "physical_coefficients_assigned": false
+  },
+  "steps_per_pass": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "complete_outputs": [
+    "pressure_float64",
+    "vx_float32",
+    "vy_float32",
+    "vz_float32",
+    "tracer_float32"
+  ],
+  "expanded_blocks": {
+    "scenes": 24,
+    "independent_forcing_groups": 4,
+    "grid_shapes_xyz": [
+      [
+        32,
+        32,
+        32
+      ],
+      [
+        32,
+        24,
+        48
+      ],
+      [
+        16,
+        24,
+        40
+      ],
+      [
+        64,
+        64,
+        64
+      ]
+    ],
+    "starts": [
+      0,
+      32,
+      96,
+      192
+    ],
+    "complete_outputs": 960,
+    "all_accuracy_pass": true,
+    "worst_error": {
+      "equation": 1.996921176375766e-09,
+      "pressure": 2.991187549466026e-11,
+      "velocity": 1.0421191250821858e-10,
+      "tracer": 8.319468796160957e-15
+    },
+    "accuracy_by_density": [
+      {
+        "cells_per_metre": 8,
+        "outputs": 160,
+        "worst_error": {
+          "equation": 2.2111605184604386e-11,
+          "pressure": 2.991187549466026e-11,
+          "velocity": 1.902519041632989e-13,
+          "tracer": 3.044973440541612e-26
+        },
+        "all_accuracy_pass": true
+      },
+      {
+        "cells_per_metre": 10,
+        "outputs": 160,
+        "worst_error": {
+          "equation": 1.789267464581955e-11,
+          "pressure": 2.3936701197015483e-11,
+          "velocity": 2.0199203611497845e-13,
+          "tracer": 2.4277042415580835e-25
+        },
+        "all_accuracy_pass": true
+      },
+      {
+        "cells_per_metre": 16,
+        "outputs": 160,
+        "worst_error": {
+          "equation": 1.1170301732175797e-11,
+          "pressure": 1.4796866503918885e-11,
+          "velocity": 2.334922878059028e-12,
+          "tracer": 0.0
+        },
+        "all_accuracy_pass": true
+      },
+      {
+        "cells_per_metre": 25,
+        "outputs": 160,
+        "worst_error": {
+          "equation": 7.239064144496225e-12,
+          "pressure": 9.532804219018575e-12,
+          "velocity": 3.735881082005837e-11,
+          "tracer": 8.319468796160957e-15
+        },
+        "all_accuracy_pass": true
+      },
+      {
+        "cells_per_metre": 50,
+        "outputs": 160,
+        "worst_error": {
+          "equation": 8.748698079123544e-11,
+          "pressure": 4.803887135500805e-12,
+          "velocity": 1.0421191250821858e-10,
+          "tracer": 0.0
+        },
+        "all_accuracy_pass": true
+      },
+      {
+        "cells_per_metre": 100,
+        "outputs": 160,
+        "worst_error": {
+          "equation": 1.996921176375766e-09,
+          "pressure": 1.4016233693829994e-11,
+          "velocity": 3.231877244621776e-12,
+          "tracer": 5.635958798547785e-35
+        },
+        "all_accuracy_pass": true
+      }
+    ],
+    "accuracy_by_density_grid_K_and_substeps": [
+      {
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.196532638763623e-15,
+          "pressure": 2.9881816731034735e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.259531318190546e-15,
+          "pressure": 8.941419431470438e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.512504832682032e-14,
+          "pressure": 2.3533149205437908e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3665875808014951e-14,
+          "pressure": 3.1938157741688985e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.805597900186751e-15,
+          "pressure": 2.989930541623076e-15,
+          "velocity": 3.6335621650424454e-17,
+          "tracer": 2.427286303512439e-25
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.224328939474446e-15,
+          "pressure": 9.01527805176499e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5748990679182474e-14,
+          "pressure": 2.3479095476622435e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3669653075962944e-14,
+          "pressure": 3.901499611014443e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.881504926460508e-15,
+          "pressure": 2.9858064501158858e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.283681038699576e-15,
+          "pressure": 8.974649231880978e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.591430839676285e-14,
+          "pressure": 2.3503632766842305e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3620208068811654e-14,
+          "pressure": 4.497608698232189e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.9811851694888e-15,
+          "pressure": 3.003382674925756e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.2397512268077105e-15,
+          "pressure": 9.074707494993437e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.548460727896153e-14,
+          "pressure": 2.3516761518359005e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3750024147163944e-14,
+          "pressure": 6.116735299075956e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.149693164030889e-15,
+          "pressure": 3.0174558158381413e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.246999871828277e-15,
+          "pressure": 8.993294212303902e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5465026175463264e-14,
+          "pressure": 2.348951978560365e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3715423231923867e-14,
+          "pressure": 9.876806452775025e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.182100378415078e-15,
+          "pressure": 2.9980166088300995e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.300579923942178e-15,
+          "pressure": 9.178529227333504e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.344564560055621e-15,
+          "pressure": 5.57512948926877e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 1,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 4,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3673767406392437e-14,
+          "pressure": 1.5673057795034521e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.196532638763623e-15,
+          "pressure": 2.9881816731034735e-15,
+          "velocity": 0.0,
+          "tracer": 3.0447292741635184e-26
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.259531318190546e-15,
+          "pressure": 9.242891273819632e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.512504832682032e-14,
+          "pressure": 2.3533149205437908e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3665875808014951e-14,
+          "pressure": 3.4179788899094054e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.805597900186751e-15,
+          "pressure": 2.989930541623076e-15,
+          "velocity": 3.6335621650424454e-17,
+          "tracer": 2.4274256703638007e-25
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.224328939474446e-15,
+          "pressure": 9.153797059395779e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5748990679182474e-14,
+          "pressure": 2.3479095476622435e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3669653075962944e-14,
+          "pressure": 4.1249088734810905e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.881504926460508e-15,
+          "pressure": 2.9858064501158858e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.283681038699576e-15,
+          "pressure": 9.202452850797106e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.591430839676285e-14,
+          "pressure": 2.3503632766842305e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3628178236119359e-14,
+          "pressure": 4.706277902920757e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.9811851694888e-15,
+          "pressure": 3.003382674925756e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.2397512268077105e-15,
+          "pressure": 9.189088291998438e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.548460727896153e-14,
+          "pressure": 2.3516761518359005e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3754308421461507e-14,
+          "pressure": 7.121429822004012e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.149693164030889e-15,
+          "pressure": 3.0174558158381413e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.246999871828277e-15,
+          "pressure": 9.293003526094835e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5465026175463264e-14,
+          "pressure": 2.348951978560365e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3737174282162737e-14,
+          "pressure": 9.876806452775025e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.182100378415078e-15,
+          "pressure": 2.9980166088300995e-15,
+          "velocity": 0.0,
+          "tracer": 5.635909324419302e-35
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.300579923942178e-15,
+          "pressure": 9.554861389627518e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.344564560055621e-15,
+          "pressure": 7.554419649264871e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 2,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 8,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.3720123482103725e-14,
+          "pressure": 1.5673057795034521e-16,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.196532638763623e-15,
+          "pressure": 2.9881816731034735e-15,
+          "velocity": 0.0,
+          "tracer": 3.0448514974901837e-26
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.2111605184604386e-11,
+          "pressure": 2.991187549466026e-11,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.512504832682032e-14,
+          "pressure": 2.3533149205437908e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7234190935486723e-13,
+          "pressure": 5.126611744786128e-14,
+          "velocity": 2.5245871268728495e-14,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.805597900186751e-15,
+          "pressure": 2.989930541623076e-15,
+          "velocity": 3.6335621650424454e-17,
+          "tracer": 2.427564981325615e-25
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.789267464581955e-11,
+          "pressure": 2.3936701197015483e-11,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5748990679182474e-14,
+          "pressure": 2.3479095476622435e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.785803191099677e-13,
+          "pressure": 5.132590291777105e-14,
+          "velocity": 2.0199203611497845e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.881504926460508e-15,
+          "pressure": 2.9858064501158858e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.1170301732175797e-11,
+          "pressure": 1.4796866503918885e-11,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.591430839676285e-14,
+          "pressure": 2.3503632766842305e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7310177745048327e-13,
+          "pressure": 5.127562283681483e-14,
+          "velocity": 8.082623227703361e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.9811851694888e-15,
+          "pressure": 3.003382674925756e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.239064144496225e-12,
+          "pressure": 9.532804219018575e-12,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.548460727896153e-14,
+          "pressure": 2.3516761518359005e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7785468619890584e-13,
+          "pressure": 5.127519207744023e-14,
+          "velocity": 1.1360665801299831e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.149693164030889e-15,
+          "pressure": 3.0174558158381413e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 3.663777872395047e-12,
+          "pressure": 4.803887135500805e-12,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5465026175463264e-14,
+          "pressure": 2.348951978560365e-14,
+          "velocity": 1.590446828130106e-16,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7675838805023177e-13,
+          "pressure": 5.128464055776134e-14,
+          "velocity": 1.0421191250821858e-10,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.182100378415078e-15,
+          "pressure": 2.9980166088300995e-15,
+          "velocity": 0.0,
+          "tracer": 5.635928927516994e-35
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.855142695863237e-12,
+          "pressure": 2.4207432286508213e-12,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.344564560055621e-15,
+          "pressure": 7.554419649264871e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 3,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 12,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7751510899881525e-13,
+          "pressure": 5.129874577905583e-14,
+          "velocity": 3.231877244621776e-12,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.196532638763623e-15,
+          "pressure": 2.9881816731034735e-15,
+          "velocity": 0.0,
+          "tracer": 3.044973440541612e-26
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.2111605184604386e-11,
+          "pressure": 2.991187549466026e-11,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.512504832682032e-14,
+          "pressure": 2.3533149205437908e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 8,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7234190935486723e-13,
+          "pressure": 5.126611744786128e-14,
+          "velocity": 1.902519041632989e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.805597900186751e-15,
+          "pressure": 2.989930541623076e-15,
+          "velocity": 3.6335621650424454e-17,
+          "tracer": 2.4277042415580835e-25
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.789267464581955e-11,
+          "pressure": 2.3936701197015483e-11,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5748990679182474e-14,
+          "pressure": 2.3479095476622435e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 10,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.785803191099677e-13,
+          "pressure": 5.132590291777105e-14,
+          "velocity": 2.0199203611497845e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.881504926460508e-15,
+          "pressure": 2.9858064501158858e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.1170301732175797e-11,
+          "pressure": 1.4796866503918885e-11,
+          "velocity": 2.334922878059028e-12,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.591430839676285e-14,
+          "pressure": 2.3503632766842305e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 2.7310177745048327e-13,
+          "pressure": 5.127562283681483e-14,
+          "velocity": 8.082623227703361e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.9811851694888e-15,
+          "pressure": 3.003382674925756e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 7.239064144496225e-12,
+          "pressure": 9.532804219018575e-12,
+          "velocity": 3.735881082005837e-11,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.548460727896153e-14,
+          "pressure": 2.3516761518359005e-14,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 25,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.854606301256864e-13,
+          "pressure": 5.127519207744023e-14,
+          "velocity": 2.4399956532082218e-11,
+          "tracer": 8.319468796160957e-15
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.149693164030889e-15,
+          "pressure": 3.0174558158381413e-15,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 3.663777872395047e-12,
+          "pressure": 4.803887135500805e-12,
+          "velocity": 1.4593374478199037e-13,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 4.5465026175463264e-14,
+          "pressure": 2.348951978560365e-14,
+          "velocity": 1.590446828130106e-16,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 50,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.748698079123544e-11,
+          "pressure": 2.4031530853130687e-13,
+          "velocity": 1.0421191250821858e-10,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          16,
+          24,
+          40
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 8.182100378415078e-15,
+          "pressure": 2.9980166088300995e-15,
+          "velocity": 0.0,
+          "tracer": 5.635958798547785e-35
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          24,
+          48
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.855142695863237e-12,
+          "pressure": 2.4207432286508213e-12,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "internal_substeps": 8,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 6.344564560055621e-15,
+          "pressure": 9.667226409916462e-17,
+          "velocity": 0.0,
+          "tracer": 0.0
+        }
+      },
+      {
+        "K": 4,
+        "cells_per_metre": 100,
+        "counts_xyz": [
+          64,
+          64,
+          64
+        ],
+        "internal_substeps": 1,
+        "complete_outputs": 16,
+        "all_accuracy_pass": true,
+        "worst_error": {
+          "equation": 1.996921176375766e-09,
+          "pressure": 1.4016233693829994e-11,
+          "velocity": 3.231877244621776e-12,
+          "tracer": 0.0
+        }
+      }
+    ],
+    "every_timed_intermediate_and_host_transfer_output_hash_verified": true
+  },
+  "consumed_own_history_regression": {
+    "scenes": 16,
+    "densities_cells_per_metre": [
+      8,
+      16
+    ],
+    "physical_output_steps_per_scene": 240,
+    "complete_outputs": 15360,
+    "all_accuracy_pass": true,
+    "worst_error": {
+      "equation": 1.2755942586082583e-13,
+      "pressure": 4.3566815538966466e-14,
+      "velocity": 0.0,
+      "tracer": 0.0
+    },
+    "every_intermediate_scored": true,
+    "no_teacher_resets": true,
+    "new_independent_holdout": false
+  },
+  "gpu_timing_by_density_grid_and_internal_substeps": [
+    {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.649375915527344,
+          6.426069259643555
+        ],
+        "synchronized_resident_wall": [
+          5.729255499318242,
+          6.578749482287094
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.49258498257647,
+          7.605471007991582
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.7857279777526855,
+          6.600639820098877
+        ],
+        "synchronized_resident_wall": [
+          5.866444960702211,
+          6.6704465134534985
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.4065444932784885,
+          8.54027399327606
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.4813761711120605,
+          7.433343887329102
+        ],
+        "synchronized_resident_wall": [
+          5.499416991369799,
+          7.461734989192337
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.417111512040719,
+          8.375323668587953
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          10.788408279418945,
+          12.013055801391602
+        ],
+        "synchronized_resident_wall": [
+          10.812347492901608,
+          12.031177000608295
+        ],
+        "synchronized_host_input_and_output_wall": [
+          20.365800650324672,
+          23.676354030612856
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.510335922241211,
+          6.6623358726501465
+        ],
+        "synchronized_resident_wall": [
+          5.5335480137728155,
+          6.6821539658121765
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.57607401565959,
+          8.017265005037189
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.730175971984863,
+          6.889279842376709
+        ],
+        "synchronized_resident_wall": [
+          5.747953002961974,
+          6.911456002853811
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.225946494145319,
+          8.640790008939803
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.524208068847656,
+          7.200831890106201
+        ],
+        "synchronized_resident_wall": [
+          5.541983002331108,
+          7.236959005240351
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.181182998465374,
+          8.211921958718449
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 10,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          9.449919700622559,
+          12.341312408447266
+        ],
+        "synchronized_resident_wall": [
+          9.483542991802096,
+          12.383972003590316
+        ],
+        "synchronized_host_input_and_output_wall": [
+          19.366528489626944,
+          22.35520665999502
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.224607944488525,
+          6.7707200050354
+        ],
+        "synchronized_resident_wall": [
+          5.375740001909435,
+          6.8043789942748845
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.4954974805004895,
+          7.49285303754732
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.447135925292969,
+          7.742496013641357
+        ],
+        "synchronized_resident_wall": [
+          5.539995996514335,
+          7.767585979308933
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.761843018466607,
+          8.152114984113723
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.7421441078186035,
+          6.833856105804443
+        ],
+        "synchronized_resident_wall": [
+          5.759536987170577,
+          6.856365944258869
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.25895632058382,
+          8.214869012590498
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          9.462176322937012,
+          12.179424285888672
+        ],
+        "synchronized_resident_wall": [
+          9.493482008110732,
+          12.213561974931508
+        ],
+        "synchronized_host_input_and_output_wall": [
+          18.166221998399124,
+          22.008242027368397
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.674655914306641,
+          6.407466888427734
+        ],
+        "synchronized_resident_wall": [
+          5.727562005631626,
+          6.417378007123868
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.499514003129055,
+          8.05945898173377
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.547455787658691,
+          6.797152042388916
+        ],
+        "synchronized_resident_wall": [
+          5.571589979808778,
+          6.914487981703132
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.356907255598344,
+          8.302113477839157
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.456943988800049,
+          6.285048007965088
+        ],
+        "synchronized_resident_wall": [
+          5.475473502883688,
+          6.397805002052337
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.123243995010853,
+          8.269771002233028
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 25,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          10.313568115234375,
+          11.961471557617188
+        ],
+        "synchronized_resident_wall": [
+          10.347748990170658,
+          11.995754030067474
+        ],
+        "synchronized_host_input_and_output_wall": [
+          20.08582348935306,
+          22.71260303677991
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.6751837730407715,
+          6.26798947652181
+        ],
+        "synchronized_resident_wall": [
+          5.7097960379906,
+          6.425004976335913
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.512063671834767,
+          7.576657983008772
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.604576110839844,
+          6.877632141113281
+        ],
+        "synchronized_resident_wall": [
+          5.621288495603949,
+          6.899228959809989
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.235171971842647,
+          8.770517015364021
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.558495998382568,
+          6.802783966064453
+        ],
+        "synchronized_resident_wall": [
+          5.696070962585509,
+          6.833621009718627
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.1195230120792985,
+          8.309223980177194
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 50,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          10.574111938476562,
+          12.77609634399414
+        ],
+        "synchronized_resident_wall": [
+          10.636935340395818,
+          12.870319013018161
+        ],
+        "synchronized_host_input_and_output_wall": [
+          19.778704256168567,
+          22.70789199974388
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        16,
+        24,
+        40
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.690976142883301,
+          6.536746978759766
+        ],
+        "synchronized_resident_wall": [
+          5.7363114901818335,
+          6.552671664394438
+        ],
+        "synchronized_host_input_and_output_wall": [
+          6.610148499021307,
+          7.5320699834264815
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        24,
+        48
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          5.49729585647583,
+          6.4047896067301435
+        ],
+        "synchronized_resident_wall": [
+          5.5157209862954915,
+          6.419484658787648
+        ],
+        "synchronized_host_input_and_output_wall": [
+          7.186299000750296,
+          8.265473501523957
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        32,
+        32,
+        32
+      ],
+      "internal_substeps": 8,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          43.599552154541016,
+          48.57120132446289
+        ],
+        "synchronized_resident_wall": [
+          43.63657801877707,
+          48.60194498905912
+        ],
+        "synchronized_host_input_and_output_wall": [
+          53.71214199112728,
+          57.955366966780275
+        ]
+      }
+    },
+    {
+      "cells_per_metre": 100,
+      "counts_xyz": [
+        64,
+        64,
+        64
+      ],
+      "internal_substeps": 1,
+      "median_ms_per_published_step_range": {
+        "cuda_event": [
+          10.103072166442871,
+          11.980175971984863
+        ],
+        "synchronized_resident_wall": [
+          10.195715993177146,
+          12.394899036735296
+        ],
+        "synchronized_host_input_and_output_wall": [
+          20.00531133186693,
+          23.88147497549653
+        ]
+      }
+    }
+  ],
+  "timing_scope": "Full generator and all candidate internal advances, amortized over published K outputs. Report resident and host-input/output clocks separately; graph/setup/warm-up excluded from steady state and separately recorded.",
+  "historical_cpu_latency_target_verified": false,
+  "matched_scaling_study_verified": false,
+  "full240step_expanded_density_accuracy_verified": false,
+  "above100axis_count_full_state_accuracy_verified": false,
+  "expanded_reserved52_references_opened": 0,
+  "phase600steps_started": false,
+  "full_generator_targets_verified": {
+    "1": false,
+    "2": false,
+    "3": false,
+    "4": false
+  },
+  "regression_fix": {
+    "original_raw_deployment_failed_outputs": 400,
+    "independent_failing_scenes": 1,
+    "first_failing_step": 141,
+    "root": "Coefficient fitting noise caused a float32velocity rounding difference that accumulated in own history. The same-request solve stayed accurate. Uniform deployment precision removed the regression.",
+    "repair": "Uniform2^-36rounding of all four inherited learned coefficients onGPU at setup; no assigned operator values, new fitting, changed metrics or raw artifact edits.",
+    "failing_scene_full240_outputs_pass": true,
+    "all16scene_full_regression_pass": true,
+    "all24expanded_blocks_pass": true,
+    "production_model_contains_diagnostic_capture_hooks": false,
+    "diagnostic_harnesses_retained_as_frozen_experiment_evidence": true
+  },
+  "cpu_support": "Portable weights, model definition and deployment transform are recorded. This new shared-head model has no validated CPU forward backend; original CPU snapshot remains intact.",
+  "next": "Fuse generic learned CUDA sampling and CSR spatial work against this verified full-state baseline, preserving complete output accuracy and all-stage timing.",
+  "evidence_sha256": {
+    "runs/full-ai-data-diversity-v1/expanded-generator-blocks-02/results.json": "c94b6bfdddd96125313e93443e7552562a4b0fcb37059cc2f7c020b2de7f2726",
+    "runs/full-ai-data-diversity-v1/expanded-legacy-rollout-02/results.json": "84e0bfa91f961c53e8832b80f6b50c4b74b168225c14d82ab640f7b3ad48c5cc",
+    "docs/plans/full-ai-data-diversity-v1/expanded-generator-block-protocol-02.json": "1d0bab91244e90a6b9073fe27d6a970b32df2ea8a133b599829023535164cda7",
+    "docs/plans/full-ai-data-diversity-v1/expanded-legacy-rollout-protocol-02.json": "7d753adbf4ce3dda7338abd1ef555d68b32dd1110815cad7bfbf0bdc67ba68cc",
+    "docs/plans/full-ai-data-diversity-v1/shared-rollout-failure-diagnosis-01.json": "7a0b498d0632c636d2764bae3881f31a32eaec05d200d13729a4c8483372c206",
+    "runs/full-ai-data-diversity-v1/shared-rollout-precision-01/results.json": "c0fd9e28a35ee9297c65db37269ac4deb5e2960897151aee0753e71ae567e48a",
+    "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/receipt.json": "fc4c775bfb422959ce4acb99b6389408e63fe3c379f7ac41ce28d7496633313f",
+    "runs/full-ai-data-diversity-v1/shared-spectral-pair-01/restore/weights.npz": "1570880b28ed771baf1577a189ddf2951262391a98795550cd4b2e407a7bdc87"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "identifier": "internal-residual-width8-s1",
+  "role": "internal_group_nonlinear_residual_component",
+  "seed": 1729,
+  "epochs": 2,
+  "optimizer_updates": 1566,
+  "optimizer": "AdamW",
+  "learning_rate": 0.003,
+  "minimum_learning_rate": 0.0003,
+  "adam_epsilon": 1e-12,
+  "weight_decay": 0.0,
+  "gradient_clip_norm": 1.0,
+  "wall_seconds": 900,
+  "maximum_peak_rss_bytes": 4294967296,
+  "maximum_gpu_allocated_bytes": 8589934592,
+  "selection": "minimum_full148scene_training_objective_earlier_epoch_tie",
+  "qualified_initial_objective": 1.9138810975032417e-05,
+  "qualified_initial_inventory": {
+    "input_rms": {
+      "shape": [
+        1,
+        42,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "03607579d061e0a3afb7037cc5e7bbf69985070dc0e4e3aefa0f29451a69108d"
+    },
+    "output_rms": {
+      "shape": [
+        4
+      ],
+      "dtype": "<f4",
+      "sha256": "f6dcc9570fba7f8d765ace2909fe76a00d84a802e25b8432ac2d523d5ecd0d87"
+    },
+    "conv1.weight": {
+      "shape": [
+        8,
+        42,
+        3,
+        3,
+        3
+      ],
+      "dtype": "<f4",
+      "sha256": "842af574b0f6c52f98dd3e36c5362f125388329f5ab90749f099b8b4197dc87b"
+    },
+    "conv1.bias": {
+      "shape": [
+        8
+      ],
+      "dtype": "<f4",
+      "sha256": "bdeeb9033b3080885fa6048b0d6966e5d896bc2e4b71eb24d8ec587b61a2c4e6"
+    },
+    "conv2.weight": {
+      "shape": [
+        8,
+        8,
+        3,
+        3,
+        3
+      ],
+      "dtype": "<f4",
+      "sha256": "b38d93285f61e12b76c774dd6f848a46170dec45a275712cb64cd7572ba1b1bf"
+    },
+    "conv2.bias": {
+      "shape": [
+        8
+      ],
+      "dtype": "<f4",
+      "sha256": "28bf707bba31b12e08e935c5249573252a4fff62af2cd5add14ded24b759019e"
+    },
+    "velocity.0.weight": {
+      "shape": [
+        8,
+        1,
+        1,
+        1,
+        2
+      ],
+      "dtype": "<f4",
+      "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    "velocity.0.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "velocity.1.weight": {
+      "shape": [
+        8,
+        1,
+        1,
+        2,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    "velocity.1.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "velocity.2.weight": {
+      "shape": [
+        8,
+        1,
+        2,
+        1,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    "velocity.2.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "tracer.weight": {
+      "shape": [
+        1,
+        8,
+        1,
+        1,
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "tracer.bias": {
+      "shape": [
+        1
+      ],
+      "dtype": "<f4",
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    }
+  },
+  "evaluation_normalization": {
+    "status": "frozen_before_managed_fit",
+    "source": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+    "source_sha256": "fb77ae2ee0fd4ef67969866be000561036b8311b6ca46f258ccd1cdd82c0c037",
+    "relative_denominator_rms_floor": {
+      "pressure": 9.47211357321988e-08,
+      "velocity": 6.465589999830133e-11,
+      "tracer": 1.2995164216288916e-10
+    },
+    "degenerate_absolute_rms_tolerance": {
+      "pressure": 9.47211357321988e-13,
+      "velocity": 6.465589999830133e-16,
+      "tracer": 1.2995164216288918e-15
+    },
+    "maximum_relative_error": 1e-05,
+    "pressure_comparison": "Mean-free",
+    "equation_rhs_floor": 1e-30
+  },
+  "native_accuracy_claim": false,
+  "latency_claim": false,
+  "full_generator_target_pass": false
+}

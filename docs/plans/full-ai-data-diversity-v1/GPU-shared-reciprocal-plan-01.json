@@ -1,0 +1,40 @@
+{
+  "status": "registered_before_shared_reciprocal_primitive_compile",
+  "created_unix": 1792563025.70549,
+  "execution_variant": 1,
+  "maximum_new_execution_variants": 3,
+  "previous_execution_plan": "docs/plans/full-ai-data-diversity-v1/GPU-next-execution-priorities-01.json",
+  "scope": "Generic scalar IEEEdivision implementation only; all learned coefficients, physical inputs, interpolation math/order/casts and complete-state timing scope unchanged.",
+  "formula": [
+    "r=RN(1/b), prepared once from known spacing",
+    "q0=RN(a*r)",
+    "e0=fmaRN(-b,q0,a); q1=fmaRN(e0,r,q0)",
+    "e1=fmaRN(-b,q1,a); q2=fmaRN(e1,r,q1)"
+  ],
+  "normal_range": {
+    "absolute_a": [
+      3.8725919148493183e-121,
+      2.5822498780869086e+120
+    ],
+    "positive_b": [
+      9.5367431640625e-07,
+      1048576.0
+    ]
+  },
+  "fallback": "CUDA__ddiv_rnforzero/nonfinite/extreme inputs outside guarded normal domain.",
+  "proof_outline": "Withu=2^-53and RN reciprocal,q0relative error<3u. Rounded first residual times reciprocal changes q0to a pre-round value within7u^2of true quotient. q1is within1ulp; handle binade crossings by distance-to-boundary. Guard leaves all exact residual product bits normal, so final Markstein correction applies. Primitive independently verifies GPUdivision bits and exact rational prerequisite samples.",
+  "primary_reference": "https://www.cl.cam.ac.uk/~jrh13/slides/tphols-15aug00/slides.pdf",
+  "primary_reference_scope": "Slide6states final correction given1ulpquotient and RNreciprocal; bounded-range estimate above is our derivation, checked with arbitrary/corner inputs before any model use.",
+  "intrinsics_reference": "https://docs.nvidia.com/cuda/cuda-math-api/cuda_math_api/group__CUDA__MATH__INTRINSIC__DOUBLE.html",
+  "gates": [
+    "IndependentGPU__ddiv_rnbitparity and first-estimate rational error checks",
+    "All960development/15360legacy and all24full histories plus two larger consumed histories unchanged output bytes",
+    "Exact changed-backend profile, then one finite balanced complete-entry GPUstudy only when correctness passes"
+  ],
+  "maximum_ms_per_generated_step": 1.2,
+  "maximum_error": 1e-05,
+  "cpu_model_forward": false,
+  "optimizer_updates": 0,
+  "expanded_reserved52_references_opened": 0,
+  "full_generator_target_verified": false
+}

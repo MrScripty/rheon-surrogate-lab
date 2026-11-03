@@ -1,0 +1,156 @@
+{
+  "schema": "rheon-variable-pressure-experiment-v1",
+  "id": "variable-cubic-groupnorm-cpu-v1",
+  "captures": [
+    {
+      "schema": "rheon-cubic-pressure-v1",
+      "cells_per_metre": 8,
+      "experiment": {
+        "schema": "rheon-local-pressure-experiment-v1",
+        "id": "variable-cubic-density-8",
+        "geometries_extents_m": {
+          "g0": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "g1": [
+            1.125,
+            0.875,
+            0.625
+          ],
+          "g2": [
+            1.5,
+            1.0,
+            0.75
+          ]
+        },
+        "trajectories": [
+          {
+            "trajectory_id": "variable-train-510000",
+            "seed": 510000,
+            "split": "train",
+            "geometry": "g0",
+            "forcing_regime": "steady",
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "frames": 24
+          },
+          {
+            "trajectory_id": "variable-train-510001",
+            "seed": 510001,
+            "split": "train",
+            "geometry": "g1",
+            "forcing_regime": "moving",
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "frames": 24
+          },
+          {
+            "trajectory_id": "variable-validation-510002",
+            "seed": 510002,
+            "split": "validation",
+            "geometry": "g2",
+            "forcing_regime": "steady",
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "frames": 24
+          }
+        ],
+        "training": {
+          "model": "groupnorm-v1",
+          "seed": 20261014,
+          "updates": 200,
+          "batch_size": 2,
+          "learning_rate": 0.001,
+          "checkpoint_interval": 20
+        },
+        "resources": {
+          "wall_seconds": 600,
+          "max_output_bytes": 33554432
+        }
+      }
+    },
+    {
+      "schema": "rheon-cubic-pressure-v1",
+      "cells_per_metre": 16,
+      "experiment": {
+        "schema": "rheon-local-pressure-experiment-v1",
+        "id": "variable-cubic-density-16",
+        "geometries_extents_m": {
+          "g0": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "g1": [
+            1.0625,
+            0.8125,
+            0.5625
+          ],
+          "g2": [
+            1.5,
+            1.0,
+            0.75
+          ]
+        },
+        "trajectories": [
+          {
+            "trajectory_id": "variable-train-510100",
+            "seed": 510100,
+            "split": "train",
+            "geometry": "g0",
+            "forcing_regime": "steady",
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "frames": 24
+          },
+          {
+            "trajectory_id": "variable-train-510101",
+            "seed": 510101,
+            "split": "train",
+            "geometry": "g1",
+            "forcing_regime": "moving",
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "frames": 24
+          },
+          {
+            "trajectory_id": "variable-validation-510102",
+            "seed": 510102,
+            "split": "validation",
+            "geometry": "g2",
+            "forcing_regime": "steady",
+            "amplitude_m_s2": 0.5,
+            "dt_s": 0.016666666666666666,
+            "frames": 24
+          }
+        ],
+        "training": {
+          "model": "groupnorm-v1",
+          "seed": 20261014,
+          "updates": 200,
+          "batch_size": 2,
+          "learning_rate": 0.001,
+          "checkpoint_interval": 20
+        },
+        "resources": {
+          "wall_seconds": 600,
+          "max_output_bytes": 33554432
+        }
+      }
+    }
+  ],
+  "training": {
+    "model": "cubic-groupnorm-v2",
+    "seed": 20261015,
+    "updates": 200,
+    "batch_size": 2,
+    "learning_rate": 0.001,
+    "checkpoint_interval": 20
+  },
+  "resources": {
+    "wall_seconds": 600,
+    "max_output_bytes": 33554432
+  }
+}

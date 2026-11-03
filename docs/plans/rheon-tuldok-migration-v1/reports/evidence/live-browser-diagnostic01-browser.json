@@ -1,0 +1,117 @@
+{
+  "schema": "rheon-readonly-field-selector-diagnosis-v1",
+  "status": "cause_confirmed",
+  "cause": "Embedded Filter collection disclosure starts closed; existing helper omitted normal visible summary click",
+  "baseline": "TimeoutError",
+  "after_single_disclosure": "passed",
+  "lookup": {
+    "method": "GET",
+    "path": "/api/workbench/records?q=&kind=field_sequence&review=&sort=newest&task=&label=&group=field-sequence-source%3Ad91c7e7136a5d1a4589db02f0ad86cca904571e500c9ab76ba99104e5d3a42b5&rights=&offset=0&limit=40",
+    "sha256": "08685fe9ceef9bb692f0b23492ee461000dc265426dbeafa32215985a3193871",
+    "record_id": "77971da0b73d45a29c373a8461133761",
+    "total": 1,
+    "collection_writes": 0
+  },
+  "steps": [
+    {
+      "phase": "navigate catalog"
+    },
+    {
+      "phase": "actual DOM before baseline",
+      "frame_path": "/workbench?workspace=1",
+      "controls": [
+        {
+          "id": "kind",
+          "count": 1,
+          "visible": true,
+          "details": []
+        },
+        {
+          "id": "query",
+          "count": 1,
+          "visible": true,
+          "details": []
+        },
+        {
+          "id": "group-filter",
+          "count": 1,
+          "visible": true,
+          "details": []
+        }
+      ]
+    },
+    {
+      "phase": "baseline existing helper",
+      "verdict": "TimeoutError"
+    },
+    {
+      "phase": "single visible disclosure click"
+    },
+    {
+      "phase": "actual DOM after disclosure",
+      "frame_path": "/workbench?workspace=1",
+      "controls": [
+        {
+          "id": "kind",
+          "count": 1,
+          "visible": true,
+          "details": [
+            {
+              "summary": "Filter collection",
+              "open": true
+            }
+          ]
+        },
+        {
+          "id": "query",
+          "count": 1,
+          "visible": true,
+          "details": [
+            {
+              "summary": "Filter collection",
+              "open": true
+            }
+          ]
+        },
+        {
+          "id": "group-filter",
+          "count": 1,
+          "visible": true,
+          "details": [
+            {
+              "summary": "Filter collection",
+              "open": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "same helper after one disclosure change",
+      "verdict": "passed",
+      "lookup": {
+        "method": "GET",
+        "path": "/api/workbench/records?q=&kind=field_sequence&review=&sort=newest&task=&label=&group=field-sequence-source%3Ad91c7e7136a5d1a4589db02f0ad86cca904571e500c9ab76ba99104e5d3a42b5&rights=&offset=0&limit=40",
+        "sha256": "08685fe9ceef9bb692f0b23492ee461000dc265426dbeafa32215985a3193871",
+        "record_id": "77971da0b73d45a29c373a8461133761",
+        "total": 1,
+        "collection_writes": 0
+      }
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/workbench/records?q=&kind=&review=&sort=newest&task=&label=&group=&rights=&offset=0&limit=40",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/workbench/records?q=&kind=field_sequence&review=&sort=newest&task=&label=&group=field-sequence-source%3Ad91c7e7136a5d1a4589db02f0ad86cca904571e500c9ab76ba99104e5d3a42b5&rights=&offset=0&limit=40",
+      "status": 200
+    }
+  ],
+  "collection_writes": 0,
+  "new_runs": 0,
+  "scientific_acceptance": "not_asserted"
+}

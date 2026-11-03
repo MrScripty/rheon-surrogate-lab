@@ -1,0 +1,1581 @@
+{
+  "schema": "rheon-stopping-floor-completed-sequence-v1",
+  "state": "completed",
+  "optimizer_updates": 0,
+  "new_training_runs": 0,
+  "selected_policy": "late-minimum8",
+  "selection": {
+    "schema": "rheon-stopping-floor-frozen-selection-v1",
+    "frozen_at_utc": "2026-10-16T16:53:59.688834+00:00",
+    "challenger": "late-minimum8",
+    "consumed_acceptance_passed": true,
+    "pressure_bound_dominates_floor": false,
+    "selection_rule": "Default challenger late-minimum8 when its consumed gates pass. Choose late-pressure only if its consumed gates pass and it is no worse than late-minimum8 in worst paired pressure and mean/maximum calls. No final-informed selection.",
+    "validation_config_sha256": "df29c3df3507f38a871c3bd0952ff866b9518707eeb1453183fbf5bdeb1cbd13",
+    "fresh_scenes_sha256": "fd498b155a57ee50f365b27157690ce839cd735e688a9463ced6950814f8ed6b",
+    "fresh_fixture_report_sha256": "a4f0e179979601313416a3b33de729c81842f6ed009f6d62e391829baeab2848",
+    "consumed_floor_summary_sha256": "820c908b981e4652ad5a7d876b6492b06f446271365a27da6aec52bbae93d7c5",
+    "consumed_pressure_summary_sha256": "ee1397a4788404da157c2c15e96f70854568b7e6f273fc66420ca0c4ef914202",
+    "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+    "models": {
+      "reference-current": {
+        "weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+        "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "stopping_profile_sha256": "ad0cf3abb88d1749c8d8f28ea8781cd35bf4553871970ed51fdef03a16d86522",
+        "minimum_network_evaluations": 0
+      },
+      "late-minimum8": {
+        "weights_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+        "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "stopping_profile_sha256": "ad0cf3abb88d1749c8d8f28ea8781cd35bf4553871970ed51fdef03a16d86522",
+        "minimum_network_evaluations": 8
+      }
+    },
+    "source_sha256": "72853b1e6ed238f53a90afc8e6b570883575a6b5fca561db0bdff50b5df4d79a",
+    "optimizer_updates": 0,
+    "candidate_promoted": false,
+    "scope": "frozen consumed-data choice; no final-informed reselection, fit or deployment change"
+  },
+  "fresh_validation": {
+    "schema": "rheon-stopping-floor-comparison-v1",
+    "phase": "validation",
+    "source_report_sha256": "33bf53bc5835aed075bd06565bd56284852829a29b2eadd6b729123ca83a270c",
+    "source_sha256": "4aa190ff7363274443cfba5125c68e09eaca1942b2b17e3ef018275c094dad72",
+    "models": {
+      "reference-current": {
+        "episodes": 8,
+        "qualified_episodes": 8,
+        "ai_steps": 904,
+        "mean_network_evaluations": 9.126106194690266,
+        "minimum_network_evaluations": 7,
+        "maximum_network_evaluations": 11,
+        "worst_paired_pressure_relative_l2": 3.3733593703700276e-06,
+        "median_paired_pressure_relative_l2": 1.8095046334871174e-07,
+        "worst_actual_divergence": 2.980232238769531e-07,
+        "steady_ai_seconds_median": 0.068219879,
+        "per_episode_ai_seconds_median": [
+          0.046625387500000004,
+          0.069969901,
+          0.065077077,
+          0.1723565645,
+          0.06465578150000001,
+          0.0525811135,
+          0.0710950205,
+          0.0845824245
+        ],
+        "sampled_same_rhs_states": 24,
+        "sparse_worst_pressure_relative_l2": 2.5364918696065144e-06,
+        "sparse_worst_gradient_relative_l2": 8.303983328883881e-07,
+        "sparse_worst_low_band_relative_l2": 2.2233398613422123e-06,
+        "sparse_worst_other_band_relative_l2": 2.9531363417672063e-07
+      },
+      "late-minimum8": {
+        "episodes": 8,
+        "qualified_episodes": 8,
+        "ai_steps": 904,
+        "mean_network_evaluations": 8.357300884955752,
+        "minimum_network_evaluations": 8,
+        "maximum_network_evaluations": 12,
+        "worst_paired_pressure_relative_l2": 2.6655975210866455e-05,
+        "median_paired_pressure_relative_l2": 1.9531365989096516e-07,
+        "worst_actual_divergence": 3.5762786865234375e-07,
+        "steady_ai_seconds_median": 0.0628891385,
+        "per_episode_ai_seconds_median": [
+          0.0492269445,
+          0.06700187399999999,
+          0.062996729,
+          0.149595436,
+          0.0607415355,
+          0.0423039325,
+          0.0604887525,
+          0.09025643350000001
+        ],
+        "sampled_same_rhs_states": 24,
+        "sparse_worst_pressure_relative_l2": 9.477043049347662e-06,
+        "sparse_worst_gradient_relative_l2": 2.8323796498322645e-06,
+        "sparse_worst_low_band_relative_l2": 8.56157794453943e-06,
+        "sparse_worst_other_band_relative_l2": 6.364940101469055e-07
+      }
+    },
+    "candidate": "late-minimum8",
+    "consumed_acceptance_gates": {
+      "all_episodes_qualified": true,
+      "worst_pressure_not_regressed": false,
+      "mean_calls_not_regressed": true,
+      "maximum_calls_not_regressed": false
+    },
+    "consumed_acceptance_passed": false,
+    "elapsed_seconds": 120.99690263699813,
+    "timing_scope": "parallel/instrumented correctness; no isolated latency claim",
+    "network_call_scope": "all AI steps, including first AI step; steady timing excludes first AI step",
+    "sparse_band_scope": "mean-free spatial pressure error; first3 cosine modes/axis excluding constant gauge; components normalized against entire exact mean-free pressure, not band-specific denominators",
+    "pressure_scope": "paired_pressure compares independently advanced native/AI tracks; sparse_same_rhs errors solve each actual supplied state independently",
+    "optimizer_updates": 0,
+    "candidate_promoted": false,
+    "native_children": 24,
+    "all_native_children_reaped": true
+  },
+  "fresh_numeric_gates_passed": false,
+  "fresh_worst_pressure_reference_over_candidate": 0.12655171471628843,
+  "fresh_mean_call_reduction_fraction": 0.08424242424242434,
+  "candidate_promoted": false,
+  "deployment_changed": false,
+  "retained_deployment_weights_sha256": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+  "reason_no_training": "Minimum-pass and pressure-aware stopping recovered consumed accuracy with frozen weights; no blind CUDA refit or final-informed training.",
+  "phase_elapsed_seconds": {
+    "floor-development": 230.16762513600042,
+    "floor-timing": 45.22516986000119,
+    "pressure-development": 237.3727833720004,
+    "pressure-timing": 46.90691399899879,
+    "fresh-validation": 120.99690263699813
+  },
+  "first_attempt_to_final_finish_seconds": 970.952656,
+  "elapsed_scope": "first incorrect-binary fixture start through fresh validation finish, including preparation/diagnosis gaps; phase seconds separate",
+  "native_receipts": [
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-00-late-current-0/native/receipt.json",
+      "sha256": "7c2a515a858afee56d4a945fa26e800dc57e2af1e11f6c221950dbe4fc1b1b3f",
+      "status": "completed",
+      "native_process": {
+        "pid": 54,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "cfb4da9aca0d4320efdc9f4c3e2a48ca9d0b7d19c6c2f4d2bedb508b3586e25f",
+      "status": "completed",
+      "native_process": {
+        "pid": 55,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-00-native-0/native/receipt.json",
+      "sha256": "981843b30cb17ce12e4b4bd02b9c14e2218bb821ca8dcf4674c8b2e56b36c882",
+      "status": "completed",
+      "native_process": {
+        "pid": 32,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "ecdb35a908475be590bfb4f91a7e9c7651a0fb77439f34e516b776a53ba24457",
+      "status": "completed",
+      "native_process": {
+        "pid": 49,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-00-reference-minimum8-0/native/receipt.json",
+      "sha256": "9fedc9b0047202bc2105c651e1629faacaac2226e632bb59368f4fa9851c87ef",
+      "status": "completed",
+      "native_process": {
+        "pid": 48,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-01-late-current-0/native/receipt.json",
+      "sha256": "e0610ca0fe136df7ffd8dcb595dadd45a499502585127ebfeed3259f7cb6d016",
+      "status": "completed",
+      "native_process": {
+        "pid": 64,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-01-late-minimum8-0/native/receipt.json",
+      "sha256": "8b0c6185891ca304c5e0d1285a0a862f17b23204e085bf644148e69b4d46ad6f",
+      "status": "completed",
+      "native_process": {
+        "pid": 67,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-01-native-0/native/receipt.json",
+      "sha256": "cfb6533c4315f8fc55797d427fc41c5e907a0ef351e355f752706cf9d2bf2d9d",
+      "status": "completed",
+      "native_process": {
+        "pid": 33,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-01-reference-current-0/native/receipt.json",
+      "sha256": "029f3632933ae18f7d1732c5457233a1e72980b0f1a13c7d5d6fda99b225a6e2",
+      "status": "completed",
+      "native_process": {
+        "pid": 60,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-01-reference-minimum8-0/native/receipt.json",
+      "sha256": "4e4e20ab5ffc2e6ee9178a3480e36d5c11143fe1ba082fb71897818baae16d40",
+      "status": "completed",
+      "native_process": {
+        "pid": 61,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-02-late-current-0/native/receipt.json",
+      "sha256": "3664fe64aeb192ccf1e24c5e133819f22476815d41b3d1631ce7f2c279e625a2",
+      "status": "completed",
+      "native_process": {
+        "pid": 76,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-02-late-minimum8-0/native/receipt.json",
+      "sha256": "1fa791b6c00e3102010c99d414474c0aebd8e018a3762f37c500bf456b731a32",
+      "status": "completed",
+      "native_process": {
+        "pid": 79,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-02-native-0/native/receipt.json",
+      "sha256": "fe1946e28e015f3221ee2b7f4875dfb0091b0116b9ea470983cb7aa89dc6e054",
+      "status": "completed",
+      "native_process": {
+        "pid": 35,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-02-reference-current-0/native/receipt.json",
+      "sha256": "df5bb3fba800617daab9c9c03c9c6deedad65793697bb8cbff8771e763380b01",
+      "status": "completed",
+      "native_process": {
+        "pid": 70,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-02-reference-minimum8-0/native/receipt.json",
+      "sha256": "290c0760edc26bc6d02d26be59e13ff737c40daf7e229c02ee6f3aa0b835bdd2",
+      "status": "completed",
+      "native_process": {
+        "pid": 73,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-03-late-current-0/native/receipt.json",
+      "sha256": "260de1a35106fd05706790a0ebff70af4daa389020748e9d21a032bc524250d7",
+      "status": "completed",
+      "native_process": {
+        "pid": 88,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-03-late-minimum8-0/native/receipt.json",
+      "sha256": "8bfdcc6ea9037ac59c055d80ec4f167c4807a2d3b4eff87631918481506e5946",
+      "status": "completed",
+      "native_process": {
+        "pid": 91,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-03-native-0/native/receipt.json",
+      "sha256": "36fb3b4ecd15274e092491472fba4fba87c5a54883e804deed6c392139f99551",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-03-reference-current-0/native/receipt.json",
+      "sha256": "fdd5979c2b44ddbdeee6a9539dbb9e563ef21c6080890f9f3d2907e067d1491d",
+      "status": "completed",
+      "native_process": {
+        "pid": 82,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-03-reference-minimum8-0/native/receipt.json",
+      "sha256": "a732377d5da36ae28c4fb1c4276e62c3ce84a3ddea74509c69d3ddcf27523f29",
+      "status": "completed",
+      "native_process": {
+        "pid": 85,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-04-late-current-0/native/receipt.json",
+      "sha256": "bd94da31a10b113c67adc095c2149becd58870e861e7742e0018f19f0d71fec5",
+      "status": "completed",
+      "native_process": {
+        "pid": 101,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-04-late-minimum8-0/native/receipt.json",
+      "sha256": "99a783d0cc5b029fb60490d3dc65594f6e84ac619730ceb236e94cb288265172",
+      "status": "completed",
+      "native_process": {
+        "pid": 103,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-04-native-0/native/receipt.json",
+      "sha256": "d63154b9e436939bc87ec54f917c3612f8c1735b232bdcc1f200ac175e91d971",
+      "status": "completed",
+      "native_process": {
+        "pid": 39,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-04-reference-current-0/native/receipt.json",
+      "sha256": "bb873b0edcf5dd049cc64a05431caa55ecdadd4fd778da1df39b36c2ea341da9",
+      "status": "completed",
+      "native_process": {
+        "pid": 96,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-04-reference-minimum8-0/native/receipt.json",
+      "sha256": "3d21ff9d7f5bfec172b431fed6be5998a791cb7d55a6a1d4b1b8b4fe85a54a78",
+      "status": "completed",
+      "native_process": {
+        "pid": 97,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-05-late-current-0/native/receipt.json",
+      "sha256": "b4d81d698b7e9d629cdc7d02cdc6e7d2e3627056f2e075131468b6776e536675",
+      "status": "completed",
+      "native_process": {
+        "pid": 112,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-05-late-minimum8-0/native/receipt.json",
+      "sha256": "a122395bc97822615afdc3038a19ddfe05dd708e4e71a8fdd1abbc385127cf78",
+      "status": "completed",
+      "native_process": {
+        "pid": 115,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-05-native-0/native/receipt.json",
+      "sha256": "bac3e5b1e91489d43aec13afb6d65e370a947d2510279d3d41fa4c2f7398833b",
+      "status": "completed",
+      "native_process": {
+        "pid": 41,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-05-reference-current-0/native/receipt.json",
+      "sha256": "e21407bc4ac67d800a2ea8eab17bc58db1dabf9f96d4f78082b1c1cb476448e8",
+      "status": "completed",
+      "native_process": {
+        "pid": 106,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/development/scene-05-reference-minimum8-0/native/receipt.json",
+      "sha256": "61c45e01548d9528ead92108d9580bf3ee2b42e830e5cf58da878ca1177c1242",
+      "status": "completed",
+      "native_process": {
+        "pid": 109,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fixture-correct-binary/scene-00-late-current-0/native/receipt.json",
+      "sha256": "1e4166417e8c8444e07ba0a079a5a8e5f8a70fac90eae013dc04beebb9f25372",
+      "status": "completed",
+      "native_process": {
+        "pid": 40,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fixture-correct-binary/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "32446d94bf67a251fb938fb9a8d90e59cd4fe1979da9560e821397a11ea07ae2",
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fixture-correct-binary/scene-00-native-0/native/receipt.json",
+      "sha256": "ba5986288cd0a3d62b7c7e38a83b1d85325be307e96d4d04c3a1861563524add",
+      "status": "completed",
+      "native_process": {
+        "pid": 30,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fixture-correct-binary/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "5534c530e26dea076fcd6bd6ff65c62773bd1035801c49df80ad9f44f49ea0a8",
+      "status": "completed",
+      "native_process": {
+        "pid": 34,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fixture-correct-binary/scene-00-reference-minimum8-0/native/receipt.json",
+      "sha256": "9bc27c186375529394878c307f6ab64f3abdccb1e9ba02dbd8b5ce6d150f5661",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-00-native-0/native/receipt.json",
+      "sha256": "3bd1cc20493141d4ddc863dfe33a7502177dc4ef3cf4fad1ff87e2986d95b9bb",
+      "status": "completed",
+      "native_process": {
+        "pid": 33,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-01-native-0/native/receipt.json",
+      "sha256": "dd9b29ae06bd63f721e51119277e3543c9fbd78dc801f4a76220b5e15153a1e1",
+      "status": "completed",
+      "native_process": {
+        "pid": 32,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-02-native-0/native/receipt.json",
+      "sha256": "4990a90b2f17b33278b62619c22fa2d5ff8cf8efa09b1e45a8b0eb699c026619",
+      "status": "completed",
+      "native_process": {
+        "pid": 35,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-03-native-0/native/receipt.json",
+      "sha256": "3c4a70a3d9150d408071575b2c1e772d3947bbfed6430066aae3378efbea46f9",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-04-native-0/native/receipt.json",
+      "sha256": "8b02aeed2430e4f738128026d50313cd719ae6d08ae4b7958f7fde16e2017621",
+      "status": "completed",
+      "native_process": {
+        "pid": 39,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-05-native-0/native/receipt.json",
+      "sha256": "e3421977cc51b24925329c0f41b84fc8d49317ea3796cf667aedea8391d2d462",
+      "status": "completed",
+      "native_process": {
+        "pid": 41,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-06-native-0/native/receipt.json",
+      "sha256": "aa250157308c789bf2cde64a60acb73a43f6719b7c71b09398db9bea684fba8a",
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-07-native-0/native/receipt.json",
+      "sha256": "e016c9e441bef98596f62c1eeeafedf23879a419a73a551287266075b3752d1a",
+      "status": "completed",
+      "native_process": {
+        "pid": 45,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "2821e240847644ce0332c30c25101e2af59d8a5b20805a12cd7cb846c9ebcbb0",
+      "status": "completed",
+      "native_process": {
+        "pid": 54,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-00-late-pressure-0/native/receipt.json",
+      "sha256": "61c4a5a1f60de46253a4087245441e92a18de60a606ee18e1ac2eac90641d5b8",
+      "status": "completed",
+      "native_process": {
+        "pid": 55,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-00-native-0/native/receipt.json",
+      "sha256": "128be8cba0a3087c7949fb44f71abbfbf996a4d12f2ba7c79563a2e8b5eeddb7",
+      "status": "completed",
+      "native_process": {
+        "pid": 33,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "3cb05c13fada78cce1e938b08d1c2223a05c79d3561c7fbfeb8aa0f71810d371",
+      "status": "completed",
+      "native_process": {
+        "pid": 48,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-00-reference-pressure-0/native/receipt.json",
+      "sha256": "917fa351b352737eb3d1bb61742f75b117417b523805283cd1cdac5203a70b59",
+      "status": "completed",
+      "native_process": {
+        "pid": 49,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-01-late-minimum8-0/native/receipt.json",
+      "sha256": "1746bd2fbfc656fa06730e5119d83e7be14c9a15211b70acd442198dbfcfa975",
+      "status": "completed",
+      "native_process": {
+        "pid": 64,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-01-late-pressure-0/native/receipt.json",
+      "sha256": "d0336bac4d53c2e12330eb6b19af21cee9ce72f9c465be5b6391a07c9f05fca0",
+      "status": "completed",
+      "native_process": {
+        "pid": 67,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-01-native-0/native/receipt.json",
+      "sha256": "98d76dd72e7138c6c9349740501389f373eddaa0134dff761515c38c9330b0b2",
+      "status": "completed",
+      "native_process": {
+        "pid": 32,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-01-reference-current-0/native/receipt.json",
+      "sha256": "d35e636a3401ca151a081cfb4ebe3f0afbcc63a7d2894f7b0e0d06e99c4659af",
+      "status": "completed",
+      "native_process": {
+        "pid": 59,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-01-reference-pressure-0/native/receipt.json",
+      "sha256": "9bdfa7d0c15d151dc8f523793472e643bf34f28a20b4d295ef4d52ed36958f7a",
+      "status": "completed",
+      "native_process": {
+        "pid": 61,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-02-late-minimum8-0/native/receipt.json",
+      "sha256": "2afc3d4b16777be3322e006c1f911936efe16f2f555e2a2792c92f131bf168b6",
+      "status": "completed",
+      "native_process": {
+        "pid": 76,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-02-late-pressure-0/native/receipt.json",
+      "sha256": "908d44e6b8f0dd80957dbca14f52433404945c9a51aa939e990a78638e4f03ed",
+      "status": "completed",
+      "native_process": {
+        "pid": 79,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-02-native-0/native/receipt.json",
+      "sha256": "03258e373a29672ff66c43cff4e6379aa91b9e505ace36e7ab8a44d017ebbe13",
+      "status": "completed",
+      "native_process": {
+        "pid": 35,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-02-reference-current-0/native/receipt.json",
+      "sha256": "9340aa95c1125d85e77af934fd073fbff6efec76f3e5dedd742da7ef96642d90",
+      "status": "completed",
+      "native_process": {
+        "pid": 70,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-02-reference-pressure-0/native/receipt.json",
+      "sha256": "d4170137e5fc0eedf96c913f76c9243171dfccf03da66c2497ce11eb3b7acdc0",
+      "status": "completed",
+      "native_process": {
+        "pid": 73,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-03-late-minimum8-0/native/receipt.json",
+      "sha256": "beaab0d20232bd8b8d3946638a657c279d1aa731c4353661250566211f43d163",
+      "status": "completed",
+      "native_process": {
+        "pid": 88,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-03-late-pressure-0/native/receipt.json",
+      "sha256": "deb6641a6a755e34d6c2893d87b0cac5e4b4f2d79ef7afe7cd0f0f4c035ea71f",
+      "status": "completed",
+      "native_process": {
+        "pid": 93,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-03-native-0/native/receipt.json",
+      "sha256": "37638c9044160c8e9f83c80433783bb61496fd6ac0192d99868480ad5bdcdf26",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-03-reference-current-0/native/receipt.json",
+      "sha256": "885ad244a056b323fc5b228d2eeaa2ce04e9a7756caacd8aecf1b5ef1b79b88f",
+      "status": "completed",
+      "native_process": {
+        "pid": 82,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-03-reference-pressure-0/native/receipt.json",
+      "sha256": "efd3bbac2cde567bdf94f6ef29399ad282ef572f3b7b89299493b9457ad953e4",
+      "status": "completed",
+      "native_process": {
+        "pid": 85,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-04-late-minimum8-0/native/receipt.json",
+      "sha256": "de3136822d53c5ab92f621e0d0f38b1accd40d22e56506ef8b5d8015fba23e97",
+      "status": "completed",
+      "native_process": {
+        "pid": 100,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-04-late-pressure-0/native/receipt.json",
+      "sha256": "29888266c1f33bf6ed1429e9032ffaa0990297e650cde1245dc058d0be4419a9",
+      "status": "completed",
+      "native_process": {
+        "pid": 103,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-04-native-0/native/receipt.json",
+      "sha256": "4cfa0800a9092fb3ae68257cac84d3ab7a30a922b54f3d3039be172ae5587ca2",
+      "status": "completed",
+      "native_process": {
+        "pid": 39,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-04-reference-current-0/native/receipt.json",
+      "sha256": "61aa575d2ae686b7b7ad55034ccdb360bc95fe718e4bcae51ed3467dbf157f04",
+      "status": "completed",
+      "native_process": {
+        "pid": 94,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-04-reference-pressure-0/native/receipt.json",
+      "sha256": "b99c4d62a0400f2f67d11f4c75ae18b6b27e635d8b9e4749c15a61771548803e",
+      "status": "completed",
+      "native_process": {
+        "pid": 97,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-05-late-minimum8-0/native/receipt.json",
+      "sha256": "6206e56e8324a860eafeb14ea89f8b140ed74262f76d31c5e69929ada862e21e",
+      "status": "completed",
+      "native_process": {
+        "pid": 112,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-05-late-pressure-0/native/receipt.json",
+      "sha256": "7bd66cab2995280c41d2fc50796bb4fcb6de1dd8f48cc1da266c6625d5bb4dc7",
+      "status": "completed",
+      "native_process": {
+        "pid": 115,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-05-native-0/native/receipt.json",
+      "sha256": "5e4079cc5890ebc087a17f06c7f3cbd693a3dbce4508bd3e6562964a4165847f",
+      "status": "completed",
+      "native_process": {
+        "pid": 41,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-05-reference-current-0/native/receipt.json",
+      "sha256": "5e0d44105465b6a808aafc028be9c0d00888a0cd8730785c0189dbae7f0f117b",
+      "status": "completed",
+      "native_process": {
+        "pid": 106,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/development/scene-05-reference-pressure-0/native/receipt.json",
+      "sha256": "a6a40f917683599a4a7491921e8f5036538e372c838a6566b23fae46367006a8",
+      "status": "completed",
+      "native_process": {
+        "pid": 109,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/fixture/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "dec260f08a747194bca9a04c79997c410747ff212e7cb2113ca07d423a9ee6d9",
+      "status": "completed",
+      "native_process": {
+        "pid": 42,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/fixture/scene-00-late-pressure-0/native/receipt.json",
+      "sha256": "c07d8160c9dbd9dd59d731081306a0f61f4b3f5ddf59ab876be6a19b7c2143b6",
+      "status": "completed",
+      "native_process": {
+        "pid": 45,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/fixture/scene-00-native-0/native/receipt.json",
+      "sha256": "6835d54fb7334056bf278a34c629764fcee3c596a5725491e5cfd1d938ffa976",
+      "status": "completed",
+      "native_process": {
+        "pid": 32,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/fixture/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "a7ef1e1801c76b638d020bcf44d70fdf8b1332150cbde3aab2c5d01359a32e51",
+      "status": "completed",
+      "native_process": {
+        "pid": 36,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/fixture/scene-00-reference-pressure-0/native/receipt.json",
+      "sha256": "280d5e4170d9c49945a8af4eea2e43cd0c245084e9fde6445182c77f64d7c65a",
+      "status": "completed",
+      "native_process": {
+        "pid": 39,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "dbe9ea3314d73df86118d499407203d516981f048984120f1c2eb07c9ed8d8e1",
+      "status": "completed",
+      "native_process": {
+        "pid": 40,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-late-minimum8-1/native/receipt.json",
+      "sha256": "bfe0936b7333f243a69885ea701d0be682eb67cdd94d3b45c2e4c4104d6bc327",
+      "status": "completed",
+      "native_process": {
+        "pid": 49,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-late-pressure-0/native/receipt.json",
+      "sha256": "63930c8255aed10da392a1eab076ae1ec0c7569697117935c70ab6e879f40071",
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-late-pressure-1/native/receipt.json",
+      "sha256": "07d1d08b11fb47f6877998e6176545cc974848fe98512df495b0ac06d6cf413c",
+      "status": "completed",
+      "native_process": {
+        "pid": 46,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-native-0/native/receipt.json",
+      "sha256": "481d1b3f0c2a1081e2bed8efd68bc0a55d48790e908e974bc1e6e3c6ec93f20f",
+      "status": "completed",
+      "native_process": {
+        "pid": 30,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "9fc4001621971828b5ee03b4063395f3ab7c1f3f833006e4a9152bf0b35066ef",
+      "status": "completed",
+      "native_process": {
+        "pid": 34,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-reference-current-1/native/receipt.json",
+      "sha256": "c71d2fbee17c7af2908ed63b6682382a6043483eb3fa66599a41ce82c667325a",
+      "status": "completed",
+      "native_process": {
+        "pid": 55,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-reference-pressure-0/native/receipt.json",
+      "sha256": "2d3839ad25aacac8342fcf7d3515d65601c6689884de36ef1e0f0de63f5cd96e",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/pressure-bound/timing/scene-00-reference-pressure-1/native/receipt.json",
+      "sha256": "df18f59bdae68bda2cd8427d8866ada2795dc7da32b616ddb4f80397338b1fe2",
+      "status": "completed",
+      "native_process": {
+        "pid": 52,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/rejected-binary-verification/receipt.json",
+      "sha256": "dde0a318a3065f433694da952c8f248b76fba4bc4313235e1fee474adec6334d",
+      "status": "failed",
+      "native_process": {
+        "pid": 4,
+        "returncode": 2,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/study-cli-fixture/scene-00/late-current-0/receipt.json",
+      "sha256": "049ef5a8c344d450fc43dc21adf82a5c4fbbdf8fdda1263c33d8716e6f77b43b",
+      "status": "completed",
+      "native_process": {
+        "pid": 40,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/study-cli-fixture/scene-00/late-minimum8-0/receipt.json",
+      "sha256": "a3559109269b428e75e25d146abf9ca4edf0105dc6c2aa9d0dd7e75b08fa4b2e",
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/study-cli-fixture/scene-00/native-0/receipt.json",
+      "sha256": "d609e6be076fc411d7ecbb983ab0a6985dea87426830b2c6db4ead864faf9a03",
+      "status": "completed",
+      "native_process": {
+        "pid": 30,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/study-cli-fixture/scene-00/reference-current-0/receipt.json",
+      "sha256": "e536e5df134de41596e6fdae2dbf74e814b29ffdb347fa4ff487dc335475f3c8",
+      "status": "completed",
+      "native_process": {
+        "pid": 34,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/study-cli-fixture/scene-00/reference-minimum8-0/receipt.json",
+      "sha256": "16152dab5bd6eda3b5069fad36eb8cca123ad2480d38eb1245b1da7aa8cad79d",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-late-current-0/native/receipt.json",
+      "sha256": "aed5934bc81f93ac5c550d5587b4052a31002e707b6c4a57465f1dffca255645",
+      "status": "completed",
+      "native_process": {
+        "pid": 40,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-late-current-1/native/receipt.json",
+      "sha256": "573f62d34c67772c2af2a0fb7a552aa86a219e5addddd4fa537bfd8d68006af7",
+      "status": "completed",
+      "native_process": {
+        "pid": 49,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "e3d8cb0990bcc3bef42aa50841c957db91f3d4c30159021e7aeb4bf8c5694544",
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-late-minimum8-1/native/receipt.json",
+      "sha256": "09416bda2920cc1622b7b622a882550043ba3baa49a7ff0f639b212d094b8841",
+      "status": "completed",
+      "native_process": {
+        "pid": 46,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-native-0/native/receipt.json",
+      "sha256": "4d0599422b82d1f1dbd769d1e840a6fec6c9de03ceec23252c8a2570a071db36",
+      "status": "completed",
+      "native_process": {
+        "pid": 30,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "50552c0fd6cc313210e1fc7fbd14f8cc8ac076aa827cf24e7853d229d9aaa01b",
+      "status": "completed",
+      "native_process": {
+        "pid": 34,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-reference-current-1/native/receipt.json",
+      "sha256": "14a11a3bdda4688c4ed177bfedf6a6dba77021e491f220d685ddebe9f465c5bc",
+      "status": "completed",
+      "native_process": {
+        "pid": 55,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-reference-minimum8-0/native/receipt.json",
+      "sha256": "6b700ed7759ce983c4856dfc39f55db9c22f43c196ce7905f2bc99013493e945",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/timing/scene-00-reference-minimum8-1/native/receipt.json",
+      "sha256": "6f4add6d65a7a41a5afb99128f02cb9c153ec4f05c318e57a987267d8ba76f7b",
+      "status": "completed",
+      "native_process": {
+        "pid": 52,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-00-late-minimum8-0/native/receipt.json",
+      "sha256": "1c2af594c791e7fa321e4c730214ee422f1d0a7ccbed62d37426171910def2cd",
+      "status": "completed",
+      "native_process": {
+        "pid": 53,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-00-native-0/native/receipt.json",
+      "sha256": "be86ae1229c2a8cb82fe8083ba510a95f8270c6e8d76af2cb78b80d502414c36",
+      "status": "completed",
+      "native_process": {
+        "pid": 33,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-00-reference-current-0/native/receipt.json",
+      "sha256": "b4e20aa3910ffd263d4b46a4bc3c521f5a92112ff3a7aad8c4fa4fc06f10ba96",
+      "status": "completed",
+      "native_process": {
+        "pid": 52,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-01-late-minimum8-0/native/receipt.json",
+      "sha256": "cf0b2a8351da2c45b96350fe4b0ed9595f83511e1b31355222679e2d4b76a1e5",
+      "status": "completed",
+      "native_process": {
+        "pid": 59,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-01-native-0/native/receipt.json",
+      "sha256": "0bc5084d6ebcf3ec83d5ead9e1dddafbe013a034126df2e25e8700a81f436ef6",
+      "status": "completed",
+      "native_process": {
+        "pid": 32,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-01-reference-current-0/native/receipt.json",
+      "sha256": "48ac9067bee2be833c2285471e85d17b265bcb8c4cb2e21b286068a485c830ee",
+      "status": "completed",
+      "native_process": {
+        "pid": 58,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-02-late-minimum8-0/native/receipt.json",
+      "sha256": "b85acee16bc4674305d7673ab8cd78614bbc534d5f51514f5f989ebf64975211",
+      "status": "completed",
+      "native_process": {
+        "pid": 65,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-02-native-0/native/receipt.json",
+      "sha256": "02e9d85406d8cafed55cd01ef409d5592c5bece0234bf649455c063b50a6dc9b",
+      "status": "completed",
+      "native_process": {
+        "pid": 35,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-02-reference-current-0/native/receipt.json",
+      "sha256": "3be7c9fcf390cca48f7a5dcb7f65a2c8134de72fd34df75b42fe8a5d95559308",
+      "status": "completed",
+      "native_process": {
+        "pid": 64,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-03-late-minimum8-0/native/receipt.json",
+      "sha256": "6650a62e9b3b55dfb67943638f519ee25faf8d763bf12d7e91c1766ce57ab899",
+      "status": "completed",
+      "native_process": {
+        "pid": 71,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-03-native-0/native/receipt.json",
+      "sha256": "de3ad7f6cdb32a802b94e972a374d85db45446b4c917ec1adf08b1097b335898",
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-03-reference-current-0/native/receipt.json",
+      "sha256": "51ef28eb056611e8d22bdccbf835704b2395cdb6ba205ff53d2a8ac94b5d615a",
+      "status": "completed",
+      "native_process": {
+        "pid": 70,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-04-late-minimum8-0/native/receipt.json",
+      "sha256": "43f829f2e06582c82563c22781f456d2a2dbd153135294bc31ac12426c19f22b",
+      "status": "completed",
+      "native_process": {
+        "pid": 77,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-04-native-0/native/receipt.json",
+      "sha256": "aa30483b579cab2cda3360fd205c7dbd98d17a03963d41c6e007b540249366e6",
+      "status": "completed",
+      "native_process": {
+        "pid": 39,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-04-reference-current-0/native/receipt.json",
+      "sha256": "2f9797542749ae2e4ecf034d7e40a69cf1bb323741c1a00ea6b6bf4ac1a130e4",
+      "status": "completed",
+      "native_process": {
+        "pid": 74,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-05-late-minimum8-0/native/receipt.json",
+      "sha256": "f795e23a3bd7b52208ec7ee2e40680d5243468d2b5a96746b9580e368907ce76",
+      "status": "completed",
+      "native_process": {
+        "pid": 83,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-05-native-0/native/receipt.json",
+      "sha256": "58dc8d4341ad0a42d15114321aee0ca4374861f446176a182617211bad262f51",
+      "status": "completed",
+      "native_process": {
+        "pid": 41,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-05-reference-current-0/native/receipt.json",
+      "sha256": "8cb17d5f915eb4b4ddb5b514d6e0c4cac10cfc4406a7e909049172a177839b21",
+      "status": "completed",
+      "native_process": {
+        "pid": 81,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-06-late-minimum8-0/native/receipt.json",
+      "sha256": "6a4f33c32cb8cb9a4a63f227b4554c09e8a76e7dd496edb274eef127cdb84f0e",
+      "status": "completed",
+      "native_process": {
+        "pid": 89,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-06-native-0/native/receipt.json",
+      "sha256": "c074ca0968f644516e72d1ca3f76720d9198c0bed9eddcc74a2d82738b08d26b",
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-06-reference-current-0/native/receipt.json",
+      "sha256": "d4ca7744f521dd6429ae6cf3b16be8c4a347a4da8f950e2697694ddb0792c30f",
+      "status": "completed",
+      "native_process": {
+        "pid": 88,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-07-late-minimum8-0/native/receipt.json",
+      "sha256": "aa64314e25b17741e2c1f74189c2b77bda58e3a997b728fdddc1b10c05f8b7c2",
+      "status": "completed",
+      "native_process": {
+        "pid": 95,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-07-native-0/native/receipt.json",
+      "sha256": "bbc2f676087d550c472459ce7182ef8eb34a1effba42af6da9f9f130b00bbb49",
+      "status": "completed",
+      "native_process": {
+        "pid": 45,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-stopping-floor-v1/validation/scene-07-reference-current-0/native/receipt.json",
+      "sha256": "55003ab8d3bf16cb887522a57ee157a581d62786e185ecd29848cfca27aa5d73",
+      "status": "completed",
+      "native_process": {
+        "pid": 93,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      }
+    }
+  ],
+  "observed_native_receipts_all_reaped": true,
+  "initial_rejected_native_receipt_missing": true,
+  "initial_failure_scope": "First wrong-entrypoint rejection occurred before simulation; secondary stdin cleanup exception prevented its native receipt. Original logs and reaped controller retained; real rejection receipt and regression test verify the repair.",
+  "controller_children_with_timing_receipts": 121,
+  "controller_children_all_reaped": true,
+  "runtime": {
+    "python": "3.14.7",
+    "torch": "2.14.0+cu132",
+    "cuda_initialized": false
+  },
+  "kernel": "7.0.0-31-generic",
+  "cpu_model": "Intel(R) Core(TM) Ultra 9 275HX",
+  "available_cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "boot_id": "271ff446-e03d-49d2-b635-5deff9912e70",
+  "local_retained_bytes": 63237201,
+  "source_sha256": {
+    "experiments/water-stopping-floor-v1/test_pressure_bound.py": "f1c4fb4fa46cf9e3b338cc02f809ccd0aceff0372a1b47d6131a496083ecc8c4",
+    "experiments/water-stopping-floor-v1/finalize.py": "35d74f47f5d323ca503a177e7021a74e0b912d012684a14baf5a55a489a2d863",
+    "experiments/water-stopping-floor-v1/run.py": "2117b4d8db64214a304c6b69039813cd4035576c0aac9d052c4e75f70efa6b38",
+    "experiments/water-stopping-floor-v1/test_frozen_selection.py": "14342940c13f4761163e784bb8c8e3a0da01954f542d504478ab6fdcd51468bf",
+    "experiments/water-stopping-floor-v1/test_early_exit.py": "d4d58348f82054cd525c31a1f81a9675d129d644eb6df117eedcb33792af6a86",
+    "experiments/water-stopping-floor-v1/episode.py": "39397a3cd5b1387ff471d3df30d6bb2b0b4132a6972ff0dd5ea6ea5c51bb19c6",
+    "experiments/water-stopping-floor-v1/select.py": "72853b1e6ed238f53a90afc8e6b570883575a6b5fca561db0bdff50b5df4d79a",
+    "experiments/water-stopping-floor-v1/summarize.py": "4aa190ff7363274443cfba5125c68e09eaca1942b2b17e3ef018275c094dad72",
+    "experiments/water-stability-learning-v1/learned_iteration.py": "a14273b0a07e9885f01182695be6d3a82fab84583963b1119681cefc454e4cd5",
+    "experiments/water-residual-learning-v1/rollout.py": "18250feaa36e7dfa31c8597337be1a9d06eca9570ea7639738a6d93cff89d849"
+  },
+  "limitations": [
+    "Six consumed scenes and eight fresh scenes are finite evidence; earlier58-scene complete regression not repeated under new policies.",
+    "Global worst-pressure improvement does not imply each scene improves; short serial scene pressure tradeoffs retained.",
+    "Residual-to-pressure bound is for the sealed cubic constant-density operator; it bounds same-RHS mean-free error, not accumulated trajectory deviation.",
+    "Only serial uninstrumented timing stages support latency observations; ordinary desktop services remain.",
+    "No native refinement, fallback, new fluid data, checkpoint update or deployment activation."
+  ]
+}

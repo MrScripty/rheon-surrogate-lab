@@ -1,0 +1,221 @@
+{
+  "schema": "rheon-late-residual-final-verification-v1",
+  "native_receipts_observed": 285,
+  "all_native_children_reaped": true,
+  "failed_native_attempts": [
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-01/native-0/receipt.json",
+      "status": "failed",
+      "frames": 0,
+      "process": {
+        "pid": 62188,
+        "returncode": 1,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout/scene-06/native-0/receipt.json",
+      "status": "failed",
+      "frames": 0,
+      "process": {
+        "pid": 62192,
+        "returncode": 1,
+        "reaped": true,
+        "terminated": false
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout-amended/scene-01/shape-two-reference-0/receipt.json",
+      "status": "failed",
+      "frames": 124,
+      "process": {
+        "pid": 67079,
+        "returncode": -15,
+        "reaped": true,
+        "terminated": true
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout-amended/scene-00/shape-two-reference-0/receipt.json",
+      "status": "failed",
+      "frames": 111,
+      "process": {
+        "pid": 67077,
+        "returncode": -15,
+        "reaped": true,
+        "terminated": true
+      }
+    },
+    {
+      "path": "runs/water-late-residual-v1/final-holdout-amended/scene-07/shape-two-reference-0/receipt.json",
+      "status": "failed",
+      "frames": 120,
+      "process": {
+        "pid": 67321,
+        "returncode": -15,
+        "reaped": true,
+        "terminated": true
+      }
+    }
+  ],
+  "resource_recovery": {
+    "started_at_utc": "2026-10-16T12:00:02.986440+00:00",
+    "state": "completed",
+    "workers": 2,
+    "original_report_sha256": "98e961b8b48b21f0ded8fef06164d338760d62b41b419dce2ff7846c021778f0",
+    "selection_sha256": "2859b2f60da6089b4bce57b64caf1c9933b4e84b488f622d250f9f50d8fe875e",
+    "source_sha256": "dcb836281433655f69d18c43465c67e7b8d914e65731496a5ab30a44716d1229",
+    "deadline_or_physics_changed": false,
+    "model_or_scene_changed": false,
+    "retries": [
+      {
+        "scene": 0,
+        "model": "shape-two-reference",
+        "output": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-00-shape-two-reference-0",
+        "matching_prefix_frames": 111,
+        "timing": {
+          "argv": [
+            "taskset",
+            "-c",
+            "1",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py",
+            "--binary",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--scene",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout-amended/scene-00/scene.json",
+            "--output",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-00-shape-two-reference-0",
+            "--threads",
+            "1",
+            "--project",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+            "--artifacts",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+            "--proposals",
+            "32",
+            "--adaptive-profile",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-inference-budget-v1/configs/adaptive.json",
+            "--single-evaluation"
+          ],
+          "started_at_utc": "2026-10-16T12:00:02.987310+00:00",
+          "status": "completed",
+          "pid": 69382,
+          "returncode": 0,
+          "finished_at_utc": "2026-10-16T12:01:29.082223+00:00",
+          "elapsed_seconds": 86.09473339099986,
+          "child_reaped": true
+        }
+      },
+      {
+        "scene": 1,
+        "model": "shape-two-reference",
+        "output": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-01-shape-two-reference-0",
+        "matching_prefix_frames": 124,
+        "timing": {
+          "argv": [
+            "taskset",
+            "-c",
+            "3",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py",
+            "--binary",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--scene",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout-amended/scene-01/scene.json",
+            "--output",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-01-shape-two-reference-0",
+            "--threads",
+            "1",
+            "--project",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+            "--artifacts",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+            "--proposals",
+            "32",
+            "--adaptive-profile",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-inference-budget-v1/configs/adaptive.json",
+            "--single-evaluation"
+          ],
+          "started_at_utc": "2026-10-16T12:00:02.987591+00:00",
+          "status": "completed",
+          "pid": 69383,
+          "returncode": 0,
+          "finished_at_utc": "2026-10-16T12:01:08.725434+00:00",
+          "elapsed_seconds": 65.73746698299965,
+          "child_reaped": true
+        }
+      },
+      {
+        "scene": 7,
+        "model": "shape-two-reference",
+        "output": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-07-shape-two-reference-0",
+        "matching_prefix_frames": 120,
+        "timing": {
+          "argv": [
+            "taskset",
+            "-c",
+            "7",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py",
+            "--binary",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+            "--scene",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-holdout-amended/scene-07/scene.json",
+            "--output",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1/final-resource-retries/scene-07-shape-two-reference-0",
+            "--threads",
+            "1",
+            "--project",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+            "--artifacts",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+            "--proposals",
+            "32",
+            "--adaptive-profile",
+            "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-inference-budget-v1/configs/adaptive.json",
+            "--single-evaluation"
+          ],
+          "started_at_utc": "2026-10-16T12:01:08.727763+00:00",
+          "status": "completed",
+          "pid": 69784,
+          "returncode": 0,
+          "finished_at_utc": "2026-10-16T12:02:32.819755+00:00",
+          "elapsed_seconds": 84.09189317800065,
+          "child_reaped": true
+        }
+      }
+    ],
+    "finished_at_utc": "2026-10-16T12:02:32.904496+00:00",
+    "elapsed_seconds": 149.91773342800025
+  },
+  "final_amendment_attempt": {
+    "started_at_utc": "2026-10-16T11:53:02.372217+00:00",
+    "state": "failed",
+    "amendment_sha256": "a2f3923cabb0545e97e73af5daea73dfe3672c0be7713947c705b4e079406aa8",
+    "selection_sha256": "2859b2f60da6089b4bce57b64caf1c9933b4e84b488f622d250f9f50d8fe875e",
+    "source_sha256": "84b99ac58d48bc9c4447a355a15186dbdd63d6004d393a8b66d10cc85e5cce3d",
+    "original_protocol_amended_after_fitting": true,
+    "training_repeated": false,
+    "selection_changed": false,
+    "error_type": "CalledProcessError",
+    "finished_at_utc": "2026-10-16T11:57:14.418899+00:00",
+    "elapsed_seconds": 252.0466115579993
+  },
+  "cases_and_physical_inputs_changed_for_resource_recovery": false,
+  "matching_recorded_non_timing_frame_prefixes": 355,
+  "captured_training_source_commit": "7df75591de53e0f2da012e30d58aba057fb30ca1",
+  "configured_seed_confirmation_population_consumed": false,
+  "final_experiment_tests": "8 passed; 1.255s test interval",
+  "training_contract_tests": "32 passed; retained earlier unit-tests.json and final source verification log",
+  "completed_summary_guard_output_identical": true,
+  "retained_reference": "17b423b78f82468a3e879af64dc2f6ecf61c94500a4bb154a08ebf527768e2e8",
+  "project_readback": "project-readback.json",
+  "incomplete_summary_guard": {
+    "red": "test_completed_native_without_frame_file_is_rejected (test_failed_summary.FailedSummary.test_completed_native_without_frame_file_is_rejected) ... ok\ntest_failed_native_without_frames_retains_failure_and_reaping (test_failed_summary.FailedSummary.test_failed_native_without_frames_retains_failure_and_reaping) ... ok\ntest_incomplete_trajectory_requests_reconciliation (test_failed_summary.FailedSummary.test_incomplete_trajectory_requests_reconciliation) ... ERROR\n\n======================================================================\nERROR: test_incomplete_trajectory_requests_reconciliation (test_failed_summary.FailedSummary.test_incomplete_trajectory_requests_reconciliation)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-late-residual-v1/test_failed_summary.py\", line 54, in test_incomplete_trajectory_requests_reconciliation\n    trajectory.main()\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/trajectory_summary.py\", line 31, in main\n    if len(frames)!=receipt['result']['ai_steps']:raise ValueError('complete AI step population required')\n                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\nTypeError: 'NoneType' object is not subscriptable\n\n----------------------------------------------------------------------\nRan 3 tests in 0.012s\n\nFAILED (errors=1)\n",
+    "green": "test_completed_native_without_frame_file_is_rejected (test_failed_summary.FailedSummary.test_completed_native_without_frame_file_is_rejected) ... ok\ntest_failed_native_without_frames_retains_failure_and_reaping (test_failed_summary.FailedSummary.test_failed_native_without_frames_retains_failure_and_reaping) ... ok\ntest_incomplete_trajectory_requests_reconciliation (test_failed_summary.FailedSummary.test_incomplete_trajectory_requests_reconciliation) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.011s\n\nOK\n",
+    "current_source_sha256": "495317f86daad6a89afb6ee543857b887a29c3a4a5442ae7538ad73de54d39a9",
+    "actual_completed_summary_parity_sha256": "904d48e016b2fac5db364d3fc46bd72e9b0d7ca0c0edc823063c012cd634e59e"
+  }
+}

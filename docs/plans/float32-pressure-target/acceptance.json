@@ -1,0 +1,83 @@
+{
+  "status": "accepted_for_current_development_family; learned_accuracy_unqualified",
+  "policy_tests": 5,
+  "fresh_native_diagnostics": 156,
+  "selection": {
+    "frames": 96,
+    "maximum_relative_residual": 4.7665255694815913e-07,
+    "policy": {
+      "minimum_relative_residual": 1e-07,
+      "population": "train_only",
+      "safety_factor": 2.0
+    },
+    "population": "train_only",
+    "selected_relative_residual": 1e-06,
+    "selection_completed_before_validation": true
+  },
+  "report": {
+    "actual_model": {
+      "float32_profile_qualified": 0,
+      "frames": 12,
+      "maximum_actual_f32_divergence_s_inv": 0.04791331849992275,
+      "maximum_predicted_divergence_s_inv": 0.047913317372585196,
+      "maximum_relative_residual": 0.6177574215619439,
+      "native_strict_qualified": 0
+    },
+    "calibration": {
+      "train": {
+        "float32_profile_qualified": 96,
+        "frames": 96,
+        "maximum_actual_f32_divergence_s_inv": 1.7881393432617188e-07,
+        "maximum_predicted_divergence_s_inv": 3.509787001772698e-08,
+        "maximum_relative_residual": 4.7665255694815913e-07,
+        "native_strict_qualified": 0
+      },
+      "validation": {
+        "float32_profile_qualified": 48,
+        "frames": 48,
+        "maximum_actual_f32_divergence_s_inv": 1.2665987014770508e-07,
+        "maximum_predicted_divergence_s_inv": 1.3950427257825027e-08,
+        "maximum_relative_residual": 3.5748981451032027e-07,
+        "native_strict_qualified": 0
+      }
+    },
+    "native_binary_sha256": "67d03c454e8293fd0120243c5834e8f67e4a24f2ba66392fef9a815d7b9117ad",
+    "normalization_sha256": "2ce6c3ab6722269b97b6ae61e978d219c0ee8d3d56c471cba0b3d85188a64da1",
+    "optimizer_updates": 0,
+    "packet_sha256": "743cf8184e71041f0bf1d09dae9ae6fafa0cd5fcee10fc2301f7d263bcc3fb0f",
+    "profile": {
+      "absolute_residual": 1e-12,
+      "calibration": {
+        "minimum_relative_residual": 1e-07,
+        "population": "train_only",
+        "safety_factor": 2.0
+      },
+      "id": "cubic-float32-output-v1",
+      "output_dtype": "float32",
+      "relative_residual": 1e-06,
+      "schema": "rheon-float32-pressure-target-v1"
+    },
+    "restore_receipt_sha256": "f386b6d57e78993c5a13f6ad15ace1012a828ab16132faa48e0b233017e5ad91",
+    "schema": "rheon-float32-target-comparison-v1",
+    "scope": "float32 learned-output acceptance; native reference and conventional solver gates remain stricter; no training, rollout or acceleration claim",
+    "source_sha256": {
+      "experiments/float32-pressure-target-v1/configs/development.json": "b1826d4c890b431aa972f38d45dd3924d7de556ef94cce46fe83bca04180d9f4",
+      "experiments/float32-pressure-target-v1/run.py": "0d65e455672d14fcd6f00555cd15a1bc6345b7dd6dae1eede9c64d27154565b0",
+      "experiments/float32-pressure-target-v1/targets.py": "3625f8a996a8d3b247117ba4d5e710cdeb2dd60126891db3ab11a0d1019c1f3f"
+    },
+    "splits_sha256": "6925843cbf536bf46662d96ea2dd4b4bfa8b3567481a1a5d51e2f4a7d6974b57",
+    "status": "complete",
+    "training_receipt_sha256": "9a9e8bd97302e0a5d16f4c24a9b21a5daeb7708d09481b1b77bb818c77196524",
+    "unchanged_physical_limits": {
+      "absolute_net_flux_m3_s": 1e-12,
+      "actual_f32_divergence_s_inv": 1e-05,
+      "courant": 0.5,
+      "predicted_divergence_s_inv": 1e-07,
+      "relative_net_flux": 1e-08,
+      "wall_normal_flux_exact_zero": true
+    },
+    "weights_sha256": "9a9593165d428fcb4b4353176d67ca697d75bc1e7c9fc52cf08cf224524b6944"
+  },
+  "report_sha256": "86262c09843f92ccccd38a8a2eaae8bebf6b764854de94087153b598fe276265",
+  "evidence_root": "runs/float32-pressure-target-v1-1"
+}

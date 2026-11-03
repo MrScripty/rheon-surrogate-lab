@@ -1,0 +1,77 @@
+{
+  "schema": "rheon-sealed-water-dataset-v1",
+  "id": "sealed-water-forces-v1",
+  "seed": 2026101603,
+  "population": {
+    "train": 256,
+    "validation": 1,
+    "reserved_test": 64
+  },
+  "counts_range": [
+    5,
+    16
+  ],
+  "cells_per_metre": [
+    8,
+    16
+  ],
+  "steps": 64,
+  "snapshot_steps": [
+    15,
+    63
+  ],
+  "dt_s": 0.016666666666666666,
+  "material": {
+    "density_kg_m3": 1000.0,
+    "dynamic_viscosity_pa_s": 0.001,
+    "boundary": "sealed_impermeable_free_slip"
+  },
+  "force_ranges": {
+    "acceleration_m_s2": [
+      0.1,
+      2.0
+    ],
+    "radius_fraction": [
+      0.18,
+      0.4
+    ],
+    "fluctuation_fraction": [
+      0,
+      0.6
+    ],
+    "frequency_hz": [
+      0.1,
+      3
+    ]
+  },
+  "training": {
+    "schema": "rheon-cuda-pressure-experiment-v1",
+    "id": "sealed-water-cuda-baseline-v1",
+    "training": {
+      "model": "cubic-groupnorm-v3",
+      "seed": 20261015,
+      "sampling_seed": 2026102501,
+      "updates": 2000,
+      "batch_size": 2,
+      "learning_rate": 0.001,
+      "checkpoints": [
+        0,
+        100,
+        500,
+        1000,
+        2000
+      ],
+      "schedule": [
+        {
+          "update": 1000,
+          "learning_rate": 0.0001
+        }
+      ]
+    },
+    "resources": {
+      "wall_seconds": 600,
+      "max_output_bytes": 33554432
+    }
+  },
+  "forcing_profile": "compact-gaussian-taper-v1"
+}

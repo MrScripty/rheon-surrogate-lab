@@ -1,0 +1,160 @@
+{
+  "trials": [
+    {
+      "trial": "supplement-control",
+      "config_sha256": "f8148631112847224e296df8cdf6d7ee54afe8192a07901770bfd0044a305f4a",
+      "primary_tensor_order_evidence_parity": true,
+      "torch_rng_preserved": true,
+      "primary": {
+        "schema": "rheon-analytical-feedback-v3",
+        "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+        "sampling": "uniform-balanced-grid",
+        "grid_exposures": [
+          625,
+          625,
+          625,
+          625,
+          625,
+          625,
+          625,
+          625
+        ],
+        "sampling_order_sha256": "39d725b00a918700a028bc561c6b0eb3f0c05fa6c3b73509eec13276cc5cda9a",
+        "bank_description_sha256": "3442124bf3c5a24197d26d51609f76aab8e1a6ef587a357b6ff89c5887c6d72d",
+        "loss_weights": {
+          "pressure": 0.25,
+          "gradient": 0.25,
+          "equation": 0.5,
+          "amplification": 1.0
+        },
+        "weight": 0.1,
+        "additional_examples": 5000,
+        "resident_tensor_bytes": 529469440,
+        "cache_max_bytes": 805306368,
+        "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+        "amplitude_reference": "train-correction-cell-rms",
+        "amplitude_rms_pa": 2.8535734640782584,
+        "grid_capacity": 16
+      },
+      "supplemental": {
+        "schema": "rheon-supplemental-feedback-v1",
+        "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+        "sampling": "uniform-balanced-grid",
+        "grid_exposures": [
+          625,
+          625,
+          625,
+          625,
+          625,
+          625,
+          625,
+          625
+        ],
+        "sampling_order_sha256": "f210dad03fd9809f3a2812b5f9946418a7fbd4ce9d3aa693e3ddebee762e822e",
+        "bank_description_sha256": "3442124bf3c5a24197d26d51609f76aab8e1a6ef587a357b6ff89c5887c6d72d",
+        "loss_weights": {
+          "pressure": 0.25,
+          "gradient": 0.25,
+          "equation": 0.5,
+          "amplification": 1.0
+        },
+        "weight": 0.1,
+        "additional_examples": 5000,
+        "resident_tensor_bytes": 0,
+        "cache_max_bytes": 805306368,
+        "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+        "amplitude_reference": "train-correction-cell-rms",
+        "amplitude_rms_pa": 2.8535734640782584,
+        "grid_capacity": 16,
+        "source_bank_schema": "rheon-analytical-feedback-v3",
+        "reuses_primary": true,
+        "seed": 2026101607,
+        "combined_resident_tensor_bytes": 529469440,
+        "primary_bank_description_sha256": "3442124bf3c5a24197d26d51609f76aab8e1a6ef587a357b6ff89c5887c6d72d"
+      },
+      "labels_checked_including_reuse": 2048,
+      "worst_relative_operator_error": 6.442566319044137e-14
+    },
+    {
+      "trial": "targeted-feedback",
+      "config_sha256": "042dcc677d363bef09a00480095e3acfc9fdfb6b1fbf40f1752e0397f4beab51",
+      "primary_tensor_order_evidence_parity": true,
+      "torch_rng_preserved": true,
+      "primary": {
+        "schema": "rheon-analytical-feedback-v3",
+        "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+        "sampling": "uniform-balanced-grid",
+        "grid_exposures": [
+          625,
+          625,
+          625,
+          625,
+          625,
+          625,
+          625,
+          625
+        ],
+        "sampling_order_sha256": "39d725b00a918700a028bc561c6b0eb3f0c05fa6c3b73509eec13276cc5cda9a",
+        "bank_description_sha256": "3442124bf3c5a24197d26d51609f76aab8e1a6ef587a357b6ff89c5887c6d72d",
+        "loss_weights": {
+          "pressure": 0.25,
+          "gradient": 0.25,
+          "equation": 0.5,
+          "amplification": 1.0
+        },
+        "weight": 0.1,
+        "additional_examples": 5000,
+        "resident_tensor_bytes": 529469440,
+        "cache_max_bytes": 805306368,
+        "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+        "amplitude_reference": "train-correction-cell-rms",
+        "amplitude_rms_pa": 2.8535734640782584,
+        "grid_capacity": 16
+      },
+      "supplemental": {
+        "schema": "rheon-supplemental-feedback-v1",
+        "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+        "sampling": "uniform-balanced-grid",
+        "grid_exposures": [
+          833,
+          833,
+          833,
+          834,
+          834,
+          833
+        ],
+        "sampling_order_sha256": "e7d818e9f8e5f78776d1c9306f2ac79b06fc3d582cec6193b896e30c66cb79ef",
+        "bank_description_sha256": "581d616ba4a9d38c0213ccc14183a61006047b55d7c3d4ec74eafe77701b3a9f",
+        "loss_weights": {
+          "pressure": 0.25,
+          "gradient": 0.25,
+          "equation": 0.5,
+          "amplification": 1.0
+        },
+        "weight": 0.1,
+        "additional_examples": 5000,
+        "resident_tensor_bytes": 134572032,
+        "cache_max_bytes": 805306368,
+        "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+        "amplitude_reference": "train-correction-cell-rms",
+        "amplitude_rms_pa": 2.8535734640782584,
+        "grid_capacity": 16,
+        "source_bank_schema": "rheon-analytical-feedback-v3",
+        "reuses_primary": false,
+        "seed": 2026101607,
+        "combined_resident_tensor_bytes": 664041472,
+        "primary_bank_description_sha256": "3442124bf3c5a24197d26d51609f76aab8e1a6ef587a357b6ff89c5887c6d72d"
+      },
+      "labels_checked_including_reuse": 1792,
+      "worst_relative_operator_error": 6.442566319044137e-14
+    }
+  ],
+  "train_parents": 16,
+  "train_states": 32,
+  "amplitude_rms_pa": 2.8535734640782584,
+  "legacy_source_sha256": "2fdca0e2cb2cd4ed2301c032915c6bdd3a17fcf9763e8e6861ac436cd24a3283",
+  "source_sha256": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb",
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "elapsed_seconds": 3.3850168180069886
+}

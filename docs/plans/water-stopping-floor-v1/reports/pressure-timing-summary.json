@@ -1,0 +1,109 @@
+{
+  "schema": "rheon-stopping-floor-comparison-v1",
+  "phase": "timing",
+  "source_report_sha256": "924add47ec0c22b3cfe067a0293c5fe4d05dce9e35b83790b10d61fde113a82c",
+  "source_sha256": "4aa190ff7363274443cfba5125c68e09eaca1942b2b17e3ef018275c094dad72",
+  "models": {
+    "reference-current": {
+      "episodes": 2,
+      "qualified_episodes": 2,
+      "ai_steps": 162,
+      "mean_network_evaluations": 9.197530864197532,
+      "minimum_network_evaluations": 8,
+      "maximum_network_evaluations": 10,
+      "worst_paired_pressure_relative_l2": 4.816520343741245e-07,
+      "median_paired_pressure_relative_l2": 1.5254324265208728e-07,
+      "worst_actual_divergence": 2.086162567138672e-07,
+      "steady_ai_seconds_median": 0.0380149185,
+      "per_episode_ai_seconds_median": [
+        0.038182723,
+        0.037829347
+      ],
+      "sampled_same_rhs_states": 0,
+      "sparse_worst_pressure_relative_l2": null,
+      "sparse_worst_gradient_relative_l2": null,
+      "sparse_worst_low_band_relative_l2": null,
+      "sparse_worst_other_band_relative_l2": null
+    },
+    "reference-pressure": {
+      "episodes": 2,
+      "qualified_episodes": 2,
+      "ai_steps": 162,
+      "mean_network_evaluations": 11.580246913580247,
+      "minimum_network_evaluations": 10,
+      "maximum_network_evaluations": 13,
+      "worst_paired_pressure_relative_l2": 4.2004860784446774e-07,
+      "median_paired_pressure_relative_l2": 9.559712617462303e-08,
+      "worst_actual_divergence": 1.7881393432617188e-07,
+      "steady_ai_seconds_median": 0.048299778,
+      "per_episode_ai_seconds_median": [
+        0.048479223,
+        0.0482302005
+      ],
+      "sampled_same_rhs_states": 0,
+      "sparse_worst_pressure_relative_l2": null,
+      "sparse_worst_gradient_relative_l2": null,
+      "sparse_worst_low_band_relative_l2": null,
+      "sparse_worst_other_band_relative_l2": null
+    },
+    "late-minimum8": {
+      "episodes": 2,
+      "qualified_episodes": 2,
+      "ai_steps": 162,
+      "mean_network_evaluations": 8,
+      "minimum_network_evaluations": 8,
+      "maximum_network_evaluations": 8,
+      "worst_paired_pressure_relative_l2": 6.393504976036151e-07,
+      "median_paired_pressure_relative_l2": 1.3418058120536503e-07,
+      "worst_actual_divergence": 1.7881393432617188e-07,
+      "steady_ai_seconds_median": 0.0344204545,
+      "per_episode_ai_seconds_median": [
+        0.034494892,
+        0.034387491000000006
+      ],
+      "sampled_same_rhs_states": 0,
+      "sparse_worst_pressure_relative_l2": null,
+      "sparse_worst_gradient_relative_l2": null,
+      "sparse_worst_low_band_relative_l2": null,
+      "sparse_worst_other_band_relative_l2": null
+    },
+    "late-pressure": {
+      "episodes": 2,
+      "qualified_episodes": 2,
+      "ai_steps": 162,
+      "mean_network_evaluations": 7.839506172839506,
+      "minimum_network_evaluations": 7,
+      "maximum_network_evaluations": 8,
+      "worst_paired_pressure_relative_l2": 8.705059405650215e-07,
+      "median_paired_pressure_relative_l2": 1.8718454280291928e-07,
+      "worst_actual_divergence": 2.086162567138672e-07,
+      "steady_ai_seconds_median": 0.034768491,
+      "per_episode_ai_seconds_median": [
+        0.0346440145,
+        0.034842732
+      ],
+      "sampled_same_rhs_states": 0,
+      "sparse_worst_pressure_relative_l2": null,
+      "sparse_worst_gradient_relative_l2": null,
+      "sparse_worst_low_band_relative_l2": null,
+      "sparse_worst_other_band_relative_l2": null
+    }
+  },
+  "candidate": "late-pressure",
+  "consumed_acceptance_gates": {
+    "all_episodes_qualified": true,
+    "worst_pressure_not_regressed": false,
+    "mean_calls_not_regressed": true,
+    "maximum_calls_not_regressed": true
+  },
+  "consumed_acceptance_passed": false,
+  "elapsed_seconds": 46.90691399899879,
+  "timing_scope": "serial uninstrumented repeated episodes; ordinary desktop services remain",
+  "network_call_scope": "all AI steps, including first AI step; steady timing excludes first AI step",
+  "sparse_band_scope": "mean-free spatial pressure error; first3 cosine modes/axis excluding constant gauge; components normalized against entire exact mean-free pressure, not band-specific denominators",
+  "pressure_scope": "paired_pressure compares independently advanced native/AI tracks; sparse_same_rhs errors solve each actual supplied state independently",
+  "optimizer_updates": 0,
+  "candidate_promoted": false,
+  "native_children": 9,
+  "all_native_children_reaped": true
+}

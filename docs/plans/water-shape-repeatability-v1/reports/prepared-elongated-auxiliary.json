@@ -1,0 +1,99 @@
+{
+  "schema": "rheon-multigrid-bank-qualification-v1",
+  "configuration_sha256": "a5cd4e83cfc41c0eb48e40e15d3af79606f3431947a42b495e12c14e3514027c",
+  "source_sha256": "b4b9bb8ad37f51bf0e7190f881588c5503c5d80d85b9c110d06fdaa42068ffcf",
+  "legacy_source_sha256": "8c2f9e91988c7e3558926830f3758d2752f5efed953a6853a12cea793b96a726",
+  "legacy_config_sha256": "952a251cab9b31ff1ac3bc360fc7e242fb2d1f3efdf991da1a0c4dc044a62ed1",
+  "legacy_bank_tensor_order_evidence_parity": true,
+  "torch_rng_preserved": true,
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "bank": {
+    "schema": "rheon-analytical-feedback-v2",
+    "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+    "grids": [
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          65,
+          9,
+          7
+        ]
+      },
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          7,
+          65,
+          9
+        ]
+      },
+      {
+        "cells_per_metre": 16,
+        "counts_xyz": [
+          127,
+          5,
+          5
+        ]
+      }
+    ],
+    "sampling": "uniform-balanced-grid",
+    "grid_exposures": [
+      1666,
+      1667,
+      1667
+    ],
+    "sampling_order_sha256": "953e6a3bc051601afff50f22815d67ee833ed047410c92ac0471bac63f204f5e",
+    "bank_description_sha256": "d2ece4e2c65bf809126eb00398e3107d74dcdc4b0b84d73588f6ccabe254373f",
+    "loss_weights": {
+      "pressure": 0.25,
+      "gradient": 0.25,
+      "equation": 0.5,
+      "amplification": 1.0
+    },
+    "weight": 0.1,
+    "additional_examples": 5000,
+    "resident_tensor_bytes": 46560256,
+    "cache_max_bytes": 805306368,
+    "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+    "amplitude_reference": "train-correction-cell-rms",
+    "amplitude_rms_pa": 2.8535734640782584
+  },
+  "samples_checked": 384,
+  "worst_relative_operator_error": 7.058584431229532e-13,
+  "source_train_simulations": 16,
+  "source_train_states": 32,
+  "scope": "cosine eigenvalue labels versus implemented FV operator; does not qualify a fluid trajectory",
+  "status": "prepared_not_trained",
+  "full_receipt": {
+    "path": "runs/water-shape-repeatability-v1/prepared-elongated-auxiliary-full.json",
+    "sha256": "8cf809dedeeff68cc340769c056e596f477155f39ced335e32ad4c90e6d8aef1",
+    "bytes": 236330
+  },
+  "timing": {
+    "argv": [
+      "taskset",
+      "-c",
+      "23",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/qualify_bank.py",
+      "--config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-shape-repeatability-v1/configs/prepared-elongated-auxiliary.json",
+      "--packet",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/views/cohort-16",
+      "--legacy-source",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stability-learning-v1/stability-modes/project/analytical.py",
+      "--legacy-config",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stability-learning-v1/stability-modes/project/config.json",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-shape-repeatability-v1/prepared-elongated-auxiliary-full.json"
+    ],
+    "started_at_utc": "2026-10-16T04:34:29.669355+00:00",
+    "status": "completed",
+    "pid": 1635652,
+    "returncode": 0,
+    "finished_at_utc": "2026-10-16T04:34:31.985670+00:00",
+    "elapsed_seconds": 2.316198410000652,
+    "child_reaped": true
+  }
+}

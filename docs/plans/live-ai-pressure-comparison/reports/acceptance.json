@@ -1,0 +1,219 @@
+{
+  "schema": "rheon-live-water-comparison-acceptance-v1",
+  "status": "comparison_workflow_verified_model_accuracy_failed",
+  "checkpoint_sha256": "aa82bd122fde9406d9e6b92114b3e6ba77281f5ee8b9c726aa168dacbd93a62d",
+  "context_policy": {
+    "mode": "native_prefix",
+    "minimum_native_steps": 15,
+    "derivation": "minimum retained zero-based snapshot index from frozen training reservation; first prediction is physical step 16"
+  },
+  "qualification_scope": "Cold start is unsupported by the measured checkpoint protocol. Warm-up matches prior-pressure availability, not proof of generalization or exact training distribution.",
+  "earlier_reserved_128_snapshot_result": {
+    "disposition": "valid_accuracy_evidence",
+    "preceding_reference_pressure_supplied": true,
+    "qualified": 0,
+    "count": 128
+  },
+  "deployment_verification": {
+    "status": "passed",
+    "checkpoint_sha256": "aa82bd122fde9406d9e6b92114b3e6ba77281f5ee8b9c726aa168dacbd93a62d",
+    "device": "cpu",
+    "cuda_initialized": false,
+    "optimizer_updates": 0,
+    "exact_prediction_bytes": true,
+    "zero_residual_exact": true,
+    "unsupported_cold_start_rejected_before_inference": true,
+    "counts_xyz": [
+      16,
+      16,
+      16
+    ],
+    "native_frame": 15,
+    "pressure_sha256": "9af4715d737da4404093f8b80cf709ce9f676d364dd71148c160cd5873148361",
+    "stderr_bytes": 0
+  },
+  "collection": {
+    "status": "draft_diagnostic_fields_imported",
+    "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "project_id": "350d12fecfee4c51b38c75877896a58f",
+    "record_id": "899f4cc68ea64a91a4abc4ad9ac31b7e",
+    "source_sha256": "823c4782c531249f8d24c4d49f41090869ed29b088450dd31c837396a6bf9c72",
+    "frames": 65,
+    "fields": 5,
+    "native_warmup_steps": 15,
+    "ai_predictions": 49,
+    "ai_qualified": 0,
+    "numeric_slice_reopened": true,
+    "slice_keys": [
+      "id",
+      "content_hash",
+      "frame",
+      "field",
+      "shape_zyx",
+      "axis",
+      "index",
+      "values",
+      "row_axis",
+      "column_axis",
+      "physical_origin",
+      "physical_row_step",
+      "physical_column_step",
+      "time",
+      "time_units",
+      "grid",
+      "units",
+      "stage",
+      "centering",
+      "dtype"
+    ],
+    "review_or_release_admitted": false,
+    "catalog_content_hash_exact": true,
+    "numeric_error_slice_exact": true,
+    "slice_time_s": "0.26666666666666666",
+    "whole_catalog_bundle_byte_exact": true
+  },
+  "runs": [
+    {
+      "directory": "runs/live-ai-comparison/project/run-1792063422326723143-3",
+      "scene_sha256": "acb975264d60c0bdceb5825820979c7a4dad36686899008efcc06d77a53a4206",
+      "completion_sha256": "d44863e82cf18257114710ffa77b413f5ddf7e540e24146a8527e346d881ce9e",
+      "disposition": "unsupported_cold_start_testing_setup",
+      "model_accuracy_evidence_admitted": false,
+      "native_warmup_steps": 0,
+      "native_steps": 8,
+      "native_qualified": 8,
+      "observed_ai_predictions": 8,
+      "observed_ai_qualified": 0,
+      "weights_changed": false,
+      "optimizer_updates": 0,
+      "raw_records_preserved": true
+    },
+    {
+      "directory": "runs/live-ai-comparison/project/run-1792063509316971909-1078162",
+      "scene_sha256": "42bb7c35196be4ab40ddb6a43417e82ca389af1abcdaff22d3ecd22b35124fca",
+      "completion_sha256": "130a9f3089a65a3e1b67efa42a8f1cd74a0579047ea675c9ce82490a52ac00ba",
+      "disposition": "unsupported_cold_start_testing_setup",
+      "model_accuracy_evidence_admitted": false,
+      "native_warmup_steps": 0,
+      "native_steps": 64,
+      "native_qualified": 64,
+      "observed_ai_predictions": 64,
+      "observed_ai_qualified": 0,
+      "weights_changed": false,
+      "optimizer_updates": 0,
+      "raw_records_preserved": true
+    },
+    {
+      "directory": "runs/live-ai-comparison/project/run-1792064346164469413-3",
+      "scene_sha256": "839b897415b503a8152e44cf283655c7742eec403acbae19de5676463ce1d54f",
+      "completion_sha256": "59110fbbdee07d3335ba0a1815f106d64fd90c111b96fc112f238b49b2015d46",
+      "disposition": "warm_start_accuracy_observation",
+      "model_accuracy_evidence_admitted": true,
+      "native_warmup_steps": 15,
+      "native_steps": 24,
+      "native_qualified": 24,
+      "observed_ai_predictions": 9,
+      "observed_ai_qualified": 0,
+      "weights_changed": false,
+      "optimizer_updates": 0,
+      "raw_records_preserved": true,
+      "first_ai_step": 16,
+      "first_ai_relative_residual": 0.037254496090177495,
+      "first_ai_actual_divergence": 0.001416906714439392,
+      "median_ai_relative_residual": 0.08046005049452425,
+      "final_ai_relative_residual": 0.09088264275841135,
+      "first_ai_max_abs_pressure_difference_pa": 2.213110736912867,
+      "shared_prefix_pressures_identical": true,
+      "prefix_ai_quality_absent": true
+    },
+    {
+      "directory": "runs/live-ai-comparison/project/run-1792064406232280102-1084829",
+      "scene_sha256": "74c9de9e389c8a54b77ebd2e5cb8540da48a7942cf7623d522d0e83493191659",
+      "completion_sha256": "b8b2ec1d577d1edd6ed8e331993ced09d4f7947903f1c4bfff34fecb1c3fd51c",
+      "disposition": "warm_start_accuracy_observation",
+      "model_accuracy_evidence_admitted": true,
+      "native_warmup_steps": 15,
+      "native_steps": 64,
+      "native_qualified": 64,
+      "observed_ai_predictions": 49,
+      "observed_ai_qualified": 0,
+      "weights_changed": false,
+      "optimizer_updates": 0,
+      "raw_records_preserved": true,
+      "first_ai_step": 16,
+      "first_ai_relative_residual": 0.037254496090177495,
+      "first_ai_actual_divergence": 0.001416906714439392,
+      "median_ai_relative_residual": 0.12463979843079975,
+      "final_ai_relative_residual": 0.39187611513824505,
+      "first_ai_max_abs_pressure_difference_pa": 2.213110736912867,
+      "shared_prefix_pressures_identical": true,
+      "prefix_ai_quality_absent": true
+    }
+  ],
+  "verification": {
+    "focused_native_tests": 7,
+    "ordinary_desktop_tests": 46,
+    "bridge_boundary_tests": 4,
+    "strict_clippy_both_bins": "passed",
+    "native_prefix_test": "no callback during prefix; exact solved previous pressure at first callback",
+    "actual_desktop": "warm-up control, initial/prefix/AI phase labels, paired cubic volumes, timestamp, signed Pa legend; user operates retained timeline",
+    "screenshot_path": "runs/live-ai-comparison/window-warm-start.png",
+    "screenshot_sha256": "1b127bb5855f9e287d96401775c76a570ffc1e58adf8c21b5cb54f578af63f25",
+    "limitations": [
+      "No claim of reliable learned pressure solver",
+      "Warm-start live force generator is a fresh procedural test, not a held-out accuracy benchmark",
+      "Automatic catalog import for each future interactive restart is not implemented; reusable explicit field export/import is supported"
+    ],
+    "real_checkpoint_lifecycle": {
+      "status": "passed",
+      "cancel_after_ai_predictions": 2,
+      "retained_frames_minimum": 18,
+      "cancelled_terminal_state": true,
+      "child_slots_drained": true,
+      "restart_steps": 16,
+      "restart_distinct_directory": true,
+      "log_path": "runs/live-ai-comparison/lifecycle-verification.log",
+      "log_sha256": "a79a24e52d4357ca62d38183cdc84e6ee0abc3d312635e83b7d4cc7107619778"
+    },
+    "strict_clippy_both_bins_and_tests": "passed",
+    "context_reservation_hash_binding": {
+      "status": "passed",
+      "modified_split_rejected": true,
+      "reusable_test_snapshot_indices": [
+        3,
+        31
+      ],
+      "fresh_export_descriptor_byte_exact": true,
+      "descriptor_sha256": "be4eef1f051206205598e6876c83edaf5246138e17613f1aa787f3df183a761f"
+    }
+  },
+  "standards_commit_guidance": {
+    "provider": "Coding Standards MCP / Standards Engine",
+    "policies": [
+      "core",
+      "workflow.commit",
+      "workflow.implementation"
+    ],
+    "snapshot": "snapshot:v1:353b5714-c22b-49cc-a983-ff7a0b45a266"
+  },
+  "source": {
+    "rheon_branch": "feat/live-ai-pressure-comparison",
+    "rheon_feature_commit": "6c38078",
+    "lab_branch": "feat/sealed-water-pressure-training",
+    "historical_weights_and_results_unchanged": true,
+    "rheon_lifecycle_commit": "66e50388ec7a788dbda0ad1227e330996edf506e",
+    "lab_deployment_commit": "d6a9292"
+  },
+  "worktree_lifecycle": {
+    "path": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/live-ai-comparison/Rheon",
+    "head": "66e50388ec7a788dbda0ad1227e330996edf506e",
+    "head_reachability": "retained-ref",
+    "retained_ref": "refs/heads/feat/live-ai-pressure-comparison",
+    "commit_disposition": "retained",
+    "outcome": "retained-protected",
+    "purpose": "Serves the active comparison app and Tuldok project source references",
+    "owner": "local surrogate-lab integration task",
+    "synchronization": "Pinned until app stop, upstream review and affected reverification",
+    "retirement": "After accepted integration and migration of active binary/project source pointers"
+  }
+}

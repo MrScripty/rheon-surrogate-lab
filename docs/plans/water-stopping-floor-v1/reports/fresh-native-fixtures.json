@@ -1,0 +1,696 @@
+{
+  "phase": "development",
+  "configuration": {
+    "schema": "rheon-stopping-floor-study-v1",
+    "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+    "root": "runs/water-stopping-floor-v1/fresh-preflight",
+    "binary": "runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+    "profile": "experiments/water-inference-budget-v1/configs/adaptive.json",
+    "models": [],
+    "scenes": [
+      {
+        "seed": 2026103100,
+        "counts": [
+          19,
+          15,
+          11
+        ],
+        "cells_per_metre": 8,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.567196,
+          0.414001,
+          0.376193
+        ],
+        "acceleration": 0.146976,
+        "radius": 0.26561,
+        "swirl": 0.340186,
+        "fluctuation": 0.212705,
+        "frequency": 0.813039,
+        "sgs": false
+      },
+      {
+        "seed": 2026103101,
+        "counts": [
+          27,
+          9,
+          17
+        ],
+        "cells_per_metre": 16,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.489896,
+          0.656117,
+          0.552513
+        ],
+        "acceleration": 0.247886,
+        "radius": 0.281972,
+        "swirl": 0.732422,
+        "fluctuation": 0.456895,
+        "frequency": 1.098607,
+        "sgs": false
+      },
+      {
+        "seed": 2026103102,
+        "counts": [
+          11,
+          23,
+          15
+        ],
+        "cells_per_metre": 8,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.386999,
+          0.422748,
+          0.521524
+        ],
+        "acceleration": 0.214542,
+        "radius": 0.217506,
+        "swirl": -0.010645,
+        "fluctuation": 0.262199,
+        "frequency": 1.28672,
+        "sgs": false
+      },
+      {
+        "seed": 2026103103,
+        "counts": [
+          21,
+          21,
+          21
+        ],
+        "cells_per_metre": 16,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.587986,
+          0.306883,
+          0.454421
+        ],
+        "acceleration": 0.365947,
+        "radius": 0.293495,
+        "swirl": -0.203742,
+        "fluctuation": 0.554877,
+        "frequency": 1.710666,
+        "sgs": false
+      },
+      {
+        "seed": 2026103104,
+        "counts": [
+          35,
+          13,
+          9
+        ],
+        "cells_per_metre": 8,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.444605,
+          0.300012,
+          0.292477
+        ],
+        "acceleration": 0.11723,
+        "radius": 0.214421,
+        "swirl": -0.949989,
+        "fluctuation": 0.341936,
+        "frequency": 1.110195,
+        "sgs": false
+      },
+      {
+        "seed": 2026103105,
+        "counts": [
+          13,
+          29,
+          7
+        ],
+        "cells_per_metre": 16,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.290675,
+          0.349439,
+          0.621575
+        ],
+        "acceleration": 0.281376,
+        "radius": 0.286359,
+        "swirl": 0.29977,
+        "fluctuation": 0.178651,
+        "frequency": 1.551492,
+        "sgs": false
+      },
+      {
+        "seed": 2026103106,
+        "counts": [
+          24,
+          18,
+          10
+        ],
+        "cells_per_metre": 8,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.680356,
+          0.476523,
+          0.334634
+        ],
+        "acceleration": 0.197491,
+        "radius": 0.335299,
+        "swirl": -0.220333,
+        "fluctuation": 0.17718,
+        "frequency": 1.860517,
+        "sgs": false
+      },
+      {
+        "seed": 2026103107,
+        "counts": [
+          9,
+          11,
+          33
+        ],
+        "cells_per_metre": 16,
+        "steps": 16,
+        "warmup_steps": 15,
+        "center": [
+          0.528126,
+          0.519362,
+          0.25097
+        ],
+        "acceleration": 0.263233,
+        "radius": 0.268199,
+        "swirl": 0.383749,
+        "fluctuation": 0.106167,
+        "frequency": 1.728575,
+        "sgs": false
+      }
+    ],
+    "workers": 2,
+    "native_timeout_seconds": 120,
+    "max_output_bytes": 1073741824,
+    "available_memory_reserve_bytes": 8589934592,
+    "oracle_address_space_growth_bytes": 536870912,
+    "serial_timing_scene": 0,
+    "serial_timing_repetitions": 2,
+    "source_populations": [
+      "experiments/water-pressure-accuracy-v1/configs/study.json",
+      "experiments/water-shape-repeatability-v1/configs/fresh-development.json"
+    ],
+    "capture_schedule": "first AI, every64th step, final; raw inputs and prediction; same-RHS oracle after native child reaped",
+    "fixture_report": "runs/water-stopping-floor-v1/fixture-correct-binary/report.json"
+  },
+  "config_sha256": "fcb5e2fabd54bdf6c4334b44d14ff1aa38437116164008a474ab17da2f34690d",
+  "source_sha256": {
+    "experiments/water-stopping-floor-v1/run.py": "2b0ea64ca290df075989e4c57f3aad5e772c86de86d768aaa9ad355c3e4e4a7a",
+    "experiments/water-stopping-floor-v1/episode.py": "39397a3cd5b1387ff471d3df30d6bb2b0b4132a6972ff0dd5ea6ea5c51bb19c6",
+    "experiments/water-stability-learning-v1/learned_iteration.py": "a14273b0a07e9885f01182695be6d3a82fab84583963b1119681cefc454e4cd5",
+    "experiments/water-residual-learning-v1/rollout.py": "18250feaa36e7dfa31c8597337be1a9d06eca9570ea7639738a6d93cff89d849"
+  },
+  "started_at_utc": "2026-10-16T16:50:56.269587+00:00",
+  "workers": 2,
+  "records": [
+    {
+      "scene": 0,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 1,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-00-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "1",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "0",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-00-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:56.271860+00:00",
+        "status": "completed",
+        "pid": 29,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:56.941248+00:00",
+        "elapsed_seconds": 0.669168478998472,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "3bd1cc20493141d4ddc863dfe33a7502177dc4ef3cf4fad1ff87e2986d95b9bb",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 33,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 8.4374823848017e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 1,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 2,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-01-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "2",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "1",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-01-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:56.275783+00:00",
+        "status": "completed",
+        "pid": 31,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:57.041985+00:00",
+        "elapsed_seconds": 0.766037397999753,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "dd9b29ae06bd63f721e51119277e3543c9fbd78dc801f4a76220b5e15153a1e1",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 32,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 9.641979034409183e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 2,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 1,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-02-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "1",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "2",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-02-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:56.941890+00:00",
+        "status": "completed",
+        "pid": 34,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:57.606785+00:00",
+        "elapsed_seconds": 0.664833325001382,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "4990a90b2f17b33278b62619c22fa2d5ff8cf8efa09b1e45a8b0eb699c026619",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 35,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 9.209063696550146e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 3,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 2,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-03-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "2",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "3",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-03-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:57.042496+00:00",
+        "status": "completed",
+        "pid": 36,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:58.544174+00:00",
+        "elapsed_seconds": 1.501159301998996,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "3c4a70a3d9150d408071575b2c1e772d3947bbfed6430066aae3378efbea46f9",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 37,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 8.166982835934662e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 4,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 1,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-04-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "1",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "4",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-04-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:57.607353+00:00",
+        "status": "completed",
+        "pid": 38,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:58.323492+00:00",
+        "elapsed_seconds": 0.7160796190000838,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "8b02aeed2430e4f738128026d50313cd719ae6d08ae4b7958f7fde16e2017621",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 39,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 9.921087956073338e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 5,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 1,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-05-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "1",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "5",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-05-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:58.324030+00:00",
+        "status": "completed",
+        "pid": 40,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:58.789289+00:00",
+        "elapsed_seconds": 0.46520406899799127,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "e3421977cc51b24925329c0f41b84fc8d49317ea3796cf667aedea8391d2d462",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 41,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 9.39925211327241e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 6,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 2,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-06-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "2",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "6",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-06-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:58.544770+00:00",
+        "status": "completed",
+        "pid": 42,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:59.260864+00:00",
+        "elapsed_seconds": 0.7154839699978766,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "aa250157308c789bf2cde64a60acb73a43f6719b7c71b09398db9bea684fba8a",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 43,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 8.842018249600109e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    },
+    {
+      "scene": 7,
+      "model": "native",
+      "repetition": 0,
+      "cpu": 1,
+      "output": "runs/water-stopping-floor-v1/fresh-preflight/development/scene-07-native-0",
+      "timing": {
+        "argv": [
+          "taskset",
+          "-c",
+          "1",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/episode.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/configs/fresh-native-fixtures.json",
+          "--scene",
+          "7",
+          "--model",
+          "native",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-stopping-floor-v1/fresh-preflight/development/scene-07-native-0"
+        ],
+        "started_at_utc": "2026-10-16T16:50:58.789859+00:00",
+        "status": "completed",
+        "pid": 44,
+        "returncode": 0,
+        "finished_at_utc": "2026-10-16T16:50:59.405495+00:00",
+        "elapsed_seconds": 0.6151407830002427,
+        "child_reaped": true
+      },
+      "error": null,
+      "receipt_sha256": "e016c9e441bef98596f62c1eeeafedf23879a419a73a551287266075b3752d1a",
+      "result": {
+        "ai_steps": 1,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 1,
+        "reference_control": true,
+        "warmup_steps": 15
+      },
+      "status": "completed",
+      "native_process": {
+        "pid": 45,
+        "returncode": 0,
+        "reaped": true,
+        "terminated": false
+      },
+      "all_ai_steps_qualified": true,
+      "all_reference_steps_qualified": true,
+      "timing_samples": 0,
+      "native_seconds": [],
+      "ai_seconds": [],
+      "callback_seconds": [],
+      "network_passes": [],
+      "worst_relative_residual": 9.749351773783084e-09,
+      "final_pressure_difference": 0.0,
+      "all_declared_stopping_checks_passed": true,
+      "qualified": true
+    }
+  ],
+  "failures": [],
+  "models": [],
+  "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "timing_scope": "parallel/instrumented correctness; no isolated latency claim",
+  "elapsed_seconds": 3.138719749000302,
+  "updated_at_utc": "2026-10-16T16:50:59.407863+00:00",
+  "state": "completed",
+  "all_qualified": true,
+  "finished_at_utc": "2026-10-16T16:50:59.407855+00:00"
+}

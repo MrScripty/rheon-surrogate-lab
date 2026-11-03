@@ -1,0 +1,100 @@
+{
+  "schema": "rheon-water-residual-experiment-v5",
+  "id": "water-multigrid-cohort16-2pass",
+  "training": {
+    "model": "cubic-groupnorm-v3",
+    "seed": 20261015,
+    "sampling_seed": 2026102501,
+    "updates": 5000,
+    "batch_size": 1,
+    "learning_rate": 0.001,
+    "checkpoints": [
+      0,
+      100,
+      500,
+      1000,
+      2000,
+      4000,
+      5000
+    ],
+    "schedule": [
+      {
+        "update": 3000,
+        "learning_rate": 0.0001
+      },
+      {
+        "update": 4500,
+        "learning_rate": 1e-05
+      }
+    ]
+  },
+  "resources": {
+    "wall_seconds": 600,
+    "max_output_bytes": 33554432
+  },
+  "conditioning": "physical-residual",
+  "normalization": "none",
+  "execution": {
+    "resident_inputs": true,
+    "finite_checks": "combined",
+    "batch_mode": "serial",
+    "profile_updates": 0,
+    "prepared_fields": false
+  },
+  "correction": {
+    "activation": "linear",
+    "steps": 2
+  },
+  "objective": "canonical",
+  "output_scale": "previous-pressure-rms",
+  "analytical_feedback": {
+    "weight": 0.1,
+    "seed": 2026101507,
+    "patterns": 32,
+    "grids": [
+      {
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          24,
+          24,
+          24
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          40,
+          40,
+          40
+        ],
+        "cells_per_metre": 16
+      },
+      {
+        "counts_xyz": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16
+      }
+    ],
+    "sampling": "uniform-balanced-grid",
+    "cache_max_bytes": 805306368,
+    "amplitude_reference": "train-correction-cell-rms"
+  }
+}

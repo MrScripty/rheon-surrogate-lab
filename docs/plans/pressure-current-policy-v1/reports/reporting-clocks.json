@@ -1,0 +1,42 @@
+[
+  {
+    "label": "matched-arms",
+    "command": [
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-current-policy-v1/compare_arms.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--reference",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-feedback-weight-ablation-v1/weight003-study-01",
+      "--early",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/current-early-study-02",
+      "--late",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/current-late-study-03",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/docs/plans/pressure-current-policy-v1/reports/matched-training.json"
+    ],
+    "elapsed_s": 0.14679358100693207,
+    "returncode": 0
+  },
+  {
+    "label": "summary",
+    "command": [
+      "python3",
+      "-B",
+      "/tmp/summarize-current-policy.py"
+    ],
+    "elapsed_s": 0.22989725100342184,
+    "returncode": 0
+  },
+  {
+    "label": "decision",
+    "command": [
+      "python3",
+      "-B",
+      "/tmp/record-current-decision.py"
+    ],
+    "elapsed_s": 0.1553100320015801,
+    "returncode": 1
+  }
+]

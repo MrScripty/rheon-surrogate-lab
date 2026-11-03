@@ -1,0 +1,139 @@
+{
+  "schema": "rheon-pressure-accuracy-study-v1",
+  "root": "runs/water-pressure-accuracy-v1",
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+  "native_binary": "runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+  "models": {
+    "retained": {
+      "project": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+      "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts"
+    },
+    "targeted": {
+      "project": "runs/water-targeted-feedback-v1/targeted-feedback/project",
+      "artifacts": "runs/water-targeted-feedback-v1/targeted-feedback/managed-full/stage-01/artifacts"
+    }
+  },
+  "witnesses": [
+    {
+      "name": "witness-00",
+      "scene": {
+        "seed": 2026101601,
+        "counts": [
+          31,
+          11,
+          7
+        ],
+        "cells_per_metre": 16,
+        "steps": 96,
+        "warmup_steps": 15,
+        "center": [
+          0.511609,
+          0.67983,
+          0.642051
+        ],
+        "acceleration": 0.392755,
+        "radius": 0.271963,
+        "swirl": 0.472078,
+        "fluctuation": 0.100978,
+        "frequency": 2.21065,
+        "sgs": false
+      },
+      "capture_steps": [
+        16,
+        88,
+        96
+      ],
+      "historical_frames": "runs/water-targeted-feedback-v1/targeted-feedback/grid-study/scene-01/targeted-feedback-0/frames.jsonl",
+      "historical_frames_sha256": "3305871104235143181687af9c3dff16766d438966edd1015f5c1d09857aad1c"
+    },
+    {
+      "name": "witness-01",
+      "scene": {
+        "seed": 20261032,
+        "counts": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16,
+        "steps": 512,
+        "warmup_steps": 15,
+        "center": [
+          0.65,
+          0.35,
+          0.55
+        ],
+        "acceleration": 0.1875,
+        "radius": 0.25,
+        "swirl": -0.5,
+        "fluctuation": 0.6,
+        "frequency": 2.0,
+        "sgs": false
+      },
+      "capture_steps": [
+        16,
+        282,
+        512
+      ],
+      "historical_frames": "runs/water-targeted-feedback-v1/targeted-feedback/long-study/scene-01/targeted-feedback-0/frames.jsonl",
+      "historical_frames_sha256": "2068fe3e60d7fc15eda96b0f82aeb6a89db2670f7316fc5e82eb9737609e7a04"
+    },
+    {
+      "name": "witness-02",
+      "scene": {
+        "seed": 2026102106,
+        "counts": [
+          31,
+          15,
+          23
+        ],
+        "cells_per_metre": 8,
+        "steps": 128,
+        "warmup_steps": 15,
+        "center": [
+          0.28,
+          0.39,
+          0.28
+        ],
+        "acceleration": 0.248,
+        "radius": 0.194,
+        "swirl": 0.92,
+        "fluctuation": 0.265,
+        "frequency": 1.6800000000000002,
+        "sgs": false
+      },
+      "capture_steps": [
+        16,
+        107,
+        128
+      ],
+      "historical_frames": "runs/water-targeted-feedback-v1/final-holdout/scene-06/targeted-feedback-0/frames.jsonl",
+      "historical_frames_sha256": "998e481c4ab8f104002f9e9975455ef6de26e9138a2835915a990cdc53a16297"
+    }
+  ],
+  "policies": {
+    "original": {
+      "schema": "rheon-learned-stopping-policy-v1",
+      "relative_residual": 1e-06,
+      "absolute_residual": 1e-12,
+      "predicted_divergence": 1e-07
+    },
+    "strict-7": {
+      "schema": "rheon-learned-stopping-policy-v1",
+      "relative_residual": 1e-07,
+      "absolute_residual": 1e-12,
+      "predicted_divergence": 1e-07
+    },
+    "strict-8": {
+      "schema": "rheon-learned-stopping-policy-v1",
+      "relative_residual": 1e-08,
+      "absolute_residual": 1e-12,
+      "predicted_divergence": 1e-07
+    }
+  },
+  "maximum_calls": 32,
+  "native_timeout_seconds": 120,
+  "workers": 24,
+  "max_output_bytes": 1073741824,
+  "free_reserve_bytes": 1073741824
+}

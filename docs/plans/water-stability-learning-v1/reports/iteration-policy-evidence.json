@@ -1,0 +1,385 @@
+{
+  "schema": "rheon-learned-iteration-acceptance-v1",
+  "checkpoint_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179",
+  "inference_policy": {
+    "proposals": 8,
+    "nn_passes": 32,
+    "native_refinement": false,
+    "neural_dtype": "float32",
+    "physical_arithmetic": "existing float64 operator/base accumulation"
+  },
+  "fitted_native": {
+    "all_native_children_drained": true,
+    "candidate_policy": {
+      "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+      "name": "fixed-repeated-learned-correction",
+      "native_pressure_refinement": false,
+      "nn_passes_per_pressure_solve": 32,
+      "proposals": 8
+    },
+    "cases": 1,
+    "cuda_initialized": false,
+    "elapsed_s": 2.0734689235687256,
+    "float32_qualified": 1,
+    "methods": {
+      "learned_jacobi": {
+        "completed_iterations": 0,
+        "fallbacks": 0,
+        "qualified": 1,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_full_budget": {
+        "completed_iterations": 136,
+        "fallbacks": 0,
+        "qualified": 1,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_jacobi": {
+        "completed_iterations": 168,
+        "fallbacks": 1,
+        "qualified": 1,
+        "wasted_warm_iterations": 32
+      },
+      "zero_jacobi": {
+        "completed_iterations": 141,
+        "fallbacks": 0,
+        "qualified": 1,
+        "wasted_warm_iterations": 0
+      }
+    },
+    "raw_native_qualified": 1,
+    "relative_residual": {
+      "maximum": 3.6905268046754057e-13,
+      "median": 3.6905268046754057e-13,
+      "minimum": 3.6905268046754057e-13
+    },
+    "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+    "status": "complete_native_diagnostic",
+    "used_cpus": [
+      1
+    ],
+    "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179",
+    "workers": 1
+  },
+  "development_native": {
+    "all_native_children_drained": true,
+    "candidate_policy": {
+      "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+      "name": "fixed-repeated-learned-correction",
+      "native_pressure_refinement": false,
+      "nn_passes_per_pressure_solve": 32,
+      "proposals": 8
+    },
+    "cases": 128,
+    "cuda_initialized": false,
+    "elapsed_s": 8.089498519897461,
+    "float32_qualified": 128,
+    "methods": {
+      "learned_jacobi": {
+        "completed_iterations": 59,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_full_budget": {
+        "completed_iterations": 11867,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_jacobi": {
+        "completed_iterations": 15963,
+        "fallbacks": 128,
+        "qualified": 128,
+        "wasted_warm_iterations": 4096
+      },
+      "zero_jacobi": {
+        "completed_iterations": 12670,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      }
+    },
+    "raw_native_qualified": 121,
+    "relative_residual": {
+      "maximum": 5.823111580507467e-08,
+      "median": 1.4431660131689734e-12,
+      "minimum": 6.172710673256448e-15
+    },
+    "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+    "status": "complete_native_diagnostic",
+    "used_cpus": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      12,
+      14,
+      16,
+      18,
+      21,
+      22
+    ],
+    "weights_sha256": "7ca7a02e2454d6b79ff6f68fe27118991d9fbbeff1e768aae943ee0b0e2d3179",
+    "workers": 23
+  },
+  "trajectories": {
+    "iterative-8-compact-long-trajectory": {
+      "result": {
+        "ai_steps": 241,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 241,
+        "reference_control": false,
+        "warmup_steps": 15
+      },
+      "scene": {
+        "seed": 20261033,
+        "counts": [
+          12,
+          8,
+          10
+        ],
+        "cells_per_metre": 8,
+        "steps": 256,
+        "warmup_steps": 15,
+        "center": [
+          0.3,
+          0.65,
+          0.45
+        ],
+        "acceleration": 2.0,
+        "radius": 0.35,
+        "swirl": 0.4,
+        "fluctuation": 0.7,
+        "frequency": 2.5,
+        "sgs": false
+      },
+      "receipt_sha256": "3c4e83a1f63e0d4506d1c9931b581749f27d8a32b0ad5ff8d1c7e7098be74898",
+      "worst_relative_residual": 6.784414503903542e-12,
+      "worst_actual_divergence": 7.748603820800781e-07,
+      "final_pressure_field_relative_l2_error": 2.94130356520463e-07,
+      "max_pressure_field_relative_l2_error": 1.3712884790094018e-06,
+      "mean_ai_track_seconds": 0.08836751867219916,
+      "mean_native_track_seconds": 0.0034505190829875517,
+      "timing_scope": "whole per-track Engine.advance including physical preparation, projection and IPC/model callback; not isolated neural kernel"
+    },
+    "iterative-8-compact-trajectory": {
+      "result": {
+        "ai_steps": 49,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 49,
+        "reference_control": false,
+        "warmup_steps": 15
+      },
+      "scene": {
+        "seed": 20261033,
+        "counts": [
+          12,
+          8,
+          10
+        ],
+        "cells_per_metre": 8,
+        "steps": 64,
+        "warmup_steps": 15,
+        "center": [
+          0.3,
+          0.65,
+          0.45
+        ],
+        "acceleration": 2.0,
+        "radius": 0.35,
+        "swirl": 0.4,
+        "fluctuation": 0.7,
+        "frequency": 2.5,
+        "sgs": false
+      },
+      "receipt_sha256": "cdfb4a24ab1787b972b23551d110e2a364ad8b8a7b8396026a2de34f2aa323da",
+      "worst_relative_residual": 5.654594945490759e-12,
+      "worst_actual_divergence": 3.5762786865234375e-07,
+      "final_pressure_field_relative_l2_error": 1.2485811000531838e-07,
+      "max_pressure_field_relative_l2_error": 5.210026226781489e-07,
+      "mean_ai_track_seconds": 0.07272099379591837,
+      "mean_native_track_seconds": 0.0027624486734693877,
+      "timing_scope": "whole per-track Engine.advance including physical preparation, projection and IPC/model callback; not isolated neural kernel"
+    },
+    "iterative-8-cube-240-trajectory": {
+      "result": {
+        "ai_steps": 225,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 225,
+        "reference_control": false,
+        "warmup_steps": 15
+      },
+      "scene": {
+        "seed": 20261031,
+        "counts": [
+          16,
+          16,
+          16
+        ],
+        "cells_per_metre": 16,
+        "steps": 240,
+        "warmup_steps": 15,
+        "center": [
+          0.4,
+          0.55,
+          0.6
+        ],
+        "acceleration": 1.0,
+        "radius": 0.25,
+        "swirl": 0.7,
+        "fluctuation": 0.4,
+        "frequency": 1.2,
+        "sgs": false
+      },
+      "receipt_sha256": "d8c04ffc8f44d9afcd699d2943e36f171df0c9ab2466216819c0a5ed534c106b",
+      "worst_relative_residual": 5.442772543916257e-13,
+      "worst_actual_divergence": 1.1920928955078125e-06,
+      "final_pressure_field_relative_l2_error": 1.148795466453632e-07,
+      "max_pressure_field_relative_l2_error": 2.528657684457806e-07,
+      "mean_ai_track_seconds": 0.20108509628444443,
+      "mean_native_track_seconds": 0.014916392604444445,
+      "timing_scope": "whole per-track Engine.advance including physical preparation, projection and IPC/model callback; not isolated neural kernel"
+    },
+    "iterative-8-cube-trajectory": {
+      "result": {
+        "ai_steps": 49,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 49,
+        "reference_control": false,
+        "warmup_steps": 15
+      },
+      "scene": {
+        "seed": 20261031,
+        "counts": [
+          16,
+          16,
+          16
+        ],
+        "cells_per_metre": 16,
+        "steps": 64,
+        "warmup_steps": 15,
+        "center": [
+          0.4,
+          0.55,
+          0.6
+        ],
+        "acceleration": 1.0,
+        "radius": 0.25,
+        "swirl": 0.7,
+        "fluctuation": 0.4,
+        "frequency": 1.2,
+        "sgs": false
+      },
+      "receipt_sha256": "150a40bf5971f48bfc568aa744b37ae1915dc35513d8a17fe67085f7e5f68b97",
+      "worst_relative_residual": 3.0913703493278286e-13,
+      "worst_actual_divergence": 4.954636096954346e-07,
+      "final_pressure_field_relative_l2_error": 1.408321840239672e-07,
+      "max_pressure_field_relative_l2_error": 1.679263565700155e-07,
+      "mean_ai_track_seconds": 0.19533079140816326,
+      "mean_native_track_seconds": 0.014319058959183673,
+      "timing_scope": "whole per-track Engine.advance including physical preparation, projection and IPC/model callback; not isolated neural kernel"
+    },
+    "iterative-8-long-long-trajectory": {
+      "result": {
+        "ai_steps": 241,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 241,
+        "reference_control": false,
+        "warmup_steps": 15
+      },
+      "scene": {
+        "seed": 20261032,
+        "counts": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16,
+        "steps": 256,
+        "warmup_steps": 15,
+        "center": [
+          0.65,
+          0.35,
+          0.55
+        ],
+        "acceleration": 1.5,
+        "radius": 0.25,
+        "swirl": -0.5,
+        "fluctuation": 0.6,
+        "frequency": 2.0,
+        "sgs": false
+      },
+      "receipt_sha256": "9bf5d00635f4a20c065e6081bfc3dbeb281a8228f4dc0d1768718b806b559272",
+      "worst_relative_residual": 1.8689550086371148e-13,
+      "worst_actual_divergence": 1.1920928955078125e-06,
+      "final_pressure_field_relative_l2_error": 2.596984614863126e-07,
+      "max_pressure_field_relative_l2_error": 3.90889051029556e-07,
+      "mean_ai_track_seconds": 0.20454096444813277,
+      "mean_native_track_seconds": 0.01904624763485477,
+      "timing_scope": "whole per-track Engine.advance including physical preparation, projection and IPC/model callback; not isolated neural kernel"
+    },
+    "iterative-8-long-trajectory": {
+      "result": {
+        "ai_steps": 49,
+        "hard_stop": false,
+        "kind": "complete",
+        "qualified_ai_steps": 49,
+        "reference_control": false,
+        "warmup_steps": 15
+      },
+      "scene": {
+        "seed": 20261032,
+        "counts": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16,
+        "steps": 64,
+        "warmup_steps": 15,
+        "center": [
+          0.65,
+          0.35,
+          0.55
+        ],
+        "acceleration": 1.5,
+        "radius": 0.25,
+        "swirl": -0.5,
+        "fluctuation": 0.6,
+        "frequency": 2.0,
+        "sgs": false
+      },
+      "receipt_sha256": "9f0ff0f3a27dd0ed366addf709592f54af00f019a65fdc78861427b16a27a3b6",
+      "worst_relative_residual": 1.8689550086371148e-13,
+      "worst_actual_divergence": 7.152557373046875e-07,
+      "final_pressure_field_relative_l2_error": 8.196290629619838e-08,
+      "max_pressure_field_relative_l2_error": 2.2514649931314846e-07,
+      "mean_ai_track_seconds": 0.20123712002040817,
+      "mean_native_track_seconds": 0.018552773857142858,
+      "timing_scope": "whole per-track Engine.advance including physical preparation, projection and IPC/model callback; not isolated neural kernel"
+    }
+  },
+  "source_sha256": {
+    "experiments/water-stability-learning-v1/learned_iteration.py": "33043faebd79409b62f4ae1e43fb5cd215fe294cde3029cb5ecd88422fabd0fe",
+    "experiments/water-stability-learning-v1/test_learned_iteration.py": "add682e2d04756efdd7bd79aff74b454f6bc7fcebe9d8f75a21320405ae5784b",
+    "experiments/water-residual-learning-v1/rollout.py": "fe430aaad2641f00357f26be2e5d2f22f80e85010371df5b38b743e2316c3ea7",
+    "experiments/water-conditioning-v1/native_parallel.py": "92637a050d51a276bdb22c4509bfda38087b4353b87a0cea8a6bb94860ed5c2c"
+  },
+  "focused_checks": {
+    "two_cell_feedback_and_budget": 2,
+    "real_process_cleanup": 2,
+    "native_negative_source_policy_checks": 2
+  },
+  "qualification_scope": "fitted state, 128 development states, three 64-step and three extended trajectories; no untouched test, deployment or speedup claim"
+}

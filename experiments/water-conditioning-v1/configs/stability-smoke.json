@@ -1,0 +1,41 @@
+{
+  "schema": "rheon-water-residual-experiment-v3",
+  "id": "water-stability-smoke",
+  "training": {
+    "model": "cubic-groupnorm-v3",
+    "seed": 20261015,
+    "sampling_seed": 2026102501,
+    "updates": 2,
+    "batch_size": 1,
+    "learning_rate": 0.001,
+    "checkpoints": [
+      0,
+      2
+    ],
+    "schedule": []
+  },
+  "resources": {
+    "wall_seconds": 600,
+    "max_output_bytes": 33554432
+  },
+  "conditioning": "physical-residual",
+  "normalization": "none",
+  "execution": {
+    "resident_inputs": true,
+    "finite_checks": "combined",
+    "batch_mode": "serial",
+    "profile_updates": 0,
+    "prepared_fields": false
+  },
+  "correction": {
+    "activation": "linear",
+    "steps": 4
+  },
+  "objective": "canonical",
+  "output_scale": "correction-rms",
+  "analytical_feedback": {
+    "weight": 0.1,
+    "seed": 2026101507,
+    "patterns": 32
+  }
+}

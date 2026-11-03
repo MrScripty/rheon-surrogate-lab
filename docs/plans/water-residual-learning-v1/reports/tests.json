@@ -1,0 +1,72 @@
+{
+  "schema": "rheon-residual-checks-v1",
+  "checked_at_utc": "2026-10-15T20:05:11.383270+00:00",
+  "source_head": "497002d72a48fa9599a9825dbb4bcd102f65b064",
+  "python_checks": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/water-conditioning-v1/training",
+        "-p",
+        "test_conditioning.py"
+      ],
+      "expected_tests": 7,
+      "returncode": 0,
+      "output": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.607s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/water-conditioning-v1/training",
+        "-p",
+        "test_residual.py"
+      ],
+      "expected_tests": 6,
+      "returncode": 0,
+      "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.653s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/water-residual-learning-v1",
+        "-p",
+        "test_audit.py"
+      ],
+      "expected_tests": 1,
+      "returncode": 0,
+      "output": ".\n----------------------------------------------------------------------\nRan 1 test in 0.231s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/water-residual-learning-v1",
+        "-p",
+        "test_rollout.py"
+      ],
+      "expected_tests": 2,
+      "returncode": 0,
+      "output": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.063s\n\nOK\n"
+    }
+  ],
+  "python_test_count": 16,
+  "rust_existing_engine_tests": 4,
+  "rust_build_receipt": "native-rollout-build.json",
+  "rust_clippy": "passed with -D warnings",
+  "scope": "changed model/execution contracts, spectral control and real process failure/deadline cleanup; model accuracy has separate native evidence"
+}

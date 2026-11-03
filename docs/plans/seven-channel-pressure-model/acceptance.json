@@ -1,0 +1,137 @@
+{
+  "schema": "rheon-seven-channel-acceptance-v1",
+  "status": "accepted_input_training_restore_native_diagnostic; raw_accuracy_unqualified",
+  "source_commit": "1db001b7fbaa67e271363238550a497a3626e379",
+  "input_channels": [
+    "native_residual",
+    "previous_pressure",
+    "x",
+    "y",
+    "z",
+    "rho",
+    "dt"
+  ],
+  "physical_metadata": "one positive scalar cell_size_m per sample; no voxel-size network channels",
+  "parameters": 371729,
+  "physical_field_arrays_byte_identical_to_v1": true,
+  "all_parent_frame_hashes_identical_to_v1": true,
+  "captures_reused_and_reverified": true,
+  "parents": 6,
+  "reference_frames": 144,
+  "train_frames": 96,
+  "validation_frames": 48,
+  "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "project_id": "497a1373e5654c75b9d067561f7d6298",
+  "managed_runs": [
+    {
+      "name": "train",
+      "id": "89e5e42c4563405d9afb3942907aea14",
+      "state": "completed",
+      "custody_phase": "drained",
+      "artifact_count": 18
+    },
+    {
+      "name": "restore",
+      "id": "cfe01464cb8d4444b546cc06b4fc304f",
+      "state": "completed",
+      "custody_phase": "drained",
+      "artifact_count": 18
+    }
+  ],
+  "shared_artifacts_byte_exact": 16,
+  "restored_predictions_recomputed_exact": 12,
+  "optimizer_updates": {
+    "train": 200,
+    "restore": 0
+  },
+  "validation": {
+    "final": 0.1003719134394471,
+    "initial": 2.60757256742981
+  },
+  "native_diagnostic": {
+    "cases": 12,
+    "cubic_cells": true,
+    "methods": {
+      "learned_jacobi": {
+        "completed_iterations": 1691,
+        "fallbacks": 12,
+        "qualified": 12,
+        "wasted_warm_iterations": 384
+      },
+      "temporal_full_budget": {
+        "completed_iterations": 1307,
+        "fallbacks": 0,
+        "qualified": 12,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_jacobi": {
+        "completed_iterations": 1691,
+        "fallbacks": 12,
+        "qualified": 12,
+        "wasted_warm_iterations": 384
+      },
+      "zero_jacobi": {
+        "completed_iterations": 1332,
+        "fallbacks": 0,
+        "qualified": 12,
+        "wasted_warm_iterations": 0
+      }
+    },
+    "raw_qualified": 0,
+    "scope": "teacher-state development snapshots; no autonomous rollout or acceleration claim",
+    "shapes_xyz": [
+      [
+        8,
+        8,
+        8
+      ],
+      [
+        9,
+        7,
+        5
+      ],
+      [
+        12,
+        8,
+        6
+      ],
+      [
+        16,
+        16,
+        16
+      ],
+      [
+        17,
+        13,
+        9
+      ],
+      [
+        24,
+        16,
+        12
+      ]
+    ],
+    "status": "complete_diagnostic",
+    "workflow_elapsed_s": 0.9933495559962466
+  },
+  "source_witness_sha256": "802abe311e2c23009cb176c28307f88f648b7f7b033f77b82e78ac53aa30f0aa",
+  "runtime_manifest_sha256": "ce8a0a16972e050b2985b9853f61edd85f70748cf6681ca768c9e3794d5964d7",
+  "normalization_sha256": "2ce6c3ab6722269b97b6ae61e978d219c0ee8d3d56c471cba0b3d85188a64da1",
+  "input_tensor_sha256": "81c52184366c4e70663c9351d835baa23f6dc49d0cff8e537c429fd65da888a3",
+  "surviving_input_channels_byte_exact_to_v1": true,
+  "model_tests": 10,
+  "native_tests": 6,
+  "clippy": "passed",
+  "browser_checks": 9,
+  "evidence_paths": {
+    "packet": "runs/variable-pressure-v2-material-1/packet",
+    "workspace": "runs/variable-pressure-v2-workspace-1",
+    "viewer": "runs/tensor-viewer/seven-channel-inputs.json",
+    "browser": "runs/tensor-viewer/seven-channel-browser-checks.json"
+  },
+  "limitations": [
+    "Previously observed development parents; no new held-out test",
+    "Raw pressure failed 12/12 strict gates; fallback qualified all 12",
+    "No GPU, autonomous rollout or acceleration claim"
+  ]
+}

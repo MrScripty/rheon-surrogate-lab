@@ -1,0 +1,1424 @@
+{
+  "schema": "rheon-water-learning-sequence-acceptance-v1",
+  "status": "experiment_completed_model_not_qualified",
+  "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "source_commit": "5646c37",
+  "training_device": "cuda:0",
+  "inference_device": "cpu",
+  "dtype": "float32",
+  "model_and_loss_unchanged": true,
+  "relative_residual_target": 1e-06,
+  "physical_gates_unchanged": true,
+  "warm_previous_pressure_supplied": true,
+  "historical_results_preserved": true,
+  "trials": {
+    "fit-one": {
+      "training_parents": 1,
+      "training_snapshots": 1,
+      "updates": 10000,
+      "cuda_training_s": 238.92699992199778,
+      "execution": {
+        "amp": false,
+        "batches_cuda": true,
+        "cuda_cpu_pressure_max_abs_difference": 0.00010548562447709742,
+        "deterministic_algorithms": true,
+        "device": "cuda:0",
+        "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+        "model_dtype": "float32",
+        "parameters_gradients_adam_moments_cuda": true,
+        "peak_allocated_bytes": 8774656,
+        "peak_reserved_bytes": 10485760,
+        "tf32": false
+      },
+      "cpu_restore": {
+        "cuda_initialized": false,
+        "device": "cpu",
+        "optimizer_updates": 0
+      },
+      "cpu_checkpoint_weights_exact": true,
+      "training_weights_sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223",
+      "validation_loss": {
+        "final": 0.009862271827800726,
+        "initial": 17.70540289055894
+      },
+      "validation_native": {
+        "cases": 128,
+        "float32_qualified": 0,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 15323,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 3456
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 11867,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "zero_jacobi": {
+            "completed_iterations": 12670,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "populations": [
+          "validation"
+        ],
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 0.2756988597493179,
+          "median": 0.07168661478370586,
+          "minimum": 0.015316539915805115
+        },
+        "scope": "Full original equation and physical gates on supplied preceding native pressure; no cold-start or autonomous claim",
+        "status": "complete_native_diagnostic",
+        "weights_sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223"
+      },
+      "validation_reference_qualified": 128,
+      "validation_model_failure_counts": {
+        "original_rhs_full_residual": 128,
+        "predicted_divergence": 128,
+        "actual_f32_divergence": 128
+      },
+      "managed": {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "project_id": "982edf9c5369404e8f32ffa96396cc3f",
+        "stages": [
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 165414,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "f774aa445daf0d813b04555795db81fbf83de0883328b7e34b550e4d4bf6becf",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "4c08199eaaa6424b75a0fc407a648c3fb9b8abada4bd15dae8c72829cb573138",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 27318,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "e962e851c6b4f7e76b1b8fa0a774793e8980680a10d67326a7656994ec6b173a",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/history.json"
+              },
+              {
+                "bytes": 374928,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/splits.json"
+              },
+              {
+                "bytes": 1173,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "37965c625cb8c3efb06bfd3e5b2d2e422d62a979a386c2e3b6bb164cda09da8e",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/normalization.json"
+              },
+              {
+                "bytes": 8402,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "training_result",
+                "sha256": "c8a77f73ac8141d001f9c1d154bc5373eb2854a9853c44be755a3de13a6ad860",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/receipt.json"
+              },
+              {
+                "bytes": 836,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "7346dd2920fd849e0486d7208d921ad10a8b261ae6f4e9470a76e33bee8f46b0",
+                "url": "/api/workspace/runs/bc1ea77166d444dc8f791cc532a49541/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "2ed39e573cdcf292c01ad6b7cdd3118e5658d04c1ebec7af2c880bb8e6583475",
+            "name": "train",
+            "run_id": "bc1ea77166d444dc8f791cc532a49541",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 165414,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "f774aa445daf0d813b04555795db81fbf83de0883328b7e34b550e4d4bf6becf",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "4c08199eaaa6424b75a0fc407a648c3fb9b8abada4bd15dae8c72829cb573138",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 27318,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "e962e851c6b4f7e76b1b8fa0a774793e8980680a10d67326a7656994ec6b173a",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/history.json"
+              },
+              {
+                "bytes": 374928,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "80f345e733ac0fa419fda1249fa714fcb25c1ac7ef2ffe3f09038f33ce313feb",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/splits.json"
+              },
+              {
+                "bytes": 1173,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "37965c625cb8c3efb06bfd3e5b2d2e422d62a979a386c2e3b6bb164cda09da8e",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/normalization.json"
+              },
+              {
+                "bytes": 9786,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "b26d3be476a6ce134e021c380f6ef15db341d293043e5416164918ea37cc89ba",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/receipt.json"
+              },
+              {
+                "bytes": 834,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "161b1e17a590e4a43531d624fedb2e7dc6105875a569fe46271f1b7ecdabc9f1",
+                "url": "/api/workspace/runs/1fa2fa3fbf044a4795bc41c8b9845bc4/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "3258098e33219b58e6e8b7b96ed8dcece043c8fd67282eb875bb557c69b9e97b",
+            "name": "restore",
+            "run_id": "1fa2fa3fbf044a4795bc41c8b9845bc4",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1120502,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "eda257b00a8e160d4d23571b0715fbbb5dd90a48e3b398864fcb6bbc797eef33",
+                "url": "/api/workspace/runs/841260809ad2459e802c351ca00649c0/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 42203,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "ab864d816f47fc4db6c16752a37be518e3354c388a87951e5a37017409399997",
+                "url": "/api/workspace/runs/841260809ad2459e802c351ca00649c0/artifacts/receipt.json"
+              },
+              {
+                "bytes": 127,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "88586ff425ee38123d9276ff50dc99b2ff8b2e204bfccb3dddef7b17d45e6b84",
+                "url": "/api/workspace/runs/841260809ad2459e802c351ca00649c0/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "36583caae6cd2efbcb2a93460477ed337e94f9637a7468737417b891e89a42f2",
+            "name": "validation",
+            "run_id": "841260809ad2459e802c351ca00649c0",
+            "state": "completed"
+          }
+        ],
+        "status": "completed_and_drained"
+      },
+      "source_commit": "5646c37",
+      "training_receipt_sha256": "c8a77f73ac8141d001f9c1d154bc5373eb2854a9853c44be755a3de13a6ad860",
+      "history_sha256": "e962e851c6b4f7e76b1b8fa0a774793e8980680a10d67326a7656994ec6b173a",
+      "native_cases_sha256": "ca127bc157f640170065da9b103814bd972a719c3adf61959ce9d4dbf349eff1",
+      "fitted_native": {
+        "cases": 1,
+        "float32_qualified": 0,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 168,
+            "fallbacks": 1,
+            "qualified": 1,
+            "wasted_warm_iterations": 32
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 136,
+            "fallbacks": 0,
+            "qualified": 1,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 168,
+            "fallbacks": 1,
+            "qualified": 1,
+            "wasted_warm_iterations": 32
+          },
+          "zero_jacobi": {
+            "completed_iterations": 141,
+            "fallbacks": 0,
+            "qualified": 1,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "populations": [
+          "train"
+        ],
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 0.0017782435122407447,
+          "median": 0.0017782435122407447,
+          "minimum": 0.0017782435122407447
+        },
+        "scope": "Full original equation and physical gates on supplied preceding native pressure; no cold-start or autonomous claim",
+        "status": "complete_native_diagnostic",
+        "weights_sha256": "685d617f49e23cc78f6aab8e5567d8ec74d8a80262f2beb8de2c38e029be3223"
+      }
+    },
+    "long-256": {
+      "training_parents": 256,
+      "training_snapshots": 512,
+      "updates": 10000,
+      "cuda_training_s": 377.3735397270066,
+      "execution": {
+        "amp": false,
+        "batches_cuda": true,
+        "cuda_cpu_pressure_max_abs_difference": 0.00030965107718472495,
+        "deterministic_algorithms": true,
+        "device": "cuda:0",
+        "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+        "model_dtype": "float32",
+        "parameters_gradients_adam_moments_cuda": true,
+        "peak_allocated_bytes": 32808448,
+        "peak_reserved_bytes": 58720256,
+        "tf32": false
+      },
+      "cpu_restore": {
+        "cuda_initialized": false,
+        "device": "cpu",
+        "optimizer_updates": 0
+      },
+      "cpu_checkpoint_weights_exact": true,
+      "training_weights_sha256": "cdf45b9e5c39c48cbe1518306899f76eb1130d68fecad00b88810bdbb30d400c",
+      "validation_loss": {
+        "final": 0.002572603102200356,
+        "initial": 55.89418180719971
+      },
+      "validation_native": {
+        "cases": 128,
+        "float32_qualified": 0,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 11867,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "zero_jacobi": {
+            "completed_iterations": 12670,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "populations": [
+          "validation"
+        ],
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 0.19760299673140935,
+          "median": 0.039109866370526956,
+          "minimum": 0.003927858283037575
+        },
+        "scope": "Full original equation and physical gates on supplied preceding native pressure; no cold-start or autonomous claim",
+        "status": "complete_native_diagnostic",
+        "weights_sha256": "cdf45b9e5c39c48cbe1518306899f76eb1130d68fecad00b88810bdbb30d400c"
+      },
+      "validation_reference_qualified": 128,
+      "validation_model_failure_counts": {
+        "original_rhs_full_residual": 128,
+        "predicted_divergence": 128,
+        "actual_f32_divergence": 128
+      },
+      "managed": {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "project_id": "5c1f29c238c14c23b9924a6d3ee3f30c",
+        "stages": [
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 298222,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "4863f732cb907b2cb331fd8706b1c9e43b83b92711f1dc1b583fc91f0a592eb9",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "aa82bd122fde9406d9e6b92114b3e6ba77281f5ee8b9c726aa168dacbd93a62d",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "cdf45b9e5c39c48cbe1518306899f76eb1130d68fecad00b88810bdbb30d400c",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "cdf45b9e5c39c48cbe1518306899f76eb1130d68fecad00b88810bdbb30d400c",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 27016,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "e5e6c6daa9dfc5719f75f025e9e9501ba74900a128ee9ab8b538f8ab878779c7",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/history.json"
+              },
+              {
+                "bytes": 986084,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "babfb21aed2a01c38fa6f735f5c67e2987be0daad1867b200806153adfd6c15e",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/splits.json"
+              },
+              {
+                "bytes": 92398,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "74763c28d68a4c6fb2923170bb58cd9a7306d2a955b86417efd2f115cb08922f",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/normalization.json"
+              },
+              {
+                "bytes": 11755,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "training_result",
+                "sha256": "83c417946315282d5162232503020161c0e9b6e532c073b7c1e6136727c49718",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/receipt.json"
+              },
+              {
+                "bytes": 3317,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "ca6692821a88e41f9c769257e242b9c44c61471ecb02daa66707a4fb78ef4412",
+                "url": "/api/workspace/runs/a63a03c360ab4dc993a4add962f86834/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "7bae994262472b701127626da0f3b0d39e66e5e969a87597366e6e0632801dab",
+            "name": "train",
+            "run_id": "a63a03c360ab4dc993a4add962f86834",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 298222,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "4863f732cb907b2cb331fd8706b1c9e43b83b92711f1dc1b583fc91f0a592eb9",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "aa82bd122fde9406d9e6b92114b3e6ba77281f5ee8b9c726aa168dacbd93a62d",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "cdf45b9e5c39c48cbe1518306899f76eb1130d68fecad00b88810bdbb30d400c",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "cdf45b9e5c39c48cbe1518306899f76eb1130d68fecad00b88810bdbb30d400c",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 27016,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "e5e6c6daa9dfc5719f75f025e9e9501ba74900a128ee9ab8b538f8ab878779c7",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/history.json"
+              },
+              {
+                "bytes": 986084,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "babfb21aed2a01c38fa6f735f5c67e2987be0daad1867b200806153adfd6c15e",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/splits.json"
+              },
+              {
+                "bytes": 92398,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "74763c28d68a4c6fb2923170bb58cd9a7306d2a955b86417efd2f115cb08922f",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/normalization.json"
+              },
+              {
+                "bytes": 13139,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "b35fee079f67b8e676bb0b3871a7cb6b5a4c5632dad2a1f45fc77b7ad5ed118a",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/receipt.json"
+              },
+              {
+                "bytes": 3315,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "01d37f153e3f365d535b20311d29b811279333e12ba13aee0c247028aa49b1be",
+                "url": "/api/workspace/runs/cac7599102a54fc09b6ef1c48860b319/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "3049bed060eac64997dbcbfa1c4bd4dc3f556ae0802b3e682792c7ee637e38f4",
+            "name": "restore",
+            "run_id": "cac7599102a54fc09b6ef1c48860b319",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1120502,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "55fd2ef1071995d0d7ba669b16415b58795be0a192f65183605b4c6eb0d06efd",
+                "url": "/api/workspace/runs/182782998e654ce3a2b5d81b3ce861fc/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 42200,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "b61ef74aecca5b91139038cc9e0ac836977dafaf6cfc6bf72e0972342f0e935a",
+                "url": "/api/workspace/runs/182782998e654ce3a2b5d81b3ce861fc/artifacts/receipt.json"
+              },
+              {
+                "bytes": 127,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "88586ff425ee38123d9276ff50dc99b2ff8b2e204bfccb3dddef7b17d45e6b84",
+                "url": "/api/workspace/runs/182782998e654ce3a2b5d81b3ce861fc/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "df9f6aef5b34e62f6f240b3a7428ed92b1f0eb849809ff752f0828961404376a",
+            "name": "validation",
+            "run_id": "182782998e654ce3a2b5d81b3ce861fc",
+            "state": "completed"
+          }
+        ],
+        "status": "completed_and_drained"
+      },
+      "source_commit": "5646c37",
+      "training_receipt_sha256": "83c417946315282d5162232503020161c0e9b6e532c073b7c1e6136727c49718",
+      "history_sha256": "e5e6c6daa9dfc5719f75f025e9e9501ba74900a128ee9ab8b538f8ab878779c7",
+      "native_cases_sha256": "ac1f735412fd2a9e44d097fb46914dac36c7f91f6a69a835aa24f57d681a3513"
+    },
+    "scale-256": {
+      "training_parents": 256,
+      "training_snapshots": 256,
+      "updates": 10000,
+      "cuda_training_s": 386.54521932802163,
+      "execution": {
+        "amp": false,
+        "batches_cuda": true,
+        "cuda_cpu_pressure_max_abs_difference": 0.0002729663478824307,
+        "deterministic_algorithms": true,
+        "device": "cuda:0",
+        "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+        "model_dtype": "float32",
+        "parameters_gradients_adam_moments_cuda": true,
+        "peak_allocated_bytes": 32808448,
+        "peak_reserved_bytes": 58720256,
+        "tf32": false
+      },
+      "cpu_restore": {
+        "cuda_initialized": false,
+        "device": "cpu",
+        "optimizer_updates": 0
+      },
+      "cpu_checkpoint_weights_exact": true,
+      "training_weights_sha256": "d1ee4f181becb11c901d3cc31d8b9388b5dfe222dbda6593245b6dce48ba3616",
+      "validation_loss": {
+        "final": 0.0027460474486211894,
+        "initial": 68.34115681847021
+      },
+      "validation_native": {
+        "cases": 128,
+        "float32_qualified": 0,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 11867,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "zero_jacobi": {
+            "completed_iterations": 12670,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "populations": [
+          "validation"
+        ],
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 0.1891394435480184,
+          "median": 0.04565520620053903,
+          "minimum": 0.004002177353561454
+        },
+        "scope": "Full original equation and physical gates on supplied preceding native pressure; no cold-start or autonomous claim",
+        "status": "complete_native_diagnostic",
+        "weights_sha256": "d1ee4f181becb11c901d3cc31d8b9388b5dfe222dbda6593245b6dce48ba3616"
+      },
+      "validation_reference_qualified": 128,
+      "validation_model_failure_counts": {
+        "original_rhs_full_residual": 128,
+        "predicted_divergence": 128,
+        "actual_f32_divergence": 128
+      },
+      "managed": {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "project_id": "17f26f33fd0e4f41bf0f6b874a41aac2",
+        "stages": [
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 298222,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "74704217ed07e7c11ead5a6ffdb743bbfa0cecf2d1b0c823331aa9a4c4448df6",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "048d109c85b3ff987138b2fd684d2bc2f11efef26bd2be78214942a18f02ad44",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "d1ee4f181becb11c901d3cc31d8b9388b5dfe222dbda6593245b6dce48ba3616",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "d1ee4f181becb11c901d3cc31d8b9388b5dfe222dbda6593245b6dce48ba3616",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 27029,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "d9f6b4bfe5e6bfe9533925554c7402e5184b560fac41805d91ffb72bb5677bb1",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/history.json"
+              },
+              {
+                "bytes": 897630,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "95b4db8bc528cdbdf00879b1470833e8c8b979cced21d9dce49aefd89f3d4210",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/splits.json"
+              },
+              {
+                "bytes": 92400,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "110daea256f2fca34a7c4ccf492d77d21beb47bbb88d18022a2a45a238c9e32d",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/normalization.json"
+              },
+              {
+                "bytes": 11757,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "training_result",
+                "sha256": "c88c7a258cbecbb844ee05fbcb6f75c3047dc31dca7cc055f215a3d9836a40be",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/receipt.json"
+              },
+              {
+                "bytes": 3318,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "69ddc07be9beceede383c85ba6859db321ebac292b03036764cf54300b732849",
+                "url": "/api/workspace/runs/a9c6b01204874a1e8d12fe863f216e8d/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "b8a1db6c25b1790737e96c370d6a24ea33f22744c50f7cae0b1a7edd2a4a14e0",
+            "name": "train",
+            "run_id": "a9c6b01204874a1e8d12fe863f216e8d",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 298222,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "74704217ed07e7c11ead5a6ffdb743bbfa0cecf2d1b0c823331aa9a4c4448df6",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "048d109c85b3ff987138b2fd684d2bc2f11efef26bd2be78214942a18f02ad44",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "d1ee4f181becb11c901d3cc31d8b9388b5dfe222dbda6593245b6dce48ba3616",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "d1ee4f181becb11c901d3cc31d8b9388b5dfe222dbda6593245b6dce48ba3616",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 27029,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "d9f6b4bfe5e6bfe9533925554c7402e5184b560fac41805d91ffb72bb5677bb1",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/history.json"
+              },
+              {
+                "bytes": 897630,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "95b4db8bc528cdbdf00879b1470833e8c8b979cced21d9dce49aefd89f3d4210",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/splits.json"
+              },
+              {
+                "bytes": 92400,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "110daea256f2fca34a7c4ccf492d77d21beb47bbb88d18022a2a45a238c9e32d",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/normalization.json"
+              },
+              {
+                "bytes": 13137,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "c68552a4efc9de475016880cf7be58092b8c671de9b5cd441b0c5b0b7d1d0036",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/receipt.json"
+              },
+              {
+                "bytes": 3316,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "e03e282665f27ec691f21a6a4ad5d1ec960ec8a096fbe5a0445d5a31b8528930",
+                "url": "/api/workspace/runs/702a1bfd6c1d490a982c8cba02048e2b/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "7412308fd9d99c05681781fa70c5b602db1ea5aebd571f3d2aae2584ce84dead",
+            "name": "restore",
+            "run_id": "702a1bfd6c1d490a982c8cba02048e2b",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1120502,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "28a2c628b1d54380f3838d9f4f355a0105af2028be68a06df035b64c5c1a4a23",
+                "url": "/api/workspace/runs/42d9f60c1541467288b7cb10e445299f/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 42203,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "898351f41533ad70dcccd8143ba82d6014114f5acb913a95268143ee92fcf3c8",
+                "url": "/api/workspace/runs/42d9f60c1541467288b7cb10e445299f/artifacts/receipt.json"
+              },
+              {
+                "bytes": 127,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "88586ff425ee38123d9276ff50dc99b2ff8b2e204bfccb3dddef7b17d45e6b84",
+                "url": "/api/workspace/runs/42d9f60c1541467288b7cb10e445299f/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "6e365d2b64d95fd0612391bb116c46de6bb232d60e08534b0381b1bd60e74de8",
+            "name": "validation",
+            "run_id": "42d9f60c1541467288b7cb10e445299f",
+            "state": "completed"
+          }
+        ],
+        "status": "completed_and_drained"
+      },
+      "source_commit": "5646c37",
+      "training_receipt_sha256": "c88c7a258cbecbb844ee05fbcb6f75c3047dc31dca7cc055f215a3d9836a40be",
+      "history_sha256": "d9f6b4bfe5e6bfe9533925554c7402e5184b560fac41805d91ffb72bb5677bb1",
+      "native_cases_sha256": "6828d04453e77f87f1448d475a062d512516b6b09e485c57696656cbc43f4fbf"
+    },
+    "scale-1024": {
+      "training_parents": 1024,
+      "training_snapshots": 1024,
+      "updates": 10000,
+      "cuda_training_s": 384.13561277801637,
+      "execution": {
+        "amp": false,
+        "batches_cuda": true,
+        "cuda_cpu_pressure_max_abs_difference": 0.0003307014985409751,
+        "deterministic_algorithms": true,
+        "device": "cuda:0",
+        "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+        "model_dtype": "float32",
+        "parameters_gradients_adam_moments_cuda": true,
+        "peak_allocated_bytes": 32872960,
+        "peak_reserved_bytes": 58720256,
+        "tf32": false
+      },
+      "cpu_restore": {
+        "cuda_initialized": false,
+        "device": "cpu",
+        "optimizer_updates": 0
+      },
+      "cpu_checkpoint_weights_exact": true,
+      "training_weights_sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2",
+      "validation_loss": {
+        "final": 0.002710001054974759,
+        "initial": 122.42751181637055
+      },
+      "validation_native": {
+        "cases": 128,
+        "float32_qualified": 0,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 11867,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "zero_jacobi": {
+            "completed_iterations": 12670,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "populations": [
+          "validation"
+        ],
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 0.20792608173828353,
+          "median": 0.0385792962090315,
+          "minimum": 0.002732736831640761
+        },
+        "scope": "Full original equation and physical gates on supplied preceding native pressure; no cold-start or autonomous claim",
+        "status": "complete_native_diagnostic",
+        "weights_sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2"
+      },
+      "validation_reference_qualified": 128,
+      "validation_model_failure_counts": {
+        "original_rhs_full_residual": 128,
+        "predicted_divergence": 128,
+        "actual_f32_divergence": 128
+      },
+      "managed": {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "project_id": "98c5cc57aff44e959be7564620b0d76b",
+        "stages": [
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 274726,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "ec760629b72ad5d55be894616b2d51c80484b083fbc9c6596e7a764f30e97230",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "3fc3e056dbc76a12a26120853912c4200564d723e968bedad6cb137656efe279",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 26992,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "e53b17e2efbb4169ea1d92fede4e16b593d0bce98176fcce030511f65c448c69",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/history.json"
+              },
+              {
+                "bytes": 2958876,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "a05bc26cff4fcc74c64b60975211f16ede4949edf0e88f29f2a75357d73f8a03",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/splits.json"
+              },
+              {
+                "bytes": 367209,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "040612980ad5f962c10bfdcdf1478b45f91b91b98abfa35a2604e04a21db4291",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/normalization.json"
+              },
+              {
+                "bytes": 11766,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "training_result",
+                "sha256": "31d091da5ea435c9c53986601e3472ba7d02b9521ca13bb2a03cedd22564dd80",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/receipt.json"
+              },
+              {
+                "bytes": 10864,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "e8969cdab90970129fed95ff6d34262dbfed966f34d3830ad7416f61cbd4f216",
+                "url": "/api/workspace/runs/c9c0cc20ce4849f8af6b0c9bf841154f/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "18b88d3315f9c0004a60c1b91e28c84939e53b57f85b3a4452591fcfca4c7c15",
+            "name": "train",
+            "run_id": "c9c0cc20ce4849f8af6b0c9bf841154f",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-000.npz",
+                "role": "checkpoint",
+                "sha256": "2e5c789c4583791f7d472c93952ac6fe937a1f32f3d0bf06e81daaf6517f889c",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/checkpoint-000.npz"
+              },
+              {
+                "bytes": 274726,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "ec760629b72ad5d55be894616b2d51c80484b083fbc9c6596e7a764f30e97230",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-2000.npz",
+                "role": "checkpoint",
+                "sha256": "3fc3e056dbc76a12a26120853912c4200564d723e968bedad6cb137656efe279",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/checkpoint-2000.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "weights.npz",
+                "role": "checkpoint",
+                "sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/weights.npz"
+              },
+              {
+                "bytes": 1497594,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "checkpoint-10000.npz",
+                "role": "checkpoint",
+                "sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/checkpoint-10000.npz"
+              },
+              {
+                "bytes": 26992,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "history.json",
+                "role": "training_diagnostics",
+                "sha256": "e53b17e2efbb4169ea1d92fede4e16b593d0bce98176fcce030511f65c448c69",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/history.json"
+              },
+              {
+                "bytes": 2958876,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "splits.json",
+                "role": "training_splits",
+                "sha256": "a05bc26cff4fcc74c64b60975211f16ede4949edf0e88f29f2a75357d73f8a03",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/splits.json"
+              },
+              {
+                "bytes": 367209,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "normalization.json",
+                "role": "preprocessing",
+                "sha256": "040612980ad5f962c10bfdcdf1478b45f91b91b98abfa35a2604e04a21db4291",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/normalization.json"
+              },
+              {
+                "bytes": 13145,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "97f520185cc96fcf0f81e93601cc692e5d092dcd0a3fc5670adc46f8aef93f6f",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/receipt.json"
+              },
+              {
+                "bytes": 10862,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "6bfc42d2c84df9cc4402c7126f95ee1d3873cd8ea3f552cd143a71471d942039",
+                "url": "/api/workspace/runs/00b82369780c47cdae4db1b416eb5cdf/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "351d91b055777f1e81b9ae9560bfad1162ea721bb0a627898f5528966d6ead3c",
+            "name": "restore",
+            "run_id": "00b82369780c47cdae4db1b416eb5cdf",
+            "state": "completed"
+          },
+          {
+            "artifacts": [
+              {
+                "bytes": 1120502,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "predictions.npz",
+                "role": "predictions",
+                "sha256": "2179021ca61683bc785e5658984605b00df2059e5144659b5e1bcd910f9effe6",
+                "url": "/api/workspace/runs/db16914bd906467a8a6bc623e2a26573/artifacts/predictions.npz"
+              },
+              {
+                "bytes": 42199,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "receipt.json",
+                "role": "evaluation_result",
+                "sha256": "f60083cfe9fad179047a3798f89c69814d30510a32e91d25e74c536e9bf470ed",
+                "url": "/api/workspace/runs/db16914bd906467a8a6bc623e2a26573/artifacts/receipt.json"
+              },
+              {
+                "bytes": 127,
+                "locked": false,
+                "media_type": "application/octet-stream",
+                "name": "summary.json",
+                "role": "result_summary",
+                "sha256": "88586ff425ee38123d9276ff50dc99b2ff8b2e204bfccb3dddef7b17d45e6b84",
+                "url": "/api/workspace/runs/db16914bd906467a8a6bc623e2a26573/artifacts/summary.json"
+              }
+            ],
+            "custody_phase": "drained",
+            "material_sha256": "4638b899b1681a2742880335d0c45082ec377c6404f6e9394352272a89b61b3b",
+            "name": "validation",
+            "run_id": "db16914bd906467a8a6bc623e2a26573",
+            "state": "completed"
+          }
+        ],
+        "status": "completed_and_drained"
+      },
+      "source_commit": "5646c37",
+      "training_receipt_sha256": "31d091da5ea435c9c53986601e3472ba7d02b9521ca13bb2a03cedd22564dd80",
+      "history_sha256": "e53b17e2efbb4169ea1d92fede4e16b593d0bce98176fcce030511f65c448c69",
+      "native_cases_sha256": "0e79df27d97cdc2892d6146edc710c305e2c23c4173413dc0cb1144843307e14"
+    }
+  },
+  "historical_baseline": {
+    "updates": 2000,
+    "validation_loss": 0.0035414697685510134,
+    "old_test_median_relative_residual": 0.0436711,
+    "old_test_cases": 128,
+    "same_first_2000_tensor_inventories": true,
+    "old_test_population_differs_from_fresh_test": true
+  },
+  "matched_data_comparison": {
+    "matched_256_median": 0.04565520620053903,
+    "matched_1024_median": 0.0385792962090315,
+    "median_reduction_fraction": 0.1549858292267221,
+    "worst_residual_increase_fraction": 0.09932691900669366
+  },
+  "selected_trial": "scale-1024",
+  "selection_policy": "most qualified validation proposals, lower median, lower worst, fixed tie order",
+  "selection_frozen_file_sha256": "bc64fdd4b5d498e0890d181de463fed68e57bb5755fe7ad39a99797f26f9a8d7",
+  "reserved_inference_completed": true,
+  "reserved_test_parents": 64,
+  "reserved_test_snapshots": 128,
+  "fresh_reserved": {
+    "cases": 128,
+    "float32_qualified": 0,
+    "methods": {
+      "learned_jacobi": {
+        "completed_iterations": 16553,
+        "fallbacks": 128,
+        "qualified": 128,
+        "wasted_warm_iterations": 4096
+      },
+      "temporal_full_budget": {
+        "completed_iterations": 12457,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_jacobi": {
+        "completed_iterations": 16553,
+        "fallbacks": 128,
+        "qualified": 128,
+        "wasted_warm_iterations": 4096
+      },
+      "zero_jacobi": {
+        "completed_iterations": 13272,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      }
+    },
+    "populations": [
+      "reserved_test"
+    ],
+    "raw_native_qualified": 0,
+    "relative_residual": {
+      "maximum": 0.20844179546638217,
+      "median": 0.03879033802507916,
+      "minimum": 0.004443327220794096
+    },
+    "scope": "Full original equation and physical gates on supplied preceding native pressure; no cold-start or autonomous claim",
+    "status": "complete_native_diagnostic",
+    "weights_sha256": "fac9f59be57f95d9112f623006fd93e1cf26eaaad63c553a86a571cf0ce0aac2"
+  },
+  "raw_model_success": false,
+  "claim_limits": [
+    "One initialization/sampling seed per trial; no confidence interval.",
+    "Teacher-state pressure proposals with preceding native pressure, not autonomous trajectories.",
+    "Matched data-size trials use one snapshot per parent; long-256 uses two.",
+    "Historical test and fresh reserved test contain different simulations.",
+    "Native fallback success is not AI pressure qualification or solver acceleration."
+  ],
+  "scientific_run_count": 13,
+  "pipeline_smoke_run_count": 2,
+  "data_collection_report": "reports/collection.json",
+  "observation_report": "observation.md"
+}

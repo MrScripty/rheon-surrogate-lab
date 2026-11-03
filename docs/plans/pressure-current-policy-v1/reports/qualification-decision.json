@@ -1,0 +1,81 @@
+{
+  "format": "pressure-current-policy-qualification-decision-v1",
+  "decision": "rejected_for_promotion",
+  "regression_summary_sha256": "7429530662d2199282ca79748c61888d082e56a30e733bcb646a8a2c6500bb31",
+  "candidate_decisions": {
+    "current-early": "rejected",
+    "current-late": "rejected"
+  },
+  "physical_qualification": {
+    "current-early": {
+      "scenes": 74,
+      "passed": 74,
+      "independent_checks": 233,
+      "all_worker_children_reaped": true
+    },
+    "current-late": {
+      "scenes": 74,
+      "passed": 74,
+      "independent_checks": 233,
+      "all_worker_children_reaped": true
+    }
+  },
+  "failed_gates": {
+    "current-early": {
+      "original58": {
+        "control": [
+          "mean_calls_not_regressed"
+        ]
+      },
+      "late-amended8": {
+        "late-pressure": [
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ],
+        "control": [
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ]
+      },
+      "minimum8-failed8": {
+        "reference-current": [
+          "maximum_calls_not_regressed"
+        ],
+        "late-pressure": [
+          "worst_pressure_not_regressed"
+        ],
+        "control": [
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ]
+      }
+    },
+    "current-late": {
+      "original58": {
+        "late-pressure": [
+          "worst_pressure_not_regressed"
+        ]
+      },
+      "minimum8-failed8": {
+        "reference-current": [
+          "maximum_calls_not_regressed"
+        ],
+        "late-pressure": [
+          "worst_pressure_not_regressed"
+        ],
+        "control": [
+          "mean_calls_not_regressed",
+          "maximum_calls_not_regressed"
+        ]
+      }
+    }
+  },
+  "eligible_candidates": [],
+  "ranking": {},
+  "selected_candidate": null,
+  "candidate_promoted": false,
+  "unused_holdouts_consumed": 0,
+  "holdout_disposition": "Eight unused whole scenes remain untouched; neither candidate met all unchanged population gates.",
+  "selection_rule": "Preregistered: among eligible minimize worst normalized pressure across three populations against best retained comparator, then maximum calls, mean calls, early arm tie-break.",
+  "scope": "Measurement completion and physical qualification are distinct from population accuracy/work selection and any later promotion."
+}

@@ -1,0 +1,1198 @@
+{
+  "schema": "rheon-multigrid-trial-record-v1",
+  "trial": "cohort-two-seed3",
+  "configuration": {
+    "analytical_feedback": {
+      "amplitude_reference": "train-correction-cell-rms",
+      "cache_max_bytes": 805306368,
+      "grids": [
+        {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            16,
+            16,
+            16
+          ]
+        },
+        {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            24,
+            24,
+            24
+          ]
+        },
+        {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            40,
+            40,
+            40
+          ]
+        },
+        {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            24,
+            16,
+            12
+          ]
+        }
+      ],
+      "patterns": 32,
+      "sampling": "uniform-balanced-grid",
+      "seed": 2026101507,
+      "weight": 0.1
+    },
+    "conditioning": "physical-residual",
+    "correction": {
+      "activation": "linear",
+      "steps": 2
+    },
+    "execution": {
+      "batch_mode": "serial",
+      "finite_checks": "combined",
+      "prepared_fields": false,
+      "profile_updates": 0,
+      "resident_inputs": true
+    },
+    "id": "water-cohort-two-seed3",
+    "normalization": "none",
+    "objective": "canonical",
+    "output_scale": "previous-pressure-rms",
+    "resources": {
+      "max_output_bytes": 33554432,
+      "wall_seconds": 600
+    },
+    "schema": "rheon-water-residual-experiment-v5",
+    "training": {
+      "batch_size": 1,
+      "checkpoints": [
+        0,
+        100,
+        500,
+        1000,
+        2000,
+        4000,
+        5000
+      ],
+      "learning_rate": 0.001,
+      "model": "cubic-groupnorm-v3",
+      "sampling_seed": 2026102603,
+      "schedule": [
+        {
+          "learning_rate": 0.0001,
+          "update": 3000
+        },
+        {
+          "learning_rate": 1e-05,
+          "update": 4500
+        }
+      ],
+      "seed": 2026101603,
+      "updates": 5000
+    }
+  },
+  "source_commit": "ebad78c18a13ca139827b42d97bdbc462462cf6b",
+  "source_witness_sha256": "6318164f1a3bc75376c6e4627db4b24c7e5b02abcbed15458f8c55cfcd392e40",
+  "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "managed_stages": [
+    {
+      "name": "train",
+      "run_id": "98333ac8f88c47619dc3996c946663d3",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "3ecfd3752127a38630f9ba580bf5ba6b510d789778c60a2f5d9ef4bd9afc79b3"
+    },
+    {
+      "name": "restore",
+      "run_id": "533ed88fa0774fc595e0ee0a6afb81c2",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "d56d93e971c1b58b81d816cfe89211ad109307de83a6c4bae0630cac3f328f56"
+    },
+    {
+      "name": "validation",
+      "run_id": "f02f1a78365945638cd40fa550ea97fa",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "1ce19ecda137bf65d3ad4b0636f810f658fb8ccf968e67878f55960de6abe77c"
+    }
+  ],
+  "cuda_optimizer_updates": 5000,
+  "cuda_execution": {
+    "amp": false,
+    "batches_cuda": true,
+    "cuda_cpu_pressure_max_abs_difference": 1.9233773310034508e-05,
+    "deterministic_algorithms": true,
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "model_dtype": "float32",
+    "parameters_gradients_adam_moments_cuda": true,
+    "peak_allocated_bytes": 555410432,
+    "peak_reserved_bytes": 578813952,
+    "tf32": false
+  },
+  "cpu_restore_execution": {
+    "cuda_initialized": false,
+    "device": "cpu",
+    "optimizer_updates": 0
+  },
+  "optimizer_updates_per_s": 18.769393410370874,
+  "optimizer_interval_seconds": 266.39113426208496,
+  "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+  "weights_file_bytes": 1485452,
+  "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+  "analytical_training": {
+    "additional_examples": 5000,
+    "amplitude_reference": "train-correction-cell-rms",
+    "amplitude_rms_pa": 2.8535734640782584,
+    "bank_description_sha256": "2dfeb65ad0eb9c424479815e2d6eb39ed88b3478e20e308a3ae79fc4c31efaa5",
+    "cache_max_bytes": 805306368,
+    "grid_exposures": [
+      1000,
+      1000,
+      1000,
+      1000,
+      1000
+    ],
+    "loss_weights": {
+      "amplification": 1.0,
+      "equation": 0.5,
+      "gradient": 0.25,
+      "pressure": 0.25
+    },
+    "resident_tensor_bytes": 488651776,
+    "sampling": "uniform-balanced-grid",
+    "sampling_order_sha256": "a65cba963a186776965572766a6931ed8951d975b97006b7a5383297d154f028",
+    "schema": "rheon-analytical-feedback-v2",
+    "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+    "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+    "weight": 0.1
+  },
+  "training_exposure": {
+    "real_simulations": 16,
+    "real_states": 32,
+    "real_draws": 5000,
+    "analytical_draws": 5000,
+    "forward_network_evaluations": 20000,
+    "forward_cell_evaluation_proxy": 250395820,
+    "scope": "sample/evaluation/voxel accounting, not FLOPs or backward-work equivalence"
+  },
+  "control_parity": {
+    "initial_parameter_inventory": false,
+    "normalization": true,
+    "real_sampling_order": false
+  },
+  "final_training_trace": {
+    "gradient_clipped": false,
+    "gradient_norm_before_clip": 0.02729208953678608,
+    "learning_rate": 1e-05,
+    "loss": 9.245132809510032e-05,
+    "post_update_sample_relative_residual": 0.0038578191930494195,
+    "update": 5000
+  },
+  "cpu_pipeline": {
+    "status": "complete",
+    "fit_development_short_grids_qualified": false,
+    "commands": [
+      {
+        "name": "fit",
+        "argv": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/evaluate.py",
+          "--project",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/project",
+          "--artifacts",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/managed-full/stage-01/artifacts",
+          "--packet",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-residual-learning-v1/views/cohort-16",
+          "--population",
+          "train",
+          "--binary",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/fit"
+        ]
+      },
+      {
+        "name": "development",
+        "argv": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/evaluate.py",
+          "--project",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/project",
+          "--artifacts",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/managed-full/stage-01/artifacts",
+          "--packet",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-learning-sequence-v1/views/validation",
+          "--population",
+          "validation",
+          "--binary",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/development"
+        ]
+      },
+      {
+        "name": "modes",
+        "argv": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/mode_probe.py",
+          "--project",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/project",
+          "--artifacts",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/managed-full/stage-01/artifacts",
+          "--packet",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-learning-sequence-v1/views/fit-one",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/mode-probe"
+        ]
+      },
+      {
+        "name": "fixed-eight",
+        "argv": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/evaluate.py",
+          "--project",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/project",
+          "--artifacts",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/managed-full/stage-01/artifacts",
+          "--packet",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-learning-sequence-v1/views/validation",
+          "--population",
+          "validation",
+          "--binary",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/fixed-eight",
+          "--network-budget",
+          "8",
+          "--fixed-budget"
+        ]
+      },
+      {
+        "name": "grids",
+        "argv": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/study.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/grid-study.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/grid-study",
+          "--workers",
+          "8"
+        ]
+      },
+      {
+        "name": "long",
+        "argv": [
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-multigrid-learning-v1/study.py",
+          "--config",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/long-study.json",
+          "--output",
+          "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-recurrence-generalization-v1/cohort-two-seed3/long-study",
+          "--workers",
+          "3"
+        ]
+      }
+    ]
+  },
+  "adaptive_fit": {
+    "schema": "rheon-multigrid-development-evaluation-v1",
+    "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+    "native": {
+      "all_native_children_drained": true,
+      "candidate_policy": {
+        "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+        "name": "adaptive-learned-correction",
+        "native_pressure_refinement": false,
+        "nn_passes_per_pressure_solve": 32,
+        "proposal_network_evaluations": 1,
+        "proposals": 32,
+        "scope": "equation/predicted-divergence stopping only; actual native physical checks remain required",
+        "stopping": {
+          "absolute_residual": 1e-12,
+          "predicted_divergence": 1e-07,
+          "relative_residual": 1e-06,
+          "schema": "rheon-learned-stopping-policy-v1"
+        }
+      },
+      "cases": 32,
+      "cuda_initialized": false,
+      "elapsed_s": 6.33274507522583,
+      "float32_qualified": 32,
+      "methods": {
+        "learned_jacobi": {
+          "completed_iterations": 2940,
+          "fallbacks": 22,
+          "qualified": 32,
+          "wasted_warm_iterations": 704
+        },
+        "temporal_full_budget": {
+          "completed_iterations": 3047,
+          "fallbacks": 0,
+          "qualified": 32,
+          "wasted_warm_iterations": 0
+        },
+        "temporal_jacobi": {
+          "completed_iterations": 4071,
+          "fallbacks": 32,
+          "qualified": 32,
+          "wasted_warm_iterations": 1024
+        },
+        "zero_jacobi": {
+          "completed_iterations": 3213,
+          "fallbacks": 0,
+          "qualified": 32,
+          "wasted_warm_iterations": 0
+        }
+      },
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 9.528494079826032e-07,
+        "median": 5.632832079928123e-07,
+        "minimum": 2.4887798134919476e-07
+      },
+      "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+      "status": "complete_native_diagnostic",
+      "used_cpus": [
+        2,
+        3,
+        5,
+        7,
+        14,
+        16,
+        23
+      ],
+      "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+      "workers": 23
+    },
+    "network_evaluations": {
+      "mean": 10.53125,
+      "minimum": 9,
+      "maximum": 12,
+      "cases": [
+        10,
+        10,
+        11,
+        11,
+        11,
+        12,
+        9,
+        9,
+        10,
+        11,
+        10,
+        10,
+        12,
+        11,
+        12,
+        10,
+        11,
+        11,
+        11,
+        12,
+        10,
+        10,
+        11,
+        11,
+        11,
+        10,
+        11,
+        11,
+        9,
+        9,
+        10,
+        10
+      ]
+    },
+    "inference_receipt_sha256": "a0d9c1bac7c44c7c9403e9371f5dd3eb2f0db39cdec3f71c62f5de627acc1587",
+    "scope": "adaptive per-evaluation policy, maximum 32; CPU inference, independent native gates, no refinement"
+  },
+  "adaptive_development": {
+    "schema": "rheon-multigrid-development-evaluation-v1",
+    "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+    "native": {
+      "all_native_children_drained": true,
+      "candidate_policy": {
+        "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+        "name": "adaptive-learned-correction",
+        "native_pressure_refinement": false,
+        "nn_passes_per_pressure_solve": 32,
+        "proposal_network_evaluations": 1,
+        "proposals": 32,
+        "scope": "equation/predicted-divergence stopping only; actual native physical checks remain required",
+        "stopping": {
+          "absolute_residual": 1e-12,
+          "predicted_divergence": 1e-07,
+          "relative_residual": 1e-06,
+          "schema": "rheon-learned-stopping-policy-v1"
+        }
+      },
+      "cases": 128,
+      "cuda_initialized": false,
+      "elapsed_s": 7.062387704849243,
+      "float32_qualified": 128,
+      "methods": {
+        "learned_jacobi": {
+          "completed_iterations": 11941,
+          "fallbacks": 92,
+          "qualified": 128,
+          "wasted_warm_iterations": 2944
+        },
+        "temporal_full_budget": {
+          "completed_iterations": 11867,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        },
+        "temporal_jacobi": {
+          "completed_iterations": 15963,
+          "fallbacks": 128,
+          "qualified": 128,
+          "wasted_warm_iterations": 4096
+        },
+        "zero_jacobi": {
+          "completed_iterations": 12670,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        }
+      },
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 9.672893258887296e-07,
+        "median": 5.554174654453979e-07,
+        "minimum": 9.973912704790698e-08
+      },
+      "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+      "status": "complete_native_diagnostic",
+      "used_cpus": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        12,
+        13,
+        16,
+        17,
+        19,
+        21
+      ],
+      "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+      "workers": 23
+    },
+    "network_evaluations": {
+      "mean": 10.0859375,
+      "minimum": 7,
+      "maximum": 14,
+      "cases": [
+        10,
+        10,
+        10,
+        10,
+        9,
+        9,
+        11,
+        10,
+        12,
+        10,
+        11,
+        10,
+        11,
+        9,
+        10,
+        10,
+        10,
+        9,
+        8,
+        8,
+        8,
+        9,
+        10,
+        10,
+        7,
+        7,
+        10,
+        10,
+        10,
+        10,
+        9,
+        9,
+        11,
+        11,
+        9,
+        9,
+        9,
+        8,
+        10,
+        10,
+        11,
+        10,
+        11,
+        10,
+        10,
+        9,
+        9,
+        9,
+        9,
+        9,
+        12,
+        11,
+        10,
+        11,
+        8,
+        8,
+        13,
+        12,
+        12,
+        10,
+        9,
+        9,
+        10,
+        10,
+        10,
+        11,
+        8,
+        9,
+        9,
+        8,
+        11,
+        11,
+        10,
+        11,
+        10,
+        9,
+        10,
+        11,
+        10,
+        10,
+        10,
+        10,
+        13,
+        12,
+        9,
+        9,
+        9,
+        12,
+        11,
+        11,
+        10,
+        10,
+        8,
+        9,
+        12,
+        12,
+        12,
+        10,
+        9,
+        9,
+        13,
+        14,
+        12,
+        13,
+        9,
+        10,
+        11,
+        10,
+        11,
+        11,
+        10,
+        10,
+        10,
+        10,
+        12,
+        13,
+        9,
+        10,
+        8,
+        8,
+        11,
+        11,
+        11,
+        11,
+        11,
+        10,
+        11,
+        11
+      ]
+    },
+    "inference_receipt_sha256": "66b43ef9e484fbd5b8d4a9dfeb6ef03a15090a5ba6f7946d4344ae0019e07e22",
+    "scope": "adaptive per-evaluation policy, maximum 32; CPU inference, independent native gates, no refinement"
+  },
+  "mode_probe": {
+    "schema": "rheon-multigrid-mixed-mode-report-v1",
+    "seed": 2026101517,
+    "mixtures": 60,
+    "signed_cases": 120,
+    "aggregate": [
+      {
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "population": "low",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 9.833333333333334,
+        "worst_first_relative_residual": 0.19203961635685243,
+        "worst_final_relative_residual": 8.670858631120836e-07
+      },
+      {
+        "counts_xyz": [
+          16,
+          16,
+          16
+        ],
+        "population": "broad",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 16.916666666666668,
+        "worst_first_relative_residual": 0.1511083492763296,
+        "worst_final_relative_residual": 2.8421583600828993e-07
+      },
+      {
+        "counts_xyz": [
+          24,
+          24,
+          24
+        ],
+        "population": "low",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 10.166666666666666,
+        "worst_first_relative_residual": 0.22479962620429333,
+        "worst_final_relative_residual": 9.941530099853639e-07
+      },
+      {
+        "counts_xyz": [
+          24,
+          24,
+          24
+        ],
+        "population": "broad",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 16.25,
+        "worst_first_relative_residual": 0.17418874790341068,
+        "worst_final_relative_residual": 1.479530661075028e-07
+      },
+      {
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "population": "low",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 11.166666666666666,
+        "worst_first_relative_residual": 0.2539884575297845,
+        "worst_final_relative_residual": 9.486985826266321e-07
+      },
+      {
+        "counts_xyz": [
+          32,
+          32,
+          32
+        ],
+        "population": "broad",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 16.666666666666668,
+        "worst_first_relative_residual": 0.15723858614967945,
+        "worst_final_relative_residual": 5.510151158524267e-08
+      },
+      {
+        "counts_xyz": [
+          40,
+          40,
+          40
+        ],
+        "population": "low",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 12,
+        "worst_first_relative_residual": 0.2617302272029866,
+        "worst_final_relative_residual": 9.807240753217806e-07
+      },
+      {
+        "counts_xyz": [
+          40,
+          40,
+          40
+        ],
+        "population": "broad",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 16.333333333333332,
+        "worst_first_relative_residual": 0.21346631320093895,
+        "worst_final_relative_residual": 1.4520249267354278e-07
+      },
+      {
+        "counts_xyz": [
+          24,
+          16,
+          12
+        ],
+        "population": "low",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 10,
+        "worst_first_relative_residual": 0.17141857724384407,
+        "worst_final_relative_residual": 9.133496320485665e-07
+      },
+      {
+        "counts_xyz": [
+          24,
+          16,
+          12
+        ],
+        "population": "broad",
+        "cases": 12,
+        "equation_passed": 12,
+        "mean_network_evaluations": 17.583333333333332,
+        "worst_first_relative_residual": 0.18092480146319817,
+        "worst_final_relative_residual": 1.4330967616644477e-07
+      }
+    ],
+    "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+    "source_sha256": "c330382ddf922f94792c71abf55abcb525d55b22ef3614e55856fe4a72fc206f",
+    "cuda_initialized": false,
+    "used_cpus": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "scope": "60 analytical development mixtures at two signed amplitudes (120 cases), separate seed; not CFD simulations, no global convergence or native physical qualification claim"
+  },
+  "grid_study": {
+    "schema": "rheon-multigrid-trajectory-report-v1",
+    "models": [
+      {
+        "name": "cohort-two-seed3",
+        "project": "runs/water-recurrence-generalization-v1/cohort-two-seed3/project",
+        "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-seed3/managed-full/stage-01/artifacts",
+        "single_evaluation": true,
+        "proposals": 32,
+        "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+        "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "source_witness_sha256": "6318164f1a3bc75376c6e4627db4b24c7e5b02abcbed15458f8c55cfcd392e40"
+      }
+    ],
+    "aggregate": [
+      {
+        "scene": 0,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 21.37037037037037,
+        "maximum_network_evaluations": 27,
+        "worst_relative_residual": 9.993637727509824e-07,
+        "ai_median_seconds": 0.15700805750000002,
+        "native_median_seconds": 0.0122004535,
+        "per_repetition_ai_median_seconds": [
+          0.15700805750000002
+        ]
+      },
+      {
+        "scene": 1,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 9.419753086419753,
+        "maximum_network_evaluations": 10,
+        "worst_relative_residual": 9.928718791529127e-07,
+        "ai_median_seconds": 0.08129921749999999,
+        "native_median_seconds": 0.015608034,
+        "per_repetition_ai_median_seconds": [
+          0.08129921749999999
+        ]
+      },
+      {
+        "scene": 2,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 23.938271604938272,
+        "maximum_network_evaluations": 26,
+        "worst_relative_residual": 9.837950548207149e-07,
+        "ai_median_seconds": 0.18630191000000001,
+        "native_median_seconds": 0.014582177,
+        "per_repetition_ai_median_seconds": [
+          0.18630191000000001
+        ]
+      },
+      {
+        "scene": 3,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 8.432098765432098,
+        "maximum_network_evaluations": 9,
+        "worst_relative_residual": 9.887831317583518e-07,
+        "ai_median_seconds": 0.1043501715,
+        "native_median_seconds": 0.020915029,
+        "per_repetition_ai_median_seconds": [
+          0.1043501715
+        ]
+      },
+      {
+        "scene": 4,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": false,
+        "mean_network_evaluations": 32,
+        "maximum_network_evaluations": 32,
+        "worst_relative_residual": 2.7853881020494557,
+        "ai_median_seconds": 0.49070291850000003,
+        "native_median_seconds": 0.039325070000000004,
+        "per_repetition_ai_median_seconds": [
+          0.49070291850000003
+        ]
+      },
+      {
+        "scene": 5,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 9.950617283950617,
+        "maximum_network_evaluations": 11,
+        "worst_relative_residual": 9.802316816441156e-07,
+        "ai_median_seconds": 0.124706062,
+        "native_median_seconds": 0.028004097999999998,
+        "per_repetition_ai_median_seconds": [
+          0.124706062
+        ]
+      },
+      {
+        "scene": 6,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 9.88888888888889,
+        "maximum_network_evaluations": 10,
+        "worst_relative_residual": 9.986979283654415e-07,
+        "ai_median_seconds": 0.11813322500000001,
+        "native_median_seconds": 0.0241897,
+        "per_repetition_ai_median_seconds": [
+          0.11813322500000001
+        ]
+      },
+      {
+        "scene": 7,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 12.08641975308642,
+        "maximum_network_evaluations": 14,
+        "worst_relative_residual": 9.97779916218819e-07,
+        "ai_median_seconds": 0.1453581425,
+        "native_median_seconds": 0.0126731525,
+        "per_repetition_ai_median_seconds": [
+          0.1453581425
+        ]
+      }
+    ],
+    "source_sha256": {
+      "experiments/water-multigrid-learning-v1/study.py": "6710c3442c45620ff510965ac993792003f920ad25ec0316cb25dc1b03218073",
+      "experiments/water-residual-learning-v1/rollout.py": "80ddfe311571abf853342f891692300408c97abba04847ca404fe054e17c1318",
+      "experiments/water-stability-learning-v1/learned_iteration.py": "4cb7ae61cdcd3a66052f0809a2dd8020606c7c7e6bd60c354cef47bdb1c1ac5f"
+    },
+    "config_sha256": "fba486861bb050d17e82dc942fb8d8ee44c8c2d4b72b46885068903445c71e07",
+    "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+    "workers": 8,
+    "threads_per_worker": 1,
+    "available_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "used_cpus": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+    "started_at_utc": "2026-10-16T01:41:55.029910+00:00",
+    "elapsed_s": 26.574503898620605,
+    "scope": "development correctness/throughput; no isolated latency claim"
+  },
+  "raw_native": {
+    "raw-fit-native": {
+      "all_native_children_drained": true,
+      "candidate_policy": null,
+      "cases": 12,
+      "cuda_initialized": false,
+      "elapsed_s": 4.093104362487793,
+      "float32_qualified": 0,
+      "methods": {
+        "learned_jacobi": {
+          "completed_iterations": 1579,
+          "fallbacks": 12,
+          "qualified": 12,
+          "wasted_warm_iterations": 384
+        },
+        "temporal_full_budget": {
+          "completed_iterations": 1195,
+          "fallbacks": 0,
+          "qualified": 12,
+          "wasted_warm_iterations": 0
+        },
+        "temporal_jacobi": {
+          "completed_iterations": 1579,
+          "fallbacks": 12,
+          "qualified": 12,
+          "wasted_warm_iterations": 384
+        },
+        "zero_jacobi": {
+          "completed_iterations": 1250,
+          "fallbacks": 0,
+          "qualified": 12,
+          "wasted_warm_iterations": 0
+        }
+      },
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 0.015122824571085124,
+        "median": 0.007046657656803602,
+        "minimum": 0.0024456685187177257
+      },
+      "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+      "status": "complete_native_diagnostic",
+      "used_cpus": [
+        5,
+        6,
+        11,
+        12
+      ],
+      "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+      "workers": 12
+    },
+    "raw-validation-native": {
+      "all_native_children_drained": true,
+      "candidate_policy": null,
+      "cases": 128,
+      "cuda_initialized": false,
+      "elapsed_s": 6.887712001800537,
+      "float32_qualified": 0,
+      "methods": {
+        "learned_jacobi": {
+          "completed_iterations": 15963,
+          "fallbacks": 128,
+          "qualified": 128,
+          "wasted_warm_iterations": 4096
+        },
+        "temporal_full_budget": {
+          "completed_iterations": 11867,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        },
+        "temporal_jacobi": {
+          "completed_iterations": 15963,
+          "fallbacks": 128,
+          "qualified": 128,
+          "wasted_warm_iterations": 4096
+        },
+        "zero_jacobi": {
+          "completed_iterations": 12670,
+          "fallbacks": 0,
+          "qualified": 128,
+          "wasted_warm_iterations": 0
+        }
+      },
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 0.019836121414656113,
+        "median": 0.004650247083904485,
+        "minimum": 0.00037823582679603554
+      },
+      "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+      "status": "complete_native_diagnostic",
+      "used_cpus": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        13,
+        15,
+        17
+      ],
+      "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+      "workers": 23
+    }
+  },
+  "scope": "development, iterative CPU inference, unchanged physical targets; no deployment or final-test claim",
+  "long_study": {
+    "schema": "rheon-multigrid-trajectory-report-v1",
+    "models": [
+      {
+        "name": "cohort-two-seed3",
+        "project": "runs/water-recurrence-generalization-v1/cohort-two-seed3/project",
+        "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-seed3/managed-full/stage-01/artifacts",
+        "single_evaluation": true,
+        "proposals": 32,
+        "weights_sha256": "d4d07898fcca7e7294f57e7277e0f1d57187d691cf853b7a68e2dc59878eeeca",
+        "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+        "source_witness_sha256": "6318164f1a3bc75376c6e4627db4b24c7e5b02abcbed15458f8c55cfcd392e40"
+      }
+    ],
+    "aggregate": [
+      {
+        "scene": 0,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 8.340040241448692,
+        "maximum_network_evaluations": 9,
+        "worst_relative_residual": 9.957125151760192e-07,
+        "ai_median_seconds": 0.073553902,
+        "native_median_seconds": 0.016802246,
+        "per_repetition_ai_median_seconds": [
+          0.073553902
+        ]
+      },
+      {
+        "scene": 1,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 8.434607645875252,
+        "maximum_network_evaluations": 9,
+        "worst_relative_residual": 9.99149126774749e-07,
+        "ai_median_seconds": 0.07379986050000001,
+        "native_median_seconds": 0.0206089415,
+        "per_repetition_ai_median_seconds": [
+          0.07379986050000001
+        ]
+      },
+      {
+        "scene": 2,
+        "model": "cohort-two-seed3",
+        "runs": 1,
+        "qualified": true,
+        "mean_network_evaluations": 10.492957746478874,
+        "maximum_network_evaluations": 12,
+        "worst_relative_residual": 9.935679625684128e-07,
+        "ai_median_seconds": 0.036953202,
+        "native_median_seconds": 0.003739905,
+        "per_repetition_ai_median_seconds": [
+          0.036953202
+        ]
+      }
+    ],
+    "source_sha256": {
+      "experiments/water-multigrid-learning-v1/study.py": "6710c3442c45620ff510965ac993792003f920ad25ec0316cb25dc1b03218073",
+      "experiments/water-residual-learning-v1/rollout.py": "80ddfe311571abf853342f891692300408c97abba04847ca404fe054e17c1318",
+      "experiments/water-stability-learning-v1/learned_iteration.py": "4cb7ae61cdcd3a66052f0809a2dd8020606c7c7e6bd60c354cef47bdb1c1ac5f"
+    },
+    "config_sha256": "d54fcc18de3f013038ca429756cd4c86587e0092a6ce856a2b857700e8f6e26e",
+    "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+    "workers": 3,
+    "threads_per_worker": 1,
+    "available_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "used_cpus": [
+      1,
+      2,
+      3
+    ],
+    "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+    "started_at_utc": "2026-10-16T01:42:21.713350+00:00",
+    "elapsed_s": 69.2272880077362,
+    "scope": "development correctness/throughput; no isolated latency claim"
+  },
+  "native_trajectory_children_reaped": 22
+}

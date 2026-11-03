@@ -1,0 +1,80 @@
+{
+  "schema": "rheon-current-project-registration-preparation-v1",
+  "status": "prepared_not_executed",
+  "files": [
+    {
+      "path": "runs/dependency-migration-v1/ops/register_current_project.py",
+      "sha256": "cf75c34bbb2b7dbf280a4e6348446d77ededdf8022aed1466ae3bf156ecd60b1",
+      "bytes": 13304
+    },
+    {
+      "path": "runs/dependency-migration-v1/ops/test_register_current_project.py",
+      "sha256": "7e8400e97a45ebd986cc6713e0aa56507b9e176fffbd4530b6e6e17d62ea86de",
+      "bytes": 5349
+    },
+    {
+      "path": "runs/dependency-migration-v1/ops/register-current-project.md",
+      "sha256": "0f6455f05d921a9aeb6bd0facbd01b37757aaf0cab688cb978293c8b48cc6cfb",
+      "bytes": 3656
+    }
+  ],
+  "fixed_target": {
+    "endpoint": "http://127.0.0.1:8091",
+    "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "application": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok-deployed/current-03",
+    "project_root_alias": "current-lab",
+    "project_root": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+    "project_id": "97eae52ac8074b4baccee2c12101ead6",
+    "manifest_path": "runs/dependency-migration-v1/current-project-04/project.json",
+    "manifest_sha256": "97a8020cd6cfe39afa426921dc692dc948d0d6475f9a4dfd37dea49f4792b2a0",
+    "separate_pressure_alias": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab"
+  },
+  "checks": {
+    "command": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "runs/dependency-migration-v1/ops",
+      "-p",
+      "test_register_current_project.py",
+      "-v"
+    ],
+    "tests": 5,
+    "passed": 5,
+    "skipped": 0,
+    "suite_elapsed_s": 0.199,
+    "authority_read": false,
+    "network_access": false,
+    "database_access": false
+  },
+  "normal_operation": {
+    "name": "project_snapshots.open",
+    "version": 1,
+    "method": "POST",
+    "path": "/api/workspace/project-snapshots",
+    "body": {
+      "root": "current-lab",
+      "manifest_path": "runs/dependency-migration-v1/current-project-04/project.json"
+    },
+    "readback": "project_snapshots.get"
+  },
+  "guards": [
+    "exact immutable cutover and launch SHA256 pins",
+    "full clean03 deployment verification",
+    "exact expected Project04 SHA and ID",
+    "both current-lab and pressure absolute alias bindings",
+    "actual PID startticks and command before authority access",
+    "existing current owner identity and current catalog via normal API",
+    "exclusive gate/launch-specific predispatch journal; uncertain result inspect/no retry",
+    "matching normal snapshot API readback and unchanged Run ID set"
+  ],
+  "executed_registration": false,
+  "new_runs": 0,
+  "approvals_or_admissions": false,
+  "live_callbacks_changed": false,
+  "private_authority_read": false,
+  "original_catalog_contacted": false
+}

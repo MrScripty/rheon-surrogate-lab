@@ -1,0 +1,89 @@
+{
+  "schema": "rheon-managed-training-failure-v1",
+  "trial": "stability-combined-single-pass",
+  "run_id": "2500fc7690c14049876250d8c3f5a981",
+  "state": "failed",
+  "custody_phase": "drained",
+  "source_commit": "8c6ddc71784e397e4cb9bedd75ec5d45d873f65b",
+  "configuration": {
+    "analytical_feedback": {
+      "patterns": 32,
+      "seed": 2026101507,
+      "weight": 0.1
+    },
+    "conditioning": "physical-residual",
+    "correction": {
+      "activation": "linear",
+      "steps": 1
+    },
+    "execution": {
+      "batch_mode": "serial",
+      "finite_checks": "combined",
+      "prepared_fields": false,
+      "profile_updates": 0,
+      "resident_inputs": true
+    },
+    "id": "water-stability-combined-single-pass",
+    "normalization": "none",
+    "objective": "canonical",
+    "output_scale": "correction-rms",
+    "resources": {
+      "max_output_bytes": 33554432,
+      "wall_seconds": 600
+    },
+    "schema": "rheon-water-residual-experiment-v3",
+    "training": {
+      "batch_size": 1,
+      "checkpoints": [
+        0,
+        100,
+        500,
+        1000,
+        2000,
+        4000,
+        5000
+      ],
+      "learning_rate": 0.001,
+      "model": "cubic-groupnorm-v3",
+      "sampling_seed": 2026102501,
+      "schedule": [
+        {
+          "learning_rate": 0.0001,
+          "update": 3000
+        },
+        {
+          "learning_rate": 1e-05,
+          "update": 4500
+        }
+      ],
+      "seed": 20261015,
+      "updates": 5000
+    }
+  },
+  "progress_evidence": "custody_verified",
+  "last_reported_completed_updates": 2400,
+  "exact_completed_updates": "not published; at least 2400 and before next 2500-update progress event",
+  "last_reported_loss": 77382.86951570239,
+  "failure": "gradient norm rejected as non-finite by clip_grad_norm_(error_if_nonfinite=True); optimizer never allowed to apply this rejected gradient",
+  "stderr": "Traceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/data-postgres/workspace-runs/.external-2500fc7690c14049876250d8c3f5a981/runtime-bootstrap/torch_runtime.py\", line 201, in <module>\n    (launch if sys.argv[1]=='--launch' else child)(*sys.argv[2:5],sys.argv[5:])\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/data-postgres/workspace-runs/.external-2500fc7690c14049876250d8c3f5a981/runtime-bootstrap/torch_runtime.py\", line 191, in child\n    try:runpy.run_path(entry,run_name='__main__')\n        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen runpy>\", line 294, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/data-postgres/workspace-runs/.external-2500fc7690c14049876250d8c3f5a981/source/runs/water-inference-budget-v1/stability-combined-single-pass/project/train.py\", line 374, in <module>\n    main()\n    ~~~~^^\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/data-postgres/workspace-runs/.external-2500fc7690c14049876250d8c3f5a981/source/runs/water-inference-budget-v1/stability-combined-single-pass/project/train.py\", line 370, in main\n    run(args)\n    ~~~^^^^^^\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/data-postgres/workspace-runs/.external-2500fc7690c14049876250d8c3f5a981/source/runs/water-inference-budget-v1/stability-combined-single-pass/project/train.py\", line 273, in run\n    loss, gradient = one_update(network, optimizer, parents, indices, normalization, cache, strategy, prepared,\n                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        analytical_sample=extra,analytical_weight=feedback['weight'] if extra is not None else 0.)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/creative-media/Tuldok/data-postgres/workspace-runs/.external-2500fc7690c14049876250d8c3f5a981/source/runs/water-inference-budget-v1/stability-combined-single-pass/project/train.py\", line 86, in one_update\n    gradient = torch.nn.utils.clip_grad_norm_(network.parameters(), 1.0, error_if_nonfinite=True)\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages/torch/nn/utils/clip_grad.py\", line 41, in _no_grad_wrapper\n    return func(*args, **kwargs)\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages/torch/nn/utils/clip_grad.py\", line 230, in clip_grad_norm_\n    total_norm = _get_total_norm(grads, norm_type, error_if_nonfinite, foreach)\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages/torch/nn/utils/clip_grad.py\", line 41, in _no_grad_wrapper\n    return func(*args, **kwargs)\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/lib/python3.14/site-packages/torch/nn/utils/clip_grad.py\", line 110, in _get_total_norm\n    raise RuntimeError(\n    ...<4 lines>...\n    )\nRuntimeError: The total norm of order 2.0 for gradients from `parameters` is non-finite, so it cannot be clipped. To disable this error and scale the gradients by the non-finite norm anyway, set `error_if_nonfinite=False`\n",
+  "events": [
+    {
+      "at": "2026-10-15T22:17:19.184254+00:00",
+      "message": "Exact owner-approved external recipe admitted.",
+      "state": "queued"
+    },
+    {
+      "at": "2026-10-15T22:17:22.709762+00:00",
+      "message": "Starting the approved custodian; recipe waits behind its launch barrier.",
+      "state": "running"
+    },
+    {
+      "at": "2026-10-15T22:18:34.517929+00:00",
+      "message": "External process drained without successful publication.",
+      "state": "failed"
+    }
+  ],
+  "published_artifacts": [],
+  "run_receipt_sha256": "8675a5dbc05711320d9c5d6090b1c2b219c3e68505075ca6946586f5ff0b9fd6",
+  "disposition": "retain failed Run; no restore, validation or scientific success claimed; separately configured lower learning-rate comparison"
+}

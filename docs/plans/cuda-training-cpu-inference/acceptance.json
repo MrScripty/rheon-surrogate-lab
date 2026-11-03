@@ -1,0 +1,175 @@
+{
+  "all_38_initial_parameter_tensors_match_historical_cpu": true,
+  "all_artifacts_redownloaded_verified": true,
+  "artifacts_per_run": [
+    10,
+    10
+  ],
+  "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "checks": {
+    "additional_registration_budget_check": true,
+    "model_cpu_cuda": 14,
+    "tuldok_runtime_legacy_material_custody": 51
+  },
+  "cpu_prediction_cases_exact": 12,
+  "cpu_restore_elapsed_s": 2.987051767995581,
+  "cpu_restore_evidence": {
+    "cuda_initialized": false,
+    "device": "cpu",
+    "optimizer_updates": 0
+  },
+  "cpu_restore_updates": 0,
+  "device_evidence": {
+    "amp": false,
+    "batches_cuda": true,
+    "cuda_cpu_pressure_max_abs_difference": 9.715233779570773e-09,
+    "deterministic_algorithms": true,
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "model_dtype": "float32",
+    "parameters_gradients_adam_moments_cuda": true,
+    "peak_allocated_bytes": 10272256,
+    "peak_reserved_bytes": 12582912,
+    "tf32": false
+  },
+  "evidence": {
+    "docs/plans/cuda-training-cpu-inference/reports/live-final.json": "84c5c709dc9e2042dda5377fa652d54a4a5e3f3b7dcd875cea7bfc74ed56f68f",
+    "docs/plans/cuda-training-cpu-inference/reports/runtime-events.json": "ccbc123a5834b5dc05add869ca79d854f3307d0f766af68fe1e2e72ea57ed2fb",
+    "runs/cuda-pressure-v1-workspace-2/evaluation/cases.jsonl": "6fbd81640848be1130f6e4094e33b018617da87f2f493506d87785e43f216770",
+    "runs/cuda-pressure-v1-workspace-2/evaluation/evaluation.json": "0a847a745fc491336875ff38083f6c473d84309d4f44e7ba4baa27ceb1898e07",
+    "runs/cuda-pressure-v1-workspace-2/execution/receipt.json": "2e73f553dfdc4e3358b15ee41d188598833d0e5fce949fa89baab3806c967c7d"
+  },
+  "execution_project_id": "0ae8c995d2ec4f0194c6828dfb8aad35",
+  "final_tuldok_commit": "d3514c6",
+  "historical_and_current_artifacts_reopened_after_final_restart": true,
+  "lab_source_commit": "59397ffbeb8dda0d63e47bc1b2fad01af34768b6",
+  "limitations": [
+    "Installed runtime is measured and trusted-local, not a captured hermetic GPU closure. Host OS/driver/hardware are external dependencies.",
+    "CUDA/CPU predictions are not bit identical; deployment CPU predictions repeat exactly.",
+    "All twelve learned pressure proposals fail the 1e-6/physical target. Conventional fallback qualifies every case; no learned accuracy or acceleration claim.",
+    "Longer D0/R1 and later scientific comparisons have not started. One-frame selection and scheduled target inspection still need their own implementation."
+  ],
+  "native": {
+    "cases": 12,
+    "cubic_cells": true,
+    "float32_qualified": 0,
+    "methods": {
+      "learned_jacobi": {
+        "completed_iterations": 1691,
+        "fallbacks": 12,
+        "qualified": 12,
+        "wasted_warm_iterations": 384
+      },
+      "temporal_full_budget": {
+        "completed_iterations": 1307,
+        "fallbacks": 0,
+        "qualified": 12,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_jacobi": {
+        "completed_iterations": 1691,
+        "fallbacks": 12,
+        "qualified": 12,
+        "wasted_warm_iterations": 384
+      },
+      "zero_jacobi": {
+        "completed_iterations": 1332,
+        "fallbacks": 0,
+        "qualified": 12,
+        "wasted_warm_iterations": 0
+      }
+    },
+    "raw_qualified": 0,
+    "scope": "teacher-state development snapshots; no autonomous rollout or acceleration claim",
+    "shapes_xyz": [
+      [
+        8,
+        8,
+        8
+      ],
+      [
+        9,
+        7,
+        5
+      ],
+      [
+        12,
+        8,
+        6
+      ],
+      [
+        16,
+        16,
+        16
+      ],
+      [
+        17,
+        13,
+        9
+      ],
+      [
+        24,
+        16,
+        12
+      ]
+    ],
+    "status": "complete_diagnostic",
+    "workflow_elapsed_s": 1.1062225329951616
+  },
+  "normalization_sha256": "2ce6c3ab6722269b97b6ae61e978d219c0ee8d3d56c471cba0b3d85188a64da1",
+  "prior_attempt": {
+    "optimizer_updates": 0,
+    "reason": "legacy host closure used at supervisor dispatch; fixed before launch in d852e21",
+    "run_id": "bf6d12d3e90e4e728baa20c5ad82aa8f",
+    "state": "interrupted"
+  },
+  "runtime": {
+    "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+    "file_count": 25765,
+    "manifest_bytes": 7469892,
+    "manifest_sha256": "74bbe92e160f14266b850cfebad01655192f3cb272083f8a87c1ae224c9e1e4e",
+    "profile": "managed_torch_python_v1",
+    "schema_version": 1,
+    "total_bytes": 5744383179
+  },
+  "runtime_assets_verified_before_after_both_runs": true,
+  "schema": "rheon-cuda-cpu-portability-acceptance-v1",
+  "scope": "20-update portability qualification, not D0/R1 or scientific accuracy acceptance",
+  "shared_artifacts_byte_equal": [
+    "checkpoint-000.npz",
+    "checkpoint-010.npz",
+    "checkpoint-020.npz",
+    "history.json",
+    "normalization.json",
+    "predictions.npz",
+    "splits.json",
+    "weights.npz"
+  ],
+  "source_witness_sha256": "aecc55bf265476a772803e554d434d7ab6dd3c7426e32bbc23a9867f988b81d2",
+  "stages": [
+    {
+      "custody_phase": "drained",
+      "material_sha256": "bbf7290091153a94aa0bf453110e936f84959afe5291f75f9e81bfeb15a92219",
+      "name": "train",
+      "run_id": "097f84f0493f45d1a52c1180c1c1032b",
+      "state": "completed"
+    },
+    {
+      "custody_phase": "drained",
+      "material_sha256": "16b69f7af4318a3d51f23dc9b83204f2c6173d369e0ed79c463e6c7ca98784ab",
+      "name": "restore",
+      "run_id": "284b8c39020e41a5a00468181b7d12bf",
+      "state": "completed"
+    }
+  ],
+  "status": "qualified_cuda_training_cpu_inference",
+  "training_elapsed_s": 5.2340810099995,
+  "training_updates": 20,
+  "tuldok_execution_commit": "d852e21",
+  "validation": {
+    "final": 0.3414271193111632,
+    "initial": 2.607572838812022
+  },
+  "weights_sha256": "064a19f3f678be31aaa49f93278531a2054c3500bf2fa9a3997bcaa59a3c38c9",
+  "working_project_id": "ed5357f2d4c84763ba6dc826a0c9465b"
+}

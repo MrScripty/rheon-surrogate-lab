@@ -1,0 +1,161 @@
+{
+  "schema": "rheon-fixed-eight-accuracy-comparison-v1",
+  "network_evaluation_budget": 8,
+  "population_cases": 128,
+  "packet_experiment_sha256": "d422b77ce947279d34b9686a3955715c45f600c74940bad4c0f3702b635998e4",
+  "results": {
+    "previous": {
+      "schema": "rheon-fixed-budget-development-evaluation-v1",
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "native": {
+        "all_native_children_drained": true,
+        "candidate_policy": {
+          "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+          "name": "fixed-repeated-learned-correction",
+          "native_pressure_refinement": false,
+          "nn_passes_per_pressure_solve": 8,
+          "proposal_network_evaluations": 1,
+          "proposals": 8
+        },
+        "cases": 128,
+        "cuda_initialized": false,
+        "elapsed_s": 6.688825845718384,
+        "float32_qualified": 11,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 15475,
+            "fallbacks": 122,
+            "qualified": 128,
+            "wasted_warm_iterations": 3904
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 11867,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "zero_jacobi": {
+            "completed_iterations": 12670,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 0.00167300615837373,
+          "median": 6.929895513306473e-06,
+          "minimum": 3.4214643010114934e-07
+        },
+        "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+        "status": "complete_native_diagnostic",
+        "used_cpus": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          11,
+          13,
+          14,
+          16,
+          17
+        ],
+        "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+        "workers": 23
+      },
+      "network_evaluations": {
+        "declared_fixed_budget": 8
+      },
+      "inference_receipt_sha256": "5773c6441eed8ffe4ba78038c048af8fc8112da839d849cd4b9e975527a5c2fa",
+      "scope": "fixed policy, maximum 8; CPU inference, independent native gates, no refinement"
+    },
+    "cohort": {
+      "schema": "rheon-fixed-budget-development-evaluation-v1",
+      "weights_sha256": "0de683cccc3fb878c3310f098676d08bcda519defe3c13275b768fd4931bb4d6",
+      "native": {
+        "all_native_children_drained": true,
+        "candidate_policy": {
+          "cpu_physical_arithmetic": "unchanged float64 operator/base accumulation",
+          "name": "fixed-repeated-learned-correction",
+          "native_pressure_refinement": false,
+          "nn_passes_per_pressure_solve": 8,
+          "proposal_network_evaluations": 1,
+          "proposals": 8
+        },
+        "cases": 128,
+        "cuda_initialized": false,
+        "elapsed_s": 6.717693090438843,
+        "float32_qualified": 46,
+        "methods": {
+          "learned_jacobi": {
+            "completed_iterations": 12887,
+            "fallbacks": 100,
+            "qualified": 128,
+            "wasted_warm_iterations": 3200
+          },
+          "temporal_full_budget": {
+            "completed_iterations": 11867,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          },
+          "temporal_jacobi": {
+            "completed_iterations": 15963,
+            "fallbacks": 128,
+            "qualified": 128,
+            "wasted_warm_iterations": 4096
+          },
+          "zero_jacobi": {
+            "completed_iterations": 12670,
+            "fallbacks": 0,
+            "qualified": 128,
+            "wasted_warm_iterations": 0
+          }
+        },
+        "raw_native_qualified": 0,
+        "relative_residual": {
+          "maximum": 4.532857439879542e-05,
+          "median": 1.2126547088740803e-06,
+          "minimum": 7.795243496926234e-08
+        },
+        "scope": "unchanged native equation/physical gates and oracle; independent teacher-state cases, no cold start or autonomous rollout",
+        "status": "complete_native_diagnostic",
+        "used_cpus": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          9,
+          10,
+          12,
+          13,
+          15,
+          18,
+          20,
+          21
+        ],
+        "weights_sha256": "0de683cccc3fb878c3310f098676d08bcda519defe3c13275b768fd4931bb4d6",
+        "workers": 23
+      },
+      "network_evaluations": {
+        "declared_fixed_budget": 8
+      },
+      "inference_receipt_sha256": "dd29e6cec24cb305cca54641f9502634f31cff00951c11fbf74037d8c67f6abc",
+      "scope": "fixed policy, maximum 8; CPU inference, independent native gates, no refinement"
+    }
+  },
+  "median_relative_residual_improvement": 5.714648582646175,
+  "worst_relative_residual_improvement": 36.908422128055925,
+  "scope": "same 128 teacher states and fixed eight-evaluation policy; unchanged native physical targets; both still fail some cases at this budget; no optimization or native refinement"
+}

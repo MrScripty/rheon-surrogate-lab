@@ -1,0 +1,62 @@
+{
+  "models": {
+    "late-pressure": {
+      "project": "runs/water-late-residual-v1/extra-late/project",
+      "artifacts": "runs/water-late-residual-v1/extra-late/managed-full/stage-01/artifacts"
+    },
+    "control": {
+      "project": "runs/water-early-pressure-v1/control/project",
+      "artifacts": "runs/water-early-pressure-v1/control/managed-full/stage-01/artifacts"
+    }
+  },
+  "maximum_calls": 32,
+  "policies": {
+    "pressure-bound": {
+      "schema": "rheon-learned-stopping-policy-v2",
+      "relative_residual": 1e-06,
+      "absolute_residual": 1e-12,
+      "predicted_divergence": 1e-07,
+      "mean_free_pressure_relative_error": 1e-06
+    },
+    "tight-3e-7": {
+      "schema": "rheon-learned-stopping-policy-v2",
+      "relative_residual": 1e-06,
+      "absolute_residual": 1e-12,
+      "predicted_divergence": 1e-07,
+      "mean_free_pressure_relative_error": 3e-07
+    },
+    "tight-1e-7": {
+      "schema": "rheon-learned-stopping-policy-v2",
+      "relative_residual": 1e-06,
+      "absolute_residual": 1e-12,
+      "predicted_divergence": 1e-07,
+      "mean_free_pressure_relative_error": 1e-07
+    }
+  },
+  "scenes": [
+    17,
+    60,
+    69,
+    73
+  ],
+  "samples": [
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0016.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0064.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0128.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0192.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0256.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0320.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0384.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0448.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-17-control-0/state-0512.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-60-control-0/state-0016.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-60-control-0/state-0064.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-60-control-0/state-0128.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-69-control-0/state-0016.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-69-control-0/state-0064.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-69-control-0/state-0128.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-73-control-0/state-0016.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-73-control-0/state-0064.npz",
+    "runs/water-early-pressure-v1/regression/development/scene-73-control-0/state-0128.npz"
+  ]
+}

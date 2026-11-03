@@ -1,0 +1,62 @@
+[
+  {
+    "phase": "collect",
+    "command": [
+      "taskset",
+      "-c",
+      "23",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python3.12",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-coarse-stability-v1/collect.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+      "--tuldok",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "--selection-file",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/ops/live-selection.private.json",
+      "--study",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/diagnostic-study-01",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/diagnostic-custody-01",
+      "--session-file",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-current-policy-v1/private/owner-session.txt",
+      "--endpoint",
+      "http://127.0.0.1:8091",
+      "--catalog-id",
+      "a7da4a8de53541a2a0e2aad08005bb71",
+      "--assembly",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/stability-project-01/assembly.json",
+      "--capture-verification",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/capture-verification-01.json",
+      "--probe-qualification",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/integration-qualification-03.json"
+    ],
+    "elapsed_s": 13.24941587500507,
+    "returncode": 0
+  },
+  {
+    "phase": "analyze",
+    "command": [
+      "taskset",
+      "-c",
+      "23",
+      "python3",
+      "-B",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-coarse-stability-v1/analyze.py",
+      "--custody",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/diagnostic-custody-01",
+      "--capture-verification",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/capture-verification-01.json",
+      "--probe-qualification",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/integration-qualification-03.json",
+      "--reference",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/stability-project-01/gradient-reference.json",
+      "--baseline-custody",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-gradient-v1/diagnostic-custody-01",
+      "--output",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-coarse-stability-v1/analysis-01"
+    ],
+    "elapsed_s": 0.032860638995771296,
+    "returncode": 0
+  }
+]

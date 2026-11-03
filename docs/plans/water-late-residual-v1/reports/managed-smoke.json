@@ -1,0 +1,120 @@
+{
+  "schema": "rheon-late-residual-managed-smoke-v1",
+  "status": "completed_and_drained",
+  "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "stages": [
+    {
+      "name": "train",
+      "run_id": "f5818120176842448f2e0ef520a25c1c",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "78644b1375ad49032f0ccf7bf6ca58d345ce6beddb01ee38466c83e1c4e3aa69"
+    },
+    {
+      "name": "restore",
+      "run_id": "e69b187a005d458f8521c1c66cdb1287",
+      "state": "completed",
+      "custody_phase": "drained",
+      "material_sha256": "5980b1ea983bc52f8a4c41c8a516c5b6de0658d0ca5058e2948a2e7f015f9b2a"
+    }
+  ],
+  "cuda_execution": {
+    "amp": false,
+    "batches_cuda": true,
+    "cuda_cpu_pressure_max_abs_difference": 2.45396417923871e-05,
+    "deterministic_algorithms": true,
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "model_dtype": "float32",
+    "parameters_gradients_adam_moments_cuda": true,
+    "peak_allocated_bytes": 762757632,
+    "peak_reserved_bytes": 786432000,
+    "tf32": false
+  },
+  "cpu_restore_execution": {
+    "cuda_initialized": false,
+    "device": "cpu",
+    "optimizer_updates": 0
+  },
+  "train_optimizer_updates": 1,
+  "restore_optimizer_updates": 0,
+  "weights_identical": true,
+  "redownload_all_artifacts_identical": true,
+  "direction_feedback": {
+    "additional_examples": 1,
+    "amplitude_rms_pa": 2.8535734640782584,
+    "cases": 144,
+    "combined_resident_tensor_bytes": 706750144,
+    "forward_cells_per_correction": 9200,
+    "group_exposures": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "groups": [
+      "primary-00",
+      "primary-01",
+      "primary-02",
+      "primary-03",
+      "primary-04",
+      "primary-05",
+      "primary-06",
+      "primary-07",
+      "real",
+      "supplemental-00",
+      "supplemental-01",
+      "supplemental-02",
+      "supplemental-03",
+      "supplemental-04",
+      "supplemental-05"
+    ],
+    "loss": "existing analytical relative pressure/gradient/equation and intermediate contraction",
+    "manifest_sha256": "4b0a35e50ad5958bbc69c074f90ddacaa76c10435e1c3b731cf9be19b40f9135",
+    "payload_sha256": "83f147a056f94366ddedeeaf3505eab51e8efba6bd33e033283c07a0e4b06a08",
+    "resident_tensor_bytes": 42708672,
+    "sampling_order_sha256": "9b5381e8217295018bd2d43e3221da1aeebe399f80cb763aa0c485939699d899",
+    "schema": "rheon-direction-feedback-training-v1",
+    "scope": "additional train-only directions; existing real/analytical streams preserved",
+    "seed": 2026102701,
+    "source": {
+      "artifacts": "runs/water-targeted-feedback-v1/targeted-feedback/managed-full/stage-01/artifacts",
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "project": "runs/water-targeted-feedback-v1/targeted-feedback/project",
+      "source_witness_sha256": "30f35107050997bbf29bd734097047e1912aa42dd63004eda5d5449524b1f0f2",
+      "weights_sha256": "5bbdc3159fe965b4768c14501bcb678ecffc837e0ccd01a513003bcad533f3fe"
+    },
+    "stage": "early",
+    "weight": 0.1
+  },
+  "timing": {
+    "argv": [
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/.venv/bin/python",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-targeted-feedback-v1/managed-controller.py",
+      "--root",
+      "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/water-late-residual-v1",
+      "--trial",
+      "smoke",
+      "--phase",
+      "smoke"
+    ],
+    "started_at_utc": "2026-10-16T10:38:24.800520+00:00",
+    "status": "completed",
+    "pid": 23282,
+    "returncode": 0,
+    "finished_at_utc": "2026-10-16T10:43:50.110049+00:00",
+    "elapsed_seconds": 325.309430284,
+    "child_reaped": true
+  }
+}

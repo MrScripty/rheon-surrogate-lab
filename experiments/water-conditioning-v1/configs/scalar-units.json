@@ -1,0 +1,38 @@
+{
+  "schema": "rheon-water-conditioning-experiment-v1",
+  "id": "water-conditioning-scalar-units",
+  "training": {
+    "model": "cubic-groupnorm-v3",
+    "seed": 20261015,
+    "sampling_seed": 2026102501,
+    "updates": 10000,
+    "batch_size": 1,
+    "learning_rate": 0.001,
+    "checkpoints": [
+      0,
+      100,
+      500,
+      1000,
+      2000,
+      4000,
+      6000,
+      8000,
+      10000
+    ],
+    "schedule": [
+      {
+        "update": 1000,
+        "learning_rate": 0.0001
+      },
+      {
+        "update": 6000,
+        "learning_rate": 1e-05
+      }
+    ]
+  },
+  "resources": {
+    "wall_seconds": 600,
+    "max_output_bytes": 33554432
+  },
+  "conditioning": "scalar-units"
+}

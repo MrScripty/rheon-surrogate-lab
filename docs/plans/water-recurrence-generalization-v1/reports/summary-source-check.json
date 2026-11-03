@@ -1,0 +1,25 @@
+{
+  "schema": "rheon-recurrence-summary-source-check-v1",
+  "command": [
+    "python3",
+    "experiments/water-recurrence-generalization-v1/summarize.py",
+    "--root",
+    "runs/water-recurrence-generalization-v1",
+    "--records",
+    "runs/water-recurrence-generalization-v1",
+    "--reference-record",
+    "docs/plans/water-multigrid-learning-v1/reports/trial-cohort16-two-pass.json",
+    "--reference-fixed",
+    "docs/plans/water-multigrid-learning-v1/reports/fixed-eight.json",
+    "--reference-fixed-name",
+    "cohort",
+    "--output",
+    "runs/water-recurrence-generalization-v1/summary-fixture.json"
+  ],
+  "reference_cases": 128,
+  "adaptive_passed": 128,
+  "mean_evaluations": 8.8828125,
+  "fixed_eight_passed": 46,
+  "result": "passed against separately retained reference totals",
+  "scope": "reference-only summary check; full candidate reports still pending"
+}

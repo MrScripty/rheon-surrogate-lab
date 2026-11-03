@@ -1,0 +1,29 @@
+{
+  "schema": "rheon-water-conditioning-experiment-v2",
+  "id": "water-conditioning-gpu-batch4",
+  "training": {
+    "model": "cubic-groupnorm-v3",
+    "seed": 20261015,
+    "sampling_seed": 2026102501,
+    "updates": 500,
+    "batch_size": 4,
+    "learning_rate": 0.001,
+    "checkpoints": [
+      0,
+      2,
+      500
+    ],
+    "schedule": []
+  },
+  "resources": {
+    "wall_seconds": 600,
+    "max_output_bytes": 33554432
+  },
+  "conditioning": "amplitude-and-units",
+  "execution": {
+    "resident_inputs": true,
+    "finite_checks": "combined",
+    "batch_mode": "stacked",
+    "profile_updates": 10
+  }
+}

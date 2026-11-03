@@ -1,0 +1,406 @@
+{
+  "schema": "rheon-multigrid-trajectory-report-v1",
+  "configuration": {
+    "schema": "rheon-multigrid-trajectory-study-v1",
+    "binary": "runs/water-residual-learning-v1/native-rollout-build/rheon-residual-rollout",
+    "profile": "experiments/water-inference-budget-v1/configs/adaptive.json",
+    "repetitions": 1,
+    "models": [
+      {
+        "name": "latest-fine",
+        "project": "runs/water-inference-budget-v1/stability-modes-single-pass/project",
+        "artifacts": "runs/water-inference-budget-v1/stability-modes-single-pass/managed-full/stage-01/artifacts",
+        "single_evaluation": true
+      }
+    ],
+    "scenes": [
+      {
+        "seed": 20261031,
+        "counts": [
+          16,
+          16,
+          16
+        ],
+        "cells_per_metre": 16,
+        "steps": 512,
+        "warmup_steps": 15,
+        "center": [
+          0.4,
+          0.55,
+          0.6
+        ],
+        "acceleration": 0.25,
+        "radius": 0.25,
+        "swirl": 0.7,
+        "fluctuation": 0.4,
+        "frequency": 1.2,
+        "sgs": false
+      },
+      {
+        "seed": 20261032,
+        "counts": [
+          24,
+          16,
+          12
+        ],
+        "cells_per_metre": 16,
+        "steps": 512,
+        "warmup_steps": 15,
+        "center": [
+          0.65,
+          0.35,
+          0.55
+        ],
+        "acceleration": 0.375,
+        "radius": 0.25,
+        "swirl": -0.5,
+        "fluctuation": 0.6,
+        "frequency": 2.0,
+        "sgs": false
+      },
+      {
+        "seed": 20261033,
+        "counts": [
+          12,
+          8,
+          10
+        ],
+        "cells_per_metre": 8,
+        "steps": 512,
+        "warmup_steps": 15,
+        "center": [
+          0.3,
+          0.65,
+          0.45
+        ],
+        "acceleration": 0.5,
+        "radius": 0.35,
+        "swirl": 0.4,
+        "fluctuation": 0.7,
+        "frequency": 2.5,
+        "sgs": false
+      }
+    ]
+  },
+  "models": [
+    {
+      "name": "latest-fine",
+      "project": "runs/water-inference-budget-v1/stability-modes-single-pass/project",
+      "artifacts": "runs/water-inference-budget-v1/stability-modes-single-pass/managed-full/stage-01/artifacts",
+      "single_evaluation": true,
+      "proposals": 32,
+      "weights_sha256": "393fac2cb82b5d259c3aedaa3b9ab7376d99d9896cbfb7535a52a0ac3a6432c7",
+      "normalization_sha256": "73d1cb4a0d9e37c5dc10b40328d10e93d881151310c6c330978eece155c38dd0",
+      "source_witness_sha256": "e32d4009484f4456109342384ee1f6a30fdbc2c021d9521ddfd4b18477d1fab5"
+    }
+  ],
+  "aggregate": [
+    {
+      "scene": 0,
+      "model": "latest-fine",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 8.732394366197184,
+      "maximum_network_evaluations": 10,
+      "worst_relative_residual": 9.969796979175477e-07,
+      "ai_median_seconds": 0.074221642,
+      "native_median_seconds": 0.016521222000000002,
+      "per_repetition_ai_median_seconds": [
+        0.074221642
+      ]
+    },
+    {
+      "scene": 1,
+      "model": "latest-fine",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 8.963782696177063,
+      "maximum_network_evaluations": 11,
+      "worst_relative_residual": 9.9934605068047e-07,
+      "ai_median_seconds": 0.074227766,
+      "native_median_seconds": 0.020101433000000002,
+      "per_repetition_ai_median_seconds": [
+        0.074227766
+      ]
+    },
+    {
+      "scene": 2,
+      "model": "latest-fine",
+      "runs": 1,
+      "qualified": true,
+      "mean_network_evaluations": 9.557344064386317,
+      "maximum_network_evaluations": 11,
+      "worst_relative_residual": 9.990843781159984e-07,
+      "ai_median_seconds": 0.034157820000000005,
+      "native_median_seconds": 0.003727643,
+      "per_repetition_ai_median_seconds": [
+        0.034157820000000005
+      ]
+    }
+  ],
+  "source_sha256": {
+    "experiments/water-multigrid-learning-v1/study.py": "c3dd701f8e464b9d04edabb93a73f1599f1a4745c43c032b2945f69a64b74177",
+    "experiments/water-residual-learning-v1/rollout.py": "f5472f7bfa7c49090a116b5f38bf937317d678260f9c082fd60ea96643d59579",
+    "experiments/water-stability-learning-v1/learned_iteration.py": "4cb7ae61cdcd3a66052f0809a2dd8020606c7c7e6bd60c354cef47bdb1c1ac5f"
+  },
+  "config_sha256": "9dc8693b46747d9fd180bef2145f71e0b90c181e7bc53e9dec7ce5910fd446a4",
+  "binary_sha256": "bbf843a9e309bad8139408b72edb8a24c239978144734ce35a8f6735a8e5143a",
+  "workers": 3,
+  "used_cpus": [
+    1,
+    2,
+    3
+  ],
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+  "started_at_utc": "2026-10-15T23:34:06.895618+00:00",
+  "elapsed_s": 70.04669833183289,
+  "scope": "development correctness/throughput; overlapping jobs, no latency claim",
+  "qualified_ai_steps": 1491,
+  "ai_steps": 1491,
+  "all_native_children_reaped": true,
+  "drift": [
+    {
+      "scene": 0,
+      "worst_pressure_relative_l2": 5.700627264353452e-07,
+      "samples": [
+        {
+          "step": 16,
+          "time_s": 0.26666666666666666,
+          "relative_pressure_difference": 3.763259614337585e-08,
+          "ai_quality": {
+            "actual_divergence": 1.862645149230957e-08,
+            "courant": 0.008496630440155665,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 5.287490323357957e-09,
+            "qualified": true,
+            "relative_residual": 9.18848867548677e-07,
+            "residual_l2": 1.221611474541835e-09
+          }
+        },
+        {
+          "step": 64,
+          "time_s": 1.0666666666666667,
+          "relative_pressure_difference": 1.5416021230306246e-07,
+          "ai_quality": {
+            "actual_divergence": 9.685754776000977e-08,
+            "courant": 0.054243042071660356,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 5.232122611553703e-09,
+            "qualified": true,
+            "relative_residual": 9.539653780130137e-07,
+            "residual_l2": 1.1008670741372494e-09
+          }
+        },
+        {
+          "step": 128,
+          "time_s": 2.1333333333333333,
+          "relative_pressure_difference": 1.4548030798218982e-07,
+          "ai_quality": {
+            "actual_divergence": 2.2351741790771484e-07,
+            "courant": 0.10721750656763712,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 9.82030431510387e-09,
+            "qualified": true,
+            "relative_residual": 5.449707797978735e-07,
+            "residual_l2": 1.6638674537947862e-09
+          }
+        },
+        {
+          "step": 256,
+          "time_s": 4.266666666666667,
+          "relative_pressure_difference": 4.779777387021432e-07,
+          "ai_quality": {
+            "actual_divergence": 3.5762786865234375e-07,
+            "courant": 0.18554747104644775,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.1440463837386616e-08,
+            "qualified": true,
+            "relative_residual": 3.8576124825249063e-07,
+            "residual_l2": 2.6773617519705573e-09
+          }
+        },
+        {
+          "step": 512,
+          "time_s": 8.533333333333333,
+          "relative_pressure_difference": 3.649712424867972e-07,
+          "ai_quality": {
+            "actual_divergence": 5.066394805908203e-07,
+            "courant": 0.24256970087687174,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 3.61484526053187e-08,
+            "qualified": true,
+            "relative_residual": 4.5954384250809696e-07,
+            "residual_l2": 6.5750003877505415e-09
+          }
+        }
+      ]
+    },
+    {
+      "scene": 1,
+      "worst_pressure_relative_l2": 1.2382040528391714e-05,
+      "samples": [
+        {
+          "step": 16,
+          "time_s": 0.26666666666666666,
+          "relative_pressure_difference": 2.321243681047683e-06,
+          "ai_quality": {
+            "actual_divergence": 5.960464477539063e-08,
+            "courant": 0.027175709108511605,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 3.4962546880771643e-09,
+            "qualified": true,
+            "relative_residual": 7.650022987383262e-07,
+            "residual_l2": 1.058095668981297e-09
+          }
+        },
+        {
+          "step": 64,
+          "time_s": 1.0666666666666667,
+          "relative_pressure_difference": 2.0222103141573938e-06,
+          "ai_quality": {
+            "actual_divergence": 1.7881393432617188e-07,
+            "courant": 0.08079484105110168,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.7929296618664675e-08,
+            "qualified": true,
+            "relative_residual": 5.009517558577738e-07,
+            "residual_l2": 2.850157091597072e-09
+          }
+        },
+        {
+          "step": 128,
+          "time_s": 2.1333333333333333,
+          "relative_pressure_difference": 3.6540437349970165e-07,
+          "ai_quality": {
+            "actual_divergence": 2.980232238769531e-07,
+            "courant": 0.1416774829228719,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.576960327690872e-08,
+            "qualified": true,
+            "relative_residual": 5.282040280102266e-07,
+            "residual_l2": 2.3977744550200622e-09
+          }
+        },
+        {
+          "step": 256,
+          "time_s": 4.266666666666667,
+          "relative_pressure_difference": 1.6731763022413044e-06,
+          "ai_quality": {
+            "actual_divergence": 4.76837158203125e-07,
+            "courant": 0.1949673891067505,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.0796393423717631e-08,
+            "qualified": true,
+            "relative_residual": 3.9583250652006304e-07,
+            "residual_l2": 2.6517325373782565e-09
+          }
+        },
+        {
+          "step": 512,
+          "time_s": 8.533333333333333,
+          "relative_pressure_difference": 7.52619668490604e-07,
+          "ai_quality": {
+            "actual_divergence": 3.5762786865234375e-07,
+            "courant": 0.21143840154012045,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.8479835521093926e-08,
+            "qualified": true,
+            "relative_residual": 4.2532143031345624e-07,
+            "residual_l2": 4.730743111647286e-09
+          }
+        }
+      ]
+    },
+    {
+      "scene": 2,
+      "worst_pressure_relative_l2": 3.4955248503548767e-06,
+      "samples": [
+        {
+          "step": 16,
+          "time_s": 0.26666666666666666,
+          "relative_pressure_difference": 6.431099039174686e-08,
+          "ai_quality": {
+            "actual_divergence": 2.3748725652694702e-08,
+            "courant": 0.015221856534481049,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.7008696016433216e-08,
+            "qualified": true,
+            "relative_residual": 5.843153261605704e-07,
+            "residual_l2": 1.4328087745877908e-08
+          }
+        },
+        {
+          "step": 64,
+          "time_s": 1.0666666666666667,
+          "relative_pressure_difference": 2.1226513625096455e-07,
+          "ai_quality": {
+            "actual_divergence": 9.313225746154785e-08,
+            "courant": 0.04864169855912527,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.6774819006082353e-08,
+            "qualified": true,
+            "relative_residual": 5.94250043540091e-07,
+            "residual_l2": 1.4094856690578638e-08
+          }
+        },
+        {
+          "step": 128,
+          "time_s": 2.1333333333333333,
+          "relative_pressure_difference": 2.7075256801955435e-07,
+          "ai_quality": {
+            "actual_divergence": 1.4901161193847656e-07,
+            "courant": 0.0812131106853485,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 3.574898355488779e-08,
+            "qualified": true,
+            "relative_residual": 9.514248866414659e-07,
+            "residual_l2": 2.2234099641452096e-08
+          }
+        },
+        {
+          "step": 256,
+          "time_s": 4.266666666666667,
+          "relative_pressure_difference": 4.1468867762849017e-07,
+          "ai_quality": {
+            "actual_divergence": 2.5331974029541016e-07,
+            "courant": 0.12561229864756265,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 1.4182339676723406e-08,
+            "qualified": true,
+            "relative_residual": 3.8218144062089456e-07,
+            "residual_l2": 1.2489471661629925e-08
+          }
+        },
+        {
+          "step": 512,
+          "time_s": 8.533333333333333,
+          "relative_pressure_difference": 9.66956790760996e-07,
+          "ai_quality": {
+            "actual_divergence": 2.7008354663848877e-07,
+            "courant": 0.14365010658899943,
+            "hard_stop": false,
+            "net_flux": 0.0,
+            "predicted_divergence": 3.6473909340954214e-08,
+            "qualified": true,
+            "relative_residual": 4.2927048476727854e-07,
+            "residual_l2": 2.2627416767572494e-08
+          }
+        }
+      ]
+    }
+  ]
+}

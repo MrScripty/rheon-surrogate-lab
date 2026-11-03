@@ -1,0 +1,18 @@
+{
+  "argv": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "experiments/water-stopping-floor-v1",
+    "-p",
+    "test_early_exit.py",
+    "-v"
+  ],
+  "red": "test_broken_stdin_cleanup_preserves_original_failure_and_receipt (test_early_exit.EarlyExit.test_broken_stdin_cleanup_preserves_original_failure_and_receipt) ... FAIL\n\n======================================================================\nFAIL: test_broken_stdin_cleanup_preserves_original_failure_and_receipt (test_early_exit.EarlyExit.test_broken_stdin_cleanup_preserves_original_failure_and_receipt)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-residual-learning-v1/rollout.py\", line 68, in run\n    child.stdin.write(json.dumps(scene).encode()+b'\\n');child.stdin.flush()\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/test_early_exit.py\", line 18, in write\n    raise BrokenPipeError('native rejected invocation')\nBrokenPipeError: native rejected invocation\n\nDuring handling of the above exception, another exception occurred:\n\nBrokenPipeError: buffered stdin close\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/experiments/water-stopping-floor-v1/test_early_exit.py\", line 45, in test_broken_stdin_cleanup_preserves_original_failure_and_receipt\n    with self.assertRaisesRegex(BrokenPipeError, 'native rejected invocation'):\nAssertionError: \"native rejected invocation\" does not match \"buffered stdin close\"\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "test_broken_stdin_cleanup_preserves_original_failure_and_receipt (test_early_exit.EarlyExit.test_broken_stdin_cleanup_preserves_original_failure_and_receipt) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+  "elapsed_seconds": 0.06915727900195634
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "rheon-cubic-pressure-v1",
+  "cells_per_metre": 16,
+  "experiment": {
+    "schema": "rheon-local-pressure-experiment-v1",
+    "id": "cubic-cells-cpu-v1",
+    "geometries_extents_m": {
+      "g0": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "g1": [
+        1.5,
+        1.0,
+        0.75
+      ],
+      "g2": [
+        0.75,
+        1.5,
+        1.0
+      ],
+      "g3": [
+        1.0,
+        0.75,
+        1.5
+      ]
+    },
+    "trajectories": [
+      {
+        "trajectory_id": "cubic-train-410000",
+        "seed": 410000,
+        "split": "train",
+        "geometry": "g0",
+        "forcing_regime": "steady",
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "frames": 24
+      },
+      {
+        "trajectory_id": "cubic-train-410001",
+        "seed": 410001,
+        "split": "train",
+        "geometry": "g1",
+        "forcing_regime": "steady",
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "frames": 24
+      },
+      {
+        "trajectory_id": "cubic-validation-410002",
+        "seed": 410002,
+        "split": "validation",
+        "geometry": "g1",
+        "forcing_regime": "steady",
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "frames": 24
+      }
+    ],
+    "training": {
+      "model": "groupnorm-v1",
+      "seed": 20261014,
+      "updates": 200,
+      "batch_size": 2,
+      "learning_rate": 0.001,
+      "checkpoint_interval": 20
+    },
+    "resources": {
+      "wall_seconds": 600,
+      "max_output_bytes": 33554432
+    }
+  }
+}

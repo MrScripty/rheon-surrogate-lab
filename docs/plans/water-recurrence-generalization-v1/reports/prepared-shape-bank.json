@@ -1,0 +1,293 @@
+{
+  "schema": "rheon-multigrid-bank-qualification-v1",
+  "configuration_sha256": "00f05ccff168bf0227a1a99127476a31e0f50a33d4bd6b415cda260302cd73d2",
+  "source_sha256": "b4b9bb8ad37f51bf0e7190f881588c5503c5d80d85b9c110d06fdaa42068ffcf",
+  "legacy_source_sha256": "8c2f9e91988c7e3558926830f3758d2752f5efed953a6853a12cea793b96a726",
+  "legacy_config_sha256": "7f305dd41439a708bf713f26b3bc370ab2f5bd91ad15151800f10417a6b3be28",
+  "legacy_bank_tensor_order_evidence_parity": true,
+  "torch_rng_preserved": true,
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "bank": {
+    "schema": "rheon-analytical-feedback-v2",
+    "source": "all real train cell-state correction RMS; explicit grids and common water density/timestep",
+    "grids": [
+      {
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            16,
+            16,
+            16
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            16,
+            16,
+            16
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "6dee639c4f177f7cad21fec74ca7c5ec261cb271cfb7e4dfe67d2b21eff0eac8",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            24,
+            24,
+            24
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            24,
+            24,
+            24
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "74bab4c340147c097459b7de7a9058cf8d1db2dfdf96e050037744a92d4e5ab8",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            32,
+            32,
+            32
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            32,
+            32,
+            32
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "4d22b935390b3e2692b7e7882a3950c18040f8394dc1ac88ada53ed34f9975ca",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            40,
+            40,
+            40
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            40,
+            40,
+            40
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "64fad9e339d7c522616d6b55fab6a45ce04e38650a9d7766ef24f42e96572bfb",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 16,
+          "counts_xyz": [
+            24,
+            16,
+            12
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            12,
+            16,
+            24
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "e077c48689eb7fbf81e34df8263826ea19cf99eceba0de4cca648aab64a958d8",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            17,
+            13,
+            9
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            9,
+            13,
+            17
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "1625b59410c516392f01f1d5e2ca7e0ed22930ec08754d416fab575271e7ebd3",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            33,
+            17,
+            9
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            9,
+            17,
+            33
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "dd684ae86fdb047e67f22f8be474733fed51fe991cdb0930f1786306c12ff52b",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      },
+      {
+        "grid": {
+          "cells_per_metre": 8,
+          "counts_xyz": [
+            9,
+            25,
+            13
+          ]
+        },
+        "bank": {
+          "schema": "rheon-analytical-feedback-v1",
+          "source": "train frame shape, scalar physics and correction RMS only",
+          "shape_zyx": [
+            13,
+            25,
+            9
+          ],
+          "sampling_order_sha256": "3c5ad67db5a91dda43bf6bb441a732ed8de8395fc866b52082ac85880e3ad31d",
+          "bank_description_sha256": "53c952dd0154c7df892daa9025d1f71b38d0236d049e03431aa4ca9470b1eabb",
+          "loss_weights": {
+            "pressure": 0.25,
+            "gradient": 0.25,
+            "equation": 0.5,
+            "amplification": 1.0
+          },
+          "weight": 0.1,
+          "additional_examples": 1,
+          "scope": "manufactured operator training; not additional CFD simulations"
+        }
+      }
+    ],
+    "sampling": "uniform-balanced-grid",
+    "grid_exposures": [
+      625,
+      625,
+      625,
+      625,
+      625,
+      625,
+      625,
+      625
+    ],
+    "sampling_order_sha256": "39d725b00a918700a028bc561c6b0eb3f0c05fa6c3b73509eec13276cc5cda9a",
+    "bank_description_sha256": "3442124bf3c5a24197d26d51609f76aab8e1a6ef587a357b6ff89c5887c6d72d",
+    "loss_weights": {
+      "pressure": 0.25,
+      "gradient": 0.25,
+      "equation": 0.5,
+      "amplification": 1.0
+    },
+    "weight": 0.1,
+    "additional_examples": 5000,
+    "resident_tensor_bytes": 529469440,
+    "cache_max_bytes": 805306368,
+    "scope": "manufactured operator training, not additional CFD simulations; normalization remains real-train-only",
+    "amplitude_reference": "train-correction-cell-rms",
+    "amplitude_rms_pa": 2.8535734640782584
+  },
+  "samples_checked": 1024,
+  "worst_relative_operator_error": 6.442566319044137e-14,
+  "source_train_simulations": 16,
+  "source_train_states": 32,
+  "scope": "cosine eigenvalue labels versus implemented FV operator; does not qualify a fluid trajectory",
+  "full_receipt": {
+    "path": "runs/water-recurrence-generalization-v1/prepared-shape-bank-full.json",
+    "sha256": "93c99b00c467b65659e1946e11071e5c1521b9a15c8a82ba19b8c210b18cfe8c",
+    "bytes": 628474
+  }
+}

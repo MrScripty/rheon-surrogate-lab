@@ -361,3 +361,155 @@ The owner supplied the [Apache-2.0 project license](../LICENSE) when creating th
 repository. Dependencies retain their own licenses. See
 [dependency provenance](../THIRD_PARTY.md). The optional Rheon API patch remains a
 separate proposal; this publication changes no upstream Rheon code or dependency.
+
+
+## Water and pressure experiments from `experiment/coarse-full-fit-20261017`
+
+Moved from that branch's README when it was merged (commit f329826). Newest first.
+
+The latest [pressure accuracy diagnostic](plans/water-pressure-accuracy-v1/results.md)
+finds smooth remaining pressure error on identical inputs. Stricter CPU stopping
+reduces the targeted checkpoint's worst paired pressure difference by 23.3× on
+three consumed scenes, with 45.9% more network calls. All 18 model/policy
+simulations and 4,146 AI steps qualify; this is a diagnostic tradeoff, so the
+retained model stays selected. Methods, timings, failures and a
+[controlled late-residual training protocol](plans/water-pressure-accuracy-v1/next-training-protocol.md)
+are recorded. No new training or fresh-final evaluation occurred.
+
+The preceding [targeted supplemental-feedback study](plans/water-targeted-feedback-v1/results.md)
+fixes the two prior slow-domain cases and passes all 50 development plus eight
+fresh final simulations. It uses 19.5% fewer final network calls than the retained
+learned control, with 3.4× higher worst pressure difference, so control remains
+selected. Two CUDA fits, methods/timings and setup recoveries are recorded.
+[Future preparation](plans/water-targeted-feedback-v1/reports/future-collection.json)
+adds 16 larger water pressure timelines to the existing Tuldok catalog; 32 late
+labels are independently qualified. [Next steps](plans/water-targeted-feedback-v1/next-steps.md)
+target the remaining accuracy/work tradeoff.
+
+The preceding [coverage and intermediate-feedback experiments](plans/water-coverage-feedback-v1/results.md)
+complete two CUDA fits and 10,000 updates. Intermediate feedback reduces familiar
+mean calls by 30%, but regresses worst-shape work and pressure error. Coverage
+passes eight fresh final simulations with 3.4× lower worst pressure error, while
+requiring 68% more calls. The retained control remains preferred. Full
+[methods and timings](plans/water-coverage-feedback-v1/reports/methods.md),
+[decision](plans/water-coverage-feedback-v1/reports/decision.json) and
+[next experiments](plans/water-coverage-feedback-v1/next-steps.md) are recorded.
+
+The preceding [longer two-correction control](plans/water-two-pass-long-v1/results.md)
+completes 10,000 CUDA updates and passes all eight new final simulations. It fixes
+the preceding one-correction model's odd-domain qualification failure, but needs
+12% more calls than the retained control on the new final cases and has higher
+pressure error. The prior control remains preferred. [Methods and timings](plans/water-two-pass-long-v1/reports/methods.md),
+the [retained decision](plans/water-two-pass-long-v1/reports/decision.json) and
+[prepared next steps](plans/water-two-pass-long-v1/next-steps.md) are recorded.
+
+The preceding [shape repeatability and correction-efficiency experiments](plans/water-shape-repeatability-v1/results.md)
+complete four CUDA fits and 25,000 updates. The frozen candidate improves familiar
+mean work 9.41→6.68 calls but passes 15/16 new simulations, versus 16/16 for the prior
+reference. The prior reference remains the qualified control. Full optimizer,
+pipeline and qualification [timings](plans/water-shape-repeatability-v1/reports/timings.json)
+and failures are retained; [next experiments](plans/water-shape-repeatability-v1/next-steps.md)
+target odd-grid convergence and robust selection.
+
+The earlier [recurrence and generalization experiments](plans/water-recurrence-generalization-v1/results.md)
+complete five CUDA fits and 25,000 updates. The selected shape-feedback checkpoint
+passes all 16 untouched simulations and 1,808 AI steps, versus 11/16 simulations
+for the preceding reference. It uses fewer evaluations on the unseen population
+but costs more on familiar grids. Inference remains iterative on CPU; Rheon's
+deployed adapter is unchanged. See the [checkpoint contract](plans/water-recurrence-generalization-v1/model-contract.md),
+[retained comparisons](plans/water-recurrence-generalization-v1/reports/summary.json)
+and [prepared follow-ups](plans/water-recurrence-generalization-v1/next-steps.md).
+
+The earlier [pressure conditioning experiments](plans/water-conditioning-v1/results.md)
+completed 25 managed CUDA/CPU stages. In the 500-update controls, preparing
+immutable training tensors makes training about 67% faster with identical
+retained checkpoints. Removing GroupNorm
+reduces the fitted-frame residual to 0.000398, but it still fails the 1e-6 target.
+The [next model experiments](plans/water-conditioning-v1/next-steps.md) address
+representation and linear/coarse correction before more dataset expansion.
+
+The preceding [controlled water learning sequence](plans/water-learning-sequence-v1/results.md)
+completed four 10,000-update CUDA trials with fresh CPU checks. Increasing training
+simulations from 256 to 1,024 reduced median validation equation error by 15.5%
+and worsened the worst error by 9.9%. The selected candidate still qualified
+**0/128 fresh reserved pressure proposals**. The one-case fit also failed its
+pressure gate. Architecture, loss, float32 target and physical gates stayed fixed.
+
+[Continuous native water playback](plans/water-learning-sequence-v1/observation.md)
+now pins one scene, uses Rheon's translucent voxels and shows its actual force
+and velocity. Training progress and recorded simulation time are separate:
+optimizer updates reuse saved states. Both preview timelines and all 768 added
+training simulations are in the existing Tuldok data collection.
+
+The preceding baseline uses [varied sealed domains full of water](../experiments/sealed-water-v1/README.md), with cubic cells, viscous native references and localized fluctuating forces. The unchanged seven-channel network completed 2,000 CUDA updates on 256 training simulations, with 64 validation and 64 reserved test simulations. Median reserved equation residual was 4.37%, but **0/128 model proposals passed** the pressure gates. Fresh CPU restore and all managed artifacts qualified. See [measured results and previous-run comparison](plans/sealed-water-pressure-v1/results.md).
+
+The [fresh native / AI comparison](../experiments/live-water-comparison-v1/README.md)
+now uses 15 native warm-up steps before the first prediction and offers signed
+voxel pressure differences with a Pa legend. Cold-start attempts are unsupported
+test setups. The new 64-step warm-start run still passes 0/49 AI checks; the prior
+0/128 held-out snapshots already included previous reference pressure. See
+[context correction and measured results](plans/live-ai-pressure-comparison/results.md).
+
+The earlier [CUDA training and CPU inference qualification](plans/cuda-training-cpu-inference/results.md) retains its original 20-update result and twelve failed accuracy checks.
+Voxel size is one scalar in physical metadata, with no voxel-size network channels.
+Current learned-output acceptance uses a [float32-calibrated residual target of
+1e-6](../experiments/float32-pressure-target-v1/README.md), with existing physical
+limits retained. Historical experiments keep their original targets and results.
+The [proposed next training sequence](plans/pressure-learning-next-runs/proposal.md)
+requires CUDA training with CPU deployment inference, then one-case fitting and
+controlled normalization comparisons.
+Explore its `[batch, channel, Z, Y, X]` inputs in the interactive
+[pressure tensor page](../viewer/tensor.html), with [recorded-data instructions](../viewer/TENSOR-README.md).
+Variable-domain capture uses [cubic physical cells](../experiments/cubic-pressure-v1/README.md):
+16 cells per metre, with per-axis counts derived from domain size. Historical
+experiments below retain their original grids and results.
+
+Live work is visible through the [current Tuldok project producer](../experiments/dependency-migration-v1/README.md) and
+[Rheon egui observation workflow](../experiments/live-project-v1/README.md).
+
+Fresh local GroupNorm CPU experiments use the separate
+[reusable CPU pipeline](../experiments/local-pressure-v1/README.md), with configurable
+development reservations, fixture-first qualification and managed train/restore.
+Its [acceptance plan](plans/reusable-local-cpu-pipeline/plan.md) records current
+verification status. Historical pressure experiments and results remain frozen.
+
+### Residual pressure learning experiments
+
+The [completed controlled sequence](plans/water-residual-learning-v1/results.md)
+retains 17 managed stages and 40,002 CUDA updates, including physical residual
+inputs, linearity, repeated corrections and changed physical feedback. Median
+saved-state error improved, but all candidates remain physically unqualified
+and independent simulations become unstable. See the
+[JSON index](plans/water-residual-learning-v1/reports/summary.json),
+[CSV comparison](plans/water-residual-learning-v1/reports/comparison.csv),
+[method/commands](plans/water-residual-learning-v1/reports/commands.md) and
+[prepared next experiments](plans/water-residual-learning-v1/next-steps.md).
+Weights/datasets remain in the existing Tuldok catalog and ignored local Run
+artifacts. Historical results and the existing deployed comparison are preserved.
+
+The completed [stability-aware pressure sequence](plans/water-stability-learning-v1/results.md) retains a development-qualified 32-evaluation iterative CPU policy.
+
+Previous experiment: [inference budget and scaling](plans/water-inference-budget-v1/plan.md), with [methods and results](plans/water-inference-budget-v1/results.md).
+
+Earlier experiment: [multi-grid pressure learning results](plans/water-multigrid-learning-v1/results.md), with [retained comparison data](plans/water-multigrid-learning-v1/reports/summary.json), CUDA cohort training and qualified iterative CPU inference.
+
+Completed experiment: [matched early and late residual feedback](plans/water-late-residual-v1/plan.md), with [results](plans/water-late-residual-v1/reports/summary.json), [fixed-call comparison](plans/water-late-residual-v1/reports/fixed-call-comparison.csv) and [methods, timing and recoveries](plans/water-late-residual-v1/execution-ledger.md). Late-direction training improves equal-call pressure accuracy, but default adaptive trajectory pressure still regresses versus the retained reference. Both CUDA fits and CPU qualification are recorded; the original final setup required a separately labelled post-fit amendment. No model is promoted.
+
+The frozen-model stopping experiment is complete on `experiment/water-stopping-floor-v1`: an eight-pass minimum improves consumed-scene accuracy, but fails fresh worst-pressure and maximum-work gates, so the reference remains retained. A residual-to-pressure bound is separately tested on consumed scenes. [Methods and timings](plans/water-stopping-floor-v1/execution-ledger.md), [complete results](plans/water-stopping-floor-v1/reports/summary.json), and [analysis CSV](plans/water-stopping-floor-v1/reports/comparison.csv) retain all outcomes; zero new training updates or deployment changes.
+
+The [broader pressure-aware regression](plans/water-pressure-bound-regression-v1/plan.md) retains 74 completed scenes, 233 independent bound checks and current serial timings. Worst pressure deviation improves about 2–2.4× per population and tested median AI-step latency improves 8–21%, but one population requires 17 maximum calls versus retained 11. No replacement or new holdout consumption occurs. [Results](plans/water-pressure-bound-regression-v1/reports/summary.json), [population CSV](plans/water-pressure-bound-regression-v1/reports/population-comparison.csv), [timing CSV](plans/water-pressure-bound-regression-v1/reports/timing-comparison.csv), and [methods](plans/water-pressure-bound-regression-v1/execution-ledger.md) preserve the complete accuracy/work tradeoff.
+
+The [earlier-pressure experiment](plans/water-early-pressure-v1/results.md)
+completed two matched 5,000-update CUDA fits and 148 qualified trajectories. Harder
+training data reduced the recent peak from 17 network calls to 11, but neither
+fit preserved the best prior pressure accuracy across all populations; no model
+was promoted and eight independent scenes remain reserved. The records also
+separate weak-mode amplitude, cross-band leakage and float32 input rounding.
+[Sealed results and timings](plans/water-early-pressure-v1/reports/summary.json).
+
+The [pressure accuracy recovery sequence](plans/water-pressure-recovery-v1/results.md)
+retains two matched CUDA fits and 296 qualified AI trajectories across 74 consumed
+scenes. Weight 0.1 reduces recent maximum calls 17→10, but does not preserve the best
+prior pressure accuracy everywhere; no replacement or independent-scene use.
+[Methods, timings and receipts](plans/water-pressure-recovery-v1/reports/summary.json)
+include stricter stopping tests, frequency/amplitude diagnostics and current CPU latency.

@@ -1,0 +1,20 @@
+{
+  "schema": "rheon-conditioning-environment-v1",
+  "python": "3.14.7 (main, Sep  1 2026, 14:18:09) [Clang 22.1.3 ]",
+  "torch": "2.14.0+cu132",
+  "numpy": "2.5.3",
+  "cuda_toolkit": "13.2",
+  "kernel": "7.0.0-31-generic",
+  "cpu": "Intel Core Ultra 9 275HX; 24 available cores",
+  "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+  "runtime_manifest_sha256": "74bbe92e160f14266b850cfebad01655192f3cb272083f8a87c1ae224c9e1e4e",
+  "scientific_arithmetic": "float32 network/gradients/Adam; existing float64 physical operator/reference/reconstruction unchanged",
+  "threading": "managed eager CPU witness one thread; diagnostic workers one thread per assigned core; independent throughput configurations retained",
+  "commands": {
+    "cpu_regression": "$TORCH_PYTHON -m unittest discover -s experiments/water-conditioning-v1 -p test_cpu.py",
+    "model_regression": "$TORCH_PYTHON -m unittest discover -s experiments/water-conditioning-v1/training -p test_conditioning.py",
+    "managed_assembly": "$TORCH_PYTHON experiments/water-conditioning-v1/training/pipeline.py assemble --packet runs/water-learning-sequence-v1/views/fit-one --validation runs/water-learning-sequence-v1/views/validation --reserved runs/water-learning-sequence-v1/views/reserved-test --runtime-manifest runs/cuda-pressure-runtime-1/manifest.json --tuldok runs/live-integration/Tuldok --config experiments/water-conditioning-v1/configs/<variant>.json --output <fresh-project-path>",
+    "managed_execution": "workflow.execute(authenticated_existing_catalog_client, project, fresh_output, observer, stage_names=selected_stages, previous=prior_run_bindings); exact recipes/material/custody retained in normal Runs",
+    "native_check": "$TORCH_PYTHON experiments/water-conditioning-v1/native_parallel.py --packet <declared-view> --inference <managed-cpu-artifacts> --binary runs/sealed-water-v1-3/evaluation-build/rheon-sealed-water-evaluation --output <fresh-output>"
+  }
+}

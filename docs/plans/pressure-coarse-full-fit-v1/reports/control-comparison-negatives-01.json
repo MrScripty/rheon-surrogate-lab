@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "actual_retained_campaign_accepted": true,
+  "negative_cases": [
+    {
+      "case": "wrong-campaign-package",
+      "expected": "Control campaign package manifest differs",
+      "observed": "Control campaign package manifest differs",
+      "passed": true
+    },
+    {
+      "case": "wrong-control-weights",
+      "expected": "Control campaign packaged weights differ from measured Study",
+      "observed": "Control campaign packaged weights differ from measured Study",
+      "passed": true
+    }
+  ],
+  "scope": "Real retained campaign/config/package; one altered manifest identity, then a different valid checkpoint identity supplied as expected control. No model execution or campaign regeneration.",
+  "sources": {
+    "runs/pressure-spatial-coarse-v1/control-regression-01/receipt.json": "0bc7028db1cc9bad1ef44e33bd538cfb394e689ba2c7e150f63802a13aada866",
+    "runs/pressure-spatial-coarse-v1/control-regression-config.json": "2d9ad80f12162a92fac75b404f87714958a37e75d5ae3ddfca6894db40a6491c",
+    "runs/pressure-spatial-coarse-v1/control-study-01/train/weights.npz": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+    "runs/pressure-spatial-coarse-v1/control-study-01/train/checkpoint-000.npz": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-coarse-full-fit-v1/test_control_comparison.py": "620cf32de315070fd5db231611dfbeffc63163a6d17402565f8a944a3b62ffd7",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/pressure-coarse-full-fit-v1/control_comparison.py": "f35b741ff09828884096c7d14ce201658e28f245d9a13788ddb6a5675b437bee"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "format": "pressure_matched_weight_training_v1",
+  "status": "passed",
+  "source_sha256": "7ae4bc2204d48422288871b7e124a77bd11375bc2b8408332114ed3d64358ccb",
+  "artifact_root": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+  "reference": {
+    "study": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-throughput-feedback-v1/control-study-02",
+    "receipt_sha256": "304db528778b2e6a4ca5bd005d99416180458038ed38947ace566ad946ed51ac",
+    "training_run_id": "9c9777fcb4b541e98dc03e66c1df4f73",
+    "restore_run_id": "5c5b54957b1544ba87240263aba9a8e6",
+    "weights_sha256": "26b66232928ce81d428dbdb1c8cc750a0cf5c0bc5f678977efc111a0a56d2d9a",
+    "initial_checkpoint_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+    "optimizer_updates": 5000,
+    "band_feedback": {
+      "max_mode": 3,
+      "signal_floor_fraction": 0.1,
+      "stages": "first-and-final",
+      "weight": 0.0
+    },
+    "optimizer_s": 362.1493761539459,
+    "trainer_s": 365.77180759799376,
+    "complete_study_command_s": 1015.3661067559879,
+    "peak_cuda_bytes": 770565632,
+    "artifact_parity": {
+      "checkpoint-5000.npz": true,
+      "history.json": true,
+      "normalization.json": true,
+      "predictions.npz": true,
+      "weights.npz": true
+    }
+  },
+  "candidates": {
+    "weight001": {
+      "study": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-feedback-weight-ablation-v1/weight001-study-02",
+      "receipt_sha256": "0dedd189000bcb16a855c58ef0ce18e2254f8bb1a85bceb0854b2331d6369079",
+      "training_run_id": "a7f26e3d6f2d42d297ebf80d23e09e4c",
+      "restore_run_id": "ae3dc266d76147aea4fbd120b28a7502",
+      "weights_sha256": "8503d99bd96e9c8f935c08d8e6a649a73e64c394777453dd8ec26aff929844b9",
+      "initial_checkpoint_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+      "optimizer_updates": 5000,
+      "band_feedback": {
+        "max_mode": 3,
+        "signal_floor_fraction": 0.1,
+        "stages": "first-and-final",
+        "weight": 0.01
+      },
+      "optimizer_s": 393.8340210914612,
+      "trainer_s": 397.6460579830018,
+      "complete_study_command_s": 1160.3397047579929,
+      "peak_cuda_bytes": 837691904,
+      "artifact_parity": {
+        "checkpoint-5000.npz": true,
+        "history.json": true,
+        "normalization.json": true,
+        "predictions.npz": true,
+        "weights.npz": true
+      },
+      "matched_checks": {
+        "inputs": true,
+        "normalization_sha256": true,
+        "runtime_manifest_sha256": true,
+        "sample_order_sha256": true,
+        "initial_checkpoint_exact": true,
+        "optimizer_updates_exact": true
+      }
+    },
+    "weight003": {
+      "study": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/pressure-feedback-weight-ablation-v1/weight003-study-01",
+      "receipt_sha256": "e6e0265237e7f59d6ee8d7c2642878e4b2cd9a668e838c8fd31838dd56d5d5b6",
+      "training_run_id": "42b18c5da68c4382b7e5ff511c28998d",
+      "restore_run_id": "21b9fee4399f46748cf7c5a6af051b34",
+      "weights_sha256": "f38c9b79426eb6a35e027e96df2814d687bc080dac83289c81d2acb1a9ac2e33",
+      "initial_checkpoint_sha256": "21924973935cbad8da3ead87240f44c33b4235fb978b00805390e4738abeb713",
+      "optimizer_updates": 5000,
+      "band_feedback": {
+        "max_mode": 3,
+        "signal_floor_fraction": 0.1,
+        "stages": "first-and-final",
+        "weight": 0.03
+      },
+      "optimizer_s": 389.51959133148193,
+      "trainer_s": 393.14090232799936,
+      "complete_study_command_s": 1852.9090963499912,
+      "peak_cuda_bytes": 837691904,
+      "artifact_parity": {
+        "checkpoint-5000.npz": true,
+        "history.json": true,
+        "normalization.json": true,
+        "predictions.npz": true,
+        "weights.npz": true
+      },
+      "matched_checks": {
+        "inputs": true,
+        "normalization_sha256": true,
+        "runtime_manifest_sha256": true,
+        "sample_order_sha256": true,
+        "initial_checkpoint_exact": true,
+        "optimizer_updates_exact": true
+      }
+    }
+  },
+  "scientific_accuracy_asserted": false,
+  "optimizer_updates_executed_by_report": 0,
+  "scope": "Retained control fit is reused, not reexecuted. Complete command clocks include queue/preparation/readback; optimizer and trainer clocks are separate. Accuracy requires independent CPU trajectories."
+}

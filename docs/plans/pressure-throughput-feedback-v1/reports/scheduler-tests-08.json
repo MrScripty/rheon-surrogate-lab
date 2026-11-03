@@ -1,0 +1,34 @@
+{
+  "schema": "pressure-throughput-test-receipt-v1",
+  "started_at_utc": "2026-10-17T04:44:52.273897+00:00",
+  "source": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+  "source_sha256": {
+    "runs.py": "6dc3b9dafd15a9de43cc8a8686384cc13bec7041a3c88c73f9b1925f64479d92",
+    "run_capacity.py": "6811c5b2255b2a57c92147bab448a82c89876072d260ef217eb7284c511e8cfa"
+  },
+  "database": "explicit isolated fixture; DSN omitted",
+  "tests": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_runs.py",
+        "-v",
+        "-k",
+        "test_runs.RunTests.*"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 12.13288097800978,
+      "output": "test_ambiguous_spawn_reconciles_only_after_matching_process_ceases (test_runs.RunTests.test_ambiguous_spawn_reconciles_only_after_matching_process_ceases) ... ok\ntest_current_exposure_refreshes_without_mutating_admission_evidence (test_runs.RunTests.test_current_exposure_refreshes_without_mutating_admission_evidence) ... ok\ntest_database_disconnect_still_drains_child_before_shutdown_returns (test_runs.RunTests.test_database_disconnect_still_drains_child_before_shutdown_returns) ... ok\ntest_lost_ack_repeated_key_returns_receipt_before_new_graph_validation (test_runs.RunTests.test_lost_ack_repeated_key_returns_receipt_before_new_graph_validation) ... ok\ntest_lost_commit_ack_reconciliation_wakes_exact_committed_queue (test_runs.RunTests.test_lost_commit_ack_reconciliation_wakes_exact_committed_queue) ... ok\ntest_queued_cancel_and_peer_supervisor_are_honest (test_runs.RunTests.test_queued_cancel_and_peer_supervisor_are_honest) ... ok\ntest_recovery_keeps_observed_live_prior_process_unknown (test_runs.RunTests.test_recovery_keeps_observed_live_prior_process_unknown) ... ok\ntest_restart_does_not_replay_queue_or_signal_reused_pid (test_runs.RunTests.test_restart_does_not_replay_queue_or_signal_reused_pid) ... ok\ntest_restart_during_proven_pre_spawn_validation_is_interrupted (test_runs.RunTests.test_restart_during_proven_pre_spawn_validation_is_interrupted) ... ok\ntest_running_cancel_confirms_real_process_group_drain (test_runs.RunTests.test_running_cancel_confirms_real_process_group_drain) ... ok\ntest_sibling_unknown_between_capacity_check_and_entry_prevents_worker_start (test_runs.RunTests.test_sibling_unknown_between_capacity_check_and_entry_prevents_worker_start) ... ok\ntest_unknown_attempt_fences_already_queued_work (test_runs.RunTests.test_unknown_attempt_fences_already_queued_work) ... ok\ntest_worker_failure_retry_preserves_frozen_parent_and_reuses_no_checkpoint (test_runs.RunTests.test_worker_failure_retry_preserves_frozen_parent_and_reuses_no_checkpoint) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 11.857s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 12.132910197993624,
+  "passed": true
+}

@@ -1,0 +1,40 @@
+{
+  "criterion": "same input pressure error no worse than retained original",
+  "observations": [
+    {
+      "argv": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "experiments/water-pressure-accuracy-v1/repro.py",
+        "--reference",
+        "runs/water-pressure-accuracy-v1/fixture-retained-replay.json",
+        "--candidate",
+        "runs/water-pressure-accuracy-v1/fixture-targeted-replay.json",
+        "--candidate-policy",
+        "original"
+      ],
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "elapsed_seconds": 0.05542667899862863,
+      "stdout": "{'same_sample_sha256': 'e31c8ad8efd4c16f3e83a8249d0b1c59115852e12ebc82a402f464340677167f', 'criterion': 'no same-RHS pressure regression', 'reference_error': 1.6497162398361557e-07, 'candidate_error': 1.1411137260677013e-05, 'candidate_policy': 'original', 'passed': False}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+        "experiments/water-pressure-accuracy-v1/repro.py",
+        "--reference",
+        "runs/water-pressure-accuracy-v1/fixture-retained-replay.json",
+        "--candidate",
+        "runs/water-pressure-accuracy-v1/fixture-targeted-replay.json",
+        "--candidate-policy",
+        "strict-8"
+      ],
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "elapsed_seconds": 0.055109742999775335,
+      "stdout": "{'same_sample_sha256': 'e31c8ad8efd4c16f3e83a8249d0b1c59115852e12ebc82a402f464340677167f', 'criterion': 'no same-RHS pressure regression', 'reference_error': 1.6497162398361557e-07, 'candidate_error': 1.2096469708751048e-07, 'candidate_policy': 'strict-8', 'passed': True}\n",
+      "stderr": ""
+    }
+  ],
+  "scope": "expected original red and stricter-policy green; no checkpoint change or model promotion"
+}

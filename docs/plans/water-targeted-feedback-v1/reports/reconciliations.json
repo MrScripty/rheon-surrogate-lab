@@ -1,0 +1,21 @@
+{
+  "accepted_failed_commands": [
+    {
+      "failed_timing": "runs/water-targeted-feedback-v1/cpu-preparation-timing.json",
+      "timing_sha256": "bee83eaf3ac221cf45d8ba5222f80d3d0999060303e8a07873cbee743e78e57f",
+      "source_sha256": "3005e1baa8186d69927ee33084675289137754a7cfed3fe1c2dcfc518cdd11b4",
+      "reason": "CPU worker initializer could not import the existing capture owner dependency verify_capture",
+      "side_effects": "zero late output files; no native child/fixture created; pool shut down and command child reaped",
+      "disposition": "retain failed attempt; correct module search path; fresh output and command identity for CPU preparation only; no training replay",
+      "recovery_timing": "runs/water-targeted-feedback-v1/cpu-preparation-1-timing.json"
+    },
+    {
+      "failed_timing": "runs/water-targeted-feedback-v1/publish-preparation-timing.json",
+      "timing_sha256": "16516b36e35b2b83cef8e4e6b6b2b4adff39bf0ce2cebe3ab9f0185a7109d09c",
+      "reason": "Pumas inference Python lacks psycopg required by existing Tuldok authentication bootstrap",
+      "side_effects": "authentication import failed before session or any catalog mutation; no catalog receipt exists",
+      "disposition": "retain failed command; use existing controller .venv with required dependencies under fresh command identity",
+      "recovery_timing": "runs/water-targeted-feedback-v1/publish-preparation-1-timing.json"
+    }
+  ]
+}

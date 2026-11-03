@@ -1,0 +1,60 @@
+# Controlled multi-grid pressure experiments
+
+The [plan](../../docs/plans/water-multigrid-learning-v1/plan.md) owns scope and
+acceptance. Reuse the conditioning trainer's captured-source assembly and normal
+Tuldok workflow. Historical `stability-modes-single-pass.json` is the single-grid
+control. New `multigrid-smoke`, `multigrid-modes-single-pass` and conditional
+`multigrid-modes-two-pass` configurations declare train-only analytical feedback.
+
+Version 4 adds five explicit grids: 16³, 24³, 32³, 40³, and 24×16×12. At 16 cells
+per metre, each voxel is a 1/16 m cube and physical extent follows slice count.
+Five-grid shuffles give exactly equal exposure over each five updates. Each grid
+has 32 patterns at four signed amplitudes; amplitude and normalization come only
+from the real fitting frame. Generated labels use Neumann cosine eigenvalues,
+independent of the implemented finite-volume stencil. No extra CFD simulation
+or observation of the reserved population is implied.
+
+The resident tensor cache is projected and checked against a 768 MiB limit;
+network parameters, gradients and CUDA workspace are separate measured memory.
+Historical schema-v3 sampling and tensor values retain their original behavior.
+The 10-update smoke covers all five grids before a 5,000-update fit.
+
+`learned_iteration.py --single-evaluation --proposals 32 --adaptive-profile ...`
+checks the same equation/divergence targets after every shared network evaluation
+for either a one-pass-trained or four-pass-trained checkpoint. Without that
+option the original proposal width applies. The captured recurrence implementation
+is reused without mutating checkpoint metadata. This is iterative CPU inference,
+not a new one-pass success or a changed Rheon deployment contract.
+
+`qualify_bank.py --config CONFIG --packet FIT_VIEW --legacy-source CAPTURE/analytical.py
+--legacy-config ORIGINAL_CONFIG --output FRESH.json` checks every authored label
+and exact parity with the retained single-grid implementation without optimizing.
+
+`study.py --config STUDY.json --output FRESH --workers N` runs native controls
+before candidate episodes. The JSON names restored checkpoints and scenes rather
+than embedding historical hashes in executable logic. Use up to available cores
+minus one for independent numerical jobs. Each worker owns a fixed core and one
+Torch/native thread. Use `--workers 1` on an otherwise idle CPU for isolated,
+alternating repeated timings. Native/learned retain 1e-8/1e-6 equation profiles.
+
+`mode_probe.py` tests 60 independently seeded low/broad-frequency mixtures at two signed
+amplitudes (120 cases) over the same five grids. It records first-evaluation error, bounded
+32-evaluation stopping and sampled equation acceptance. Independent eigenvalues
+check the existing FV operator. These are development operator probes, not full
+fluid simulations or a proof of contraction for every residual.
+
+`study.py --threads 4 --workers 1 --timing-study` gives native and AI tracks the
+same four-core partition and explicit thread budgets. Three repetitions must be
+configured and unrelated task CPU/GPU work must finish first. Without
+`--timing-study`, even a serial run is qualification evidence only. The optional
+thread count is execution policy; it changes neither weights nor default
+single-threaded inference. A fresh one-AI-step fixture qualifies this path.
+
+Prepared schema-v5 cohort configurations use `train-correction-cell-rms` as the
+analytical amplitude authority. The trainer computes a cell-weighted RMS over
+all real training states and checks common water density/timestep. Normalization
+continues to use actual training data only. This permits the prepared 16-scene,
+32-state cohort without treating its first frame as representative. It changes
+the training population/statistics; comparisons must not imply those remain
+identical to one-frame fitting. Historical v3/v4 paths remain supported unchanged.
+Prepared configurations do not authorize bypassing the plan's admission gate.

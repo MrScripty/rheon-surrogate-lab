@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/torch-versions/v2.14.0/venv/bin/python",
+    "experiments/water-late-residual-v1/sampling_probe.py",
+    "--study",
+    "experiments/water-pressure-accuracy-v1/configs/study.json",
+    "--model",
+    "targeted",
+    "--output",
+    "docs/plans/water-late-residual-v1/reports/temporal-sampling-probe.json"
+  ],
+  "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab",
+  "returncode": 0,
+  "child_reaped": true,
+  "result_sha256": "b5a2b263b4f6b8d3f16c7ae188090fa3f888cd8e252f90e151db83162d35fe7e",
+  "elapsed_boundary": "probe internal timer includes Python-side setup/model restore and all checks; excludes interpreter startup; not whole CFD runtime",
+  "physical_time_scope": "dt metadata varied with fixed native input residual/base; no claim of resimulated velocity or pressure at different dt",
+  "sources": [
+    {
+      "title": "Sampling theorem, author Steven W. Smith",
+      "url": "https://www.dspguide.com/ch03/2.htm",
+      "use": "ideal temporal sampling and aliasing bound"
+    },
+    {
+      "title": "Bridson fluid simulation notes, pressure projection",
+      "url": "https://www.cs.ubc.ca/~rbridson/fluidsimulation/fluids_notes.pdf",
+      "use": "spatial pressure solve per projection step"
+    }
+  ],
+  "additional_source_sha256": {
+    "experiments/water-stability-learning-v1/learned_iteration.py": "4cb7ae61cdcd3a66052f0809a2dd8020606c7c7e6bd60c354cef47bdb1c1ac5f"
+  }
+}

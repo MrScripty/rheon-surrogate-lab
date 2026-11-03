@@ -1,0 +1,2566 @@
+{
+  "schema": "rheon-pressure-accuracy-replay-v1",
+  "sample": "runs/water-pressure-bound-regression-v1/development/scene-73-late-pressure-0/state-0016.npz",
+  "sample_sha256": "893c1c4f8e0f38e954a65946929c2e9a63117369d32655810e8942170ec39732",
+  "model": {
+    "project": "runs/water-late-residual-v1/extra-late/project",
+    "artifacts": "runs/water-late-residual-v1/extra-late/managed-full/stage-01/artifacts"
+  },
+  "weights_sha256": "a73fbc342ed070390b47535e6b94b535dec158671393b074a17e8a6858c249da",
+  "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+  "source_witness_sha256": "ac8b7ae5a58782e46babc6c209c5e4991bfb1e300888bd8a04660e92c13f8cc9",
+  "counts_xyz": [
+    9,
+    11,
+    33
+  ],
+  "oracle_relative_error": 7.523433286343034e-15,
+  "removed_constant_over_initial_residual": 1.331931622400812e-17,
+  "rounded_full_pressure": {
+    "pressure_relative_l2": 2.77092522508397e-08,
+    "mean_free_pressure_relative_l2": 3.465600559971653e-08,
+    "gradient_relative_l2": 2.4380998418921107e-07,
+    "pressure_max_abs_pa": 4.7519343659985225e-07,
+    "mean_error_pa": -7.504895260285862e-10
+  },
+  "negative_zero_correction": {
+    "pressure_relative_l2": 0.10548486307304875,
+    "mean_free_pressure_relative_l2": 0.09024538671187847,
+    "gradient_relative_l2": 0.08972286357194376,
+    "pressure_max_abs_pa": 1.2942141205084,
+    "mean_error_pa": 0.378159798569904
+  },
+  "selected": {
+    "original": {
+      "calls": 8,
+      "correction_seconds_cumulative": 0.05946037100147805,
+      "pressure_relative_l2": 9.477043049347662e-06,
+      "mean_free_pressure_relative_l2": 8.584566779941588e-06,
+      "gradient_relative_l2": 2.8323796498322645e-06,
+      "pressure_max_abs_pa": 9.780212078869255e-05,
+      "mean_error_pa": -3.211598208326353e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9946513190963387,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8969168767102214
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09773369698675588
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0043381773179957854
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007932906409631181
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010545795464036181
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.023330940862075e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.864520758800252e-07,
+          "predicted_divergence": 7.575767839775782e-09,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 2.023330940862075e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.864520758800252e-07,
+          "predicted_divergence": 7.575767839775782e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.0035747285217963315,
+          "mean_free_pressure_relative_error_bound": 1.5916497241516762e-05,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    "pressure-bound": {
+      "calls": 12,
+      "correction_seconds_cumulative": 0.08555162700213259,
+      "pressure_relative_l2": 5.677406069049493e-07,
+      "mean_free_pressure_relative_l2": 5.145250365206761e-07,
+      "gradient_relative_l2": 1.7010538404087047e-07,
+      "pressure_max_abs_pa": 5.866409772181669e-06,
+      "mean_error_pa": -1.922937967570329e-06,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944032670613885,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954251040365204
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09897816296771747
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0046075033520498725
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007775189092357389
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010221571929237577
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.2181299933261565e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 5.3368128736054386e-08,
+          "predicted_divergence": 4.553214542607154e-10,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.2181299933261565e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 5.3368128736054386e-08,
+          "predicted_divergence": 4.553214542607154e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 0.0002152136332449541,
+          "mean_free_pressure_relative_error_bound": 9.582282531135883e-07,
+          "pressure_error_bound_passed": true
+        }
+      }
+    }
+  },
+  "frontier": [
+    {
+      "calls": 0,
+      "correction_seconds_cumulative": 0.0,
+      "pressure_relative_l2": 0.10548486307304875,
+      "mean_free_pressure_relative_l2": 0.09024538671187847,
+      "gradient_relative_l2": 0.08972286357194376,
+      "pressure_max_abs_pa": 1.2942141205084,
+      "mean_error_pa": 0.378159798569904,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.8060639757082505,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.30114353717325815
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.16973751824367722
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.10322837982262557
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.06128223689503889
+        },
+        {
+          "mode": [
+            1,
+            0,
+            1
+          ],
+          "energy_fraction": 0.060170878445504845
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 0.00024404817150517106,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.10692121781783713,
+          "predicted_divergence": 0.0021487250790667802,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 0.00024404817150517106,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.10692121781783713,
+          "predicted_divergence": 0.0021487250790667802,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 431.1731421455325,
+          "mean_free_pressure_relative_error_bound": null,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 1,
+      "correction_seconds_cumulative": 0.01172590700298315,
+      "pressure_relative_l2": 0.02804931245549853,
+      "mean_free_pressure_relative_l2": 0.022590942686911884,
+      "gradient_relative_l2": 0.010803766794363049,
+      "pressure_max_abs_pa": 0.17776704342725846,
+      "mean_error_pa": 0.10546518198211666,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9602552169898597,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.709803425353347
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.18544292213883462
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.03344354120728158
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.02469502126460984
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.01641977249583834
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.8914481023669266e-05,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.00828672197365854,
+          "predicted_divergence": 0.00014511149725550027,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 1.8914481023669266e-05,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.00828672197365854,
+          "predicted_divergence": 0.00014511149725550027,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 33.417239574994,
+          "mean_free_pressure_relative_error_bound": 0.17746216367506906,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 2,
+      "correction_seconds_cumulative": 0.02008461100194836,
+      "pressure_relative_l2": 0.002001564432317729,
+      "mean_free_pressure_relative_l2": 0.0016295426937655202,
+      "gradient_relative_l2": 0.001213888499764888,
+      "pressure_max_abs_pa": 0.022123802166008844,
+      "mean_error_pa": 0.007467511011539336,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.8580346210173598,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.5310037347536972
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.13073232364680876
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.11777969236793658
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.0920697064805637
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.04530527432542225
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.0810070034186106e-06,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.000911720836590047,
+          "predicted_divergence": 1.1455667031095897e-05,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 2.0810070034186106e-06,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.000911720836590047,
+          "predicted_divergence": 1.1455667031095897e-05,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 3.6766279499531067,
+          "mean_free_pressure_relative_error_bound": 0.016661488858484598,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 3,
+      "correction_seconds_cumulative": 0.026660322000680026,
+      "pressure_relative_l2": 0.00021278021854678655,
+      "mean_free_pressure_relative_l2": 0.00026291555315742266,
+      "gradient_relative_l2": 0.00018484177563570834,
+      "pressure_max_abs_pa": 0.0026349483202818824,
+      "mean_error_pa": 0.0001620059145639428,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.6165388824184285,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.41579430664644274
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.3780843432195653
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.05198040080636748
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.04717227387924457
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.04236283871376908
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 3.224912701989835e-07,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.00014128833308864138,
+          "predicted_divergence": 1.6650768639905195e-06,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 3.224912701989835e-07,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 0.00014128833308864138,
+          "predicted_divergence": 1.6650768639905195e-06,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.5697628194819455,
+          "mean_free_pressure_relative_error_bound": 0.0025435251358453146,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 4,
+      "correction_seconds_cumulative": 0.033201943999301875,
+      "pressure_relative_l2": 0.0001752265338571055,
+      "mean_free_pressure_relative_l2": 0.00015975855924867726,
+      "gradient_relative_l2": 5.374091168686031e-05,
+      "pressure_max_abs_pa": 0.0016853884992027446,
+      "mean_error_pa": -0.0005895160025292236,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9922799634930943,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9165128892963766
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.06448153035387313
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.005184890894228159
+        },
+        {
+          "mode": [
+            0,
+            1,
+            0
+          ],
+          "energy_fraction": 0.004070644733287237
+        },
+        {
+          "mode": [
+            1,
+            1,
+            0
+          ],
+          "energy_fraction": 0.003615220188679288
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 5.093148649211641e-08,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.2313859298447652e-05,
+          "predicted_divergence": 2.24561791476822e-07,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 5.093148649211641e-08,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.2313859298447652e-05,
+          "predicted_divergence": 2.24561791476822e-07,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.08998341978761054,
+          "mean_free_pressure_relative_error_bound": 0.0004007881843817424,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 5,
+      "correction_seconds_cumulative": 0.0397704889983288,
+      "pressure_relative_l2": 7.198282162540225e-05,
+      "mean_free_pressure_relative_l2": 6.796768695198763e-05,
+      "gradient_relative_l2": 2.37665596458876e-05,
+      "pressure_max_abs_pa": 0.0007755806382316877,
+      "mean_error_pa": 0.0002319967516889206,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9830268929005813,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8621713695788698
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.11983014134963443
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.016443037464881988
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00042077771976503425
+        },
+        {
+          "mode": [
+            0,
+            0,
+            1
+          ],
+          "energy_fraction": 0.00037969978461494875
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.9204033814183225e-08,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.413579457545278e-06,
+          "predicted_divergence": 6.844021147192983e-08,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 1.9204033814183225e-08,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.413579457545278e-06,
+          "predicted_divergence": 6.844021147192983e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.03392880819578272,
+          "mean_free_pressure_relative_error_bound": 0.0001510926594413872,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 6,
+      "correction_seconds_cumulative": 0.046290709000459174,
+      "pressure_relative_l2": 3.9272835377323264e-05,
+      "mean_free_pressure_relative_l2": 3.550374178165316e-05,
+      "gradient_relative_l2": 1.1572555862814462e-05,
+      "pressure_max_abs_pa": 0.00040163928056546894,
+      "mean_error_pa": -0.00013337960236873764,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.996324749750349,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.9057401751922456
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09048952509566913
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.002507615169725756
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0009106928478387531
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00013160252938684502
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 8.157494027997243e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.5739222729506e-06,
+          "predicted_divergence": 3.0788209407246335e-08,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 8.157494027997243e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.5739222729506e-06,
+          "predicted_divergence": 3.0788209407246335e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.014412287174257564,
+          "mean_free_pressure_relative_error_bound": 6.417326541619362e-05,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 7,
+      "correction_seconds_cumulative": 0.05302313400170533,
+      "pressure_relative_l2": 1.8892741266090594e-05,
+      "mean_free_pressure_relative_l2": 1.7206833356767722e-05,
+      "gradient_relative_l2": 5.7251865511415086e-06,
+      "pressure_max_abs_pa": 0.0001963332374943505,
+      "mean_error_pa": 6.363692859686985e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9935238719497643,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8908525980079525
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.10266377551980417
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00555256258049226
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007302640237709522
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 9.019371935489433e-05
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 4.135257330609435e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.8117191661463879e-06,
+          "predicted_divergence": 1.5427871115513314e-08,
+          "equation_passed": false
+        },
+        "pressure-bound": {
+          "residual_l2": 4.135257330609435e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.8117191661463879e-06,
+          "predicted_divergence": 1.5427871115513314e-08,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.007305983428691403,
+          "mean_free_pressure_relative_error_bound": 3.253076877466935e-05,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 8,
+      "correction_seconds_cumulative": 0.05946037100147805,
+      "pressure_relative_l2": 9.477043049347662e-06,
+      "mean_free_pressure_relative_l2": 8.584566779941588e-06,
+      "gradient_relative_l2": 2.8323796498322645e-06,
+      "pressure_max_abs_pa": 9.780212078869255e-05,
+      "mean_error_pa": -3.211598208326353e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9946513190963387,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8969168767102214
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09773369698675588
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0043381773179957854
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007932906409631181
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010545795464036181
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.023330940862075e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.864520758800252e-07,
+          "predicted_divergence": 7.575767839775782e-09,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 2.023330940862075e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.864520758800252e-07,
+          "predicted_divergence": 7.575767839775782e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.0035747285217963315,
+          "mean_free_pressure_relative_error_bound": 1.5916497241516762e-05,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 9,
+      "correction_seconds_cumulative": 0.0660178790021746,
+      "pressure_relative_l2": 4.674123271281812e-06,
+      "mean_free_pressure_relative_l2": 4.2383591569184815e-06,
+      "gradient_relative_l2": 1.4023316675956252e-06,
+      "pressure_max_abs_pa": 4.8330473556568165e-05,
+      "mean_error_pa": 1.5821538485895874e-05,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9943092768181909,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8948396287152576
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09946958548833103
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004709600067989565
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007717449533283118
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010080064212400506
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.0051033391992221e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 4.403510683860149e-07,
+          "predicted_divergence": 3.755374916637122e-09,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.0051033391992221e-09,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 4.403510683860149e-07,
+          "predicted_divergence": 3.755374916637122e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.0017757705877108495,
+          "mean_free_pressure_relative_error_bound": 7.906600710511771e-06,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 10,
+      "correction_seconds_cumulative": 0.07233383800121373,
+      "pressure_relative_l2": 2.3173774871010415e-06,
+      "mean_free_pressure_relative_l2": 2.100046736113224e-06,
+      "gradient_relative_l2": 6.941398022970257e-07,
+      "pressure_max_abs_pa": 2.39422163410552e-05,
+      "mean_error_pa": -7.84944671537635e-06,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944281660208674,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8955867938843581
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09884136586570182
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0045803475541318405
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007791753711610102
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010255567139951817
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 4.969534964437941e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.1772288934144628e-07,
+          "predicted_divergence": 1.8577249193173564e-09,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 4.969534964437941e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.1772288934144628e-07,
+          "predicted_divergence": 1.8577249193173564e-09,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.0008779946976875395,
+          "mean_free_pressure_relative_error_bound": 3.909238079796993e-06,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 11,
+      "correction_seconds_cumulative": 0.07882512400101405,
+      "pressure_relative_l2": 1.1466873614321109e-06,
+      "mean_free_pressure_relative_l2": 1.039272596951781e-06,
+      "gradient_relative_l2": 3.4362937930196194e-07,
+      "pressure_max_abs_pa": 1.1849686473830445e-05,
+      "mean_error_pa": 3.883555367268937e-06,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9943903953884304,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8953393623723387
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09905103244332135
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0046215426928694495
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000776690242711693
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010202062392559901
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.46100550627676e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.0782039634414494e-07,
+          "predicted_divergence": 9.202059762473726e-10,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 2.46100550627676e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.0782039634414494e-07,
+          "predicted_divergence": 9.202059762473726e-10,
+          "equation_passed": false,
+          "mean_free_pressure_error_bound_pa_l2": 0.0004347991916654552,
+          "mean_free_pressure_relative_error_bound": 1.9359252606981026e-06,
+          "pressure_error_bound_passed": false
+        }
+      }
+    },
+    {
+      "calls": 12,
+      "correction_seconds_cumulative": 0.08555162700213259,
+      "pressure_relative_l2": 5.677406069049493e-07,
+      "mean_free_pressure_relative_l2": 5.145250365206761e-07,
+      "gradient_relative_l2": 1.7010538404087047e-07,
+      "pressure_max_abs_pa": 5.866409772181669e-06,
+      "mean_error_pa": -1.922937967570329e-06,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944032670613885,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954251040365204
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09897816296771747
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0046075033520498725
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007775189092357389
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010221571929237577
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.2181299933261565e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 5.3368128736054386e-08,
+          "predicted_divergence": 4.553214542607154e-10,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.2181299933261565e-10,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 5.3368128736054386e-08,
+          "predicted_divergence": 4.553214542607154e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 0.0002152136332449541,
+          "mean_free_pressure_relative_error_bound": 9.582282531135883e-07,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 13,
+      "correction_seconds_cumulative": 0.0922022190025018,
+      "pressure_relative_l2": 2.810331632116236e-07,
+      "mean_free_pressure_relative_l2": 2.5469451427122686e-07,
+      "gradient_relative_l2": 8.420674849225389e-08,
+      "pressure_max_abs_pa": 2.9039605129455026e-06,
+      "mean_error_pa": 9.518463463852711e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9943991388206025,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8953975142908379
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09900162452413866
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00461201714024396
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007772569558342453
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010215019286728146
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 6.030254196246979e-11,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.641946130705544e-08,
+          "predicted_divergence": 2.253603194411818e-10,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 6.030254196246979e-11,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.641946130705544e-08,
+          "predicted_divergence": 2.253603194411818e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 0.00010653977178751365,
+          "mean_free_pressure_relative_error_bound": 4.743630623805065e-07,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 14,
+      "correction_seconds_cumulative": 0.09880346200225176,
+      "pressure_relative_l2": 1.3912104273984708e-07,
+      "mean_free_pressure_relative_l2": 1.2608170061802965e-07,
+      "gradient_relative_l2": 4.16844375659502e-08,
+      "pressure_max_abs_pa": 1.4375465973159862e-06,
+      "mean_error_pa": -4.7119988840083034e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944005844610224,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954068716925315
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899371276779426
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00461043488381037
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773454679420089
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217586643893319
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.985042562837481e-11,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.3077925726228947e-08,
+          "predicted_divergence": 1.1155813884293617e-10,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 2.985042562837481e-11,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.3077925726228947e-08,
+          "predicted_divergence": 1.1155813884293617e-10,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 5.2738366090545284e-05,
+          "mean_free_pressure_relative_error_bound": 2.348148772968454e-07,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 15,
+      "correction_seconds_cumulative": 0.10540160000164178,
+      "pressure_relative_l2": 6.886888166466262e-08,
+      "mean_free_pressure_relative_l2": 6.241412811082657e-08,
+      "gradient_relative_l2": 2.063512132000264e-08,
+      "pressure_max_abs_pa": 7.116291360631521e-07,
+      "mean_error_pa": 2.3325699381366338e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944000293944658,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954030931672211
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899693622720782
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004611030880222729
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000777319528494859
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001021672996996073
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.4777138046127997e-11,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 6.4740890538523125e-09,
+          "predicted_divergence": 5.523309027573974e-11,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.4777138046127997e-11,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 6.4740890538523125e-09,
+          "predicted_divergence": 5.523309027573974e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.6107571320739428e-05,
+          "mean_free_pressure_relative_error_bound": 1.1624261989069438e-07,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 16,
+      "correction_seconds_cumulative": 0.11202380599934258,
+      "pressure_relative_l2": 3.4092285499099295e-08,
+      "mean_free_pressure_relative_l2": 3.089695030847743e-08,
+      "gradient_relative_l2": 1.0215016118019894e-08,
+      "pressure_max_abs_pa": 3.522786231613395e-07,
+      "mean_error_pa": -1.1546973786389332e-07,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001460010281,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954045229478779
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899562305311982
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00461085934928104
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000777357383472298
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217876118648951
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 7.315179592068695e-12,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.20489150037988e-09,
+          "predicted_divergence": 2.7337201419845174e-11,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 7.315179592068695e-12,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.20489150037988e-09,
+          "predicted_divergence": 2.7337201419845174e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.2924124571874951e-05,
+          "mean_free_pressure_relative_error_bound": 5.754399531021658e-08,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 17,
+      "correction_seconds_cumulative": 0.11863496799924178,
+      "pressure_relative_l2": 1.687665334198372e-08,
+      "mean_free_pressure_relative_l2": 1.529487696118512e-08,
+      "gradient_relative_l2": 5.0567260499602405e-09,
+      "pressure_max_abs_pa": 1.7438787036638814e-07,
+      "mean_error_pa": 5.7160789140225114e-08,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944002108965314,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.895404199173371
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899601172306752
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610863094452812
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773065371246634
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000102162911296682
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 3.621207387610138e-12,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.58650606339831e-09,
+          "predicted_divergence": 1.353608164502788e-11,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 3.621207387610138e-12,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.58650606339831e-09,
+          "predicted_divergence": 1.353608164502788e-11,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 6.397783511536757e-06,
+          "mean_free_pressure_relative_error_bound": 2.8485799384577545e-08,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 18,
+      "correction_seconds_cumulative": 0.1252012989971263,
+      "pressure_relative_l2": 8.354433239709977e-09,
+      "mean_free_pressure_relative_l2": 7.571405208104437e-09,
+      "gradient_relative_l2": 2.5032251593818175e-09,
+      "pressure_max_abs_pa": 8.632714987300005e-08,
+      "mean_error_pa": -2.8296261305813402e-08,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001544530282,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954043368139715
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899581763890304
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0046108923646224235
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773291194165452
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217039834838238
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.7926031821673874e-12,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 7.853667336221204e-10,
+          "predicted_divergence": 6.699603241969165e-12,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.7926031821673874e-12,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 7.853667336221204e-10,
+          "predicted_divergence": 6.699603241969165e-12,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 3.1670892754827117e-06,
+          "mean_free_pressure_relative_error_bound": 1.410130047934201e-08,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 19,
+      "correction_seconds_cumulative": 0.13180537399603054,
+      "pressure_relative_l2": 4.135667827167995e-09,
+      "mean_free_pressure_relative_l2": 3.748044031226365e-09,
+      "gradient_relative_l2": 1.2391613127510519e-09,
+      "pressure_max_abs_pa": 4.2734207283956493e-08,
+      "mean_error_pa": 1.4007422368179988e-08,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001762251052,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954049518448125
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899522438021462
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610876667349622
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773163843386757
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217150296201822
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 8.87389176919895e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.887787025383754e-10,
+          "predicted_divergence": 3.31632084893801e-12,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 8.87389176919895e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.887787025383754e-10,
+          "predicted_divergence": 3.31632084893801e-12,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.5677985922151513e-06,
+          "mean_free_pressure_relative_error_bound": 6.9805417685100606e-09,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 20,
+      "correction_seconds_cumulative": 0.1383355199941434,
+      "pressure_relative_l2": 2.0472723207888885e-09,
+      "mean_free_pressure_relative_l2": 1.855388521262441e-09,
+      "gradient_relative_l2": 6.13420262581799e-10,
+      "pressure_max_abs_pa": 2.1154648699450718e-08,
+      "mean_error_pa": -6.934065681575016e-09,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001859128052,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954049156170558
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899527029567097
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610830020242509
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773355180174985
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010218149369678829
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 4.392832650879463e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.9245668336918392e-10,
+          "predicted_divergence": 1.6419183648692474e-12,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 4.392832650879463e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.9245668336918392e-10,
+          "predicted_divergence": 1.6419183648692474e-12,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 7.761055718293117e-07,
+          "mean_free_pressure_relative_error_bound": 3.4555697127555798e-09,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 21,
+      "correction_seconds_cumulative": 0.14486145899354597,
+      "pressure_relative_l2": 1.0134640910207317e-09,
+      "mean_free_pressure_relative_l2": 9.1847568143253e-10,
+      "gradient_relative_l2": 3.036623049439893e-10,
+      "pressure_max_abs_pa": 1.0472212430556738e-08,
+      "mean_error_pa": 3.4325798677031694e-09,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944002337368025,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954047274794059
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899550625733143
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0046108114347545685
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773156334051364
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001021729232760051
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.1745662779755074e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 9.527105785417289e-11,
+          "predicted_divergence": 8.125615116741716e-13,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 2.1745662779755074e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 9.527105785417289e-11,
+          "predicted_divergence": 8.125615116741716e-13,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 3.8419241951114075e-07,
+          "mean_free_pressure_relative_error_bound": 1.7105967743614049e-09,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 22,
+      "correction_seconds_cumulative": 0.15113759299492813,
+      "pressure_relative_l2": 5.016972575115613e-10,
+      "mean_free_pressure_relative_l2": 4.5467510369079486e-10,
+      "gradient_relative_l2": 1.5032279390664587e-10,
+      "pressure_max_abs_pa": 5.184083384790483e-09,
+      "mean_error_pa": -1.6992365681174842e-09,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944000530020469,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954040489648865
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899600403713488
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610976709914616
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000777335067159305
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217854503033599
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.0764833861191845e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 4.716237531904369e-11,
+          "predicted_divergence": 4.023263529331448e-13,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.0764833861191845e-13,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 4.716237531904369e-11,
+          "predicted_divergence": 4.023263529331448e-13,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.9018815883676325e-07,
+          "mean_free_pressure_relative_error_bound": 8.46802888513171e-10,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 23,
+      "correction_seconds_cumulative": 0.1567958599953272,
+      "pressure_relative_l2": 2.4835517726797634e-10,
+      "mean_free_pressure_relative_l2": 2.250777134942309e-10,
+      "gradient_relative_l2": 7.441426071541627e-11,
+      "pressure_max_abs_pa": 2.566276080528951e-09,
+      "mean_error_pa": 8.411733892667739e-10,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001105722549,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954042242439049
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0989958863282975
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610913739755689
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773174852917069
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000102182916909509
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 5.328976011358862e-14,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.334705485980078e-11,
+          "predicted_divergence": 1.9915660555887744e-13,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 5.328976011358862e-14,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.334705485980078e-11,
+          "predicted_divergence": 1.9915660555887744e-13,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 9.414990971104482e-08,
+          "mean_free_pressure_relative_error_bound": 4.1919757764894103e-10,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 24,
+      "correction_seconds_cumulative": 0.16247249099615146,
+      "pressure_relative_l2": 1.229444940973356e-10,
+      "mean_free_pressure_relative_l2": 1.1142134402690585e-10,
+      "gradient_relative_l2": 3.6837617554317245e-11,
+      "pressure_max_abs_pa": 1.2703980090122968e-09,
+      "mean_error_pa": -4.164101974683435e-10,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001723473722,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954052190746159
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899495327259346
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00461082910620865
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773425078227597
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001021818027127748
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 2.6379938960554224e-14,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.1557452703811396e-11,
+          "predicted_divergence": 9.859680617525096e-14,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 2.6379938960554224e-14,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.1557452703811396e-11,
+          "predicted_divergence": 9.859680617525096e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 4.6606869049983675e-08,
+          "mean_free_pressure_relative_error_bound": 2.075146610445713e-10,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 25,
+      "correction_seconds_cumulative": 0.16797880399462883,
+      "pressure_relative_l2": 6.086196263694097e-11,
+      "mean_free_pressure_relative_l2": 5.515759000288798e-11,
+      "gradient_relative_l2": 1.8235983120531735e-11,
+      "pressure_max_abs_pa": 6.28891605458648e-10,
+      "mean_error_pa": 2.0613806854996284e-10,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.994400103064618,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954033266402706
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899677642361522
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610967221942422
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.000777311462820458
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010216761890290587
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.3059054682676089e-14,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 5.721370586838716e-12,
+          "predicted_divergence": 4.881712980901731e-14,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.3059054682676089e-14,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 5.721370586838716e-12,
+          "predicted_divergence": 4.881712980901731e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.3072140251049724e-08,
+          "mean_free_pressure_relative_error_bound": 1.0272750478944654e-10,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 26,
+      "correction_seconds_cumulative": 0.17356613999436377,
+      "pressure_relative_l2": 3.012862792109109e-11,
+      "mean_free_pressure_relative_l2": 2.730480187212053e-11,
+      "gradient_relative_l2": 9.027375686162414e-12,
+      "pressure_max_abs_pa": 3.113216351380288e-10,
+      "mean_error_pa": -1.0204488031518892e-10,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944003757023615,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954060014905917
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899437420904024
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610707084327998
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007772819425062351
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217180748635496
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 6.464661923626193e-15,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.8322667668094714e-12,
+          "predicted_divergence": 2.4169824037878254e-14,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 6.464661923626193e-15,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 2.8322667668094714e-12,
+          "predicted_divergence": 2.4169824037878254e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.1421468873653987e-08,
+          "mean_free_pressure_relative_error_bound": 5.0853496275531244e-11,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 27,
+      "correction_seconds_cumulative": 0.179335168992111,
+      "pressure_relative_l2": 1.49140653541106e-11,
+      "mean_free_pressure_relative_l2": 1.3516210603593441e-11,
+      "gradient_relative_l2": 4.468680674052255e-12,
+      "pressure_max_abs_pa": 1.5410872578058843e-10,
+      "mean_error_pa": 5.051365068145455e-11,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944001049080498,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954024958301394
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899760906852911
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00461089215662808
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007773737849119761
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010217566815740544
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 3.200084212462034e-15,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.4020055917887714e-12,
+          "predicted_divergence": 1.1967433518414912e-14,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 3.200084212462034e-15,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.4020055917887714e-12,
+          "predicted_divergence": 1.1967433518414912e-14,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 5.653762355632901e-09,
+          "mean_free_pressure_relative_error_bound": 2.517308290835923e-11,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 28,
+      "correction_seconds_cumulative": 0.18524974899264635,
+      "pressure_relative_l2": 7.383114934131213e-12,
+      "mean_free_pressure_relative_l2": 6.691139964461631e-12,
+      "gradient_relative_l2": 2.2121874130746343e-12,
+      "pressure_max_abs_pa": 7.629097353856196e-11,
+      "mean_error_pa": -2.500636699573901e-11,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944002733081998,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954074785053109
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09899279476063051
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610864798714852
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007772197188067637
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0001021806242045156
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.5841904199171828e-15,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 6.94057930892168e-13,
+          "predicted_divergence": 5.930664488153214e-15,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.5841904199171828e-15,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 6.94057930892168e-13,
+          "predicted_divergence": 5.930664488153214e-15,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 2.7988751437711297e-09,
+          "mean_free_pressure_relative_error_bound": 1.2461846043581003e-11,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 29,
+      "correction_seconds_cumulative": 0.19095663899497595,
+      "pressure_relative_l2": 3.654471258774198e-12,
+      "mean_free_pressure_relative_l2": 3.3119422843989664e-12,
+      "gradient_relative_l2": 1.0949937425216258e-12,
+      "pressure_max_abs_pa": 3.7762681870390225e-11,
+      "mean_error_pa": 1.237764544103825e-11,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.994399489956527,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.89539503855426
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09900445123693433
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004611321537555208
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007775709318981292
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010215639416525168
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 7.841936757607968e-16,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.435671830698961e-13,
+          "predicted_divergence": 2.944489812563289e-15,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 7.841936757607968e-16,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 3.435671830698961e-13,
+          "predicted_divergence": 2.944489812563289e-15,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.3854775027221698e-09,
+          "mean_free_pressure_relative_error_bound": 6.1687665397102135e-12,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 30,
+      "correction_seconds_cumulative": 0.19645680099347373,
+      "pressure_relative_l2": 1.8093595626248653e-12,
+      "mean_free_pressure_relative_l2": 1.639781678969241e-12,
+      "gradient_relative_l2": 5.421256639289858e-13,
+      "pressure_max_abs_pa": 1.8696155734687636e-11,
+      "mean_error_pa": -6.128230851920293e-12,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944010656390655,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954215680360562
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09897949703148164
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004610527878069039
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007767570818681982
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010221103372199666
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 3.8823319038731987e-16,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.7009086877193387e-13,
+          "predicted_divergence": 1.458987824217578e-15,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 3.8823319038731987e-16,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 1.7009086877193387e-13,
+          "predicted_divergence": 1.458987824217578e-15,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 6.859126357814359e-10,
+          "mean_free_pressure_relative_error_bound": 3.0539903451617202e-12,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 31,
+      "correction_seconds_cumulative": 0.2018773159943521,
+      "pressure_relative_l2": 8.953388705756485e-13,
+      "mean_free_pressure_relative_l2": 8.114182705787612e-13,
+      "gradient_relative_l2": 2.682818638822764e-13,
+      "pressure_max_abs_pa": 9.252154598016205e-12,
+      "mean_error_pa": 3.0325075078542388e-12,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9943984284597991,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8953656984897499
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09903272735594405
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004611398824620987
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007784992021489918
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010215621697192491
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 1.9223902844629446e-16,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.42228438214712e-14,
+          "predicted_divergence": 7.3138652252613395e-16,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 1.9223902844629446e-16,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 8.42228438214712e-14,
+          "predicted_divergence": 7.3138652252613395e-16,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 3.3963911887248064e-10,
+          "mean_free_pressure_relative_error_bound": 1.512225516436789e-12,
+          "pressure_error_bound_passed": true
+        }
+      }
+    },
+    {
+      "calls": 32,
+      "correction_seconds_cumulative": 0.20760170099310926,
+      "pressure_relative_l2": 4.4348774876883276e-13,
+      "mean_free_pressure_relative_l2": 4.019356104822339e-13,
+      "gradient_relative_l2": 1.3287623993037905e-13,
+      "pressure_max_abs_pa": 4.583000645652646e-12,
+      "mean_error_pa": -1.502023433717578e-12,
+      "low_modes_per_axis": 3,
+      "low_mode_error_energy_fraction": 0.9944033906750447,
+      "top_modes_zyx": [
+        {
+          "mode": [
+            1,
+            0,
+            0
+          ],
+          "energy_fraction": 0.8954725724367294
+        },
+        {
+          "mode": [
+            2,
+            0,
+            0
+          ],
+          "energy_fraction": 0.09893080528353651
+        },
+        {
+          "mode": [
+            3,
+            0,
+            0
+          ],
+          "energy_fraction": 0.004609528946124304
+        },
+        {
+          "mode": [
+            4,
+            0,
+            0
+          ],
+          "energy_fraction": 0.0007752229173993755
+        },
+        {
+          "mode": [
+            5,
+            0,
+            0
+          ],
+          "energy_fraction": 0.00010230246377878289
+        }
+      ],
+      "quality": {
+        "original": {
+          "residual_l2": 9.52670532851758e-17,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 4.173794580121224e-14,
+          "predicted_divergence": 3.67587001057675e-16,
+          "equation_passed": true
+        },
+        "pressure-bound": {
+          "residual_l2": 9.52670532851758e-17,
+          "rhs_l2": 0.0022825045999846226,
+          "relative_residual": 4.173794580121224e-14,
+          "predicted_divergence": 3.67587001057675e-16,
+          "equation_passed": true,
+          "mean_free_pressure_error_bound_pa_l2": 1.683134704543425e-10,
+          "mean_free_pressure_relative_error_bound": 7.494069753382718e-13,
+          "pressure_error_bound_passed": true
+        }
+      }
+    }
+  ],
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "cpu_affinity": [
+    1
+  ],
+  "cpu_threads": 1,
+  "elapsed_seconds": 1.4619948620020295,
+  "source_sha256": "4c395f89ca67d4b3831b679c1ec5ab0dbd921660ab397944e8d644d6bd478858",
+  "scope": "same supplied RHS exact sealed-Neumann solve; not native reference-state pressure or autonomous trajectory accuracy"
+}

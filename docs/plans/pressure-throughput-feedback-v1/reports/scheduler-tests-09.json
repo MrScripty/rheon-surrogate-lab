@@ -1,0 +1,49 @@
+{
+  "schema": "pressure-throughput-test-receipt-v1",
+  "started_at_utc": "2026-10-17T04:45:03.547241+00:00",
+  "source": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+  "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+  "source_sha256": {
+    "runs.py": "6dc3b9dafd15a9de43cc8a8686384cc13bec7041a3c88c73f9b1925f64479d92",
+    "run_capacity.py": "6811c5b2255b2a57c92147bab448a82c89876072d260ef217eb7284c511e8cfa"
+  },
+  "database": "explicit isolated fixture; DSN omitted",
+  "tests": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_run_concurrency.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 22.022980377005297,
+      "output": "test_busy_cuda_slot_does_not_block_cpu_and_next_cuda_waits (test_run_concurrency.ConcurrentRuns.test_busy_cuda_slot_does_not_block_cpu_and_next_cuda_waits) ... ok\ntest_memory_shortage_preserves_queue_and_queued_cancel_creates_no_child (test_run_concurrency.ConcurrentRuns.test_memory_shortage_preserves_queue_and_queued_cancel_creates_no_child) ... ok\ntest_two_cpu_custodians_overlap_and_cancel_independently (test_run_concurrency.ConcurrentRuns.test_two_cpu_custodians_overlap_and_cancel_independently) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 21.719s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok/../app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_external_runs.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 72.5197094000032,
+      "output": "test_consumption_and_run_rollback_together (test_external_runs.ExternalAdmissionTests.test_consumption_and_run_rollback_together) ... ok\ntest_lost_ack_is_not_dispatched_by_an_already_running_queue (test_external_runs.ExternalAdmissionTests.test_lost_ack_is_not_dispatched_by_an_already_running_queue) ... ok\ntest_lost_commit_ack_reconciles_without_new_approval (test_external_runs.ExternalAdmissionTests.test_lost_commit_ack_reconciles_without_new_approval) ... ok\ntest_revocation_and_source_drift_leave_no_run_or_consumption (test_external_runs.ExternalAdmissionTests.test_revocation_and_source_drift_leave_no_run_or_consumption) ... ok\ntest_same_boot_missing_drain_receipt_fences_after_go_intent (test_external_runs.ExternalAdmissionTests.test_same_boot_missing_drain_receipt_fences_after_go_intent) ... ok\ntest_same_key_actor_and_digest_reconcile_exact_consumption (test_external_runs.ExternalAdmissionTests.test_same_key_actor_and_digest_reconcile_exact_consumption) ... ok\ntest_same_key_reconciles_after_approval_expiry_and_graph_drift (test_external_runs.ExternalAdmissionTests.test_same_key_reconciles_after_approval_expiry_and_graph_drift) ... ok\ntest_real_running_cancel_retains_consumed_approval (test_external_runs.ExternalExecutionTests.test_real_running_cancel_retains_consumed_approval) ... ok\ntest_real_unicode_parameter_descendant_output_cold_download_and_restart (test_external_runs.ExternalExecutionTests.test_real_unicode_parameter_descendant_output_cold_download_and_restart) ... ok\ntest_unknown_go_commit_ack_never_sends_go_to_real_helper (test_external_runs.ExternalExecutionTests.test_unknown_go_commit_ack_never_sends_go_to_real_helper) ... ok\ntest_stopped_real_helper_deadline_is_unknown_until_actual_drain (test_external_runs.ExternalStoppedHelperTests.test_stopped_real_helper_deadline_is_unknown_until_actual_drain) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 72.175s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 94.54278237899416,
+  "passed": true
+}

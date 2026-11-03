@@ -1,0 +1,44 @@
+{
+  "schema": "rheon-dependency-template-v1",
+  "sources": {
+    "lab": {
+      "root": "../.."
+    },
+    "rheon": {
+      "root": "../../../Rheon"
+    },
+    "tuldok": {
+      "root": "../../../Tuldok"
+    }
+  },
+  "artifacts": {
+    "control_weights": {
+      "path": "../../../../water-early-pressure-v1/control/managed-full/stage-01/artifacts/weights.npz",
+      "sha256": "26b66232928ce81d428dbdb1c8cc750a0cf5c0bc5f678977efc111a0a56d2d9a"
+    },
+    "control_normalization": {
+      "path": "../../../../water-early-pressure-v1/control/managed-full/stage-01/artifacts/normalization.json",
+      "sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"
+    },
+    "control_source_witness": {
+      "path": "../../../../water-early-pressure-v1/control/project/source-witness.json",
+      "sha256": "2a2653c68fb6ce1f5ef15794e4441d559203d05fc46e341e8f5c78545488fbef"
+    }
+  },
+  "runtimes": {
+    "cpu": {
+      "profile": "managed_torch_python_v1",
+      "manifest": "../../../runtime/current-manifest-v2.json"
+    }
+  },
+  "paths": {
+    "artifact_root": "../../../../..",
+    "runs": "../../../..",
+    "migration": "../../..",
+    "live": "../../../live-migration",
+    "cargo_home": "../../../../../.cargo-local",
+    "cargo_target": "../../../cargo-target-probes",
+    "control_project": "../../../../water-early-pressure-v1/control/project"
+  },
+  "rust_toolchain": "1.92.0"
+}

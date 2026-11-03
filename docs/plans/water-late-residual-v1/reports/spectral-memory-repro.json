@@ -1,0 +1,36 @@
+{
+  "before": {
+    "counts_xyz": [
+      40,
+      40,
+      40
+    ],
+    "additional_address_space_limit_bytes": 536870912,
+    "before_peak_rss_bytes": 530747392,
+    "optimizer_updates": 0,
+    "status": "memory_rejected",
+    "error": "[enforce fail at alloc_cpu.cpp:127] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 32768000000 bytes. Error code 12 (Cannot allocate memory)",
+    "elapsed_seconds": 0.03304764699998941,
+    "peak_rss_bytes": 562176000,
+    "cuda_initialized": false
+  },
+  "after": {
+    "counts_xyz": [
+      40,
+      40,
+      40
+    ],
+    "additional_address_space_limit_bytes": 536870912,
+    "before_peak_rss_bytes": 541970432,
+    "optimizer_updates": 0,
+    "status": "passed",
+    "relative_pressure_error": 4.3804589788276876e-16,
+    "elapsed_seconds": 0.007055970999999772,
+    "peak_rss_bytes": 553603072,
+    "cuda_initialized": false
+  },
+  "cause": "four-operand einsum without optional contraction optimizer forms40^6 intermediate;32,768,000,000-byte request;24 workers amplify the system-wide spike",
+  "fix": "one-axis two-operand cosine contractions, bounded grid-sized intermediates",
+  "repro_command": "configured Pumas Python experiments/water-late-residual-v1/probe_memory.py --output <fresh receipt>",
+  "scope": "CPU numerical oracle/mode-analysis memory fix, unchanged model/training precision and accepted physics"
+}

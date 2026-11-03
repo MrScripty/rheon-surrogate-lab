@@ -1,0 +1,272 @@
+{
+  "all_384_catalog_records_reopened_and_hash_checked": true,
+  "all_artifacts_reopened_and_redownloaded_verified": true,
+  "artifacts_per_run": [
+    12,
+    12,
+    3
+  ],
+  "branch": "feat/sealed-water-pressure-training",
+  "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+  "checkpoints": [
+    "checkpoint-000.npz",
+    "checkpoint-100.npz",
+    "checkpoint-1000.npz",
+    "checkpoint-2000.npz",
+    "checkpoint-500.npz"
+  ],
+  "checks": {
+    "clippy_warnings_denied": true,
+    "native_capture_tests": 2,
+    "native_release_builds": 2,
+    "native_water_diagnostic_tests": 7,
+    "python_contract_tests": 5,
+    "rustfmt": true
+  },
+  "cpu_exact_prediction_cases": 24,
+  "cpu_restore_cuda_initialized": false,
+  "cpu_restore_elapsed_s": 3.063443178019952,
+  "cuda_execution": {
+    "amp": false,
+    "batches_cuda": true,
+    "cuda_cpu_pressure_max_abs_difference": 0.00036504737081344274,
+    "deterministic_algorithms": true,
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "model_dtype": "float32",
+    "parameters_gradients_adam_moments_cuda": true,
+    "peak_allocated_bytes": 32808448,
+    "peak_reserved_bytes": 58720256,
+    "tf32": false
+  },
+  "dataset_configuration_sha256": "5a5731550caf3b2f4a30ac07926c34449e25f5f445e43e6e4e9c6c43c275562a",
+  "evidence": {
+    "runs/sealed-water-v1-3/capture/manifest.json": "41ca720cb153321b65dcee50b2c97564628026e9d2348a8b4b4308be5812294d",
+    "runs/sealed-water-v1-3/diagnostic-failure/failure.json": "6038471c82c62b77ba7dcf11f92963593c799f91e5580c7927e43dfff67390e9",
+    "runs/sealed-water-v1-3/diagnostic-failure/water-replay.json": "06a7eea082c68af0de80cc59c1cb3116f0024588ba7544e7af0d69ccea58b8a6",
+    "runs/sealed-water-v1-3/evaluation-build/build-receipt.json": "43551c6c8131a2c8bbd03800cead7451c93e45adfd33dc0aa491aaf19d063448",
+    "runs/sealed-water-v1-3/evaluation-water/cases.jsonl": "d7c0544e926165f00cce3d4247f22b965728a577d60fe4cb5423b273370085dd",
+    "runs/sealed-water-v1-3/evaluation-water/evaluation.json": "520f01c997a9740c4852ae5874593abcdb9613f0f9046e4c19b6217b03c82c70",
+    "runs/sealed-water-v1-3/fixture/manifest.json": "364d23b1f9c0f9edc036239a54b0071186415ad34d29a1ed711dcaece400916d",
+    "runs/sealed-water-v1-3/live-final.json": "8c56f219e53e9d9e4b0a2af9ba40f7248429885a2c4cd4e62136f3e400fbfc9b",
+    "runs/sealed-water-v1-3/managed/receipt.json": "dced06fbf71407c39d2ab6d65ffe456c011a8cbf4b51072f92563a6a9ce008b3",
+    "runs/sealed-water-v1-3/managed/stage-00/artifacts/receipt.json": "84674887178288e8eb6e48d3e6bf152113f24958357453c59c3a9029bd51fd7c",
+    "runs/sealed-water-v1-3/managed/stage-00/run.json": "9ef94e4a21148a45dc86ae1f0094a229360de87ade3a87aba4c0e6cf2ad7a872",
+    "runs/sealed-water-v1-3/managed/stage-01/artifacts/receipt.json": "3928b248e314c3765d87795daa5a983f738affa0e8f6d7be0374a46c9cdcf5a7",
+    "runs/sealed-water-v1-3/managed/stage-01/run.json": "3a42ee63d1bbdc7fdee857a48a1af2a428ae4a36a10e377467a0accb0ffb24d7",
+    "runs/sealed-water-v1-3/managed/stage-02/artifacts/receipt.json": "a4185d6eff3d3cf1ac18317ac0f30334ecd645acda092779023bca1590c2085f",
+    "runs/sealed-water-v1-3/managed/stage-02/run.json": "05fcb4eef5da7aa45f4d5984ab7b5a5fdea9d958aec1202af342080f0a57a64a",
+    "runs/sealed-water-v1-3/material.json": "e0d32352138b89917381364cb9dae8527bd0796ea7c1497c45bc8aa6d75d61fd",
+    "runs/sealed-water-v1-3/native-build/build-receipt.json": "8942495580b2a66324fd32c335e1885ca81ac8651945de013e9da201930e4956",
+    "runs/sealed-water-v1-3/pilot/manifest.json": "6bea58c138ef2df7056d4ea5943f54e3a9d753e592730077c4dc43d73af11aaf",
+    "runs/sealed-water-v1-3/project/qualification.json": "7169fb713d2627bfc0d5999091263a4deede29f31369ac3c7eb937ed6138e735",
+    "runs/sealed-water-v1-3/project/source-witness.json": "582d1f2c77cc2a37bf06035a868867b7118cd5933418a93b390bb92961fd8c56"
+  },
+  "execution_project_id": "bb9315b6e176491bb6c1eb29a5e9dc89",
+  "field_records_imported": 384,
+  "historical_comparison": [
+    {
+      "cases": 12,
+      "evidence": "runs/cuda-pressure-v1-workspace-2/evaluation/cases.jsonl",
+      "name": "Previous CUDA qualification",
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 0.9636275233970074,
+        "median": 0.8710990888184703,
+        "minimum": 0.48709701934346045
+      },
+      "sha256": "6fbd81640848be1130f6e4094e33b018617da87f2f493506d87785e43f216770",
+      "updates": 20
+    },
+    {
+      "cases": 12,
+      "evidence": "runs/variable-pressure-v2-workspace-1/evaluation/cases.jsonl",
+      "name": "Previous seven-channel CPU training",
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 0.6177574215619439,
+        "median": 0.3884075636356892,
+        "minimum": 0.22305194122335914
+      },
+      "sha256": "c26bee8101212e3b084eabe907c0a3d19734470e50df9da35b684c326b90bc53",
+      "updates": 200
+    },
+    {
+      "cases": 128,
+      "evidence": "runs/sealed-water-v1-3/evaluation-water/cases.jsonl",
+      "name": "Current varied water CUDA training",
+      "raw_native_qualified": 0,
+      "relative_residual": {
+        "maximum": 0.2501757408419079,
+        "median": 0.04367110207482444,
+        "minimum": 0.0031622934062178016
+      },
+      "sha256": "d7c0544e926165f00cce3d4247f22b965728a577d60fe4cb5423b273370085dd",
+      "updates": 2000
+    }
+  ],
+  "limitations": [
+    "Teacher snapshots only; no autonomous model rollout or acceleration qualification.",
+    "Small 5\u201316-cell axes with 8/16 cells per metre; no arbitrary-resolution accuracy claim.",
+    "Sealed free-slip water boxes without obstacles, free surfaces or inflow/outflow; one engineering material, 64 timesteps per scene.",
+    "Controlled fluctuating forcing is not resolved real-world turbulence.",
+    "Preserved baseline normalization including constant density channel at unit scale; no architecture, normalization or loss ablation.",
+    "Previous experiment populations and training budgets differ; residual comparison is descriptive.",
+    "Installed trusted-local Torch assets are measured; host OS/driver/hardware remain external dependencies.",
+    "CPU deployment repeats exactly; cross-device float32 predictions are not bit identical."
+  ],
+  "live_ai_comparison_implemented": false,
+  "material": {
+    "boundary": "sealed_impermeable_free_slip",
+    "density_kg_m3": 1000.0,
+    "dynamic_viscosity_pa_s": 0.001
+  },
+  "native": {
+    "cases": 128,
+    "float32_qualified": 0,
+    "methods": {
+      "learned_jacobi": {
+        "completed_iterations": 16950,
+        "fallbacks": 128,
+        "qualified": 128,
+        "wasted_warm_iterations": 4096
+      },
+      "temporal_full_budget": {
+        "completed_iterations": 12854,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      },
+      "temporal_jacobi": {
+        "completed_iterations": 16950,
+        "fallbacks": 128,
+        "qualified": 128,
+        "wasted_warm_iterations": 4096
+      },
+      "zero_jacobi": {
+        "completed_iterations": 13753,
+        "fallbacks": 0,
+        "qualified": 128,
+        "wasted_warm_iterations": 0
+      }
+    },
+    "parents": 64,
+    "raw_native_qualified": 0,
+    "relative_residual": {
+      "maximum": 0.2501757408419079,
+      "median": 0.04367110207482444,
+      "minimum": 0.0031622934062178016
+    },
+    "scope": "Independent reserved teacher states; no autonomous rollout or acceleration claim",
+    "status": "complete_reserved_test_diagnostic",
+    "weights_sha256": "aa82bd122fde9406d9e6b92114b3e6ba77281f5ee8b9c726aa168dacbd93a62d"
+  },
+  "normalization_sha256": "bee9be00a94f0241bc8baf6df2499314918b0a9e708b3f995bea5046c40a3296",
+  "numeric_viewer_slices_inspected": 6,
+  "optimizer_updates": {
+    "cpu_restore": 0,
+    "cuda_training": 2000,
+    "reserved_cpu_inference": 0
+  },
+  "population": {
+    "cells_per_metre": [
+      8,
+      16
+    ],
+    "extent_m_range_by_axis": [
+      [
+        0.3125,
+        2.0
+      ],
+      [
+        0.3125,
+        2.0
+      ],
+      [
+        0.3125,
+        2.0
+      ]
+    ],
+    "force_ranges_observed": {
+      "acceleration_m_s2": [
+        0.10035168664078595,
+        1.9832429604403554
+      ],
+      "fluctuation_fraction": [
+        0.0048007019525792005,
+        0.5989986873826875
+      ],
+      "frequency_hz": [
+        0.10700132998020036,
+        2.9873973917816414
+      ],
+      "motion_fraction": [
+        0.00018890996535743108,
+        0.11989264063068661
+      ],
+      "radius_fraction": [
+        0.18030297157459618,
+        0.399815387460842
+      ],
+      "swirl_fraction": [
+        -0.9845711409873393,
+        0.9981006958201342
+      ]
+    },
+    "native_timesteps_qualified": 24576,
+    "reference_maximums": {
+      "actual_divergence_max_s_inv": 7.152557373046875e-07,
+      "courant": 0.39737618764241533,
+      "net_flux_m3_s": 0.0,
+      "reference_relative_residual": 9.989294845577092e-09
+    },
+    "reservation_sha256": "f5175321d24f4cb897b854ec4b60841d5c907613859cc4e2a60dfbb4720b59fa",
+    "retained_snapshots": 768,
+    "scenes_by_split": {
+      "reserved_test": 64,
+      "train": 256,
+      "validation": 64
+    },
+    "source_commit": "11408e9",
+    "unique_force_centers": 384,
+    "unique_physical_setups": 384,
+    "unique_seeds": 384,
+    "unique_shapes": 339
+  },
+  "reserved_cpu_inference_elapsed_s": 3.037735394987976,
+  "runs": [
+    {
+      "custody_phase": "drained",
+      "material_sha256": "f65b2965f055c95b7f504699e236c734467f5311bca74ad0f088cc270ef1bfd2",
+      "name": "train",
+      "run_id": "fa641802967e4d339ad2d0d82dd54b7c",
+      "state": "completed"
+    },
+    {
+      "custody_phase": "drained",
+      "material_sha256": "ddeea19a9bb2eb666b61c2d10a849eb7382e02c07b211c8a7dff56a215a03b48",
+      "name": "restore",
+      "run_id": "630e12fa31d348e7af584ce125a819bc",
+      "state": "completed"
+    },
+    {
+      "custody_phase": "drained",
+      "material_sha256": "f9de26dcd29be1a188446fc21eb1cc6f526b8745ce6bcc9b2a41d65c61780c3b",
+      "name": "test",
+      "run_id": "4ee8b8c359444202bccf3d67b320e622",
+      "state": "completed"
+    }
+  ],
+  "schema": "rheon-sealed-water-acceptance-v1",
+  "status": "execution_qualified; learned_pressure_accuracy_unqualified",
+  "test_cpu_cuda_initialized": false,
+  "training_elapsed_s": 80.57971252000425,
+  "training_source_commit": "11408e93995a9f3c3f59e171ccd0889906531027",
+  "validation_loss": {
+    "final": 0.0035414697685510134,
+    "initial": 55.89418180719971
+  },
+  "water_diagnostics_source_commit": "7bf9f0f5f069063140f67f005da39c7a516c416d",
+  "weights_sha256": "aa82bd122fde9406d9e6b92114b3e6ba77281f5ee8b9c726aa168dacbd93a62d",
+  "working_project_id": "6460b40983b64da2a7ac21d40a6aa688"
+}

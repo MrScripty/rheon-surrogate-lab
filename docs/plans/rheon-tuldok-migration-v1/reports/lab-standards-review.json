@@ -1,0 +1,331 @@
+{
+  "schema": "rheon-lab-standards-review-v1",
+  "status": "passed_no_open_documented_violations",
+  "axis": "standards_only",
+  "base": "d6146a20a083ed73a8b59fb1d54b14b8ac706945",
+  "head": "d6146a20a083ed73a8b59fb1d54b14b8ac706945",
+  "comparison": "git diff d6146a20a083ed73a8b59fb1d54b14b8ac706945 plus explicit new-file inventory",
+  "scope": "Dependency selection, current material/trainer assembly, probe/build callers and current package/adapter; source and provenance review. Typed A11 workflow, live application UI/catalog operations and full cohort acceptance remain separately owned.",
+  "standards_mcp_snapshot": "snapshot:v1:cc3430f7-ef19-4129-afc9-abd8c9927dff",
+  "routing_status": "complete; no unresolved categories",
+  "judgement_calls": [
+    {
+      "id": "LAB-SMELL-1",
+      "name": "possible Duplicated Code",
+      "paths": [
+        "experiments/local-pressure-v1/native.py:31",
+        "experiments/water-residual-learning-v1/build_rollout.py:32"
+      ],
+      "finding": "Cargo environment filtering, graph selection and build/test/clippy mechanics repeat. Consider a shared build mechanism while preserving independently owned source closures and receipt schemas.",
+      "blocking": false
+    }
+  ],
+  "source_witness": [
+    {
+      "path": "experiments/dependency-migration-v1/config.py",
+      "bytes": 3432,
+      "sha256": "8e0021a615ac83b8a74934f518c7a70550c2bb571ffb201043757696b3866775"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/config.template.json",
+      "bytes": 1407,
+      "sha256": "f0656d6cd438e97ee6cb4f73a7b2099cdbb1d305b1732f839a7afed129e39ed7"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_config.py",
+      "bytes": 8552,
+      "sha256": "d2c4bc11b69ed6fb3d6fb56661e2849488404cd57da2bf8d89bd69795c91fb44"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_project.py",
+      "bytes": 3302,
+      "sha256": "966c201b84e9b0e2bc69b5364ac0d2fefab0866fef707269574e7654de8ac71a"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_runtime.py",
+      "bytes": 2978,
+      "sha256": "76bfe12130a7675e1bbb9ef9ff7af76f28fdad14b296e7b0c0da03d5a13077dd"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_tests.py",
+      "bytes": 8122,
+      "sha256": "5e4ea625e38db99f131973485d09e5f2169d2d155e4894cac17f9a7f65ea25f6"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_training.py",
+      "bytes": 14248,
+      "sha256": "e2c963117878ecddf161b0d1291a24d57f1c1eca0c13e02241cb65deb90bc79c"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_training_check.py",
+      "bytes": 3051,
+      "sha256": "098ed7fe51a8044793ab7e1334cf0a25a01cb461b8edaff9e11d33556b9ff652"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/dependency_training_entry.py",
+      "bytes": 1751,
+      "sha256": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/model_adapter.py",
+      "bytes": 17375,
+      "sha256": "763b99c1755de66a31eb66990a1b16215d85871d52269e7a125d51fb8b71f911"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/model_adapter_numerics.py",
+      "bytes": 2492,
+      "sha256": "93e19fbe3d4629cb2e876ce0c22b3746bf6fc816047c54bd981bd3b0d411e0b6"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/model_adapter_policy.py",
+      "bytes": 623,
+      "sha256": "55beba41d79a314e3e4d5e4d0ccee33b43e3a7641ed809978a9a5ef12d811b78"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/package_model_adapter.py",
+      "bytes": 12913,
+      "sha256": "273d7aeb1acec1461c692746f484bd4522ccb8f010f7f39fc81f4b7534e07e5c"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/qualify.py",
+      "bytes": 18171,
+      "sha256": "26f3ff64402f48ef1147678dac8402a6a1589c6ef753d150ac7b053b2aaf38bf"
+    },
+    {
+      "path": "experiments/dependency-migration-v1/qualify_cohort.py",
+      "bytes": 6618,
+      "sha256": "3e7a18e587636bf6232878fbdd92a6b44f0f9a76a8c8b73f7680665f18ab1f72"
+    },
+    {
+      "path": "experiments/live-water-comparison-v1/cpu_bridge.py",
+      "bytes": 289,
+      "sha256": "0e73ff8e8881da0b7009ab6bbde811940ce9cb327695a0b2b11923d72e083d2d"
+    },
+    {
+      "path": "experiments/live-water-comparison-v1/deployment.py",
+      "bytes": 286,
+      "sha256": "d7d12e3feca8b14da3a7fa03686cad144695b8e924ec94edad0b1223dcb13981"
+    },
+    {
+      "path": "experiments/live-water-comparison-v1/test_bridge.py",
+      "bytes": 254,
+      "sha256": "13c02cfb5d5dff6dba5d55119dcf3006a77b39328cdd70d99d2470cf666ad553"
+    },
+    {
+      "path": "experiments/live-water-comparison-v1/verify_deployment.py",
+      "bytes": 3218,
+      "sha256": "ea19d14a420ad831c093f6a39e1cbf70348de35bc474f79ddd5d6966ab44177d"
+    },
+    {
+      "path": "experiments/local-pressure-v1/bootstrap.py",
+      "bytes": 1008,
+      "sha256": "00d6bfcc0cf96d2114ac2257ae2640c741940322504abc01c2dc62cd722545f6"
+    },
+    {
+      "path": "experiments/local-pressure-v1/capture.py",
+      "bytes": 11163,
+      "sha256": "b7b207cc6af6b3a048a7397784add98c15b3a5c54d6cbdbbc882e50014ab6079"
+    },
+    {
+      "path": "experiments/local-pressure-v1/dependency.py",
+      "bytes": 1793,
+      "sha256": "37aaf0800727d788450b140615da1b3065007df6545ca8240a857e9dc4068e5a"
+    },
+    {
+      "path": "experiments/local-pressure-v1/native.py",
+      "bytes": 5772,
+      "sha256": "39a998ec3095c2e95e0b41bb84421ab41602a9dcef44b7142d0148e85e0b7ebd"
+    },
+    {
+      "path": "experiments/local-pressure-v1/pipeline.py",
+      "bytes": 3173,
+      "sha256": "78a604651b140ee69a3d5b65ae8d0e8501f47e3d1b785ba1947ce2a434fd1e4f"
+    },
+    {
+      "path": "experiments/local-pressure-v1/project.py",
+      "bytes": 581,
+      "sha256": "58d2165bf7686d5f249726b2a19b1e79781bd0ea647122446247fcb563ffe5f0"
+    },
+    {
+      "path": "experiments/local-pressure-v1/test_pipeline.py",
+      "bytes": 14243,
+      "sha256": "69accf46f6a3c3c6f911a9622d7c1e65b9f75731c371f25cc9377e4c4ad27098"
+    },
+    {
+      "path": "experiments/water-residual-learning-v1/build_rollout.py",
+      "bytes": 4560,
+      "sha256": "8f43366f5024ffae3ee011dde02d546719a6a2119f8e9721c3f516a78f6e867e"
+    },
+    {
+      "path": "experiments/water-residual-learning-v1/rollout.py",
+      "bytes": 9907,
+      "sha256": "3930ceae5401a7b85cc5d8e1e6ae59ac77fcdbd61e6c69ec136e0ae0141fdeb7"
+    },
+    {
+      "path": "experiments/water-residual-learning-v1/test_rollout.py",
+      "bytes": 5023,
+      "sha256": "faa751a6fe32c782cde217af5f91677f86989d25a294f2f2db189ca0e0b7c09c"
+    },
+    {
+      "path": "probes/local-pressure-evaluation-v1/Cargo.lock",
+      "bytes": 16187,
+      "sha256": "0e284e582fd84f0b9bd11e88a060bfa28b844b708948ba4a55b2f18a670dfa29"
+    },
+    {
+      "path": "probes/local-pressure-evaluation-v1/Cargo.toml",
+      "bytes": 603,
+      "sha256": "2ad8ffdfbd08b078e6e49d6e2d2ac8e30d460c7f62a5836e5e57715bd31e8d1e"
+    },
+    {
+      "path": "probes/local-pressure-v1/Cargo.lock",
+      "bytes": 17571,
+      "sha256": "b242a4977dfbdb8bb22918590ad6da44a008f9e47c887da58ccff77fd5087ea5"
+    },
+    {
+      "path": "probes/local-pressure-v1/Cargo.toml",
+      "bytes": 656,
+      "sha256": "93359ffa99e4a0014977c09ae76b9ee1eaa8e961f13bc43232e8c32728b8b187"
+    },
+    {
+      "path": "probes/residual-rollout-v1/Cargo.lock",
+      "bytes": 16184,
+      "sha256": "01dccc257bcecdb35dab7434776aca7621515c952eb8814435ae871d05d73be1"
+    },
+    {
+      "path": "probes/residual-rollout-v1/Cargo.toml",
+      "bytes": 420,
+      "sha256": "e6fdd7a7f3e2cca0394ce76aceec4b525cfa3a0cdf29aa1b4ebc8e1a37948950"
+    },
+    {
+      "path": "probes/residual-rollout-v1/src/main.rs",
+      "bytes": 10960,
+      "sha256": "3a13003d574b650abd789098c10f9a87232c25bb3998768e937912dc5f6bbea1"
+    }
+  ],
+  "source_witness_sha256": "b6fca44c0d039451bb065f807c564b9aad8e7f9cb49d20882e1c9f06eb576ff9",
+  "explicit_new_files_reviewed": [
+    "experiments/dependency-migration-v1/config.py",
+    "experiments/dependency-migration-v1/config.template.json",
+    "experiments/dependency-migration-v1/dependency_config.py",
+    "experiments/dependency-migration-v1/dependency_project.py",
+    "experiments/dependency-migration-v1/dependency_runtime.py",
+    "experiments/dependency-migration-v1/dependency_tests.py",
+    "experiments/dependency-migration-v1/dependency_training.py",
+    "experiments/dependency-migration-v1/dependency_training_check.py",
+    "experiments/dependency-migration-v1/dependency_training_entry.py",
+    "experiments/dependency-migration-v1/model_adapter.py",
+    "experiments/dependency-migration-v1/model_adapter_numerics.py",
+    "experiments/dependency-migration-v1/model_adapter_policy.py",
+    "experiments/dependency-migration-v1/package_model_adapter.py",
+    "experiments/dependency-migration-v1/qualify.py",
+    "experiments/dependency-migration-v1/qualify_cohort.py"
+  ],
+  "removed_files": [
+    {
+      "path": "probes/residual-rollout-v1/build.rs",
+      "deleted": true
+    }
+  ],
+  "archive_byte_checks": [
+    {
+      "original_path": "tuldok-project.json",
+      "archive_path": "experiments/dependency-migration-v1/dependency-original-project.json",
+      "base": "d6146a20a083ed73a8b59fb1d54b14b8ac706945",
+      "exact_original_bytes": true,
+      "sha256": "27c17b0ac155839c77cd077cb13f770cd3c4d37588de95dff207a4c6678dc3a5"
+    },
+    {
+      "original_path": "experiments/local-pressure-v1/bootstrap.py",
+      "archive_path": "experiments/dependency-migration-v1/dependency-reference-bootstrap.py",
+      "base": "d6146a20a083ed73a8b59fb1d54b14b8ac706945",
+      "exact_original_bytes": true,
+      "sha256": "6e284462af3170c82de5e56231a0088d34357bfc491b314bcd9bd6ba31792753"
+    },
+    {
+      "original_path": "experiments/local-pressure-v1/project.py",
+      "archive_path": "experiments/dependency-migration-v1/dependency-reference-project.py",
+      "base": "d6146a20a083ed73a8b59fb1d54b14b8ac706945",
+      "exact_original_bytes": true,
+      "sha256": "92a84bdebe77b3ef2f8093c97c3c8b3987ee183edfc313dceb82113b84ab59d3"
+    }
+  ],
+  "evidence_limits": [
+    "Read-only review; no optimizer, GPU, service, database, model inference or trajectory execution.",
+    "Prior acceptance receipts are supporting evidence; this review does not upgrade them or establish full 74-case/current lifecycle acceptance.",
+    "Uncommitted integration is intentional. Exact committed review remains a later step."
+  ],
+  "review_process": "Primary read-only review plus parallel standards check under code-review skill; independent Spec findings are reported by separately assigned owner.",
+  "documented_violations": [],
+  "closed_documented_violations": [
+    {
+      "id": "LAB-STD-1",
+      "priority": "blocking_current_producer_consumer_contract",
+      "documented_standard": "Core: Replace coordinated internal contracts atomically with producers, consumers, generated artifacts and fixtures; Contracts evolution: current consumers must use one supported representation",
+      "producer": {
+        "path": "experiments/dependency-migration-v1/dependency_runtime.py",
+        "line": 40,
+        "field": "all_original_fields_and_asset_bytes_identical"
+      },
+      "consumer": {
+        "path": "experiments/dependency-migration-v1/qualify_cohort.py",
+        "line": 28,
+        "field": "all_baseline_fields_and_asset_bytes_identical"
+      },
+      "effect": "The documented runtime utility emits a receipt rejected with KeyError by the current cohort consumer. A separately generated accepted runtime receipt does not prove this producer/consumer path.",
+      "required_fix": "Select one canonical current field and test producer-to-consumer integration; preserve accepted historical receipts and their actual producer identity. No dual-read compatibility key.",
+      "disposition": "Closed after independent exact-fix review. Current consumer admits only the unchanged producer field all_original_fields_and_asset_bytes_identical and requires both qualification booleans to be True. No compatibility alias. Original executed runner retained byte-for-byte under numerical qualification provenance.",
+      "historical_producer_consumer_coordinates": true,
+      "resolution_interfaces": [
+        "dependency_runtime.measure(selection,baseline,expected_sha256,output)",
+        "qualify_cohort.admit_runtime_receipt(receipt)"
+      ]
+    }
+  ],
+  "initial_source_witness_scope": "Initial WIP standards review. Follow-up below supersedes the consumer witness only and adds the focused test witness; unrelated sources were not rereviewed in this closure.",
+  "followup": {
+    "reviewed_at_utc": "2026-10-17T01:00:39.087334+00:00",
+    "finding": "LAB-STD-1",
+    "status": "closed",
+    "exact_change": "Extract admission predicate and replace unsupported alternate key with producer canonical key; strict True checks retain verification requirement. No scientific arithmetic change.",
+    "test_review": "Focused regression calls actual dependency_runtime.measure with a tiny stdlib owner, feeds its emitted receipt to current admission, rejects alternate-only key and false second verification.",
+    "validation": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_qualify.py"
+      ],
+      "cwd": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/dependency-migration-v1",
+      "exit_code": 0,
+      "tests": 8,
+      "unittest_elapsed_seconds": 0.007,
+      "scientific_workloads": 0
+    },
+    "source_witness": [
+      {
+        "path": "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/dependency_runtime.py",
+        "bytes": 2978,
+        "sha256": "76bfe12130a7675e1bbb9ef9ff7af76f28fdad14b296e7b0c0da03d5a13077dd"
+      },
+      {
+        "path": "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/qualify_cohort.py",
+        "bytes": 6719,
+        "sha256": "0567e41d54faab8274776dcfca7471ac3aa6ca57feb77f0990a6c6efe2902797"
+      },
+      {
+        "path": "runs/dependency-migration-v1/lab/experiments/dependency-migration-v1/test_qualify.py",
+        "bytes": 8449,
+        "sha256": "b4dde74bb432f5d5724572a441cc5cd55ff2d3858509f96d4f48e22fb333c259"
+      },
+      {
+        "path": "runs/dependency-migration-v1/numerical-qualification-v1/cohort-runner-source-01.py",
+        "bytes": 6618,
+        "sha256": "3e7a18e587636bf6232878fbdd92a6b44f0f9a76a8c8b73f7680665f18ab1f72"
+      }
+    ],
+    "historical_receipt_custody": "Reviewer changed only these review documents. Original execution-runner bytes retain original recorded source identity; completed scientific receipts are neither relabelled nor rerun by this review.",
+    "acceptance_limits": "Standards finding closure only. Full A7 scientific acceptance and timing remain independently owned."
+  }
+}

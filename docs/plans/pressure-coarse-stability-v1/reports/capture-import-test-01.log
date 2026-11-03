@@ -1,0 +1,47 @@
+FF
+======================================================================
+FAIL: test_owned_source_packages_include_clipping_dependency (test_clipping_capture.ClippingCapture.test_owned_source_packages_include_clipping_dependency) (schema='rheon-water-residual-experiment-v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/water-conditioning-v1/training/test_clipping_capture.py", line 23, in test_owned_source_packages_include_clipping_dependency
+    self.assertEqual(result.returncode,0,result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import train, gradient_clipping; assert train.clip_l2_ is gradient_clipping.clip_l2_
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/tmpy7c_vl81/train.py", line 14, in <module>
+    from policy import HERE, MIB, canonical, decode, execution, experiment, load_module, read, require, sha, write
+  File "/tmp/tmpy7c_vl81/policy.py", line 6, in <module>
+    LAB=HERE.parents[2]
+        ~~~~~~~~~~~~^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/lib/python3.14/pathlib/__init__.py", line 68, in __getitem__
+    raise IndexError(idx)
+IndexError: 2
+
+
+======================================================================
+FAIL: test_owned_source_packages_include_clipping_dependency (test_clipping_capture.ClippingCapture.test_owned_source_packages_include_clipping_dependency) (schema='rheon-water-residual-experiment-v10')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/lab/experiments/water-conditioning-v1/training/test_clipping_capture.py", line 23, in test_owned_source_packages_include_clipping_dependency
+    self.assertEqual(result.returncode,0,result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import train, gradient_clipping; assert train.clip_l2_ is gradient_clipping.clip_l2_
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/tmp_5b6paax/train.py", line 14, in <module>
+    from policy import HERE, MIB, canonical, decode, execution, experiment, load_module, read, require, sha, write
+  File "/tmp/tmp_5b6paax/policy.py", line 6, in <module>
+    LAB=HERE.parents[2]
+        ~~~~~~~~~~~~^^^
+  File "/media/jeremy/OrangeCream/Linux Software/repos/owned/ai-systems/Pumas-Library/launcher-data/managed-python/python/0800c1ab76812b8a0a424e27c9a0c6ff818175e26b32d40b165081b5e041a8c5/cpython-3.14.7-linux-x86_64-gnu/lib/python3.14/pathlib/__init__.py", line 68, in __getitem__
+    raise IndexError(idx)
+IndexError: 2
+
+
+----------------------------------------------------------------------
+Ran 1 test in 2.213s
+
+FAILED (failures=2)

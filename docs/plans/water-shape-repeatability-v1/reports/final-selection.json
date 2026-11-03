@@ -1,0 +1,36 @@
+{
+  "schema": "rheon-shape-repeatability-selection-v1",
+  "frozen_at_utc": "2026-10-16T04:44:53.675246+00:00",
+  "development_choice": "shape-one-longer",
+  "candidate": {
+    "name": "shape-one-longer",
+    "project": "runs/water-shape-repeatability-v1/shape-one-longer/project",
+    "artifacts": "runs/water-shape-repeatability-v1/shape-one-longer/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "candidate_development_qualified": true,
+  "candidate_weights_sha256": "8cd2a0d4a694f44f393ebc8381a407e4195fd9361f1e115060104bd0df60ac8f",
+  "reference": {
+    "name": "shape-two-reference",
+    "project": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/project",
+    "artifacts": "runs/water-recurrence-generalization-v1/cohort-two-shape-feedback/managed-full/stage-01/artifacts",
+    "single_evaluation": true
+  },
+  "configs": [
+    {
+      "original": "experiments/water-shape-repeatability-v1/configs/final-holdout-0.json",
+      "original_sha256": "ccc40b9acd617fa4871124d3bf4cfd6921f5ed6eb8981de70c2057d3a785487f",
+      "runtime": "runs/water-shape-repeatability-v1/final-holdout-0.study.json",
+      "runtime_sha256": "5e33d4384a2a3f05e1e6ff8495a32716046d48928030d5903bb19ff1a3d30109"
+    },
+    {
+      "original": "experiments/water-shape-repeatability-v1/configs/final-holdout-1.json",
+      "original_sha256": "e861c57a6a949ace64b887d8a1aecad7353a319e58a2326fb72d5c1ce9477d7f",
+      "runtime": "runs/water-shape-repeatability-v1/final-holdout-1.study.json",
+      "runtime_sha256": "e5b50da0d54785d7d19c50aed1c3dad807a140887cd640402c39fb2495150720"
+    }
+  ],
+  "comparison_sha256": "1bc9489f50a7c0b5d1bb42ec79cd831879649505b639b991252c5665092c5753",
+  "selection_policy": "Eligibility requires every train/validation state and fresh/prior/long autonomous trajectory to pass; among eligible checkpoints minimize familiar mean network evaluations, then fixed-eight worst residual. Include current reference; freeze before final population. No final-informed refit/reselection.",
+  "scope": "best new eligible challenger, or unqualified diagnostic if none; retain reference when it wins development; no final-informed refit/reselection"
+}

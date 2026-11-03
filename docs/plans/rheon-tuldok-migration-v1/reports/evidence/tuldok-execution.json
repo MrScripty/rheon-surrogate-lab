@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-17T00:16:52.106399+00:00",
+  "task": "Tuldok current managed CUDA/CPU execution lifecycle",
+  "status": "final owned execution source frozen; exact GO/inventory-stage/context checks passed; real GPU and composed evidence qualification owned by siblings",
+  "source_root": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+  "branch": "integration/rheon-lab-current-20261016",
+  "base_revision": "300f12df6f48e028fd9379911703f7c89337952a",
+  "files": {
+    "recipe_process.py": "91d392b1c3c88dd43062457e01176551757b835cc5f8cad61e5e9b77795e421d",
+    "runs.py": "3fe39311f495334ad05e9ec6ee9f4b36aa5a9dba0069823758621db532ec1c99",
+    "tests/test_recipe_process.py": "8e3a3256f7252c60d438ba714aa144260fa529cb963f395ff8cff42f445d917e",
+    "tests/test_torch_runtime_lifecycle.py": "e7f08a93d209f010064d24854da4419ea3ea0822b1caa85170e7d8f130ea166c"
+  },
+  "environment": {
+    "python": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+    "private_postgresql_fixture": "/tmp/rheon-migration-pg-20261016",
+    "catalogs": "Disposable per-test catalog schemas only",
+    "umask": "022",
+    "real_unix_sockets_and_child_processes": true,
+    "gpu_used_by_this_agent": false,
+    "production_service_or_database_changed": false
+  },
+  "runtime_interface": {
+    "profile": "managed_torch_python_v1",
+    "spec_field": "torch_runtime",
+    "descriptor_owner": "torch_runtime.validate_descriptor",
+    "manifest_binding_owner": "torch_runtime.verify_descriptor",
+    "verification_owner": "torch_runtime.verify(value, checkpoint=...)",
+    "helper_dependency": "Captured bootstrap exact SHA checked, sealed and imported from memfd into helper; no ambient module lookup",
+    "supervisor_observation": "verifying event emitted once from the first checkpoint inside torch_runtime.verify, after captured-file rechecks and exact descriptor/manifest validation; Runs stage verify_runtime reports actual installed-inventory start",
+    "device": "Explicit cpu or cuda in argv[7]; closed fresh bootstrap environment; no fallback"
+  },
+  "budgets": {
+    "readiness_seconds": 60,
+    "inventory_verification_seconds": 60,
+    "child_wall_ceiling_seconds": 600,
+    "sigterm_grace_seconds": 3,
+    "cleanup_seconds": 10,
+    "outer_custody_observation_margin_seconds": 5,
+    "stream_bytes_each": 1048576,
+    "output_bytes": 67108864,
+    "capture_bytes": 335544320,
+    "input_bytes_total": 268435456,
+    "input_bytes_each": 41943040
+  },
+  "checks": [
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_torch_runtime_lifecycle.py",
+        "-v"
+      ],
+      "elapsed_seconds": 1.093,
+      "exit_code": 0,
+      "output": "test_cancel_during_inventory_drains_without_fork_and_retains_cold_identity (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_cancel_during_inventory_drains_without_fork_and_retains_cold_identity) ... ok\ntest_captured_bootstrap_drift_after_ready_refuses_recipe_entry (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_captured_bootstrap_drift_after_ready_refuses_recipe_entry) ... ok\ntest_controller_loss_during_inventory_drains_without_fork (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_controller_loss_during_inventory_drains_without_fork) ... ok\ntest_exact_managed_spec_requires_one_profile_device_and_captured_identity (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_exact_managed_spec_requires_one_profile_device_and_captured_identity) ... ok\ntest_inventory_deadline_fails_and_drains_before_child_wall_clock (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_inventory_deadline_fails_and_drains_before_child_wall_clock) ... ok\ntest_managed_context_drift_after_ready_drains_without_recipe_entry (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_managed_context_drift_after_ready_drains_without_recipe_entry) ... ok\ntest_managed_context_is_reverified_after_child_exit_before_completion (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_managed_context_is_reverified_after_child_exit_before_completion) ... ok\ntest_managed_context_keeps_one_exact_bounded_captured_argument (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_managed_context_keeps_one_exact_bounded_captured_argument) ... ok\ntest_missing_or_changed_inventory_refused_after_go_without_child_or_cpu_retry (test_torch_runtime_lifecycle.ManagedInventoryCustodyTests.test_missing_or_changed_inventory_refused_after_go_without_child_or_cpu_retry) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 1.016s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/app-env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_recipe_process.py",
+        "-v"
+      ],
+      "elapsed_seconds": 10.878,
+      "exit_code": 0,
+      "output": "test_cancel_during_delayed_go_verification_drains_before_fork (test_recipe_process.CpuSnapshotContractTests.test_cancel_during_delayed_go_verification_drains_before_fork) ... ok\ntest_canonical_roundtrip_without_live_packages (test_recipe_process.CpuSnapshotContractTests.test_canonical_roundtrip_without_live_packages) ... ok\ntest_cpu_capture_and_input_bounds_are_profile_specific (test_recipe_process.CpuSnapshotContractTests.test_cpu_capture_and_input_bounds_are_profile_specific) ... ok\ntest_cpu_exact_aggregate_boundaries_and_per_input_limit (test_recipe_process.CpuSnapshotContractTests.test_cpu_exact_aggregate_boundaries_and_per_input_limit) ... ok\ntest_cpu_launch_environment_is_fresh_unicode_capable_and_locale_closed (test_recipe_process.CpuSnapshotContractTests.test_cpu_launch_environment_is_fresh_unicode_capable_and_locale_closed) ... ok\ntest_cpu_launch_vector_requires_bound_descriptor (test_recipe_process.CpuSnapshotContractTests.test_cpu_launch_vector_requires_bound_descriptor) ... ok\ntest_directory_and_preparation_budget_are_bounded (test_recipe_process.CpuSnapshotContractTests.test_directory_and_preparation_budget_are_bounded) ... ok\ntest_large_output_scan_has_exact_file_total_and_count_bounds_without_large_writes (test_recipe_process.CpuSnapshotContractTests.test_large_output_scan_has_exact_file_total_and_count_bounds_without_large_writes) ... ok\ntest_large_resource_profile_requires_full_cpu_identity_and_keeps_input_bounds (test_recipe_process.CpuSnapshotContractTests.test_large_resource_profile_requires_full_cpu_identity_and_keeps_input_bounds) ... ok\ntest_manifest_change_and_kind_mismatch_refused (test_recipe_process.CpuSnapshotContractTests.test_manifest_change_and_kind_mismatch_refused) ... ok\ntest_mutated_bytes_mode_missing_and_unlisted_refused (test_recipe_process.CpuSnapshotContractTests.test_mutated_bytes_mode_missing_and_unlisted_refused) ... ok\ntest_pure_bounds_paths_modes_and_descriptor_binding (test_recipe_process.CpuSnapshotContractTests.test_pure_bounds_paths_modes_and_descriptor_binding) ... ok\ntest_symlink_and_hardlink_file_custody_refused (test_recipe_process.CpuSnapshotContractTests.test_symlink_and_hardlink_file_custody_refused) ... ok\ntest_virtual_torch_origins_are_exact_and_captured (test_recipe_process.CpuSnapshotContractTests.test_virtual_torch_origins_are_exact_and_captured) ... ok\ntest_artifact_source_cold_identity_and_completed_custody (test_recipe_process.CustodyTests.test_artifact_source_cold_identity_and_completed_custody) ... ok\ntest_barrier_complete_exact_output_and_cold_receipt (test_recipe_process.CustodyTests.test_barrier_complete_exact_output_and_cold_receipt) ... ok\ntest_cancel_before_go_and_controller_loss (test_recipe_process.CustodyTests.test_cancel_before_go_and_controller_loss) ... ok\ntest_closed_controller_channel_reports_lost_once_and_cancel_is_idempotent (test_recipe_process.CustodyTests.test_closed_controller_channel_reports_lost_once_and_cancel_is_idempotent) ... ok\ntest_controller_eof_after_go_drains_escaped_child (test_recipe_process.CustodyTests.test_controller_eof_after_go_drains_escaped_child) ... ok\ntest_helper_death_preserves_unknown_even_when_leader_is_dead (test_recipe_process.CustodyTests.test_helper_death_preserves_unknown_even_when_leader_is_dead) ... ok\ntest_malformed_control_and_receipt_loss_never_claim_completion (test_recipe_process.CustodyTests.test_malformed_control_and_receipt_loss_never_claim_completion) ... ok\ntest_native_policy_absence_is_closed_and_receipt_is_pure (test_recipe_process.CustodyTests.test_native_policy_absence_is_closed_and_receipt_is_pure) ... ok\ntest_output_and_runtime_drift_bounds (test_recipe_process.CustodyTests.test_output_and_runtime_drift_bounds) ... ok\ntest_setsid_double_fork_and_term_resistance_are_drained (test_recipe_process.CustodyTests.test_setsid_double_fork_and_term_resistance_are_drained) ... ok\ntest_source_drift_after_ready_does_not_execute (test_recipe_process.CustodyTests.test_source_drift_after_ready_does_not_execute) ... ok\ntest_spec_rejects_invalid_bounds_and_executable_hash_before_spawn (test_recipe_process.CustodyTests.test_spec_rejects_invalid_bounds_and_executable_hash_before_spawn) ... ok\ntest_wall_and_stream_limits_and_nonzero_exit (test_recipe_process.CustodyTests.test_wall_and_stream_limits_and_nonzero_exit) ... ok\n\n----------------------------------------------------------------------\nRan 27 tests in 10.813s\n\nOK\n"
+    }
+  ],
+  "preliminary_environment_findings": [
+    {
+      "command": "/usr/bin/python3 -B -m unittest discover -s tests -p test_recipe_process.py -v",
+      "environment": "Restricted sandbox, ambient umask0002",
+      "result": "Interrupted after helper/socket observation failures; no production behavior conclusion; every custodied helper cleaned/reaped."
+    },
+    {
+      "command": "ROOT/.venv/bin/python -B -m unittest discover -s tests -p test_recipe_process.py -v",
+      "environment": "Real sockets, ambient umask0002",
+      "elapsed_test_seconds": 10.957,
+      "result": "24 pass, 3 CPU fixture directory errors. Existing verifier rejects group-writable directories; explicitly setting umask022 resolves all27 without changing production CPU contract."
+    }
+  ],
+  "pending": [
+    "Sibling runtime/project owners complete composed bound managed-evidence integration and final source freeze",
+    "Required-real GPU lifecycle and pressure trainer CUDA-to-CPU success must use final recipe_process/recipe_contract/pipeline identity and fresh material; earlier receipts retain only their original source claims",
+    "Supporting unrelated built-in TinyCNN CPU test requires separately selected pinned CPU environment; original missing-environment failure retained in prior source receipt"
+  ],
+  "standards": {
+    "snapshot": "snapshot:v1:3fe4de6b-e6f1-4964-958b-f58575b5bff2",
+    "selected_topics": [
+      "core",
+      "topic.code-design",
+      "topic.concurrency",
+      "topic.resilience",
+      "topic.contracts",
+      "topic.contracts.evolution",
+      "topic.contracts.protocols",
+      "profile.boundary.ipc",
+      "profile.boundary.persistence",
+      "workflow.verification",
+      "workflow.verification.platforms"
+    ],
+    "implementation_scope": "One current Runtime/Recipes/Run/custody owner, exact coordinated spec, no legacy readers, no second runner/catalog."
+  },
+  "committed": false,
+  "test_summary": {
+    "passed": 36,
+    "failed": 0,
+    "details": "Final exact-inventory source managed/context9 pass1.093s, existingprocess27 pass10.878s; prior-source receipts preserved with their exact identities"
+  },
+  "supporting_checks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "working_directory": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/Tuldok",
+      "exit_code": 0
+    },
+    {
+      "command": "Python ast.parse for recipe_process.py, runs.py, tests/test_torch_runtime_lifecycle.py",
+      "exit_code": 0
+    }
+  ],
+  "acceptance_scope": {
+    "current_managed_custody_and_context": "36 current source checks passed",
+    "prior_generic_admission_unknown_reopen": "11 supporting checks passed on prior GO-corrected source; retained with that source identity",
+    "required_real_GPU_A2_A8": "not claimed by this receipt; runtime owner final qualified receipts required",
+    "production_cutover": "not performed"
+  },
+  "prior_source_receipt": "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/receipts/tuldok-execution-before-go-truth.json",
+  "go_observation": {
+    "go_received": "True exactly when an authenticated GO packet matching helper/attempt/request has been validated, before inventory verification",
+    "child_observation": "Successful preparation state remains separate; hash cancellation has no started event and leader_returncode=None; drained/echild prove no remaining custodied descendants",
+    "prior_receipts": "Retained unchanged for their original source identities; real GPU cases are rerun on new source/material"
+  },
+  "source_history_receipts": [
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/receipts/tuldok-execution-before-go-truth.json",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/receipts/tuldok-execution-before-model-context.json",
+    "/media/jeremy/OrangeCream/Linux Software/repos/owned/graphics-3d/rheon-surrogate-lab/runs/dependency-migration-v1/receipts/tuldok-execution-before-inventory-start.json"
+  ],
+  "managed_model_context": {
+    "authorized_scope": "Existing bound schema3 external_model_evidence_recipe_v2 selected by recipe_contract owner; custody spec schema2",
+    "profiles": "Already fully validated captured_cpu_python_v1 or managed_torch_python_v1; mutually exclusive runtime specs",
+    "unchanged_invariants": [
+      "context captured at runtime-bootstrap/model-evidence-context.json",
+      "1..65536 bytes, exact SHA and size",
+      "one exact argv occurrence and exact captured file record",
+      "owned unlinked regular readonly file, anchored directory/path identity verification",
+      "verification before launch, at READY and GO, and after descendant drainage before successful publication"
+    ],
+    "new_evidence": [
+      "CPU/CUDA managed descriptor exactcontext spec accepted",
+      "missing profile/argument/capture, duplicate argument, wrong hash/path, empty/oversize/mutable context refused",
+      "context drift after READY prevents recipe entry and leaves GOtrue/no leader/drained failure",
+      "authored measured dummy interpreter mutates context then exits0: real custodian drains and rejects completion with model_context_changed; no Torch/CUDA/optimizer executed"
+    ]
+  },
+  "inventory_stage_precision": {
+    "before_observation": [
+      "Recheck captured input/source/system file identities",
+      "Load current captured manifest and bind full descriptor identity"
+    ],
+    "observation_owner": "First checkpoint reached inside managed runtime owner.verify",
+    "negative_proof": "Captured bootstrap drift after READY fails before any verifying observation",
+    "controlled_hash_cancel": "Delayed actual inventory asset verification entered; GO receipt true, no started event, no leader_returncode, drained/echild true"
+  }
+}

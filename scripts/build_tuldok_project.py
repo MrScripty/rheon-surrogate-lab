@@ -670,6 +670,48 @@ class SubjectMatcher:
         return f'recipes/{self.stem_of_fit[fit]}', route
 
 
+def case_values(observed, group_by, where):
+    """The tuldok_results_v1 `values` of one subject, sorted, with groups limited to `group_by`.
+
+    A dimension recorded as null is not a group value, so that value carries no group for it.
+    """
+    values, seen = [], {}
+    for case, metric, value, reason, texts, source in observed:
+        group = {key: texts[key] for key in group_by if key in texts and texts[key] != 'null'}
+        identity = (case, metric, tuple(sorted(group.items())))
+        if identity in seen:
+            raise ValueError(f'{where}: case {case!r}, metric {metric!r}, group {dict(identity[2])} has two values, '
+                             f'from result sets {seen[identity]!r} and {source!r}.')
+        seen[identity] = source
+        entry = {'case': case, 'metric': metric, 'value': value}
+        if value is None:
+            entry['reason'] = reason
+        if group:
+            entry['group'] = group
+        values.append(entry)
+    return sorted(values, key=lambda e: (e['metric'], e['case'], sorted(e.get('group', {}).items())))
+
+
+def summarise_values(values, summarise):
+    """{(metric, group): summary} for one subject: the ungrouped row and one row per single key=value."""
+    measured, missing = collections.defaultdict(list), collections.Counter()
+    for entry in values:
+        for group in ['', *(f'{key}={text}' for key, text in sorted(entry.get('group', {}).items()))]:
+            if entry['value'] is None:
+                missing[entry['metric'], group] += 1
+            else:
+                measured[entry['metric'], group].append(entry['value'])
+    return {key: summarise(measured[key], missing[key]) for key in sorted(set(measured) | set(missing))}
+
+
+def dump_values(document):
+    """A values file: its header fields, then one value per line, so large files stay readable."""
+    head = {key: value for key, value in document.items() if key != 'values'}
+    lines = [json.dumps(entry, ensure_ascii=False, allow_nan=False) for entry in document['values']]
+    text = json.dumps(head, indent=1, ensure_ascii=False)[:-2] + ',\n "values": [\n  ' + ',\n  '.join(lines) + '\n ]\n}\n'
+    return text.encode('utf-8')
+
+
 class Benchmarks:
     """The project's measurement_source result sets, grouped into benchmark definitions and summarised."""
 
@@ -689,6 +731,7 @@ class Benchmarks:
                 raise FileNotFoundError(f"Result set {record['title']!r}: {len(found)} stored files match its checksum.")
             self.result_sets.append({'title': record['title'], 'imported_at': record['imported_at'], 'file': found[0]})
         self.matches = []   # (benchmark, subject id, recipe reference or None, route or reason)
+        self.values = {}    # (benchmark, subject name) -> its tuldok_results_v1 document
 
     def build(self, summarise, write_results, summary_row):
         groups = collections.defaultdict(list)
@@ -704,8 +747,7 @@ class Benchmarks:
 
     def _benchmark(self, name, title, members, summarise, summary_row):
         metrics, subjects, cases, scopes = {}, {}, set(), set()
-        values = collections.defaultdict(list)          # (subject, metric, group items) -> measured values
-        unavailable = collections.Counter()
+        observed = collections.defaultdict(list)   # subject id -> (case, metric, value, reason, dimensions, set)
         produced = {}
         dimension_values = collections.defaultdict(set)
         for member in members:
@@ -719,23 +761,22 @@ class Benchmarks:
                 if metrics.setdefault(metric['id'], entry) != entry:
                     raise ValueError(f"Metric {metric['id']!r} differs between the result sets of {title!r}.")
             for subject in document['subjects']:
-                if subject['id'] in subjects:
-                    raise ValueError(f"Subject {subject['id']!r} appears in two result sets of {title!r}.")
-                subjects[subject['id']] = subject
-                produced[subject['id']] = member['imported_at'][:10]
+                subjects.setdefault(subject['id'], subject)
+                produced[subject['id']] = max(produced.get(subject['id'], ''), member['imported_at'][:10])
             cases.update(case['id'] for case in document['cases'])
             for observation in document['observations']:
                 dimensions = observation.get('dimensions') or {}
                 if isinstance(dimensions, list):
                     dimensions = {entry['id']: entry['value'] for entry in dimensions}
-                group = tuple(sorted((key, dimension_text(value)) for key, value in dimensions.items()))
-                for key, text in group:
+                texts = {key: dimension_text(value) for key, value in dimensions.items()}
+                for key, text in texts.items():
                     dimension_values[key].add(text)
-                key = (observation['subject_id'], observation['metric_id'], group)
-                if observation['state'] == 'measured' and observation['value'] is not None:
-                    values[key].append(observation['value'])
-                else:
-                    unavailable[key] += 1
+                measured = observation['state'] == 'measured' and observation['value'] is not None
+                reason = None if measured else (' '.join(str(observation.get('reason') or '').split())[:400]
+                                                or 'Recorded as unavailable by the earlier study harness.')
+                observed[observation['subject_id']].append(
+                    (observation['case_id'], observation['metric_id'].replace('-', '_'),
+                     observation['value'] if measured else None, reason, texts, member['title']))
             del document
         if len(scopes) != 1:
             raise ValueError(f'The result sets grouped as {title!r} have different scopes: {sorted(scopes)}.')
@@ -746,19 +787,17 @@ class Benchmarks:
             if not METRIC_ID.fullmatch(key):
                 raise ValueError(f'Dimension {key!r} of {title!r} cannot be a group_by key.')
 
-        # One row per subject and metric over all values, and, when there is a grouping, one per group as well.
-        measured_in, missing_in = collections.defaultdict(list), collections.Counter()
-        for subject, metric, group in sorted(set(values) | set(unavailable)):
-            chosen = tuple(pair for pair in group if pair[0] in group_by)
-            for text in sorted({'', ';'.join(f'{key}={value}' for key, value in chosen)}):
-                measured_in[subject, metric, text].extend(values.get((subject, metric, group), []))
-                missing_in[subject, metric, text] += unavailable.get((subject, metric, group), 0)
+        # Each subject's per-case values, the same list that --values-output writes, and the summary rows
+        # computed from exactly that list.
         summary_rows = []
-        for (subject, metric, group) in sorted(set(measured_in) | set(missing_in)):
-            summary = summarise(measured_in[subject, metric, group], missing_in[subject, metric, group])
-            summary_rows.append(summary_row(
-                subject=subject_name(subject), metric=metric.replace('-', '_'), group=group, commit='',
-                produced=produced[subject], **summary))
+        for identifier in sorted(observed):
+            values = case_values(observed[identifier], group_by, f'{title!r}, subject {identifier!r}')
+            subject = subject_name(identifier)
+            self.values[name, subject] = {'format': 'tuldok_results_v1', 'benchmark': name, 'subject': subject,
+                                          'commit': '', 'produced': produced[identifier], 'values': values}
+            for (metric, group), summary in summarise_values(values, summarise).items():
+                summary_rows.append(summary_row(subject=subject, metric=metric, group=group, commit='',
+                                                produced=produced[identifier], **summary))
 
         subject_entries, names = [], set()
         for identifier in sorted(subjects):
@@ -779,8 +818,8 @@ class Benchmarks:
                        f"set{'s' if len(members) > 1 else ''} titled "
                        + '; '.join(f"{t!r}" + (f' ({n} sets)' if n > 1 else '')
                                    for t, n in collections.Counter(m['title'] for m in members).items())
-                       + f'. Summaries are in results/{name}.csv; the per-case values stay in the earlier '
-                       "project's store.")
+                       + f'. Summaries are in results/{name}.csv. The per-case values are not in the folder; '
+                       'scripts/build_tuldok_project.py --values-output writes them as tuldok_results_v1 files.')
         document = definition(
             'benchmark', title, description=description[:4000],
             earlier_work=earlier('no', 'Measured by the earlier study harness, which is not a command this '
@@ -1001,6 +1040,10 @@ def report(files, output, details, run_code_folder):
                      + ', '.join(f'{token} in {count} recipes' for token, count in sorted(tokens.items())))
     results = sum(len(data) for path, data in files.items() if path.startswith('results/'))
     notes_size = sum(len(data) for path, data in files.items() if path.startswith('notes/'))
+    rows = {path[len('results/'):-len('.csv')]: data.count(b'\n') - 1
+            for path, data in sorted(files.items()) if path.startswith('results/')}
+    lines.append(f'Summary rows: {sum(rows.values())} in {len(rows)} results files.')
+    lines += [f'  {name}: {count}' for name, count in rows.items()]
     size = sum(map(len, existing_files(output).values()))
     lines.append(f'Folder size: {size / 1e6:.2f} MB in {len(existing)} files '
                  f'(notes {notes_size / 1e6:.2f} MB, results {results / 1e6:.2f} MB).')
@@ -1009,12 +1052,40 @@ def report(files, output, details, run_code_folder):
     return '\n'.join(lines)
 
 
+VALUES_DEFAULT = Path('runs/tuldok-results')
+
+
+def write_values(folder, documents):
+    """Write <folder>/<benchmark>/<subject>.json for every document, remove stale ones there, and say what was written."""
+    wanted = {f'{benchmark}/{subject}.json': document for (benchmark, subject), document in documents.items()}
+    for benchmark in sorted({benchmark for benchmark, _ in documents}):
+        for path in sorted((folder / benchmark).glob('*.json')):
+            if f'{benchmark}/{path.name}' not in wanted:
+                path.unlink()
+    written = 0
+    for path, document in sorted(wanted.items()):
+        target = folder / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        data = dump_values(document)
+        if not target.is_file() or target.read_bytes() != data:
+            target.write_bytes(data)
+            written += 1
+    count = sum(len(document['values']) for document in documents.values())
+    size = sum((folder / path).stat().st_size for path in wanted)
+    return (f'Values files in {folder}: {len(wanted)} files ({written} rewritten), {count} values, '
+            f'{size / 1e6:.1f} MB.')
+
+
 def main(arguments=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--tuldok', required=True, type=Path, help='the Tuldok repository, to import tuldok_project')
     parser.add_argument('--source', type=Path, default=Path('projects/rheon-model-portfolio-unified-04'))
     parser.add_argument('--output', type=Path, default=Path('projects/surrogate-lab'))
     parser.add_argument('--check', action='store_true', help='write nothing; fail if the folder differs')
+    parser.add_argument('--values-output', nargs='?', type=Path, const=VALUES_DEFAULT, metavar='DIR',
+                        help='also write the per-case values of every earlier benchmark and subject as '
+                             f'tuldok_results_v1 files under DIR (default {VALUES_DEFAULT}, from the code root); '
+                             'they are generated data, outside the folder and not covered by --check')
     options = parser.parse_args(arguments)
 
     files, run_code, details = build(options.source, options.output, options.tuldok)
@@ -1039,6 +1110,11 @@ def main(arguments=None):
                 if not any(directory.iterdir()):
                     directory.rmdir()
     print(report(files, options.output, details, run_code_folder))
+    if options.values_output is not None:
+        folder = options.values_output
+        if folder == VALUES_DEFAULT:
+            folder = details['code_root'] / VALUES_DEFAULT
+        print(write_values(folder, details['benchmarks'].values))
     if options.check:
         out_of_date = [f'{folder.name}/{path}' for folder, _, changed, stale in plans for path in changed + stale]
         if out_of_date:

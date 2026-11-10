@@ -132,6 +132,46 @@ class Helpers(unittest.TestCase):
         self.assertFalse(converter.owned_by_script('README.md', b''))
 
 
+class ValuesAndSummaries(unittest.TestCase):
+    OBSERVED = [  # (case, metric, value, reason, dimension texts, result set)
+        ('a', 'err', 1.0, None, {'blocks': '2', 'pass': 'true', 'samples': '20'}, 'set 1'),
+        ('b', 'err', 3.0, None, {'blocks': '4', 'pass': 'true', 'samples': '20'}, 'set 1'),
+        ('c', 'err', None, 'Not scored.', {'blocks': 'null', 'pass': 'false', 'samples': '20'}, 'set 2'),
+    ]
+
+    def test_values_keep_only_group_by_keys(self):
+        values = converter.case_values(self.OBSERVED, ['blocks', 'pass'], 'test')
+        self.assertEqual(values, [
+            {'case': 'a', 'metric': 'err', 'value': 1.0, 'group': {'blocks': '2', 'pass': 'true'}},
+            {'case': 'b', 'metric': 'err', 'value': 3.0, 'group': {'blocks': '4', 'pass': 'true'}},
+            # A null dimension is not a group value.
+            {'case': 'c', 'metric': 'err', 'value': None, 'reason': 'Not scored.', 'group': {'pass': 'false'}}])
+
+    def test_marginal_rows_only(self):
+        def count(values, unavailable):
+            return {'count': len(values), 'unavailable': unavailable, 'total': sum(values)}
+        values = converter.case_values(self.OBSERVED, ['blocks', 'pass'], 'test')
+        rows = converter.summarise_values(values, count)
+        self.assertEqual(rows, {
+            ('err', ''): {'count': 2, 'unavailable': 1, 'total': 4.0},
+            ('err', 'blocks=2'): {'count': 1, 'unavailable': 0, 'total': 1.0},
+            ('err', 'blocks=4'): {'count': 1, 'unavailable': 0, 'total': 3.0},
+            ('err', 'pass=false'): {'count': 0, 'unavailable': 1, 'total': 0},
+            ('err', 'pass=true'): {'count': 2, 'unavailable': 0, 'total': 4.0}})
+
+    def test_duplicate_value_is_refused(self):
+        observed = self.OBSERVED + [('a', 'err', 1.5, None, {'blocks': '2', 'pass': 'true', 'samples': '20'}, 'set 3')]
+        with self.assertRaises(ValueError) as raised:
+            converter.case_values(observed, ['blocks', 'pass'], 'test')
+        self.assertIn("'set 1'", str(raised.exception))
+        self.assertIn("'set 3'", str(raised.exception))
+
+    def test_values_file_is_strict_json(self):
+        document = {'format': 'tuldok_results_v1', 'benchmark': 'b', 'subject': 's', 'commit': '',
+                    'produced': '2026-10-24', 'values': converter.case_values(self.OBSERVED, ['pass'], 'test')}
+        self.assertEqual(json.loads(converter.dump_values(document)), document)
+
+
 class TrainingSetConversion(unittest.TestCase):
     def setUp(self):
         self.sets = converter.TrainingSets(TRAINING_SETS, EverythingTracked())
@@ -398,6 +438,43 @@ class EndToEnd(unittest.TestCase):
                                                'description': 'Grouping.', 'models': ['recipes/model--aaaa']}])
         self.assertEqual(document['comparisons'], [{'model': 'recipes/model--aaaa', 'compared_with': 'fit-z',
                                                     'explanation': 'A compared with Z.', 'excerpt': 'Better.'}])
+
+    def test_values_files_rebuild_the_summaries(self):
+        sys.path.insert(0, str(TULDOK))
+        from tuldok_project.results import SummaryRow, summarise, write_results
+        values = self.root / 'values'
+        status, printed = self.run_script('--values-output', str(values))
+        self.assertIn('Values files', printed)
+        files = sorted(p.relative_to(values).as_posix() for p in values.rglob('*.json'))
+        self.assertEqual(files, ['errors/c01.json', 'errors/c02.json', 'errors/f64-n1.json'])
+        first = {path: (values / path).read_bytes() for path in files}
+        rows = []
+        for path in files:
+            document = json.loads(first[path])
+            for (metric, group), summary in converter.summarise_values(document['values'], summarise).items():
+                rows.append(SummaryRow(subject=document['subject'], metric=metric, group=group,
+                                       commit=document['commit'], produced=document['produced'], **summary))
+        self.assertEqual(write_results(rows), (self.output / 'results' / 'errors.csv').read_text())
+        c01 = json.loads(first['errors/c01.json'])
+        self.assertIn({'case': 'c', 'metric': 'error_l2', 'value': None,
+                       'reason': 'Recorded as unavailable by the earlier study harness.',
+                       'group': {'blocks': 'false'}}, c01['values'])
+        self.run_script('--values-output', str(values))
+        self.assertEqual({path: (values / path).read_bytes() for path in files}, first)
+
+    def test_duplicate_values_across_result_sets_stop_the_script(self):
+        record = self.source / '.tuldok' / 'records' / 'measurement_source' / '2.json'
+        sha = json.loads(record.read_text())['blob']['sha256']
+        blob = self.source / 'artifacts' / 'sha256' / sha[:2] / sha
+        document = json.loads(blob.read_text())
+        document['subjects'].append({'id': 'C01', 'label': 'C01', 'dimensions': {'fit_item_id': 'fit-a'}})
+        document['observations'].append({'subject_id': 'C01', 'case_id': 'a', 'metric_id': 'error-l2',
+                                         'state': 'measured', 'value': 9.0, 'dimensions': {'blocks': False}})
+        blob.write_text(json.dumps(document))
+        with self.assertRaises(ValueError) as raised:
+            self.run_script()
+        self.assertIn('Errors · part 1', str(raised.exception))
+        self.assertIn('Errors · part 2', str(raised.exception))
 
     def test_stale_owned_files_go_and_hand_written_stay(self):
         self.run_script()

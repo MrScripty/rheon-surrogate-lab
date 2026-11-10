@@ -1,0 +1,23 @@
+{
+  "name": "stepper-pilot-dense-k1",
+  "label": "Divergence-free U-Net stepper · pilot · dense sinusoidal scenes · 1 output per pass",
+  "train_banks": [
+    "runs/full-ai-next-priorities-v1/temporal-data-01/bank.json"
+  ],
+  "development_banks": [
+    "runs/full-ai-next-priorities-v1/temporal-development-240-01/bank.json"
+  ],
+  "model": {
+    "outputs_per_pass": 1,
+    "widths": [32, 64, 128],
+    "blocks_per_level": 2
+  },
+  "updates": 20000,
+  "rollout_schedule": [[0, 1], [2000, 2], [6000, 4], [12000, 8]],
+  "cells_per_batch": 262144,
+  "learning_rate": 0.0003,
+  "warmup_updates": 500,
+  "input_noise": 0.01,
+  "evaluation_outputs": 32,
+  "seed": 0
+}

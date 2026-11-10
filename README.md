@@ -2,6 +2,10 @@
 
 Controlled experiments in learned pressure prediction for Rheon. The lab preserves data contracts, checkpoints, negative results and numerical comparisons so each claim can be traced to an actual experiment.
 
+## Current work
+
+New models, dataset definitions, training and the shared benchmark live in [`surrogate/`](surrogate/README.md). Everything under `experiments/` and `docs/plans/` is the record of the earlier studies.
+
 ## Start with the reference pipeline
 
 Requires Git and Rust 1.92.0. From a clean committed checkout:

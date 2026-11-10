@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "water-coarse-candidate full5000 clipping-qualified fit CUDA",
- "description": "Earlier model, trained 2026-10-17 by Tuldok run c01e1741f48a474d9a2a3252b3971827 (water-coarse-candidate full5000 clipping-qualified fit CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-17 by Tuldok run c01e1741f48a474d9a2a3252b3971827 (water-coarse-candidate full5000 clipping-qualified fit CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 3 record files (not code or settings) were left out: gradient-reference.json, qualification.json, source-witness.json.",
  "card": "notes/fits/water-coarse-candidate-full5000-clipping-qualified-fit-cuda--385e70a586037324.md",
  "labels": {
   "fit_id": "fit-385e70a586037324",
@@ -20,8 +20,8 @@
   "input:splits": "runs/dependency-migration-v1/training-project-6/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 6 of its source files have no tracked copy in Git (for example runs/pressure-coarse-full-fit-v1/project-01/baseline_train.py)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <source: gradient-reference.json> (a record file, not code or settings, so it is not in Git); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -43,7 +43,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
    "--source-witness",
-   "runs/pressure-coarse-full-fit-v1/project-01/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -53,7 +53,7 @@
    "--current-manifest",
    "{inputs.current_manifest}",
    "--fit-reference",
-   "runs/pressure-coarse-full-fit-v1/project-01/gradient-reference.json",
+   "<source: gradient-reference.json>",
    "--pressure-probe",
    "{inputs.pressure_probe}",
    "--model-evidence-context",
@@ -390,7 +390,7 @@
    "experiments/water-conditioning-v1/training/analytical.py",
    "experiments/water-conditioning-v1/training/band_feedback.py",
    "experiments/water-conditioning-v1/training/model.py",
-   "runs/pressure-coarse-full-fit-v1/project-01/baseline_train.py",
+   "earlier-run-code/pressure-coarse-full-fit-v1/project-01/baseline_train.py",
    "experiments/pressure-coarse-stability-v1/capture_policy.py",
    "experiments/pressure-spatial-coarse-v1/overlay/coarse.py",
    "experiments/water-conditioning-v1/training/data.py",
@@ -398,7 +398,6 @@
    "experiments/pressure-throughput-feedback-v1/evidence.py",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "experiments/pressure-coarse-full-fit-v1/full_fit.py",
-   "runs/pressure-coarse-full-fit-v1/project-01/gradient-reference.json",
    "experiments/water-conditioning-v1/training/gradient_clipping.py",
    "experiments/pressure-coarse-gradient-v1/gradient_screen.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
@@ -411,17 +410,13 @@
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/pressure-coarse-full-fit-v1/project-01/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/pressure-coarse-full-fit-v1/project-01/source-witness.json",
    "experiments/pressure-coarse-stability-v1/stability_screen.py",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
    "experiments/water-conditioning-v1/training/train.py",
-   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
-   "runs/pressure-coarse-full-fit-v1/project-01/tuldok_extension_sdk/__init__.py",
-   "runs/pressure-coarse-full-fit-v1/project-01/tuldok_extension_sdk/evidence.py"
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
   ]
  }
 }

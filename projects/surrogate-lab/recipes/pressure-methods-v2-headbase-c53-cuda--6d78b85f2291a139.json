@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "Pressure methods · v2-headbase · C53 CUDA",
- "description": "Earlier model, trained 2026-10-18 by Tuldok run b2078c10a631460a8f396284255fcfea (Pressure methods · v2-headbase · C53 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. Input initial_weights (runs/pressure-methods-v1/learned-coarse-initialization-01/weights.npz) holds earlier weights that the account does not tie to a model. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-18 by Tuldok run b2078c10a631460a8f396284255fcfea (Pressure methods · v2-headbase · C53 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. Input initial_weights (runs/pressure-methods-v1/learned-coarse-initialization-01/weights.npz) holds earlier weights that the account does not tie to a model. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/pressure-methods-v2-headbase-c53-cuda--6d78b85f2291a139.md",
  "labels": {
   "fit_id": "fit-6d78b85f2291a139",
@@ -22,7 +22,7 @@
  },
  "earlier_work": {
   "rebuild": "no",
-  "reason": "Cannot be rebuilt: 10 of its source files have no tracked copy in Git (for example runs/pressure-methods-v2/v2-headbase-project-02/fine-tuning.json); it starts from weights at runs/pressure-methods-v1/learned-coarse-initialization-01/weights.npz whose producing model is not identified."
+  "reason": "Cannot be rebuilt: it starts from weights at runs/pressure-methods-v1/learned-coarse-initialization-01/weights.npz whose producing model is not identified."
  },
  "run": {
   "command": [
@@ -44,7 +44,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
    "--source-witness",
-   "runs/pressure-methods-v2/v2-headbase-project-02/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -395,16 +395,16 @@
    "experiments/pressure-methods-v1/domain_data.py",
    "experiments/water-conditioning-v1/training/direction_feedback.py",
    "experiments/pressure-throughput-feedback-v1/evidence.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/fine-tuning.json",
+   "earlier-run-code/pressure-methods-v2/v2-headbase-project-02/fine-tuning.json",
    "experiments/pressure-four-pass-distillation-v1/fine_tuning.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/fixed-normalization.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/fixed-normalization.json",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "experiments/water-conditioning-v1/training/gradient_clipping.py",
    "experiments/pressure-methods-v2/head_optimizer.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
    "experiments/water-conditioning-v1/training/data.py",
    "experiments/water-conditioning-v1/training/physical_residual.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/hybrid-method.json",
+   "earlier-run-code/pressure-methods-v2/v2-headbase-project-02/hybrid-method.json",
    "experiments/pressure-methods-v1/learned_model.py",
    "experiments/pressure-methods-v1/view.py",
    "experiments/pressure-methods-v2/shape_order.py",
@@ -413,21 +413,17 @@
    "experiments/global-pressure-v1/training/model.py",
    "experiments/global-pressure-v1/training/train.py",
    "experiments/pressure-methods-v1/learned_physical.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/policy.py",
+   "earlier-run-code/pressure-methods-v1/coarse-head-rate-project-01/policy.py",
    "experiments/cuda-pressure-v1/model.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/portable_policy.py",
+   "earlier-run-code/pressure-methods-v1/coarse-head-rate-project-01/portable_policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/qualification.json",
    "experiments/pressure-methods-v1/domain_model.py",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/train.py",
-   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/tuldok_extension_sdk/__init__.py",
-   "runs/pressure-methods-v2/v2-headbase-project-02/tuldok_extension_sdk/evidence.py"
+   "earlier-run-code/pressure-methods-v1/coarse-head-rate-project-01/train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
   ]
  }
 }

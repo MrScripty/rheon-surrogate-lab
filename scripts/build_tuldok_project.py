@@ -174,14 +174,52 @@ def study_of(path):
     return parts[1] if parts[0] == 'runs' and len(parts) > 2 else None
 
 
-class CodePaths:
-    """Maps the paths earlier runs executed (staged copies under runs/, which Git ignores) to tracked files.
+EARLIER_RUN_CODE = 'earlier-run-code'
 
-    A path is replaced by a tracked file with identical content anywhere in the repository except the
-    old project folder. When several tracked files match, the one under experiments/<the run's study>/
-    is preferred, then any under experiments/, then the first in path order. Files the old Tuldok's
-    run wiring needed (its runtime bootstrap and manifest, contribution and extension descriptors, and
-    its project document) are not lab code and are left out.
+# What each untracked JSON file the earlier runs named is, decided by opening it (see the slice L2 report).
+# 'settings' are values a run was configured with or read as configuration: they are copied into
+# earlier-run-code/. 'record' files are records about other files or about a run (checksums,
+# witnesses, receipts, qualification and provenance notes, offline probe results): they are not
+# copied, are left out of `sources`, and are named in the reason when a command reads one.
+JSON_FILES = {
+    'architecture-variant.json': 'settings',       # variant, updates, checkpoints, stages, modes, head width
+    'config.json': 'settings',                     # a run's experiment configuration (other than the recipe's own)
+    'configuration.json': 'settings',              # architecture and scales of an exported pressure core
+    'distillation.json': 'settings',               # distillation objective (width fractions, weight); embeds the teacher's tensor checksums
+    'fine-tuning.json': 'settings',                # fine-tuning objective (passes, teacher weight); embeds the starting tensors' checksums
+    'fit-sampling.json': 'settings',               # which records a fit samples and how
+    'fixed-normalization.json': 'settings',        # the normalisation scales the model applies
+    'hybrid-method.json': 'settings',              # which hybrid method variant the run used
+    'initial-context.json': 'settings',            # the parent entry and teacher bank a run starts from
+    'mode-curriculum.json': 'settings',            # seed and pattern counts of a curriculum
+    'routing.json': 'settings',                    # grid-size routing between two heads
+    'spacing-method.json': 'settings',             # the spacing feature a run adds
+    'step-scales.json': 'settings',                # train-only step statistics used as scales
+    'coupled-asset-provenance.json': 'record',     # provenance notes about assembled assets
+    'gate-bounds.json': 'record',                  # result of an offline bound probe
+    'gate-bounds.source.json': 'record',           # checksums of the probe's source and result
+    'gradient-reference.json': 'record',           # reference values and checksums to check a fit against
+    'point-initialization.json': 'record',         # checksum and run ids of the weights a component starts from
+    'qualification.json': 'record',                # qualification status flags of a run
+    'receipt.json': 'record',                      # export receipt with file checksums
+    'request-initialization.json': 'record',       # checksum and run ids of starting weights
+    'source-witness.json': 'record',               # witness of the sources and inputs a run was assembled from
+    'viscosity-initialization.json': 'record',     # checksum and run ids of starting weights
+}
+DATA_SUFFIXES = ('.npz', '.npy', '.zip', '.pt', '.pth')
+
+
+class CodePaths:
+    """Maps the paths earlier runs executed (staged copies under runs/, which Git ignores) to files in Git.
+
+    A path becomes a tracked file with identical content anywhere in the repository except the old
+    project folder and earlier-run-code/. When several tracked files match, the one under
+    experiments/<the run's study>/ is preferred, then any under experiments/, then the first in path
+    order. Python code and settings files with no tracked twin are copied to earlier-run-code/: one
+    copy per distinct content, at the first of its paths in sorted order with runs/ removed.
+    Files the old Tuldok's run wiring needed (its runtime bootstrap and manifest, custody validator,
+    extension SDK, contribution and extension descriptors, project document) and record files (see
+    JSON_FILES) are left out. Archives and arrays are generated data and are not copied.
     """
 
     def __init__(self, root, exclude):
@@ -189,17 +227,21 @@ class CodePaths:
         listing = subprocess.run(['git', 'ls-files', '-s', '-z'], cwd=self.root, check=True,
                                  capture_output=True).stdout.decode('utf-8')
         self.tracked, self.by_blob = set(), collections.defaultdict(list)
+        excluded = [prefix.rstrip('/') + '/' for prefix in (exclude, EARLIER_RUN_CODE) if prefix]
         for record in filter(None, listing.split('\0')):
             meta, path = record.split('\t', 1)
-            if exclude and (path + '/').startswith(exclude.rstrip('/') + '/'):
+            if any(path.startswith(prefix) for prefix in excluded):
                 continue
             self.tracked.add(path)
             self.by_blob[meta.split()[1]].append(path)
         self.counts = collections.Counter()
+        self.home = {}          # untracked path -> its copy under earlier-run-code/
+        self.copies = {}        # path under earlier-run-code/ -> bytes
 
     def generated(self, path):
-        name = Path(path).name
-        if 'runtime-bootstrap' in Path(path).parts[:-1] or name == 'runtime-manifest.json':
+        parts = Path(path).parts
+        name = parts[-1]
+        if {'runtime-bootstrap', 'tuldok_extension_sdk'} & set(parts[:-1]) or name == 'runtime-manifest.json':
             return True
         # The runs' custody validator is a copy of the old Tuldok's recipe_process.py, put in each staged
         # project by the assemble scripts (experiments/pressure-throughput-feedback-v1/assemble.py).
@@ -216,20 +258,57 @@ class CodePaths:
                         or (name == 'project.json' and {'recipes', 'requirements'} <= set(document)))
         return False
 
+    @staticmethod
+    def file_kind(path):
+        """'code', 'settings', 'record' or 'data' for a file with no tracked copy."""
+        name = Path(path).name
+        if name.endswith('.py'):
+            return 'code'
+        if name.endswith(DATA_SUFFIXES):
+            return 'data'
+        if name in JSON_FILES:
+            return JSON_FILES[name]
+        raise ValueError(f'{path}: add {name!r} to JSON_FILES as settings or record.')
+
+    def twin(self, path):
+        twins = self.by_blob.get(git_blob_id((self.root / path).read_bytes()), [])
+        study = study_of(path)
+        return sorted(twins, key=lambda twin: (not (study and twin.startswith(f'experiments/{study}/')),
+                                              not twin.startswith('experiments/'), twin))[:1]
+
+    def prepare(self, paths):
+        """Choose the earlier-run-code/ copy of every untracked code or settings file among `paths`."""
+        by_content = collections.defaultdict(list)
+        for path in sorted(set(paths)):
+            if path in self.tracked or self.generated(path) or not (self.root / path).is_file():
+                continue
+            if not self.twin(path) and self.file_kind(path) in ('code', 'settings'):
+                by_content[git_blob_id((self.root / path).read_bytes())].append(path)
+        for same in by_content.values():
+            first = same[0]
+            home = f"{EARLIER_RUN_CODE}/{first[len('runs/'):] if first.startswith('runs/') else first}"
+            self.copies[home] = (self.root / first).read_bytes()
+            for path in same:
+                self.home[path] = home
+
     def resolve(self, path):
-        """('tracked' | 'rewritten' | 'generated' | 'missing', the path to write or None)."""
+        """(state, the path to write or None). States: tracked, rewritten, copied, generated, record,
+        data (an archive or array with no copy in Git) and missing (not on this machine)."""
         if path in self.tracked:
             result = 'tracked', path
         elif self.generated(path):
             result = 'generated', None
         elif not (self.root / path).is_file():
             result = 'missing', path
+        elif self.twin(path):
+            result = 'rewritten', self.twin(path)[0]
+        elif path in self.home:
+            result = 'copied', self.home[path]
         else:
-            twins = self.by_blob.get(git_blob_id((self.root / path).read_bytes()), [])
-            study = study_of(path)
-            twins = sorted(twins, key=lambda twin: (not (study and twin.startswith(f'experiments/{study}/')),
-                                                   not twin.startswith('experiments/'), twin))
-            result = ('rewritten', twins[0]) if twins else ('missing', path)
+            kind = self.file_kind(path)
+            result = (kind, None) if kind == 'record' else (kind, path)
+            if kind in ('code', 'settings'):
+                raise ValueError(f'{path} was not prepared for copying.')
         self.counts[result[0]] += 1
         return result
 
@@ -309,7 +388,7 @@ class TrainingSets:
 
         # The label is about this set alone: its own command, its own code, and whether it reads model weights.
         named = sorted({stage[1] for stage in stages} | set(entry.get('settings') or []))
-        missing = [path for path in named if self.code_paths.resolve(path)[0] not in ('tracked', 'rewritten')]
+        missing = [path for path in named if self.code_paths.resolve(path)[0] not in ('tracked', 'rewritten', 'copied')]
         if missing:
             rebuild, reason = 'no', f"{', '.join(missing)} {'is' if len(missing) == 1 else 'are'} not in Git."
         else:
@@ -414,10 +493,10 @@ class Recipes:
                 paths[name] = recorded_input['path']
                 supplied.append(f'the environment listing given as input {name}')
 
-        # Every script and source path, mapped to the tracked file with the same content.
+        # Every script and source path, mapped to a file in Git: a tracked twin or a copy in earlier-run-code/.
         entry_state, entrypoint = self.code_paths.resolve(recipe['entrypoint'])
         self.training_scripts[stem] = (entry_state, recipe['entrypoint'])
-        written, missing, dropped = {}, [], []
+        written, absent, data, dropped, records = {}, [], [], [], []
         for source in recipe['sources']:
             if source == recipe.get('settings_file'):
                 self.code_paths.counts['carried as settings'] += 1
@@ -425,10 +504,14 @@ class Recipes:
             state, path = self.code_paths.resolve(source)
             if state == 'generated':
                 dropped.append(source)
+            elif state == 'record':
+                records.append(source)
             else:
                 written[source] = path
                 if state == 'missing':
-                    missing.append(source)
+                    absent.append(source)
+                elif state == 'data':
+                    data.append(source)
 
         settings_name = Path(recipe['settings_file']).name if recipe.get('settings_file') else None
         command = ['python', entrypoint]
@@ -451,7 +534,8 @@ class Recipes:
                     command.append(escape(written[found[0]]))
                 else:
                     command.append(escape(token))
-                    supplied.append(f'{token} (written by the old Tuldok for the run)')
+                    supplied.append(f'{token} (a record file, not code or settings, so it is not in Git)'
+                                    if found[0] in records else f'{token} (written by the old Tuldok for the run)')
             elif token.startswith('<'):
                 self.unknown_tokens[token] += 1
                 command.append(escape(token))
@@ -461,24 +545,33 @@ class Recipes:
         if len(command) > 64:
             raise ValueError(f'{stem}: the command has more than 64 words.')
 
-        self.missing_sources[stem] = missing
+        self.missing_sources[stem] = absent + data
         problems = []
         if entry_state == 'missing':
-            problems.append(f"its training script {recipe['entrypoint']} has no tracked copy in Git")
-        if missing:
-            problems.append(f"{len(missing)} of its source files {'has' if len(missing) == 1 else 'have'} no tracked "
-                            f'copy in Git (for example {missing[0]})')
+            problems.append(f"its training script {recipe['entrypoint']} is neither in Git nor on this machine")
+        if absent:
+            problems.append(f"{len(absent)} of its source files {'is' if len(absent) == 1 else 'are'} neither in Git "
+                            f'nor on this machine (for example {absent[0]})')
         if lost:
             problems.append(f'it starts from weights at {lost[0]} whose producing model is not identified')
+        if data and not problems:
+            label = earlier('no', 'Cannot be rebuilt: the only missing pieces are archives or arrays (generated '
+                            f"data) with no copy in Git: {', '.join(data)}.")
+        elif data:
+            problems.append(f"{len(data)} archive or array file{'s' if len(data) > 1 else ''} it reads "
+                            f'{"has" if len(data) == 1 else "have"} no copy in Git (for example {data[0]})')
         if problems:
             label = earlier('no', 'Cannot be rebuilt: ' + '; '.join(problems) + '.')
-        elif supplied:
+        elif not data and supplied:
             label = earlier('needs-work', 'The recorded command takes arguments the old Tuldok supplied: '
                             + '; '.join(dict.fromkeys(supplied)) + '. They have to be replaced before it can run.')
-        else:
+        elif not data:
             label = earlier('after-inputs' if weights else 'yes')
         if dropped:
             notes.append(f'{len(dropped)} source files the old Tuldok generated for the run were left out.')
+        if records:
+            notes.append(f"{len(records)} record files (not code or settings) were left out: "
+                         f"{', '.join(sorted({Path(r).name for r in records}))}.")
 
         run = {'command': command, 'environment': ENVIRONMENT_OF_RUNTIME[recipe['runtime']],
                'inputs': inputs, 'settings': recipe['settings'], 'outputs': self.outputs(recipe['outputs']),
@@ -487,7 +580,7 @@ class Recipes:
         description = (f"Earlier model, trained {recipe['trained_at'][:10]} by Tuldok run {recipe['tuldok_run']} "
                        f"({recipe['run_name']}). Converted from its extracted training recipe. The run executed "
                        'staged copies under runs/; each script and source is given as the tracked file with the '
-                       'same content where one exists.')
+                       'same content, or as its copy in earlier-run-code/.')
         if notes:
             description += ' ' + ' '.join(dict.fromkeys(notes))
         return definition('recipe', recipe['model'], description=description[:4000], card=card, labels=labels,
@@ -717,8 +810,9 @@ def notes_left_out(notes):
         'subjects; the rest is not carried.',
         f"notes/00-models.portfolio.json: {len(portfolio['models'])} model entries (aliases, review state, task "
         f"group, a long method summary), {len(portfolio['groups'])} authored task groups, and "
-        f"{len(portfolio['relationships'])} authored comparisons between fits with excerpts. The model "
-        'summaries partly repeat the cards; the groups and comparisons are not carried.',
+        f"{len(portfolio['relationships'])} authored comparisons between fits with excerpts. The groups and "
+        'comparisons are carried in notes/model-groups-and-comparisons.json; the model entries (aliases, review '
+        'state, summaries that partly repeat the cards) are not.',
         f"notes/checkpoints/ ({len(checkpoints)} rows): one row per distinct checkpoint file (checksum, size, the "
         'retained path where it was verified, every path it was found at, and its context). It is the map from '
         'weights checksums to files on the training machine, which registering the earlier weights as products '
@@ -765,6 +859,8 @@ def build(source, output, tuldok):
     code_paths = CodePaths(code_root, exclude=old_project)
     training_sets = TrainingSets(load(notes / 'recipes' / 'training-sets.json'), code_paths)
     recipes = Recipes(notes / 'recipes', code_paths)
+    code_paths.prepare(path for recipe in recipes.recorded.values() if recipe.get('command')
+                       for path in [recipe['entrypoint'], *recipe['sources']] if path != recipe.get('settings_file'))
     benchmarks = Benchmarks(source, SubjectMatcher(notes, recipes.stem_of_fit))
 
     documents = {**training_sets.definitions(), **recipes.definitions()}
@@ -772,6 +868,8 @@ def build(source, output, tuldok):
     for path, content in benchmarks.build(summarise, write_results, SummaryRow).items():
         files[path] = content if isinstance(content, bytes) else dump(content)
     files['tuldok.json'] = dump(PROJECT)
+    files['notes/model-groups-and-comparisons.json'] = dump(
+        groups_and_comparisons(load(notes / '00-models.portfolio.json'), recipes.stem_of_fit))
     for path in sorted([*notes.glob('*.md'), *(notes / 'fits').glob('*.md')]):
         files[path.relative_to(source).as_posix()] = path.read_bytes()
 
@@ -779,7 +877,47 @@ def build(source, output, tuldok):
     clash = sorted(set(files) & hand_written)
     if clash:
         raise ValueError(f'These files are written by hand and the script would overwrite them: {clash}')
-    return files, {'benchmarks': benchmarks, 'recipes': recipes, 'notes': notes, 'code_paths': code_paths}
+    run_code = {path[len(EARLIER_RUN_CODE) + 1:]: data for path, data in code_paths.copies.items()}
+    run_code['README.md'] = EARLIER_RUN_CODE_README.encode('utf-8')
+    return files, run_code, {'benchmarks': benchmarks, 'recipes': recipes, 'notes': notes, 'code_paths': code_paths,
+                             'code_root': code_root}
+
+
+EARLIER_RUN_CODE_README = '''# Earlier run code
+
+The code and settings files that the lab's earlier training runs executed, in the versions they ran.
+Those runs worked from staged copies under `runs/`, which Git ignores, and these versions were never
+committed anywhere else. They are kept here so the earlier recipes in `projects/surrogate-lab/recipes/`
+name files that are in Git.
+
+A file from `runs/<path>` is here at `<path>`. Each distinct file is here once, at the first of its
+paths in sorted order; every recipe that ran an identical file points at that copy. Archives, arrays,
+weights and record files (checksums, witnesses, receipts, qualification records) are not copied.
+
+`scripts/build_tuldok_project.py` writes this folder and removes anything it no longer needs. Do not
+edit it by hand.
+'''
+
+
+def groups_and_comparisons(portfolio, stem_of_fit):
+    """The authored task groups and model comparisons of notes/00-models.portfolio.json, by recipe reference."""
+    def recipe(fit):
+        return f'recipes/{stem_of_fit[fit]}' if fit in stem_of_fit else fit
+
+    members = collections.defaultdict(list)
+    for model in portfolio['models']:
+        members[model['group_id']].append(recipe(model['id']))
+    return {
+        'about': ('Authored by hand in the earlier project (notes/00-models.portfolio.json): task groups of the '
+                  'earlier models and comparisons between them. Groups are not training ancestry; a comparison '
+                  'is retrospective review context.'),
+        'groups': [{'id': group['id'], 'title': group['label'], 'parent': group['parent'],
+                    'description': group['description'], 'models': sorted(members.get(group['id'], []))}
+                   for group in portfolio['groups']],
+        'comparisons': [{'model': recipe(item['from']), 'compared_with': recipe(item['to']),
+                         'explanation': item['explanation'], 'excerpt': item['excerpt']}
+                        for item in portfolio['relationships']],
+    }
 
 
 SEVERITY = ('new work', 'yes', 'after-inputs', 'needs-work', 'no')
@@ -804,7 +942,7 @@ def effective_labels(files):
     return collections.Counter((documents[r]['kind'], label(r)) for r in sorted(documents))
 
 
-def report(files, output, details, size):
+def report(files, output, details, run_code_folder):
     existing = existing_files(output)
     hand = {path: data for path, data in existing.items() if not owned_by_script(path, data)}
     everything = {**hand, **files}
@@ -825,25 +963,30 @@ def report(files, output, details, size):
     lines += [f'  {kind:12s} {label:13s} {count:4d}' for (kind, label), count in sorted(effective.items())]
     counts = details['code_paths'].counts
     lines.append(f"Code paths of earlier items: {counts['rewritten']} rewritten to a tracked file with the same "
-                 f"content, {counts['tracked']} already tracked, {counts['missing']} with no tracked file, "
-                 f"{counts['generated']} generated by the old Tuldok and left out, {counts['carried as settings']} "
-                 'settings files carried as the recipe\'s settings.')
+                 f"content, {counts['copied']} pointed at a copy in {EARLIER_RUN_CODE}/, {counts['tracked']} already "
+                 f"tracked, {counts['generated']} generated by the old Tuldok and left out, {counts['record']} record "
+                 f"files left out, {counts['data']} archives or arrays with no copy in Git, {counts['missing']} not on "
+                 f"this machine, {counts['carried as settings']} settings files carried as the recipe's settings.")
+    lines.append('Untracked JSON files, as classified in JSON_FILES:')
+    for kind in ('settings', 'record'):
+        lines.append(f"  {kind}: " + ', '.join(name for name, k in sorted(JSON_FILES.items()) if k == kind))
     scripts = details['recipes'].training_scripts
+    by_state = collections.Counter(state for state, _ in scripts.values())
+    lines.append(f"Training scripts of the {len(scripts)} earlier recipes with a command: "
+                 + ', '.join(f'{count} {state}' for state, count in sorted(by_state.items())) + '.')
     absent = collections.defaultdict(list)
     for stem, (state, path) in sorted(scripts.items()):
         if state == 'missing':
             absent[study_of(path) or 'not under runs/'].append(stem)
-    lines.append(f'Earlier recipes whose training script is not in Git: {sum(map(len, absent.values()))} '
-                 f'of {len(scripts)} with a command.')
     for study, stems in sorted(absent.items()):
-        lines.append(f'  {study} ({len(stems)}):')
+        lines.append(f'  not in Git or on this machine, {study} ({len(stems)}):')
         lines += [f'    {stem}' for stem in stems]
     missing = {stem: paths for stem, paths in details['recipes'].missing_sources.items() if paths}
-    code_missing = [stem for stem, paths in missing.items() if any(p.endswith('.py') for p in paths)]
     names = collections.Counter(Path(p).name for paths in missing.values() for p in set(paths))
-    lines.append(f'Earlier recipes with sources that have no tracked copy: {len(missing)}; {len(code_missing)} of them '
-                 f'miss Python code, {len(missing) - len(code_missing)} only data or settings files. Most common: '
-                 + ', '.join(f'{name} ({count})' for name, count in names.most_common(12)) + '.')
+    lines.append(f'Earlier recipes with source files still not in Git: {len(missing)}. Their names: '
+                 + ', '.join(f'{name} ({count})' for name, count in sorted(names.items())) + '.')
+    run_code = existing_files(run_code_folder)
+    lines.append(f'{EARLIER_RUN_CODE}/: {sum(map(len, run_code.values())) / 1e6:.2f} MB in {len(run_code)} files.')
     matches = details['benchmarks'].matches
     matched = [m for m in matches if m[2]]
     routes = collections.Counter(m[3] for m in matched)
@@ -858,7 +1001,8 @@ def report(files, output, details, size):
                      + ', '.join(f'{token} in {count} recipes' for token, count in sorted(tokens.items())))
     results = sum(len(data) for path, data in files.items() if path.startswith('results/'))
     notes_size = sum(len(data) for path, data in files.items() if path.startswith('notes/'))
-    lines.append(f'Folder size: {size / 1e6:.2f} MB in {len(everything)} files '
+    size = sum(map(len, existing_files(output).values()))
+    lines.append(f'Folder size: {size / 1e6:.2f} MB in {len(existing)} files '
                  f'(notes {notes_size / 1e6:.2f} MB, results {results / 1e6:.2f} MB).')
     lines.append('Left in the old notes and not carried:')
     lines += [f'  - {line}' for line in notes_left_out(details['notes'])]
@@ -873,34 +1017,39 @@ def main(arguments=None):
     parser.add_argument('--check', action='store_true', help='write nothing; fail if the folder differs')
     options = parser.parse_args(arguments)
 
-    files, details = build(options.source, options.output, options.tuldok)
-    existing = existing_files(options.output)
-    stale = sorted(path for path, data in existing.items() if owned_by_script(path, data) and path not in files)
-    changed = sorted(path for path, data in files.items() if existing.get(path) != data)
+    files, run_code, details = build(options.source, options.output, options.tuldok)
+    run_code_folder = details['code_root'] / EARLIER_RUN_CODE
+    folders = [(options.output, files, owned_by_script), (run_code_folder, run_code, lambda path, data: True)]
+    plans = []
+    for folder, wanted, owned in folders:
+        existing = existing_files(folder)
+        plans.append((folder, wanted,
+                      sorted(path for path, data in wanted.items() if existing.get(path) != data),
+                      sorted(path for path, data in existing.items() if owned(path, data) and path not in wanted)))
 
+    if not options.check:
+        for folder, wanted, changed, stale in plans:
+            for path in stale:
+                (folder / path).unlink()
+            for path in changed:
+                target = folder / path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(wanted[path])
+            for directory in sorted((p for p in folder.rglob('*') if p.is_dir()), reverse=True):
+                if not any(directory.iterdir()):
+                    directory.rmdir()
+    print(report(files, options.output, details, run_code_folder))
     if options.check:
-        size = sum(len(data) for path, data in existing.items())
-        print(report(files, options.output, details, size))
-        if changed or stale:
-            print(f'\nOut of date: {len(changed)} files differ or are missing, {len(stale)} should not be there.')
-            for path in (changed + stale)[:20]:
+        out_of_date = [f'{folder.name}/{path}' for folder, _, changed, stale in plans for path in changed + stale]
+        if out_of_date:
+            print(f'\nOut of date: {len(out_of_date)} files differ, are missing or should not be there.')
+            for path in out_of_date[:20]:
                 print(f'  {path}')
             return 1
-        print('\nThe folder matches what the script writes.')
+        print('\nThe folder and earlier-run-code/ match what the script writes.')
         return 0
-
-    for path in stale:
-        (options.output / path).unlink()
-    for path in changed:
-        target = options.output / path
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(files[path])
-    for directory in sorted((p for p in options.output.rglob('*') if p.is_dir()), reverse=True):
-        if not any(directory.iterdir()):
-            directory.rmdir()
-    size = sum(len(data) for data in existing_files(options.output).values())
-    print(report(files, options.output, details, size))
-    print(f'\nWrote {len(changed)} files, removed {len(stale)}.')
+    print('\n' + '; '.join(f'{folder.name}: wrote {len(changed)} files, removed {len(stale)}'
+                           for folder, _, changed, stale in plans) + '.')
     return 0
 
 

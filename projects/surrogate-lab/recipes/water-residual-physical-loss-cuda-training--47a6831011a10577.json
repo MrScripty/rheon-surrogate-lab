@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "water-residual-physical-loss · CUDA training",
- "description": "Earlier model, trained 2026-10-15 by Tuldok run ea16176b7f644038aa503affa22354fd (water-residual-physical-loss · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-15 by Tuldok run ea16176b7f644038aa503affa22354fd (water-residual-physical-loss · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 2 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/water-residual-physical-loss-cuda-training--47a6831011a10577.md",
  "labels": {
   "fit_id": "fit-47a6831011a10577",
@@ -14,13 +14,13 @@
   "input:splits": "runs/water-residual-learning-v1/residual-physical-loss/project/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: its training script runs/water-residual-learning-v1/residual-physical-loss/project/train.py has no tracked copy in Git; 6 of its source files have no tracked copy in Git (for example runs/water-residual-learning-v1/residual-physical-loss/project/model.py)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: <source: runtime-manifest.json> (written by the old Tuldok for the run); <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
  },
  "run": {
   "command": [
    "python",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/train.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/train.py",
    "train",
    "--dataset",
    "{inputs.dataset}",
@@ -33,7 +33,7 @@
    "--runtime-manifest",
    "<source: runtime-manifest.json>",
    "--source-witness",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -175,21 +175,19 @@
    "experiments/water-conditioning-v1/training/data.py",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/model.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/model.py",
    "experiments/global-pressure-v1/training/data.py",
    "experiments/global-pressure-v1/training/model.py",
    "experiments/global-pressure-v1/training/train.py",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/physical_residual.py",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/policy.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/physical_residual.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/policy.py",
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/water-residual-learning-v1/residual-physical-loss/project/train.py"
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/train.py"
   ]
  }
 }

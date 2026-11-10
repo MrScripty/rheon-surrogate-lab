@@ -1,0 +1,9 @@
+{
+  "kind": "numerical-coarse",
+  "coarse_nodes_per_axis": 4,
+  "placement": "Numerical stage before each neural pass",
+  "numerical_operator": "Same sealed fine equation; no reference labels",
+  "cost": "Count geometry setup, restriction/transform, solve/selected inverse, prolongation, residual and neural inference",
+  "transfer": "Clamped trilinear interpolation at coarse aggregate centers; conservative transpose restriction",
+  "operator": "Galerkin Ac=P^T L P, float64 Cholesky with fixed coarse gauge"
+}

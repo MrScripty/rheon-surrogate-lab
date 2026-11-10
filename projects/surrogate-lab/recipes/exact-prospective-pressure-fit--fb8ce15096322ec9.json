@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "Exact prospective pressure fit",
- "description": "Earlier model, trained 2026-10-17 by Tuldok run 6b75f3ce89e64c8fb45ac514d0f386ae (Exact prospective pressure fit). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-17 by Tuldok run 6b75f3ce89e64c8fb45ac514d0f386ae (Exact prospective pressure fit). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/exact-prospective-pressure-fit--fb8ce15096322ec9.md",
  "labels": {
   "fit_id": "fit-fb8ce15096322ec9",
@@ -18,8 +18,8 @@
   "input:splits": "runs/dependency-migration-v1/training-project-3/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 7 of its source files have no tracked copy in Git (for example runs/dependency-migration-v1/typed-pressure-project-02/model.py)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -41,7 +41,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/training-project-3/runtime-manifest.json",
    "--source-witness",
-   "runs/dependency-migration-v1/typed-pressure-project-02/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -359,24 +359,20 @@
    "experiments/water-conditioning-v1/training/direction_feedback.py",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
-   "runs/dependency-migration-v1/typed-pressure-project-02/model.py",
+   "earlier-run-code/dependency-migration-v1/typed-pressure-project-02/model.py",
    "experiments/global-pressure-v1/training/data.py",
    "experiments/global-pressure-v1/training/model.py",
    "experiments/global-pressure-v1/training/train.py",
    "experiments/water-conditioning-v1/training/physical_residual.py",
-   "runs/dependency-migration-v1/typed-pressure-project-02/policy.py",
+   "earlier-run-code/dependency-migration-v1/typed-pressure-project-02/policy.py",
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/dependency-migration-v1/typed-pressure-project-02/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/dependency-migration-v1/typed-pressure-project-02/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/dependency-migration-v1/typed-pressure-project-02/train.py",
-   "runs/dependency-migration-v1/typed-pressure-project-02/tuldok_extension_sdk/__init__.py",
-   "runs/dependency-migration-v1/typed-pressure-project-02/tuldok_extension_sdk/evidence.py",
+   "earlier-run-code/dependency-migration-v1/typed-pressure-project-02/train.py",
    "experiments/dependency-migration-v1/typed_pressure_evidence.py"
   ]
  }

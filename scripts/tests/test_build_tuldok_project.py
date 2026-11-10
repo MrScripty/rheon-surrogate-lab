@@ -82,6 +82,10 @@ def make_code(root, stems):
         (staged / 'train.py').write_bytes(TRAIN_SCRIPT)
         (staged / 'config.json').write_text('{"seed": 1}')
         (staged / 'local.py').write_text('# never committed\n')
+        (staged / 'qualification.json').write_text('{"status": "smoke"}')
+        (staged / 'source-witness.json').write_text('{"inputs": {}}')
+        (staged / 'weights.npz').write_bytes(b'PK')
+        (staged / 'unknown.json').write_text('{}')
         (staged / 'model-contribution.json').write_text('{"format": "tuldok_contribution_v1"}')
 
 
@@ -173,7 +177,7 @@ class RecipeConversion(unittest.TestCase):
         self.root = Path(tempfile.mkdtemp())
         self.addCleanup(lambda: __import__('shutil').rmtree(self.root))
         self.folder = self.root / 'recipes'
-        make_code(self.root / 'lab', ['parent--aaaa', 'child--bbbb', 'local--dddd'])
+        make_code(self.root / 'lab', ['parent--aaaa', 'child--bbbb', 'local--dddd', 'twin--eeee', 'data--ffff'])
         data = {'name': 'data', 'path': 'runs/p/inputs/data.npz', 'bytes': 1, 'kind': 'training data',
                 'training_set': 'internal-residual-view-01'}
         write_json(self.folder / 'parent--aaaa.json', recorded_recipe('parent--aaaa', 'Parent model', 'fit-a', [
@@ -185,7 +189,13 @@ class RecipeConversion(unittest.TestCase):
              {'name': 'mystery', 'path': 'runs/q/{w}.npz', 'bytes': 1, 'kind': 'earlier model weights'}],
             command='train --data <input: data> --init <input: start> --other <input: mystery> --output-dir <output dir>'))
         write_json(self.folder / 'local--dddd.json', recorded_recipe(
-            'local--dddd', 'Local model', 'fit-d', [data], sources=('train.py', 'local.py', 'model-contribution.json')))
+            'local--dddd', 'Local model', 'fit-d', [data],
+            command='train --data <input: data> --witness <source: source-witness.json> --output-dir <output dir>',
+            sources=('train.py', 'local.py', 'model-contribution.json', 'qualification.json', 'source-witness.json')))
+        write_json(self.folder / 'twin--eeee.json', recorded_recipe(
+            'twin--eeee', 'Twin model', 'fit-e', [data], sources=('train.py', 'local.py')))
+        write_json(self.folder / 'data--ffff.json', recorded_recipe(
+            'data--ffff', 'Data model', 'fit-f', [data], sources=('train.py', 'weights.npz')))
         write_json(self.folder / 'old--cccc.json', {
             'model': 'old', 'fit_id': 'fit-c', 'card': 'notes/fits/old--cccc.md', 'tuldok_run': None,
             'run_folder': 'runs/x', 'note': 'Trained before runs were recorded.', 'entrypoint': 'train.py',
@@ -193,6 +203,9 @@ class RecipeConversion(unittest.TestCase):
             'outputs': []})
         self.code_paths = converter.CodePaths(self.root / 'lab', exclude='projects/old')
         self.recipes = converter.Recipes(self.folder, self.code_paths)
+        self.code_paths.prepare(path for recipe in self.recipes.recorded.values() if recipe.get('command')
+                                for path in [recipe['entrypoint'], *recipe['sources']]
+                                if path != recipe['settings_file'])
         self.files = self.recipes.definitions()
 
     def test_recorded_command_becomes_placeholders(self):
@@ -204,7 +217,7 @@ class RecipeConversion(unittest.TestCase):
         self.assertEqual(run['settings'], {'seed': 1})
         self.assertEqual(run['resources'], {'gpu': True, 'wall_hours': 1.0, 'disk_gb': 1.0})
         self.assertEqual(run['outputs']['history_json'], {'path': 'history.json', 'role': 'file'})
-        self.assertEqual(self.recipes.unknown_tokens['<input evidence>'], 2)
+        self.assertEqual(self.recipes.unknown_tokens['<input evidence>'], 3)
 
     def test_labels_and_card(self):
         document = self.files['recipes/parent--aaaa.json']
@@ -221,14 +234,36 @@ class RecipeConversion(unittest.TestCase):
         # train.py becomes its tracked twin in the run's own study rather than experiments/other/.
         self.assertEqual(run['sources'], ['experiments/study/train.py'])
         self.assertEqual(self.code_paths.counts['generated'], 3)
-        self.assertEqual(self.code_paths.counts['carried as settings'], 3)
+        self.assertEqual(self.code_paths.counts['carried as settings'], 5)
 
-    def test_untracked_source_makes_it_no(self):
+    def test_untracked_code_is_copied_once(self):
+        home = 'earlier-run-code/study/local--dddd/local.py'
+        self.assertEqual(sorted(self.code_paths.copies), [home])
+        self.assertEqual(self.code_paths.copies[home], b'# never committed\n')
+        self.assertIn(home, self.files['recipes/local--dddd.json']['run']['sources'])
+        self.assertIn(home, self.files['recipes/twin--eeee.json']['run']['sources'])
+        self.assertEqual(self.files['recipes/twin--eeee.json']['earlier_work']['rebuild'], 'needs-work')
+
+    def test_record_files_are_left_out_and_named_when_read(self):
         document = self.files['recipes/local--dddd.json']
-        self.assertEqual(document['earlier_work']['rebuild'], 'no')
-        self.assertIn('runs/study/local--dddd/local.py', document['earlier_work']['reason'])
-        self.assertIn('runs/study/local--dddd/local.py', document['run']['sources'])
-        self.assertNotIn('runs/study/local--dddd/model-contribution.json', document['run']['sources'])
+        sources = document['run']['sources']
+        self.assertFalse([s for s in sources if s.endswith(('qualification.json', 'source-witness.json',
+                                                             'model-contribution.json'))])
+        self.assertEqual(document['earlier_work']['rebuild'], 'needs-work')
+        self.assertIn('<source: source-witness.json> (a record file', document['earlier_work']['reason'])
+        self.assertIn('<source: source-witness.json>', document['run']['command'])
+
+    def test_only_arrays_missing_is_no(self):
+        label = self.files['recipes/data--ffff.json']['earlier_work']
+        self.assertEqual(label['rebuild'], 'no')
+        self.assertIn('only missing pieces are archives or arrays', label['reason'])
+        self.assertIn('runs/study/data--ffff/weights.npz', label['reason'])
+
+    def test_unclassified_json_is_refused(self):
+        with self.assertRaises(ValueError):
+            converter.CodePaths.file_kind('runs/study/x/unknown.json')
+        self.assertEqual(converter.CodePaths.file_kind('runs/a/qualification.json'), 'record')
+        self.assertEqual(converter.CodePaths.file_kind('runs/a/fine-tuning.json'), 'settings')
 
     def test_earlier_weights(self):
         document = self.files['recipes/child--bbbb.json']
@@ -254,12 +289,17 @@ def make_source(root):
     write_json(notes / 'recipes' / 'training-sets.json', TRAINING_SETS)
     write_json(notes / 'recipes' / 'model--aaaa.json', recorded_recipe('model--aaaa', 'Model', 'fit-a', [
         {'name': 'data', 'path': 'runs/p/data.npz', 'bytes': 1, 'kind': 'training data',
-         'training_set': 'temporal-training-view-02'}]))
+         'training_set': 'temporal-training-view-02'}],
+        sources=('train.py', 'local.py', 'runtime-bootstrap/extension-binding.json')))
     write_json(notes / 'portfolio-index.json', {
         'aliases': [{'label': 'C02', 'fit_item_id': 'fit-a', 'declared_weights_sha256': 'w2',
                      'fit_link_disposition': 'linked_by_project_or_pair'}],
         'fits': [], 'source_candidates': [], 'limitations': []})
-    write_json(notes / '00-models.portfolio.json', {'models': [], 'groups': [], 'relationships': []})
+    write_json(notes / '00-models.portfolio.json', {
+        'models': [{'id': 'fit-a', 'group_id': 'pressure', 'label': 'Model', 'aliases': []}],
+        'groups': [{'id': 'pressure', 'label': 'Pressure fits', 'parent': None, 'description': 'Grouping.'}],
+        'relationships': [{'kind': 'comparison', 'from': 'fit-a', 'to': 'fit-z', 'evidence_model': 'fit-a',
+                           'explanation': 'A compared with Z.', 'excerpt': 'Better.'}]})
     write_json(notes / 'checkpoints' / 'part-01.json', {'rows': []})
     inventory = []
     for part, subjects in ((1, [{'id': 'C01', 'label': 'C01', 'dimensions': {'fit_item_id': 'fit-a'}}]),
@@ -333,6 +373,31 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(lines[0], 'subject,metric,group,count,unavailable,mean,median,p10,p90,min,max,commit,produced')
         self.assertIn('c01,error_l2,,2,1,2.0,2.0,1.2,2.8,1.0,3.0,,2026-10-24', lines)
         self.assertIn('c01,error_l2,blocks=false,1,1,1.0,1.0,1.0,1.0,1.0,1.0,,2026-10-24', lines)
+
+    def test_earlier_run_code(self):
+        self.run_script()
+        code = self.root / 'earlier-run-code'
+        copy = code / 'study' / 'model--aaaa' / 'local.py'
+        self.assertEqual(copy.read_text(), '# never committed\n')
+        self.assertIn('scripts/build_tuldok_project.py', (code / 'README.md').read_text())
+        recipe = json.loads((self.output / 'recipes' / 'model--aaaa.json').read_text())
+        self.assertIn('earlier-run-code/study/model--aaaa/local.py', recipe['run']['sources'])
+        # The script owns the folder: --check sees an edit, and a stale file is removed.
+        copy.write_text('edited\n')
+        self.assertEqual(self.run_script('--check')[0], 1)
+        (code / 'stale.py').write_text('x\n')
+        self.run_script()
+        self.assertFalse((code / 'stale.py').exists())
+        self.assertEqual(copy.read_text(), '# never committed\n')
+        self.assertEqual(self.run_script('--check')[0], 0)
+
+    def test_groups_and_comparisons(self):
+        self.run_script()
+        document = json.loads((self.output / 'notes' / 'model-groups-and-comparisons.json').read_text())
+        self.assertEqual(document['groups'], [{'id': 'pressure', 'title': 'Pressure fits', 'parent': None,
+                                               'description': 'Grouping.', 'models': ['recipes/model--aaaa']}])
+        self.assertEqual(document['comparisons'], [{'model': 'recipes/model--aaaa', 'compared_with': 'fit-z',
+                                                    'explanation': 'A compared with Z.', 'excerpt': 'Better.'}])
 
     def test_stale_owned_files_go_and_hand_written_stay(self):
         self.run_script()

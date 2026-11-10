@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "Pressure methods · teacher-quarter · C53 CUDA",
- "description": "Earlier model, trained 2026-10-18 by Tuldok run f8e986d2814d4496801599897ac92de9 (Pressure methods · teacher-quarter · C53 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-18 by Tuldok run f8e986d2814d4496801599897ac92de9 (Pressure methods · teacher-quarter · C53 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/pressure-methods-teacher-quarter-c53-cuda--01fc69dbfaf391dd.md",
  "labels": {
   "fit_id": "fit-01fc69dbfaf391dd",
@@ -21,8 +21,8 @@
   "input:splits": "runs/pressure-methods-v1/teacher-quarter-training-view-01/manifest.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 9 of its source files have no tracked copy in Git (for example runs/pressure-methods-v1/teacher-quarter-project-01/fine-tuning.json)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -44,7 +44,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
    "--source-witness",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -395,9 +395,9 @@
    "experiments/pressure-methods-v1/domain_data.py",
    "experiments/water-conditioning-v1/training/direction_feedback.py",
    "experiments/pressure-throughput-feedback-v1/evidence.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/fine-tuning.json",
+   "earlier-run-code/pressure-methods-v1/teacher-quarter-project-01/fine-tuning.json",
    "experiments/pressure-four-pass-distillation-v1/fine_tuning.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/fixed-normalization.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/fixed-normalization.json",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "experiments/water-conditioning-v1/training/gradient_clipping.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
@@ -409,20 +409,16 @@
    "experiments/global-pressure-v1/training/model.py",
    "experiments/global-pressure-v1/training/train.py",
    "experiments/water-conditioning-v1/training/physical_residual.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/policy.py",
+   "earlier-run-code/pressure-methods-v1/coarse-head-rate-project-01/policy.py",
    "experiments/cuda-pressure-v1/model.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/portable_policy.py",
+   "earlier-run-code/pressure-methods-v1/coarse-head-rate-project-01/portable_policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/train.py",
-   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/tuldok_extension_sdk/__init__.py",
-   "runs/pressure-methods-v1/teacher-quarter-project-01/tuldok_extension_sdk/evidence.py"
+   "earlier-run-code/pressure-methods-v1/domain-expanded-project-01/train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
   ]
  }
 }

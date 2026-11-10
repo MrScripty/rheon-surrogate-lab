@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "CUDA water training",
- "description": "Earlier model, trained 2026-10-15 by Tuldok run fa641802967e4d339ad2d0d82dd54b7c (CUDA water training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-15 by Tuldok run fa641802967e4d339ad2d0d82dd54b7c (CUDA water training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 2 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/cuda-water-training--84674887178288e8.md",
  "labels": {
   "fit_id": "fit-84674887178288e8",
@@ -13,8 +13,8 @@
   "input:splits": "runs/sealed-water-v1-3/project/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 2 of its source files have no tracked copy in Git (for example runs/sealed-water-v1-3/project/qualification.json)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: <source: runtime-manifest.json> (written by the old Tuldok for the run); <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -30,7 +30,7 @@
    "--runtime-manifest",
    "<source: runtime-manifest.json>",
    "--source-witness",
-   "runs/sealed-water-v1-3/project/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -136,9 +136,7 @@
    "experiments/sealed-water-v1/policy.py",
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
-   "runs/sealed-water-v1-3/project/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
-   "runs/sealed-water-v1-3/project/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/sealed-water-v1/test_inference.py",
    "experiments/sealed-water-v1/train.py"

@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "water-conditioning-gpu-batch4 · CUDA training",
- "description": "Earlier model, trained 2026-10-15 by Tuldok run afc12896705a421f84024c3fd6b45830 (water-conditioning-gpu-batch4 · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-15 by Tuldok run afc12896705a421f84024c3fd6b45830 (water-conditioning-gpu-batch4 · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 2 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/water-conditioning-gpu-batch4-cuda-training--becf4ad5b5526ae4.md",
  "labels": {
   "fit_id": "fit-becf4ad5b5526ae4",
@@ -14,13 +14,13 @@
   "input:splits": "runs/water-conditioning-v1/gpu-batch4/project/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: its training script runs/water-conditioning-v1/gpu-batch4/project/train.py has no tracked copy in Git; 5 of its source files have no tracked copy in Git (for example runs/water-conditioning-v1/gpu-batch4/project/model.py)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: <source: runtime-manifest.json> (written by the old Tuldok for the run); <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
  },
  "run": {
   "command": [
    "python",
-   "runs/water-conditioning-v1/gpu-batch4/project/train.py",
+   "earlier-run-code/water-conditioning-v1/gpu-baseline/project/train.py",
    "train",
    "--dataset",
    "{inputs.dataset}",
@@ -33,7 +33,7 @@
    "--runtime-manifest",
    "<source: runtime-manifest.json>",
    "--source-witness",
-   "runs/water-conditioning-v1/gpu-batch4/project/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -129,19 +129,17 @@
    "experiments/water-conditioning-v1/training/data.py",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
-   "runs/water-conditioning-v1/gpu-batch4/project/model.py",
+   "earlier-run-code/water-conditioning-v1/gpu-baseline/project/model.py",
    "experiments/global-pressure-v1/training/data.py",
    "experiments/global-pressure-v1/training/model.py",
    "experiments/global-pressure-v1/training/train.py",
-   "runs/water-conditioning-v1/gpu-batch4/project/policy.py",
+   "earlier-run-code/water-conditioning-v1/gpu-baseline/project/policy.py",
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
-   "runs/water-conditioning-v1/gpu-batch4/project/qualification.json",
    "experiments/water-conditioning-v1/training/scenes.py",
-   "runs/water-conditioning-v1/gpu-batch4/project/source-witness.json",
    "experiments/water-conditioning-v1/training/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/water-conditioning-v1/gpu-batch4/project/train.py"
+   "earlier-run-code/water-conditioning-v1/gpu-baseline/project/train.py"
   ]
  }
 }

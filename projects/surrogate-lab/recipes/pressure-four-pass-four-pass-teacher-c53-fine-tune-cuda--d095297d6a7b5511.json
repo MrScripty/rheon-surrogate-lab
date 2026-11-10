@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "Pressure four-pass · four-pass-teacher · C53 fine-tune CUDA",
- "description": "Earlier model, trained 2026-10-18 by Tuldok run 1f751fab85a2472f8879493ff017022f (Pressure four-pass · four-pass-teacher · C53 fine-tune CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-18 by Tuldok run 1f751fab85a2472f8879493ff017022f (Pressure four-pass · four-pass-teacher · C53 fine-tune CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/pressure-four-pass-four-pass-teacher-c53-fine-tune-cuda--d095297d6a7b5511.md",
  "labels": {
   "fit_id": "fit-d095297d6a7b5511",
@@ -21,8 +21,8 @@
   "input:splits": "runs/dependency-migration-v1/training-project-6/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 7 of its source files have no tracked copy in Git (for example runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/fine-tuning.json)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -44,7 +44,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
    "--source-witness",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -395,8 +395,8 @@
    "experiments/water-conditioning-v1/training/data.py",
    "experiments/water-conditioning-v1/training/direction_feedback.py",
    "experiments/pressure-throughput-feedback-v1/evidence.py",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/fine-tuning.json",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/fine_tuning.py",
+   "earlier-run-code/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/fine-tuning.json",
+   "earlier-run-code/pressure-four-pass-distillation-v1/four-pass-physics-project-01/fine_tuning.py",
    "experiments/global-pressure-v1/groupnorm-v1/model.py",
    "experiments/water-conditioning-v1/training/gradient_clipping.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
@@ -409,16 +409,12 @@
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/train.py",
-   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/tuldok_extension_sdk/__init__.py",
-   "runs/pressure-four-pass-distillation-v1/four-pass-teacher-project-01/tuldok_extension_sdk/evidence.py"
+   "earlier-run-code/pressure-four-pass-distillation-v1/four-pass-physics-project-01/train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
   ]
  }
 }

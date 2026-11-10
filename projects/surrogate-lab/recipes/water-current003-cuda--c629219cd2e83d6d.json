@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "water-current003 CUDA",
- "description": "Earlier model, trained 2026-10-17 by Tuldok run 598ef9774bd547fba9eddb72f0b6114d (water-current003 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-17 by Tuldok run 598ef9774bd547fba9eddb72f0b6114d (water-current003 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/water-current003-cuda--c629219cd2e83d6d.md",
  "labels": {
   "fit_id": "fit-c629219cd2e83d6d",
@@ -20,8 +20,8 @@
   "input:splits": "runs/dependency-migration-v1/training-project-6/inputs/splits.json"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 5 of its source files have no tracked copy in Git (for example runs/pressure-current-feedback-weight-v1/current003-project-01/qualification.json)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -43,7 +43,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
    "--source-witness",
-   "runs/pressure-current-feedback-weight-v1/current003-project-01/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -401,16 +401,12 @@
    "experiments/cuda-pressure-v1/model.py",
    "experiments/cuda-pressure-v1/policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/pressure-current-feedback-weight-v1/current003-project-01/qualification.json",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/pressure-current-feedback-weight-v1/current003-project-01/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/pressure-current-feedback-weight-v1/current003-project-01/train.py",
-   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
-   "runs/pressure-current-feedback-weight-v1/current003-project-01/tuldok_extension_sdk/__init__.py",
-   "runs/pressure-current-feedback-weight-v1/current003-project-01/tuldok_extension_sdk/evidence.py"
+   "earlier-run-code/pressure-coarse-full-fit-v1/project-01/baseline_train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
   ]
  }
 }

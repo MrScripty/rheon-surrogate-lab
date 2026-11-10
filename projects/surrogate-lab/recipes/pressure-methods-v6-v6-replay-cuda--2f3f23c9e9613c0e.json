@@ -2,7 +2,7 @@
  "format": "tuldok_definition_v1",
  "kind": "recipe",
  "title": "Pressure methods v6 · v6-replay CUDA",
- "description": "Earlier model, trained 2026-10-19 by Tuldok run 06e7fa883e554c11b133a9df5953918e (Pressure methods v6 · v6-replay CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 10 source files the old Tuldok generated for the run were left out.",
+ "description": "Earlier model, trained 2026-10-19 by Tuldok run 06e7fa883e554c11b133a9df5953918e (Pressure methods v6 · v6-replay CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
  "card": "notes/fits/pressure-methods-v6-v6-replay-cuda--2f3f23c9e9613c0e.md",
  "labels": {
   "fit_id": "fit-2f3f23c9e9613c0e",
@@ -24,8 +24,8 @@
   "input:view_08": "runs/pressure-methods-v3/derived-training-view-01/dataset-08.npz"
  },
  "earlier_work": {
-  "rebuild": "no",
-  "reason": "Cannot be rebuilt: 14 of its source files have no tracked copy in Git (for example runs/pressure-methods-v6/v6-replay-project-01/fine-tuning.json)."
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
  },
  "run": {
   "command": [
@@ -43,7 +43,7 @@
    "--runtime-manifest",
    "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
    "--source-witness",
-   "runs/pressure-methods-v6/v6-replay-project-01/source-witness.json",
+   "<source: source-witness.json>",
    "--input-evidence",
    "<input evidence>",
    "--output-dir",
@@ -402,42 +402,38 @@
    "experiments/pressure-methods-v5/conditioned_data.py",
    "experiments/water-conditioning-v1/training/direction_feedback.py",
    "experiments/pressure-throughput-feedback-v1/evidence.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/fine-tuning.json",
+   "earlier-run-code/pressure-methods-v6/v6-replay-project-01/fine-tuning.json",
    "experiments/pressure-methods-v6/solver_objective.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/fixed-normalization.json",
-   "runs/pressure-methods-v6/v6-replay-project-01/frozen_gn.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/fixed-normalization.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/frozen_gn.py",
    "experiments/water-conditioning-v1/training/gradient_clipping.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/head_optimizer.py",
+   "earlier-run-code/pressure-methods-v5/v5-multilevel-project-02/head_optimizer.py",
    "docs/plans/global-pressure-correction-v1/reservation.json",
    "experiments/water-conditioning-v1/training/data.py",
    "experiments/water-conditioning-v1/training/physical_residual.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/hybrid-method.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/hybrid-method.json",
    "experiments/pressure-methods-v1/learned_model.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/methods_view.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/methods_view.py",
    "experiments/pressure-methods-v3/order.py",
    "experiments/pressure-methods-v6/local_model.py",
    "experiments/pressure-methods-v5/training_reconstruct.py",
    "experiments/global-pressure-v1/training/data.py",
    "experiments/global-pressure-v1/training/model.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/original_train.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/original_train.py",
    "experiments/pressure-methods-v2/shape_physical.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/policy.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/policy.py",
    "experiments/cuda-pressure-v1/model.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/portable_policy.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/portable_policy.py",
    "experiments/water-conditioning-v1/training/prepared.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/qualification.json",
    "experiments/pressure-methods-v1/numerics.py",
    "experiments/pressure-methods-v1/domain_model.py",
    "experiments/sealed-water-v1/scenes.py",
    "experiments/dependency-migration-v1/dependency_training_entry.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/source-witness.json",
    "experiments/cuda-pressure-v1/support.py",
    "experiments/water-conditioning-v1/training/test_inference.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/train.py",
+   "earlier-run-code/pressure-methods-v3/v3-native-project-07/train.py",
    "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
-   "experiments/pressure-methods-v4/multilevel.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/tuldok_extension_sdk/__init__.py",
-   "runs/pressure-methods-v6/v6-replay-project-01/tuldok_extension_sdk/evidence.py"
+   "experiments/pressure-methods-v4/multilevel.py"
   ]
  }
 }

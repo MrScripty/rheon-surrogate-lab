@@ -1,0 +1,171 @@
+{
+ "model": "Full AI temporal b4-reuse train",
+ "fit_id": "fit-926cf04f81244f0e",
+ "card": "notes/fits/full-ai-temporal-b4-reuse-train--926cf04f81244f0e.md",
+ "tuldok_run": "f35927500e42487c84788e701fb34283",
+ "run_name": "Full AI temporal b4-reuse train",
+ "trained_at": "2026-10-19T22:40:41.994350+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 33554432,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 1800
+ },
+ "entrypoint": "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_train_sharing.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00> <input: part_01> <input: part_02> <input: part_03> <input: part_04> <input: part_05> <input: part_06> <input: part_07> <input: part_08> <input: part_09> <input: part_10>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-next-priorities-v1/b4-reuse-project-01/config.json",
+ "settings": {
+  "schema": "rheon-temporal-fit-sharing-v1",
+  "architecture": "reuse",
+  "feedback_protocol": 2,
+  "identifier": "b4-reuse",
+  "horizons": 4,
+  "width": 12,
+  "updates": 10000,
+  "single_block_updates": 2000,
+  "learning_rate": 0.001,
+  "schedule": [
+   {
+    "update": 6001,
+    "learning_rate": 0.0003
+   },
+   {
+    "update": 9001,
+    "learning_rate": 0.0001
+   }
+  ],
+  "seed": 2026101921,
+  "sampling_seed": 2026101922,
+  "wall_seconds": 1800,
+  "physical_context": {
+   "dt_s": 0.016666666666666666,
+   "rho_kg_m3": 1000.0,
+   "mu_pa_s": 0.001,
+   "boundaries": "closed regular grid"
+  },
+  "initialization": "Seeded width12 shared global encoder; zero fresh-pressure output heads; previous pressure excluded",
+  "inference": "One shared encoder; predicted-endpoint intermediate decoder or retained-feature latent updates; no numerical solve",
+  "sample_step_range": [
+   0,
+   120
+  ],
+  "loss": "Equal horizon weights; pressure/velocity/tracer, equation, divergence, mass, energy and bounds",
+  "track_b_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574",
+  "sharing_registration_sha256": "788464651edff12d25ec3c847b27a4091b84c49382af66d139d563a7e0052983",
+  "full_fit_registration_sha256": "08ed048038db26f1838a6e74f82ae521c848f06b954a42aaf3000a17794d0510"
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/manifest.json",
+   "bytes": 37465
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+   "bytes": 981
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-00.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_01",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-01.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_02",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-02.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_03",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-03.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_04",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-04.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_05",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-05.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_06",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-06.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_07",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-07.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_08",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-08.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_09",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-09.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_10",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-10.bin",
+   "bytes": 1247280
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/bundle_model_sharing.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/config.json",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/custody_validator.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/learned_global.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_codec.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_data.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_features.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_features_v2.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_feedback.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_objective.py",
+  "runs/full-ai-next-priorities-v1/b4-reuse-project-01/temporal_train_sharing.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

@@ -1,0 +1,290 @@
+{
+ "model": "water-early-pressure-smoke · CUDA training",
+ "fit_id": "fit-312d4f0dbc44117c",
+ "card": "notes/fits/water-early-pressure-smoke-cuda-training--312d4f0dbc44117c.md",
+ "tuldok_run": "10bfdb9b698e4a36bbe09217808ddb50",
+ "run_name": "water-early-pressure-smoke · CUDA training",
+ "trained_at": "2026-10-16T18:15:04.120178+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "max_output_bytes": 33554432,
+  "wall_seconds": 600
+ },
+ "entrypoint": "runs/water-early-pressure-v1/smoke/project/train.py",
+ "command": "train --dataset <input: dataset> --dataset-extra <input: dataset_extra> --splits <input: splits> --direction-dataset <input: direction_dataset> --direction-manifest <input: direction_manifest> --config <source: config.json> --runtime-manifest <source: runtime-manifest.json> --source-witness <source: source-witness.json> --input-evidence <input evidence> --output-dir <output dir>",
+ "parameters": {},
+ "settings_file": "runs/water-early-pressure-v1/smoke/project/config.json",
+ "settings": {
+  "analytical_feedback": {
+   "amplitude_reference": "train-correction-cell-rms",
+   "cache_max_bytes": 805306368,
+   "grid_capacity": 16,
+   "grids": [
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      16,
+      16,
+      16
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      24,
+      24,
+      24
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      32,
+      32,
+      32
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      40,
+      40,
+      40
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      24,
+      16,
+      12
+     ]
+    },
+    {
+     "cells_per_metre": 8,
+     "counts_xyz": [
+      17,
+      13,
+      9
+     ]
+    },
+    {
+     "cells_per_metre": 8,
+     "counts_xyz": [
+      33,
+      17,
+      9
+     ]
+    },
+    {
+     "cells_per_metre": 8,
+     "counts_xyz": [
+      9,
+      25,
+      13
+     ]
+    }
+   ],
+   "patterns": 32,
+   "sampling": "uniform-balanced-grid",
+   "seed": 2026101507,
+   "weight": 0.1
+  },
+  "conditioning": "physical-residual",
+  "correction": {
+   "activation": "linear",
+   "steps": 2
+  },
+  "direction_feedback": {
+   "manifest_sha256": "15995c95b2f9aec9695bd53f76700f73f8c71aa1449d816f61e7618540b3ee06",
+   "seed": 2026102701,
+   "stage": "late",
+   "weight": 0.1
+  },
+  "execution": {
+   "batch_mode": "serial",
+   "finite_checks": "combined",
+   "prepared_fields": false,
+   "profile_updates": 0,
+   "resident_inputs": true
+  },
+  "first_pressure_weight": 1.0,
+  "id": "water-early-pressure-smoke",
+  "normalization": "none",
+  "objective": "canonical-intermediate-contraction",
+  "output_scale": "previous-pressure-rms",
+  "resources": {
+   "max_output_bytes": 33554432,
+   "wall_seconds": 600
+  },
+  "schema": "rheon-water-residual-experiment-v9",
+  "supplemental_feedback": {
+   "amplitude_reference": "train-correction-cell-rms",
+   "cache_max_bytes": 805306368,
+   "grid_capacity": 16,
+   "grids": [
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      16,
+      23,
+      25
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      23,
+      25,
+      16
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      25,
+      16,
+      23
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      10,
+      7,
+      25
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      7,
+      25,
+      10
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      25,
+      10,
+      7
+     ]
+    }
+   ],
+   "patterns": 32,
+   "sampling": "uniform-balanced-grid",
+   "seed": 2026101607,
+   "source": "grids",
+   "weight": 0.1
+  },
+  "training": {
+   "batch_size": 1,
+   "checkpoints": [
+    0,
+    1
+   ],
+   "learning_rate": 0.001,
+   "model": "cubic-groupnorm-v3",
+   "sampling_seed": 2026102501,
+   "schedule": [],
+   "seed": 20261015,
+   "updates": 1
+  }
+ },
+ "inputs": [
+  {
+   "name": "dataset",
+   "path": "runs/water-early-pressure-v1/smoke/project/inputs/dataset.npz",
+   "bytes": 2820310
+  },
+  {
+   "name": "dataset_extra",
+   "path": "runs/water-early-pressure-v1/smoke/project/inputs/dataset_extra.npz",
+   "bytes": 2823990
+  },
+  {
+   "name": "direction_dataset",
+   "path": "runs/water-early-pressure-v1/smoke/project/inputs/direction_dataset.npz",
+   "bytes": 24476086
+  },
+  {
+   "name": "direction_manifest",
+   "path": "runs/water-early-pressure-v1/smoke/project/inputs/direction_manifest.json",
+   "bytes": 513808
+  },
+  {
+   "name": "splits",
+   "path": "runs/water-early-pressure-v1/smoke/project/inputs/splits.json",
+   "bytes": 411192
+  }
+ ],
+ "sources": [
+  "runs/water-early-pressure-v1/smoke/project/analytical.py",
+  "runs/water-early-pressure-v1/smoke/project/config.json",
+  "runs/water-early-pressure-v1/smoke/project/custody-validator.py",
+  "runs/water-early-pressure-v1/smoke/project/data.py",
+  "runs/water-early-pressure-v1/smoke/project/direction_feedback.py",
+  "runs/water-early-pressure-v1/smoke/project/frozen_gn.py",
+  "runs/water-early-pressure-v1/smoke/project/historical-reservation.json",
+  "runs/water-early-pressure-v1/smoke/project/model.py",
+  "runs/water-early-pressure-v1/smoke/project/original_data.py",
+  "runs/water-early-pressure-v1/smoke/project/original_model.py",
+  "runs/water-early-pressure-v1/smoke/project/original_train.py",
+  "runs/water-early-pressure-v1/smoke/project/physical_residual.py",
+  "runs/water-early-pressure-v1/smoke/project/policy.py",
+  "runs/water-early-pressure-v1/smoke/project/portable_model.py",
+  "runs/water-early-pressure-v1/smoke/project/portable_policy.py",
+  "runs/water-early-pressure-v1/smoke/project/prepared.py",
+  "runs/water-early-pressure-v1/smoke/project/qualification.json",
+  "runs/water-early-pressure-v1/smoke/project/runtime-manifest.json",
+  "runs/water-early-pressure-v1/smoke/project/scenes.py",
+  "runs/water-early-pressure-v1/smoke/project/source-witness.json",
+  "runs/water-early-pressure-v1/smoke/project/support.py",
+  "runs/water-early-pressure-v1/smoke/project/test_inference.py",
+  "runs/water-early-pressure-v1/smoke/project/train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "predictions.npz",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "splits.json",
+   "role": "training_splits"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "profile.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  },
+  {
+   "path": "summary.json",
+   "role": "result_summary"
+  },
+  {
+   "path": "checkpoint-000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-001.npz",
+   "role": "checkpoint"
+  }
+ ]
+}

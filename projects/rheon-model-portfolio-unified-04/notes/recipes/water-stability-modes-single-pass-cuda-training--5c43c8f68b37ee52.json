@@ -1,0 +1,176 @@
+{
+ "model": "water-stability-modes-single-pass · CUDA training",
+ "fit_id": "fit-5c43c8f68b37ee52",
+ "card": "notes/fits/water-stability-modes-single-pass-cuda-training--5c43c8f68b37ee52.md",
+ "tuldok_run": "406b606cd7a8431db744e86b2631f28e",
+ "run_name": "water-stability-modes-single-pass · CUDA training",
+ "trained_at": "2026-10-15T22:10:51.751552+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "max_output_bytes": 33554432,
+  "wall_seconds": 600
+ },
+ "entrypoint": "runs/water-inference-budget-v1/stability-modes-single-pass/project/train.py",
+ "command": "train --dataset <input: dataset> --dataset-extra <input: dataset_extra> --splits <input: splits> --config <source: config.json> --runtime-manifest <source: runtime-manifest.json> --source-witness <source: source-witness.json> --input-evidence <input evidence> --output-dir <output dir>",
+ "parameters": {},
+ "settings_file": "runs/water-inference-budget-v1/stability-modes-single-pass/project/config.json",
+ "settings": {
+  "analytical_feedback": {
+   "patterns": 32,
+   "seed": 2026101507,
+   "weight": 0.1
+  },
+  "conditioning": "physical-residual",
+  "correction": {
+   "activation": "linear",
+   "steps": 1
+  },
+  "execution": {
+   "batch_mode": "serial",
+   "finite_checks": "combined",
+   "prepared_fields": false,
+   "profile_updates": 0,
+   "resident_inputs": true
+  },
+  "id": "water-stability-modes-single-pass",
+  "normalization": "none",
+  "objective": "canonical",
+  "output_scale": "previous-pressure-rms",
+  "resources": {
+   "max_output_bytes": 33554432,
+   "wall_seconds": 600
+  },
+  "schema": "rheon-water-residual-experiment-v3",
+  "training": {
+   "batch_size": 1,
+   "checkpoints": [
+    0,
+    100,
+    500,
+    1000,
+    2000,
+    4000,
+    5000
+   ],
+   "learning_rate": 0.001,
+   "model": "cubic-groupnorm-v3",
+   "sampling_seed": 2026102501,
+   "schedule": [
+    {
+     "learning_rate": 0.0001,
+     "update": 3000
+    },
+    {
+     "learning_rate": 1e-05,
+     "update": 4500
+    }
+   ],
+   "seed": 20261015,
+   "updates": 5000
+  }
+ },
+ "inputs": [
+  {
+   "name": "dataset",
+   "path": "runs/water-inference-budget-v1/stability-modes-single-pass/project/inputs/dataset.npz",
+   "bytes": 2275660
+  },
+  {
+   "name": "dataset_extra",
+   "path": "runs/water-inference-budget-v1/stability-modes-single-pass/project/inputs/dataset_extra.npz",
+   "bytes": 2278650
+  },
+  {
+   "name": "splits",
+   "path": "runs/water-inference-budget-v1/stability-modes-single-pass/project/inputs/splits.json",
+   "bytes": 374928
+  }
+ ],
+ "sources": [
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/analytical.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/config.json",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/custody-validator.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/data.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/frozen_gn.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/historical-reservation.json",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/model.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/original_data.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/original_model.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/original_train.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/physical_residual.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/policy.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/portable_model.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/portable_policy.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/prepared.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/qualification.json",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/runtime-manifest.json",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/scenes.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/source-witness.json",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/support.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/test_inference.py",
+  "runs/water-inference-budget-v1/stability-modes-single-pass/project/train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "predictions.npz",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "splits.json",
+   "role": "training_splits"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "profile.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  },
+  {
+   "path": "summary.json",
+   "role": "result_summary"
+  },
+  {
+   "path": "checkpoint-000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-100.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-500.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-1000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-2000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-4000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-5000.npz",
+   "role": "checkpoint"
+  }
+ ]
+}

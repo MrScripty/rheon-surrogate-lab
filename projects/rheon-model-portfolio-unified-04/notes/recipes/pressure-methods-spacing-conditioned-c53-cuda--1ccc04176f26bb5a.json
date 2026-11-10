@@ -1,0 +1,431 @@
+{
+ "model": "Pressure methods · spacing-conditioned · C53 CUDA",
+ "fit_id": "fit-1ccc04176f26bb5a",
+ "card": "notes/fits/pressure-methods-spacing-conditioned-c53-cuda--1ccc04176f26bb5a.md",
+ "tuldok_run": "e076f04e5c3c4326bff6f4e7ea1276ea",
+ "run_name": "Pressure methods · spacing-conditioned · C53 CUDA",
+ "trained_at": "2026-10-18T20:50:36.146554+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 2,
+  "max_output_bytes": 33554432,
+  "memory_bytes": 8589934592,
+  "wall_seconds": 1800
+ },
+ "entrypoint": "runs/pressure-methods-v1/spacing-conditioned-project-01/evidence.py",
+ "command": "train --dataset <input: dataset> --dataset-extra <input: dataset_extra> --direction-dataset <input: direction_dataset> --direction-manifest <input: direction_manifest> --splits <input: splits> --config <source: config.json> --runtime-manifest <input: runtime_manifest> --source-witness <source: source-witness.json> --input-evidence <input evidence> --output-dir <output dir> --current-dataset <input: current_dataset> --current-manifest <input: current_manifest> --pressure-probe <input: pressure_probe> --model-evidence-context <model evidence context> --initial-weights <input: initial_weights>",
+ "parameters": {},
+ "settings_file": "runs/pressure-methods-v1/spacing-conditioned-project-01/config.json",
+ "settings": {
+  "analytical_feedback": {
+   "amplitude_reference": "train-correction-cell-rms",
+   "cache_max_bytes": 805306368,
+   "grid_capacity": 16,
+   "grids": [
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      16,
+      16,
+      16
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      24,
+      24,
+      24
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      32,
+      32,
+      32
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      40,
+      40,
+      40
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      24,
+      16,
+      12
+     ]
+    },
+    {
+     "cells_per_metre": 8,
+     "counts_xyz": [
+      17,
+      13,
+      9
+     ]
+    },
+    {
+     "cells_per_metre": 8,
+     "counts_xyz": [
+      33,
+      17,
+      9
+     ]
+    },
+    {
+     "cells_per_metre": 8,
+     "counts_xyz": [
+      9,
+      25,
+      13
+     ]
+    }
+   ],
+   "patterns": 32,
+   "sampling": "uniform-balanced-grid",
+   "seed": 2026101507,
+   "weight": 0.1
+  },
+  "band_feedback": {
+   "max_mode": 3,
+   "signal_floor_fraction": 0.1,
+   "stages": "first-and-final",
+   "weight": 0.03
+  },
+  "conditioning": "physical-residual",
+  "correction": {
+   "activation": "linear",
+   "steps": 2
+  },
+  "current_feedback": {
+   "manifest_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+   "seed": 2026102801,
+   "stage": "late",
+   "weight": 0.1
+  },
+  "direction_feedback": {
+   "manifest_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+   "seed": 2026102701,
+   "stage": "late",
+   "weight": 0.1
+  },
+  "execution": {
+   "batch_mode": "serial",
+   "finite_checks": "combined",
+   "prepared_fields": false,
+   "profile_updates": 0,
+   "resident_inputs": true
+  },
+  "first_pressure_weight": 0.0,
+  "id": "fourpass-spacing-conditioned",
+  "normalization": "none",
+  "objective": "canonical-intermediate-contraction",
+  "output_scale": "previous-pressure-rms",
+  "resources": {
+   "max_output_bytes": 33554432,
+   "wall_seconds": 1800
+  },
+  "schema": "rheon-water-residual-experiment-v11",
+  "supplemental_feedback": {
+   "amplitude_reference": "train-correction-cell-rms",
+   "cache_max_bytes": 805306368,
+   "grid_capacity": 16,
+   "grids": [
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      16,
+      23,
+      25
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      23,
+      25,
+      16
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      25,
+      16,
+      23
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      10,
+      7,
+      25
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      7,
+      25,
+      10
+     ]
+    },
+    {
+     "cells_per_metre": 16,
+     "counts_xyz": [
+      25,
+      10,
+      7
+     ]
+    }
+   ],
+   "patterns": 32,
+   "sampling": "uniform-balanced-grid",
+   "seed": 2026101607,
+   "source": "grids",
+   "weight": 0.1
+  },
+  "training": {
+   "batch_size": 1,
+   "checkpoints": [
+    0,
+    1600
+   ],
+   "learning_rate": 1e-05,
+   "model": "cubic-groupnorm-v3",
+   "sampling_seed": 2026101804,
+   "schedule": [
+    {
+     "update": 1201,
+     "learning_rate": 1e-06
+    },
+    {
+     "update": 1501,
+     "learning_rate": 1e-07
+    }
+   ],
+   "seed": 2026101803,
+   "updates": 1600
+  }
+ },
+ "inputs": [
+  {
+   "name": "current_dataset",
+   "path": "runs/pressure-current-policy-v1/bank-02/late.npz",
+   "bytes": 21428086
+  },
+  {
+   "name": "current_manifest",
+   "path": "runs/pressure-current-policy-v1/bank-02/manifest.json",
+   "bytes": 168912
+  },
+  {
+   "name": "dataset",
+   "path": "runs/pressure-methods-v1/spacing-training-view-01/dataset-00.npz",
+   "bytes": 2442774
+  },
+  {
+   "name": "dataset_extra",
+   "path": "runs/pressure-methods-v1/spacing-training-view-01/dataset-01.npz",
+   "bytes": 2445718
+  },
+  {
+   "name": "direction_dataset",
+   "path": "runs/dependency-migration-v1/training-project-6/inputs/direction_dataset.npz",
+   "bytes": 24476086
+  },
+  {
+   "name": "direction_manifest",
+   "path": "runs/dependency-migration-v1/training-project-6/inputs/direction_manifest.json",
+   "bytes": 298490
+  },
+  {
+   "name": "initial_weights",
+   "path": "runs/pressure-methods-v1/spacing-two-channel-initialization-01/weights.npz",
+   "bytes": 1486316
+  },
+  {
+   "name": "pressure_probe",
+   "path": "runs/dependency-migration-v1/receipts/typed-pressure-preparation-01/pressure-probe.npz",
+   "bytes": 99058
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  },
+  {
+   "name": "splits",
+   "path": "runs/pressure-methods-v1/spacing-training-view-01/manifest.json",
+   "bytes": 161625
+  }
+ ],
+ "sources": [
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/analytical.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/band_feedback.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/baseline_model.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/config.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/custody-validator.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/data.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/direction_feedback.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/evaluator-contribution.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/evidence.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/fine-tuning.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/fine_tuning.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/fixed-normalization.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/frozen_gn.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/gradient_clipping.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/historical-reservation.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/historical_data.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/historical_physical.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/methods_view.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/mixed_order.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/model-contribution.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/model.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/original_data.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/original_model.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/original_train.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/physical_residual.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/policy.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/portable_model.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/portable_policy.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/prepared.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/project.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/provider.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/qualification.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/reader-contribution.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/retained_domain_model.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/scenes.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/smoke_train.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/source-witness.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/spacing-method.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/support.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/task-contribution.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/test_inference.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/train.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/trainer-contribution.json",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/training_diagnostic.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/tuldok_extension_sdk/__init__.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/tuldok_extension_sdk/evidence.py",
+  "runs/pressure-methods-v1/spacing-conditioned-project-01/view-contribution.json",
+  "runtime-bootstrap/extension-binding.json"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "predictions.npz",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "splits.json",
+   "role": "training_splits"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "training-profile.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  },
+  {
+   "path": "summary.json",
+   "role": "result_summary"
+  },
+  {
+   "path": "checkpoint-000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-1600.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "execution-context.json",
+   "role": "model_context"
+  },
+  {
+   "path": "model-evidence.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "model-definition.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "profile.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "probe.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "metric-definitions.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "checkpoints.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "observations.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "field-index.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "fitted-transform.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "output-policy.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "checkpoint-1600.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "pressure-diagnostic.json",
+   "role": "model_evidence"
+  },
+  {
+   "path": "probe-residual.npy",
+   "role": "model_evidence"
+  },
+  {
+   "path": "probe-base.npy",
+   "role": "model_evidence"
+  },
+  {
+   "path": "pressure-prediction.npy",
+   "role": "model_evidence"
+  },
+  {
+   "path": "pressure-reference.npy",
+   "role": "model_evidence"
+  }
+ ]
+}

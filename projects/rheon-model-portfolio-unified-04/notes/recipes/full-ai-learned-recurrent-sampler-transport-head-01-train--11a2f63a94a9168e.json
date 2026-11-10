@@ -1,0 +1,105 @@
+{
+ "model": "Full AI learned recurrent sampler transport head 01 train",
+ "fit_id": "fit-11a2f63a94a9168e",
+ "card": "notes/fits/full-ai-learned-recurrent-sampler-transport-head-01-train--11a2f63a94a9168e.md",
+ "tuldok_run": "65a84a734d8f416bbbdee46c6a636e1b",
+ "run_name": "Full AI learned recurrent sampler transport head 01 train",
+ "trained_at": "2026-10-20T17:00:36.738133+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 33554432,
+  "memory_bytes": 8589934592,
+  "wall_seconds": 900
+ },
+ "entrypoint": "runs/full-ai-tight-targets-v1/sampler-head-project-03/train_sampler_head.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00> <input: part_01> <input: part_02> <input: part_03>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-tight-targets-v1/sampler-head-project-03/config.json",
+ "settings": {
+  "identifier": "recurrent-sampler-head-01",
+  "role": "recurrent_sampler_transport_fit",
+  "objective": "native_supervised_sampler_v1",
+  "seed": 2026102061,
+  "updates": 440,
+  "adam_updates": 400,
+  "lbfgs_updates": 40,
+  "lbfgs_max_iter": 5,
+  "lbfgs_max_eval": 8,
+  "batch_points": 8192,
+  "learning_rate": 0.03,
+  "minimum_learning_rate": 1e-05,
+  "wall_seconds": 900
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/manifest.json",
+   "bytes": 106310
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/normalization.json",
+   "bytes": 3271
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g16_16_16.npz",
+   "bytes": 4380816
+  },
+  {
+   "name": "part_01",
+   "path": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g11_11_9.npz",
+   "bytes": 2994005
+  },
+  {
+   "name": "part_02",
+   "path": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g8_6_15.npz",
+   "bytes": 2467653
+  },
+  {
+   "name": "part_03",
+   "path": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g32_32_32.npz",
+   "bytes": 5439298
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-tight-targets-v1/sampler-head-project-03/config.json",
+  "runs/full-ai-tight-targets-v1/sampler-head-project-03/custody_validator.py",
+  "runs/full-ai-tight-targets-v1/sampler-head-project-03/learned_sampler_head.py",
+  "runs/full-ai-tight-targets-v1/sampler-head-project-03/managed_fit_artifacts.py",
+  "runs/full-ai-tight-targets-v1/sampler-head-project-03/train_sampler_head.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

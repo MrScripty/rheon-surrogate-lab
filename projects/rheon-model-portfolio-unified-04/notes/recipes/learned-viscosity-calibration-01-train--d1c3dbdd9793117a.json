@@ -1,0 +1,83 @@
+{
+ "model": "Learned viscosity calibration 01 train",
+ "fit_id": "fit-d1c3dbdd9793117a",
+ "card": "notes/fits/learned-viscosity-calibration-01-train--d1c3dbdd9793117a.md",
+ "tuldok_run": "256e9efaab374dc09d75faf12e081a43",
+ "run_name": "Learned viscosity calibration 01 train",
+ "trained_at": "2026-10-20T05:16:01.382320+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 16777216,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 1800
+ },
+ "entrypoint": "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/viscosity_calibration_train.py",
+ "command": "train --config <source: config.json> --input-evidence <input evidence> --output-dir <output dir> --teacher <input: teacher> --teacher-manifest <input: teacher_manifest> --runtime-manifest <input: runtime_manifest>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/config.json",
+ "settings": {
+  "schema": "rheon-viscosity-calibration-v1",
+  "updates": 1000,
+  "batch_size": 8,
+  "learning_rate": 0.25,
+  "seed": 2026102061,
+  "sampling_seed": 2026102062,
+  "wall_seconds": 1200,
+  "double_tolerance": 1e-08,
+  "published_tolerance": 1e-06,
+  "identifier": "viscosity-calibration-01",
+  "registration_sha256": "702e7ab154f37656e0c09810e878881825f7ee87f9a7901933805313a434476c"
+ },
+ "inputs": [
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  },
+  {
+   "name": "teacher",
+   "path": "runs/full-ai-next-priorities-v1/viscosity-calibration-teacher-01/teacher.npz",
+   "bytes": 1233001
+  },
+  {
+   "name": "teacher_manifest",
+   "path": "runs/full-ai-next-priorities-v1/viscosity-calibration-teacher-01/manifest.json",
+   "bytes": 3402
+  }
+ ],
+ "sources": [
+  "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/config.json",
+  "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/custody_validator.py",
+  "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/managed_fit_artifacts.py",
+  "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/viscosity_calibration_model.py",
+  "runs/full-ai-next-priorities-v1/viscosity-calibration-project-01/viscosity_calibration_train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

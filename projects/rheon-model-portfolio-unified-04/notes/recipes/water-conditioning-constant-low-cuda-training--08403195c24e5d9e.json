@@ -1,0 +1,150 @@
+{
+ "model": "water-conditioning-constant-low · CUDA training",
+ "fit_id": "fit-08403195c24e5d9e",
+ "card": "notes/fits/water-conditioning-constant-low-cuda-training--08403195c24e5d9e.md",
+ "tuldok_run": "9387f101da0b4df5844658bf0080a3ab",
+ "run_name": "water-conditioning-constant-low · CUDA training",
+ "trained_at": "2026-10-15T17:48:37.836637+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "max_output_bytes": 33554432,
+  "wall_seconds": 600
+ },
+ "entrypoint": "runs/water-conditioning-v1/constant-low/project/train.py",
+ "command": "train --dataset <input: dataset> --dataset-extra <input: dataset_extra> --splits <input: splits> --config <source: config.json> --runtime-manifest <source: runtime-manifest.json> --source-witness <source: source-witness.json> --input-evidence <input evidence> --output-dir <output dir>",
+ "parameters": {},
+ "settings_file": "runs/water-conditioning-v1/constant-low/project/config.json",
+ "settings": {
+  "id": "water-conditioning-constant-low",
+  "resources": {
+   "max_output_bytes": 33554432,
+   "wall_seconds": 600
+  },
+  "schema": "rheon-cuda-pressure-experiment-v1",
+  "training": {
+   "batch_size": 1,
+   "checkpoints": [
+    0,
+    100,
+    500,
+    1000,
+    2000,
+    4000,
+    6000,
+    8000,
+    10000
+   ],
+   "learning_rate": 0.0001,
+   "model": "cubic-groupnorm-v3",
+   "sampling_seed": 2026102501,
+   "schedule": [],
+   "seed": 20261015,
+   "updates": 10000
+  }
+ },
+ "inputs": [
+  {
+   "name": "dataset",
+   "path": "runs/water-conditioning-v1/constant-low/project/inputs/dataset.npz",
+   "bytes": 2275660
+  },
+  {
+   "name": "dataset_extra",
+   "path": "runs/water-conditioning-v1/constant-low/project/inputs/dataset_extra.npz",
+   "bytes": 2278650
+  },
+  {
+   "name": "splits",
+   "path": "runs/water-conditioning-v1/constant-low/project/inputs/splits.json",
+   "bytes": 374928
+  }
+ ],
+ "sources": [
+  "runs/water-conditioning-v1/constant-low/project/config.json",
+  "runs/water-conditioning-v1/constant-low/project/custody-validator.py",
+  "runs/water-conditioning-v1/constant-low/project/data.py",
+  "runs/water-conditioning-v1/constant-low/project/frozen_gn.py",
+  "runs/water-conditioning-v1/constant-low/project/historical-reservation.json",
+  "runs/water-conditioning-v1/constant-low/project/model.py",
+  "runs/water-conditioning-v1/constant-low/project/original_data.py",
+  "runs/water-conditioning-v1/constant-low/project/original_model.py",
+  "runs/water-conditioning-v1/constant-low/project/original_train.py",
+  "runs/water-conditioning-v1/constant-low/project/policy.py",
+  "runs/water-conditioning-v1/constant-low/project/portable_model.py",
+  "runs/water-conditioning-v1/constant-low/project/portable_policy.py",
+  "runs/water-conditioning-v1/constant-low/project/qualification.json",
+  "runs/water-conditioning-v1/constant-low/project/runtime-manifest.json",
+  "runs/water-conditioning-v1/constant-low/project/scenes.py",
+  "runs/water-conditioning-v1/constant-low/project/source-witness.json",
+  "runs/water-conditioning-v1/constant-low/project/support.py",
+  "runs/water-conditioning-v1/constant-low/project/test_inference.py",
+  "runs/water-conditioning-v1/constant-low/project/train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "predictions.npz",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "splits.json",
+   "role": "training_splits"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  },
+  {
+   "path": "summary.json",
+   "role": "result_summary"
+  },
+  {
+   "path": "checkpoint-000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-100.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-500.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-1000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-2000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-4000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-6000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-8000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-10000.npz",
+   "role": "checkpoint"
+  }
+ ]
+}

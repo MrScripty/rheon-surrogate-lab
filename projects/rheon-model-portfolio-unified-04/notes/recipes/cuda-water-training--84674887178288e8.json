@@ -1,0 +1,130 @@
+{
+ "model": "CUDA water training",
+ "fit_id": "fit-84674887178288e8",
+ "card": "notes/fits/cuda-water-training--84674887178288e8.md",
+ "tuldok_run": "fa641802967e4d339ad2d0d82dd54b7c",
+ "run_name": "CUDA water training",
+ "trained_at": "2026-10-15T10:25:40.337679+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "max_output_bytes": 33554432,
+  "wall_seconds": 600
+ },
+ "entrypoint": "runs/sealed-water-v1-3/project/train.py",
+ "command": "train --dataset <input: dataset> --splits <input: splits> --config <source: config.json> --runtime-manifest <source: runtime-manifest.json> --source-witness <source: source-witness.json> --input-evidence <input evidence> --output-dir <output dir>",
+ "parameters": {},
+ "settings_file": "runs/sealed-water-v1-3/project/config.json",
+ "settings": {
+  "id": "sealed-water-cuda-baseline-v1",
+  "resources": {
+   "max_output_bytes": 33554432,
+   "wall_seconds": 600
+  },
+  "schema": "rheon-cuda-pressure-experiment-v1",
+  "training": {
+   "batch_size": 2,
+   "checkpoints": [
+    0,
+    100,
+    500,
+    1000,
+    2000
+   ],
+   "learning_rate": 0.001,
+   "model": "cubic-groupnorm-v3",
+   "sampling_seed": 2026102501,
+   "schedule": [
+    {
+     "learning_rate": 0.0001,
+     "update": 1000
+    }
+   ],
+   "seed": 20261015,
+   "updates": 2000
+  }
+ },
+ "inputs": [
+  {
+   "name": "dataset",
+   "path": "runs/sealed-water-v1-3/project/inputs/dataset.npz",
+   "bytes": 24326678
+  },
+  {
+   "name": "splits",
+   "path": "runs/sealed-water-v1-3/project/inputs/splits.json",
+   "bytes": 930868
+  }
+ ],
+ "sources": [
+  "runs/sealed-water-v1-3/project/config.json",
+  "runs/sealed-water-v1-3/project/custody-validator.py",
+  "runs/sealed-water-v1-3/project/data.py",
+  "runs/sealed-water-v1-3/project/frozen_gn.py",
+  "runs/sealed-water-v1-3/project/historical-reservation.json",
+  "runs/sealed-water-v1-3/project/model.py",
+  "runs/sealed-water-v1-3/project/original_data.py",
+  "runs/sealed-water-v1-3/project/original_model.py",
+  "runs/sealed-water-v1-3/project/original_train.py",
+  "runs/sealed-water-v1-3/project/policy.py",
+  "runs/sealed-water-v1-3/project/portable_model.py",
+  "runs/sealed-water-v1-3/project/portable_policy.py",
+  "runs/sealed-water-v1-3/project/qualification.json",
+  "runs/sealed-water-v1-3/project/runtime-manifest.json",
+  "runs/sealed-water-v1-3/project/scenes.py",
+  "runs/sealed-water-v1-3/project/source-witness.json",
+  "runs/sealed-water-v1-3/project/support.py",
+  "runs/sealed-water-v1-3/project/test_inference.py",
+  "runs/sealed-water-v1-3/project/train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "predictions.npz",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "splits.json",
+   "role": "training_splits"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  },
+  {
+   "path": "summary.json",
+   "role": "result_summary"
+  },
+  {
+   "path": "checkpoint-000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-100.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-500.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-1000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-2000.npz",
+   "role": "checkpoint"
+  }
+ ]
+}

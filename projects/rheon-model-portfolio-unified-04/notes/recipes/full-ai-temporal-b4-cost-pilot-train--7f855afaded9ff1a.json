@@ -1,0 +1,158 @@
+{
+ "model": "Full AI temporal b4-cost-pilot train",
+ "fit_id": "fit-7f855afaded9ff1a",
+ "card": "notes/fits/full-ai-temporal-b4-cost-pilot-train--7f855afaded9ff1a.md",
+ "tuldok_run": "69ccaf18a3fd4831b124b7dd7095cd06",
+ "run_name": "Full AI temporal b4-cost-pilot train",
+ "trained_at": "2026-10-19T15:48:17.946931+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 33554432,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 1800
+ },
+ "entrypoint": "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_train.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00> <input: part_01> <input: part_02> <input: part_03> <input: part_04> <input: part_05> <input: part_06> <input: part_07> <input: part_08> <input: part_09> <input: part_10>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/config.json",
+ "settings": {
+  "schema": "rheon-temporal-fit-v1",
+  "identifier": "b4-cost-pilot",
+  "horizons": 4,
+  "width": 4,
+  "updates": 16,
+  "single_block_updates": 8,
+  "learning_rate": 0.001,
+  "schedule": [],
+  "seed": 2026101921,
+  "sampling_seed": 2026101922,
+  "wall_seconds": 1800,
+  "physical_context": {
+   "dt_s": 0.016666666666666666,
+   "rho_kg_m3": 1000.0,
+   "mu_pa_s": 0.001,
+   "boundaries": "closed regular grid"
+  },
+  "initialization": "Seeded compact spatial encoder and zero future heads",
+  "inference": "One shared encoder; joint state outputs; learned pressure modes; no numerical pressure solve",
+  "sample_step_range": [
+   0,
+   120
+  ],
+  "loss": "Equal horizon weights; pressure/velocity/tracer, equation, divergence, mass, energy and bounds",
+  "track_b_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574"
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/manifest.json",
+   "bytes": 37465
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+   "bytes": 981
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-00.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_01",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-01.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_02",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-02.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_03",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-03.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_04",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-04.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_05",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-05.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_06",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-06.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_07",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-07.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_08",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-08.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_09",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-09.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_10",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-10.bin",
+   "bytes": 1247280
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/adaptive_pool.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/bundle_model.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/bundle_model_v5.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/config.json",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/custody_validator.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_codec.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_data.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_features.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_features_v2.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_objective.py",
+  "runs/full-ai-next-priorities-v1/b4-cost-pilot-project-03/temporal_train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

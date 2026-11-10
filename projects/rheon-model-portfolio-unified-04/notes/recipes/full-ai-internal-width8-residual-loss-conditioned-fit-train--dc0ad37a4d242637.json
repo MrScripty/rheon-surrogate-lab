@@ -1,0 +1,265 @@
+{
+ "model": "Full-AI internal width8 residual loss-conditioned fit train",
+ "fit_id": "fit-dc0ad37a4d242637",
+ "card": "notes/fits/full-ai-internal-width8-residual-loss-conditioned-fit-train--dc0ad37a4d242637.md",
+ "tuldok_run": "acb748bc23a54a1d88ae11a0c9848d09",
+ "run_name": "Full-AI internal width8 residual loss-conditioned fit train",
+ "trained_at": "2026-10-21T18:46:02.085108+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 25165824,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 900
+ },
+ "entrypoint": "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/train_internal_residual_v2.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --optimization-normalization <input: optimization_normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/config.json",
+ "settings": {
+  "identifier": "internal-residual-width8-s2-loss-conditioned",
+  "role": "internal_group_nonlinear_residual_component",
+  "seed": 1729,
+  "epochs": 2,
+  "optimizer_updates": 1566,
+  "optimizer": "AdamW",
+  "learning_rate": 0.003,
+  "minimum_learning_rate": 0.0003,
+  "adam_epsilon": 1e-12,
+  "weight_decay": 0.0,
+  "gradient_clip_norm": 1.0,
+  "wall_seconds": 900,
+  "maximum_peak_rss_bytes": 4294967296,
+  "maximum_gpu_allocated_bytes": 8589934592,
+  "selection": "minimum_full148scene_training_objective_earlier_epoch_tie",
+  "qualified_initial_objective": 1.9138810975032417e-05,
+  "qualified_initial_inventory": {
+   "input_rms": {
+    "shape": [
+     1,
+     42,
+     1,
+     1,
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "03607579d061e0a3afb7037cc5e7bbf69985070dc0e4e3aefa0f29451a69108d"
+   },
+   "output_rms": {
+    "shape": [
+     4
+    ],
+    "dtype": "<f4",
+    "sha256": "f6dcc9570fba7f8d765ace2909fe76a00d84a802e25b8432ac2d523d5ecd0d87"
+   },
+   "conv1.weight": {
+    "shape": [
+     8,
+     42,
+     3,
+     3,
+     3
+    ],
+    "dtype": "<f4",
+    "sha256": "842af574b0f6c52f98dd3e36c5362f125388329f5ab90749f099b8b4197dc87b"
+   },
+   "conv1.bias": {
+    "shape": [
+     8
+    ],
+    "dtype": "<f4",
+    "sha256": "bdeeb9033b3080885fa6048b0d6966e5d896bc2e4b71eb24d8ec587b61a2c4e6"
+   },
+   "conv2.weight": {
+    "shape": [
+     8,
+     8,
+     3,
+     3,
+     3
+    ],
+    "dtype": "<f4",
+    "sha256": "b38d93285f61e12b76c774dd6f848a46170dec45a275712cb64cd7572ba1b1bf"
+   },
+   "conv2.bias": {
+    "shape": [
+     8
+    ],
+    "dtype": "<f4",
+    "sha256": "28bf707bba31b12e08e935c5249573252a4fff62af2cd5add14ded24b759019e"
+   },
+   "velocity.0.weight": {
+    "shape": [
+     8,
+     1,
+     1,
+     1,
+     2
+    ],
+    "dtype": "<f4",
+    "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+   },
+   "velocity.0.bias": {
+    "shape": [
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+   },
+   "velocity.1.weight": {
+    "shape": [
+     8,
+     1,
+     1,
+     2,
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+   },
+   "velocity.1.bias": {
+    "shape": [
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+   },
+   "velocity.2.weight": {
+    "shape": [
+     8,
+     1,
+     2,
+     1,
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+   },
+   "velocity.2.bias": {
+    "shape": [
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+   },
+   "tracer.weight": {
+    "shape": [
+     1,
+     8,
+     1,
+     1,
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+   },
+   "tracer.bias": {
+    "shape": [
+     1
+    ],
+    "dtype": "<f4",
+    "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+   }
+  },
+  "evaluation_normalization": {
+   "status": "frozen_before_managed_fit",
+   "source": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+   "source_sha256": "fb77ae2ee0fd4ef67969866be000561036b8311b6ca46f258ccd1cdd82c0c037",
+   "relative_denominator_rms_floor": {
+    "pressure": 9.47211357321988e-08,
+    "velocity": 6.465589999830133e-11,
+    "tracer": 1.2995164216288916e-10
+   },
+   "degenerate_absolute_rms_tolerance": {
+    "pressure": 9.47211357321988e-13,
+    "velocity": 6.465589999830133e-16,
+    "tracer": 1.2995164216288918e-15
+   },
+   "maximum_relative_error": 1e-05,
+   "pressure_comparison": "Mean-free",
+   "equation_rhs_floor": 1e-30
+  },
+  "native_accuracy_claim": false,
+  "latency_claim": false,
+  "full_generator_target_pass": false,
+  "metric_weights": {
+   "equation": 0.3686505980368089,
+   "pressure": 0.7769568475978544,
+   "velocity": 13044.418167693124,
+   "tracer": 3922.417978570662
+  },
+  "weight_rule": "Training-only initial active mean total loss/4 divided by each metric mean; fixed controls use the same weights.",
+  "comparison": "S1 architecture, initialization, training scenes, seed, ordering, optimizer and two epochs unchanged; explicit loss weights are the scientific intervention."
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-data-diversity-v1/internal-residual-view-01/manifest.json",
+   "bytes": 4538664
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-data-diversity-v1/internal-residual-view-01/network-normalization.json",
+   "bytes": 1521
+  },
+  {
+   "name": "optimization_normalization",
+   "path": "runs/full-ai-data-diversity-v1/internal-residual-view-01/optimization-normalization.json",
+   "bytes": 918
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-data-diversity-v1/internal-residual-view-01/training-view.zip",
+   "bytes": 9769855506
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/capture_memory_telemetry_v1.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/config.json",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/custody_validator.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/internal_residual_dataset_v1.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/internal_residual_loss_v1.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/internal_residual_network_v1.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/internal_residual_network_v2.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/internal_residual_weighted_loss_v1.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/managed_fit_artifacts.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/managed_input_stream_v1.py",
+  "runs/full-ai-data-diversity-v1/internal-residual-s2-project-01/train_internal_residual_v2.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "optimization-normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

@@ -1,0 +1,101 @@
+{
+ "model": "Full AI mixed modal query refinement 11 train",
+ "fit_id": "fit-aaf0a360c4c9622b",
+ "card": "notes/fits/full-ai-mixed-modal-query-refinement-11-train--aaf0a360c4c9622b.md",
+ "tuldok_run": "dda357a46d4c4ebeaeac30bbb65488f3",
+ "run_name": "Full AI mixed modal query refinement 11 train",
+ "trained_at": "2026-10-20T19:43:13.241079+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 25165824,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 900
+ },
+ "entrypoint": "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/train_modal_augmented.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00> <input: part_01> <input: part_02> <input: part_03>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/config.json",
+ "settings": {
+  "identifier": "modal-pressure-mixed-queries-11",
+  "role": "pressure_component_precision_refinement",
+  "objective": "native_mixed_query_weighted_precision_v3",
+  "updates": 80,
+  "mode_scale_floor": 1e-12,
+  "seed": 2026102201,
+  "wall_seconds": 900
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-tight-targets-v1/mixed-modal-view-11/manifest.json",
+   "bytes": 222215
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-tight-targets-v1/mixed-modal-view-11/normalization.json",
+   "bytes": 1219700
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-tight-targets-v1/mixed-modal-view-11/g16_16_16.npz",
+   "bytes": 4302712
+  },
+  {
+   "name": "part_01",
+   "path": "runs/full-ai-tight-targets-v1/mixed-modal-view-11/g11_11_9.npz",
+   "bytes": 1144626
+  },
+  {
+   "name": "part_02",
+   "path": "runs/full-ai-tight-targets-v1/mixed-modal-view-11/g8_6_15.npz",
+   "bytes": 754520
+  },
+  {
+   "name": "part_03",
+   "path": "runs/full-ai-tight-targets-v1/mixed-modal-view-11/g32_32_32.npz",
+   "bytes": 34418718
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/config.json",
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/custody_validator.py",
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/learned_modal_pressure.py",
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/managed_fit_artifacts.py",
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/modal_basis.py",
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/modal_precision_supervision.py",
+  "runs/full-ai-tight-targets-v1/mixed-modal-project-11b/train_modal_augmented.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

@@ -1,0 +1,131 @@
+{
+ "model": "water-conditioning-gpu-baseline · CUDA training",
+ "fit_id": "fit-acb450db5fec60b9",
+ "card": "notes/fits/water-conditioning-gpu-baseline-cuda-training--acb450db5fec60b9.md",
+ "tuldok_run": "c17fdc8d15a7499f8f651ebcf37eb3bd",
+ "run_name": "water-conditioning-gpu-baseline · CUDA training",
+ "trained_at": "2026-10-15T18:22:47.627715+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "max_output_bytes": 33554432,
+  "wall_seconds": 600
+ },
+ "entrypoint": "runs/water-conditioning-v1/gpu-baseline/project/train.py",
+ "command": "train --dataset <input: dataset> --dataset-extra <input: dataset_extra> --splits <input: splits> --config <source: config.json> --runtime-manifest <source: runtime-manifest.json> --source-witness <source: source-witness.json> --input-evidence <input evidence> --output-dir <output dir>",
+ "parameters": {},
+ "settings_file": "runs/water-conditioning-v1/gpu-baseline/project/config.json",
+ "settings": {
+  "conditioning": "amplitude-and-units",
+  "execution": {
+   "batch_mode": "serial",
+   "finite_checks": "per-tensor",
+   "profile_updates": 10,
+   "resident_inputs": false
+  },
+  "id": "water-conditioning-gpu-baseline",
+  "resources": {
+   "max_output_bytes": 33554432,
+   "wall_seconds": 600
+  },
+  "schema": "rheon-water-conditioning-experiment-v2",
+  "training": {
+   "batch_size": 1,
+   "checkpoints": [
+    0,
+    2,
+    500
+   ],
+   "learning_rate": 0.001,
+   "model": "cubic-groupnorm-v3",
+   "sampling_seed": 2026102501,
+   "schedule": [],
+   "seed": 20261015,
+   "updates": 500
+  }
+ },
+ "inputs": [
+  {
+   "name": "dataset",
+   "path": "runs/water-conditioning-v1/gpu-baseline/project/inputs/dataset.npz",
+   "bytes": 2275660
+  },
+  {
+   "name": "dataset_extra",
+   "path": "runs/water-conditioning-v1/gpu-baseline/project/inputs/dataset_extra.npz",
+   "bytes": 2278650
+  },
+  {
+   "name": "splits",
+   "path": "runs/water-conditioning-v1/gpu-baseline/project/inputs/splits.json",
+   "bytes": 374928
+  }
+ ],
+ "sources": [
+  "runs/water-conditioning-v1/gpu-baseline/project/config.json",
+  "runs/water-conditioning-v1/gpu-baseline/project/custody-validator.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/data.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/frozen_gn.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/historical-reservation.json",
+  "runs/water-conditioning-v1/gpu-baseline/project/model.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/original_data.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/original_model.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/original_train.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/policy.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/portable_model.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/portable_policy.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/qualification.json",
+  "runs/water-conditioning-v1/gpu-baseline/project/runtime-manifest.json",
+  "runs/water-conditioning-v1/gpu-baseline/project/scenes.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/source-witness.json",
+  "runs/water-conditioning-v1/gpu-baseline/project/support.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/test_inference.py",
+  "runs/water-conditioning-v1/gpu-baseline/project/train.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "predictions.npz",
+   "role": "predictions"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "splits.json",
+   "role": "training_splits"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "profile.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  },
+  {
+   "path": "summary.json",
+   "role": "result_summary"
+  },
+  {
+   "path": "checkpoint-000.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-002.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "checkpoint-500.npz",
+   "role": "checkpoint"
+  }
+ ]
+}

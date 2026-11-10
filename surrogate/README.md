@@ -100,7 +100,7 @@ On a fresh checkout the tests pass. After building the probe and generating a da
 
 Two things are not recoverable from Git and exist only where the earlier studies ran:
 
-- The weights of the earlier models (and the packaged inputs they were trained from). Their cards and benchmark results are in the Tuldok project under `projects/`, but the models cannot be run or re-benchmarked without the weights.
+- The weights of the earlier models (and the prepared inputs they were trained from). Their cards, benchmark results and training recipes are in the Tuldok project under `projects/`, but the models cannot be run or re-benchmarked without the weights, and retraining them needs those prepared inputs rebuilt.
 - The solver composition's kernel builds and fitted coefficients under `runs/`, which the `spectral-composition` subject needs.
 
 Of the earlier recordings, only the sinusoidal scenes keep every output step. The diversity recordings keep short windows of at most four outputs, which is what the earlier models were fitted on; `link` makes them usable for those windows, and `generate` replaces them with full scenes.

@@ -1,0 +1,198 @@
+{
+ "model": "Full AI temporal b2-endpoint-pressure-expert train",
+ "fit_id": "fit-1031d32821fb88cf",
+ "card": "notes/fits/full-ai-temporal-b2-endpoint-pressure-expert-train--1031d32821fb88cf.md",
+ "tuldok_run": "a3f5e3593d8249d99fd75d5ee45b26b5",
+ "run_name": "Full AI temporal b2-endpoint-pressure-expert train",
+ "trained_at": "2026-10-20T00:19:33.441511+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 33554432,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 1800
+ },
+ "entrypoint": "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_train_pressure_expert.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00> <input: part_01> <input: part_02> <input: part_03> <input: part_04> <input: part_05> <input: part_06> <input: part_07> <input: part_08> <input: part_09> <input: part_10>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/config.json",
+ "settings": {
+  "schema": "rheon-temporal-fit-pressure-expert-v1",
+  "velocity_representation": "learned_pressure_conditioned_convolution",
+  "supervision_mode": "increments",
+  "architecture": "endpoint",
+  "feedback_protocol": 2,
+  "identifier": "b2-endpoint-pressure-expert",
+  "horizons": 2,
+  "width": 16,
+  "updates": 10000,
+  "single_block_updates": 2000,
+  "learning_rate": 0.001,
+  "schedule": [
+   {
+    "update": 6001,
+    "learning_rate": 0.0003
+   },
+   {
+    "update": 9001,
+    "learning_rate": 0.0001
+   }
+  ],
+  "seed": 2026101921,
+  "sampling_seed": 2026101922,
+  "wall_seconds": 1800,
+  "physical_context": {
+   "dt_s": 0.016666666666666666,
+   "rho_kg_m3": 1000.0,
+   "mu_pa_s": 0.001,
+   "boundaries": "closed regular grid"
+  },
+  "initialization": "Frozen a-tail8 pressure expert, managed causal request initialization, seeded width16 fluid/tracer encoders and zero new heads",
+  "inference": "One fluid encoder and one frozen pressure expert per block; predicted endpoint plus cheap intermediate decoder or first-prediction feature reuse; learned velocity readout, no numerical solve or post-projection",
+  "sample_step_range": [
+   0,
+   120
+  ],
+  "loss": "Matched MSE pressure/equation/physical terms; velocity/tracer errors in fixed aggregate native-step units",
+  "track_b_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574",
+  "sharing_registration_sha256": "ad3f739d27f4a12f0b433d61b34a3c6ce67f4c04dccc55a188f0786559a5581e",
+  "step_scale_statistics_sha256": "5f976a2e19e77cf7b46bf701b9e7c7cd65856d8f391db138020c8855592dad04",
+  "original_normalization_sha256": "fb77ae2ee0fd4ef67969866be000561036b8311b6ca46f258ccd1cdd82c0c037",
+  "physical_scales": {
+   "pressure": 9.47211357321988,
+   "velocity": 0.0064655899998301335,
+   "tracer": 0.012995164216288916
+  },
+  "expert_asset_sha256": {
+   "pressure/configuration.json": "2c06da3852d27e0789c90d06f6842fb829258c6241fdf18ea99aa6c13728b5b1",
+   "pressure/fine-weights.npz": "1b651a98bb8ef9ed8e30ffb761e47db36ad5943b3191970c61a1b3dc40bd11c6",
+   "pressure/geometry-gains.npz": "6384d7f83526187243e4f8aedcda452baf2b387e720664affbceffce395abb2d",
+   "pressure/receipt.json": "d3a9a08d25bfce560d3685c5fd1cce0b5fc6959e41a7cbd3d946bd35b246c544",
+   "request-initialization.json": "486cd9be0174c48bb454a3d0659871f567d4c531c8ecc8c380872ec3ff4c32ab",
+   "request-weights.npz": "624dce8d87a2ebc1d82a814c7b19e24cdcce99979374aa0f30b8fca73539b2cd"
+  },
+  "full_fit_registration_sha256": "08ed048038db26f1838a6e74f82ae521c848f06b954a42aaf3000a17794d0510"
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/manifest.json",
+   "bytes": 37465
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+   "bytes": 981
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-00.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_01",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-01.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_02",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-02.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_03",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-03.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_04",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-04.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_05",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-05.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_06",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-06.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_07",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-07.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_08",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-08.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_09",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-09.bin",
+   "bytes": 25165824
+  },
+  {
+   "name": "part_10",
+   "path": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-10.bin",
+   "bytes": 1247280
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/bundle_model_pressure_expert.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/config.json",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/custody_validator.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/expert-assets/pressure/configuration.json",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/expert-assets/pressure/fine-weights.npz",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/expert-assets/pressure/geometry-gains.npz",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/expert-assets/pressure/receipt.json",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/expert-assets/request-initialization.json",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/expert-assets/request-weights.npz",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/factored_request_model.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/frozen_temporal_pressure_core.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/step-scales.json",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_codec.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_data.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_features.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_features_v2.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_feedback.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_objective.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_objective_increment.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_objective_mse.py",
+  "runs/full-ai-next-priorities-v1/b2-endpoint-pressure-expert-project-01/temporal_train_pressure_expert.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

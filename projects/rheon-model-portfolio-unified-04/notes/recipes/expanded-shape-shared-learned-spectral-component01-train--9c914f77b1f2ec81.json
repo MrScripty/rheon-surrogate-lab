@@ -1,0 +1,87 @@
+{
+ "model": "Expanded shape-shared learned spectral component01 train",
+ "fit_id": "fit-9c914f77b1f2ec81",
+ "card": "notes/fits/expanded-shape-shared-learned-spectral-component01-train--9c914f77b1f2ec81.md",
+ "tuldok_run": "a529f0706382449391c0a0a60c3b4c43",
+ "run_name": "Expanded shape-shared learned spectral component01 train",
+ "trained_at": "2026-10-21T00:22:13.010303+00:00",
+ "device": "cuda",
+ "runtime": "managed_torch_python_v1",
+ "resources": {
+  "cpu_cores": 1,
+  "max_output_bytes": 25165824,
+  "memory_bytes": 4294967296,
+  "wall_seconds": 600
+ },
+ "entrypoint": "runs/full-ai-data-diversity-v1/shared-spectral-project-01/train_shared_spectral_v1.py",
+ "command": "train --config <source: config.json> --manifest <input: manifest> --normalization <input: normalization> --runtime-manifest <input: runtime_manifest> --input-evidence <input evidence> --output-dir <output dir> --shards <input: part_00>",
+ "parameters": {},
+ "settings_file": "runs/full-ai-data-diversity-v1/shared-spectral-project-01/config.json",
+ "settings": {
+  "identifier": "expanded-shared-spectral-01",
+  "role": "shape_shared_spectral_pressure_component",
+  "objective": "equal_scene_native_response_residual_v1",
+  "seed": 2026102071,
+  "optimizer_calls": 160,
+  "updates": 160,
+  "wall_seconds": 600,
+  "training_scenes": 148,
+  "inference_device": "cuda",
+  "cpu_restore": "Exact typed weights only; no CPU forward; originating CUDA probe copied and verified later onCUDA"
+ },
+ "inputs": [
+  {
+   "name": "manifest",
+   "path": "runs/full-ai-data-diversity-v1/shared-spectral-view-01/manifest.json",
+   "bytes": 1268195
+  },
+  {
+   "name": "normalization",
+   "path": "runs/full-ai-data-diversity-v1/shared-spectral-view-01/normalization.json",
+   "bytes": 688
+  },
+  {
+   "name": "part_00",
+   "path": "runs/full-ai-data-diversity-v1/shared-spectral-view-01/part-00.npz",
+   "bytes": 10844745
+  },
+  {
+   "name": "runtime_manifest",
+   "path": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "bytes": 7989288
+  }
+ ],
+ "sources": [
+  "runs/full-ai-data-diversity-v1/shared-spectral-project-01/config.json",
+  "runs/full-ai-data-diversity-v1/shared-spectral-project-01/custody_validator.py",
+  "runs/full-ai-data-diversity-v1/shared-spectral-project-01/managed_fit_artifacts.py",
+  "runs/full-ai-data-diversity-v1/shared-spectral-project-01/shared_spectral_model_v1.py",
+  "runs/full-ai-data-diversity-v1/shared-spectral-project-01/train_shared_spectral_v1.py"
+ ],
+ "outputs": [
+  {
+   "path": "weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "initial-weights.npz",
+   "role": "checkpoint"
+  },
+  {
+   "path": "normalization.json",
+   "role": "preprocessing"
+  },
+  {
+   "path": "history.json",
+   "role": "training_diagnostics"
+  },
+  {
+   "path": "probe.npy",
+   "role": "predictions"
+  },
+  {
+   "path": "receipt.json",
+   "role": "training_result"
+  }
+ ]
+}

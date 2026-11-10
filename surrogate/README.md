@@ -47,7 +47,15 @@ python -m surrogate.datasets generate diversity-v1 --split development
 | `diversity-v1` | 148 train, 24 development, 52 reserved | Scheduled forcing, six cell densities from 8 to 100 per metre, grids up to 128³. The lab's earlier recordings of these scenes kept only short windows; the reserved scenes have never been simulated. |
 | `sinusoidal-v1` | 16 train, 8 development, 88 reserved | The older scenes on four grid shapes. All 88 reserved scenes have already been used to check an earlier model. |
 
-Thirty `diversity-v1` scenes need eight solver substeps per output; the driver skips those until that solver build is wired in.
+## The reference solver
+
+`generate` and the `rheon-native` benchmark subject run a small Rust probe around Rheon. Its driver is `probes/reference/`. It pins branch `lab/reference-solver-v1` of the Rheon repository: Rheon at the commit all reference data comes from, plus the lab's stepping, scheduled-forcing and substep additions. One build runs every scene of both datasets.
+
+```sh
+CARGO_TARGET_DIR="$PWD/target" cargo build --release --locked --manifest-path probes/reference/Cargo.toml
+```
+
+The binary lands in `target/release/rheon-reference-probe`; set `$SURROGATE_PROBE` to use another one. To build against a local Rheon checkout of that branch instead of GitHub, drop `--locked` and add `--config 'patch."https://github.com/MrScripty/Rheon.git".rheon.path="/path/to/Rheon"'`.
 
 ## Benchmark
 
@@ -80,8 +88,6 @@ The run writes `model.pt` (what the benchmark loads), `resume.pt`, `config.json`
 
 ## What needs local files
 
-The Rheon probe, the solver composition's kernel builds and the earlier recordings live under `runs/`, which is not in Git. On a fresh checkout the tests pass, but generating data, the suites, training and the two solver subjects need those files first.
-
-The probe is built from a Rheon source tree with the lab's own changes. Those changes are not yet in the Rheon repository or in this one, so the probe cannot be rebuilt from a fresh checkout today.
+On a fresh checkout the tests pass, and data can be generated once the probe is built. The benchmark suites and the pilot training configuration still read the earlier recordings under `runs/`, and the solver composition needs its kernel builds there; `runs/` is not in Git.
 
 Of the earlier recordings, only the sinusoidal scenes keep every output step. The diversity recordings keep short windows of at most four outputs, which is what the earlier models were fitted on.

@@ -46,8 +46,8 @@ def main(arguments=None):
         print(f"{definition['id']} -> {root / definition['id']}")
         for split, entry in plan(definition, rows, root).items():
             total += entry['estimated_bytes']
-            print(f"  {split:12s} {entry['scenes']:4d} scenes: {entry['done']} on disk, {entry['not_wired']} not "
-                  f"wired yet, {entry['scenes'] - entry['done'] - entry['not_wired']} to run -> {entry['states']} states, "
+            print(f"  {split:12s} {entry['scenes']:4d} scenes: {entry['done']} on disk, "
+                  f"{entry['scenes'] - entry['done']} to run -> {entry['states']} states, "
                   f"{entry['cell_states'] / 1e9:.2f} billion cell-states, about {entry['estimated_bytes'] / 1e9:.1f} GB")
         existing = next(folder for folder in (root, *root.parents) if folder.exists())
         print(f'  total about {total / 1e9:.1f} GB to write; '

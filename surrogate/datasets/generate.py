@@ -19,7 +19,7 @@ from pathlib import Path
 
 import numpy as np
 
-from ..solver import REPOSITORY, RheonProbe, probe_for
+from ..solver import REPOSITORY, RheonProbe
 from . import load, scene
 
 DEFAULT_ROOT = REPOSITORY / 'data' / 'reference'
@@ -46,15 +46,12 @@ def plan(definition, rows, root):
     directory = root / definition['id']
     summary = {}
     for row in rows:
-        entry = summary.setdefault(row['split'], {'scenes': 0, 'done': 0, 'not_wired': 0, 'states': 0,
-                                                  'cell_states': 0, 'estimated_bytes': 0})
+        entry = summary.setdefault(row['split'], {'scenes': 0, 'done': 0, 'states': 0, 'cell_states': 0,
+                                                  'estimated_bytes': 0})
         steps = row.get('steps', definition.get('steps'))
         entry['scenes'] += 1
         if (directory / row['id'] / 'receipt.json').is_file():
             entry['done'] += 1
-            continue
-        if row.get('solver_substeps', 1) != 1:
-            entry['not_wired'] += 1
             continue
         cell_states = math.prod(row['counts']) * (steps + 1)
         entry['states'] += steps + 1
@@ -77,7 +74,7 @@ def generate_scene(definition, row, directory):
         shutil.rmtree(partial)
     partial.mkdir(parents=True)
     started = time.perf_counter()
-    with RheonProbe(parameters, probe_for(parameters)) as probe:
+    with RheonProbe(parameters) as probe:
         _, state = probe.state()
         zeros = {name: state.pressure.clone().zero_() for name in ('rhs', 'native_input_residual', 'pressure_base')}
         _save(partial / 'state-000.npz', state, zeros)
@@ -114,9 +111,6 @@ def generate(name, root=None, splits=None, scenes=None, allow_reserved=False, re
         records = {record['identifier']: record for record in json.loads(bank.read_text())['trajectories']}
     for row in rows:
         if (directory / row['id'] / 'receipt.json').is_file() and row['id'] in records:
-            continue
-        if row.get('solver_substeps', 1) != 1:
-            report(f"skipped {row['id']}: needs {row['solver_substeps']} solver substeps per output, not wired yet")
             continue
         if (directory / row['id']).exists():
             shutil.rmtree(directory / row['id'])       # a whole scene the index never recorded: redo it

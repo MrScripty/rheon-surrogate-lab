@@ -1,0 +1,15 @@
+[package]
+name = "rheon-reference-probe"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.92"
+publish = false
+
+[dependencies]
+anyhow = "=1.0.100"
+# Branch lab/reference-solver-v1 of Rheon: the solver that produced the lab's reference data.
+rheon = { git = "https://github.com/MrScripty/Rheon.git", rev = "bbe01bd3b3ed293183e87e1f047fcd512578a8b4", default-features = false, features = ["diagnostic"] }
+serde_json = { version = "=1.0.154", features = ["float_roundtrip"] }
+
+[lints.rust]
+unsafe_code = "forbid"

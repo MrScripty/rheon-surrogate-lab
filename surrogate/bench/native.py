@@ -1,6 +1,6 @@
 """Rheon's own solver as a benchmark subject: one CPU thread, conjugate-gradient pressure solve."""
-from ..solver import RheonProbe, probe_for
-from .runner import Subject, Unsupported
+from ..solver import RheonProbe, probe_path
+from .runner import Subject
 
 
 class NativeRheon(Subject):
@@ -9,14 +9,11 @@ class NativeRheon(Subject):
     attributes = {'kind': 'solver', 'device': 'cpu'}
 
     def __init__(self):
+        self._binary = probe_path()
         self._probe = self._seconds = None
 
     def begin(self, case):
-        try:
-            binary = probe_for(case.parameters)
-        except NotImplementedError as error:
-            raise Unsupported(str(error)) from error
-        self._probe = RheonProbe(case.parameters, binary, density=case.scene.density.item())
+        self._probe = RheonProbe(case.parameters, self._binary, density=case.scene.density.item())
 
     def advance(self, state, forcing, scene, step):
         self._probe.restore(step, state.map(lambda tensor: tensor[0]))

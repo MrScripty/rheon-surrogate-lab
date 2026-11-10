@@ -13,7 +13,7 @@ import torch
 from surrogate import data, datasets
 from surrogate.datasets import __main__ as cli
 from surrogate.datasets import generate
-from surrogate.solver import PROBES, REPOSITORY, pressure_flux, spectral_correction
+from surrogate.solver import PROBE, REPOSITORY, pressure_flux, spectral_correction
 from surrogate.tests.support import sealed_state
 
 # sha256 of every diversity-v1 scene built from its definition (canonical JSON, definition order).
@@ -97,7 +97,6 @@ class SpectralSolve(unittest.TestCase):
             spectral_correction(torch.ones(4, 4, 4, dtype=torch.float64), 0.1, 1000.0)
 
 
-@mock.patch.object(generate, 'probe_for', lambda scene: None)
 @mock.patch.object(generate, 'RheonProbe', FakeProbe)
 class Generation(unittest.TestCase):
     def setUp(self):
@@ -145,11 +144,10 @@ class Generation(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Not in this dataset'):
             self.run_generate(scenes=['no-such-scene'])
 
-    def test_plan_counts_what_is_left_and_what_is_not_wired(self):
+    def test_plan_counts_what_is_left_to_run(self):
         diversity = datasets.load('diversity-v1')
         summary = generate.plan(diversity, generate.select(diversity, ['development']), self.root)['development']
-        self.assertEqual((summary['scenes'], summary['done']), (24, 0))
-        self.assertEqual(summary['scenes'] - summary['not_wired'], summary['states'] // 241)
+        self.assertEqual((summary['scenes'], summary['done'], summary['states']), (24, 0, 24 * 241))
         self.assertEqual(summary['estimated_bytes'], summary['cell_states'] * generate.BYTES_PER_CELL_STATE)
         self.run_generate(scenes=['temporal-g2-cpm8-r0'])
         sinusoidal = datasets.load('sinusoidal-v1')
@@ -165,7 +163,7 @@ class Generation(unittest.TestCase):
         self.assertIn('reserved       52 scenes: 0 on disk', text)
 
 
-@unittest.skipUnless((REPOSITORY / PROBES['scheduled']).is_file(), 'the Rheon probe is not built here')
+@unittest.skipUnless((REPOSITORY / PROBE).is_file(), 'the Rheon reference probe is not built here')
 class RealSolver(unittest.TestCase):
     def test_generates_a_small_scene_with_the_real_solver(self):
         with tempfile.TemporaryDirectory() as directory:

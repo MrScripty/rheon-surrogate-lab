@@ -40,7 +40,15 @@ python -m surrogate.datasets plan diversity-v1                       # scenes, s
 python -m surrogate.datasets generate diversity-v1 --split development
 ```
 
-`generate` writes every output step of each scene under `data/reference/<dataset>/` (ignored by Git; change it with `--root` or `$SURROGATE_DATA`). It runs one scene after another on one CPU thread, skips scenes already on disk, and can be stopped and restarted. Reserved scenes are only generated with `--include-reserved`.
+`generate` writes every output step of each scene under `data/reference/<dataset>/` (ignored by Git; change it with `--root` or `$SURROGATE_DATA`). It runs one scene after another on one CPU thread, skips scenes already complete on disk, and can be stopped and restarted. Reserved scenes are only generated with `--include-reserved`.
+
+On a machine that already holds recordings of these scenes from the earlier studies, `link` uses them in place instead of simulating again. It checks each recording was simulated from exactly the scene the definition builds, then puts symbolic links at the dataset's location:
+
+```sh
+python -m surrogate.datasets link sinusoidal-v1 --bank runs/<study>/<bank>.json [--bank ...]
+```
+
+Training and the benchmark read datasets only from that location, so they behave the same whether the fields were generated or linked.
 
 | Definition | Scenes | What it is |
 | --- | --- | --- |
@@ -88,6 +96,11 @@ The run writes `model.pt` (what the benchmark loads), `resume.pt`, `config.json`
 
 ## What needs local files
 
-On a fresh checkout the tests pass, and data can be generated once the probe is built. The benchmark suites and the pilot training configuration still read the earlier recordings under `runs/`, and the solver composition needs its kernel builds there; `runs/` is not in Git.
+On a fresh checkout the tests pass. After building the probe and generating a dataset, the benchmark suites and training work from that dataset alone.
 
-Of the earlier recordings, only the sinusoidal scenes keep every output step. The diversity recordings keep short windows of at most four outputs, which is what the earlier models were fitted on.
+Two things are not recoverable from Git and exist only where the earlier studies ran:
+
+- The weights of the earlier models (and the packaged inputs they were trained from). Their cards and benchmark results are in the Tuldok project under `projects/`, but the models cannot be run or re-benchmarked without the weights.
+- The solver composition's kernel builds and fitted coefficients under `runs/`, which the `spectral-composition` subject needs.
+
+Of the earlier recordings, only the sinusoidal scenes keep every output step. The diversity recordings keep short windows of at most four outputs, which is what the earlier models were fitted on; `link` makes them usable for those windows, and `generate` replaces them with full scenes.

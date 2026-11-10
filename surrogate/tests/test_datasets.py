@@ -11,10 +11,12 @@ from unittest import mock
 import torch
 
 from surrogate import data, datasets
+from surrogate.bench import suites
 from surrogate.datasets import __main__ as cli
-from surrogate.datasets import generate
+from surrogate.datasets import generate, link
 from surrogate.solver import PROBE, REPOSITORY, pressure_flux, spectral_correction
 from surrogate.tests.support import sealed_state
+from surrogate.tests.test_data import SCENE, write_bank, write_definition
 
 # sha256 of every diversity-v1 scene built from its definition (canonical JSON, definition order).
 # The scenes were checked equal to the 224 the lab's reference data was simulated from; if this
@@ -119,8 +121,7 @@ class Generation(unittest.TestCase):
         self.assertEqual(tuple(first.right_hand_sides(0, 2).shape), (2, 8, 6, 15))
         self.assertEqual(first.forcing(0, 1)[0].shape, (1, 8, 6, 16))
         receipt = json.loads((bank.parent / scenes[0] / 'receipt.json').read_text())
-        self.assertEqual((receipt['dataset'], receipt['solver'], receipt['states']),
-                         ('sinusoidal-v1', 'rheon-reference-v1', 129))
+        self.assertEqual((receipt['dataset'], receipt['origin'], receipt['states']), ('sinusoidal-v1', 'generated', 129))
 
     def test_a_second_run_only_does_what_is_missing(self):
         self.run_generate(scenes=['temporal-g2-cpm8-r0'])
@@ -136,7 +137,7 @@ class Generation(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'rejected step 5'):
                 self.run_generate(scenes=['temporal-g2-cpm8-r0'])
         self.assertFalse((self.root / 'sinusoidal-v1' / 'temporal-g2-cpm8-r0').exists())
-        self.assertFalse((self.root / 'sinusoidal-v1' / 'bank.json').exists())
+        self.assertEqual(data.load_bank(self.root / 'sinusoidal-v1' / 'bank.json'), [])
 
     def test_reserved_scenes_need_an_explicit_decision(self):
         with self.assertRaisesRegex(ValueError, 'final checks only'):
@@ -147,11 +148,12 @@ class Generation(unittest.TestCase):
     def test_plan_counts_what_is_left_to_run(self):
         diversity = datasets.load('diversity-v1')
         summary = generate.plan(diversity, generate.select(diversity, ['development']), self.root)['development']
-        self.assertEqual((summary['scenes'], summary['done'], summary['states']), (24, 0, 24 * 241))
+        self.assertEqual((summary['scenes'], summary['complete'], summary['states']), (24, 0, 24 * 241))
         self.assertEqual(summary['estimated_bytes'], summary['cell_states'] * generate.BYTES_PER_CELL_STATE)
         self.run_generate(scenes=['temporal-g2-cpm8-r0'])
         sinusoidal = datasets.load('sinusoidal-v1')
-        self.assertEqual(generate.plan(sinusoidal, generate.select(sinusoidal, ['train']), self.root)['train']['done'], 1)
+        after = generate.plan(sinusoidal, generate.select(sinusoidal, ['train']), self.root)['train']
+        self.assertEqual((after['complete'], after['partial']), (1, 0))
 
     def test_command_line_lists_and_plans(self):
         output = io.StringIO()
@@ -160,7 +162,67 @@ class Generation(unittest.TestCase):
             cli.main(['plan', 'diversity-v1', '--split', 'reserved', '--root', str(self.root)])
         text = output.getvalue()
         self.assertIn('148 train, 24 development, 52 reserved', text)
-        self.assertIn('reserved       52 scenes: 0 on disk', text)
+        self.assertIn('reserved       52 scenes: 0 complete on disk, 52 to run', text)
+
+
+class Linking(unittest.TestCase):
+    """Recordings that already exist are used in place, and are never simulated again."""
+
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.old = Path(self.directory.name) / 'lab'          # stands in for the repository with its runs/
+        self.root = Path(self.directory.name) / 'data'
+        write_bank(self.old)                                   # dense-scene: steps 0..5; sparse-scene: 0,1,2,5,6
+        write_definition(Path(self.directory.name) / 'definitions', steps=5)
+        patcher = mock.patch.object(datasets, 'DEFINITIONS', Path(self.directory.name) / 'definitions')
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self.addCleanup(self.directory.cleanup)
+        self.messages = []
+
+    def link(self):
+        return link.link('unit-v1', ['bank.json'], self.root, repository=self.old, report=self.messages.append)
+
+    def test_links_complete_and_partial_scenes_without_copying(self):
+        dense, sparse = data.load_bank(self.link())
+        self.assertEqual((dense.id, sorted(dense.paths), dense.starts(5)), ('dense-scene', [0, 1, 2, 3, 4, 5], [0]))
+        self.assertEqual((sorted(sparse.paths), sparse.starts(1)), ([0, 1, 2, 5], [0, 1]))
+        self.assertTrue(dense.paths[3].is_symlink())
+        self.assertTrue(torch.equal(dense.state(3).u, data.load_bank('bank.json', self.old)[0].state(3).u))
+        self.assertIn('linked 2 scenes, 0 already complete; 1 of 2 scenes are complete on disk, 1 have some steps',
+                      self.messages[0])
+        definition = datasets.load('unit-v1')
+        summary = generate.plan(definition, definition['scenes'], self.root)
+        self.assertEqual((summary['train']['complete'], summary['development']['partial']), (1, 1))
+
+    def test_a_recording_of_a_different_scene_is_refused(self):
+        receipt = self.old / 'runs/dense-scene/receipt.json'
+        receipt.write_text(json.dumps({'scene': {**SCENE, 'swirl': 0.5}}))
+        with self.assertRaisesRegex(ValueError, 'different scene'):
+            self.link()
+
+    @mock.patch.object(generate, 'RheonProbe', FakeProbe)
+    def test_generation_skips_linked_complete_scenes_and_completes_partial_ones(self):
+        self.link()
+        generated = []
+        bank = generate.generate('unit-v1', self.root, splits=['train', 'development'], report=generated.append)
+        self.assertEqual(len(generated), 1)
+        self.assertIn('sparse-scene', generated[0])
+        dense, sparse = data.load_bank(bank)
+        self.assertTrue(dense.paths[0].is_symlink())           # still the original recording
+        self.assertEqual((sorted(sparse.paths), sparse.paths[0].is_symlink()), ([0, 1, 2, 3, 4, 5], False))
+        self.link()
+        self.assertIn('linked 0 scenes, 2 already complete', self.messages[-1])
+
+    def test_a_suite_needs_every_scene_of_its_split_and_says_how_to_get_them(self):
+        unit = {'label': 'Unit', 'population': 'consumed', 'description': 'x', 'dataset': 'unit-v1',
+                'split': 'development', 'starts': [0], 'intervals': 2, 'velocity_error_limit': 0.1}
+        with mock.patch.dict(suites.SPECIFICATIONS, {'unit': unit}):
+            with self.assertRaisesRegex(FileNotFoundError, 'python -m surrogate.datasets'):
+                suites.build('unit', self.root)
+            self.link()
+            (case,) = list(suites.build('unit', self.root).cases)
+            self.assertEqual((case.id, case.intervals), ('sparse-scene.start-0', 2))
 
 
 @unittest.skipUnless((REPOSITORY / PROBE).is_file(), 'the Rheon reference probe is not built here')

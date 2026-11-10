@@ -186,6 +186,7 @@ class RheonProbe:
             if self._child.poll() is None:
                 self._child.kill()
                 self._child.wait()
+            self._child.stdout.close()
             self._errors.close()
             self._child = None
 

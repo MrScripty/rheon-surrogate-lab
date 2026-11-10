@@ -21,10 +21,11 @@ from pathlib import Path
 
 import torch
 
-from . import data
+from . import data, datasets
 from .bench.metrics import relative_error
 from .bench.results import git_identity
 from .checkpoint import save_stepper
+from .datasets.store import bank_path
 from .fields import curl, remove_mean, seal_potential
 from .models import DivergenceFreeStepper, StepperConfig
 
@@ -33,9 +34,8 @@ from .models import DivergenceFreeStepper, StepperConfig
 class TrainingConfig:
     name: str
     label: str
-    train_banks: list
-    development_banks: list
-    # Which of a bank's trajectories are used, by the split label the bank gives them.
+    datasets: list                                     # dataset names; their fields must be under the data root
+    # Which scenes are fitted and which are only evaluated, by the split their dataset gives them.
     train_splits: list = field(default_factory=lambda: ['train'])
     development_splits: list = field(default_factory=lambda: ['development'])
     model: dict = field(default_factory=dict)          # StepperConfig fields except the measured scales
@@ -187,19 +187,24 @@ def evaluate(model, trajectories, outputs, device):
     return sum(errors) / len(errors) if errors else None
 
 
-def train(config, output, device, resume=False, repository=data.REPOSITORY):
-    """Run or continue a training run; returns the path of the saved model. Bank paths are relative to `repository`."""
+def train(config, output, device, resume=False, root=None):
+    """Run or continue a training run; returns the path of the saved model. `root` is the data root."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     device = torch.device(device)
     identity = git_identity()
     torch.manual_seed(config.seed)
     generator = torch.Generator().manual_seed(config.seed)
-    training = [t for t in data.load_banks(config.train_banks, repository) if t.split in config.train_splits]
-    development = [t for t in data.load_banks(config.development_banks, repository)
-                   if t.split in config.development_splits]
+    banks = [bank_path(datasets.load(name), root) for name in config.datasets]
+    missing = [str(bank.parent) for bank in banks if not bank.is_file()]
+    if missing:
+        raise FileNotFoundError(f'No fields on disk for {missing}; generate or link the dataset first '
+                                f'(python -m surrogate.datasets).')
+    trajectories = data.load_banks(banks)
+    training = [t for t in trajectories if t.split in config.train_splits]
+    development = [t for t in trajectories if t.split in config.development_splits]
     if not training:
-        raise ValueError(f'The training banks contain no trajectory with split {config.train_splits}.')
+        raise ValueError(f'The datasets on disk contain no trajectory with split {config.train_splits}.')
     shared = {t.id for t in training} & {t.id for t in development}
     if shared:
         raise ValueError(f'{len(shared)} trajectories are in both the training and development sets, '

@@ -5,18 +5,20 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 import torch
 
-from surrogate import train
+from surrogate import datasets, train
 from surrogate.bench.subjects import LearnedStepper
+from surrogate.datasets import link
 from surrogate.fields import divergence
 from surrogate.tests.support import sealed_state
-from surrogate.tests.test_data import write_bank
+from surrogate.tests.test_data import write_bank, write_definition
 
 
 def config(**changes):
-    settings = dict(name='unit-run', label='Unit run', train_banks=['bank.json'], development_banks=['bank.json'],
+    settings = dict(name='unit-run', label='Unit run', datasets=['unit-v1'],
                     model={'outputs_per_pass': 1, 'widths': [6, 8], 'blocks_per_level': 1}, updates=4,
                     rollout_schedule=[[0, 1], [2, 2]], cells_per_batch=240, warmup_updates=2, report_every=2,
                     evaluate_every=4, evaluation_outputs=2, input_noise=0.05)
@@ -26,18 +28,24 @@ def config(**changes):
 class Training(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
-        self.root = Path(self.directory.name)
-        write_bank(self.root, dense_states=8)
+        self.root = Path(self.directory.name) / 'data'
+        old = Path(self.directory.name) / 'lab'
+        write_bank(old, dense_states=8)
+        write_definition(Path(self.directory.name) / 'definitions', steps=7)
+        patcher = mock.patch.object(datasets, 'DEFINITIONS', Path(self.directory.name) / 'definitions')
         quiet = contextlib.redirect_stdout(io.StringIO())   # train() prints each report line
+        patcher.start()
         quiet.__enter__()
         self.addCleanup(self.directory.cleanup)
         self.addCleanup(quiet.__exit__, None, None, None)
+        self.addCleanup(patcher.stop)
+        link.link('unit-v1', ['bank.json'], self.root, repository=old)
 
     def train(self, settings, resume=False):
-        return train.train(settings, self.root / 'run', 'cpu', resume, repository=self.root)
+        return train.train(settings, Path(self.directory.name) / 'run', 'cpu', resume, root=self.root)
 
     def test_runs_saves_a_loadable_model_and_logs_each_report(self):
-        output = self.root / 'run'
+        output = Path(self.directory.name) / 'run'
         path = self.train(config())
         lines = [json.loads(line) for line in (output / 'log.jsonl').read_text().splitlines()]
         self.assertEqual([line['update'] for line in lines], [2, 4])
@@ -52,16 +60,17 @@ class Training(unittest.TestCase):
         self.assertEqual(subject.model.config.velocity_scale, saved['scales']['velocity_scale'])
 
     def test_resume_continues_from_the_saved_update(self):
-        output = self.root / 'run'
+        output = Path(self.directory.name) / 'run'
         self.train(config())
         self.train(config(updates=6), resume=True)
         updates = [json.loads(line)['update'] for line in (output / 'log.jsonl').read_text().splitlines()]
         self.assertEqual(updates, [2, 4, 6])
 
-    def test_a_bank_without_training_trajectories_is_refused(self):
-        (self.root / 'empty.json').write_text(json.dumps({'trajectories': []}))
+    def test_missing_fields_and_empty_splits_are_refused_with_the_way_forward(self):
+        with self.assertRaisesRegex(FileNotFoundError, 'generate or link the dataset first'):
+            train.train(config(), Path(self.directory.name) / 'run', 'cpu', root=self.root / 'elsewhere')
         with self.assertRaisesRegex(ValueError, 'no trajectory with split'):
-            self.train(config(train_banks=['empty.json']))
+            self.train(config(train_splits=['reserved']))
 
     def test_a_trajectory_may_not_be_both_fitted_and_used_for_development(self):
         with self.assertRaisesRegex(ValueError, 'both the training and development sets'):

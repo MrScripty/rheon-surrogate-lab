@@ -1,35 +1,22 @@
 """Simulate a dataset definition's scenes and keep every output step on disk.
 
-Output goes under a data root (default: `data/reference/` in this repository,
-which Git ignores), one folder per dataset:
-
-    <root>/<dataset>/bank.json                     index that surrogate.data.load_bank reads
-    <root>/<dataset>/<scene>/receipt.json          the scene's parameters and how it was produced
-    <root>/<dataset>/<scene>/state-NNN.npz         one file per output step, 0..steps
-
 A scene is written to a temporary folder and renamed when complete, so an
 interrupted run leaves only whole scenes and can simply be started again.
+Scenes that are already complete on disk are never simulated again.
 """
 import json
 import math
-import os
 import shutil
 import time
-from pathlib import Path
 
 import numpy as np
 
-from ..solver import REPOSITORY, RheonProbe
+from ..solver import RheonProbe
 from . import load, scene
+from .store import data_root, is_complete, read_records, record, steps_of, write_records
 
-DEFAULT_ROOT = REPOSITORY / 'data' / 'reference'
 # Measured on the lab's existing compressed state files (27 to 36 bytes per cell per state).
 BYTES_PER_CELL_STATE = 36
-
-
-def data_root(root=None):
-    """Where generated datasets live: the argument, else $SURROGATE_DATA, else data/reference in the repository."""
-    return Path(root or os.environ.get('SURROGATE_DATA') or DEFAULT_ROOT)
 
 
 def select(definition, splits=None, scenes=None):
@@ -41,18 +28,19 @@ def select(definition, splits=None, scenes=None):
     return rows
 
 
-def plan(definition, rows, root):
+def plan(definition, rows, root=None):
     """What generating `rows` involves: per split, scenes still to run, states, cells and estimated bytes."""
-    directory = root / definition['id']
+    records = read_records(definition, root)
     summary = {}
     for row in rows:
-        entry = summary.setdefault(row['split'], {'scenes': 0, 'done': 0, 'states': 0, 'cell_states': 0,
-                                                  'estimated_bytes': 0})
-        steps = row.get('steps', definition.get('steps'))
+        entry = summary.setdefault(row['split'], {'scenes': 0, 'complete': 0, 'partial': 0, 'states': 0,
+                                                  'cell_states': 0, 'estimated_bytes': 0})
+        steps = steps_of(definition, row)
         entry['scenes'] += 1
-        if (directory / row['id'] / 'receipt.json').is_file():
-            entry['done'] += 1
+        if is_complete(records.get(row['id']), steps):
+            entry['complete'] += 1
             continue
+        entry['partial'] += row['id'] in records
         cell_states = math.prod(row['counts']) * (steps + 1)
         entry['states'] += steps + 1
         entry['cell_states'] += cell_states
@@ -66,7 +54,7 @@ def _save(path, state, labels):
 
 
 def generate_scene(definition, row, directory):
-    """Simulate one scene into `directory` (must not exist). Returns its bank record."""
+    """Simulate one scene into `directory`, replacing whatever is there. Returns its index entry."""
     parameters = scene(definition, row)
     steps = parameters['steps']
     partial = directory.with_name(directory.name + '.partial')
@@ -80,46 +68,36 @@ def generate_scene(definition, row, directory):
         _save(partial / 'state-000.npz', state, zeros)
         for step in range(1, steps + 1):
             report, labels = probe.advance_reference()
-            if not report['advanced'] or report['step'] != step:
+            reached, state = probe.state()
+            if not report['advanced'] or reached != step:
                 raise RuntimeError(f"The solver rejected step {step} of {row['id']}: {report.get('quality')}")
-            _save(partial / f'state-{step:03d}.npz', probe.state()[1], labels)
+            _save(partial / f'state-{step:03d}.npz', state, labels)
     receipt = {'identifier': row['id'], 'split': row['split'], 'group': row['group'], 'dataset': definition['id'],
-               'solver': definition['solver'], 'pressure_solve': 'exact cosine transform on the solver\'s requests',
+               'origin': 'generated', 'solver': definition['solver'],
+               'pressure_solve': "exact cosine transform on the solver's requests",
                'scene': parameters, 'states': steps + 1, 'elapsed_seconds': time.perf_counter() - started}
     (partial / 'receipt.json').write_text(json.dumps(receipt) + '\n')
+    if directory.exists():
+        shutil.rmtree(directory)       # an incomplete scene (for example linked windows): the full one replaces it
     partial.rename(directory)
-    record = {'identifier': row['id'], 'split': row['split'], 'counts_xyz': row['counts'],
-              'cells_per_metre': row['cells_per_metre'], 'states': steps + 1, 'receipt': f"{row['id']}/receipt.json"}
-    for name in ('group', 'profile', 'motion'):
-        if name in row:
-            record[name] = row[name]
-    return record
+    return record(row, range(steps + 1))
 
 
 def generate(name, root=None, splits=None, scenes=None, allow_reserved=False, report=print):
-    """Generate the chosen scenes of dataset `name` that are not on disk yet; returns the bank path."""
+    """Generate the chosen scenes of dataset `name` that are not complete on disk; returns the index path."""
     definition = load(name)
     rows = select(definition, splits, scenes)
     if any(row['split'] == 'reserved' for row in rows) and not allow_reserved:
         raise ValueError('This selection includes reserved scenes. Reserved scenes are for final checks only; '
                          'pass allow_reserved to generate them on purpose.')
     directory = data_root(root) / definition['id']
-    directory.mkdir(parents=True, exist_ok=True)
-    bank = directory / 'bank.json'
-    records = {}
-    if bank.is_file():
-        records = {record['identifier']: record for record in json.loads(bank.read_text())['trajectories']}
+    records = read_records(definition, root)
+    bank = write_records(definition, records, root)
     for row in rows:
-        if (directory / row['id'] / 'receipt.json').is_file() and row['id'] in records:
+        if is_complete(records.get(row['id']), steps_of(definition, row)):
             continue
-        if (directory / row['id']).exists():
-            shutil.rmtree(directory / row['id'])       # a whole scene the index never recorded: redo it
         started = time.perf_counter()
         records[row['id']] = generate_scene(definition, row, directory / row['id'])
-        document = {'dataset': definition['id'], 'paths_relative_to': 'bank',
-                    'trajectories': [records[r['id']] for r in definition['scenes'] if r['id'] in records]}
-        temporary = bank.with_suffix('.json.partial')
-        temporary.write_text(json.dumps(document, indent=1) + '\n')
-        temporary.replace(bank)
+        write_records(definition, records, root)
         report(f"generated {row['id']} ({records[row['id']]['states']} states, {time.perf_counter() - started:.1f} s)")
     return bank

@@ -49,6 +49,17 @@ def write_bank(root, dense_states=6, sparse_steps=(0, 1, 2, 5, 6)):
     return start
 
 
+def write_definition(directory, steps=5):
+    """A dataset definition `unit-v1` whose two scenes are the ones write_bank records."""
+    keys = ('seed', 'counts', 'cells_per_metre', 'center', 'acceleration', 'radius', 'swirl', 'fluctuation', 'frequency')
+    rows = [{'id': name, 'split': split, 'group': name, **{key: SCENE[key] for key in keys}}
+            for name, split in (('dense-scene', 'train'), ('sparse-scene', 'development'))]
+    Path(directory).mkdir(parents=True, exist_ok=True)
+    (Path(directory) / 'unit-v1.json').write_text(json.dumps(
+        {'id': 'unit-v1', 'label': 'Unit dataset', 'description': 'Two synthetic scenes.',
+         'scene_family': 'sinusoidal-forcing', 'solver': 'none', 'steps': steps, 'scenes': rows}))
+
+
 class Banks(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()

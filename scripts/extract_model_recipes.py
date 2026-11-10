@@ -11,7 +11,9 @@ what a person or a tool needs to retrain a model:
         command, entrypoint   what was run
         settings              the training settings (the run's config.json)
         inputs                the prepared files it read; `from_model` names the earlier
-                              model whose weights an input is
+                              model whose weights an input is, and `training_set` names the
+                              entry of notes/recipes/training-sets.json that says which
+                              script prepared the file and from what
         sources               the code and settings files the run used
         outputs, device, ...
 
@@ -23,6 +25,7 @@ Usage: python scripts/extract_model_recipes.py projects/<project-directory> [--c
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -60,9 +63,42 @@ def _settings_source(recipe, sources):
     return named[0] if len(named) == 1 else None
 
 
+class TrainingSets:
+    """notes/recipes/training-sets.json: the hand-traced account of how each prepared input was produced."""
+
+    def __init__(self, path):
+        self.document = _load(path) if Path(path).is_file() else {'training_sets': [], 'not_training_data': []}
+        self.by_folder, self.patterns = {}, []
+        for kind, key in (('training data', 'training_sets'), ('not training data', 'not_training_data')):
+            for entry in self.document[key]:
+                for folder in entry.get('folders', []):
+                    self.by_folder[folder] = (kind, entry['id'])
+                if 'folder_pattern' in entry:
+                    self.patterns.append((re.compile(entry['folder_pattern']), kind, entry['id']))
+
+    def find(self, path):
+        """(kind, id) for the folder a file was read from, or (None, None)."""
+        folder = str(Path(path).parent) if '/' in path else ''
+        if folder in self.by_folder:
+            return self.by_folder[folder]
+        for pattern, kind, identity in self.patterns:
+            if pattern.search(folder):
+                return kind, identity
+        return None, None
+
+    def scripts(self):
+        """Every repository path the document names as a script or settings file."""
+        entries = self.document['training_sets'] + self.document.get('recordings', [])
+        keys = ('prepared_by', 'views_prepared_by', 'settings', 'originally_captured_by', 'indexed_by',
+                'builds_prepared_by')
+        return sorted({item.split(' (')[0].split(',')[0] for entry in entries for key in keys
+                       for item in entry.get(key, [])})
+
+
 class Project:
     def __init__(self, directory):
         self.directory = Path(directory)
+        self.training_sets = TrainingSets(self.directory / 'notes' / 'recipes' / 'training-sets.json')
         manifest = _load(self.directory / '.tuldok' / 'project.json')
         self.runs = {}
         for entry in manifest['inventory']:
@@ -150,8 +186,15 @@ class Project:
             entry = {'name': name, 'path': reference.get('path'), 'bytes': blob.get('bytes')}
             parents = sorted({self.fit_of_run[r]['name'] for r in self.weights_from.get(blob.get('sha256'), ())
                               if r in self.fit_of_run and r != run_id})
+            kind, training_set = self.training_sets.find(reference.get('path') or '')
             if parents:
+                entry['kind'] = 'earlier model weights'
                 entry['from_model'] = parents[0] if len(parents) == 1 else parents
+            elif training_set == 'starting-weights':
+                entry['kind'] = 'earlier model weights'
+            elif training_set:
+                entry['kind'] = kind
+                entry['training_set'] = training_set
             inputs.append(entry)
         return {
             'model': fit['name'], 'fit_id': fit['item_id'], 'card': fit['card_path'],
@@ -195,10 +238,16 @@ def main():
         written += 1
     for line in skipped:
         print('no recipe: ' + line, file=sys.stderr)
+    repository = arguments.project.resolve().parents[1]
+    tracked = set(subprocess.run(['git', 'ls-files'], cwd=repository, check=True, capture_output=True,
+                                 text=True).stdout.splitlines())
+    absent = [path for path in project.training_sets.scripts() if path not in tracked]
+    for path in absent:
+        print(f'training-sets.json names {path}, which is not in the repository', file=sys.stderr)
     if arguments.check:
         for path in stale:
             print(f'{path} is missing or out of date; run without --check.', file=sys.stderr)
-        return 1 if stale else 0
+        return 1 if stale or absent else 0
     print(f'{target}: {written} recipes written, {len(skipped)} models without one')
     return 0
 

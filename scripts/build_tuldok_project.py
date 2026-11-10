@@ -807,7 +807,8 @@ class Benchmarks:
                 raise ValueError(f'Two subjects of {title!r} become the name {entry["name"]!r}.')
             names.add(entry['name'])
             label = subject.get('label') or identifier
-            entry['title'] = (identifier if label == identifier else f'{identifier} · {label}')[:200]
+            # Many labels already begin with the id ("C16 · GPU pressure request"); do not repeat it.
+            entry['title'] = (label if label.startswith(identifier) else f'{identifier} · {label}')[:200]
             recipe, route = self.matcher.match(subject)
             self.matches.append((name, identifier, recipe, route))
             if recipe:

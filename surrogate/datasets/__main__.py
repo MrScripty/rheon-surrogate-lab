@@ -1,7 +1,7 @@
 """List, size, link and generate reference datasets.
 
     python -m surrogate.datasets list
-    python -m surrogate.datasets plan NAME [--split SPLIT ...] [--root DIRECTORY]
+    python -m surrogate.datasets plan NAME [--split SPLIT ...] [--root DIRECTORY] [--json]
     python -m surrogate.datasets link NAME --bank INDEX [--bank INDEX ...] [--root DIRECTORY]
     python -m surrogate.datasets generate NAME --split SPLIT ... [--scene ID ...] [--root DIRECTORY]
 
@@ -11,6 +11,7 @@ under runs/) instead of simulating them again. `generate` runs the solver, one
 scene after another on one CPU thread, and skips scenes already complete.
 """
 import argparse
+import json
 import shutil
 import sys
 
@@ -18,6 +19,20 @@ from . import SPLITS, available, load
 from .generate import generate, plan, select
 from .link import link
 from .store import data_root
+
+
+def totals(summary):
+    """The plan summed over its splits, as the flat object `plan --json` prints."""
+    entries = summary.values()
+    complete = sum(entry['complete'] for entry in entries)
+    items = sum(entry['scenes'] for entry in entries)
+    return {'disk_bytes': sum(entry['estimated_bytes'] for entry in entries),
+            'items': items,
+            'complete': complete,
+            'to_run': items - complete,
+            'partial': sum(entry['partial'] for entry in entries),
+            'states': sum(entry['states'] for entry in entries),
+            'cell_states': sum(entry['cell_states'] for entry in entries)}
 
 
 def main(arguments=None):
@@ -31,6 +46,9 @@ def main(arguments=None):
         command.add_argument('--split', action='append', choices=SPLITS, dest='splits')
         command.add_argument('--scene', action='append', dest='scenes')
         command.add_argument('--root', help='data root (default: $SURROGATE_DATA or data/reference in the repository)')
+        if name == 'plan':
+            command.add_argument('--json', action='store_true',
+                                 help='print the totals as one JSON object instead of the text summary')
         if name == 'generate':
             command.add_argument('--include-reserved', action='store_true',
                                  help='allow generating reserved scenes, which are for final checks only')
@@ -55,9 +73,13 @@ def main(arguments=None):
     root = data_root(options.root)
     if options.command == 'plan':
         rows = select(definition, options.splits, options.scenes)
+        summary = plan(definition, rows, options.root)
+        if options.json:
+            print(json.dumps(totals(summary)))
+            return 0
         total = 0
         print(f"{definition['id']} -> {root / definition['id']}")
-        for split, entry in plan(definition, rows, options.root).items():
+        for split, entry in summary.items():
             total += entry['estimated_bytes']
             to_run = entry['scenes'] - entry['complete']
             print(f"  {split:12s} {entry['scenes']:4d} scenes: {entry['complete']} complete on disk, {to_run} to "

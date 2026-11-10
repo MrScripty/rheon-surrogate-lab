@@ -164,6 +164,44 @@ class Generation(unittest.TestCase):
         self.assertIn('148 train, 24 development, 52 reserved', text)
         self.assertIn('reserved       52 scenes: 0 complete on disk, 52 to run', text)
 
+    def plan_output(self, *arguments):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            self.assertEqual(cli.main(['plan', *arguments, '--root', str(self.root)]), 0)
+        return output.getvalue()
+
+    def test_command_line_plans_as_json(self):
+        self.run_generate(scenes=['temporal-g2-cpm8-r0'])
+        for selection, splits, chosen in (
+                (['sinusoidal-v1', '--split', 'train', '--split', 'development'], ['train', 'development'], None),
+                (['diversity-v1', '--split', 'reserved'], ['reserved'], None),
+                (['sinusoidal-v1', '--scene', 'temporal-g2-cpm8-r0'], None, ['temporal-g2-cpm8-r0'])):
+            with self.subTest(selection=selection):
+                printed = self.plan_output(*selection, '--json')
+                self.assertEqual(printed.count('\n'), 1)
+                figures = json.loads(printed)
+                self.assertEqual(set(figures), {'disk_bytes', 'items', 'complete', 'to_run', 'partial',
+                                                'states', 'cell_states'})
+                self.assertTrue(all(type(value) is int for value in figures.values()))
+                self.assertNotIn('wall_seconds', figures)
+                text = self.plan_output(*selection).splitlines()
+                lines = text[1:-1]
+                counts = [int(line.split()[1]) for line in lines]
+                complete = [int(line.split('scenes: ')[1].split()[0]) for line in lines]
+                states = [int(line.split('-> ')[1].split()[0]) for line in lines]
+                gigabytes = [float(line.split('about ')[1].split()[0]) for line in lines]
+                self.assertEqual(figures['items'], sum(counts))
+                self.assertEqual(figures['complete'], sum(complete))
+                self.assertEqual(figures['to_run'], sum(counts) - sum(complete))
+                self.assertEqual(figures['states'], sum(states))
+                self.assertAlmostEqual(figures['disk_bytes'] / 1e9, sum(gigabytes), delta=0.05 * len(lines))
+                self.assertEqual(f"{figures['disk_bytes'] / 1e9:.1f}", text[-1].split('about ')[1].split()[0])
+                definition = datasets.load(selection[0])
+                summary = generate.plan(definition, generate.select(definition, splits, chosen), self.root)
+                self.assertEqual(figures['disk_bytes'], sum(entry['estimated_bytes'] for entry in summary.values()))
+        figures = json.loads(self.plan_output('sinusoidal-v1', '--scene', 'temporal-g2-cpm8-r0', '--json'))
+        self.assertEqual((figures['items'], figures['complete'], figures['disk_bytes']), (1, 1, 0))
+
 
 class Linking(unittest.TestCase):
     """Recordings that already exist are used in place, and are never simulated again."""

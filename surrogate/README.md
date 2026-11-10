@@ -40,6 +40,8 @@ python -m surrogate.datasets plan diversity-v1                       # scenes, s
 python -m surrogate.datasets generate diversity-v1 --split development
 ```
 
+`plan --json` prints the same selection's totals as one JSON object (`disk_bytes`, `items`, `complete`, `to_run`, `partial`, `states`, `cell_states`); `disk_bytes` and the state counts cover only the scenes not yet complete on disk.
+
 `generate` writes every output step of each scene under `data/reference/<dataset>/` (ignored by Git; change it with `--root` or `$SURROGATE_DATA`). It runs one scene after another on one CPU thread, skips scenes already complete on disk, and can be stopped and restarted. Reserved scenes are only generated with `--include-reserved`.
 
 On a machine that already holds recordings of these scenes from the earlier studies, `link` uses them in place instead of simulating again. It checks each recording was simulated from exactly the scene the definition builds, then puts symbolic links at the dataset's location:

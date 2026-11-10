@@ -1,0 +1,31 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "current-policy-bank-02",
+ "description": "Early and late correction states produced by running a trained pressure model on the training scenes. Prepared by: experiments/pressure-current-policy-v1/prepare.py; experiments/pressure-current-policy-v1/freeze_bank.py. Built from: dependency-training-inputs. Settings: experiments/pressure-current-policy-v1/configs/preparation.json. Computed with the weights of: the weight003 model of pressure-feedback-weight-ablation-v1 (itself trained on dependency-training-inputs). The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'prepare.py into preparation-02, then freeze_bank.py --root . --preparation runs/pressure-current-policy-v1/preparation-02 --output runs/pressure-current-policy-v1/bank-02'. Its files sat in: runs/pressure-current-policy-v1/bank-02. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "after-inputs"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-current-policy-v1/freeze_bank.py",
+   "--root",
+   ".",
+   "--preparation",
+   "{inputs.first}",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "dependency_training_inputs": "datasets/dependency-training-inputs",
+   "first": "steps/current-policy-bank-02-first"
+  },
+  "sources": [
+   "experiments/pressure-current-policy-v1/configs/preparation.json",
+   "experiments/pressure-current-policy-v1/freeze_bank.py",
+   "experiments/pressure-current-policy-v1/prepare.py"
+  ]
+ }
+}

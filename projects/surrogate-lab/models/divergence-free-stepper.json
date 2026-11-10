@@ -1,0 +1,12 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "model",
+ "title": "Divergence-free U-Net stepper",
+ "description": "A 3D U-Net that predicts a vector potential; the velocity change is its curl, so every output is divergence free and sealed whatever the weights are. It advances a fluid state by one or more output intervals per pass. The architecture settings (outputs per pass, widths, blocks per level) come from the model section of a training configuration.",
+ "entry": "surrogate.models:DivergenceFreeStepper",
+ "sources": [
+  "surrogate/models/stepper.py",
+  "surrogate/models/unet3d.py",
+  "surrogate/fields.py"
+ ]
+}

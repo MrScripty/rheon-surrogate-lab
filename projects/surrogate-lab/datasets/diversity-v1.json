@@ -1,0 +1,36 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "Diversity scenes v1",
+ "description": "Sealed boxes of water pushed by one moving, pulsing forcing blob: 40 forcing groups, each at up to six cell densities from 8 to 100 cells per metre, grids up to 128 cubed. Splits are by forcing group. The reserved scenes have never been simulated. The scene table is surrogate/datasets/definitions/diversity-v1.json. The command simulates the train and development scenes one after another on one CPU thread and writes them under diversity-v1/ in the output directory. Reserved scenes are for final checks only and are not generated here (surrogate.datasets generate needs --include-reserved for them).",
+ "run": {
+  "command": ["python", "-m", "surrogate.datasets", "generate", "diversity-v1", "--root", "{output}", "--split", "train", "--split", "development"],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "solver": {"from": "steps/reference-solver", "output": "probe"}
+  },
+  "env": {
+   "SURROGATE_PROBE": "{inputs.solver}"
+  },
+  "outputs": {
+   "bank": {"path": "diversity-v1/bank.json", "role": "data"}
+  },
+  "resources": {
+   "cpu_threads": 1
+  },
+  "sources": [
+   "surrogate/datasets",
+   "surrogate/scenes.py",
+   "surrogate/solver.py",
+   "surrogate/fields.py"
+  ],
+  "estimate": {
+   "command": ["python", "-m", "surrogate.datasets", "plan", "diversity-v1", "--root", "{output}", "--split", "train", "--split", "development", "--json"]
+  }
+ },
+ "splits": {
+  "train": 148,
+  "development": 24,
+  "reserved": 52
+ }
+}

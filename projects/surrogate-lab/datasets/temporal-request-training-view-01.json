@@ -1,0 +1,25 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "temporal-request-training-view-01",
+ "description": "Velocities from temporal-training-view-02 with the pressure right-hand side of the same states. Prepared by: experiments/full-ai-next-priorities-v1/pack_pressure_request_view.py. Built from: temporal-training-view-02; sinusoidal-recordings (train split). The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'pack_pressure_request_view.py --output runs/full-ai-next-priorities-v1/temporal-request-training-view-01'. Its files sat in: runs/full-ai-next-priorities-v1/temporal-request-training-view-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/pack_pressure_request_view.py",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "sinusoidal_v1": "datasets/sinusoidal-v1",
+   "temporal_training_view_02": "datasets/temporal-training-view-02"
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/pack_pressure_request_view.py"
+  ]
+ }
+}

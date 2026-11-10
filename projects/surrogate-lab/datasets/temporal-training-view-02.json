@@ -1,0 +1,24 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "temporal-training-view-02",
+ "description": "All 129 states of the 16 sinusoidal training scenes, packed losslessly, with one scale each for pressure, velocity and tracer. Prepared by: experiments/full-ai-next-priorities-v1/pack_temporal.py; experiments/full-ai-next-priorities-v1/finish_temporal_view.py. Built from: sinusoidal-recordings (train split). The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'pack_temporal.py then finish_temporal_view.py; neither takes arguments'. No randomness. The packing step stopped at its own size limit after writing the archive and the finish step completed the view. Rebuildable from the dataset alone. Its files sat in: runs/full-ai-next-priorities-v1/temporal-training-view-02. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines. The script writes to fixed paths under runs/, not to the output directory Tuldok gives it.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/finish_temporal_view.py"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "first": "steps/temporal-training-view-02-first",
+   "sinusoidal_v1": "datasets/sinusoidal-v1"
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/finish_temporal_view.py",
+   "experiments/full-ai-next-priorities-v1/pack_temporal.py"
+  ]
+ }
+}

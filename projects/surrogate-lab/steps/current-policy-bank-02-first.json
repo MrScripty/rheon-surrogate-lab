@@ -1,0 +1,25 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "step",
+ "title": "current-policy-bank-02, first stage",
+ "description": "The first of the two commands that prepared the earlier training set current-policy-bank-02; see datasets/current-policy-bank-02.",
+ "earlier_work": {
+  "rebuild": "after-inputs"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-current-policy-v1/prepare.py",
+   "--root",
+   ".",
+   "--config",
+   "experiments/pressure-current-policy-v1/configs/preparation.json",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "sources": [
+   "experiments/pressure-current-policy-v1/prepare.py"
+  ]
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "shared-spectral-view-01",
+ "description": "Pressure and right-hand side of all 148 diversity training scenes at eight states. Prepared by: experiments/full-ai-data-diversity-v1/prepare_shared_spectral_view_v1.py. Built from: diversity-recordings (train split). Settings: docs/plans/full-ai-data-diversity-v1/shared-spectral-view-protocol-01.json. The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'prepare_shared_spectral_view_v1.py --protocol <settings file> --output <folder>'. Seeded. Pins the system FFTW library by fingerprint. Its files sat in: runs/full-ai-data-diversity-v1/shared-spectral-view-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-data-diversity-v1/prepare_shared_spectral_view_v1.py",
+   "--protocol",
+   "docs/plans/full-ai-data-diversity-v1/shared-spectral-view-protocol-01.json",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "diversity_v1": "datasets/diversity-v1"
+  },
+  "sources": [
+   "docs/plans/full-ai-data-diversity-v1/shared-spectral-view-protocol-01.json",
+   "experiments/full-ai-data-diversity-v1/prepare_shared_spectral_view_v1.py"
+  ]
+ }
+}

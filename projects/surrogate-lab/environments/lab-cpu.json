@@ -1,0 +1,16 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "environment",
+ "title": "Lab CPU environment",
+ "description": "The lab's .venv: tests, dataset generation and anything else that runs on the CPU. The full list of pinned packages is the lock file.",
+ "python": "3.12",
+ "device": "cpu",
+ "packages": {
+  "numpy": "2.3.5",
+  "torch": "2.8.0+cpu"
+ },
+ "install": {
+  "requirements": "tuldok/requirements-cpu.lock",
+  "index_urls": ["https://download.pytorch.org/whl/cpu"]
+ }
+}

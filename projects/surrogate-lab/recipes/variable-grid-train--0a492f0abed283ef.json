@@ -1,0 +1,292 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Variable-grid train",
+ "description": "Earlier model, trained 2026-10-14 by Tuldok run f94e2a345cb14cdf8672365dbe8d615f (Variable-grid train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/variable-grid-train--0a492f0abed283ef.md",
+ "labels": {
+  "fit_id": "fit-0a492f0abed283ef",
+  "tuldok_run": "f94e2a345cb14cdf8672365dbe8d615f",
+  "trained_at": "2026-10-14T23:56:02.594928+00:00",
+  "input:dataset": "runs/variable-pressure-v1-workspace-1/project/inputs/dataset.npz",
+  "input:splits": "runs/variable-pressure-v1-workspace-1/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: 2 of its source files have no tracked copy in Git (for example runs/variable-pressure-v1-workspace-1/project/qualification.json)."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/variable-pressure-v1/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "runs/variable-pressure-v1-workspace-1/project/source-witness.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "dataset": "datasets/variable-pressure-project-inputs",
+   "splits": "datasets/variable-pressure-project-inputs"
+  },
+  "settings": {
+   "captures": [
+    {
+     "cells_per_metre": 8,
+     "experiment": {
+      "geometries_extents_m": {
+       "g0": [
+        1.0,
+        1.0,
+        1.0
+       ],
+       "g1": [
+        1.125,
+        0.875,
+        0.625
+       ],
+       "g2": [
+        1.5,
+        1.0,
+        0.75
+       ]
+      },
+      "id": "variable-cubic-density-8",
+      "resources": {
+       "max_output_bytes": 33554432,
+       "wall_seconds": 600
+      },
+      "schema": "rheon-local-pressure-experiment-v1",
+      "training": {
+       "batch_size": 2,
+       "checkpoint_interval": 20,
+       "learning_rate": 0.001,
+       "model": "groupnorm-v1",
+       "seed": 20261014,
+       "updates": 200
+      },
+      "trajectories": [
+       {
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "forcing_regime": "steady",
+        "frames": 24,
+        "geometry": "g0",
+        "seed": 510000,
+        "split": "train",
+        "trajectory_id": "variable-train-510000"
+       },
+       {
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "forcing_regime": "moving",
+        "frames": 24,
+        "geometry": "g1",
+        "seed": 510001,
+        "split": "train",
+        "trajectory_id": "variable-train-510001"
+       },
+       {
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "forcing_regime": "steady",
+        "frames": 24,
+        "geometry": "g2",
+        "seed": 510002,
+        "split": "validation",
+        "trajectory_id": "variable-validation-510002"
+       }
+      ]
+     },
+     "schema": "rheon-cubic-pressure-v1"
+    },
+    {
+     "cells_per_metre": 16,
+     "experiment": {
+      "geometries_extents_m": {
+       "g0": [
+        1.0,
+        1.0,
+        1.0
+       ],
+       "g1": [
+        1.0625,
+        0.8125,
+        0.5625
+       ],
+       "g2": [
+        1.5,
+        1.0,
+        0.75
+       ]
+      },
+      "id": "variable-cubic-density-16",
+      "resources": {
+       "max_output_bytes": 33554432,
+       "wall_seconds": 600
+      },
+      "schema": "rheon-local-pressure-experiment-v1",
+      "training": {
+       "batch_size": 2,
+       "checkpoint_interval": 20,
+       "learning_rate": 0.001,
+       "model": "groupnorm-v1",
+       "seed": 20261014,
+       "updates": 200
+      },
+      "trajectories": [
+       {
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "forcing_regime": "steady",
+        "frames": 24,
+        "geometry": "g0",
+        "seed": 510100,
+        "split": "train",
+        "trajectory_id": "variable-train-510100"
+       },
+       {
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "forcing_regime": "moving",
+        "frames": 24,
+        "geometry": "g1",
+        "seed": 510101,
+        "split": "train",
+        "trajectory_id": "variable-train-510101"
+       },
+       {
+        "amplitude_m_s2": 0.5,
+        "dt_s": 0.016666666666666666,
+        "forcing_regime": "steady",
+        "frames": 24,
+        "geometry": "g2",
+        "seed": 510102,
+        "split": "validation",
+        "trajectory_id": "variable-validation-510102"
+       }
+      ]
+     },
+     "schema": "rheon-cubic-pressure-v1"
+    }
+   ],
+   "id": "variable-cubic-groupnorm-cpu-v1",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-variable-pressure-experiment-v1",
+   "training": {
+    "batch_size": 2,
+    "checkpoint_interval": 20,
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v2",
+    "seed": 20261015,
+    "updates": 200
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_020_npz": {
+    "path": "checkpoint-020.npz",
+    "role": "weights"
+   },
+   "checkpoint_040_npz": {
+    "path": "checkpoint-040.npz",
+    "role": "weights"
+   },
+   "checkpoint_060_npz": {
+    "path": "checkpoint-060.npz",
+    "role": "weights"
+   },
+   "checkpoint_080_npz": {
+    "path": "checkpoint-080.npz",
+    "role": "weights"
+   },
+   "checkpoint_100_npz": {
+    "path": "checkpoint-100.npz",
+    "role": "weights"
+   },
+   "checkpoint_120_npz": {
+    "path": "checkpoint-120.npz",
+    "role": "weights"
+   },
+   "checkpoint_140_npz": {
+    "path": "checkpoint-140.npz",
+    "role": "weights"
+   },
+   "checkpoint_160_npz": {
+    "path": "checkpoint-160.npz",
+    "role": "weights"
+   },
+   "checkpoint_180_npz": {
+    "path": "checkpoint-180.npz",
+    "role": "weights"
+   },
+   "checkpoint_200_npz": {
+    "path": "checkpoint-200.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/variable-pressure-v1/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/variable-pressure-v1/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "experiments/variable-pressure-v1/policy.py",
+   "runs/variable-pressure-v1-workspace-1/project/qualification.json",
+   "runs/variable-pressure-v1-workspace-1/project/source-witness.json",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/variable-pressure-v1/train.py"
+  ]
+ }
+}

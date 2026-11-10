@@ -1,0 +1,303 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-direction-smoke · CUDA training",
+ "description": "Earlier model, trained 2026-10-16 by Tuldok run f5818120176842448f2e0ef520a25c1c (water-direction-smoke · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/water-direction-smoke-cuda-training--803a07c660a70a93.md",
+ "labels": {
+  "fit_id": "fit-803a07c660a70a93",
+  "tuldok_run": "f5818120176842448f2e0ef520a25c1c",
+  "trained_at": "2026-10-16T10:38:56.547932+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/water-late-residual-v1/smoke/project/inputs/dataset.npz",
+  "input:dataset_extra": "runs/water-late-residual-v1/smoke/project/inputs/dataset_extra.npz",
+  "input:direction_dataset": "runs/water-late-residual-v1/smoke/project/inputs/direction_dataset.npz",
+  "input:direction_manifest": "runs/water-late-residual-v1/smoke/project/inputs/direction_manifest.json",
+  "input:splits": "runs/water-late-residual-v1/smoke/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: its training script runs/water-late-residual-v1/smoke/project/train.py has no tracked copy in Git; 5 of its source files have no tracked copy in Git (for example runs/water-late-residual-v1/smoke/project/model.py)."
+ },
+ "run": {
+  "command": [
+   "python",
+   "runs/water-late-residual-v1/smoke/project/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--direction-dataset",
+   "{inputs.direction_dataset}",
+   "--direction-manifest",
+   "{inputs.direction_manifest}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "runs/water-late-residual-v1/smoke/project/source-witness.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/water-project-inputs",
+   "dataset_extra": "datasets/water-project-inputs",
+   "direction_dataset": "datasets/water-project-inputs",
+   "direction_manifest": "datasets/water-project-inputs",
+   "splits": "datasets/water-project-inputs"
+  },
+  "settings": {
+   "analytical_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grid_capacity": 16,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       16,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       24,
+       24
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       32,
+       32,
+       32
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       40,
+       40,
+       40
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       16,
+       12
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       17,
+       13,
+       9
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       33,
+       17,
+       9
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       9,
+       25,
+       13
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101507,
+    "weight": 0.1
+   },
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "linear",
+    "steps": 2
+   },
+   "direction_feedback": {
+    "manifest_sha256": "4b0a35e50ad5958bbc69c074f90ddacaa76c10435e1c3b731cf9be19b40f9135",
+    "seed": 2026102701,
+    "stage": "early",
+    "weight": 0.1
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": false,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "id": "water-direction-smoke",
+   "normalization": "none",
+   "objective": "canonical-intermediate-contraction",
+   "output_scale": "previous-pressure-rms",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-water-residual-experiment-v8",
+   "supplemental_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grid_capacity": 16,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       23,
+       25
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       23,
+       25,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       25,
+       16,
+       23
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       10,
+       7,
+       25
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       7,
+       25,
+       10
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       25,
+       10,
+       7
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101607,
+    "source": "grids",
+    "weight": 0.1
+   },
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     1
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102501,
+    "schedule": [],
+    "seed": 20261015,
+    "updates": 1
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_001_npz": {
+    "path": "checkpoint-001.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/analytical.py",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/water-conditioning-v1/training/direction_feedback.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "runs/water-late-residual-v1/smoke/project/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "experiments/water-conditioning-v1/training/physical_residual.py",
+   "runs/water-late-residual-v1/smoke/project/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "runs/water-late-residual-v1/smoke/project/qualification.json",
+   "experiments/sealed-water-v1/scenes.py",
+   "runs/water-late-residual-v1/smoke/project/source-witness.json",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "runs/water-late-residual-v1/smoke/project/train.py"
+  ]
+ }
+}

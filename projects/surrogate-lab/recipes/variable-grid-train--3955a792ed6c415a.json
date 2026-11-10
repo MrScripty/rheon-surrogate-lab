@@ -1,0 +1,129 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Variable-grid train",
+ "description": "Earlier model, trained 2026-10-15 by Tuldok run 097f84f0493f45d1a52c1180c1c1032b (Variable-grid train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/variable-grid-train--3955a792ed6c415a.md",
+ "labels": {
+  "fit_id": "fit-3955a792ed6c415a",
+  "tuldok_run": "097f84f0493f45d1a52c1180c1c1032b",
+  "trained_at": "2026-10-15T02:02:22.200742+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/cuda-pressure-v1-workspace-2/project/inputs/dataset.npz",
+  "input:splits": "runs/cuda-pressure-v1-workspace-2/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: 2 of its source files have no tracked copy in Git (for example runs/cuda-pressure-v1-workspace-2/project/qualification.json)."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/cuda-pressure-v1/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "runs/cuda-pressure-v1-workspace-2/project/source-witness.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/variable-pressure-project-inputs",
+   "splits": "datasets/variable-pressure-project-inputs"
+  },
+  "settings": {
+   "id": "cuda-pressure-qualification-v1",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-cuda-pressure-experiment-v1",
+   "training": {
+    "batch_size": 2,
+    "checkpoints": [
+     0,
+     10,
+     20
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 20261016,
+    "schedule": [],
+    "seed": 20261015,
+    "updates": 20
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_010_npz": {
+    "path": "checkpoint-010.npz",
+    "role": "weights"
+   },
+   "checkpoint_020_npz": {
+    "path": "checkpoint-020.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/cuda-pressure-v1/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "experiments/cuda-pressure-v1/packet_policy.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "runs/cuda-pressure-v1-workspace-2/project/qualification.json",
+   "runs/cuda-pressure-v1-workspace-2/project/source-witness.json",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/cuda-pressure-v1/train.py"
+  ]
+ }
+}

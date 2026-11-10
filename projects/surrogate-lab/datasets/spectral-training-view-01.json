@@ -1,0 +1,27 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "spectral-training-view-01",
+ "description": "Pressure and right-hand side of the 16 sinusoidal training scenes at every sixteenth state. Prepared by: experiments/full-ai-tight-targets-v1/prepare_spectral_training_view.py. Built from: sinusoidal-recordings (train split). Settings: docs/plans/full-ai-tight-targets-v1/spectral-training-view-protocol-01.json. The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'prepare_spectral_training_view.py --protocol <settings file> --output <folder>'. Its files sat in: runs/full-ai-tight-targets-v1/spectral-training-view-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-tight-targets-v1/prepare_spectral_training_view.py",
+   "--protocol",
+   "docs/plans/full-ai-tight-targets-v1/spectral-training-view-protocol-01.json",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "sinusoidal_v1": "datasets/sinusoidal-v1"
+  },
+  "sources": [
+   "docs/plans/full-ai-tight-targets-v1/spectral-training-view-protocol-01.json",
+   "experiments/full-ai-tight-targets-v1/prepare_spectral_training_view.py"
+  ]
+ }
+}

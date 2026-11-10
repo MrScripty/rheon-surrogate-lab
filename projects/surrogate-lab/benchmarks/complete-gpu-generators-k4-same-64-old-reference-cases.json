@@ -1,0 +1,92 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Complete GPU generators · K4 · same 64 old-reference cases",
+ "description": "Earlier benchmark 'Complete GPU generators · K4 · same 64 old-reference cases' (scope old-common64-complete-generator-GPU-K4-v1, population consumed), measured by the earlier study harness on 64 cases. Converted from 1 result set titled 'Complete GPU generators · K4 · same 64 old-reference cases'. Summaries are in results/complete-gpu-generators-k4-same-64-old-reference-cases.csv; the per-case values stay in the earlier project's store.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "pressure_relative_l2",
+   "title": "Worst in K-output block · Pressure mean-free relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_relative_l2",
+   "title": "Worst in K-output block · Combined velocity relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_relative_l2",
+   "title": "Worst in K-output block · Tracer relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "equation_relative_l2",
+   "title": "Worst in K-output block · Pressure equation relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_absolute_rms",
+   "title": "Worst in K-output block · Pressure mean-free absolute RMS",
+   "units": "Pa",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_absolute_rms",
+   "title": "Worst in K-output block · Tracer absolute RMS",
+   "units": "tracer units",
+   "better": "lower"
+  },
+  {
+   "id": "block_median_ms",
+   "title": "Median full GPU block",
+   "units": "ms/block",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_median_ms",
+   "title": "Median GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_p95_ms",
+   "title": "P95 GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_maximum_ms",
+   "title": "Maximum GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "b4",
+   "title": "b4 · b4 · GPU · full K4 block",
+   "recipe": "recipes/full-ai-temporal-b4-train--31c3a0cd04679d5f"
+  },
+  {
+   "name": "b4-endpoint",
+   "title": "b4-endpoint · b4-endpoint · GPU · full K4 block",
+   "recipe": "recipes/full-ai-temporal-b4-endpoint-train--ef1843c95df2928d"
+  },
+  {
+   "name": "b4-reuse",
+   "title": "b4-reuse · b4-reuse · GPU · full K4 block",
+   "recipe": "recipes/full-ai-temporal-b4-reuse-train--926cf04f81244f0e"
+  }
+ ],
+ "cases": {
+  "count": 64
+ }
+}

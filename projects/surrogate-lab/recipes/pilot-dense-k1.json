@@ -1,0 +1,38 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Pilot stepper on sinusoidal scenes, one output per pass",
+ "description": "Trains the divergence-free stepper on the train split of sinusoidal-v1 with multi-pass rollouts of its own outputs and noisy starts, evaluating on the development split. 20,000 updates; the number of passes grows from 1 to 8 on a schedule. Writes model.pt (averaged weights, what the benchmark loads), resume.pt, config.json and log.jsonl.",
+ "model": "models/divergence-free-stepper",
+ "run": {
+  "command": ["python", "-m", "surrogate.train", "{settings}", "{output}", "--device", "cuda"],
+  "environment": "environments/cuda-torch",
+  "settings_file": "surrogate/configs/pilot-dense-k1.json",
+  "inputs": {
+   "training": "datasets/sinusoidal-v1"
+  },
+  "env": {
+   "SURROGATE_DATA": "{inputs.training}"
+  },
+  "outputs": {
+   "weights": {"path": "model.pt", "role": "weights"},
+   "resume": {"path": "resume.pt", "role": "file"},
+   "config": {"path": "config.json", "role": "file"},
+   "log": {"path": "log.jsonl", "role": "log"}
+  },
+  "resources": {
+   "gpu": true
+  },
+  "sources": [
+   "surrogate/train.py",
+   "surrogate/models",
+   "surrogate/checkpoint.py",
+   "surrogate/data.py",
+   "surrogate/fields.py",
+   "surrogate/forcing.py",
+   "surrogate/datasets",
+   "surrogate/bench/metrics.py",
+   "surrogate/bench/results.py"
+  ]
+ }
+}

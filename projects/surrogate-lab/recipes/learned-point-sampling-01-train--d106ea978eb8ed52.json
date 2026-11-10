@@ -1,0 +1,95 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Learned point sampling 01 train",
+ "description": "Earlier model, trained 2026-10-20 by Tuldok run b71b064b725f4937ae2e12a1e59bce8c (Learned point sampling 01 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/learned-point-sampling-01-train--d106ea978eb8ed52.md",
+ "labels": {
+  "fit_id": "fit-d106ea978eb8ed52",
+  "tuldok_run": "b71b064b725f4937ae2e12a1e59bce8c",
+  "trained_at": "2026-10-20T04:08:59.024797+00:00",
+  "device": "cuda",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "input:teacher": "runs/full-ai-next-priorities-v1/point-teacher-01/teacher.npz",
+  "input:teacher_manifest": "runs/full-ai-next-priorities-v1/point-teacher-01/manifest.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/point_sampling_train.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--teacher",
+   "{inputs.teacher}",
+   "--teacher-manifest",
+   "{inputs.teacher_manifest}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "teacher": "datasets/formula-teacher-banks",
+   "teacher_manifest": "datasets/formula-teacher-banks"
+  },
+  "settings": {
+   "schema": "rheon-point-sampling-calibration-v1",
+   "updates": 1000,
+   "batch_size": 8,
+   "learning_rate": 0.5,
+   "seed": 2026102041,
+   "sampling_seed": 2026102042,
+   "wall_seconds": 1500,
+   "double_tolerance": 1e-07,
+   "published_tolerance": 1e-06,
+   "identifier": "point-sampling-01",
+   "registration_sha256": "43c24eb7bee48fa377125210f3d1fd8e792b831bb2bd46dcfd8e8e3fd390696f"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0168
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-next-priorities-v1/point_sampling_model.py",
+   "experiments/full-ai-next-priorities-v1/point_sampling_train.py"
+  ]
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Matched GPU generators and F64 baseline · K3 · same 64 cases",
+ "description": "Earlier benchmark 'Matched GPU generators and F64 baseline · K3 · same 64 cases' (scope old-common64-production-GPU-K3-v2, population consumed), measured by the earlier study harness on 64 cases. Converted from 1 result set titled 'Matched GPU generators and F64 baseline · K3 · same 64 cases'. Summaries are in results/matched-gpu-generators-and-f64-baseline-k3-same-64-cases.csv; the per-case values stay in the earlier project's store.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "pressure_relative_l2",
+   "title": "Worst in K-output block · Pressure mean-free relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_relative_l2",
+   "title": "Worst in K-output block · Combined velocity relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_relative_l2",
+   "title": "Worst in K-output block · Tracer relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "equation_relative_l2",
+   "title": "Worst in K-output block · Pressure equation relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_absolute_rms",
+   "title": "Worst in K-output block · Pressure mean-free absolute RMS",
+   "units": "Pa",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_absolute_rms",
+   "title": "Worst in K-output block · Tracer absolute RMS",
+   "units": "tracer units",
+   "better": "lower"
+  },
+  {
+   "id": "block_median_ms",
+   "title": "Median full GPU block",
+   "units": "ms/block",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_median_ms",
+   "title": "Median GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_p95_ms",
+   "title": "P95 GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_maximum_ms",
+   "title": "Maximum GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "f64-n1-k3",
+   "title": "F64-N1-K3 · F64-N1-K3 · GPU · full K3 block"
+  },
+  {
+   "name": "b3",
+   "title": "b3 · b3 · GPU · full K3 block",
+   "recipe": "recipes/full-ai-temporal-b3-train--5a4d0a88ce0803e3"
+  },
+  {
+   "name": "b3-endpoint",
+   "title": "b3-endpoint · b3-endpoint · GPU · full K3 block",
+   "recipe": "recipes/full-ai-temporal-b3-endpoint-train--f5e7fb8efd0a4352"
+  },
+  {
+   "name": "b3-fixed-viscosity",
+   "title": "b3-fixed-viscosity · b3-fixed-viscosity · GPU · full K3 block",
+   "recipe": "recipes/full-ai-temporal-b3-fixed-viscosity-train--56fc09f28f9a39d7"
+  },
+  {
+   "name": "b3-reuse",
+   "title": "b3-reuse · b3-reuse · GPU · full K3 block",
+   "recipe": "recipes/full-ai-temporal-b3-reuse-train--d02a7f586d20d8b5"
+  }
+ ],
+ "cases": {
+  "count": 64
+ }
+}

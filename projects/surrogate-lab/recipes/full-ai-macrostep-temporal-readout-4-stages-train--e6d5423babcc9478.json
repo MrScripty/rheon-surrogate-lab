@@ -1,0 +1,97 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full-AI macrostep temporal readout 4 stages train",
+ "description": "Earlier model, trained 2026-10-21 by Tuldok run 72beaf5d2c994bfdbf1b236b8893c52a (Full-AI macrostep temporal readout 4 stages train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-macrostep-temporal-readout-4-stages-train--e6d5423babcc9478.md",
+ "labels": {
+  "fit_id": "fit-e6d5423babcc9478",
+  "tuldok_run": "72beaf5d2c994bfdbf1b236b8893c52a",
+  "trained_at": "2026-10-21T10:27:10.120027+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/manifest.json",
+  "input:normalization": "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/normalization.json",
+  "input:part_00": "runs/full-ai-data-diversity-v1/macrostep-loss-view-01/readout-s4.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-data-diversity-v1/train_macrostep_readout_v1.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/macrostep-loss-view-01",
+   "normalization": "datasets/macrostep-loss-view-01",
+   "part_00": "datasets/macrostep-loss-view-01"
+  },
+  "settings": {
+   "identifier": "macrostep-readout-s4-01",
+   "role": "macrostep_temporal_readout_component",
+   "stages": 4,
+   "optimizer_calls": 160,
+   "updates": 160,
+   "objective": "equal_scene_window_four_metric_QR_residual_v1",
+   "seed": 2026102126,
+   "wall_seconds": 600,
+   "uniform_deployment_quantization": 9.094947017729282e-13
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0252
+  },
+  "sources": [
+   "experiments/full-ai-data-diversity-v1/macrostep_readout_v1.py",
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-data-diversity-v1/train_macrostep_readout_v1.py"
+  ]
+ }
+}

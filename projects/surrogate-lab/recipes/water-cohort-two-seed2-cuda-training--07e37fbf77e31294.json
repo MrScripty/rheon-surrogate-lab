@@ -1,0 +1,237 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-cohort-two-seed2 · CUDA training",
+ "description": "Earlier model, trained 2026-10-16 by Tuldok run 91ccb8b6276642a5a82b99e2a83b1ea1 (water-cohort-two-seed2 · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/water-cohort-two-seed2-cuda-training--07e37fbf77e31294.md",
+ "labels": {
+  "fit_id": "fit-07e37fbf77e31294",
+  "tuldok_run": "91ccb8b6276642a5a82b99e2a83b1ea1",
+  "trained_at": "2026-10-16T01:16:21.372706+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/inputs/dataset.npz",
+  "input:dataset_extra": "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/inputs/dataset_extra.npz",
+  "input:splits": "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: its training script runs/water-recurrence-generalization-v1/cohort-two-seed2/project/train.py has no tracked copy in Git; 7 of its source files have no tracked copy in Git (for example runs/water-recurrence-generalization-v1/cohort-two-seed2/project/analytical.py)."
+ },
+ "run": {
+  "command": [
+   "python",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/source-witness.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/water-project-inputs",
+   "dataset_extra": "datasets/water-project-inputs",
+   "splits": "datasets/water-project-inputs"
+  },
+  "settings": {
+   "analytical_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       16,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       24,
+       24
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       32,
+       32,
+       32
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       40,
+       40,
+       40
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       16,
+       12
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101507,
+    "weight": 0.1
+   },
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "linear",
+    "steps": 2
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": false,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "id": "water-cohort-two-seed2",
+   "normalization": "none",
+   "objective": "canonical",
+   "output_scale": "previous-pressure-rms",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-water-residual-experiment-v5",
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     100,
+     500,
+     1000,
+     2000,
+     4000,
+     5000
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102602,
+    "schedule": [
+     {
+      "learning_rate": 0.0001,
+      "update": 3000
+     },
+     {
+      "learning_rate": 1e-05,
+      "update": 4500
+     }
+    ],
+    "seed": 2026101602,
+    "updates": 5000
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_100_npz": {
+    "path": "checkpoint-100.npz",
+    "role": "weights"
+   },
+   "checkpoint_500_npz": {
+    "path": "checkpoint-500.npz",
+    "role": "weights"
+   },
+   "checkpoint_1000_npz": {
+    "path": "checkpoint-1000.npz",
+    "role": "weights"
+   },
+   "checkpoint_2000_npz": {
+    "path": "checkpoint-2000.npz",
+    "role": "weights"
+   },
+   "checkpoint_4000_npz": {
+    "path": "checkpoint-4000.npz",
+    "role": "weights"
+   },
+   "checkpoint_5000_npz": {
+    "path": "checkpoint-5000.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/analytical.py",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/physical_residual.py",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/qualification.json",
+   "experiments/sealed-water-v1/scenes.py",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/source-witness.json",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "runs/water-recurrence-generalization-v1/cohort-two-seed2/project/train.py"
+  ]
+ }
+}

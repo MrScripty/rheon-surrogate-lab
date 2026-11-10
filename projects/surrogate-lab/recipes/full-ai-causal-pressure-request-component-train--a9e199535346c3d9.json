@@ -1,0 +1,160 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full AI causal pressure request component train",
+ "description": "Earlier model, trained 2026-10-19 by Tuldok run e4e56be8d1d5481796d2ce9273724175 (Full AI causal pressure request component train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-causal-pressure-request-component-train--a9e199535346c3d9.md",
+ "labels": {
+  "fit_id": "fit-a9e199535346c3d9",
+  "tuldok_run": "e4e56be8d1d5481796d2ce9273724175",
+  "trained_at": "2026-10-19T21:05:49.130392+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/manifest.json",
+  "input:normalization": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/normalization.json",
+  "input:part_00": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-00.bin",
+  "input:part_01": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-01.bin",
+  "input:part_02": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-02.bin",
+  "input:part_03": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-03.bin",
+  "input:part_04": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-04.bin",
+  "input:part_05": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-05.bin",
+  "input:part_06": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-06.bin",
+  "input:part_07": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-07.bin",
+  "input:part_08": "runs/full-ai-next-priorities-v1/temporal-request-training-view-01/part-08.bin",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/pressure_request_train.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}",
+   "{inputs.part_01}",
+   "{inputs.part_02}",
+   "{inputs.part_03}",
+   "{inputs.part_04}",
+   "{inputs.part_05}",
+   "{inputs.part_06}",
+   "{inputs.part_07}",
+   "{inputs.part_08}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/temporal-request-training-view-01",
+   "normalization": "datasets/temporal-request-training-view-01",
+   "part_00": "datasets/temporal-request-training-view-01",
+   "part_01": "datasets/temporal-request-training-view-01",
+   "part_02": "datasets/temporal-request-training-view-01",
+   "part_03": "datasets/temporal-request-training-view-01",
+   "part_04": "datasets/temporal-request-training-view-01",
+   "part_05": "datasets/temporal-request-training-view-01",
+   "part_06": "datasets/temporal-request-training-view-01",
+   "part_07": "datasets/temporal-request-training-view-01",
+   "part_08": "datasets/temporal-request-training-view-01"
+  },
+  "settings": {
+   "schema": "rheon-causal-request-fit-v1",
+   "identifier": "b1-causal-request",
+   "horizons": 1,
+   "updates": 10000,
+   "learning_rate": 0.003,
+   "schedule": [
+    {
+     "update": 6001,
+     "learning_rate": 0.001
+    },
+    {
+     "update": 9001,
+     "learning_rate": 0.0003
+    }
+   ],
+   "seed": 2026101994,
+   "sampling_seed": 2026101995,
+   "gradient_norm_cap": 1.0,
+   "wall_seconds": 1800,
+   "component_only": true,
+   "future_request_input": false,
+   "current_pressure_input": false,
+   "physical_context": {
+    "dt_s": 0.016666666666666666,
+    "rho_kg_m3": 1000.0,
+    "mu_pa_s": 0.001,
+    "boundaries": "closed regular grid"
+   },
+   "registration_sha256": "aced7a26cfe84968f267005de1da10fc3b96e9560745a11c46f8956999a7db85",
+   "selection": "Final update10000; checkpoints0/2000/10000retained; no development checkpoint reselection",
+   "analytical_inverse": "Offline objective only; no inverse in model inference"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_2000_npz": {
+    "path": "checkpoint-2000.npz",
+    "role": "weights"
+   },
+   "checkpoint_10000_npz": {
+    "path": "checkpoint-10000.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-next-priorities-v1/pressure_request_data.py",
+   "experiments/full-ai-next-priorities-v1/pressure_request_model.py",
+   "experiments/full-ai-next-priorities-v1/pressure_request_objective.py",
+   "experiments/full-ai-next-priorities-v1/pressure_request_train.py",
+   "experiments/full-ai-next-priorities-v1/temporal_codec.py",
+   "experiments/full-ai-next-priorities-v1/temporal_data.py",
+   "experiments/full-ai-next-priorities-v1/temporal_features_v2.py"
+  ]
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Expanded full-state controls and reduced-pass residuals",
+ "description": "Earlier benchmark 'Expanded full-state controls and reduced-pass residuals' (scope old-diversity-full-state-2120, population consumed), measured by the earlier study harness on 2120 cases. Converted from 5 result sets titled 'Expanded full-state controls and reduced-pass residuals' (5 sets). Summaries are in results/expanded-full-state-controls-and-reduced-pass-residuals.csv; the per-case values stay in the earlier project's store.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "pressure_relative_rms",
+   "title": "Full-state pressure error (mean-free RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_relative_rms",
+   "title": "Full-state velocity error (concatenated RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_relative_rms",
+   "title": "Full-state tracer error (RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_equation_relative_l2",
+   "title": "Full-state pressure equation residual (L2)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_absolute_rms",
+   "title": "Pressure absolute RMS error",
+   "units": "captured pressure units",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_absolute_rms",
+   "title": "Velocity absolute RMS error",
+   "units": "captured velocity units",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_absolute_rms",
+   "title": "Tracer absolute RMS error",
+   "units": "captured tracer units",
+   "better": "lower"
+  },
+  {
+   "id": "complete_block_ms",
+   "title": "Complete K-output GPU block latency",
+   "units": "ms",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_ms",
+   "title": "Complete GPU latency per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "cell-coordinate",
+   "title": "cell-coordinate · cell coordinate"
+  },
+  {
+   "name": "residual-fused",
+   "title": "residual-fused · residual fused",
+   "recipe": "recipes/full-ai-internal-width8-residual-first-fit-train--5ba5d143c5ff88ad"
+  },
+  {
+   "name": "residual-graph",
+   "title": "residual-graph · residual graph",
+   "recipe": "recipes/full-ai-internal-width8-residual-first-fit-train--5ba5d143c5ff88ad"
+  },
+  {
+   "name": "residual-s1",
+   "title": "residual-s1 · residual s1",
+   "recipe": "recipes/full-ai-internal-width8-residual-first-fit-train--5ba5d143c5ff88ad"
+  },
+  {
+   "name": "residual-s2",
+   "title": "residual-s2 · residual s2",
+   "recipe": "recipes/full-ai-internal-width8-residual-loss-conditioned-fit-train--dc0ad37a4d242637"
+  },
+  {
+   "name": "residual-s3",
+   "title": "residual-s3 · residual s3",
+   "recipe": "recipes/full-ai-s1-full-objective-compact-cuda-warm-start-train--0ab5ce5852ec1c47"
+  },
+  {
+   "name": "residual-s3-fused",
+   "title": "residual-s3-fused · residual s3 fused",
+   "recipe": "recipes/full-ai-s1-full-objective-compact-cuda-warm-start-train--0ab5ce5852ec1c47"
+  },
+  {
+   "name": "residual-s4",
+   "title": "residual-s4 · residual s4",
+   "recipe": "recipes/full-ai-direct-residual-supervision-compact-cuda-fit-train--fd5dc9866f07dccc"
+  },
+  {
+   "name": "residual-s4-fused",
+   "title": "residual-s4-fused · residual s4 fused",
+   "recipe": "recipes/full-ai-direct-residual-supervision-compact-cuda-fit-train--fd5dc9866f07dccc"
+  }
+ ],
+ "cases": {
+  "count": 2120
+ },
+ "summary": {
+  "group_by": [
+   "advances_block",
+   "advances_output",
+   "diagnostic_pass",
+   "residual_calls"
+  ]
+ }
+}

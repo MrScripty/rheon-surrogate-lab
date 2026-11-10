@@ -1,0 +1,79 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Cell sampler · complete GPU blocks · frozen old physics",
+ "description": "Earlier benchmark 'Cell sampler · complete GPU blocks · frozen old physics' (scope old-cell-complete-NumPy-GPU-blocks-v1, population consumed), measured by the earlier study harness on 384 cases. Converted from 1 result set titled 'Cell sampler · complete GPU blocks · frozen old physics'. Summaries are in results/cell-sampler-complete-gpu-blocks-frozen-old-physics.csv; the per-case values stay in the earlier project's store.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "pressure_relative_rms_block_worst",
+   "title": "Worst in K-output block · Full-state pressure error (mean-free RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_relative_rms_block_worst",
+   "title": "Worst in K-output block · Full-state velocity error (concatenated RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_relative_rms_block_worst",
+   "title": "Worst in K-output block · Full-state tracer error (RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_equation_relative_l2_block_worst",
+   "title": "Worst in K-output block · Full-state pressure equation residual (L2)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "complete_block_median_ms",
+   "title": "Median complete K-output GPU block",
+   "units": "ms/block",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_median_ms",
+   "title": "Median complete GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_p95_ms",
+   "title": "P95 complete GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_maximum_ms",
+   "title": "Maximum observed GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "cell_bound",
+   "title": "cell_bound · cell bound · GPU complete call"
+  },
+  {
+   "name": "cell_coordinate",
+   "title": "cell_coordinate · cell coordinate · GPU complete call"
+  }
+ ],
+ "cases": {
+  "count": 384
+ },
+ "summary": {
+  "group_by": [
+   "advances_block",
+   "advances_output"
+  ]
+ }
+}

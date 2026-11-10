@@ -1,0 +1,468 @@
+# Pressure four-pass · c53-a · C53 fine-tune CUDA
+
+Retrospective source review · fit-1d72c4df38cf5320
+
+Authored interpretation of captured source and receipts. No new training, benchmark, lineage or scientific promotion is implied.
+
+**Method.** A 370,016-parameter float32 3D pressure U-Net with encoder widths8/16/24/32, bottleneck48 and reversed decoder; physical residual reconstruction is float64. It starts from the exact C53 checkpoint. Training unrolls four pressure corrections on one equation. These corrections are not future physical simulation steps.
+
+**Purpose.** Compare unchanged four-pass fine tuning with attached and detached auxiliary gradient paths under the same initialization, pattern order, depth schedule and optimizer budget. Add a one-correction loss at a balanced depth, with gradients through the carried pressure.
+
+**Experiment.** The optimizer uses eight synthetic analytical patterns: one [0,0,1] mode on each of eight rectangular grids, at8or16cells/m. Each gets200exposures, with50at each of four auxiliary depths. The original16train trajectories calibrate amplitude/normalization; they are not the optimizer sample stream. No companion physical, direction or current-policy loss runs in the captured fitting-bank updater. Teacher weight is zero and counted teacher forwards are zero. All arms run1,600updates; U counts6,400network forwards and A/D8,000. The loss combines analytical pressure loss, log-scaled final equation residual and 0.05mean early residual feedback; A/D add0.05auxiliary loss.
+
+**Observed outcome.** C70: worst mean-free pressure relative L2 0.012387426832986829 and equation relative L2 0.005491417474605376 at the captured two-correction default. All 128 consumed old-solver equations were also replayed at one, two, four and eight corrections; all three C53 fine-tunes are worse than C53 on both worst metrics at every matched budget. No timing or own-history result is implied.
+
+**Lesson.** The eight-pattern objective fails to improve this stronger parent on the consumed native pressure bank, including at its trained four-correction depth. Extra corrections reduce absolute errors but do not reverse the parent ranking. The earlier C37 default comparison also changed one to two corrections; the new matched matrix confirms that C37 benefits only conditionally on budget and metric. Preserve distinct fit identities even when checkpoint bytes and tested outputs coincide. No sole causal explanation or unseen-scene claim follows. The subsequent matched-work CUDA matrix confirms these parent regressions at every tested one/two/four/eight correction budget. C37 benefits at two/four/eight corrections, while its worst pressure error worsens at one correction; its saved parent default uses one and its fine-tunes use two. Keep metric and actual work explicit.
+
+**Reproduction.** Use the exact captured project.json/train-recipe.json and evidence.py entrypoint with the original input bindings, source witness, C53 checkpoint, fitting bank and fine-tuning.json. Clean retraining, fresh qualified latency and new-Rheon data equivalence remain unqualified; no checkpoint can be retired on this review alone. The original CUDA training receipt is sufficient for the declared training-checkpoint replay; do not invent a CPU-restore receipt or a cohort alias for C53-U.
+
+## Exact source bindings for this review
+
+```json
+{
+  "original_receipt": {
+    "path": "runs/pressure-detached-correction-v1/c53-a-study-01/train/receipt.json",
+    "sha256": "1d72c4df38cf5320114d9b3f8a02369156322c1f0b3146b6d61e7d8b9a54e0a3"
+  },
+  "history": {
+    "path": "runs/pressure-detached-correction-v1/c53-a-study-01/train/history.json",
+    "sha256": "d3410b83b4555f5cba518b55eb494f10d593a067fe2190c189e87b32c2479054"
+  },
+  "sources": [
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/analytical.py",
+      "sha256": "1b5aacdb1888c22ebf4ec25227ae3ffc54e60e5bb0d157e9ffcd06ad015878cb"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/band_feedback.py",
+      "sha256": "c9ed84b94c54a7d60220d421e816f6a05ed3452e486c7691567b05b3352adb4d"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/baseline_model.py",
+      "sha256": "46636a12f14d6882652eb9a72f958b0d2a5e95aec16ad84772ddf8dcc24a4e04"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/config.json",
+      "sha256": "b39f16ad364fb42687c4760c475f49427df6f6518885ea9d3726b7eeade7eaca"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/custody-validator.py",
+      "sha256": "c73b96a1eb006f75f98fa66119f4ccb6eb5421123d48bcde48c08138372ebc57"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/data.py",
+      "sha256": "d001fc4f6ba7465aefab99ca0d7427a11026b0e2b68de2fb51bc679c5832a98f"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/direction_feedback.py",
+      "sha256": "e9b9be263483f99a15a51ff4dbbb9fb28f56066f87ff2786003328d75f87281f"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/evidence.py",
+      "sha256": "f7149b7ee9b913218bfd6b9f2dcf5e509c2992ea0f3e38b2f07496df20fbd210"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/fine-tuning.json",
+      "sha256": "715065bea241b33f34123042332d4586df1c0f9fd022209fd0fdf4339e418a75"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/fine_tuning.py",
+      "sha256": "57658249095fd62c38f8d3bcbbe201d5ebe288009f0042001941bca82110795e"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/fit_bank.py",
+      "sha256": "bbdbabfc89805410df196dd0724b24347954548dd83790456994ca46a6f5e347"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/frozen_gn.py",
+      "sha256": "8cb87b8e9a2aef6e500daaa43f068ed2e9d9ec70b311c6c586956ad76b60dc6c"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/gradient_clipping.py",
+      "sha256": "142d005bda439426300dfc0c10c1f5af36181070354e81f83fe9115a5c12b0cd"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/historical-reservation.json",
+      "sha256": "1e9885d4af7b0dd5d5fa762b467f9b15cfb9d6bb2d1637dccec6a195e05063f5"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/model.py",
+      "sha256": "a2ebefe6a8ce12c7e6e1e12fa82b835029f364b50e91284f33b60bfe31b0eaee"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/original_data.py",
+      "sha256": "c1395f278910a22a6caa92b37fe6d29d8c7e562aeb6489c13e2cba6acf8ab4cd"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/original_fine_tuning.py",
+      "sha256": "1b49995a3bf55a6d24ba6d5d00c88a8506cb4e6aeca8ca2b17a3c809ef8e223b"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/original_fit_bank.py",
+      "sha256": "e68c1fa6723331af3448edec8294ca0dc67a5b97576a1cd251c5a789e9bf0668"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/original_model.py",
+      "sha256": "4ecc0e1f2b5d9627f1fe19a46486d3b62b11509ef035b9aa6fc925ddcb406dbb"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/original_train.py",
+      "sha256": "68cf5971f89397fa465f3b1a63f0e05dd5b04d0b292a3c2fd7be3d307b48b33d"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/physical_residual.py",
+      "sha256": "990cb052fac1853a02325b545455c3a3a3bc78945501edf1417ebb583c7e97d5"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/policy.py",
+      "sha256": "c3e679239c58332e034064fb8825768fec4fb616f01a22f9c0c4eb1995ce29f2"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/portable_model.py",
+      "sha256": "64fae71821a497932fb73b270b75d06d76f6dd9e5438d29d2245d0ca2ae87935"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/portable_policy.py",
+      "sha256": "c9270abbbb05794b68c53d83a14f90d4c16e9d0fea1e28ce3791b8018f862995"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/prepared.py",
+      "sha256": "28263bb05c2ff2dc23d1f36d29cf396a4b9fbfb8f50338ec0e3310d920fc9d76"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/qualification.json",
+      "sha256": "27aabdb47e3411a5949e5c7dbc48329c2e887b02fbe742bcbc39f10227161c17"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/scenes.py",
+      "sha256": "d8646842134cb1086ac362239fd175a0eafb673190e55c470f9ce84d89e96383"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/smoke_train.py",
+      "sha256": "fbda6a487c1378389955eecfa2a3b9b7bc9747578a38a99e8df837852ecb9b58"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/support.py",
+      "sha256": "0609d725af4dc4c50913d4d0683acb1e9086818f134410a61de6651658a09d25"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/test_inference.py",
+      "sha256": "1d6cfec0b353b8e4e0c2e1c9f0f9a9d9bfd6c2b7783c3ab948b984b66b3e99a6"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/train.py",
+      "sha256": "b9c98c38dfd22ec77ed1bc6dcbad8e692b276dc96fe9cb5cf928ec2b6be0774b"
+    },
+    {
+      "path": "runs/pressure-detached-correction-v1/c53-a-project-01/training_diagnostic.py",
+      "sha256": "1d903e8d6ac92470893b7496be02e1285194de8b2d4aca93387256fc27b208da"
+    }
+  ],
+  "source_witness": {
+    "path": "runs/pressure-detached-correction-v1/c53-a-project-01/source-witness.json",
+    "sha256": "19d805e1dff1ea630c87e6e73f5efd01a50ce7e67c1feabab4f1679614caa231"
+  },
+  "training_population": {
+    "path": "runs/pressure-detached-correction-v1/c53-a-study-01/train/splits.json",
+    "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+  },
+  "training_inputs": [
+    {
+      "path": "runs/pressure-current-policy-v1/bank-02/late.npz",
+      "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521",
+      "slot": "current_dataset",
+      "bytes": 21428086
+    },
+    {
+      "path": "runs/pressure-current-policy-v1/bank-02/manifest.json",
+      "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+      "slot": "current_manifest",
+      "bytes": 168912
+    },
+    {
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/dataset.npz",
+      "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e",
+      "slot": "dataset",
+      "bytes": 610070
+    },
+    {
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/dataset_extra.npz",
+      "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5",
+      "slot": "dataset_extra",
+      "bytes": 610806
+    },
+    {
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/direction_dataset.npz",
+      "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6",
+      "slot": "direction_dataset",
+      "bytes": 24476086
+    },
+    {
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/direction_manifest.json",
+      "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+      "slot": "direction_manifest",
+      "bytes": 298490
+    },
+    {
+      "path": "runs/pressure-current-policy-v1/current-late-study-03/restore/weights.npz",
+      "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+      "slot": "initial_weights",
+      "bytes": 1485452
+    },
+    {
+      "path": "runs/dependency-migration-v1/training-project-6/inputs/splits.json",
+      "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e",
+      "slot": "splits",
+      "bytes": 256361
+    }
+  ]
+}
+```
+
+## Original retained fit facts before this review
+
+```json
+{
+  "fit": {
+    "item_id": "fit-1d72c4df38cf5320",
+    "kind": "training_attempt",
+    "name": "Pressure four-pass · c53-a · C53 fine-tune CUDA",
+    "task": "pressure_proposal",
+    "schema": "rheon-water-learning-training-v1",
+    "method": {
+      "schema": "rheon-physical-residual-pressure-v1",
+      "input_channels": 1,
+      "encoder_widths": [
+        8,
+        16,
+        24,
+        32
+      ],
+      "bottleneck_width": 48,
+      "decoder_widths": [
+        32,
+        24,
+        16,
+        8
+      ],
+      "kernel": [
+        3,
+        3,
+        3
+      ],
+      "activation": "silu",
+      "dtype": "float32",
+      "pressure_dtype": "float64",
+      "correction": {
+        "activation": "linear",
+        "steps": 2
+      },
+      "restrictions": "uniform-density cubic sealed Neumann operator; no independently specified geometry masks",
+      "counts_supported": "positive per-axis integers within cell budget",
+      "max_cells": 65536
+    },
+    "receipt_sha256": "1d72c4df38cf5320114d9b3f8a02369156322c1f0b3146b6d61e7d8b9a54e0a3",
+    "receipt_paths": [
+      "runs/pressure-detached-correction-v1/c53-a-study-01/train/receipt.json"
+    ],
+    "recorded_Run_observations": [
+      {
+        "catalog_id": "a7da4a8de53541a2a0e2aad08005bb71",
+        "run_id": "63360d045b6a4008aa21eb7abbaa33bb",
+        "epoch": "current_catalog",
+        "observed_in": [
+          "current_catalog"
+        ],
+        "graph_name": "Pressure four-pass · c53-a · C53 fine-tune CUDA",
+        "state": "completed"
+      }
+    ],
+    "optimizer_updates": 1600,
+    "parameter_fits": null,
+    "declared_parameter_count": null,
+    "training_closure": {
+      "experiment_sha256": "b39f16ad364fb42687c4760c475f49427df6f6518885ea9d3726b7eeade7eaca",
+      "inputs": {
+        "current_dataset": {
+          "bytes": 21428086,
+          "sha256": "8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"
+        },
+        "current_manifest": {
+          "bytes": 168912,
+          "sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"
+        },
+        "dataset": {
+          "bytes": 610070,
+          "sha256": "89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"
+        },
+        "dataset_extra": {
+          "bytes": 610806,
+          "sha256": "c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"
+        },
+        "direction_dataset": {
+          "bytes": 24476086,
+          "sha256": "4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"
+        },
+        "direction_manifest": {
+          "bytes": 298490,
+          "sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"
+        },
+        "initial_weights": {
+          "bytes": 1485452,
+          "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"
+        },
+        "splits": {
+          "bytes": 256361,
+          "sha256": "bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"
+        }
+      },
+      "normalization_sha256": "f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1",
+      "runtime_manifest_sha256": "b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682",
+      "sample_order_sha256": "21ed766152674818e22d0abb5ed5540690ab31aa14507d78fcc73a381e5d058a",
+      "source_witness_sha256": "19d805e1dff1ea630c87e6e73f5efd01a50ce7e67c1feabab4f1679614caa231"
+    },
+    "checkpoints": [
+      {
+        "name": "checkpoint-000.npz",
+        "sha256": "3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954",
+        "bytes": 1485452,
+        "stage": "initial"
+      },
+      {
+        "name": "checkpoint-1600.npz",
+        "sha256": "720cec66cea954e6748d4f7aa53f55eef396dd63935c2ae965ce4aca5f50eba1",
+        "bytes": 1485452,
+        "stage": "retained_snapshot"
+      },
+      {
+        "name": "weights.npz",
+        "sha256": "720cec66cea954e6748d4f7aa53f55eef396dd63935c2ae965ce4aca5f50eba1",
+        "bytes": 1485452,
+        "stage": "selected"
+      }
+    ],
+    "raw_receipt_status": "complete",
+    "declared_runtime": {
+      "inference_device": "cpu",
+      "interop_threads": 1,
+      "numpy": "2.5.3",
+      "peak_rss_bytes": 2414022656,
+      "threads": 1,
+      "torch": "2.14.0+cu132"
+    },
+    "named_entries": [
+      "cohorts/68"
+    ],
+    "purpose": {
+      "status": "source_review_required",
+      "evidence": "Captured architecture, training configuration and linked named entries."
+    },
+    "outcome": {
+      "status": "retained_training_evidence_only",
+      "fresh_common_benchmark": "pending",
+      "scientific_promotion": false
+    },
+    "lesson": {
+      "status": "review_required_no_automatic_causal_claim"
+    },
+    "reproduction": {
+      "receipt": "runs/pressure-detached-correction-v1/c53-a-study-01/train/receipt.json",
+      "source_and_data_closure": "Retained hashes; clean reproduction not yet exercised."
+    },
+    "applicability": {
+      "status": "adapter_and_contract_review_required",
+      "task": "pressure_proposal",
+      "fresh_result": null
+    }
+  },
+  "original_receipt": {
+    "path": "runs/pressure-detached-correction-v1/c53-a-study-01/train/receipt.json",
+    "sha256": "1d72c4df38cf5320114d9b3f8a02369156322c1f0b3146b6d61e7d8b9a54e0a3",
+    "bytes": 59980
+  },
+  "bound_training_configuration": null,
+  "qualified_common_pressure": {
+    "scope": "128 original consumed pressure requests; not a full-state, independent-validation or drift qualification",
+    "capture_and_common_score": {
+      "path": "docs/plans/model-portfolio-migration-v1/reports/pressure-common-score-01.json",
+      "sha256": "3517bc4076e6ea0da9da857db43461e1be0b841804648bb12f40db2e990f1dcd"
+    },
+    "subjects": {
+      "C70": {
+        "name": "c53-a",
+        "weights_sha256": "720cec66cea954e6748d4f7aa53f55eef396dd63935c2ae965ce4aca5f50eba1",
+        "cases": 128,
+        "worst": {
+          "common_equation_relative_l2": 0.005491417474605374,
+          "pressure_mean_free_relative_l2": 0.012387426832986829,
+          "pressure_absolute_rms": 0.619566802660268,
+          "pressure_absolute_max": 1.5060568997550683
+        },
+        "worst_case": {
+          "common_equation_relative_l2": {
+            "trajectory_id": "baseline--water-validation-0031",
+            "native_frame": 15,
+            "counts_xyz": [
+              14,
+              6,
+              16
+            ],
+            "cell_size_m": 0.0625
+          },
+          "pressure_mean_free_relative_l2": {
+            "trajectory_id": "baseline--water-validation-0032",
+            "native_frame": 63,
+            "counts_xyz": [
+              15,
+              6,
+              8
+            ],
+            "cell_size_m": 0.125
+          }
+        },
+        "by_cells_per_metre": {
+          "8.0": {
+            "cases": 64,
+            "worst": {
+              "common_equation_relative_l2": 0.004872800773892715,
+              "pressure_mean_free_relative_l2": 0.012387426832986829,
+              "pressure_absolute_rms": 0.619566802660268,
+              "pressure_absolute_max": 1.5060568997550683
+            }
+          },
+          "16.0": {
+            "cases": 64,
+            "worst": {
+              "common_equation_relative_l2": 0.005491417474605374,
+              "pressure_mean_free_relative_l2": 0.011604775601337988,
+              "pressure_absolute_rms": 0.28353909462354254,
+              "pressure_absolute_max": 0.767687842480277
+            }
+          }
+        },
+        "execution_variant": "captured_CUDA_eager",
+        "result": {
+          "path": "runs/model-portfolio-migration-v1/pressure-portfolio-GPU-qualification-01/C70/results.json",
+          "sha256": "f1c02698fc5c254fd393384858e39c3a643a35e2009782dae2a6ce6bcf952cc3"
+        },
+        "CNN_operation_AST_preserved": null,
+        "CPU_neural_forward": false
+      }
+    },
+    "qualified_latency": false
+  },
+  "interpretation": {
+    "card_status": "retrospective_evidence_draft",
+    "architecture_description": "Recorded fields; source semantics still require review.",
+    "purpose_and_lesson": "No causal lesson or completion claim is inferred from a training receipt.",
+    "reproduction": "Source/data/checkpoint identities retained. Clean reproduction remains unverified.",
+    "historical_original_Run_observations": "References only; no native Run, Trial, ancestry or current execution authority is created."
+  }
+}
+```
+
+## Exact original receipt bytes
+
+```json
+{"architecture":{"activation":"silu","analytical_training_feedback":{"amplitude_reference":"train-correction-cell-rms","cache_max_bytes":805306368,"grid_capacity":16,"grids":[{"cells_per_metre":16,"counts_xyz":[16,16,16]},{"cells_per_metre":16,"counts_xyz":[24,24,24]},{"cells_per_metre":16,"counts_xyz":[32,32,32]},{"cells_per_metre":16,"counts_xyz":[40,40,40]},{"cells_per_metre":16,"counts_xyz":[24,16,12]},{"cells_per_metre":8,"counts_xyz":[17,13,9]},{"cells_per_metre":8,"counts_xyz":[33,17,9]},{"cells_per_metre":8,"counts_xyz":[9,25,13]}],"patterns":32,"sampling":"uniform-balanced-grid","seed":2026101507,"weight":0.1},"block_normalization":{"name":"Identity"},"bottleneck_width":48,"channels":["dimensionless_laplacian_rhs"],"conditioning":"physical-residual","convolutions_per_block":2,"coordinates":"implicit grid indices; no coordinate feature maps","correction":{"activation":"linear","steps":2},"counts_supported":"positive per-axis integers within cell budget","current_policy_training_feedback":{"manifest_sha256":"fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e","seed":2026102801,"stage":"late","weight":0.1},"decoder_widths":[32,24,16,8],"direction_training_feedback":{"manifest_sha256":"ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc","seed":2026102701,"stage":"late","weight":0.1},"dtype":"float32","encoder_widths":[8,16,24,32],"fine_tuning":{"arm":"c53-a","early_weight":0.05,"fitting_bank":{"amplitude_reference":"original-train-correction-rms","cache_max_bytes":8388608,"grids":[{"cells_per_metre":16,"counts_xyz":[13,15,16]},{"cells_per_metre":16,"counts_xyz":[9,11,11]},{"cells_per_metre":8,"counts_xyz":[15,9,7]},{"cells_per_metre":16,"counts_xyz":[11,5,15]},{"cells_per_metre":8,"counts_xyz":[7,16,5]},{"cells_per_metre":16,"counts_xyz":[11,12,7]},{"cells_per_metre":8,"counts_xyz":[5,13,9]},{"cells_per_metre":16,"counts_xyz":[16,7,11]}],"modes_zyx":[[0,0,1]],"sampling_seed":2026102101},"initial_weights_sha256":"3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954","relative_equation_target":1e-06,"rollout_feedback":{"depth_seed":2026101807,"mode":"A","weight":0.05},"schema":"rheon-fine-tuning-objective-v1","teacher_cache_bytes":268435456,"teacher_passes":8,"teacher_weight":0.0,"training_passes":4},"first_correction_pressure_feedback_weight":0.0,"gauge":"subtract_first_correction_cell","global_path":"add_spatial_mean_broadcast","head":"linear_1x1x1","initialization":"retain original first-convolution residual column and all surviving seeded tensors","input_channels":1,"intermediate_feedback":{"relative_equation_weight":0.1,"stages":"all nonfinal corrections; real and analytical train samples"},"kernel":[3,3,3],"max_cells":65536,"output_scale":"previous-pressure-rms","padding":"replicate","physical_cells":"one scalar h per sample; no cell-size network channels","pool":"per-axis average, kernel=min(2,count), ceil, exclude padding","preprocessing":"q=(rho/h)*residual; q / train-only q RMS","pressure_dtype":"float64","reconstruction":"float32 raw times selected train-only RMS, cell-zero gauge, add supplied base","restrictions":"uniform-density cubic sealed Neumann operator; no independently specified geometry masks","schema":"rheon-physical-residual-pressure-v1","supplemental_training_feedback":{"amplitude_reference":"train-correction-cell-rms","cache_max_bytes":805306368,"grid_capacity":16,"grids":[{"cells_per_metre":16,"counts_xyz":[16,23,25]},{"cells_per_metre":16,"counts_xyz":[23,25,16]},{"cells_per_metre":16,"counts_xyz":[25,16,23]},{"cells_per_metre":16,"counts_xyz":[10,7,25]},{"cells_per_metre":16,"counts_xyz":[7,25,10]},{"cells_per_metre":16,"counts_xyz":[25,10,7]}],"patterns":32,"sampling":"uniform-balanced-grid","seed":2026101607,"source":"grids","weight":0.1},"training_band_feedback":{"max_mode":3,"signal_floor_fraction":0.1,"stages":"first-and-final","weight":0.03},"training_objective":"canonical-intermediate-contraction","upsampling":"nearest_to_skip_shape"},"cases":[{"cell_size_m":0.125,"counts_xyz":[16,16,16],"frame":0,"native_frame":15,"parent":0,"split":"train","trajectory_id":"baseline--water-train-0000"},{"cell_size_m":0.0625,"counts_xyz":[16,10,6],"frame":1,"native_frame":63,"parent":1,"split":"train","trajectory_id":"baseline--water-train-0001"},{"cell_size_m":0.125,"counts_xyz":[12,7,13],"frame":0,"native_frame":15,"parent":2,"split":"train","trajectory_id":"baseline--water-train-0002"},{"cell_size_m":0.125,"counts_xyz":[10,15,6],"frame":1,"native_frame":63,"parent":4,"split":"train","trajectory_id":"baseline--water-train-0004"},{"cell_size_m":0.0625,"counts_xyz":[11,10,6],"frame":0,"native_frame":15,"parent":5,"split":"train","trajectory_id":"baseline--water-train-0005"},{"cell_size_m":0.125,"counts_xyz":[8,5,9],"frame":1,"native_frame":63,"parent":6,"split":"train","trajectory_id":"baseline--water-train-0006"},{"cell_size_m":0.125,"counts_xyz":[12,8,9],"frame":0,"native_frame":15,"parent":8,"split":"train","trajectory_id":"baseline--water-train-0008"},{"cell_size_m":0.0625,"counts_xyz":[6,14,9],"frame":1,"native_frame":63,"parent":9,"split":"train","trajectory_id":"baseline--water-train-0009"},{"cell_size_m":0.125,"counts_xyz":[10,16,16],"frame":0,"native_frame":15,"parent":10,"split":"train","trajectory_id":"baseline--water-train-0010"},{"cell_size_m":0.125,"counts_xyz":[6,13,12],"frame":1,"native_frame":63,"parent":12,"split":"train","trajectory_id":"baseline--water-train-0012"},{"cell_size_m":0.0625,"counts_xyz":[5,15,15],"frame":0,"native_frame":15,"parent":13,"split":"train","trajectory_id":"baseline--water-train-0013"},{"cell_size_m":0.0625,"counts_xyz":[14,15,7],"frame":1,"native_frame":63,"parent":15,"split":"train","trajectory_id":"baseline--water-train-0015"}],"closure":{"experiment_sha256":"b39f16ad364fb42687c4760c475f49427df6f6518885ea9d3726b7eeade7eaca","inputs":{"current_dataset":{"bytes":21428086,"sha256":"8b6252c12d18ffb826d907fc4b0b6761f0eb6958802e6e462883beecab6d1521"},"current_manifest":{"bytes":168912,"sha256":"fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e"},"dataset":{"bytes":610070,"sha256":"89f5f3ee7235c33321ce4ba6bf954e5253f6e1c58cda47508f29be1e7340686e"},"dataset_extra":{"bytes":610806,"sha256":"c0abbcbf4282488002a9b69552e80a3a541c5adc866182d7775aaef9048e5fd5"},"direction_dataset":{"bytes":24476086,"sha256":"4f4f9c948ce5d38dfcb9ecdf424eae2e533e3ee83ad6549dff849178fdadabc6"},"direction_manifest":{"bytes":298490,"sha256":"ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc"},"initial_weights":{"bytes":1485452,"sha256":"3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"},"splits":{"bytes":256361,"sha256":"bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"}},"normalization_sha256":"f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1","runtime_manifest_sha256":"b4329b27c27622d1fdf2b6c5712d6420c2d3e5fedf01c1450fc1a236cdbc9682","sample_order_sha256":"21ed766152674818e22d0abb5ed5540690ab31aa14507d78fcc73a381e5d058a","source_witness_sha256":"19d805e1dff1ea630c87e6e73f5efd01a50ce7e67c1feabab4f1679614caa231"},"diagnostic_population":"train_only","elapsed_s":86.44636546599213,"execution":{"amp":false,"batches_cuda":true,"cuda_cpu_pressure_max_abs_difference":7.4613775766785295e-06,"deterministic_algorithms":true,"device":"cuda:0","gpu":"NVIDIA GeForce RTX 5090 Laptop GPU","model_dtype":"float32","parameters_gradients_adam_moments_cuda":true,"peak_allocated_bytes":20238336,"peak_reserved_bytes":39845888,"tf32":false},"fine_tuning_statistics":{"fundamental_bank":{"amplitude_rms_pa":2.8535734640782584,"cases":[{"cells_per_metre":16,"counts_xyz":[13,15,16],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[9,11,11],"mode_zyx":[0,0,1]},{"cells_per_metre":8,"counts_xyz":[15,9,7],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[11,5,15],"mode_zyx":[0,0,1]},{"cells_per_metre":8,"counts_xyz":[7,16,5],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[11,12,7],"mode_zyx":[0,0,1]},{"cells_per_metre":8,"counts_xyz":[5,13,9],"mode_zyx":[0,0,1]},{"cells_per_metre":16,"counts_xyz":[16,7,11],"mode_zyx":[0,0,1]}],"description_sha256":"30f7092460b6a649b28e4bf380a5769c2955d1e29461e0f64a6e1d474dab960f","expected_exposures":[200,200,200,200,200,200,200,200],"optimizer_examples":1600,"optimizer_exposures":[200,200,200,200,200,200,200,200],"resident_tensor_bytes":297152,"sampling_order_sha256":"d0ea221a7e03a83673ece7fc9cdf4f5212bb54f3023511f93d95c84e45647899","trace":[{"exposures_per_case":10,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.10093187905150124},{"case":0,"passes":2,"relative_equation_residual":0.007379778779118633},{"case":0,"passes":4,"relative_equation_residual":3.059074370978143e-05},{"case":0,"passes":8,"relative_equation_residual":4.935089242930599e-10},{"case":1,"passes":1,"relative_equation_residual":0.06966329312210649},{"case":1,"passes":2,"relative_equation_residual":0.003704940979611583},{"case":1,"passes":4,"relative_equation_residual":1.2684202378095508e-05},{"case":1,"passes":8,"relative_equation_residual":1.4840605930361164e-10},{"case":2,"passes":1,"relative_equation_residual":0.1859238953627822},{"case":2,"passes":2,"relative_equation_residual":0.0164788925683158},{"case":2,"passes":4,"relative_equation_residual":6.919649870139425e-05},{"case":2,"passes":8,"relative_equation_residual":2.1553198062549354e-09},{"case":3,"passes":1,"relative_equation_residual":0.10332060881877987},{"case":3,"passes":2,"relative_equation_residual":0.006068640482258631},{"case":3,"passes":4,"relative_equation_residual":6.828324288733726e-06},{"case":3,"passes":8,"relative_equation_residual":4.478987638432402e-11},{"case":4,"passes":1,"relative_equation_residual":0.05465960743847939},{"case":4,"passes":2,"relative_equation_residual":0.003420851819787092},{"case":4,"passes":4,"relative_equation_residual":5.433084749952531e-06},{"case":4,"passes":8,"relative_equation_residual":9.917631647925452e-11},{"case":5,"passes":1,"relative_equation_residual":0.10332341187482927},{"case":5,"passes":2,"relative_equation_residual":0.0060686496129475345},{"case":5,"passes":4,"relative_equation_residual":6.829042763369555e-06},{"case":5,"passes":8,"relative_equation_residual":4.6428512834836585e-11},{"case":6,"passes":1,"relative_equation_residual":0.03006690665081807},{"case":6,"passes":2,"relative_equation_residual":0.0006355220435958277},{"case":6,"passes":4,"relative_equation_residual":7.758595951304734e-07},{"case":6,"passes":8,"relative_equation_residual":1.177078651351293e-12},{"case":7,"passes":1,"relative_equation_residual":0.21969291144154865},{"case":7,"passes":2,"relative_equation_residual":0.03822503284103126},{"case":7,"passes":4,"relative_equation_residual":0.0013400406053511323},{"case":7,"passes":8,"relative_equation_residual":3.0739797013892354e-06}],"update":80},{"exposures_per_case":20,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.09307959260790613},{"case":0,"passes":2,"relative_equation_residual":0.005438541486009489},{"case":0,"passes":4,"relative_equation_residual":2.8345025268143776e-05},{"case":0,"passes":8,"relative_equation_residual":9.145769409460823e-10},{"case":1,"passes":1,"relative_equation_residual":0.04456005215678964},{"case":1,"passes":2,"relative_equation_residual":0.0028190742896879203},{"case":1,"passes":4,"relative_equation_residual":8.562164181133856e-06},{"case":1,"passes":8,"relative_equation_residual":4.975697912652181e-11},{"case":2,"passes":1,"relative_equation_residual":0.19446241069082013},{"case":2,"passes":2,"relative_equation_residual":0.01720721668076066},{"case":2,"passes":4,"relative_equation_residual":9.08820567081911e-05},{"case":2,"passes":8,"relative_equation_residual":6.232443794644023e-09},{"case":3,"passes":1,"relative_equation_residual":0.10651614666150326},{"case":3,"passes":2,"relative_equation_residual":0.0065700223538492294},{"case":3,"passes":4,"relative_equation_residual":2.1261650884420988e-05},{"case":3,"passes":8,"relative_equation_residual":2.2854964882248606e-10},{"case":4,"passes":1,"relative_equation_residual":0.03489453949735744},{"case":4,"passes":2,"relative_equation_residual":0.0015264043868311466},{"case":4,"passes":4,"relative_equation_residual":2.4305265720498815e-06},{"case":4,"passes":8,"relative_equation_residual":1.0599780293491236e-11},{"case":5,"passes":1,"relative_equation_residual":0.1065185665091835},{"case":5,"passes":2,"relative_equation_residual":0.006569743135552384},{"case":5,"passes":4,"relative_equation_residual":2.126046775119989e-05},{"case":5,"passes":8,"relative_equation_residual":2.2877949717784822e-10},{"case":6,"passes":1,"relative_equation_residual":0.02342771717077852},{"case":6,"passes":2,"relative_equation_residual":0.0005339870961858878},{"case":6,"passes":4,"relative_equation_residual":3.9387088854447835e-07},{"case":6,"passes":8,"relative_equation_residual":1.824368288970354e-13},{"case":7,"passes":1,"relative_equation_residual":0.2308546267255306},{"case":7,"passes":2,"relative_equation_residual":0.041360848629001405},{"case":7,"passes":4,"relative_equation_residual":0.0011569859427429713},{"case":7,"passes":8,"relative_equation_residual":1.6575256430401237e-06}],"update":160},{"exposures_per_case":30,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.1773644967996824},{"case":0,"passes":2,"relative_equation_residual":0.02479986419006665},{"case":0,"passes":4,"relative_equation_residual":0.0004371602880308698},{"case":0,"passes":8,"relative_equation_residual":1.3142262658433808e-07},{"case":1,"passes":1,"relative_equation_residual":0.10798551850754128},{"case":1,"passes":2,"relative_equation_residual":0.009714080611700239},{"case":1,"passes":4,"relative_equation_residual":7.387301465110704e-05},{"case":1,"passes":8,"relative_equation_residual":3.956961577136087e-09},{"case":2,"passes":1,"relative_equation_residual":0.15484826302829022},{"case":2,"passes":2,"relative_equation_residual":0.003667914156557265},{"case":2,"passes":4,"relative_equation_residual":1.0398878032629498e-05},{"case":2,"passes":8,"relative_equation_residual":1.2081547810489127e-10},{"case":3,"passes":1,"relative_equation_residual":0.05181030765089851},{"case":3,"passes":2,"relative_equation_residual":0.001780774448879005},{"case":3,"passes":4,"relative_equation_residual":1.5308385860091181e-06},{"case":3,"passes":8,"relative_equation_residual":1.9742102091989224e-11},{"case":4,"passes":1,"relative_equation_residual":0.0728670324957527},{"case":4,"passes":2,"relative_equation_residual":0.004302303038700104},{"case":4,"passes":4,"relative_equation_residual":1.3377393013397025e-05},{"case":4,"passes":8,"relative_equation_residual":1.4261693703250525e-10},{"case":5,"passes":1,"relative_equation_residual":0.05180980258958119},{"case":5,"passes":2,"relative_equation_residual":0.0017805523435965528},{"case":5,"passes":4,"relative_equation_residual":1.5307929147730403e-06},{"case":5,"passes":8,"relative_equation_residual":1.987819135384991e-11},{"case":6,"passes":1,"relative_equation_residual":0.013108399026705563},{"case":6,"passes":2,"relative_equation_residual":0.00038926907038952996},{"case":6,"passes":4,"relative_equation_residual":9.812109495308596e-08},{"case":6,"passes":8,"relative_equation_residual":1.5708336801391651e-13},{"case":7,"passes":1,"relative_equation_residual":0.1635924171122064},{"case":7,"passes":2,"relative_equation_residual":0.017659680606221265},{"case":7,"passes":4,"relative_equation_residual":0.00018011588974989519},{"case":7,"passes":8,"relative_equation_residual":1.6731334504032474e-07}],"update":240},{"exposures_per_case":40,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.20223868060414663},{"case":0,"passes":2,"relative_equation_residual":0.04370650493127016},{"case":0,"passes":4,"relative_equation_residual":0.0021662069303931488},{"case":0,"passes":8,"relative_equation_residual":5.416431402825762e-06},{"case":1,"passes":1,"relative_equation_residual":0.10009533236347581},{"case":1,"passes":2,"relative_equation_residual":0.00866990286712959},{"case":1,"passes":4,"relative_equation_residual":6.593929307213936e-05},{"case":1,"passes":8,"relative_equation_residual":3.3404776624252703e-09},{"case":2,"passes":1,"relative_equation_residual":0.21139774194182553},{"case":2,"passes":2,"relative_equation_residual":0.015205202740751104},{"case":2,"passes":4,"relative_equation_residual":0.00023876005707568624},{"case":2,"passes":8,"relative_equation_residual":5.199977427065651e-08},{"case":3,"passes":1,"relative_equation_residual":0.06543201910098544},{"case":3,"passes":2,"relative_equation_residual":0.003213832332223239},{"case":3,"passes":4,"relative_equation_residual":1.8833767392976652e-05},{"case":3,"passes":8,"relative_equation_residual":5.69543502287686e-10},{"case":4,"passes":1,"relative_equation_residual":0.04565109970729439},{"case":4,"passes":2,"relative_equation_residual":0.0024996913997502057},{"case":4,"passes":4,"relative_equation_residual":9.417678473460909e-06},{"case":4,"passes":8,"relative_equation_residual":1.6708432973808263e-10},{"case":5,"passes":1,"relative_equation_residual":0.06542941194302958},{"case":5,"passes":2,"relative_equation_residual":0.003213767411020738},{"case":5,"passes":4,"relative_equation_residual":1.8834190294938874e-05},{"case":5,"passes":8,"relative_equation_residual":5.695126307424781e-10},{"case":6,"passes":1,"relative_equation_residual":0.01229056213943611},{"case":6,"passes":2,"relative_equation_residual":0.0005113576821050837},{"case":6,"passes":4,"relative_equation_residual":4.717632783270981e-07},{"case":6,"passes":8,"relative_equation_residual":7.076713824508334e-13},{"case":7,"passes":1,"relative_equation_residual":0.12187836527125226},{"case":7,"passes":2,"relative_equation_residual":0.011225616718922193},{"case":7,"passes":4,"relative_equation_residual":0.0002815255429433805},{"case":7,"passes":8,"relative_equation_residual":4.6586783687624635e-08}],"update":320},{"exposures_per_case":50,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.16809538789063355},{"case":0,"passes":2,"relative_equation_residual":0.0242016409242583},{"case":0,"passes":4,"relative_equation_residual":0.0005140587168563562},{"case":0,"passes":8,"relative_equation_residual":2.2591429519019784e-07},{"case":1,"passes":1,"relative_equation_residual":0.0852445529955343},{"case":1,"passes":2,"relative_equation_residual":0.00533038863481663},{"case":1,"passes":4,"relative_equation_residual":1.9777857701859437e-05},{"case":1,"passes":8,"relative_equation_residual":3.067130256335177e-10},{"case":2,"passes":1,"relative_equation_residual":0.17644235337986994},{"case":2,"passes":2,"relative_equation_residual":0.006526129111742571},{"case":2,"passes":4,"relative_equation_residual":5.05326576557896e-05},{"case":2,"passes":8,"relative_equation_residual":6.546755598829941e-10},{"case":3,"passes":1,"relative_equation_residual":0.06661984214539596},{"case":3,"passes":2,"relative_equation_residual":0.0035366055615546075},{"case":3,"passes":4,"relative_equation_residual":1.4560305623522266e-05},{"case":3,"passes":8,"relative_equation_residual":2.616424159596514e-10},{"case":4,"passes":1,"relative_equation_residual":0.05017607544848721},{"case":4,"passes":2,"relative_equation_residual":0.002274470234416029},{"case":4,"passes":4,"relative_equation_residual":4.151092231126664e-06},{"case":4,"passes":8,"relative_equation_residual":1.6807157854546424e-11},{"case":5,"passes":1,"relative_equation_residual":0.06661723375920922},{"case":5,"passes":2,"relative_equation_residual":0.0035368185333028786},{"case":5,"passes":4,"relative_equation_residual":1.455979769891125e-05},{"case":5,"passes":8,"relative_equation_residual":2.6166774469438274e-10},{"case":6,"passes":1,"relative_equation_residual":0.028153694745822275},{"case":6,"passes":2,"relative_equation_residual":0.0014294598401187924},{"case":6,"passes":4,"relative_equation_residual":1.2547828906652182e-06},{"case":6,"passes":8,"relative_equation_residual":1.3770916283858183e-12},{"case":7,"passes":1,"relative_equation_residual":0.16571808001397773},{"case":7,"passes":2,"relative_equation_residual":0.019133728465614893},{"case":7,"passes":4,"relative_equation_residual":0.0001855353000571395},{"case":7,"passes":8,"relative_equation_residual":1.8311728619971112e-07}],"update":400},{"exposures_per_case":60,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.15164794951990782},{"case":0,"passes":2,"relative_equation_residual":0.01501128604838095},{"case":0,"passes":4,"relative_equation_residual":8.000463097135733e-05},{"case":0,"passes":8,"relative_equation_residual":5.239988415948938e-09},{"case":1,"passes":1,"relative_equation_residual":0.06872360611667763},{"case":1,"passes":2,"relative_equation_residual":0.003960780715001615},{"case":1,"passes":4,"relative_equation_residual":1.2471386792811836e-05},{"case":1,"passes":8,"relative_equation_residual":1.1953128765722708e-10},{"case":2,"passes":1,"relative_equation_residual":0.1726411194669964},{"case":2,"passes":2,"relative_equation_residual":0.006226421240232275},{"case":2,"passes":4,"relative_equation_residual":2.1026106385614207e-05},{"case":2,"passes":8,"relative_equation_residual":1.8312624755712882e-10},{"case":3,"passes":1,"relative_equation_residual":0.03796906247464475},{"case":3,"passes":2,"relative_equation_residual":0.0007180451405564092},{"case":3,"passes":4,"relative_equation_residual":9.039946049541802e-07},{"case":3,"passes":8,"relative_equation_residual":4.236289324197851e-12},{"case":4,"passes":1,"relative_equation_residual":0.025100957649907756},{"case":4,"passes":2,"relative_equation_residual":0.0006992244843386807},{"case":4,"passes":4,"relative_equation_residual":1.0971402305635694e-06},{"case":4,"passes":8,"relative_equation_residual":2.7209141633223334e-12},{"case":5,"passes":1,"relative_equation_residual":0.03797031986009412},{"case":5,"passes":2,"relative_equation_residual":0.0007178718568503463},{"case":5,"passes":4,"relative_equation_residual":9.032341099299279e-07},{"case":5,"passes":8,"relative_equation_residual":4.928400947852574e-12},{"case":6,"passes":1,"relative_equation_residual":0.018050874896395182},{"case":6,"passes":2,"relative_equation_residual":0.00024163960243914486},{"case":6,"passes":4,"relative_equation_residual":2.19009172386275e-07},{"case":6,"passes":8,"relative_equation_residual":5.07660054763477e-13},{"case":7,"passes":1,"relative_equation_residual":0.19571814478741903},{"case":7,"passes":2,"relative_equation_residual":0.022709173111121417},{"case":7,"passes":4,"relative_equation_residual":0.00013858175595507472},{"case":7,"passes":8,"relative_equation_residual":1.4427993900328554e-07}],"update":480},{"exposures_per_case":70,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.23261203955671508},{"case":0,"passes":2,"relative_equation_residual":0.03821906960078365},{"case":0,"passes":4,"relative_equation_residual":0.000984524355140717},{"case":0,"passes":8,"relative_equation_residual":6.307684380038283e-07},{"case":1,"passes":1,"relative_equation_residual":0.11565272630539693},{"case":1,"passes":2,"relative_equation_residual":0.009925128098973196},{"case":1,"passes":4,"relative_equation_residual":5.888916089126033e-05},{"case":1,"passes":8,"relative_equation_residual":1.4216110733711709e-09},{"case":2,"passes":1,"relative_equation_residual":0.18148928030484088},{"case":2,"passes":2,"relative_equation_residual":0.010500167649567651},{"case":2,"passes":4,"relative_equation_residual":6.663241983426025e-05},{"case":2,"passes":8,"relative_equation_residual":4.795780003980765e-09},{"case":3,"passes":1,"relative_equation_residual":0.0501368704276649},{"case":3,"passes":2,"relative_equation_residual":0.004142216003428462},{"case":3,"passes":4,"relative_equation_residual":1.2746578427655923e-05},{"case":3,"passes":8,"relative_equation_residual":1.031779889496642e-10},{"case":4,"passes":1,"relative_equation_residual":0.04413494400308136},{"case":4,"passes":2,"relative_equation_residual":0.0022103572338427403},{"case":4,"passes":4,"relative_equation_residual":5.3753245915608035e-06},{"case":4,"passes":8,"relative_equation_residual":2.0605156472264537e-11},{"case":5,"passes":1,"relative_equation_residual":0.05013807703382058},{"case":5,"passes":2,"relative_equation_residual":0.004142389791660897},{"case":5,"passes":4,"relative_equation_residual":1.2746457343310287e-05},{"case":5,"passes":8,"relative_equation_residual":1.035843137958693e-10},{"case":6,"passes":1,"relative_equation_residual":0.012906844461567694},{"case":6,"passes":2,"relative_equation_residual":0.0002853206418017},{"case":6,"passes":4,"relative_equation_residual":1.5323158916429207e-07},{"case":6,"passes":8,"relative_equation_residual":1.6809834490316114e-12},{"case":7,"passes":1,"relative_equation_residual":0.1420267457470551},{"case":7,"passes":2,"relative_equation_residual":0.01001259636285736},{"case":7,"passes":4,"relative_equation_residual":0.00017788555616985317},{"case":7,"passes":8,"relative_equation_residual":1.6963317877525302e-07}],"update":560},{"exposures_per_case":80,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.16291495861524283},{"case":0,"passes":2,"relative_equation_residual":0.024360485405231898},{"case":0,"passes":4,"relative_equation_residual":0.0005433927972675664},{"case":0,"passes":8,"relative_equation_residual":2.660569537806909e-07},{"case":1,"passes":1,"relative_equation_residual":0.0973720182001131},{"case":1,"passes":2,"relative_equation_residual":0.008437518666593598},{"case":1,"passes":4,"relative_equation_residual":5.573709396994255e-05},{"case":1,"passes":8,"relative_equation_residual":1.775493859929199e-09},{"case":2,"passes":1,"relative_equation_residual":0.15037354351605037},{"case":2,"passes":2,"relative_equation_residual":0.005454100773237864},{"case":2,"passes":4,"relative_equation_residual":2.789647209826946e-05},{"case":2,"passes":8,"relative_equation_residual":1.696511798200838e-09},{"case":3,"passes":1,"relative_equation_residual":0.03749355864154127},{"case":3,"passes":2,"relative_equation_residual":0.002910832809786881},{"case":3,"passes":4,"relative_equation_residual":4.748655781372204e-06},{"case":3,"passes":8,"relative_equation_residual":3.0534565033220086e-11},{"case":4,"passes":1,"relative_equation_residual":0.059389614389914226},{"case":4,"passes":2,"relative_equation_residual":0.004353740831032312},{"case":4,"passes":4,"relative_equation_residual":2.5463588963630683e-05},{"case":4,"passes":8,"relative_equation_residual":6.454636111031754e-10},{"case":5,"passes":1,"relative_equation_residual":0.03749298604066791},{"case":5,"passes":2,"relative_equation_residual":0.002910645550624593},{"case":5,"passes":4,"relative_equation_residual":4.748911976317041e-06},{"case":5,"passes":8,"relative_equation_residual":3.0468196548830154e-11},{"case":6,"passes":1,"relative_equation_residual":0.019643050852618936},{"case":6,"passes":2,"relative_equation_residual":0.0005893065969113727},{"case":6,"passes":4,"relative_equation_residual":6.306528325672068e-07},{"case":6,"passes":8,"relative_equation_residual":2.6834959427708442e-12},{"case":7,"passes":1,"relative_equation_residual":0.15597452593909875},{"case":7,"passes":2,"relative_equation_residual":0.015618933876386621},{"case":7,"passes":4,"relative_equation_residual":0.00027647377328599975},{"case":7,"passes":8,"relative_equation_residual":2.3086677704299278e-07}],"update":640},{"exposures_per_case":90,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.12561317661649612},{"case":0,"passes":2,"relative_equation_residual":0.014307545564929074},{"case":0,"passes":4,"relative_equation_residual":0.00026078419688484693},{"case":0,"passes":8,"relative_equation_residual":8.669850669949394e-08},{"case":1,"passes":1,"relative_equation_residual":0.061675388823679456},{"case":1,"passes":2,"relative_equation_residual":0.002959226219710056},{"case":1,"passes":4,"relative_equation_residual":5.680869955866189e-06},{"case":1,"passes":8,"relative_equation_residual":1.4144031503934643e-11},{"case":2,"passes":1,"relative_equation_residual":0.1404729112642976},{"case":2,"passes":2,"relative_equation_residual":0.004641530317525945},{"case":2,"passes":4,"relative_equation_residual":1.0355715193029267e-05},{"case":2,"passes":8,"relative_equation_residual":6.281228613821594e-11},{"case":3,"passes":1,"relative_equation_residual":0.04537414477023308},{"case":3,"passes":2,"relative_equation_residual":0.001656947962189482},{"case":3,"passes":4,"relative_equation_residual":1.9997508765809096e-06},{"case":3,"passes":8,"relative_equation_residual":5.357038362516472e-12},{"case":4,"passes":1,"relative_equation_residual":0.027857616927361717},{"case":4,"passes":2,"relative_equation_residual":0.0005232666810651313},{"case":4,"passes":4,"relative_equation_residual":6.730635805218039e-07},{"case":4,"passes":8,"relative_equation_residual":5.069031103326306e-13},{"case":5,"passes":1,"relative_equation_residual":0.04537063215890688},{"case":5,"passes":2,"relative_equation_residual":0.001656817342864948},{"case":5,"passes":4,"relative_equation_residual":2.000751899747766e-06},{"case":5,"passes":8,"relative_equation_residual":7.313906158205426e-12},{"case":6,"passes":1,"relative_equation_residual":0.022377106458503677},{"case":6,"passes":2,"relative_equation_residual":0.0007042735333049144},{"case":6,"passes":4,"relative_equation_residual":8.767939874125554e-07},{"case":6,"passes":8,"relative_equation_residual":1.4830582471410444e-12},{"case":7,"passes":1,"relative_equation_residual":0.1767593977968949},{"case":7,"passes":2,"relative_equation_residual":0.023133531116700568},{"case":7,"passes":4,"relative_equation_residual":0.00037312076406670894},{"case":7,"passes":8,"relative_equation_residual":3.7276839413462574e-07}],"update":720},{"exposures_per_case":100,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.14488433446278018},{"case":0,"passes":2,"relative_equation_residual":0.011849437296153089},{"case":0,"passes":4,"relative_equation_residual":4.67553289196782e-05},{"case":0,"passes":8,"relative_equation_residual":3.5057961025675492e-09},{"case":1,"passes":1,"relative_equation_residual":0.06295440763759182},{"case":1,"passes":2,"relative_equation_residual":0.003810250869645378},{"case":1,"passes":4,"relative_equation_residual":1.397225277912436e-05},{"case":1,"passes":8,"relative_equation_residual":1.8564089827982042e-10},{"case":2,"passes":1,"relative_equation_residual":0.15657952410838433},{"case":2,"passes":2,"relative_equation_residual":0.006018301878458994},{"case":2,"passes":4,"relative_equation_residual":2.263306635072216e-05},{"case":2,"passes":8,"relative_equation_residual":3.115801688067075e-10},{"case":3,"passes":1,"relative_equation_residual":0.03207804900015065},{"case":3,"passes":2,"relative_equation_residual":0.0012862679449925404},{"case":3,"passes":4,"relative_equation_residual":1.106381294766168e-06},{"case":3,"passes":8,"relative_equation_residual":5.856724662574411e-12},{"case":4,"passes":1,"relative_equation_residual":0.028540060172072897},{"case":4,"passes":2,"relative_equation_residual":0.0010249823781622795},{"case":4,"passes":4,"relative_equation_residual":1.3020863743638529e-06},{"case":4,"passes":8,"relative_equation_residual":4.885726060511433e-13},{"case":5,"passes":1,"relative_equation_residual":0.03208156879736404},{"case":5,"passes":2,"relative_equation_residual":0.0012863195277512931},{"case":5,"passes":4,"relative_equation_residual":1.1065235225282814e-06},{"case":5,"passes":8,"relative_equation_residual":3.713080691038967e-11},{"case":6,"passes":1,"relative_equation_residual":0.01832578126380848},{"case":6,"passes":2,"relative_equation_residual":0.0006919304624611732},{"case":6,"passes":4,"relative_equation_residual":5.379096957136825e-07},{"case":6,"passes":8,"relative_equation_residual":1.889374630697195e-12},{"case":7,"passes":1,"relative_equation_residual":0.1849903804587574},{"case":7,"passes":2,"relative_equation_residual":0.02026373054868544},{"case":7,"passes":4,"relative_equation_residual":8.361133044613523e-05},{"case":7,"passes":8,"relative_equation_residual":7.917267701524435e-08}],"update":800},{"exposures_per_case":110,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.13407360579434346},{"case":0,"passes":2,"relative_equation_residual":0.009745998859026146},{"case":0,"passes":4,"relative_equation_residual":2.6617487184235868e-05},{"case":0,"passes":8,"relative_equation_residual":1.9062024424722977e-09},{"case":1,"passes":1,"relative_equation_residual":0.048773331441438375},{"case":1,"passes":2,"relative_equation_residual":0.002156179956186291},{"case":1,"passes":4,"relative_equation_residual":4.546247897501942e-06},{"case":1,"passes":8,"relative_equation_residual":2.142481493742116e-11},{"case":2,"passes":1,"relative_equation_residual":0.15222508325775433},{"case":2,"passes":2,"relative_equation_residual":0.003465879063834724},{"case":2,"passes":4,"relative_equation_residual":2.41656836525867e-06},{"case":2,"passes":8,"relative_equation_residual":3.816060376247307e-11},{"case":3,"passes":1,"relative_equation_residual":0.022896419958001957},{"case":3,"passes":2,"relative_equation_residual":0.0001683655429964462},{"case":3,"passes":4,"relative_equation_residual":1.0220360119050074e-07},{"case":3,"passes":8,"relative_equation_residual":6.543658589087473e-12},{"case":4,"passes":1,"relative_equation_residual":0.018059043375850757},{"case":4,"passes":2,"relative_equation_residual":0.0002710457626545595},{"case":4,"passes":4,"relative_equation_residual":1.3224888438708785e-07},{"case":4,"passes":8,"relative_equation_residual":1.2128883998556547e-13},{"case":5,"passes":1,"relative_equation_residual":0.022896774614404147},{"case":5,"passes":2,"relative_equation_residual":0.00016830292270251853},{"case":5,"passes":4,"relative_equation_residual":1.0273445191960293e-07},{"case":5,"passes":8,"relative_equation_residual":9.6680999766965e-12},{"case":6,"passes":1,"relative_equation_residual":0.004489098524390532},{"case":6,"passes":2,"relative_equation_residual":2.141274168904922e-05},{"case":6,"passes":4,"relative_equation_residual":1.0005889834927003e-08},{"case":6,"passes":8,"relative_equation_residual":2.141708426536178e-12},{"case":7,"passes":1,"relative_equation_residual":0.1738043350203771},{"case":7,"passes":2,"relative_equation_residual":0.017999677684106673},{"case":7,"passes":4,"relative_equation_residual":0.00010167087939389292},{"case":7,"passes":8,"relative_equation_residual":8.670814886546567e-08}],"update":880},{"exposures_per_case":120,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.137361686202052},{"case":0,"passes":2,"relative_equation_residual":0.011159573921926201},{"case":0,"passes":4,"relative_equation_residual":4.68401700714464e-05},{"case":0,"passes":8,"relative_equation_residual":1.0030302763232264e-09},{"case":1,"passes":1,"relative_equation_residual":0.04429285119664743},{"case":1,"passes":2,"relative_equation_residual":0.0017061524432875693},{"case":1,"passes":4,"relative_equation_residual":2.6879638484786453e-06},{"case":1,"passes":8,"relative_equation_residual":7.522165874879651e-12},{"case":2,"passes":1,"relative_equation_residual":0.1600139685875686},{"case":2,"passes":2,"relative_equation_residual":0.00266290544922682},{"case":2,"passes":4,"relative_equation_residual":6.933079353925004e-06},{"case":2,"passes":8,"relative_equation_residual":1.5540637051695458e-10},{"case":3,"passes":1,"relative_equation_residual":0.023759290295726695},{"case":3,"passes":2,"relative_equation_residual":0.00034333035544220565},{"case":3,"passes":4,"relative_equation_residual":1.121719849932444e-07},{"case":3,"passes":8,"relative_equation_residual":4.518705976214501e-12},{"case":4,"passes":1,"relative_equation_residual":0.013438928184826695},{"case":4,"passes":2,"relative_equation_residual":0.00013991137939976843},{"case":4,"passes":4,"relative_equation_residual":1.1279473483900159e-07},{"case":4,"passes":8,"relative_equation_residual":1.9329659526655245e-13},{"case":5,"passes":1,"relative_equation_residual":0.02375648874382571},{"case":5,"passes":2,"relative_equation_residual":0.00034337990052696636},{"case":5,"passes":4,"relative_equation_residual":1.1272887694534953e-07},{"case":5,"passes":8,"relative_equation_residual":2.4151861167420555e-11},{"case":6,"passes":1,"relative_equation_residual":0.006732179240614056},{"case":6,"passes":2,"relative_equation_residual":5.697473841143275e-05},{"case":6,"passes":4,"relative_equation_residual":2.023920985671845e-08},{"case":6,"passes":8,"relative_equation_residual":1.0218782237734047e-12},{"case":7,"passes":1,"relative_equation_residual":0.16503861468645306},{"case":7,"passes":2,"relative_equation_residual":0.014632604981962458},{"case":7,"passes":4,"relative_equation_residual":5.742115715977512e-05},{"case":7,"passes":8,"relative_equation_residual":2.9399174604318062e-09}],"update":960},{"exposures_per_case":130,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.12198079493091099},{"case":0,"passes":2,"relative_equation_residual":0.008319911003291857},{"case":0,"passes":4,"relative_equation_residual":2.3936322992196986e-05},{"case":0,"passes":8,"relative_equation_residual":3.8235592029314964e-10},{"case":1,"passes":1,"relative_equation_residual":0.03420965441266253},{"case":1,"passes":2,"relative_equation_residual":0.0008202501831605409},{"case":1,"passes":4,"relative_equation_residual":4.7260189225178374e-07},{"case":1,"passes":8,"relative_equation_residual":2.1664693340887146e-12},{"case":2,"passes":1,"relative_equation_residual":0.15585316611843686},{"case":2,"passes":2,"relative_equation_residual":0.00418008163811751},{"case":2,"passes":4,"relative_equation_residual":4.9731852373560814e-06},{"case":2,"passes":8,"relative_equation_residual":1.2767141570311712e-10},{"case":3,"passes":1,"relative_equation_residual":0.03188819580481483},{"case":3,"passes":2,"relative_equation_residual":0.0006757469076860203},{"case":3,"passes":4,"relative_equation_residual":3.873884078750681e-07},{"case":3,"passes":8,"relative_equation_residual":5.726652075357621e-12},{"case":4,"passes":1,"relative_equation_residual":0.010132670988955572},{"case":4,"passes":2,"relative_equation_residual":0.00012860575981004694},{"case":4,"passes":4,"relative_equation_residual":5.1540257004781596e-08},{"case":4,"passes":8,"relative_equation_residual":3.0791838264959626e-14},{"case":5,"passes":1,"relative_equation_residual":0.03188997402821543},{"case":5,"passes":2,"relative_equation_residual":0.000676020916490037},{"case":5,"passes":4,"relative_equation_residual":3.864033544066579e-07},{"case":5,"passes":8,"relative_equation_residual":2.3605840942325355e-11},{"case":6,"passes":1,"relative_equation_residual":0.007844003091043147},{"case":6,"passes":2,"relative_equation_residual":3.763838621634706e-05},{"case":6,"passes":4,"relative_equation_residual":1.5264644764540293e-08},{"case":6,"passes":8,"relative_equation_residual":3.0289581120501666e-12},{"case":7,"passes":1,"relative_equation_residual":0.17083409441968844},{"case":7,"passes":2,"relative_equation_residual":0.016631739451176852},{"case":7,"passes":4,"relative_equation_residual":4.587791524428752e-05},{"case":7,"passes":8,"relative_equation_residual":5.4060416877221e-09}],"update":1040},{"exposures_per_case":140,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.11178655138692736},{"case":0,"passes":2,"relative_equation_residual":0.006503053801054178},{"case":0,"passes":4,"relative_equation_residual":9.874839611378651e-06},{"case":0,"passes":8,"relative_equation_residual":2.512111805073358e-10},{"case":1,"passes":1,"relative_equation_residual":0.025495610753798345},{"case":1,"passes":2,"relative_equation_residual":0.0003125127640268002},{"case":1,"passes":4,"relative_equation_residual":5.5734025067379306e-08},{"case":1,"passes":8,"relative_equation_residual":2.8127518017658993e-12},{"case":2,"passes":1,"relative_equation_residual":0.15866680550016932},{"case":2,"passes":2,"relative_equation_residual":0.005758332609106274},{"case":2,"passes":4,"relative_equation_residual":1.3194480958394536e-05},{"case":2,"passes":8,"relative_equation_residual":3.755094404798464e-11},{"case":3,"passes":1,"relative_equation_residual":0.04038173350202398},{"case":3,"passes":2,"relative_equation_residual":0.0013880905021577629},{"case":3,"passes":4,"relative_equation_residual":1.8564667725426331e-06},{"case":3,"passes":8,"relative_equation_residual":9.160105846820237e-12},{"case":4,"passes":1,"relative_equation_residual":0.006357846273967912},{"case":4,"passes":2,"relative_equation_residual":0.00019080326552113662},{"case":4,"passes":4,"relative_equation_residual":8.822921401642027e-08},{"case":4,"passes":8,"relative_equation_residual":2.1290011867753062e-13},{"case":5,"passes":1,"relative_equation_residual":0.04038259561393953},{"case":5,"passes":2,"relative_equation_residual":0.0013880824980543707},{"case":5,"passes":4,"relative_equation_residual":1.857088287077866e-06},{"case":5,"passes":8,"relative_equation_residual":4.133988387794888e-11},{"case":6,"passes":1,"relative_equation_residual":0.008486645581034891},{"case":6,"passes":2,"relative_equation_residual":0.0001359196149735755},{"case":6,"passes":4,"relative_equation_residual":1.5797258324118962e-08},{"case":6,"passes":8,"relative_equation_residual":1.9131750694339135e-12},{"case":7,"passes":1,"relative_equation_residual":0.17605060034146577},{"case":7,"passes":2,"relative_equation_residual":0.0180554651632476},{"case":7,"passes":4,"relative_equation_residual":6.715396030840975e-05},{"case":7,"passes":8,"relative_equation_residual":4.177415839206669e-08}],"update":1120},{"exposures_per_case":150,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.11849093167985457},{"case":0,"passes":2,"relative_equation_residual":0.007130131821678526},{"case":0,"passes":4,"relative_equation_residual":9.78459082395788e-06},{"case":0,"passes":8,"relative_equation_residual":6.596400153035897e-10},{"case":1,"passes":1,"relative_equation_residual":0.031126649839140947},{"case":1,"passes":2,"relative_equation_residual":0.0004732329128905872},{"case":1,"passes":4,"relative_equation_residual":6.91056140808391e-08},{"case":1,"passes":8,"relative_equation_residual":2.1551673441712452e-12},{"case":2,"passes":1,"relative_equation_residual":0.15905453213682316},{"case":2,"passes":2,"relative_equation_residual":0.0038009975374507132},{"case":2,"passes":4,"relative_equation_residual":3.0506172758161325e-06},{"case":2,"passes":8,"relative_equation_residual":5.458459080515156e-11},{"case":3,"passes":1,"relative_equation_residual":0.03450953412804061},{"case":3,"passes":2,"relative_equation_residual":0.0001308284943050137},{"case":3,"passes":4,"relative_equation_residual":9.755506483828254e-08},{"case":3,"passes":8,"relative_equation_residual":5.43878307336231e-12},{"case":4,"passes":1,"relative_equation_residual":0.007109851754277718},{"case":4,"passes":2,"relative_equation_residual":0.0001017867756119104},{"case":4,"passes":4,"relative_equation_residual":5.206389115345688e-08},{"case":4,"passes":8,"relative_equation_residual":1.5917415345513732e-13},{"case":5,"passes":1,"relative_equation_residual":0.03450925715795119},{"case":5,"passes":2,"relative_equation_residual":0.00013093661946835046},{"case":5,"passes":4,"relative_equation_residual":9.983460872156594e-08},{"case":5,"passes":8,"relative_equation_residual":3.351513751957844e-11},{"case":6,"passes":1,"relative_equation_residual":0.003972164393031875},{"case":6,"passes":2,"relative_equation_residual":8.396083722280939e-05},{"case":6,"passes":4,"relative_equation_residual":9.253479961745439e-09},{"case":6,"passes":8,"relative_equation_residual":1.7980300363301414e-12},{"case":7,"passes":1,"relative_equation_residual":0.1707268760027396},{"case":7,"passes":2,"relative_equation_residual":0.015196041713870059},{"case":7,"passes":4,"relative_equation_residual":4.8038974606559576e-05},{"case":7,"passes":8,"relative_equation_residual":3.4208038748554064e-09}],"update":1200},{"exposures_per_case":160,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.1165729310694527},{"case":0,"passes":2,"relative_equation_residual":0.006985618632884845},{"case":0,"passes":4,"relative_equation_residual":9.435389288486889e-06},{"case":0,"passes":8,"relative_equation_residual":5.666386046097942e-10},{"case":1,"passes":1,"relative_equation_residual":0.03110124329051119},{"case":1,"passes":2,"relative_equation_residual":0.0005062286163381149},{"case":1,"passes":4,"relative_equation_residual":7.956021766920398e-08},{"case":1,"passes":8,"relative_equation_residual":2.1026624581817097e-12},{"case":2,"passes":1,"relative_equation_residual":0.15783385895275312},{"case":2,"passes":2,"relative_equation_residual":0.0037521410900855983},{"case":2,"passes":4,"relative_equation_residual":1.0508766907003568e-06},{"case":2,"passes":8,"relative_equation_residual":3.3874861277435935e-11},{"case":3,"passes":1,"relative_equation_residual":0.03494364617766289},{"case":3,"passes":2,"relative_equation_residual":0.00012781434545118474},{"case":3,"passes":4,"relative_equation_residual":3.192996387578018e-08},{"case":3,"passes":8,"relative_equation_residual":6.200998761506383e-12},{"case":4,"passes":1,"relative_equation_residual":0.006607348383932402},{"case":4,"passes":2,"relative_equation_residual":7.88972644161281e-05},{"case":4,"passes":4,"relative_equation_residual":3.876365992126335e-08},{"case":4,"passes":8,"relative_equation_residual":7.608885989851876e-14},{"case":5,"passes":1,"relative_equation_residual":0.03494323685754578},{"case":5,"passes":2,"relative_equation_residual":0.00012777999928283425},{"case":5,"passes":4,"relative_equation_residual":3.442420520320991e-08},{"case":5,"passes":8,"relative_equation_residual":1.1838246547079549e-11},{"case":6,"passes":1,"relative_equation_residual":0.0029713290191204487},{"case":6,"passes":2,"relative_equation_residual":1.6087629885255798e-05},{"case":6,"passes":4,"relative_equation_residual":1.2001253610072435e-08},{"case":6,"passes":8,"relative_equation_residual":1.860379753791139e-12},{"case":7,"passes":1,"relative_equation_residual":0.17108696443526605},{"case":7,"passes":2,"relative_equation_residual":0.015448784655976367},{"case":7,"passes":4,"relative_equation_residual":3.461172592438781e-05},{"case":7,"passes":8,"relative_equation_residual":9.548699148341113e-09}],"update":1280},{"exposures_per_case":170,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.1174607513694694},{"case":0,"passes":2,"relative_equation_residual":0.007337382429503103},{"case":0,"passes":4,"relative_equation_residual":1.0431314444360755e-05},{"case":0,"passes":8,"relative_equation_residual":8.157028467832151e-10},{"case":1,"passes":1,"relative_equation_residual":0.031944330245091086},{"case":1,"passes":2,"relative_equation_residual":0.0005597499742071502},{"case":1,"passes":4,"relative_equation_residual":9.907713277914676e-08},{"case":1,"passes":8,"relative_equation_residual":3.044634363560742e-12},{"case":2,"passes":1,"relative_equation_residual":0.15760409942317957},{"case":2,"passes":2,"relative_equation_residual":0.0033678830815352815},{"case":2,"passes":4,"relative_equation_residual":9.481232246566829e-07},{"case":2,"passes":8,"relative_equation_residual":3.695439955826062e-11},{"case":3,"passes":1,"relative_equation_residual":0.033694764644023496},{"case":3,"passes":2,"relative_equation_residual":2.885597074331644e-05},{"case":3,"passes":4,"relative_equation_residual":3.435130826746761e-08},{"case":3,"passes":8,"relative_equation_residual":5.264948073173334e-12},{"case":4,"passes":1,"relative_equation_residual":0.007901454669367598},{"case":4,"passes":2,"relative_equation_residual":7.701132106359064e-05},{"case":4,"passes":4,"relative_equation_residual":4.759814050503533e-08},{"case":4,"passes":8,"relative_equation_residual":9.717790086695521e-14},{"case":5,"passes":1,"relative_equation_residual":0.03369519512036628},{"case":5,"passes":2,"relative_equation_residual":2.8412355593118554e-05},{"case":5,"passes":4,"relative_equation_residual":3.95467969846146e-08},{"case":5,"passes":8,"relative_equation_residual":3.745971610027883e-11},{"case":6,"passes":1,"relative_equation_residual":0.0014749891022353538},{"case":6,"passes":2,"relative_equation_residual":7.5870867773672146e-06},{"case":6,"passes":4,"relative_equation_residual":7.32953344822045e-09},{"case":6,"passes":8,"relative_equation_residual":2.20265085505973e-12},{"case":7,"passes":1,"relative_equation_residual":0.17040033484885875},{"case":7,"passes":2,"relative_equation_residual":0.015094679726357533},{"case":7,"passes":4,"relative_equation_residual":3.257684681484171e-05},{"case":7,"passes":8,"relative_equation_residual":8.581471468846377e-09}],"update":1360},{"exposures_per_case":180,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.11684579921577065},{"case":0,"passes":2,"relative_equation_residual":0.007238811035458413},{"case":0,"passes":4,"relative_equation_residual":1.0203037591252438e-05},{"case":0,"passes":8,"relative_equation_residual":7.9542939333259e-10},{"case":1,"passes":1,"relative_equation_residual":0.03153108990969793},{"case":1,"passes":2,"relative_equation_residual":0.0005373137167632462},{"case":1,"passes":4,"relative_equation_residual":7.082717710517965e-08},{"case":1,"passes":8,"relative_equation_residual":4.5284486884526085e-12},{"case":2,"passes":1,"relative_equation_residual":0.1577907939780872},{"case":2,"passes":2,"relative_equation_residual":0.0034366332584714106},{"case":2,"passes":4,"relative_equation_residual":9.511126030271229e-07},{"case":2,"passes":8,"relative_equation_residual":3.5681560343832494e-11},{"case":3,"passes":1,"relative_equation_residual":0.03401236243006302},{"case":3,"passes":2,"relative_equation_residual":3.251392148133853e-05},{"case":3,"passes":4,"relative_equation_residual":3.1584618147497955e-08},{"case":3,"passes":8,"relative_equation_residual":5.139226527920454e-12},{"case":4,"passes":1,"relative_equation_residual":0.007597002677797531},{"case":4,"passes":2,"relative_equation_residual":7.241007029334496e-05},{"case":4,"passes":4,"relative_equation_residual":2.9496865329205098e-08},{"case":4,"passes":8,"relative_equation_residual":8.713965184343822e-14},{"case":5,"passes":1,"relative_equation_residual":0.03401157409951151},{"case":5,"passes":2,"relative_equation_residual":3.260697600013582e-05},{"case":5,"passes":4,"relative_equation_residual":3.233936104023796e-08},{"case":5,"passes":8,"relative_equation_residual":2.0730561142966737e-11},{"case":6,"passes":1,"relative_equation_residual":0.0014244641299949387},{"case":6,"passes":2,"relative_equation_residual":1.3156633218370524e-05},{"case":6,"passes":4,"relative_equation_residual":7.2641123253240906e-09},{"case":6,"passes":8,"relative_equation_residual":3.2133361882331602e-12},{"case":7,"passes":1,"relative_equation_residual":0.17055328505017125},{"case":7,"passes":2,"relative_equation_residual":0.01513116933766852},{"case":7,"passes":4,"relative_equation_residual":3.230393894343889e-05},{"case":7,"passes":8,"relative_equation_residual":8.40795938862263e-09}],"update":1440},{"exposures_per_case":190,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.11698886909546678},{"case":0,"passes":2,"relative_equation_residual":0.007286895412726646},{"case":0,"passes":4,"relative_equation_residual":1.030823329510768e-05},{"case":0,"passes":8,"relative_equation_residual":8.275249053042842e-10},{"case":1,"passes":1,"relative_equation_residual":0.03179479568284793},{"case":1,"passes":2,"relative_equation_residual":0.0005521241724395327},{"case":1,"passes":4,"relative_equation_residual":8.043316507833138e-08},{"case":1,"passes":8,"relative_equation_residual":2.347215293814359e-12},{"case":2,"passes":1,"relative_equation_residual":0.15773149497633343},{"case":2,"passes":2,"relative_equation_residual":0.0033860112997134806},{"case":2,"passes":4,"relative_equation_residual":8.692845866759959e-07},{"case":2,"passes":8,"relative_equation_residual":6.847132522342008e-11},{"case":3,"passes":1,"relative_equation_residual":0.03378879609783263},{"case":3,"passes":2,"relative_equation_residual":2.1685381228683445e-05},{"case":3,"passes":4,"relative_equation_residual":2.9385915197854987e-08},{"case":3,"passes":8,"relative_equation_residual":9.159769565424532e-12},{"case":4,"passes":1,"relative_equation_residual":0.0077289374358834075},{"case":4,"passes":2,"relative_equation_residual":7.461891928591143e-05},{"case":4,"passes":4,"relative_equation_residual":2.671652413918778e-08},{"case":4,"passes":8,"relative_equation_residual":7.135436743453293e-14},{"case":5,"passes":1,"relative_equation_residual":0.033788283093606215},{"case":5,"passes":2,"relative_equation_residual":2.1200744905867096e-05},{"case":5,"passes":4,"relative_equation_residual":2.959905502691623e-08},{"case":5,"passes":8,"relative_equation_residual":3.177065415983677e-11},{"case":6,"passes":1,"relative_equation_residual":0.001300201691518349},{"case":6,"passes":2,"relative_equation_residual":9.82329179240907e-06},{"case":6,"passes":4,"relative_equation_residual":6.357683842815107e-09},{"case":6,"passes":8,"relative_equation_residual":1.7017927964576889e-12},{"case":7,"passes":1,"relative_equation_residual":0.17042557375722447},{"case":7,"passes":2,"relative_equation_residual":0.015082211758708986},{"case":7,"passes":4,"relative_equation_residual":3.205112379895116e-05},{"case":7,"passes":8,"relative_equation_residual":7.975467612320325e-09}],"update":1520},{"exposures_per_case":200,"measurements":[{"case":0,"passes":1,"relative_equation_residual":0.1169835253741121},{"case":0,"passes":2,"relative_equation_residual":0.007288536760388419},{"case":0,"passes":4,"relative_equation_residual":1.0316757246980298e-05},{"case":0,"passes":8,"relative_equation_residual":8.303803340705231e-10},{"case":1,"passes":1,"relative_equation_residual":0.03179341435417073},{"case":1,"passes":2,"relative_equation_residual":0.0005521818835219749},{"case":1,"passes":4,"relative_equation_residual":8.112299999220819e-08},{"case":1,"passes":8,"relative_equation_residual":2.22787326028864e-12},{"case":2,"passes":1,"relative_equation_residual":0.15774121583631226},{"case":2,"passes":2,"relative_equation_residual":0.0033851953715662996},{"case":2,"passes":4,"relative_equation_residual":8.631031525962175e-07},{"case":2,"passes":8,"relative_equation_residual":3.109684351380671e-11},{"case":3,"passes":1,"relative_equation_residual":0.03378602430452179},{"case":3,"passes":2,"relative_equation_residual":2.0381652425278834e-05},{"case":3,"passes":4,"relative_equation_residual":2.4233496174984475e-08},{"case":3,"passes":8,"relative_equation_residual":3.1390933028037634e-12},{"case":4,"passes":1,"relative_equation_residual":0.007744570678763657},{"case":4,"passes":2,"relative_equation_residual":7.466191525559954e-05},{"case":4,"passes":4,"relative_equation_residual":2.704339669993999e-08},{"case":4,"passes":8,"relative_equation_residual":5.739900043857735e-14},{"case":5,"passes":1,"relative_equation_residual":0.033784609828619035},{"case":5,"passes":2,"relative_equation_residual":2.028067588190709e-05},{"case":5,"passes":4,"relative_equation_residual":2.779787879788768e-08},{"case":5,"passes":8,"relative_equation_residual":1.1015528577952173e-11},{"case":6,"passes":1,"relative_equation_residual":0.0012931522625877362},{"case":6,"passes":2,"relative_equation_residual":9.955315366324106e-06},{"case":6,"passes":4,"relative_equation_residual":6.345158259318829e-09},{"case":6,"passes":8,"relative_equation_residual":1.2695031781504355e-12},{"case":7,"passes":1,"relative_equation_residual":0.17042563632303712},{"case":7,"passes":2,"relative_equation_residual":0.015082048982620581},{"case":7,"passes":4,"relative_equation_residual":3.205320673292502e-05},{"case":7,"passes":8,"relative_equation_residual":7.844583109846546e-09}],"update":1600}]},"rollout_feedback":{"auxiliary_losses":1600,"depth_exposures":[[50,50,50,50],[50,50,50,50],[50,50,50,50],[50,50,50,50],[50,50,50,50],[50,50,50,50],[50,50,50,50],[50,50,50,50]],"depth_order_sha256":"3adbd1b18830b55ac918ce265241ded42841f53a56341f43b1e333ebd0615257","mode":"A","original_sampling_order_sha256":"d0ea221a7e03a83673ece7fc9cdf4f5212bb54f3023511f93d95c84e45647899"},"teacher_cache_hits":0,"teacher_cache_peak_bytes":0,"teacher_forwards":0},"heldout_evaluations":0,"mode":"train","optimizer_updates":1600,"originating_training_run":null,"outputs":{"checkpoint-000.npz":{"bytes":1485452,"role":"checkpoint","sha256":"3ac3c9a3a64c436f653947085aa34968b7699c2e0fd6264390ac257e460de954"},"checkpoint-1600.npz":{"bytes":1485452,"role":"checkpoint","sha256":"720cec66cea954e6748d4f7aa53f55eef396dd63935c2ae965ce4aca5f50eba1"},"history.json":{"bytes":10194,"role":"training_diagnostics","sha256":"d3410b83b4555f5cba518b55eb494f10d593a067fe2190c189e87b32c2479054"},"normalization.json":{"bytes":6752,"role":"preprocessing","sha256":"f73b6cf32108f63cbd8d5edef8b08afce2e3a05d47234886458ddfbc99e1d1c1"},"predictions.npz":{"bytes":129230,"role":"predictions","sha256":"cbe47824e2933642c09bcfa4b98b26e3a01d12f70f28947e1d656710bfd7ec5f"},"profile.json":{"bytes":189,"role":"training_diagnostics","sha256":"bc399290a58d4042c0034fce0726719aa83d6cbb0569c47714b95b7225ee26e5"},"splits.json":{"bytes":256361,"role":"training_splits","sha256":"bdcfb5f5d8e4dbd54f797d827e2dd0715fcc2bfb6510697fc51996c3d5a5779e"},"summary.json":{"bytes":478,"role":"result_summary","sha256":"b39f6eccd05927f2b3e36078deefdd885d9e6b6648aed6fce8df81c7b12ac2ff"},"weights.npz":{"bytes":1485452,"role":"checkpoint","sha256":"720cec66cea954e6748d4f7aa53f55eef396dd63935c2ae965ce4aca5f50eba1"}},"per_case_inference_s":[0.023644738015718758,0.004578295018291101,0.005740376014728099,0.004575957980705425,0.004047046008054167,0.0037752040079794824,0.004775603010784835,0.004981745994882658,0.010420919978059828,0.005740855005569756,0.006785651989048347,0.006175287999212742],"prediction_inventory":{"case_000":{"bytes":32768,"dtype":"<f8","sha256":"053c1aac2893af4514d15d15e7b914596ae154ba4bba155dbc70c883c793d487","shape":[16,16,16]},"case_001":{"bytes":7680,"dtype":"<f8","sha256":"b1155fe9bac7e14de5f5c6f73d52e01b72079fb977d34effd4e14a168e3f2f7d","shape":[6,10,16]},"case_002":{"bytes":8736,"dtype":"<f8","sha256":"236e03c031028f429dde6567c8b1a74988f36ae982dccfc6688199b9fcab4747","shape":[13,7,12]},"case_003":{"bytes":7200,"dtype":"<f8","sha256":"251e51c922ef63bfee4a0165aa55ad780c1c7230ebf14d390a50d86000f9faed","shape":[6,15,10]},"case_004":{"bytes":5280,"dtype":"<f8","sha256":"c1832abe5a9e93745dad534867df24362f36ba2ffc86ad20931a1a1e5e91fcdc","shape":[6,10,11]},"case_005":{"bytes":2880,"dtype":"<f8","sha256":"276a234622dadf493ce8a10a043bd0398bb50dbeedae03e279b94e7b1df7f5be","shape":[9,5,8]},"case_006":{"bytes":6912,"dtype":"<f8","sha256":"62024b83a72922f32db50cc06cadbe3099abe81273c60f1b9787b96df29ea054","shape":[9,8,12]},"case_007":{"bytes":6048,"dtype":"<f8","sha256":"60ab2be60e2a346d730f9724672d6a3dbffc7749680dfca697d80c6185a600f9","shape":[9,14,6]},"case_008":{"bytes":20480,"dtype":"<f8","sha256":"b5c0ff8f4c2674ee550f94099ff360de596e1e20626414975e7d33136cbcfd0f","shape":[16,16,10]},"case_009":{"bytes":7488,"dtype":"<f8","sha256":"ced16aac35fbe816119cdc8a2acfe91bc492ab8b92ada1e0ad9760c9cdeeb2c9","shape":[12,13,6]},"case_010":{"bytes":9000,"dtype":"<f8","sha256":"e4a12ddd667c5a3cb13262014fd877a1c0f9f1e7504d994c2e109890ff91a292","shape":[15,15,5]},"case_011":{"bytes":11760,"dtype":"<f8","sha256":"d5a9a766d96f9746bd2e92746403ea339e95b37fdfb3053bb33e42b7edae64e8","shape":[7,15,14]}},"runtime":{"inference_device":"cpu","interop_threads":1,"numpy":"2.5.3","peak_rss_bytes":2414022656,"threads":1,"torch":"2.14.0+cu132"},"schema":"rheon-water-learning-training-v1","scientific_acceptance_or_model_promotion":false,"status":"complete"}
+```

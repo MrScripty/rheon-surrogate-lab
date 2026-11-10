@@ -1,0 +1,145 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-sequence-fit-one · CUDA training",
+ "description": "Earlier model, trained 2026-10-15 by Tuldok run bc1ea77166d444dc8f791cc532a49541 (water-sequence-fit-one · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/water-sequence-fit-one-cuda-training--c8a77f73ac8141d0.md",
+ "labels": {
+  "fit_id": "fit-c8a77f73ac8141d0",
+  "tuldok_run": "bc1ea77166d444dc8f791cc532a49541",
+  "trained_at": "2026-10-15T12:34:46.442543+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/water-learning-sequence-v1/fit-one/project/inputs/dataset.npz",
+  "input:dataset_extra": "runs/water-learning-sequence-v1/fit-one/project/inputs/dataset_extra.npz",
+  "input:splits": "runs/water-learning-sequence-v1/fit-one/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: 2 of its source files have no tracked copy in Git (for example runs/water-learning-sequence-v1/fit-one/project/qualification.json)."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/water-learning-sequence-v1/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "runs/water-learning-sequence-v1/fit-one/project/source-witness.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/water-project-inputs",
+   "dataset_extra": "datasets/water-project-inputs",
+   "splits": "datasets/water-project-inputs"
+  },
+  "settings": {
+   "id": "water-sequence-fit-one",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-cuda-pressure-experiment-v1",
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     2000,
+     10000
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102501,
+    "schedule": [
+     {
+      "learning_rate": 0.0001,
+      "update": 1000
+     },
+     {
+      "learning_rate": 1e-05,
+      "update": 6000
+     }
+    ],
+    "seed": 20261015,
+    "updates": 10000
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_2000_npz": {
+    "path": "checkpoint-2000.npz",
+    "role": "weights"
+   },
+   "checkpoint_10000_npz": {
+    "path": "checkpoint-10000.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-learning-sequence-v1/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/water-learning-sequence-v1/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "experiments/water-learning-sequence-v1/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "runs/water-learning-sequence-v1/fit-one/project/qualification.json",
+   "experiments/water-learning-sequence-v1/scenes.py",
+   "runs/water-learning-sequence-v1/fit-one/project/source-witness.json",
+   "experiments/water-learning-sequence-v1/support.py",
+   "experiments/water-learning-sequence-v1/test_inference.py",
+   "experiments/water-learning-sequence-v1/train.py"
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Sinusoidal development scenes, 240-output rollouts",
+ "description": "The eight development scenes of sinusoidal-v1 (four grid shapes at 8 and 16 cells per metre), each rolled out on its own outputs for 240 output intervals (4 s) from rest. Each subject starts from a case's first recorded state and is fed its own outputs from then on; every output is scored against the recording and the first pass is timed after warm-up. The cases have already informed model choices (population: consumed), so a score here is not evidence of generalisation. The suite and metrics are defined in surrogate/bench/suites.py and surrogate/bench/metrics.py.",
+ "run": {
+  "command": ["python", "-m", "surrogate.bench", "run", "--suite", "dense-development-240", "--subject", "{subject}", "--output", "{output}/result.json", "--device", "cuda"],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "cases": "datasets/sinusoidal-v1",
+   "solver": {"from": "steps/reference-solver", "output": "probe"}
+  },
+  "env": {
+   "SURROGATE_DATA": "{inputs.cases}",
+   "SURROGATE_PROBE": "{inputs.solver}"
+  },
+  "outputs": {
+   "results": {"path": "result.json", "role": "results"}
+  },
+  "resources": {
+   "gpu": true
+  },
+  "sources": [
+   "surrogate/bench",
+   "surrogate/checkpoint.py",
+   "surrogate/data.py",
+   "surrogate/datasets",
+   "surrogate/fields.py",
+   "surrogate/forcing.py",
+   "surrogate/models",
+   "surrogate/solver.py"
+  ]
+ },
+ "metrics": [
+  {"id": "velocity_error_worst", "title": "Worst velocity error", "units": "ratio", "better": "lower"},
+  {"id": "velocity_error_final", "title": "Final velocity error", "units": "ratio", "better": "lower"},
+  {"id": "pressure_error_worst", "title": "Worst pressure error", "units": "ratio", "better": "lower"},
+  {"id": "pressure_error_final", "title": "Final pressure error", "units": "ratio", "better": "lower"},
+  {"id": "tracer_error_worst", "title": "Worst tracer error", "units": "ratio", "better": "lower"},
+  {"id": "tracer_error_final", "title": "Final tracer error", "units": "ratio", "better": "lower"},
+  {"id": "equation_error_worst", "title": "Worst pressure equation residual", "units": "ratio", "better": "lower"},
+  {"id": "divergence_worst", "title": "Worst divergence", "units": "1/s", "better": "lower"},
+  {"id": "energy_ratio_final", "title": "Final kinetic energy ratio", "units": "ratio", "better": "none"},
+  {"id": "valid_outputs", "title": "Outputs within the error limit", "units": "count", "better": "higher"},
+  {"id": "time_per_output_ms", "title": "Time per output", "units": "ms", "better": "lower"},
+  {"id": "simulated_seconds_per_second", "title": "Simulated seconds per second", "units": "ratio", "better": "higher"}
+ ],
+ "subjects": [
+  {"name": "persistence", "title": "No change (persistence): the error any model must beat", "argument": "persistence"},
+  {"name": "rheon-native", "title": "Rheon solver, conjugate gradients, 1 CPU thread", "argument": "rheon-native"},
+  {"name": "spectral-composition-k1", "title": "Earlier GPU solver composition (F64 cell composition), 1 output per pass; needs local builds under runs/", "argument": "spectral-composition:1"},
+  {"name": "pilot-dense-k1", "title": "Pilot stepper on sinusoidal scenes, one output per pass", "recipe": "recipes/pilot-dense-k1", "argument": "checkpoint:{recipe}/model.pt"}
+ ],
+ "cases": {
+  "dataset": "datasets/sinusoidal-v1",
+  "split": "development",
+  "count": 8
+ },
+ "summary": {
+  "group_by": ["cells_per_metre"]
+ }
+}

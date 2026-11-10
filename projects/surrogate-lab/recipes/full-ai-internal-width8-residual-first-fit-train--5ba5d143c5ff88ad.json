@@ -1,0 +1,266 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full-AI internal width8 residual first fit train",
+ "description": "Earlier model, trained 2026-10-21 by Tuldok run 8d597bc5bc7f46d39e3931162f4707be (Full-AI internal width8 residual first fit train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-internal-width8-residual-first-fit-train--5ba5d143c5ff88ad.md",
+ "labels": {
+  "fit_id": "fit-5ba5d143c5ff88ad",
+  "tuldok_run": "8d597bc5bc7f46d39e3931162f4707be",
+  "trained_at": "2026-10-21T17:53:24.124664+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-data-diversity-v1/internal-residual-view-01/manifest.json",
+  "input:normalization": "runs/full-ai-data-diversity-v1/internal-residual-view-01/network-normalization.json",
+  "input:optimization_normalization": "runs/full-ai-data-diversity-v1/internal-residual-view-01/optimization-normalization.json",
+  "input:part_00": "runs/full-ai-data-diversity-v1/internal-residual-view-01/training-view.zip",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-data-diversity-v1/train_internal_residual_v1.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--optimization-normalization",
+   "{inputs.optimization_normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/internal-residual-view-01",
+   "normalization": "datasets/internal-residual-view-01",
+   "optimization_normalization": "datasets/internal-residual-view-01",
+   "part_00": "datasets/internal-residual-view-01"
+  },
+  "settings": {
+   "identifier": "internal-residual-width8-s1",
+   "role": "internal_group_nonlinear_residual_component",
+   "seed": 1729,
+   "epochs": 2,
+   "optimizer_updates": 1566,
+   "optimizer": "AdamW",
+   "learning_rate": 0.003,
+   "minimum_learning_rate": 0.0003,
+   "adam_epsilon": 1e-12,
+   "weight_decay": 0.0,
+   "gradient_clip_norm": 1.0,
+   "wall_seconds": 900,
+   "maximum_peak_rss_bytes": 4294967296,
+   "maximum_gpu_allocated_bytes": 8589934592,
+   "selection": "minimum_full148scene_training_objective_earlier_epoch_tie",
+   "qualified_initial_objective": 1.9138810975032417e-05,
+   "qualified_initial_inventory": {
+    "input_rms": {
+     "shape": [
+      1,
+      42,
+      1,
+      1,
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "03607579d061e0a3afb7037cc5e7bbf69985070dc0e4e3aefa0f29451a69108d"
+    },
+    "output_rms": {
+     "shape": [
+      4
+     ],
+     "dtype": "<f4",
+     "sha256": "f6dcc9570fba7f8d765ace2909fe76a00d84a802e25b8432ac2d523d5ecd0d87"
+    },
+    "conv1.weight": {
+     "shape": [
+      8,
+      42,
+      3,
+      3,
+      3
+     ],
+     "dtype": "<f4",
+     "sha256": "842af574b0f6c52f98dd3e36c5362f125388329f5ab90749f099b8b4197dc87b"
+    },
+    "conv1.bias": {
+     "shape": [
+      8
+     ],
+     "dtype": "<f4",
+     "sha256": "bdeeb9033b3080885fa6048b0d6966e5d896bc2e4b71eb24d8ec587b61a2c4e6"
+    },
+    "conv2.weight": {
+     "shape": [
+      8,
+      8,
+      3,
+      3,
+      3
+     ],
+     "dtype": "<f4",
+     "sha256": "b38d93285f61e12b76c774dd6f848a46170dec45a275712cb64cd7572ba1b1bf"
+    },
+    "conv2.bias": {
+     "shape": [
+      8
+     ],
+     "dtype": "<f4",
+     "sha256": "28bf707bba31b12e08e935c5249573252a4fff62af2cd5add14ded24b759019e"
+    },
+    "velocity.0.weight": {
+     "shape": [
+      8,
+      1,
+      1,
+      1,
+      2
+     ],
+     "dtype": "<f4",
+     "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    "velocity.0.bias": {
+     "shape": [
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "velocity.1.weight": {
+     "shape": [
+      8,
+      1,
+      1,
+      2,
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    "velocity.1.bias": {
+     "shape": [
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "velocity.2.weight": {
+     "shape": [
+      8,
+      1,
+      2,
+      1,
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+    },
+    "velocity.2.bias": {
+     "shape": [
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    },
+    "tracer.weight": {
+     "shape": [
+      1,
+      8,
+      1,
+      1,
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "tracer.bias": {
+     "shape": [
+      1
+     ],
+     "dtype": "<f4",
+     "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119"
+    }
+   },
+   "evaluation_normalization": {
+    "status": "frozen_before_managed_fit",
+    "source": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+    "source_sha256": "fb77ae2ee0fd4ef67969866be000561036b8311b6ca46f258ccd1cdd82c0c037",
+    "relative_denominator_rms_floor": {
+     "pressure": 9.47211357321988e-08,
+     "velocity": 6.465589999830133e-11,
+     "tracer": 1.2995164216288916e-10
+    },
+    "degenerate_absolute_rms_tolerance": {
+     "pressure": 9.47211357321988e-13,
+     "velocity": 6.465589999830133e-16,
+     "tracer": 1.2995164216288918e-15
+    },
+    "maximum_relative_error": 1e-05,
+    "pressure_comparison": "Mean-free",
+    "equation_rhs_floor": 1e-30
+   },
+   "native_accuracy_claim": false,
+   "latency_claim": false,
+   "full_generator_target_pass": false
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "optimization_normalization_json": {
+    "path": "optimization-normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.25,
+   "disk_gb": 0.0252
+  },
+  "sources": [
+   "experiments/full-ai-data-diversity-v1/capture_memory_telemetry_v1.py",
+   "experiments/full-ai-data-diversity-v1/internal_residual_dataset_v1.py",
+   "experiments/full-ai-data-diversity-v1/internal_residual_loss_v1.py",
+   "experiments/full-ai-data-diversity-v1/internal_residual_network_v1.py",
+   "experiments/full-ai-data-diversity-v1/internal_residual_network_v2.py",
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-data-diversity-v1/managed_input_stream_v1.py",
+   "experiments/full-ai-data-diversity-v1/train_internal_residual_v1.py"
+  ]
+ }
+}

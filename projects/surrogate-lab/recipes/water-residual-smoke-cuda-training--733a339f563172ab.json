@@ -1,0 +1,150 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-residual-smoke · CUDA training",
+ "description": "Earlier model, trained 2026-10-15 by Tuldok run 455586b9f3c24a06ba0b50df1d932c12 (water-residual-smoke · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. 2 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/water-residual-smoke-cuda-training--733a339f563172ab.md",
+ "labels": {
+  "fit_id": "fit-733a339f563172ab",
+  "tuldok_run": "455586b9f3c24a06ba0b50df1d932c12",
+  "trained_at": "2026-10-15T19:33:45.860347+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/water-residual-learning-v1/residual-smoke/project/inputs/dataset.npz",
+  "input:dataset_extra": "runs/water-residual-learning-v1/residual-smoke/project/inputs/dataset_extra.npz",
+  "input:splits": "runs/water-residual-learning-v1/residual-smoke/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: its training script runs/water-residual-learning-v1/residual-smoke/project/train.py has no tracked copy in Git; 6 of its source files have no tracked copy in Git (for example runs/water-residual-learning-v1/residual-smoke/project/model.py)."
+ },
+ "run": {
+  "command": [
+   "python",
+   "runs/water-residual-learning-v1/residual-smoke/project/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "runs/water-residual-learning-v1/residual-smoke/project/source-witness.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/water-project-inputs",
+   "dataset_extra": "datasets/water-project-inputs",
+   "splits": "datasets/water-project-inputs"
+  },
+  "settings": {
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "silu",
+    "steps": 1
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": true,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "id": "water-residual-smoke",
+   "normalization": "none",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-water-residual-experiment-v1",
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     2
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102501,
+    "schedule": [],
+    "seed": 20261015,
+    "updates": 2
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_002_npz": {
+    "path": "checkpoint-002.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "runs/water-residual-learning-v1/residual-smoke/project/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "runs/water-residual-learning-v1/residual-smoke/project/physical_residual.py",
+   "runs/water-residual-learning-v1/residual-smoke/project/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "runs/water-residual-learning-v1/residual-smoke/project/qualification.json",
+   "experiments/sealed-water-v1/scenes.py",
+   "runs/water-residual-learning-v1/residual-smoke/project/source-witness.json",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "runs/water-residual-learning-v1/residual-smoke/project/train.py"
+  ]
+ }
+}

@@ -1,0 +1,173 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full AI a-head-calibration train",
+ "description": "Earlier model, trained 2026-10-19 by Tuldok run 61c8d8b92a1845839e421f172089885e (Full AI a-head-calibration train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content where one exists. Input normalization (runs/pressure-methods-v4/v4-student50-control-study-01/restore/normalization.json) holds earlier weights that the account does not tie to a model. 2 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-a-head-calibration-train--c80b7d18912c7d9d.md",
+ "labels": {
+  "fit_id": "fit-c80b7d18912c7d9d",
+  "tuldok_run": "61c8d8b92a1845839e421f172089885e",
+  "trained_at": "2026-10-19T17:05:49.586920+00:00",
+  "device": "cuda",
+  "input:initial_inventory": "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/initial-inventory.json",
+  "input:initial_weights": "runs/pressure-methods-v4/v4-student50-control-study-01/restore/weights.npz",
+  "input:normalization": "runs/pressure-methods-v4/v4-student50-control-study-01/restore/normalization.json",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "input:teacher": "runs/full-ai-next-priorities-v1/head-teacher-bank-01/teacher.npz",
+  "input:teacher_manifest": "runs/full-ai-next-priorities-v1/head-teacher-bank-01/manifest.json"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: 19 of its source files have no tracked copy in Git (for example runs/full-ai-next-priorities-v1/a-head-calibration-project-01/config.json); it starts from weights at runs/pressure-methods-v4/v4-student50-control-study-01/restore/normalization.json whose producing model is not identified."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/head_train.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--teacher",
+   "{inputs.teacher}",
+   "--teacher-manifest",
+   "{inputs.teacher_manifest}",
+   "--initial-weights",
+   "{inputs.initial_weights}",
+   "--initial-inventory",
+   "{inputs.initial_inventory}",
+   "--normalization",
+   "runs/pressure-methods-v4/v4-student50-control-study-01/restore/normalization.json",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "initial_inventory": "datasets/head-calibration-and-architecture-starts",
+   "initial_weights": "recipes/pressure-methods-v4-v4-student50-control-cuda--af2d2e2f93da1faa",
+   "teacher": "datasets/formula-teacher-banks",
+   "teacher_manifest": "datasets/formula-teacher-banks"
+  },
+  "settings": {
+   "schema": "rheon-neural-head-calibration-v1",
+   "updates": 10000,
+   "batch_size": 384,
+   "learning_rate": 0.001,
+   "schedule": [
+    {
+     "update": 6001,
+     "learning_rate": 0.0003
+    },
+    {
+     "update": 9001,
+     "learning_rate": 0.0001
+    }
+   ],
+   "wall_seconds": 1800,
+   "seed": 2026101953,
+   "sampling_seed": 2026101954,
+   "objective": "Mean squared log-gain-fraction error plus0.1 times the mean per-example maximum squared mode error",
+   "identifier": "a-head-calibration",
+   "registration_sha256": "21efa404f5e7908e030835092a13df6621bd3000af6c83b75d5d71ccf9795cab"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_10000_npz": {
+    "path": "checkpoint-10000.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/analytical.py",
+   "experiments/water-conditioning-v1/training/band_feedback.py",
+   "experiments/water-conditioning-v1/training/model.py",
+   "experiments/pressure-methods-v4/student_model.py",
+   "experiments/pressure-methods-v1/coarse.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/config.json",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/data.py",
+   "experiments/water-conditioning-v1/training/direction_feedback.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/distillation.json",
+   "experiments/pressure-throughput-feedback-v1/evidence.py",
+   "experiments/pressure-four-pass-distillation-v1/fine_tuning.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/fine-tuning.json",
+   "experiments/pressure-methods-v4/distillation.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/fit-sampling.json",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/fixed-normalization.json",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/frozen_gn.py",
+   "experiments/water-conditioning-v1/training/gradient_clipping.py",
+   "experiments/full-ai-next-priorities-v1/head_descriptor.py",
+   "experiments/full-ai-next-priorities-v1/head_objective.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/head_optimizer.py",
+   "experiments/full-ai-next-priorities-v1/head_train.py",
+   "experiments/full-ai-next-priorities-v1/head_utils.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/water-conditioning-v1/training/physical_residual.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/hybrid-method.json",
+   "experiments/pressure-methods-v1/learned_model.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/methods_view.py",
+   "experiments/full-ai-next-priorities-v1/fit_sampling.py",
+   "experiments/full-ai-next-priorities-v1/head_calibration_model.py",
+   "experiments/pressure-methods-v3/native_reconstruct.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/original_train.py",
+   "experiments/pressure-methods-v2/shape_physical.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/portable_policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/qualification.json",
+   "experiments/pressure-methods-v1/numerics.py",
+   "experiments/pressure-methods-v1/domain_model.py",
+   "experiments/sealed-water-v1/scenes.py",
+   "experiments/dependency-migration-v1/dependency_training_entry.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/source-witness.json",
+   "experiments/pressure-methods-v4/student_slice.py",
+   "experiments/cuda-pressure-v1/support.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/teacher_model.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/tuldok_extension_sdk/__init__.py",
+   "runs/full-ai-next-priorities-v1/a-head-calibration-project-01/tuldok_extension_sdk/evidence.py"
+  ]
+ }
+}

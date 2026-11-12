@@ -269,6 +269,15 @@ class RecipeConversion(unittest.TestCase):
             'run_folder': 'runs/x', 'note': 'Trained before runs were recorded.', 'entrypoint': 'train.py',
             'command': None, 'settings_file': 'config.json', 'settings': {}, 'inputs': [], 'sources': [],
             'outputs': []})
+        cards = self.root / 'fits'
+        cards.mkdir()
+        (cards / 'parent--aaaa.md').write_text('# Parent\n\n**Method.** A small CNN.\n\n**Purpose.** Test the\n'
+                                               'parent  setup.   Second sentence.\n\n**Lesson.** None.\n')
+        (cards / 'child--bbbb.md').write_text('**Purpose.** Test *early* **captured** `C53` _bank_ directions;\n'
+                                              'keep snake_case and 2 * 3 as written.\n')
+        (cards / 'local--dddd.md').write_text('# Local\n\n**Experiment.** Ran it.\n\n**Method.** A __linear__ map.\n')
+        (cards / 'twin--eeee.md').write_text('# Twin\n\n**Lesson.** Nothing to learn.\n')
+        (cards / 'old--cccc.md').write_text('**Purpose.** ' + 'Keep this sentence. ' * 300 + '\n')
         self.code_paths = converter.CodePaths(self.root / 'lab', exclude='projects/old')
         self.recipes = converter.Recipes(self.folder, self.code_paths)
         self.code_paths.prepare(path for recipe in self.recipes.recorded.values() if recipe.get('command')
@@ -346,6 +355,34 @@ class RecipeConversion(unittest.TestCase):
         document = self.files['recipes/old--cccc.json']
         self.assertEqual(document['earlier_work']['rebuild'], 'no')
         self.assertNotIn('run', document)
+
+    def description(self, stem):
+        return self.files[f'recipes/{stem}.json']['description']
+
+    def test_description_leads_with_the_purpose(self):
+        self.assertTrue(self.description('parent--aaaa').startswith(
+            'Test the parent setup. Second sentence. Earlier model, trained '))
+
+    def test_emphasis_is_removed_from_the_purpose(self):
+        self.assertTrue(self.description('child--bbbb').startswith(
+            'Test early captured C53 bank directions; keep snake_case and 2 * 3 as written. Earlier model, '))
+
+    def test_without_a_purpose_the_method_leads_else_nothing(self):
+        self.assertTrue(self.description('local--dddd').startswith('A linear map. Earlier model, trained '))
+        self.assertTrue(self.description('twin--eeee').startswith('Earlier model, trained '))
+        self.assertTrue(self.description('data--ffff').startswith('Earlier model, trained '))
+        self.assertEqual(self.recipes.card_paragraphs, {'Purpose': 3, 'Method': 1, 'none': 1, 'no card file': 1,
+                                                        'shortened': 1})
+
+    def test_a_long_purpose_is_cut_at_a_sentence_end(self):
+        text = self.description('old--cccc')
+        self.assertLessEqual(len(text), 4000)
+        purpose, rest = text.split(' Earlier model. ', 1)
+        self.assertTrue(purpose.endswith('Keep this sentence.'))
+        self.assertGreater(len(purpose), 3900)
+        self.assertEqual(rest, 'Trained before runs were recorded. Its run folder was runs/x.')
+        self.assertEqual(converter.sentences_within('One. Two.', 7), 'One.')
+        self.assertEqual(converter.sentences_within('One two.', 7), '')
 
 
 def make_source(root):

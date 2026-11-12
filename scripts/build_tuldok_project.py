@@ -184,6 +184,28 @@ def definition(kind, title, **fields):
     return document
 
 
+def card_paragraph(text):
+    """(label, plain text) of a card's '**Purpose.**' paragraph, else of its '**Method.**' one, else (None, '').
+
+    The label is dropped, the Markdown emphasis marks (**, __, `, and * or _ around words) are removed and
+    the whitespace is collapsed to one line."""
+    paragraphs = re.split(r'\n\s*\n', text)
+    for label in ('Purpose', 'Method'):
+        for paragraph in paragraphs:
+            if paragraph.startswith(f'**{label}.**'):
+                plain = re.sub(r'\*\*|__|`|(?<!\w)[*_](?=\S)|(?<=\S)[*_](?!\w)', '', paragraph[len(label) + 5:])
+                return label, ' '.join(plain.split())
+    return None, ''
+
+
+def sentences_within(text, room):
+    """text, or its longest start that ends a sentence and fits in room characters ('' if none does)."""
+    if len(text) <= room:
+        return text
+    ends = [match.end() for match in re.finditer(r'[.!?](?=\s|$)', text) if match.end() <= room]
+    return text[:ends[-1]] if ends else ''
+
+
 def earlier(rebuild, reason=None):
     return {'rebuild': rebuild, **({'reason': reason[:1000]} if reason else {})}
 
@@ -466,6 +488,8 @@ class Recipes:
 
     def __init__(self, folder, code_paths):
         self.code_paths = code_paths
+        self.cards = folder.parent / 'fits'
+        self.card_paragraphs = collections.Counter()  # Purpose, Method, none, no card file, shortened
         self.training_scripts = {}      # stem -> (state, recorded path), for the report
         self.missing_sources = {}       # stem -> recorded source paths with no tracked copy
         self.recorded = {path.stem: load(path) for path in sorted(folder.glob('*.json'))
@@ -489,6 +513,16 @@ class Recipes:
                 return f'recipes/{self.stem_of_model[model]}'
         return None
 
+    def described(self, stem, text):
+        """text led by the card's Purpose (else Method) paragraph, cut at a sentence end to keep within 4000."""
+        card = self.cards / f'{stem}.md'
+        label, lead = card_paragraph(card.read_text(encoding='utf-8')) if card.is_file() else ('no card file', '')
+        self.card_paragraphs[label or 'none'] += 1
+        short = sentences_within(lead, 4000 - len(text) - 1)
+        if short != lead:
+            self.card_paragraphs['shortened'] += 1
+        return f'{short} {text}'[:4000] if short else text[:4000]
+
     def convert(self, stem, recipe):
         labels = {name: recipe[name] for name in ('fit_id', 'tuldok_run', 'trained_at', 'device') if recipe.get(name)}
         for recorded_input in recipe['inputs']:
@@ -501,8 +535,8 @@ class Recipes:
             raise ValueError(f"{stem}: its card is {recipe['card']}, not {card}.")
         if not recipe.get('command'):
             return definition('recipe', recipe['model'], card=card, labels=labels,
-                              description=f"Earlier model. {recipe.get('note', '')} Its run folder was "
-                                          f"{recipe.get('run_folder')}.",
+                              description=self.described(stem, f"Earlier model. {recipe.get('note', '')} Its run "
+                                                                 f"folder was {recipe.get('run_folder')}."),
                               earlier_work=earlier('no', recipe.get('note') or 'No command was recorded.'))
 
         notes, inputs, paths = [], {}, {}
@@ -617,7 +651,8 @@ class Recipes:
                        'same content, or as its copy in earlier-run-code/.')
         if notes:
             description += ' ' + ' '.join(dict.fromkeys(notes))
-        return definition('recipe', recipe['model'], description=description[:4000], card=card, labels=labels,
+        return definition('recipe', recipe['model'], description=self.described(stem, description), card=card,
+                          labels=labels,
                           earlier_work=label, run=run)
 
     @staticmethod
@@ -1112,6 +1147,9 @@ def report(files, output, details, run_code_folder):
     for study, stems in sorted(absent.items()):
         lines.append(f'  not in Git or on this machine, {study} ({len(stems)}):')
         lines += [f'    {stem}' for stem in stems]
+    lines.append("Earlier recipes' descriptions led by a card paragraph: "
+                 + ', '.join(f'{name} {count}' for name, count in sorted(details['recipes'].card_paragraphs.items()))
+                 + '.')
     missing = {stem: paths for stem, paths in details['recipes'].missing_sources.items() if paths}
     names = collections.Counter(Path(p).name for paths in missing.values() for p in set(paths))
     lines.append(f'Earlier recipes with source files still not in Git: {len(missing)}. Their names: '

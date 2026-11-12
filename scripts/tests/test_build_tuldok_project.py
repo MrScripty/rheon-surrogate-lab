@@ -135,6 +135,31 @@ class Helpers(unittest.TestCase):
         self.assertFalse(converter.owned_by_script('README.md', b''))
 
 
+class MapFields(unittest.TestCase):
+    PORTFOLIO = {'models': [], 'groups': [{'id': 'g', 'label': 'G', 'parent': None, 'description': None}],
+                 'relationships': [{'from': 'fit-a', 'to': 'fit-b', 'explanation': 'First.', 'excerpt': ''},
+                                   {'from': 'fit-a', 'to': 'fit-b', 'explanation': 'Second.', 'excerpt': 'Quote.'}]}
+    STEMS = {'fit-a': 'a', 'fit-b': 'b'}
+
+    def test_same_pair_twice_is_joined_into_the_first(self):
+        groups, fields, lines = converter.map_fields(self.PORTFOLIO, {'models': {}}, self.STEMS)
+        self.assertEqual(groups, [{'id': 'g', 'title': 'G'}])
+        self.assertEqual(fields['a']['compared_with'],
+                         [{'recipe': 'recipes/b', 'explanation': 'First. Second.', 'excerpt': 'Quote.'}])
+        self.assertIn('comparison fit-a -> fit-b given twice: joined into the first', lines)
+
+    def test_two_different_excerpts_stop(self):
+        portfolio = json.loads(json.dumps(self.PORTFOLIO))
+        portfolio['relationships'][0]['excerpt'] = 'Other quote.'
+        with self.assertRaises(ValueError):
+            converter.map_fields(portfolio, {'models': {}}, self.STEMS)
+
+    def test_bad_group_id_stops(self):
+        portfolio = {**self.PORTFOLIO, 'groups': [{'id': '-g', 'label': 'G', 'parent': None, 'description': None}]}
+        with self.assertRaises(ValueError):
+            converter.map_fields(portfolio, {'models': {}}, self.STEMS)
+
+
 class ValuesAndSummaries(unittest.TestCase):
     OBSERVED = [  # (case, metric, value, reason, dimension texts, result set)
         ('a', 'err', 1.0, None, {'blocks': '2', 'pass': 'true', 'samples': '20'}, 'set 1'),
@@ -334,15 +359,31 @@ def make_source(root):
         {'name': 'data', 'path': 'runs/p/data.npz', 'bytes': 1, 'kind': 'training data',
          'training_set': 'temporal-training-view-02'}],
         sources=('train.py', 'local.py', 'runtime-bootstrap/extension-binding.json')))
+    for stem, model, fit in (('old--cccc', 'Old model', 'fit-c'), ('new--dddd', 'New model', 'fit-d')):
+        write_json(notes / 'recipes' / f'{stem}.json', {
+            'model': model, 'fit_id': fit, 'card': f'notes/fits/{stem}.md', 'tuldok_run': None, 'run_folder': 'runs/x',
+            'note': 'Trained before runs were recorded.', 'entrypoint': 'train.py', 'command': None,
+            'settings_file': None, 'settings': {}, 'inputs': [], 'sources': [], 'outputs': []})
     write_json(notes / 'portfolio-index.json', {
         'aliases': [{'label': 'C02', 'fit_item_id': 'fit-a', 'declared_weights_sha256': 'w2',
                      'fit_link_disposition': 'linked_by_project_or_pair'}],
         'fits': [], 'source_candidates': [], 'limitations': []})
     write_json(notes / '00-models.portfolio.json', {
-        'models': [{'id': 'fit-a', 'group_id': 'pressure', 'label': 'Model', 'aliases': []}],
-        'groups': [{'id': 'pressure', 'label': 'Pressure fits', 'parent': None, 'description': 'Grouping.'}],
-        'relationships': [{'kind': 'comparison', 'from': 'fit-a', 'to': 'fit-z', 'evidence_model': 'fit-a',
-                           'explanation': 'A compared with Z.', 'excerpt': 'Better.'}]})
+        'models': [{'id': 'fit-a', 'group_id': 'pressure-inputs', 'label': 'Model', 'aliases': []},
+                   {'id': 'fit-c', 'group_id': 'pressure', 'label': 'Old model', 'aliases': []}],
+        'groups': [{'id': 'pressure', 'label': 'Pressure fits', 'parent': None, 'description': 'Grouping.'},
+                   {'id': 'pressure-inputs', 'label': 'Inputs', 'parent': 'pressure', 'description': ''}],
+        'relationships': [
+            {'kind': 'comparison', 'from': 'fit-a', 'to': 'fit-c', 'explanation': 'A compared with C.',
+             'excerpt': 'Better.'},
+            {'kind': 'comparison', 'from': 'fit-c', 'to': 'fit-a', 'explanation': 'C compared with A.', 'excerpt': ''},
+            {'kind': 'comparison', 'from': 'fit-a', 'to': 'fit-z', 'explanation': 'A compared with Z.',
+             'excerpt': 'Z has no recipe.'}]})
+    # fit-d has no seed entry, fit-c's parent is not a recipe, and fit-y is no recipe of the folder.
+    write_json(root / 'seed.json', {'about': 'test', 'models': {
+        'fit-a': {'change': 'training-policy', 'derived_from': 'fit-c', 'short': 'C02'},
+        'fit-c': {'change': 'component', 'derived_from': 'fit-q'},
+        'fit-y': {'change': 'architecture'}}})
     write_json(notes / 'checkpoints' / 'part-01.json', {'rows': []})
     inventory = []
     for part, subjects in ((1, [{'id': 'C01', 'label': 'C01', 'dimensions': {'fit_item_id': 'fit-a'}}]),
@@ -554,7 +595,7 @@ class EndToEnd(unittest.TestCase):
     def run_script(self, *extra):
         with contextlib.redirect_stdout(io.StringIO()) as printed:
             status = converter.main(['--tuldok', str(TULDOK), '--source', str(self.source),
-                                     '--output', str(self.output), *extra])
+                                     '--output', str(self.output), '--seed', str(self.source / 'seed.json'), *extra])
         return status, printed.getvalue()
 
     def snapshot(self):
@@ -607,13 +648,48 @@ class EndToEnd(unittest.TestCase):
         self.assertEqual(copy.read_text(), '# never committed\n')
         self.assertEqual(self.run_script('--check')[0], 0)
 
-    def test_groups_and_comparisons(self):
-        self.run_script()
-        document = json.loads((self.output / 'notes' / 'model-groups-and-comparisons.json').read_text())
-        self.assertEqual(document['groups'], [{'id': 'pressure', 'title': 'Pressure fits', 'parent': None,
-                                               'description': 'Grouping.', 'models': ['recipes/model--aaaa']}])
-        self.assertEqual(document['comparisons'], [{'model': 'recipes/model--aaaa', 'compared_with': 'fit-z',
-                                                    'explanation': 'A compared with Z.', 'excerpt': 'Better.'}])
+    def test_groups_and_map_chart(self):
+        stale = self.output / 'notes' / 'model-groups-and-comparisons.json'
+        write_json(stale, {'groups': []})
+        status, printed = self.run_script()
+        self.assertFalse(stale.exists())     # no longer written, so the regeneration removes it
+        project = json.loads((self.output / 'tuldok.json').read_text())
+        self.assertEqual(project['groups'], [
+            {'id': 'pressure', 'title': 'Pressure fits', 'description': 'Grouping.'},
+            {'id': 'pressure-inputs', 'title': 'Inputs', 'parent': 'pressure'}])
+        self.assertEqual(project['map'], {'chart': converter.MAP_CHART})
+        self.assertIn('which is not in the folder', printed)
+        self.assertEqual(self.recipe('model--aaaa')['group'], 'pressure-inputs')
+        self.assertEqual(self.recipe('old--cccc')['group'], 'pressure')
+        self.assertNotIn('group', self.recipe('new--dddd'))
+
+    def recipe(self, stem):
+        return json.loads((self.output / 'recipes' / f'{stem}.json').read_text())
+
+    def test_comparisons(self):
+        status, printed = self.run_script()
+        self.assertEqual(self.recipe('model--aaaa')['compared_with'], [
+            {'recipe': 'recipes/old--cccc', 'explanation': 'A compared with C.', 'excerpt': 'Better.'}])
+        self.assertEqual(self.recipe('old--cccc')['compared_with'], [
+            {'recipe': 'recipes/model--aaaa', 'explanation': 'C compared with A.'}])
+        self.assertIn('comparison fit-a -> fit-z left out: a side has no recipe', printed)
+        self.assertIn('with comparisons 2 (2 comparisons)', printed)
+
+    def test_seed_fields(self):
+        status, printed = self.run_script()
+        model, old, new = self.recipe('model--aaaa'), self.recipe('old--cccc'), self.recipe('new--dddd')
+        self.assertEqual((model['change'], model['derived_from'], model['labels']['short']),
+                         ('training-policy', 'recipes/old--cccc', 'C02'))
+        # A parent that is not a recipe of the folder: the field is left out and the summary says so.
+        self.assertEqual(old['change'], 'component')
+        self.assertNotIn('derived_from', old)
+        self.assertNotIn('short', old['labels'])
+        self.assertIn('derived_from of fit-c left out: fit-q is not another recipe', printed)
+        # A recipe absent from the seed gets none of the three, and a seed entry with no recipe is reported.
+        self.assertFalse({'change', 'derived_from'} & set(new))
+        self.assertNotIn('short', new.get('labels', {}))
+        self.assertIn('recipe of fit-d has no seed entry', printed)
+        self.assertIn('seed entry fit-y left out: it has no recipe', printed)
 
     def test_values_files_rebuild_the_summaries(self):
         sys.path.insert(0, str(TULDOK))
@@ -658,7 +734,7 @@ class EndToEnd(unittest.TestCase):
         manifest = self.root / 'adoption' / 'manifest.json'
         status, printed = self.run_script('--check', '--adoption-output', str(manifest))
         self.assertEqual(status, 1)    # the folder was never written; the manifest is written regardless
-        self.assertIn('Earlier recipes: 1; every declared output has a file 1', printed)
+        self.assertIn('Earlier recipes: 3; every declared output has a file 1', printed)
         document = json.loads(manifest.read_text())
         self.assertEqual(document['format'], 'tuldok_adoption_v1')
         (entry,) = document['products']

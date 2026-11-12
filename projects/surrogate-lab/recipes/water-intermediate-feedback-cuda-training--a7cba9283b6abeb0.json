@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-coverage-feedback-v1/feedback-only/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-coverage-feedback-v1/feedback-only/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-coverage-feedback-v1/feedback-only/project/inputs/splits.json"
+  "input:splits": "runs/water-coverage-feedback-v1/feedback-only/project/inputs/splits.json",
+  "short": "C40"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -256,5 +257,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-coverage-feedback-v1/coverage-only/project/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-cohort-two-shape-feedback-cuda-training--07e98b58c8c3aafb",
+   "explanation": "C40 compared with C33; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Intermediate contraction improves both common worst metrics over C33 at the same physical/manufactured sample budget and two-correction deployment. The larger logged training loss includes an extra term; final validation remains canonical. This does not establish complete-step or rollout improvement."
+  }
+ ]
 }

@@ -17,9 +17,15 @@ recordings as datasets (and the first stages of the few that took two commands, 
 steps), and the 31 earlier result sets as benchmarks with their summaries. The
 definitions of new work in the same folder are written by hand and are never touched.
 
+The map fields (Tuldok's docs/plans/definition-first-projects/spec-w1.md) are written too:
+`groups` and `map.chart` in tuldok.json, and on the earlier recipes `group` and `compared_with`
+(the authored groups and comparisons of the old notes/00-models.portfolio.json) and `change`,
+`derived_from` and the label `short` (from scripts/earlier-model-map.json, see its `about`).
+`map.chart` names a hand-written chart of the folder.
+
     python scripts/build_tuldok_project.py --tuldok ../../creative-media/Tuldok \
         [--source projects/rheon-model-portfolio-unified-04] [--output projects/surrogate-lab] [--check] \
-        [--values-output [DIR]] [--adoption-output [FILE]]
+        [--values-output [DIR]] [--adoption-output [FILE]] [--seed FILE]
 
 `--check` writes nothing and exits 1 when the folder differs from what would be
 written. Either way the script prints what it converted and what it left out.
@@ -47,6 +53,12 @@ KINDS = {'datasets': 'dataset', 'models': 'model', 'recipes': 'recipe', 'benchma
 NAME = re.compile(r'[a-z0-9][a-z0-9._-]{0,119}')
 KEY = re.compile(r'[a-z][a-z0-9_]{0,31}')
 METRIC_ID = re.compile(r'[a-z][a-z0-9_]{0,63}')
+GROUP_ID = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,63}')
+
+# change, derived_from and the label short of each earlier model, by fit id (see its `about`).
+SEED_DEFAULT = Path(__file__).resolve().parent / 'earlier-model-map.json'
+# The map's track: the worst pressure error on the 128 consumed fitting requests, a hand-written chart.
+MAP_CHART = 'charts/pressure-fits-worst-error-progression'
 
 # Earlier recordings that are now new dataset definitions (surrogate/datasets/definitions).
 RECORDINGS_NOW_DATASETS = {'sinusoidal-recordings': 'sinusoidal-v1', 'diversity-recordings': 'diversity-v1'}
@@ -869,9 +881,9 @@ def notes_left_out(notes):
         'subjects; the rest is not carried.',
         f"notes/00-models.portfolio.json: {len(portfolio['models'])} model entries (aliases, review state, task "
         f"group, a long method summary), {len(portfolio['groups'])} authored task groups, and "
-        f"{len(portfolio['relationships'])} authored comparisons between fits with excerpts. The groups and "
-        'comparisons are carried in notes/model-groups-and-comparisons.json; the model entries (aliases, review '
-        'state, summaries that partly repeat the cards) are not.',
+        f"{len(portfolio['relationships'])} authored comparisons between fits with excerpts. The groups are "
+        "carried as tuldok.json's groups and each recipe's group, the comparisons as compared_with on the "
+        'recipes; the model entries (aliases, review state, summaries that partly repeat the cards) are not.',
         f"notes/checkpoints/ ({len(checkpoints)} rows): one row per distinct checkpoint file (checksum, size, the "
         'retained path where it was verified, every path it was found at, and its context). It is the map from '
         'weights checksums to files on the training machine, which registering the earlier weights as products '
@@ -907,7 +919,7 @@ def existing_files(output):
     return files
 
 
-def build(source, output, tuldok):
+def build(source, output, tuldok, seed=SEED_DEFAULT):
     """Everything the script owns, as {relative path: bytes}, plus what the report needs."""
     sys.path.insert(0, str(Path(tuldok).resolve()))
     from tuldok_project.results import SummaryRow, summarise, write_results
@@ -923,12 +935,12 @@ def build(source, output, tuldok):
     benchmarks = Benchmarks(source, SubjectMatcher(notes, recipes.stem_of_fit))
 
     documents = {**training_sets.definitions(), **recipes.definitions()}
+    groups, fields, map_lines = map_fields(load(notes / '00-models.portfolio.json'), load(seed), recipes.stem_of_fit)
+    add_map_fields(documents, fields)
     files = {path: dump(document) for path, document in documents.items()}
     for path, content in benchmarks.build(summarise, write_results, SummaryRow).items():
         files[path] = content if isinstance(content, bytes) else dump(content)
-    files['tuldok.json'] = dump(PROJECT)
-    files['notes/model-groups-and-comparisons.json'] = dump(
-        groups_and_comparisons(load(notes / '00-models.portfolio.json'), recipes.stem_of_fit))
+    files['tuldok.json'] = dump({**PROJECT, 'groups': groups, 'map': {'chart': MAP_CHART}})
     for path in sorted([*notes.glob('*.md'), *(notes / 'fits').glob('*.md')]):
         files[path.relative_to(source).as_posix()] = path.read_bytes()
 
@@ -939,7 +951,8 @@ def build(source, output, tuldok):
     run_code = {path[len(EARLIER_RUN_CODE) + 1:]: data for path, data in code_paths.copies.items()}
     run_code['README.md'] = EARLIER_RUN_CODE_README.encode('utf-8')
     return files, run_code, {'benchmarks': benchmarks, 'recipes': recipes, 'training_sets': training_sets,
-                             'notes': notes, 'code_paths': code_paths, 'code_root': code_root}
+                             'notes': notes, 'code_paths': code_paths, 'code_root': code_root,
+                             'map': (groups, fields, map_lines)}
 
 
 EARLIER_RUN_CODE_README = '''# Earlier run code
@@ -958,25 +971,84 @@ edit it by hand.
 '''
 
 
-def groups_and_comparisons(portfolio, stem_of_fit):
-    """The authored task groups and model comparisons of notes/00-models.portfolio.json, by recipe reference."""
-    def recipe(fit):
-        return f'recipes/{stem_of_fit[fit]}' if fit in stem_of_fit else fit
+def map_fields(portfolio, seed, stem_of_fit):
+    """The project's groups and, per recipe stem, the map fields of the earlier models, plus lines for the report.
 
-    members = collections.defaultdict(list)
+    Groups and comparisons are the authored ones of notes/00-models.portfolio.json; change, derived_from
+    and the label short come from the seed (scripts/earlier-model-map.json), keyed by fit id. A field
+    that would name something that is not a recipe of the folder is left out and reported.
+    """
+    def recipe(fit):
+        return f'recipes/{stem_of_fit[fit]}' if fit in stem_of_fit else None
+
+    groups, lines = [], []
+    for group in portfolio['groups']:
+        if not GROUP_ID.fullmatch(group['id']) or len(group['label']) > 200 or len(group['description'] or '') > 2000:
+            raise ValueError(f"Group {group['id']!r} cannot be written as a project group as it is.")
+        entry = {'id': group['id'], 'title': group['label'], 'parent': group['parent'],
+                 'description': group['description']}
+        groups.append({key: value for key, value in entry.items() if value})
+    known = {group['id'] for group in groups}
+    fields = collections.defaultdict(dict)
     for model in portfolio['models']:
-        members[model['group_id']].append(recipe(model['id']))
-    return {
-        'about': ('Authored by hand in the earlier project (notes/00-models.portfolio.json): task groups of the '
-                  'earlier models and comparisons between them. Groups are not training ancestry; a comparison '
-                  'is retrospective review context.'),
-        'groups': [{'id': group['id'], 'title': group['label'], 'parent': group['parent'],
-                    'description': group['description'], 'models': sorted(members.get(group['id'], []))}
-                   for group in portfolio['groups']],
-        'comparisons': [{'model': recipe(item['from']), 'compared_with': recipe(item['to']),
-                         'explanation': item['explanation'], 'excerpt': item['excerpt']}
-                        for item in portfolio['relationships']],
-    }
+        if model['group_id'] not in known:
+            raise ValueError(f"Model {model['id']} is in the unknown group {model['group_id']!r}.")
+        if recipe(model['id']):
+            fields[stem_of_fit[model['id']]]['group'] = model['group_id']
+        else:
+            lines.append(f"group of {model['id']} left out: it has no recipe")
+
+    for item in portfolio['relationships']:
+        model, other = recipe(item['from']), recipe(item['to'])
+        if not model or not other or model == other:
+            lines.append(f"comparison {item['from']} -> {item['to']} left out: "
+                         + ('it compares a model with itself' if model and model == other else 'a side has no recipe'))
+            continue
+        if not item['explanation'] or len(item['explanation']) > 2000 or len(item.get('excerpt') or '') > 2000:
+            raise ValueError(f"Comparison {item['from']} -> {item['to']}: its texts do not fit the format.")
+        compared = fields[model[len('recipes/'):]].setdefault('compared_with', [])
+        same = [entry for entry in compared if entry['recipe'] == other]
+        if same:
+            # The format allows one entry per other recipe: keep the first, with both explanations.
+            if len(same[0]['explanation']) + 1 + len(item['explanation']) > 2000 or \
+                    (item.get('excerpt') and same[0].get('excerpt', item['excerpt']) != item['excerpt']):
+                raise ValueError(f"Comparisons {item['from']} -> {item['to']} cannot be joined into one.")
+            same[0]['explanation'] += ' ' + item['explanation']
+            if item.get('excerpt'):
+                same[0]['excerpt'] = item['excerpt']
+            lines.append(f"comparison {item['from']} -> {item['to']} given twice: joined into the first")
+            continue
+        compared.append({'recipe': other, 'explanation': item['explanation'],
+                         **({'excerpt': item['excerpt']} if item.get('excerpt') else {})})
+
+    models = seed['models']
+    for fit, entry in sorted(models.items()):
+        if fit not in stem_of_fit:
+            lines.append(f'seed entry {fit} left out: it has no recipe')
+            continue
+        own = fields[stem_of_fit[fit]]
+        own['change'] = entry['change']
+        if entry.get('short'):
+            own['short'] = entry['short']
+        if entry.get('derived_from') and recipe(entry['derived_from']) and entry['derived_from'] != fit:
+            own['derived_from'] = recipe(entry['derived_from'])
+        elif entry.get('derived_from'):
+            lines.append(f"derived_from of {fit} left out: {entry['derived_from']} is not another recipe")
+    lines += [f'recipe of {fit} has no seed entry' for fit in sorted(set(stem_of_fit) - set(models))]
+    return groups, fields, lines
+
+
+def add_map_fields(documents, fields):
+    """Put group, change, derived_from, compared_with and the label short on the recipe documents."""
+    for stem, own in fields.items():
+        document = documents[f'recipes/{stem}.json']
+        for key in ('group', 'change', 'derived_from', 'compared_with'):
+            if key in own:
+                document[key] = own[key]
+        if 'short' in own:
+            document['labels']['short'] = own['short']
+            if len(document['labels']) > 32:
+                raise ValueError(f'{stem}: more than 32 labels.')
 
 
 SEVERITY = ('new work', 'yes', 'after-inputs', 'needs-work', 'no')
@@ -1067,6 +1139,18 @@ def report(files, output, details, run_code_folder):
     size = sum(map(len, existing_files(output).values()))
     lines.append(f'Folder size: {size / 1e6:.2f} MB in {len(existing)} files '
                  f'(notes {notes_size / 1e6:.2f} MB, results {results / 1e6:.2f} MB).')
+    groups, fields, map_lines = details['map']
+    own = list(fields.values())
+    changes = collections.Counter(entry['change'] for entry in own if 'change' in entry)
+    parents = collections.Counter(entry['derived_from'] for entry in own if 'derived_from' in entry)
+    lines.append(f"Map: {len(groups)} groups; recipes with a group {sum('group' in e for e in own)}, with a change "
+                 f"{sum(changes.values())} (" + ', '.join(f'{k} {v}' for k, v in sorted(changes.items())) + '), '
+                 f"derived from another {sum(parents.values())} ("
+                 + ', '.join(f'{k} {v}' for k, v in sorted(parents.items())) + f"), with the label short "
+                 f"{sum('short' in e for e in own)}, with comparisons {sum('compared_with' in e for e in own)} "
+                 f"({sum(len(e.get('compared_with', [])) for e in own)} comparisons). Track: {MAP_CHART}"
+                 + ('' if (Path(output) / f'{MAP_CHART}.json').is_file() else ', which is not in the folder') + '.')
+    lines += [f'  {line}' for line in map_lines]
     lines.append('Left in the old notes and not carried:')
     lines += [f'  - {line}' for line in notes_left_out(details['notes'])]
     return '\n'.join(lines)
@@ -1392,9 +1476,12 @@ def main(arguments=None):
                              'as artifacts/sha256 of --source holds them, the products of the earlier recipes and '
                              f'datasets (default {ADOPTION_DEFAULT}, from the code root). It holds absolute paths, '
                              'so it stays outside Git; it is not covered by --check')
+    parser.add_argument('--seed', type=Path, default=SEED_DEFAULT,
+                        help='the change, derived_from and short label of each earlier model, by fit id '
+                             '(default scripts/earlier-model-map.json)')
     options = parser.parse_args(arguments)
 
-    files, run_code, details = build(options.source, options.output, options.tuldok)
+    files, run_code, details = build(options.source, options.output, options.tuldok, options.seed)
     run_code_folder = details['code_root'] / EARLIER_RUN_CODE
     folders = [(options.output, files, owned_by_script), (run_code_folder, run_code, lambda path, data: True)]
     plans = []

@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-residual-learning-v1/residual-linear-5000/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-residual-learning-v1/residual-linear-5000/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-residual-learning-v1/residual-linear-5000/project/inputs/splits.json"
+  "input:splits": "runs/water-residual-learning-v1/residual-linear-5000/project/inputs/splits.json",
+  "short": "C20"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -178,5 +179,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/train.py"
   ]
- }
+ },
+ "group": "pressure-stability",
+ "change": "architecture",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-residual-recurrent-cuda-training--d1e7ab06e801f4c4",
+   "explanation": "C20 compared with C18; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "This is the short-budget control for C18, not merely a renamed C17 checkpoint. Its first 5,000 physical sample selections match the longer fit, but its learning-rate changes occur at different updates."
+  }
+ ]
 }

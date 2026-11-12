@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-residual-learning-v1/residual-recurrent/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-residual-learning-v1/residual-recurrent/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-residual-learning-v1/residual-recurrent/project/inputs/splits.json"
+  "input:splits": "runs/water-residual-learning-v1/residual-recurrent/project/inputs/splits.json",
+  "short": "C18"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -178,5 +179,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/train.py"
   ]
- }
+ },
+ "group": "pressure-stability",
+ "change": "architecture",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-residual-linear-5000-cuda-training--db8170e9fcf91f24",
+   "explanation": "C18 compared with C20; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Four learned corrections improve the common equation error relative to the matched 5,000-update single-correction control C20. They cost more work within one pressure request; they are not four simulation steps. Prepared-field strategy also differs, so do not attribute all differences to recurrence alone."
+  }
+ ]
 }

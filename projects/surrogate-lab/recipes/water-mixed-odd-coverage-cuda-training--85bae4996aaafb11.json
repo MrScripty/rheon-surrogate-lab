@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-coverage-feedback-v1/coverage-only/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-coverage-feedback-v1/coverage-only/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-coverage-feedback-v1/coverage-only/project/inputs/splits.json"
+  "input:splits": "runs/water-coverage-feedback-v1/coverage-only/project/inputs/splits.json",
+  "short": "C39"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -280,5 +281,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-coverage-feedback-v1/coverage-only/project/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-cohort-two-shape-feedback-cuda-training--07e98b58c8c3aafb",
+   "explanation": "C39 compared with C33; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Adding manufactured shapes does not improve these common worst errors over C33. Eleven grids redistribute 5,000 proposals into 454/455 exposures each instead of 625; this is not an equal-exposure pure shape comparison. Grid capacity 16 is a validation bound, not 16 executed grids or new CFD scenes."
+  }
+ ]
 }

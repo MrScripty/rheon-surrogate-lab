@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/inputs/splits.json"
+  "input:splits": "runs/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/inputs/splits.json",
+  "short": "C28"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -231,5 +232,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/train.py"
   ]
- }
+ },
+ "group": "pressure-multigrid",
+ "change": "architecture",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-multigrid-modes-two-pass-cuda-training--30a68fb4782c03b7",
+   "explanation": "C28 compared with C27; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Broader physical fitting and train-cohort amplitude calibration improve both common errors over C27. Both factors change, so the effect cannot be assigned to scene count alone. The 16 physical trajectories remain small grids; the larger shapes are manufactured operator fields."
+  }
+ ]
 }

@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-two-pass-long-v1/two-pass-10000/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-two-pass-long-v1/two-pass-10000/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-two-pass-long-v1/two-pass-10000/project/inputs/splits.json"
+  "input:splits": "runs/water-two-pass-long-v1/two-pass-10000/project/inputs/splits.json",
+  "short": "C38"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -260,5 +261,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-cohort-two-shape-feedback-cuda-training--07e98b58c8c3aafb",
+   "explanation": "C38 compared with C33; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Both common worst errors improve over C33, but training budget and learning-rate schedule both change. More optimizer work does not imply more inference corrections or extra physical trajectories."
+  }
+ ]
 }

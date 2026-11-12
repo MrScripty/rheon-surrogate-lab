@@ -13,7 +13,8 @@
   "input:dataset_extra": "runs/water-late-residual-v1/extra-early/project/inputs/dataset_extra.npz",
   "input:direction_dataset": "runs/water-late-residual-v1/extra-early/project/inputs/direction_dataset.npz",
   "input:direction_manifest": "runs/water-late-residual-v1/extra-early/project/inputs/direction_manifest.json",
-  "input:splits": "runs/water-late-residual-v1/extra-early/project/inputs/splits.json"
+  "input:splits": "runs/water-late-residual-v1/extra-early/project/inputs/splits.json",
+  "short": "C43"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -331,5 +332,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-late-residual-v1/extra-early/project/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-direction-late-cuda-training--219479e596771b32",
+   "explanation": "C43 compared with C44; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "C43 improves both common worst metrics over C42. Against the matched late-direction C44, early feedback gives lower worst pressure error but higher worst equation error. Early and late describe residual stages of a fixed eight-correction source, not physical simulation time or extra generated frames."
+  }
+ ]
 }

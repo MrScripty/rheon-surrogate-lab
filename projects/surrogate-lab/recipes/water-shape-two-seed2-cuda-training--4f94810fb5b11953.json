@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-shape-repeatability-v1/shape-two-seed2/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-shape-repeatability-v1/shape-two-seed2/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-shape-repeatability-v1/shape-two-seed2/project/inputs/splits.json"
+  "input:splits": "runs/water-shape-repeatability-v1/shape-two-seed2/project/inputs/splits.json",
+  "short": "C34"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -255,5 +256,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-multigrid-learning-v1/multigrid-cohort16-2pass/project/train.py"
   ]
- }
+ },
+ "group": "pressure-multigrid",
+ "change": "architecture",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-cohort-two-shape-feedback-cuda-training--07e98b58c8c3aafb",
+   "explanation": "C34 compared with C33; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "The second rectangular-bank seed pair improves both common worst errors relative to C33. Its range overlaps the five-grid repeat results, so a single best seed does not prove the bank universally superior."
+  }
+ ]
 }

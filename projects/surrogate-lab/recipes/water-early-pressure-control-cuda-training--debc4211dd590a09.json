@@ -13,7 +13,8 @@
   "input:dataset_extra": "runs/water-early-pressure-v1/control/project/inputs/dataset_extra.npz",
   "input:direction_dataset": "runs/water-early-pressure-v1/control/project/inputs/direction_dataset.npz",
   "input:direction_manifest": "runs/water-early-pressure-v1/control/project/inputs/direction_manifest.json",
-  "input:splits": "runs/water-early-pressure-v1/control/project/inputs/splits.json"
+  "input:splits": "runs/water-early-pressure-v1/control/project/inputs/splits.json",
+  "short": "C45"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -332,5 +333,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/dependency-migration-v1/typed-pressure-project-02/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-direction-late-cuda-training--219479e596771b32",
+   "explanation": "C45 compared with C44; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "C45 is the zero-first-pressure-weight control on the expanded 192-case direction bank. It differs from C44 in 48 additional manufactured long-axis directions as well as regenerated bank identity; do not attribute that comparison solely to an objective coefficient."
+  }
+ ]
 }

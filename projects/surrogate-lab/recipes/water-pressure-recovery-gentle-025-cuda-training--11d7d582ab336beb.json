@@ -13,7 +13,8 @@
   "input:dataset_extra": "runs/water-pressure-recovery-v1/gentle-025/project/inputs/dataset_extra.npz",
   "input:direction_dataset": "runs/water-pressure-recovery-v1/gentle-025/project/inputs/direction_dataset.npz",
   "input:direction_manifest": "runs/water-pressure-recovery-v1/gentle-025/project/inputs/direction_manifest.json",
-  "input:splits": "runs/water-pressure-recovery-v1/gentle-025/project/inputs/splits.json"
+  "input:splits": "runs/water-pressure-recovery-v1/gentle-025/project/inputs/splits.json",
+  "short": "C48"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -332,5 +333,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/dependency-migration-v1/typed-pressure-project-02/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-pressure-recovery-gentle-010-cuda-training--306a13a5408dbc76",
+   "explanation": "C48 compared with C47; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Weight0.25 improves worst equation error over C45 but slightly raises worst pressure error. C47 at0.1 has lower values of both common worst errors. More first-correction supervision is not monotonically better."
+  }
+ ]
 }

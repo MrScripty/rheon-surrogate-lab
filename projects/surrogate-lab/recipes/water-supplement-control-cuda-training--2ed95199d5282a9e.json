@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-targeted-feedback-v1/supplement-control/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-targeted-feedback-v1/supplement-control/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-targeted-feedback-v1/supplement-control/project/inputs/splits.json"
+  "input:splits": "runs/water-targeted-feedback-v1/supplement-control/project/inputs/splits.json",
+  "short": "C41"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -261,5 +262,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-targeted-feedback-v1/supplement-control/project/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-intermediate-feedback-cuda-training--a7cba9283b6abeb0",
+   "explanation": "C41 compared with C40; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Relative to C40, the extra primary stream lowers worst pressure error but raises worst equation error. More feedback work has a metric-dependent effect; the changed weighted training objective cannot be compared as the same scalar loss."
+  }
+ ]
 }

@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-multigrid-learning-v1/multigrid-modes-two-pass/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-multigrid-learning-v1/multigrid-modes-two-pass/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-multigrid-learning-v1/multigrid-modes-two-pass/project/inputs/splits.json"
+  "input:splits": "runs/water-multigrid-learning-v1/multigrid-modes-two-pass/project/inputs/splits.json",
+  "short": "C27"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -230,5 +231,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-inference-budget-v1/stability-combined-single-pass-lr1e4/project/train.py"
   ]
- }
+ },
+ "group": "pressure-multigrid",
+ "change": "architecture",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-multigrid-modes-single-pass-cuda-training--750a42b3f98800c2",
+   "explanation": "C27 compared with C26; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "Two corrections improve both common worst errors over C26 with matching initialization, physical samples and manufactured draws. These corrections consume work inside a pressure call and produce no additional simulation frames."
+  }
+ ]
 }

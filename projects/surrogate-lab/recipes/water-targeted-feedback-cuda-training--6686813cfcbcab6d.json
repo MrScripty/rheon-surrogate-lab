@@ -11,7 +11,8 @@
   "device": "cuda",
   "input:dataset": "runs/water-targeted-feedback-v1/targeted-feedback/project/inputs/dataset.npz",
   "input:dataset_extra": "runs/water-targeted-feedback-v1/targeted-feedback/project/inputs/dataset_extra.npz",
-  "input:splits": "runs/water-targeted-feedback-v1/targeted-feedback/project/inputs/splits.json"
+  "input:splits": "runs/water-targeted-feedback-v1/targeted-feedback/project/inputs/splits.json",
+  "short": "C42"
  },
  "earlier_work": {
   "rebuild": "needs-work",
@@ -316,5 +317,14 @@
    "experiments/water-conditioning-v1/training/test_inference.py",
    "earlier-run-code/water-targeted-feedback-v1/supplement-control/project/train.py"
   ]
- }
+ },
+ "group": "pressure-direction",
+ "change": "training-policy",
+ "compared_with": [
+  {
+   "recipe": "recipes/water-supplement-control-cuda-training--2ed95199d5282a9e",
+   "explanation": "C42 compared with C41; retrospective source-review context, not a Trial ancestry assertion or new metric qualification.",
+   "excerpt": "C42 improves both common worst pressure and equation errors over C41 at equal optimizer and proposal counts. Compared with C40, pressure improves but equation error remains worse. Geometry, stream size and per-grid exposure change together; this is diagnostic evidence for targeted feedback, not held-out generalization or extra physical-scene coverage."
+  }
+ ]
 }

@@ -3,7 +3,9 @@
     .venv/bin/python -m unittest discover -s scripts/tests -v
 
 The end-to-end tests need Tuldok's tuldok_project package, found at $TULDOK_REPOSITORY or
-beside this repository (../../creative-media/Tuldok); they are skipped without it.
+beside this repository (../../creative-media/Tuldok); they are skipped without it. No test
+reads the earlier project folder or compares projects/surrogate-lab with the converter's
+output: that folder is edited by hand now.
 """
 import contextlib
 import hashlib
@@ -679,17 +681,6 @@ class EndToEnd(unittest.TestCase):
         write_json(self.output / 'recipes' / 'model--aaaa.json', {'kind': 'recipe'})
         with self.assertRaises(ValueError):
             self.run_script()
-
-
-@unittest.skipUnless(HAS_TULDOK and (LAB / 'projects' / 'rheon-model-portfolio-unified-04' / '.tuldok').is_dir(),
-                     'needs Tuldok and the earlier project folder')
-class LabFolder(unittest.TestCase):
-    def test_committed_folder_is_up_to_date(self):
-        with contextlib.redirect_stdout(io.StringIO()):
-            status = converter.main(['--tuldok', str(TULDOK), '--source',
-                                     str(LAB / 'projects' / 'rheon-model-portfolio-unified-04'),
-                                     '--output', str(LAB / 'projects' / 'surrogate-lab'), '--check'])
-        self.assertEqual(status, 0)
 
 
 if __name__ == '__main__':

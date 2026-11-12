@@ -1,13 +1,21 @@
 """Write the lab's Tuldok project folder (projects/surrogate-lab) from the earlier portfolio project.
 
-A one-time conversion of projects/rheon-model-portfolio-unified-04 into the folder
-format of Tuldok's docs/plans/definition-first-projects/spec-m1-m2.md. It owns
-`tuldok.json`, everything under `results/` and `notes/`, and every definition that
-carries `earlier_work`: the 205 earlier models as recipes, the earlier training
-sets and recordings as datasets (and the first stages of the few that took two
-commands, as steps), and the 31 earlier result sets as benchmarks with their
-summaries. The definitions of new work in the same folder are written by hand and
-are never touched.
+The conversion is done. projects/surrogate-lab is now the lab's Tuldok project, edited
+directly or through Tuldok and committed like any source, and it is no longer required
+to equal this script's output. The script is kept as the record of how that folder was
+made from projects/rheon-model-portfolio-unified-04 (the earlier folder, no longer in
+Git), and to write the adoption manifest (`--adoption-output`) and the values files
+(`--values-output`). It needs the earlier folder on disk, so it runs only on the
+machine that has it. Run without `--check`, it still rewrites the files it owns in
+--output, so a hand edit to one of them would be overwritten.
+
+The conversion was into the folder format of Tuldok's
+docs/plans/definition-first-projects/spec-m1-m2.md. The script owns `tuldok.json`,
+everything under `results/` and `notes/`, and every definition that carries
+`earlier_work`: the 205 earlier models as recipes, the earlier training sets and
+recordings as datasets (and the first stages of the few that took two commands, as
+steps), and the 31 earlier result sets as benchmarks with their summaries. The
+definitions of new work in the same folder are written by hand and are never touched.
 
     python scripts/build_tuldok_project.py --tuldok ../../creative-media/Tuldok \
         [--source projects/rheon-model-portfolio-unified-04] [--output projects/surrogate-lab] [--check] \
@@ -1372,7 +1380,9 @@ def main(arguments=None):
     parser.add_argument('--tuldok', required=True, type=Path, help='the Tuldok repository, to import tuldok_project')
     parser.add_argument('--source', type=Path, default=Path('projects/rheon-model-portfolio-unified-04'))
     parser.add_argument('--output', type=Path, default=Path('projects/surrogate-lab'))
-    parser.add_argument('--check', action='store_true', help='write nothing; fail if the folder differs')
+    parser.add_argument('--check', action='store_true',
+                        help='write nothing; fail if the folder differs from what the conversion would write '
+                             '(the folder is no longer required to match)')
     parser.add_argument('--values-output', nargs='?', type=Path, const=VALUES_DEFAULT, metavar='DIR',
                         help='also write the per-case values of every earlier benchmark and subject as '
                              f'tuldok_results_v1 files under DIR (default {VALUES_DEFAULT}, from the code root); '

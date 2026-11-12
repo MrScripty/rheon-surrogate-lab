@@ -20,9 +20,13 @@ __pycache__/
 *.onnx
 *.ckpt
 
-# Tuldok project folders are tracked: .tuldok/ metadata and notes always,
-# and only the stored files each project's own .gitignore allows (benchmark
-# results and model source). The Tuldok database is rebuilt from them.
+# The lab's Tuldok project, projects/surrogate-lab/, is tracked whole: definitions,
+# results/ summaries and notes. Datasets, weights and run logs live in Tuldok's
+# project directory on the machine, outside this repository.
+
+# The earlier project folder in the old format stays on disk, untracked: it is the
+# source of scripts/build_tuldok_project.py and of the files Tuldok adopted.
+/projects/rheon-model-portfolio-unified-04/
 
 # Kept on disk for local use, not published: the per-step protocols of the earlier studies,
 # the detailed reports the benchmark results were assembled from, the inputs of the retired

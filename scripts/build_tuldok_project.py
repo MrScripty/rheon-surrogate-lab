@@ -10,10 +10,14 @@ summaries. The definitions of new work in the same folder are written by hand an
 are never touched.
 
     python scripts/build_tuldok_project.py --tuldok ../../creative-media/Tuldok \
-        [--source projects/rheon-model-portfolio-unified-04] [--output projects/surrogate-lab] [--check]
+        [--source projects/rheon-model-portfolio-unified-04] [--output projects/surrogate-lab] [--check] \
+        [--values-output [DIR]] [--adoption-output [FILE]]
 
 `--check` writes nothing and exits 1 when the folder differs from what would be
 written. Either way the script prints what it converted and what it left out.
+`--adoption-output` also writes the manifest for Tuldok's `adopt` that makes the files
+the earlier runs left in the old folder's artifacts/sha256/ the products of their
+recipes, and prints what it covers and what it leaves.
 """
 import argparse
 import collections
@@ -21,9 +25,10 @@ import hashlib
 import json
 import os
 import re
+import stat
 import subprocess
 import sys
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 PROJECT = {'format': 'tuldok_project_v1', 'id': '0dcc3af1e6b84b89a0e70554d98e7326',
            'name': 'Rheon surrogate lab', 'code_root': '../..'}
@@ -166,6 +171,15 @@ def earlier(rebuild, reason=None):
 def git_blob_id(data):
     """The id Git gives a file with these bytes (what `git hash-object` prints)."""
     return hashlib.sha1(b'blob %d\0' % len(data) + data).hexdigest()
+
+
+def stored_files(source):
+    """{checksum: path} of every file in the old folder's artifacts/sha256/, which names each file by its checksum."""
+    blobs = {}
+    for directory, _, names in os.walk(Path(source) / 'artifacts' / 'sha256'):
+        for name in names:
+            blobs[name.split('.', 1)[0]] = Path(directory) / name
+    return blobs
 
 
 def study_of(path):
@@ -718,10 +732,7 @@ class Benchmarks:
     def __init__(self, source, matcher):
         self.source = source
         self.matcher = matcher
-        blobs = {}
-        for directory, _, names in os.walk(source / 'artifacts' / 'sha256'):
-            for name in names:
-                blobs[name.split('.', 1)[0]] = Path(directory) / name
+        blobs = stored_files(source)
         inventory = load(source / '.tuldok' / 'project.json')['inventory']
         self.result_sets = []
         for entry in sorted((e for e in inventory if e.get('family') == 'measurement_source'), key=lambda e: e['path']):
@@ -919,8 +930,8 @@ def build(source, output, tuldok):
         raise ValueError(f'These files are written by hand and the script would overwrite them: {clash}')
     run_code = {path[len(EARLIER_RUN_CODE) + 1:]: data for path, data in code_paths.copies.items()}
     run_code['README.md'] = EARLIER_RUN_CODE_README.encode('utf-8')
-    return files, run_code, {'benchmarks': benchmarks, 'recipes': recipes, 'notes': notes, 'code_paths': code_paths,
-                             'code_root': code_root}
+    return files, run_code, {'benchmarks': benchmarks, 'recipes': recipes, 'training_sets': training_sets,
+                             'notes': notes, 'code_paths': code_paths, 'code_root': code_root}
 
 
 EARLIER_RUN_CODE_README = '''# Earlier run code
@@ -1077,6 +1088,285 @@ def write_values(folder, documents):
             f'{size / 1e6:.1f} MB.')
 
 
+# ---------------------------------------------------------------- the earlier products, as an adoption manifest
+
+ADOPTION_DEFAULT = Path('runs/tuldok-adoption/surrogate-lab.json')
+RUN_CODE_PAYLOADS = ('source', 'host-sources', 'runtime-bootstrap')
+CHECKSUM = re.compile(r'(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])')
+
+
+def old_runs(source):
+    """{run id: state, start, artifacts and payloads} from the old folder's run_history records, read one at a time.
+
+    `artifacts` are the run's outputs as recorded ({name, role, bytes, sha256}); `payloads` are
+    (name, role, checksum, bytes) of everything kept with the run: inputs, staged code, custody proofs, outputs.
+    """
+    runs = {}
+    for path in sorted((Path(source) / '.tuldok' / 'records' / 'run_history').rglob('*.json')):
+        record = load(path)
+        run = record['run']
+        if run['id'] in runs:
+            raise ValueError(f"Run {run['id']} has two run_history records.")
+        runs[run['id']] = {'state': run['state'], 'created_at': run['created_at'], 'artifacts': run['artifacts'],
+                           'payloads': [(p['name'], p['role'], p['blob']['sha256'], p['blob']['bytes'])
+                                        for p in record['payloads']]}
+    return runs
+
+
+def gigabytes(count):
+    return f'{count / 1e9:.3f} GB'
+
+
+def training_set_folder(entry, path):
+    """The deepest folder of a training-sets.json entry that holds the recorded `path`, or None.
+
+    Its folders are `folders` (relative to the code root, or '' for the base of paths recorded without one)
+    and, for an entry with `folder_pattern`, every directory above `path` that the pattern matches.
+    """
+    found = [folder for folder in entry.get('folders') or [] if folder == '' or path.startswith(folder + '/')]
+    if entry.get('folder_pattern'):
+        found += [parent for parent in (p.as_posix() for p in PurePosixPath(path).parents)
+                  if re.search(entry['folder_pattern'], parent)]
+    return max(found, key=len, default=None)
+
+
+def common_directory(folders):
+    """The deepest directory that holds all `folders` ('' when they share none)."""
+    common = []
+    for level in zip(*(folder.split('/') if folder else [] for folder in folders)):
+        if len(set(level)) > 1:
+            break
+        common.append(level[0])
+    return '/'.join(common)
+
+
+def dataset_key(entry, path, folders):
+    """The path of a recorded input file inside its dataset's directory, or None when it cannot be placed.
+
+    The dataset's directory is its one folder, or the deepest directory holding all its folders (the
+    listed ones, else those the folder_pattern matched), so files of different folders never share a key.
+    """
+    directory = common_directory(folders)
+    if training_set_folder(entry, path) is None or not (directory == '' or path.startswith(directory + '/')):
+        return None
+    key = path[len(directory) + 1:] if directory else path
+    parts = key.split('/')
+    if path.startswith('/') or any(part in ('', '.', '..') for part in parts):
+        return None
+    return key
+
+
+def examples(items):
+    return f" (for example {'; '.join(items[:3])})" if items else ''
+
+
+def adoption(source, files, recorded, training_sets):
+    """The tuldok_adoption_v1 manifest of the earlier recipes and datasets this script writes, and lines reporting it.
+
+    A recipe's entry keys the files of its old run (its labels.tuldok_run) that are in artifacts/sha256/
+    by its declared output paths. A declared output has a file when the old run recorded an artifact at
+    that path and artifacts/sha256/ holds it as a regular file of the recorded size.
+
+    A dataset declares no outputs, so its product is its directory as a whole. Its entry holds the files
+    the earlier recipes' runs read from it (their inputs of kind 'training data', as notes/recipes/<stem>.json
+    records them, retained with the run as input/<name>), keyed by dataset_key. A path that two different
+    stored files claim is left out, as is a file that cannot be placed.
+    `recorded` is the old notes/recipes/<stem>.json documents; `training_sets` the training-sets.json entries by id.
+    """
+    blobs = stored_files(source)
+    stats = {checksum: path.lstat() for checksum, path in blobs.items()}
+    runs = old_runs(source)
+
+    def usable(checksum, size):
+        stored = stats.get(checksum)
+        return stored is not None and stat.S_ISREG(stored.st_mode) and stored.st_size == size
+
+    products, named, coverage, mismatches = [], collections.defaultdict(list), collections.Counter(), \
+        collections.defaultdict(list)
+    definitions = {path[:-len('.json')]: json.loads(files[path]) for path in sorted(files)
+                   if path.split('/', 1)[0] in ('recipes', 'datasets') and path.endswith('.json')}
+    for reference, document in definitions.items():
+        if not reference.startswith('recipes/'):
+            continue
+        declared = sorted(output['path'] for output in document.get('run', {}).get('outputs', {}).values())
+        run_id = document.get('labels', {}).get('tuldok_run')
+        if run_id and run_id not in runs:
+            mismatches['old run with no run_history record'].append(f'{reference}: run {run_id}')
+        run = runs.get(run_id, {'artifacts': []})
+        artifacts = {artifact['name']: artifact for artifact in run['artifacts']}
+        mismatches['old artifact with no declared output'] += [f'{reference}: {name}'
+                                                               for name in sorted(set(artifacts) - set(declared))]
+        found = {}
+        for name in declared:
+            artifact = artifacts.get(name)
+            if artifact is None:
+                mismatches['declared output with no old artifact'].append(f'{reference}: {name}')
+            elif artifact['sha256'] not in stats:
+                mismatches['old artifact not in artifacts/sha256'].append(f'{reference}: {name}')
+            elif not usable(artifact['sha256'], artifact['bytes']):
+                mismatches['stored file not a regular file of the recorded size'].append(f'{reference}: {name}')
+            else:
+                found[name] = artifact['sha256']
+        coverage['no declared outputs' if not declared else 'every' if len(found) == len(declared)
+                 else 'some' if found else 'none'] += 1
+        if found:
+            if len(found) > 200:
+                raise ValueError(f'{reference}: {len(found)} files, more than one entry may hold.')
+            products.append({'reference': reference, 'note': f"Tuldok run {run_id} of {run['created_at'][:10]}",
+                             'files': {name: str(blobs[checksum].resolve()) for name, checksum in found.items()}})
+            named['recipes'] += found.values()
+
+    # The files each dataset's readers took from it: (run, recorded path, checksum or None, recorded bytes).
+    reads = collections.defaultdict(list)
+    for recipe in recorded.values():
+        run = runs.get(recipe.get('tuldok_run'))
+        if run is None:
+            continue
+        retained = {name[len('input/'):]: (checksum, size) for name, _, checksum, size in run['payloads']
+                    if name.startswith('input/')}
+        for item in recipe['inputs']:
+            if item.get('kind') == 'training data':
+                checksum, size = retained.get(item['name'], (None, item.get('bytes')))
+                reads[f"datasets/{item['training_set']}"].append((recipe['tuldok_run'], item['path'], checksum, size))
+    datasets, problems, directories = collections.Counter(), collections.defaultdict(list), collections.Counter()
+    conflicts, unplaced, too_many = collections.defaultdict(set), set(), []
+    for reference, document in definitions.items():
+        if not reference.startswith('datasets/'):
+            continue
+        if document.get('run', {}).get('outputs'):
+            raise ValueError(f'{reference} declares outputs; the converter has no rule for adopting them.')
+        entry, read = training_sets.get(reference.split('/', 1)[1]) or {}, reads.get(reference, [])
+        if not read:
+            datasets['read by no earlier recipe'] += 1
+            continue
+        folders = entry.get('folders') or sorted({training_set_folder(entry, path) for _, path, _, _ in read} - {None})
+        directories['its one folder' if len(folders) == 1 else 'the directory holding its listed folders'
+                    if entry.get('folders') else 'the directory holding the folders its folder_pattern matched'] += 1
+        claims = collections.defaultdict(set)
+        for run_id, path, checksum, size in read:
+            key = dataset_key(entry, path, folders) if folders else None
+            if checksum is None:
+                problems['read file not retained with its run'].append(f'{reference}: {path}')
+            elif not usable(checksum, size):
+                problems['read file not in artifacts/sha256 as a regular file of the recorded size'].append(
+                    f'{reference}: {path}')
+            elif key is None:
+                problems['read file that cannot be placed in its dataset'].append(f'{reference}: {path}')
+                unplaced.add(checksum)
+            else:
+                claims[key].add(checksum)
+        for key, checksums in sorted(claims.items()):
+            if len(checksums) > 1:
+                conflicts[reference, key] = checksums
+        found = {key: checksums.pop() for key, checksums in sorted(claims.items()) if len(checksums) == 1}
+        if not found:
+            datasets['every read file left out'] += 1
+        elif len(found) > 200:
+            too_many.append(f'{reference} ({len(found)} files)')
+            datasets['more than 200 files'] += 1
+        else:
+            datasets['with an entry'] += 1
+            runs_reading = len({run_id for run_id, _, _, _ in read})
+            products.append({'reference': reference,
+                             'note': f"The files that {runs_reading} earlier Tuldok run{'s' * (runs_reading != 1)} "
+                                     'read from this dataset.',
+                             'files': {key: str(blobs[checksum].resolve()) for key, checksum in found.items()}})
+            named['datasets'] += found.values()
+    if len(products) > 5000:
+        raise ValueError(f'{len(products)} entries, more than a manifest may hold.')
+    every = [checksum for kind in named for checksum in named[kind]]
+
+    # What refers to each stored file no entry names: the run records first, then every other record family.
+    inputs_of_run = {recipe['tuldok_run']: {item['name']: item for item in recipe['inputs']}
+                     for recipe in recorded.values() if recipe.get('tuldok_run')}
+    refers = {}
+    # The runs of earlier recipes first, so a file such a run read is described by what its recipe says it is.
+    ordered = sorted(runs.items(), key=lambda item: (item[0] not in inputs_of_run, item[0]))
+    for run_id, run in ordered:
+        whose = 'a recipe' if run_id in inputs_of_run else 'no recipe'
+        for artifact in run['artifacts']:
+            refers.setdefault(artifact['sha256'], f"output ({artifact['role']}) of an old run with {whose}, "
+                                                  f"{run['state']}")
+    for run_id, run in ordered:
+        inputs = inputs_of_run.get(run_id)
+        for name, role, checksum, _ in run['payloads']:
+            group, _, rest = name.partition('/')
+            if group == 'input' and inputs is None:
+                label = 'input of an old run with no recipe'
+            elif group == 'input':
+                label = f"input of an earlier recipe's run: {inputs.get(rest, {}).get('kind') or 'not in the recipe'}"
+            elif group in RUN_CODE_PAYLOADS:
+                label = f'code staged for an old run ({group}/)'
+            else:
+                label = f'{role} file of an old run'
+            refers.setdefault(checksum, label)
+    unnamed = set(blobs) - set(every)
+    left = unnamed - set(refers)
+    records = Path(source) / '.tuldok' / 'records'
+    families = sorted((p.name for p in records.iterdir() if p.is_dir() and p.name != 'run_history'),
+                      key=lambda family: (family == 'project_artifact', family))   # the bare inventory last
+    for family in families:
+        for path in sorted((records / family).rglob('*.json')) if left else []:
+            for checksum in left & set(CHECKSUM.findall(path.read_text(encoding='utf-8'))):
+                refers[checksum] = f'named in {family} records'
+            left -= set(refers)
+    by_label = collections.defaultdict(list)
+    for checksum in unnamed:
+        by_label[refers.get(checksum, 'named by no record')].append(stats[checksum].st_size)
+
+    def total(checksums):
+        return sum(stats[checksum].st_size for checksum in checksums)
+
+    lines = [f'Adoption manifest: {len(products)} entries naming {len(every)} files, {total(every)} bytes '
+             f'({gigabytes(total(every))}); {len(set(every))} distinct stored files, {gigabytes(total(set(every)))}.']
+    lines.append(f'  Earlier recipes: {sum(coverage.values())}; every declared output has a file '
+                 f"{coverage['every']}, some {coverage['some']}, none {coverage['none']}, no declared outputs "
+                 f"{coverage['no declared outputs']}. Their entries name {len(named['recipes'])} files, "
+                 f"{gigabytes(total(named['recipes']))}.")
+    for problem in ('declared output with no old artifact', 'old artifact with no declared output',
+                    'old artifact not in artifacts/sha256', 'stored file not a regular file of the recorded size',
+                    'old run with no run_history record'):
+        lines.append(f'    {problem}: {len(mismatches[problem])}{examples(mismatches[problem])}')
+    lines.append(f"  Earlier datasets: {sum(datasets.values())}, none declaring outputs; with an entry "
+                 f"{datasets['with an entry']}, without {sum(datasets.values()) - datasets['with an entry']} (read by "
+                 f"no earlier recipe {datasets['read by no earlier recipe']}, every read file left out "
+                 f"{datasets['every read file left out']}, more than 200 files {datasets['more than 200 files']}"
+                 f"{examples(too_many)}). Their entries name {len(named['datasets'])} files, "
+                 f"{gigabytes(total(named['datasets']))}.")
+    lines.append('    Keys are paths inside the dataset\'s directory, which is '
+                 + ', '.join(f'{label} for {count}' for label, count in sorted(directories.items())) + '.')
+    lines.append(f"    Reads of a dataset file by an earlier recipe's run: {sum(map(len, reads.values()))}.")
+    for problem in ('read file not retained with its run',
+                    'read file not in artifacts/sha256 as a regular file of the recorded size',
+                    'read file that cannot be placed in its dataset'):
+        lines.append(f'    {problem}: {len(problems[problem])} reads{examples(problems[problem])}')
+    lines[-1] += f'; {len(unplaced)} stored files, {gigabytes(total(unplaced))}'
+    conflicting = set().union(*conflicts.values())
+    lines.append(f'    paths of a dataset that two or more different stored files claim, left out: {len(conflicts)} '
+                 f'paths, {len(conflicting)} stored files, {gigabytes(total(conflicting))}'
+                 + examples([f'{reference}: {key} ({len(checksums)} files)'
+                             for (reference, key), checksums in sorted(conflicts.items())]))
+    lines.append(f'Files in artifacts/sha256 that no entry names: {len(unnamed)}, {total(unnamed)} bytes '
+                 f'({gigabytes(total(unnamed))}), by what refers to them:')
+    lines += [f'  {len(sizes):5d} {gigabytes(sum(sizes)):>11s}  {label}'
+              for label, sizes in sorted(by_label.items(), key=lambda item: (-sum(item[1]), item[0]))]
+    return {'format': 'tuldok_adoption_v1', 'products': products}, lines
+
+
+def write_adoption(target, source, files, recorded, training_sets):
+    manifest, lines = adoption(source, files, recorded, training_sets)
+    if manifest['products']:
+        data = dump(manifest)
+        if len(data) > 16 * 2 ** 20:
+            raise ValueError(f'The manifest is {len(data)} bytes, more than 16 MiB.')
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+        lines.insert(0, f'Wrote {target.resolve()}.')
+    else:
+        lines.insert(0, f'No earlier definition has a file to adopt; {target} was not written.')
+    return '\n'.join(lines)
+
+
 def main(arguments=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--tuldok', required=True, type=Path, help='the Tuldok repository, to import tuldok_project')
@@ -1087,6 +1377,11 @@ def main(arguments=None):
                         help='also write the per-case values of every earlier benchmark and subject as '
                              f'tuldok_results_v1 files under DIR (default {VALUES_DEFAULT}, from the code root); '
                              'they are generated data, outside the folder and not covered by --check')
+    parser.add_argument('--adoption-output', nargs='?', type=Path, const=ADOPTION_DEFAULT, metavar='FILE',
+                        help='also write the tuldok_adoption_v1 manifest that makes the files of the earlier runs, '
+                             'as artifacts/sha256 of --source holds them, the products of the earlier recipes and '
+                             f'datasets (default {ADOPTION_DEFAULT}, from the code root). It holds absolute paths, '
+                             'so it stays outside Git; it is not covered by --check')
     options = parser.parse_args(arguments)
 
     files, run_code, details = build(options.source, options.output, options.tuldok)
@@ -1116,6 +1411,12 @@ def main(arguments=None):
         if folder == VALUES_DEFAULT:
             folder = details['code_root'] / VALUES_DEFAULT
         print(write_values(folder, details['benchmarks'].values))
+    if options.adoption_output is not None:
+        target = options.adoption_output
+        if target == ADOPTION_DEFAULT:
+            target = details['code_root'] / ADOPTION_DEFAULT
+        print(write_adoption(target, options.source, files, details['recipes'].recorded,
+                             details['training_sets'].sets))
     if options.check:
         out_of_date = [f'{folder.name}/{path}' for folder, _, changed, stale in plans for path in changed + stale]
         if out_of_date:

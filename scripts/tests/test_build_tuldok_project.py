@@ -6,6 +6,7 @@ The end-to-end tests need Tuldok's tuldok_project package, found at $TULDOK_REPO
 beside this repository (../../creative-media/Tuldok); they are skipped without it.
 """
 import contextlib
+import hashlib
 import io
 import json
 import os
@@ -363,6 +364,179 @@ def make_source(root):
     write_json(root / '.tuldok' / 'project.json', {'inventory': inventory})
 
 
+def store(source, data):
+    """Put `data` in the old folder's artifacts/sha256/ under its checksum; return the checksum."""
+    checksum = hashlib.sha256(data).hexdigest()
+    path = source / 'artifacts' / 'sha256' / checksum
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+    return checksum
+
+
+def write_run(source, run_id, outputs, payloads=(), stored=None):
+    """An old run_history record with these outputs ({name: bytes}) and other payloads ((name, role, bytes)).
+    Every file is put in artifacts/sha256/ except outputs not named in `stored` (when given)."""
+    artifacts, retained = [], []
+    for name, data in outputs.items():
+        checksum = store(source, data) if stored is None or name in stored else hashlib.sha256(data).hexdigest()
+        artifacts.append({'name': name, 'role': 'checkpoint', 'bytes': len(data), 'sha256': checksum,
+                          'media_type': 'application/octet-stream'})
+        retained.append({'name': name, 'role': 'checkpoint', 'blob': {'bytes': len(data), 'sha256': checksum}})
+    for name, role, data in payloads:
+        retained.append({'name': name, 'role': role, 'blob': {'bytes': len(data), 'sha256': store(source, data)}})
+    write_json(source / '.tuldok' / 'records' / 'run_history' / f'catalog.{run_id}' / 'record.json', {
+        'format': 'project_run_history_v2', 'payloads': retained,
+        'run': {'id': run_id, 'state': 'completed', 'created_at': '2026-10-21T08:00:00+00:00', 'artifacts': artifacts}})
+
+
+def recipe_definition(run_id, outputs):
+    return converter.dump(converter.definition(
+        'recipe', 'r', labels={'tuldok_run': run_id} if run_id else None, earlier_work={'rebuild': 'no'},
+        run={'command': ['x'], 'outputs': converter.Recipes.outputs([{'path': p, 'role': 'checkpoint'} for p in outputs])}
+        if outputs else None))
+
+
+class Adoption(unittest.TestCase):
+    def setUp(self):
+        self.source = Path(tempfile.mkdtemp())
+        self.addCleanup(lambda: __import__('shutil').rmtree(self.source))
+        source = self.source
+        write_run(source, 'a' * 32, {'weights.npz': b'A weights', 'history.json': b'A history'},
+                  payloads=[('input/data', 'execution_source', b'training data'),
+                            ('source/train.py', 'execution_source', b'print()'),
+                            ('custody-receipt.json', 'custody_proof', b'{}')])
+        write_run(source, 'b' * 32, {'weights.npz': b'B weights', 'history.json': b'B history', 'extra.npy': b'x'},
+                  stored={'weights.npz', 'extra.npy'})
+        write_run(source, 'c' * 32, {'weights.npz': b'C weights'}, stored=set())
+        write_run(source, 'd' * 32, {'probe.npy': b'probe'}, payloads=[('input/x', 'execution_source', b'other input')])
+        # A stored file of the wrong size, one only another record names, and one no record names.
+        write_run(source, 'e' * 32, {'weights.npz': b'E weights'})
+        (source / 'artifacts' / 'sha256' / hashlib.sha256(b'E weights').hexdigest()).write_bytes(b'E weights, longer')
+        write_json(source / '.tuldok' / 'records' / 'model_material' / 'm.json',
+                   {'artifacts': [{'blob': {'sha256': store(source, b'model material')}}]})
+        store(source, b'nobody')
+        # Runs that read datasets: the same file through different input names, a path of one dataset that two
+        # different files claim, a file outside its dataset's folders, and datasets of several folders.
+        write_run(source, 'f' * 32, {}, payloads=[('input/train', 'execution_source', b'training data'),
+                                                  ('input/labels', 'execution_source', b'labels'),
+                                                  ('input/v1', 'execution_source', b'view one')])
+        write_run(source, 'g' * 32, {}, payloads=[('input/lab', 'execution_source', b'labels'),
+                                                  ('input/data', 'execution_source', b'regenerated'),
+                                                  ('input/stray', 'execution_source', b'stray'),
+                                                  ('input/w1', 'execution_source', b'w one'),
+                                                  ('input/w2', 'execution_source', b'w two')])
+        dataset = converter.dump(converter.definition('dataset', 'd', earlier_work={'rebuild': 'no'}))
+        self.files = {
+            'recipes/a.json': recipe_definition('a' * 32, ['weights.npz', 'history.json']),
+            'recipes/b.json': recipe_definition('b' * 32, ['weights.npz', 'history.json']),
+            'recipes/c.json': recipe_definition('c' * 32, ['weights.npz']),
+            'recipes/e.json': recipe_definition('e' * 32, ['weights.npz']),
+            'recipes/old.json': recipe_definition(None, []),
+            'datasets/set.json': dataset, 'datasets/multi.json': dataset, 'datasets/water.json': dataset,
+            'datasets/nobody.json': dataset,
+            'benchmarks/x.json': converter.dump(converter.definition('benchmark', 'x', earlier_work={'rebuild': 'no'})),
+        }
+
+        def read(name, path, training_set):
+            return {'name': name, 'path': path, 'kind': 'training data', 'training_set': training_set}
+        self.recorded = {
+            'a': {'tuldok_run': 'a' * 32, 'inputs': [read('data', 'runs/s/set-01/data.npz', 'set')]},
+            'e': {'tuldok_run': 'e' * 32, 'inputs': []}, 'old': {'tuldok_run': None, 'inputs': []},
+            'f': {'tuldok_run': 'f' * 32, 'inputs': [read('train', 'runs/s/set-01/data.npz', 'set'),
+                                                     read('labels', 'runs/s/set-01/sub/labels.json', 'set'),
+                                                     read('v1', 'runs/a/v1/d.npz', 'multi')]},
+            'g': {'tuldok_run': 'g' * 32, 'inputs': [read('lab', 'runs/s/set-01/sub/labels.json', 'set'),
+                                                     read('data', 'runs/s/set-01/data.npz', 'set'),
+                                                     read('stray', 'runs/elsewhere/x.npz', 'set'),
+                                                     read('w1', 'runs/w-one/project/inputs/d.npz', 'water'),
+                                                     read('w2', 'runs/w-two/project/inputs/d.npz', 'water')]}}
+        self.sets = {'set': {'folders': ['runs/s/set-01']}, 'multi': {'folders': ['runs/a/v1', 'runs/b/v2']},
+                     'water': {'folder_pattern': '^runs/w-[a-z]+/project/inputs$'}, 'nobody': {'folders': ['runs/n']}}
+        self.before = {p: p.read_bytes() for p in source.rglob('*') if p.is_file()}
+        self.manifest, lines = converter.adoption(source, self.files, self.recorded, self.sets)
+        self.printed = '\n'.join(lines)
+        self.products = {entry['reference']: entry for entry in self.manifest['products']}
+
+    def test_entries_key_present_files_by_declared_paths(self):
+        products = self.products
+        self.assertEqual(sorted(p for p in products if p.startswith('recipes/')), ['recipes/a', 'recipes/b'])
+        a = products['recipes/a']
+        self.assertEqual(a['note'], f"Tuldok run {'a' * 32} of 2026-10-21")
+        self.assertEqual(sorted(a['files']), ['history.json', 'weights.npz'])
+        for path in a['files'].values():
+            self.assertTrue(Path(path).is_absolute())
+            self.assertFalse(Path(path).is_symlink())
+        self.assertEqual(Path(a['files']['weights.npz']).read_bytes(), b'A weights')
+        # Only what is stored, and never an artifact the definition does not declare.
+        self.assertEqual(list(products['recipes/b']['files']), ['weights.npz'])
+        self.assertEqual(json.loads(converter.dump(self.manifest)), self.manifest)
+
+    def test_dataset_entries_key_read_files_by_their_path_in_the_dataset(self):
+        products = self.products
+        self.assertEqual(sorted(p for p in products if p.startswith('datasets/')),
+                         ['datasets/multi', 'datasets/set', 'datasets/water'])
+        # Read by two runs through different input names; data.npz is claimed by two different files and the
+        # stray file is outside the dataset's folder, so both are left out.
+        dataset = products['datasets/set']
+        self.assertEqual(dataset['note'], 'The files that 3 earlier Tuldok runs read from this dataset.')
+        self.assertEqual(list(dataset['files']), ['sub/labels.json'])
+        self.assertEqual(Path(dataset['files']['sub/labels.json']).read_bytes(), b'labels')
+        # Several folders: keys are relative to the directory that holds them all.
+        self.assertEqual(list(products['datasets/multi']['files']), ['a/v1/d.npz'])
+        self.assertEqual(products['datasets/multi']['note'],
+                         'The files that 1 earlier Tuldok run read from this dataset.')
+        self.assertEqual(sorted(products['datasets/water']['files']),
+                         ['w-one/project/inputs/d.npz', 'w-two/project/inputs/d.npz'])
+
+    def test_dataset_placement(self):
+        entry = {'folders': ['', 'project-01']}
+        self.assertEqual(converter.dataset_key(entry, 'project-01/m.json', entry['folders']), 'project-01/m.json')
+        self.assertEqual(converter.dataset_key({'folders': ['runs/s']}, 'runs/s/a/b.npz', ['runs/s']), 'a/b.npz')
+        self.assertIsNone(converter.dataset_key({'folders': ['runs/s']}, 'runs/s/../t.npz', ['runs/s']))
+        self.assertIsNone(converter.dataset_key({'folders': ['runs/s']}, 'runs/sx/t.npz', ['runs/s']))
+        self.assertIsNone(converter.dataset_key({'folders': []}, 'runs/s/t.npz', []))
+
+    def test_summary_counts_and_mismatches(self):
+        printed = self.printed
+        self.assertIn('7 files, 51 bytes', printed)
+        self.assertIn('Earlier recipes: 5; every declared output has a file 1, some 1, none 2, no declared outputs 1. '
+                      'Their entries name 3 files', printed)
+        self.assertIn('Earlier datasets: 4, none declaring outputs; with an entry 3, without 1 (read by no earlier '
+                      'recipe 1, every read file left out 0, more than 200 files 0). Their entries name 4 files',
+                      printed)
+        self.assertIn('read file that cannot be placed in its dataset: 1 reads (for example datasets/set: '
+                      'runs/elsewhere/x.npz); 1 stored files', printed)
+        self.assertIn('two or more different stored files claim, left out: 1 paths, 2 stored files, 0.000 GB '
+                      '(for example datasets/set: data.npz (2 files))', printed)
+        self.assertIn('old artifact with no declared output: 1 (for example recipes/b: extra.npy)', printed)
+        self.assertIn('old artifact not in artifacts/sha256: 2', printed)
+        self.assertIn('stored file not a regular file of the recorded size: 1 (for example recipes/e: weights.npz)',
+                      printed)
+        self.assertIn('declared output with no old artifact: 0', printed)
+
+    def test_unnamed_files_by_what_refers_to_them(self):
+        printed = self.printed
+        self.assertIn('Files in artifacts/sha256 that no entry names: 11,', printed)
+        for label in ("input of an earlier recipe's run: training data", 'code staged for an old run (source/)',
+                      'custody_proof file of an old run', 'output (checkpoint) of an old run with a recipe, completed',
+                      'output (checkpoint) of an old run with no recipe, completed',
+                      'input of an old run with no recipe', 'named in model_material records', 'named by no record'):
+            self.assertIn(f'  {label}', printed)
+
+    def test_old_folder_is_unchanged(self):
+        self.assertEqual({p: p.read_bytes() for p in self.source.rglob('*') if p.is_file()}, self.before)
+
+    def test_linked_store_file_is_not_adopted(self):
+        weights = self.source / 'artifacts' / 'sha256' / hashlib.sha256(b'A weights').hexdigest()
+        moved = self.source / 'elsewhere'
+        weights.rename(moved)
+        weights.symlink_to(moved)
+        manifest, lines = converter.adoption(self.source, self.files, self.recorded, self.sets)
+        a, = [entry for entry in manifest['products'] if entry['reference'] == 'recipes/a']
+        self.assertEqual(list(a['files']), ['history.json'])
+        self.assertIn('stored file not a regular file of the recorded size: 2', '\n'.join(lines))
+
+
 @unittest.skipUnless(HAS_TULDOK, f'Tuldok is not at {TULDOK}')
 class EndToEnd(unittest.TestCase):
     def setUp(self):
@@ -475,6 +649,23 @@ class EndToEnd(unittest.TestCase):
             self.run_script()
         self.assertIn('Errors · part 1', str(raised.exception))
         self.assertIn('Errors · part 2', str(raised.exception))
+
+    def test_adoption_manifest(self):
+        write_run(self.source, 'r' * 32, {'weights.npz': b'weights', 'history.json': b'{}'})
+        before = {p: p.read_bytes() for p in self.source.rglob('*') if p.is_file()}
+        manifest = self.root / 'adoption' / 'manifest.json'
+        status, printed = self.run_script('--check', '--adoption-output', str(manifest))
+        self.assertEqual(status, 1)    # the folder was never written; the manifest is written regardless
+        self.assertIn('Earlier recipes: 1; every declared output has a file 1', printed)
+        document = json.loads(manifest.read_text())
+        self.assertEqual(document['format'], 'tuldok_adoption_v1')
+        (entry,) = document['products']
+        self.assertEqual(entry['reference'], 'recipes/model--aaaa')
+        self.assertEqual(sorted(entry['files']), ['history.json', 'weights.npz'])
+        self.run_script()
+        recipe = json.loads((self.output / 'recipes' / 'model--aaaa.json').read_text())
+        self.assertEqual(sorted(output['path'] for output in recipe['run']['outputs'].values()), sorted(entry['files']))
+        self.assertEqual({p: p.read_bytes() for p in self.source.rglob('*') if p.is_file()}, before)
 
     def test_stale_owned_files_go_and_hand_written_stay(self):
         self.run_script()

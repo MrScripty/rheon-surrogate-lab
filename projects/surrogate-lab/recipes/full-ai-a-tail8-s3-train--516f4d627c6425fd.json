@@ -1,0 +1,175 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full AI a-tail8-s3 train",
+ "description": "Reduce the small-grid pressure-error tail by fitting a final global correction while preserving the selected parent, its CNN and both routed coarse heads. This is a separate initialization/sampling-seed replicate of the tail calibration, not continuation of the completed earlier fit. Earlier model, trained 2026-10-19 by Tuldok run 7576d00e48c642729ff8a95b8fe300ab (Full AI a-tail8-s3 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. Input initial_inventory (runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/initial-inventory.json) holds earlier weights that the account does not tie to a model. Input initial_weights (runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/weights.npz) holds earlier weights that the account does not tie to a model. 4 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
+ "card": "notes/fits/full-ai-a-tail8-s3-train--516f4d627c6425fd.md",
+ "labels": {
+  "fit_id": "fit-516f4d627c6425fd",
+  "tuldok_run": "7576d00e48c642729ff8a95b8fe300ab",
+  "trained_at": "2026-10-19T20:28:30.012906+00:00",
+  "device": "cuda",
+  "input:initial_inventory": "runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/initial-inventory.json",
+  "input:initial_weights": "runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/weights.npz",
+  "input:normalization": "runs/full-ai-next-priorities-v1/a-head-calibration-s2-routed-assembly-01/normalization.json",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "input:teacher": "runs/full-ai-next-priorities-v1/tail-teacher-bank-01/teacher.npz",
+  "input:teacher_manifest": "runs/full-ai-next-priorities-v1/tail-teacher-bank-01/manifest.json",
+  "short": "C130"
+ },
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Cannot be rebuilt: it starts from weights at runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/initial-inventory.json whose producing model is not identified."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/tail_head_train.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--teacher",
+   "{inputs.teacher}",
+   "--teacher-manifest",
+   "{inputs.teacher_manifest}",
+   "--initial-weights",
+   "runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/weights.npz",
+   "--initial-inventory",
+   "runs/full-ai-next-priorities-v1/a-tail8-s3-initial-01/initial-inventory.json",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "normalization": "datasets/head-calibration-and-architecture-starts",
+   "teacher": "datasets/formula-teacher-banks",
+   "teacher_manifest": "datasets/formula-teacher-banks"
+  },
+  "settings": {
+   "schema": "rheon-neural-tail-calibration-v1",
+   "updates": 10000,
+   "batch_size": 256,
+   "learning_rate": 0.001,
+   "schedule": [
+    {
+     "update": 6001,
+     "learning_rate": 0.0003
+    },
+    {
+     "update": 9001,
+     "learning_rate": 0.0001
+    }
+   ],
+   "wall_seconds": 1800,
+   "seed": 2026101983,
+   "sampling_seed": 2026101984,
+   "objective": "Mean valid-mode squared log-gain-fraction error plus0.1per-example maximum valid-mode error",
+   "identifier": "a-tail8-s3",
+   "registration_sha256": "38cc6e478e9954ab85b795c1ac3be5447d577a60de3cb9670c1cbb9d6568eaab"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_10000_npz": {
+    "path": "checkpoint-10000.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/analytical.py",
+   "experiments/water-conditioning-v1/training/band_feedback.py",
+   "experiments/water-conditioning-v1/training/model.py",
+   "experiments/pressure-methods-v1/coarse.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-tail8-s3-project-01/config.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/data.py",
+   "experiments/water-conditioning-v1/training/direction_feedback.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/distillation.json",
+   "experiments/pressure-throughput-feedback-v1/evidence.py",
+   "experiments/pressure-four-pass-distillation-v1/fine_tuning.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-tail8-project-01/fine-tuning.json",
+   "experiments/pressure-methods-v4/distillation.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/fixed-normalization.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/frozen_gn.py",
+   "experiments/water-conditioning-v1/training/gradient_clipping.py",
+   "experiments/full-ai-next-priorities-v1/tail_head_objective.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-tail8-project-01/head_optimizer.py",
+   "experiments/full-ai-next-priorities-v1/tail_head_train.py",
+   "experiments/full-ai-next-priorities-v1/head_utils.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/water-conditioning-v1/training/physical_residual.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/hybrid-method.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-tail8-project-01/initial-context.json",
+   "experiments/pressure-methods-v1/learned_model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/methods_view.py",
+   "experiments/pressure-methods-v3/order.py",
+   "experiments/full-ai-next-priorities-v1/tail_head_pressure_model.py",
+   "experiments/pressure-methods-v3/native_reconstruct.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/original_train.py",
+   "experiments/full-ai-next-priorities-v1/routed_pressure_model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-tail8-project-01/physical_residual.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/portable_policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "experiments/pressure-methods-v1/numerics.py",
+   "experiments/pressure-methods-v1/domain_model.py",
+   "experiments/pressure-methods-v4/student_model.py",
+   "experiments/full-ai-next-priorities-v1/routed_descriptor.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-tail8-project-01/routing.json",
+   "experiments/sealed-water-v1/scenes.py",
+   "experiments/dependency-migration-v1/dependency_training_entry.py",
+   "experiments/pressure-methods-v4/student_slice.py",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/full-ai-next-priorities-v1/tail_head_descriptor.py",
+   "experiments/full-ai-next-priorities-v1/tail_physical.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/teacher_model.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
+  ]
+ },
+ "group": "pressure_head_component",
+ "change": "component"
+}

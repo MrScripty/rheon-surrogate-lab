@@ -1,0 +1,207 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-multigrid-smoke · CUDA training",
+ "description": "This unnamed fit is retained to qualify manufactured multi-grid feedback before a longer scientific fit. It is distinct from any later named final-budget candidate. Earlier model, trained 2026-10-15 by Tuldok run 6327bdba13f3465ab82474241f23d52f (water-multigrid-smoke · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 2 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
+ "card": "notes/fits/water-multigrid-smoke-cuda-training--135202a799d78633.md",
+ "labels": {
+  "fit_id": "fit-135202a799d78633",
+  "tuldok_run": "6327bdba13f3465ab82474241f23d52f",
+  "trained_at": "2026-10-15T23:29:57.969824+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/water-multigrid-learning-v1/multigrid-smoke/project/inputs/dataset.npz",
+  "input:dataset_extra": "runs/water-multigrid-learning-v1/multigrid-smoke/project/inputs/dataset_extra.npz",
+  "input:splits": "runs/water-multigrid-learning-v1/multigrid-smoke/project/inputs/splits.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: <source: runtime-manifest.json> (written by the old Tuldok for the run); <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "earlier-run-code/water-inference-budget-v1/stability-combined-single-pass-lr1e4/project/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "<source: source-witness.json>",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/water-project-inputs",
+   "dataset_extra": "datasets/water-project-inputs",
+   "splits": "datasets/water-project-inputs"
+  },
+  "settings": {
+   "analytical_feedback": {
+    "cache_max_bytes": 805306368,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       16,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       24,
+       24
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       32,
+       32,
+       32
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       40,
+       40,
+       40
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       16,
+       12
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101507,
+    "weight": 0.1
+   },
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "linear",
+    "steps": 1
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": false,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "id": "water-multigrid-smoke",
+   "normalization": "none",
+   "objective": "canonical",
+   "output_scale": "previous-pressure-rms",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-water-residual-experiment-v4",
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     5,
+     10
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102501,
+    "schedule": [],
+    "seed": 20261015,
+    "updates": 10
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_005_npz": {
+    "path": "checkpoint-005.npz",
+    "role": "weights"
+   },
+   "checkpoint_010_npz": {
+    "path": "checkpoint-010.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "earlier-run-code/water-multigrid-learning-v1/multigrid-modes-single-pass/project/analytical.py",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "earlier-run-code/water-multigrid-learning-v1/multigrid-modes-single-pass/project/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "earlier-run-code/water-inference-budget-v1/stability-combined-single-pass-lr1e4/project/physical_residual.py",
+   "earlier-run-code/water-multigrid-learning-v1/multigrid-modes-single-pass/project/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "experiments/sealed-water-v1/scenes.py",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "earlier-run-code/water-inference-budget-v1/stability-combined-single-pass-lr1e4/project/train.py"
+  ]
+ },
+ "group": "pressure-other",
+ "change": "training-policy"
+}

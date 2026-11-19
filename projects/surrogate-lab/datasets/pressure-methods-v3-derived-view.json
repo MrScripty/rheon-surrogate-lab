@@ -1,0 +1,29 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "pressure-methods-v3-derived-view",
+ "description": "34 pressure parents: the v2 shape view plus 8 larger scenes. Prepared by: experiments/pressure-methods-v3/pack.py; experiments/pressure-methods-v3/pack_derived.py. Built from: pressure-methods-v2-shape-view; pressure-methods-captures (v3 scenes). The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'pack.py --output runs/pressure-methods-v3/native-training-view-01; pack_derived.py --source runs/pressure-methods-v3/native-training-view-01 --output runs/pressure-methods-v3/derived-training-view-01'. Training rebuilds part of each sample on load with experiments/pressure-methods-v3/native_reconstruct.py and experiments/pressure-methods-v1/numerics.py. Its files sat in: runs/pressure-methods-v3/derived-training-view-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-methods-v3/pack_derived.py",
+   "--source",
+   "{inputs.first}",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "first": "steps/pressure-methods-v3-derived-view-first",
+   "pressure_methods_captures": "datasets/pressure-methods-captures",
+   "pressure_methods_v2_shape_view": "datasets/pressure-methods-v2-shape-view"
+  },
+  "sources": [
+   "experiments/pressure-methods-v3/pack.py",
+   "experiments/pressure-methods-v3/pack_derived.py"
+  ]
+ }
+}

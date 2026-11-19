@@ -1,0 +1,62 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Complete GPU pressure calls · original128consumed requests",
+ "description": "Earlier benchmark 'Complete GPU pressure calls · original128consumed requests' (scope old-pressure-complete-GPU-call-128-v1, population consumed), measured by the earlier study harness on 128 cases. Converted from 1 result set titled 'Complete GPU pressure calls · original128consumed requests'. Summaries are in results/complete-gpu-pressure-calls-original128consumed-requests.csv. The per-case values are not in the folder; scripts/build_tuldok_project.py --values-output writes them as tuldok_results_v1 files.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "equation_relative_l2",
+   "title": "Pressure equation residual (relative L2)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_mean_free_relative_l2",
+   "title": "Mean-free pressure field error (relative L2)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_absolute_rms",
+   "title": "Mean-free pressure absolute RMS error",
+   "units": "captured pressure units",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_absolute_max",
+   "title": "Mean-free pressure maximum absolute error",
+   "units": "captured pressure units",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_call_ms",
+   "title": "Complete GPU pressure-call case median",
+   "units": "ms/request",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "c106",
+   "title": "C106 · complete GPU pressure call",
+   "recipe": "recipes/pressure-methods-v4-v4-student50-distill-cuda--c1bd1512d1e225d7"
+  },
+  {
+   "name": "c107",
+   "title": "C107 · complete GPU pressure call",
+   "recipe": "recipes/pressure-methods-v4-v4-student50-control-cuda--af2d2e2f93da1faa"
+  }
+ ],
+ "cases": {
+  "count": 128
+ },
+ "summary": {
+  "group_by": [
+   "statistic"
+  ]
+ }
+}

@@ -1,0 +1,96 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Temporal sampler · complete GPU blocks · frozen old physics",
+ "description": "Earlier benchmark 'Temporal sampler · complete GPU blocks · frozen old physics' (scope old-temporal-complete-NumPy-GPU-blocks-v1, population consumed), measured by the earlier study harness on 72 cases. Converted from 1 result set titled 'Temporal sampler · complete GPU blocks · frozen old physics'. Summaries are in results/temporal-sampler-complete-gpu-blocks-frozen-old-physics.csv. The per-case values are not in the folder; scripts/build_tuldok_project.py --values-output writes them as tuldok_results_v1 files.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "pressure_relative_rms_block_worst",
+   "title": "Worst in K-output block · Full-state pressure error (mean-free RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_relative_rms_block_worst",
+   "title": "Worst in K-output block · Full-state velocity error (concatenated RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_relative_rms_block_worst",
+   "title": "Worst in K-output block · Full-state tracer error (RMS)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_equation_relative_l2_block_worst",
+   "title": "Worst in K-output block · Full-state pressure equation residual (L2)",
+   "units": "1",
+   "better": "lower"
+  },
+  {
+   "id": "complete_block_median_ms",
+   "title": "Median complete K-output GPU block",
+   "units": "ms/block",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_median_ms",
+   "title": "Median complete GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_p95_ms",
+   "title": "P95 complete GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_maximum_ms",
+   "title": "Maximum observed GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "temporal_eager.fine_reference",
+   "title": "temporal_eager.fine_reference · temporal eager.fine reference · GPU complete call"
+  },
+  {
+   "name": "temporal_eager.half_passes",
+   "title": "temporal_eager.half_passes · temporal eager.half passes · GPU complete call"
+  },
+  {
+   "name": "temporal_eager.single_pass",
+   "title": "temporal_eager.single_pass · temporal eager.single pass · GPU complete call"
+  },
+  {
+   "name": "temporal_graph.fine_reference",
+   "title": "temporal_graph.fine_reference · temporal graph.fine reference · GPU complete call"
+  },
+  {
+   "name": "temporal_graph.half_passes",
+   "title": "temporal_graph.half_passes · temporal graph.half passes · GPU complete call"
+  },
+  {
+   "name": "temporal_graph.single_pass",
+   "title": "temporal_graph.single_pass · temporal graph.single pass · GPU complete call"
+  }
+ ],
+ "cases": {
+  "count": 72
+ },
+ "summary": {
+  "group_by": [
+   "advances_block",
+   "advances_output",
+   "diagnostic_pass"
+  ]
+ }
+}

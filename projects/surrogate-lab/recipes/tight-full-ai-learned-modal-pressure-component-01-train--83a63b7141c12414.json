@@ -1,0 +1,114 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Tight full AI learned modal pressure component 01 train",
+ "description": "Test whether a geometry-specific full modal capacity can fit native pressure requests in F64 from uniform gains, before reducing parameter sharing. Earlier model, trained 2026-10-20 by Tuldok run 2b498bb65aae42f5bb834a1d0152c60c (Tight full AI learned modal pressure component 01 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/tight-full-ai-learned-modal-pressure-component-01-train--83a63b7141c12414.md",
+ "labels": {
+  "fit_id": "fit-83a63b7141c12414",
+  "tuldok_run": "2b498bb65aae42f5bb834a1d0152c60c",
+  "trained_at": "2026-10-20T15:09:16.400463+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-tight-targets-v1/spectral-training-view-01/manifest.json",
+  "input:normalization": "runs/full-ai-tight-targets-v1/spectral-training-view-01/normalization.json",
+  "input:part_00": "runs/full-ai-tight-targets-v1/spectral-training-view-01/g16_16_16.npz",
+  "input:part_01": "runs/full-ai-tight-targets-v1/spectral-training-view-01/g11_11_9.npz",
+  "input:part_02": "runs/full-ai-tight-targets-v1/spectral-training-view-01/g8_6_15.npz",
+  "input:part_03": "runs/full-ai-tight-targets-v1/spectral-training-view-01/g32_32_32.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-tight-targets-v1/train_modal_pressure.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}",
+   "{inputs.part_01}",
+   "{inputs.part_02}",
+   "{inputs.part_03}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/spectral-training-view-01",
+   "normalization": "datasets/spectral-training-view-01",
+   "part_00": "datasets/spectral-training-view-01",
+   "part_01": "datasets/spectral-training-view-01",
+   "part_02": "datasets/spectral-training-view-01",
+   "part_03": "datasets/spectral-training-view-01"
+  },
+  "settings": {
+   "identifier": "modal-pressure-component-01",
+   "role": "pressure_component_capacity_probe",
+   "objective": "native_supervised_log_gain_v1",
+   "seed": 2026102049,
+   "updates": 800,
+   "learning_rate": 0.1,
+   "minimum_learning_rate": 0.001,
+   "label_relative_q_floor": 1e-10,
+   "wall_seconds": 600,
+   "dtype": "float64",
+   "sampler": "All 144 original native training pairs in all four geometry batches per update",
+   "init": "Uniform non-DC gains one; zero DC gauge; no analytic inverse or fitted initializer",
+   "authority": "docs/plans/full-ai-tight-targets-v1/modal-pressure-component-protocol-01.md"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.25,
+   "disk_gb": 0.0252
+  },
+  "sources": [
+   "experiments/full-ai-tight-targets-v1/learned_modal_pressure.py",
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-tight-targets-v1/modal_basis.py",
+   "experiments/full-ai-tight-targets-v1/modal_supervision.py",
+   "experiments/full-ai-tight-targets-v1/train_modal_pressure.py"
+  ]
+ },
+ "group": "pressure_component",
+ "change": "component"
+}

@@ -1,0 +1,100 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Expanded shape-shared learned spectral component01 train",
+ "description": "Replace shape-specific learned modal tables with one compact response shared across grid shapes. Keep this pressure component distinct from a complete fluid-state generator and from its implementation/precision variants. Earlier model, trained 2026-10-21 by Tuldok run a529f0706382449391c0a0a60c3b4c43 (Expanded shape-shared learned spectral component01 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/expanded-shape-shared-learned-spectral-component01-train--9c914f77b1f2ec81.md",
+ "labels": {
+  "fit_id": "fit-9c914f77b1f2ec81",
+  "tuldok_run": "a529f0706382449391c0a0a60c3b4c43",
+  "trained_at": "2026-10-21T00:22:13.010303+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-data-diversity-v1/shared-spectral-view-01/manifest.json",
+  "input:normalization": "runs/full-ai-data-diversity-v1/shared-spectral-view-01/normalization.json",
+  "input:part_00": "runs/full-ai-data-diversity-v1/shared-spectral-view-01/part-00.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-data-diversity-v1/train_shared_spectral_v1.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/shared-spectral-view-01",
+   "normalization": "datasets/shared-spectral-view-01",
+   "part_00": "datasets/shared-spectral-view-01"
+  },
+  "settings": {
+   "identifier": "expanded-shared-spectral-01",
+   "role": "shape_shared_spectral_pressure_component",
+   "objective": "equal_scene_native_response_residual_v1",
+   "seed": 2026102071,
+   "optimizer_calls": 160,
+   "updates": 160,
+   "wall_seconds": 600,
+   "training_scenes": 148,
+   "inference_device": "cuda",
+   "cpu_restore": "Exact typed weights only; no CPU forward; originating CUDA probe copied and verified later onCUDA"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0252
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-data-diversity-v1/shared_spectral_model_v1.py",
+   "experiments/full-ai-data-diversity-v1/train_shared_spectral_v1.py"
+  ]
+ },
+ "group": "pressure_component",
+ "change": "component"
+}

@@ -1,0 +1,415 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-current001 CUDA",
+ "description": "Test late captured directions from the frozen current-policy bank at weight 0.01, retaining the matched C53 architecture, initialization and physical/manufactured fitting streams. Earlier model, trained 2026-10-17 by Tuldok run b88b4eb0c465471d93dc3f8f5cb103e7 (water-current001 CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
+ "card": "notes/fits/water-current001-cuda--e228260b9a45c2d4.md",
+ "labels": {
+  "fit_id": "fit-e228260b9a45c2d4",
+  "tuldok_run": "b88b4eb0c465471d93dc3f8f5cb103e7",
+  "trained_at": "2026-10-17T16:41:07.844632+00:00",
+  "device": "cuda",
+  "input:current_dataset": "runs/pressure-current-policy-v1/bank-02/late.npz",
+  "input:current_manifest": "runs/pressure-current-policy-v1/bank-02/manifest.json",
+  "input:dataset": "runs/dependency-migration-v1/training-project-6/inputs/dataset.npz",
+  "input:dataset_extra": "runs/dependency-migration-v1/training-project-6/inputs/dataset_extra.npz",
+  "input:direction_dataset": "runs/dependency-migration-v1/training-project-6/inputs/direction_dataset.npz",
+  "input:direction_manifest": "runs/dependency-migration-v1/training-project-6/inputs/direction_manifest.json",
+  "input:pressure_probe": "runs/dependency-migration-v1/receipts/typed-pressure-preparation-01/pressure-probe.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "input:splits": "runs/dependency-migration-v1/training-project-6/inputs/splits.json",
+  "short": "C55"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-throughput-feedback-v1/evidence.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--direction-dataset",
+   "{inputs.direction_dataset}",
+   "--direction-manifest",
+   "{inputs.direction_manifest}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--source-witness",
+   "<source: source-witness.json>",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--current-dataset",
+   "{inputs.current_dataset}",
+   "--current-manifest",
+   "{inputs.current_manifest}",
+   "--pressure-probe",
+   "{inputs.pressure_probe}",
+   "--model-evidence-context",
+   "<model evidence context>"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "current_dataset": "datasets/current-policy-bank-02",
+   "current_manifest": "datasets/current-policy-bank-02",
+   "dataset": "datasets/dependency-training-inputs",
+   "dataset_extra": "datasets/dependency-training-inputs",
+   "direction_dataset": "datasets/dependency-training-inputs",
+   "direction_manifest": "datasets/dependency-training-inputs",
+   "pressure_probe": "datasets/typed-pressure-probe",
+   "splits": "datasets/dependency-training-inputs"
+  },
+  "settings": {
+   "analytical_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grid_capacity": 16,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       16,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       24,
+       24
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       32,
+       32,
+       32
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       40,
+       40,
+       40
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       16,
+       12
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       17,
+       13,
+       9
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       33,
+       17,
+       9
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       9,
+       25,
+       13
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101507,
+    "weight": 0.1
+   },
+   "band_feedback": {
+    "max_mode": 3,
+    "signal_floor_fraction": 0.1,
+    "stages": "first-and-final",
+    "weight": 0.03
+   },
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "linear",
+    "steps": 2
+   },
+   "current_feedback": {
+    "manifest_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+    "seed": 2026102801,
+    "stage": "late",
+    "weight": 0.01
+   },
+   "direction_feedback": {
+    "manifest_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+    "seed": 2026102701,
+    "stage": "late",
+    "weight": 0.1
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": false,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "first_pressure_weight": 0.0,
+   "id": "water-current001",
+   "normalization": "none",
+   "objective": "canonical-intermediate-contraction",
+   "output_scale": "previous-pressure-rms",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 1800
+   },
+   "schema": "rheon-water-residual-experiment-v11",
+   "supplemental_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grid_capacity": 16,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       23,
+       25
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       23,
+       25,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       25,
+       16,
+       23
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       10,
+       7,
+       25
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       7,
+       25,
+       10
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       25,
+       10,
+       7
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101607,
+    "source": "grids",
+    "weight": 0.1
+   },
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     5000
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102501,
+    "schedule": [
+     {
+      "learning_rate": 0.0001,
+      "update": 3000
+     },
+     {
+      "learning_rate": 1e-05,
+      "update": 4500
+     }
+    ],
+    "seed": 20261015,
+    "updates": 5000
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "training_profile_json": {
+    "path": "training-profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_5000_npz": {
+    "path": "checkpoint-5000.npz",
+    "role": "weights"
+   },
+   "execution_context_json": {
+    "path": "execution-context.json",
+    "role": "file"
+   },
+   "model_evidence_json": {
+    "path": "model-evidence.json",
+    "role": "file"
+   },
+   "model_definition_json": {
+    "path": "model-definition.json",
+    "role": "file"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "file"
+   },
+   "probe_json": {
+    "path": "probe.json",
+    "role": "file"
+   },
+   "metric_definitions_json": {
+    "path": "metric-definitions.json",
+    "role": "file"
+   },
+   "checkpoints_json": {
+    "path": "checkpoints.json",
+    "role": "file"
+   },
+   "observations_json": {
+    "path": "observations.json",
+    "role": "file"
+   },
+   "field_index_json": {
+    "path": "field-index.json",
+    "role": "file"
+   },
+   "fitted_transform_json": {
+    "path": "fitted-transform.json",
+    "role": "file"
+   },
+   "output_policy_json": {
+    "path": "output-policy.json",
+    "role": "file"
+   },
+   "checkpoint_5000_json": {
+    "path": "checkpoint-5000.json",
+    "role": "file"
+   },
+   "pressure_diagnostic_json": {
+    "path": "pressure-diagnostic.json",
+    "role": "file"
+   },
+   "probe_residual_npy": {
+    "path": "probe-residual.npy",
+    "role": "file"
+   },
+   "probe_base_npy": {
+    "path": "probe-base.npy",
+    "role": "file"
+   },
+   "pressure_prediction_npy": {
+    "path": "pressure-prediction.npy",
+    "role": "file"
+   },
+   "pressure_reference_npy": {
+    "path": "pressure-reference.npy",
+    "role": "file"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 2,
+   "memory_gb": 8.59,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/analytical.py",
+   "experiments/water-conditioning-v1/training/band_feedback.py",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/water-conditioning-v1/training/direction_feedback.py",
+   "experiments/pressure-throughput-feedback-v1/evidence.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/water-conditioning-v1/training/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "experiments/water-conditioning-v1/training/physical_residual.py",
+   "experiments/water-conditioning-v1/training/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "experiments/sealed-water-v1/scenes.py",
+   "experiments/dependency-migration-v1/dependency_training_entry.py",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "earlier-run-code/pressure-coarse-full-fit-v1/project-01/baseline_train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py"
+  ]
+ },
+ "group": "pressure-variants",
+ "change": "architecture"
+}

@@ -1,0 +1,22 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "pressure-methods-v5-spectrum-view",
+ "description": "The v3 derived view plus 12 manufactured pressure patterns. Prepared by: experiments/pressure-methods-v5/pack_spectrum.py; experiments/pressure-methods-v5/spectrum.py. Built from: pressure-methods-v3-derived-view. The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'pack_spectrum.py (no arguments)'. The manufactured patterns are seeded from docs/plans/pressure-methods-v5/scene-reservation.json. Its files sat in: runs/pressure-methods-v5/spectrum-training-view-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines. The script writes to fixed paths under runs/, not to the output directory Tuldok gives it.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-methods-v5/pack_spectrum.py"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "pressure_methods_v3_derived_view": "datasets/pressure-methods-v3-derived-view"
+  },
+  "sources": [
+   "experiments/pressure-methods-v5/pack_spectrum.py"
+  ]
+ }
+}

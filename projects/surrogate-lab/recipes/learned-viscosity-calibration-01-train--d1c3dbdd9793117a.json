@@ -1,0 +1,97 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Learned viscosity calibration 01 train",
+ "description": "Calibrate the local native viscosity operator as a learned projection and freeze those coefficients in later complete generators, separating operator calibration from temporal fitting. Earlier model, trained 2026-10-20 by Tuldok run 256e9efaab374dc09d75faf12e081a43 (Learned viscosity calibration 01 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/learned-viscosity-calibration-01-train--d1c3dbdd9793117a.md",
+ "labels": {
+  "fit_id": "fit-d1c3dbdd9793117a",
+  "tuldok_run": "256e9efaab374dc09d75faf12e081a43",
+  "trained_at": "2026-10-20T05:16:01.382320+00:00",
+  "device": "cuda",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "input:teacher": "runs/full-ai-next-priorities-v1/viscosity-calibration-teacher-01/teacher.npz",
+  "input:teacher_manifest": "runs/full-ai-next-priorities-v1/viscosity-calibration-teacher-01/manifest.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/viscosity_calibration_train.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--teacher",
+   "{inputs.teacher}",
+   "--teacher-manifest",
+   "{inputs.teacher_manifest}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "teacher": "datasets/viscosity-calibration-teacher-01",
+   "teacher_manifest": "datasets/viscosity-calibration-teacher-01"
+  },
+  "settings": {
+   "schema": "rheon-viscosity-calibration-v1",
+   "updates": 1000,
+   "batch_size": 8,
+   "learning_rate": 0.25,
+   "seed": 2026102061,
+   "sampling_seed": 2026102062,
+   "wall_seconds": 1200,
+   "double_tolerance": 1e-08,
+   "published_tolerance": 1e-06,
+   "identifier": "viscosity-calibration-01",
+   "registration_sha256": "702e7ab154f37656e0c09810e878881825f7ee87f9a7901933805313a434476c"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0168
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-next-priorities-v1/viscosity_calibration_model.py",
+   "experiments/full-ai-next-priorities-v1/viscosity_calibration_train.py"
+  ]
+ },
+ "group": "viscosity_component",
+ "change": "component"
+}

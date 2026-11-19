@@ -1,0 +1,163 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full AI temporal b3 train",
+ "description": "Test amortizing one current-state encoding over 3 simultaneous physical outputs at1/60s spacing, compared with the other protocol2 K1/2/3/4 joint-head generators. Earlier model, trained 2026-10-19 by Tuldok run e035c0a8363b4ceab780711d9c7dd841 (Full AI temporal b3 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-temporal-b3-train--5a4d0a88ce0803e3.md",
+ "labels": {
+  "fit_id": "fit-5a4d0a88ce0803e3",
+  "tuldok_run": "e035c0a8363b4ceab780711d9c7dd841",
+  "trained_at": "2026-10-19T16:23:44.177625+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-next-priorities-v1/temporal-training-view-02/manifest.json",
+  "input:normalization": "runs/full-ai-next-priorities-v1/temporal-training-view-02/normalization.json",
+  "input:part_00": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-00.bin",
+  "input:part_01": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-01.bin",
+  "input:part_02": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-02.bin",
+  "input:part_03": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-03.bin",
+  "input:part_04": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-04.bin",
+  "input:part_05": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-05.bin",
+  "input:part_06": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-06.bin",
+  "input:part_07": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-07.bin",
+  "input:part_08": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-08.bin",
+  "input:part_09": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-09.bin",
+  "input:part_10": "runs/full-ai-next-priorities-v1/temporal-training-view-02/part-10.bin",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-next-priorities-v1/temporal_train_v2.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}",
+   "{inputs.part_01}",
+   "{inputs.part_02}",
+   "{inputs.part_03}",
+   "{inputs.part_04}",
+   "{inputs.part_05}",
+   "{inputs.part_06}",
+   "{inputs.part_07}",
+   "{inputs.part_08}",
+   "{inputs.part_09}",
+   "{inputs.part_10}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/temporal-training-view-02",
+   "normalization": "datasets/temporal-training-view-02",
+   "part_00": "datasets/temporal-training-view-02",
+   "part_01": "datasets/temporal-training-view-02",
+   "part_02": "datasets/temporal-training-view-02",
+   "part_03": "datasets/temporal-training-view-02",
+   "part_04": "datasets/temporal-training-view-02",
+   "part_05": "datasets/temporal-training-view-02",
+   "part_06": "datasets/temporal-training-view-02",
+   "part_07": "datasets/temporal-training-view-02",
+   "part_08": "datasets/temporal-training-view-02",
+   "part_09": "datasets/temporal-training-view-02",
+   "part_10": "datasets/temporal-training-view-02"
+  },
+  "settings": {
+   "schema": "rheon-temporal-fit-v2",
+   "feedback_protocol": 2,
+   "identifier": "b3",
+   "horizons": 3,
+   "width": 4,
+   "updates": 10000,
+   "single_block_updates": 2000,
+   "learning_rate": 0.001,
+   "schedule": [
+    {
+     "update": 6001,
+     "learning_rate": 0.0003
+    },
+    {
+     "update": 9001,
+     "learning_rate": 0.0001
+    }
+   ],
+   "seed": 2026101921,
+   "sampling_seed": 2026101922,
+   "wall_seconds": 1800,
+   "physical_context": {
+    "dt_s": 0.016666666666666666,
+    "rho_kg_m3": 1000.0,
+    "mu_pa_s": 0.001,
+    "boundaries": "closed regular grid"
+   },
+   "initialization": "Seeded compact spatial encoder and zero future heads",
+   "inference": "One shared encoder; joint state outputs; learned pressure modes; no numerical pressure solve",
+   "sample_step_range": [
+    0,
+    120
+   ],
+   "loss": "Equal horizon weights; pressure/velocity/tracer, equation, divergence, mass, energy and bounds",
+   "track_b_registration_sha256": "204d8b457e73661663eab53ba977d9d792c2185431825cc677626e6050036574",
+   "full_fit_registration_sha256": "08ed048038db26f1838a6e74f82ae521c848f06b954a42aaf3000a17794d0510"
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/full-ai-next-priorities-v1/adaptive_pool.py",
+   "experiments/full-ai-next-priorities-v1/bundle_model.py",
+   "experiments/full-ai-next-priorities-v1/bundle_model_v5.py",
+   "experiments/full-ai-next-priorities-v1/temporal_codec.py",
+   "experiments/full-ai-next-priorities-v1/temporal_data.py",
+   "experiments/full-ai-next-priorities-v1/temporal_features.py",
+   "experiments/full-ai-next-priorities-v1/temporal_features_v2.py",
+   "experiments/full-ai-next-priorities-v1/temporal_feedback.py",
+   "experiments/full-ai-next-priorities-v1/temporal_objective.py",
+   "experiments/full-ai-next-priorities-v1/temporal_train_v2.py"
+  ]
+ },
+ "group": "full_state_generator",
+ "change": "architecture"
+}

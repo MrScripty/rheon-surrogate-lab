@@ -1,0 +1,166 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "benchmark",
+ "title": "Matched GPU generators and F64 baseline · K2 · same 64 cases",
+ "description": "Earlier benchmark 'Matched GPU generators and F64 baseline · K2 · same 64 cases' (scope old-common64-production-GPU-K2-v2, population consumed), measured by the earlier study harness on 64 cases. Converted from 1 result set titled 'Matched GPU generators and F64 baseline · K2 · same 64 cases'. Summaries are in results/matched-gpu-generators-and-f64-baseline-k2-same-64-cases.csv. The per-case values are not in the folder; scripts/build_tuldok_project.py --values-output writes them as tuldok_results_v1 files.",
+ "earlier_work": {
+  "rebuild": "no",
+  "reason": "Measured by the earlier study harness, which is not a command this project can run."
+ },
+ "metrics": [
+  {
+   "id": "pressure_relative_l2",
+   "title": "Worst in K-output block · Pressure mean-free relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "velocity_relative_l2",
+   "title": "Worst in K-output block · Combined velocity relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_relative_l2",
+   "title": "Worst in K-output block · Tracer relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "equation_relative_l2",
+   "title": "Worst in K-output block · Pressure equation relative L2",
+   "units": "relative L2",
+   "better": "lower"
+  },
+  {
+   "id": "pressure_absolute_rms",
+   "title": "Worst in K-output block · Pressure mean-free absolute RMS",
+   "units": "Pa",
+   "better": "lower"
+  },
+  {
+   "id": "tracer_absolute_rms",
+   "title": "Worst in K-output block · Tracer absolute RMS",
+   "units": "tracer units",
+   "better": "lower"
+  },
+  {
+   "id": "block_median_ms",
+   "title": "Median full GPU block",
+   "units": "ms/block",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_median_ms",
+   "title": "Median GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_p95_ms",
+   "title": "P95 GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  },
+  {
+   "id": "per_output_maximum_ms",
+   "title": "Maximum GPU time per physical output",
+   "units": "ms/output",
+   "better": "lower"
+  }
+ ],
+ "subjects": [
+  {
+   "name": "f64-n1-k2",
+   "title": "F64-N1-K2 · GPU · full K2 block"
+  },
+  {
+   "name": "b2",
+   "title": "b2 · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-train--ffb73f8d12931b56"
+  },
+  {
+   "name": "b2-coupled",
+   "title": "b2-coupled · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-coupled-train--950df0d22165f059"
+  },
+  {
+   "name": "b2-displacement",
+   "title": "b2-displacement · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-displacement-train--273889e7a0201f42"
+  },
+  {
+   "name": "b2-endpoint",
+   "title": "b2-endpoint · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-train--eb4551e6f1668e5d"
+  },
+  {
+   "name": "b2-endpoint-curl-increment",
+   "title": "b2-endpoint-curl-increment · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-curl-increment-train--a47365bce83a4ce1"
+  },
+  {
+   "name": "b2-endpoint-decoder",
+   "title": "b2-endpoint-decoder · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-decoder-train--0a92490241d21911"
+  },
+  {
+   "name": "b2-endpoint-mse-fullstate",
+   "title": "b2-endpoint-mse-fullstate · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-mse-fullstate-train--c95673ba8f0efddf"
+  },
+  {
+   "name": "b2-endpoint-mse-increment",
+   "title": "b2-endpoint-mse-increment · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-mse-increment-train--ff44b4edf43bb30b"
+  },
+  {
+   "name": "b2-endpoint-pressure-expert",
+   "title": "b2-endpoint-pressure-expert · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-pressure-expert-train--1031d32821fb88cf"
+  },
+  {
+   "name": "b2-endpoint-step-scaled",
+   "title": "b2-endpoint-step-scaled · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-endpoint-step-scaled-train--e2a657f5ad91acb1"
+  },
+  {
+   "name": "b2-fixed-viscosity",
+   "title": "b2-fixed-viscosity · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-fixed-viscosity-train--648f3d667b0ebfd0"
+  },
+  {
+   "name": "b2-fixed-viscosity-s2",
+   "title": "b2-fixed-viscosity-s2 · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-fixed-viscosity-s2-train--0e3b9458dc17cbc5"
+  },
+  {
+   "name": "b2-fixed-viscosity-s3",
+   "title": "b2-fixed-viscosity-s3 · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-fixed-viscosity-s3-train--ba0434d671619389"
+  },
+  {
+   "name": "b2-provisional-aux",
+   "title": "b2-provisional-aux · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-provisional-aux-train--a80ef2fb0247b545"
+  },
+  {
+   "name": "b2-provisional-control",
+   "title": "b2-provisional-control · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-provisional-control-train--1b254e19c19f21cc"
+  },
+  {
+   "name": "b2-reuse",
+   "title": "b2-reuse · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-reuse-train--acb5d76a1aafff40"
+  },
+  {
+   "name": "b2-reuse-step-scaled",
+   "title": "b2-reuse-step-scaled · GPU · full K2 block",
+   "recipe": "recipes/full-ai-temporal-b2-reuse-step-scaled-train--e4c9af5b2daa1ffc"
+  }
+ ],
+ "cases": {
+  "count": 64
+ }
+}

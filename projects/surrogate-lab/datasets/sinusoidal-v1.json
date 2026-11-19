@@ -1,0 +1,37 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "Sinusoidal-forcing scenes v1",
+ "description": "Sealed boxes of water pushed by one forcing blob whose centre and strength vary sinusoidally, on four grid shapes at 8 and 16 cells per metre. These are the scenes the earlier models were fitted and confirmed on; every scene labelled reserved has already been used to check an earlier model. The scene table is surrogate/datasets/definitions/sinusoidal-v1.json. The command simulates the train and development scenes one after another on one CPU thread and writes them under sinusoidal-v1/ in the output directory. Reserved scenes are for final checks only and are not generated here (surrogate.datasets generate needs --include-reserved for them).",
+ "run": {
+  "command": ["python", "-m", "surrogate.datasets", "generate", "sinusoidal-v1", "--root", "{output}", "--split", "train", "--split", "development"],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "solver": {"from": "steps/reference-solver", "output": "probe"}
+  },
+  "env": {
+   "SURROGATE_PROBE": "{inputs.solver}"
+  },
+  "outputs": {
+   "bank": {"path": "sinusoidal-v1/bank.json", "role": "data"}
+  },
+  "resources": {
+   "cpu_threads": 1,
+   "disk_gb": 1.4
+  },
+  "sources": [
+   "surrogate/datasets",
+   "surrogate/scenes.py",
+   "surrogate/solver.py",
+   "surrogate/fields.py"
+  ],
+  "estimate": {
+   "command": ["python", "-m", "surrogate.datasets", "plan", "sinusoidal-v1", "--root", "{output}", "--split", "train", "--split", "development", "--json"]
+  }
+ },
+ "splits": {
+  "train": 16,
+  "development": 8,
+  "reserved": 88
+ }
+}

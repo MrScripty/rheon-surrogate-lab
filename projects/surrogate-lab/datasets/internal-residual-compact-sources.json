@@ -1,0 +1,28 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "internal-residual-compact-sources",
+ "description": "Current states of the 29 eight-substep scenes packed with the weights of four earlier models, from which the trainer regenerates its labels. Prepared by: experiments/full-ai-data-diversity-v1/pack_compact_internal_source_v1.py. Built from: internal-residual-view-01; diversity-recordings (train split). Settings: docs/plans/full-ai-data-diversity-v1/internal-residual-compact-source-protocol-01.json. Computed with the weights of: recurrent-sampler-head-01; expanded-shared-spectral-01; b1-fixed-viscosity; mixed-modal-pair-11; internal-residual s1 and s3, for the s3 and s4 data. The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'pack_compact_internal_source_v1.py --protocol <settings file> --output <folder>'. No script that wrote the s3 and s4 data files was found; each is the compact-source settings plus the previous stage's weights. Its files sat in: runs/full-ai-data-diversity-v1/internal-residual-compact-source-01; runs/full-ai-data-diversity-v1/internal-residual-s3-data-01; runs/full-ai-data-diversity-v1/internal-residual-s4-data-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "after-inputs"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-data-diversity-v1/pack_compact_internal_source_v1.py",
+   "--protocol",
+   "docs/plans/full-ai-data-diversity-v1/internal-residual-compact-source-protocol-01.json",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "diversity_v1": "datasets/diversity-v1",
+   "internal_residual_view_01": "datasets/internal-residual-view-01"
+  },
+  "sources": [
+   "docs/plans/full-ai-data-diversity-v1/internal-residual-compact-source-protocol-01.json",
+   "experiments/full-ai-data-diversity-v1/pack_compact_internal_source_v1.py"
+  ]
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full AI decoder compatible modal refinement 09 train",
+ "description": "Train the same learned gains against labels encoded in the fixed decoder’s actual coordinates, addressing numerical coordinate reconstruction rather than changing physical scenes. Earlier model, trained 2026-10-20 by Tuldok run aab56647e0fa47e1bae79ddca9a1b03b (Full AI decoder compatible modal refinement 09 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-decoder-compatible-modal-refinement-09-train--b48ebd35d5c9448d.md",
+ "labels": {
+  "fit_id": "fit-b48ebd35d5c9448d",
+  "tuldok_run": "aab56647e0fa47e1bae79ddca9a1b03b",
+  "trained_at": "2026-10-20T18:56:47.466214+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-tight-targets-v1/decoder-modal-view-09/manifest.json",
+  "input:normalization": "runs/full-ai-tight-targets-v1/decoder-modal-view-09/normalization.json",
+  "input:part_00": "runs/full-ai-tight-targets-v1/decoder-modal-view-09/g16_16_16.npz",
+  "input:part_01": "runs/full-ai-tight-targets-v1/decoder-modal-view-09/g11_11_9.npz",
+  "input:part_02": "runs/full-ai-tight-targets-v1/decoder-modal-view-09/g8_6_15.npz",
+  "input:part_03": "runs/full-ai-tight-targets-v1/decoder-modal-view-09/g32_32_32.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-tight-targets-v1/train_modal_precision.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}",
+   "{inputs.part_01}",
+   "{inputs.part_02}",
+   "{inputs.part_03}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/modal-views",
+   "normalization": "datasets/modal-views",
+   "part_00": "datasets/modal-views",
+   "part_01": "datasets/modal-views",
+   "part_02": "datasets/modal-views",
+   "part_03": "datasets/modal-views"
+  },
+  "settings": {
+   "identifier": "modal-pressure-decoder-compatible-09",
+   "role": "pressure_component_precision_refinement",
+   "objective": "native_coefficient_weighted_precision_v2",
+   "updates": 80,
+   "mode_scale_floor": 1e-12,
+   "seed": 2026102113,
+   "wall_seconds": 900
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 4.295,
+   "wall_hours": 0.25,
+   "disk_gb": 0.0252
+  },
+  "sources": [
+   "experiments/full-ai-tight-targets-v1/learned_modal_pressure.py",
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-tight-targets-v1/modal_basis.py",
+   "experiments/full-ai-tight-targets-v1/modal_precision_supervision.py",
+   "experiments/full-ai-tight-targets-v1/train_modal_precision.py"
+  ]
+ },
+ "group": "pressure_component",
+ "change": "component"
+}

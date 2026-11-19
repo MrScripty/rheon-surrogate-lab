@@ -1,0 +1,25 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "pressure-methods-v2-shape-view",
+ "description": "26 pressure parents: the v1 domain view plus 6 new shapes. Prepared by: experiments/pressure-methods-v2/pack_shapes.py. Built from: pressure-methods-v1-domain-view; pressure-methods-captures (v2 scenes). The earlier account gives the command as recorded at the time: 'pack_shapes.py --output runs/pressure-methods-v2/shape-training-view-01'. The v3 replay view is a byte copy of this view with two manifest fields changed; no script that made the copy was found. Its files sat in: runs/pressure-methods-v2/shape-training-view-01; runs/pressure-methods-v3/replay-training-view-01. The account does not say which Python environment ran it; the converter chose environments/lab-cpu. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "yes"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-methods-v2/pack_shapes.py",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/lab-cpu",
+  "inputs": {
+   "pressure_methods_captures": "datasets/pressure-methods-captures",
+   "pressure_methods_v1_domain_view": "datasets/pressure-methods-v1-domain-view"
+  },
+  "sources": [
+   "experiments/pressure-methods-v2/pack_shapes.py"
+  ]
+ }
+}

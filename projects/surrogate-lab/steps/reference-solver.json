@@ -1,0 +1,20 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "step",
+ "title": "Rheon reference solver probe",
+ "description": "Builds the small Rust probe around Rheon that dataset generation and the rheon-native benchmark subject run (surrogate/README.md, 'The reference solver'). It pins branch lab/reference-solver-v1 of the Rheon repository by commit in probes/reference/Cargo.toml. Needs a Rust toolchain of version 1.92 or later and network access to fetch Rheon and the crates on the first build.",
+ "run": {
+  "command": ["cargo", "build", "--release", "--locked", "--manifest-path", "probes/reference/Cargo.toml"],
+  "env": {
+   "CARGO_TARGET_DIR": "{output}"
+  },
+  "outputs": {
+   "probe": {"path": "release/rheon-reference-probe", "role": "file"}
+  },
+  "sources": [
+   "probes/reference/Cargo.toml",
+   "probes/reference/Cargo.lock",
+   "probes/reference/src"
+  ]
+ }
+}

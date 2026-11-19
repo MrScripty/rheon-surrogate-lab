@@ -1,0 +1,195 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "water-residual-nonlinear · CUDA training",
+ "description": "Replace seven feature channels with a physically scaled pressure-equation residual, retaining nonlinear SiLU corrections. Earlier model, trained 2026-10-15 by Tuldok run 17e4b3b6454b4e3e9d233b0ea6488d74 (water-residual-nonlinear · CUDA training). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 2 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
+ "card": "notes/fits/water-residual-nonlinear-cuda-training--7a4436f303915085.md",
+ "labels": {
+  "fit_id": "fit-7a4436f303915085",
+  "tuldok_run": "17e4b3b6454b4e3e9d233b0ea6488d74",
+  "trained_at": "2026-10-15T19:39:02.898463+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/water-residual-learning-v1/residual-nonlinear/project/inputs/dataset.npz",
+  "input:dataset_extra": "runs/water-residual-learning-v1/residual-nonlinear/project/inputs/dataset_extra.npz",
+  "input:splits": "runs/water-residual-learning-v1/residual-nonlinear/project/inputs/splits.json",
+  "short": "C16"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: <source: runtime-manifest.json> (written by the old Tuldok for the run); <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/train.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "<source: runtime-manifest.json>",
+   "--source-witness",
+   "<source: source-witness.json>",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/water-project-inputs",
+   "dataset_extra": "datasets/water-project-inputs",
+   "splits": "datasets/water-project-inputs"
+  },
+  "settings": {
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "silu",
+    "steps": 1
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": true,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "id": "water-residual-nonlinear",
+   "normalization": "none",
+   "resources": {
+    "max_output_bytes": 33554432,
+    "wall_seconds": 600
+   },
+   "schema": "rheon-water-residual-experiment-v1",
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     100,
+     500,
+     1000,
+     2000,
+     4000,
+     6000,
+     8000,
+     10000
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026102501,
+    "schedule": [
+     {
+      "learning_rate": 0.0001,
+      "update": 1000
+     },
+     {
+      "learning_rate": 1e-05,
+      "update": 6000
+     }
+    ],
+    "seed": 20261015,
+    "updates": 10000
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_100_npz": {
+    "path": "checkpoint-100.npz",
+    "role": "weights"
+   },
+   "checkpoint_500_npz": {
+    "path": "checkpoint-500.npz",
+    "role": "weights"
+   },
+   "checkpoint_1000_npz": {
+    "path": "checkpoint-1000.npz",
+    "role": "weights"
+   },
+   "checkpoint_2000_npz": {
+    "path": "checkpoint-2000.npz",
+    "role": "weights"
+   },
+   "checkpoint_4000_npz": {
+    "path": "checkpoint-4000.npz",
+    "role": "weights"
+   },
+   "checkpoint_6000_npz": {
+    "path": "checkpoint-6000.npz",
+    "role": "weights"
+   },
+   "checkpoint_8000_npz": {
+    "path": "checkpoint-8000.npz",
+    "role": "weights"
+   },
+   "checkpoint_10000_npz": {
+    "path": "checkpoint-10000.npz",
+    "role": "weights"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "wall_hours": 0.1667,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/global-pressure-v1/groupnorm-v1/model.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "earlier-run-code/water-residual-learning-v1/residual-linear/project/model.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "experiments/global-pressure-v1/training/train.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear/project/physical_residual.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear/project/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "experiments/cuda-pressure-v1/policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "experiments/sealed-water-v1/scenes.py",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "earlier-run-code/water-residual-learning-v1/residual-linear-5000/project/train.py"
+  ]
+ },
+ "group": "pressure-stability",
+ "change": "architecture"
+}

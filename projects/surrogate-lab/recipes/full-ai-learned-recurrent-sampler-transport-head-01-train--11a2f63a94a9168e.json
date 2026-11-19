@@ -1,0 +1,112 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Full AI learned recurrent sampler transport head 01 train",
+ "description": "Learn the midpoint/end sampling responses needed by the recurrent sampler using native local supervision, while retaining compact reusable transport parameters. Earlier model, trained 2026-10-20 by Tuldok run 65a84a734d8f416bbbdee46c6a636e1b (Full AI learned recurrent sampler transport head 01 train). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 1 source files the old Tuldok generated for the run were left out.",
+ "card": "notes/fits/full-ai-learned-recurrent-sampler-transport-head-01-train--11a2f63a94a9168e.md",
+ "labels": {
+  "fit_id": "fit-11a2f63a94a9168e",
+  "tuldok_run": "65a84a734d8f416bbbdee46c6a636e1b",
+  "trained_at": "2026-10-20T17:00:36.738133+00:00",
+  "device": "cuda",
+  "input:manifest": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/manifest.json",
+  "input:normalization": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/normalization.json",
+  "input:part_00": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g16_16_16.npz",
+  "input:part_01": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g11_11_9.npz",
+  "input:part_02": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g8_6_15.npz",
+  "input:part_03": "runs/full-ai-tight-targets-v1/recurrent-sampler-training-view-01/g32_32_32.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-tight-targets-v1/train_sampler_head.py",
+   "train",
+   "--config",
+   "{settings}",
+   "--manifest",
+   "{inputs.manifest}",
+   "--normalization",
+   "{inputs.normalization}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--shards",
+   "{inputs.part_00}",
+   "{inputs.part_01}",
+   "{inputs.part_02}",
+   "{inputs.part_03}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "manifest": "datasets/recurrent-sampler-training-view-01",
+   "normalization": "datasets/recurrent-sampler-training-view-01",
+   "part_00": "datasets/recurrent-sampler-training-view-01",
+   "part_01": "datasets/recurrent-sampler-training-view-01",
+   "part_02": "datasets/recurrent-sampler-training-view-01",
+   "part_03": "datasets/recurrent-sampler-training-view-01"
+  },
+  "settings": {
+   "identifier": "recurrent-sampler-head-01",
+   "role": "recurrent_sampler_transport_fit",
+   "objective": "native_supervised_sampler_v1",
+   "seed": 2026102061,
+   "updates": 440,
+   "adam_updates": 400,
+   "lbfgs_updates": 40,
+   "lbfgs_max_iter": 5,
+   "lbfgs_max_eval": 8,
+   "batch_points": 8192,
+   "learning_rate": 0.03,
+   "minimum_learning_rate": 1e-05,
+   "wall_seconds": 900
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "initial_weights_npz": {
+    "path": "initial-weights.npz",
+    "role": "weights"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "probe_npy": {
+    "path": "probe.npy",
+    "role": "data"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 1,
+   "memory_gb": 8.59,
+   "wall_hours": 0.25,
+   "disk_gb": 0.0336
+  },
+  "sources": [
+   "experiments/full-ai-tight-targets-v1/learned_sampler_head.py",
+   "experiments/full-ai-next-priorities-v1/managed_fit_artifacts.py",
+   "experiments/full-ai-tight-targets-v1/train_sampler_head.py"
+  ]
+ },
+ "group": "recurrent_transport_component",
+ "change": "component"
+}

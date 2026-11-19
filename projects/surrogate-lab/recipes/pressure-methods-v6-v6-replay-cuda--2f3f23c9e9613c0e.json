@@ -1,0 +1,442 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "recipe",
+ "title": "Pressure methods v6 · v6-replay CUDA",
+ "description": "Train the tiny smoother inside one differentiable GCR iteration that combines a frozen numerical V-cycle with the learned local proposal. Earlier model, trained 2026-10-19 by Tuldok run 06e7fa883e554c11b133a9df5953918e (Pressure methods v6 · v6-replay CUDA). Converted from its extracted training recipe. The run executed staged copies under runs/; each script and source is given as the tracked file with the same content, or as its copy in earlier-run-code/. 12 source files the old Tuldok generated for the run were left out. 2 record files (not code or settings) were left out: qualification.json, source-witness.json.",
+ "card": "notes/fits/pressure-methods-v6-v6-replay-cuda--2f3f23c9e9613c0e.md",
+ "labels": {
+  "fit_id": "fit-2f3f23c9e9613c0e",
+  "tuldok_run": "06e7fa883e554c11b133a9df5953918e",
+  "trained_at": "2026-10-19T10:26:52.705906+00:00",
+  "device": "cuda",
+  "input:dataset": "runs/pressure-methods-v3/derived-training-view-01/dataset-00.npz",
+  "input:dataset_extra": "runs/pressure-methods-v3/derived-training-view-01/dataset-01.npz",
+  "input:initial_weights": "runs/pressure-methods-v6/shared-tiny-initialization-01/weights.npz",
+  "input:pressure_probe": "runs/dependency-migration-v1/receipts/typed-pressure-preparation-01/pressure-probe.npz",
+  "input:runtime_manifest": "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+  "input:splits": "runs/pressure-methods-v3/derived-training-view-01/manifest.json",
+  "input:view_02": "runs/pressure-methods-v3/derived-training-view-01/dataset-02.npz",
+  "input:view_03": "runs/pressure-methods-v3/derived-training-view-01/dataset-03.npz",
+  "input:view_04": "runs/pressure-methods-v3/derived-training-view-01/dataset-04.npz",
+  "input:view_05": "runs/pressure-methods-v3/derived-training-view-01/dataset-05.npz",
+  "input:view_06": "runs/pressure-methods-v3/derived-training-view-01/dataset-06.npz",
+  "input:view_07": "runs/pressure-methods-v3/derived-training-view-01/dataset-07.npz",
+  "input:view_08": "runs/pressure-methods-v3/derived-training-view-01/dataset-08.npz",
+  "short": "C115"
+ },
+ "earlier_work": {
+  "rebuild": "needs-work",
+  "reason": "The recorded command takes arguments the old Tuldok supplied: the environment listing given as input runtime_manifest; <source: source-witness.json> (a record file, not code or settings, so it is not in Git); <input evidence> (a file the earlier Tuldok run system wrote for each run listing its inputs); <model evidence context> (a file the earlier Tuldok run system wrote with the model evidence context). They have to be replaced before it can run."
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/pressure-throughput-feedback-v1/evidence.py",
+   "train",
+   "--dataset",
+   "{inputs.dataset}",
+   "--dataset-extra",
+   "{inputs.dataset_extra}",
+   "--splits",
+   "{inputs.splits}",
+   "--config",
+   "{settings}",
+   "--runtime-manifest",
+   "runs/dependency-migration-v1/runtime/current-manifest-v2.json",
+   "--source-witness",
+   "<source: source-witness.json>",
+   "--input-evidence",
+   "<input evidence>",
+   "--output-dir",
+   "{output}",
+   "--pressure-probe",
+   "{inputs.pressure_probe}",
+   "--model-evidence-context",
+   "<model evidence context>",
+   "--initial-weights",
+   "{inputs.initial_weights}",
+   "--view-shards",
+   "{inputs.view_02}",
+   "{inputs.view_03}",
+   "{inputs.view_04}",
+   "{inputs.view_05}",
+   "{inputs.view_06}",
+   "{inputs.view_07}",
+   "{inputs.view_08}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "dataset": "datasets/pressure-methods-v3-derived-view",
+   "dataset_extra": "datasets/pressure-methods-v3-derived-view",
+   "initial_weights": "recipes/pressure-methods-v5-v5-multilevel-cuda--c78b892406a60d33",
+   "pressure_probe": "datasets/typed-pressure-probe",
+   "splits": "datasets/pressure-methods-v3-derived-view",
+   "view_02": "datasets/pressure-methods-v3-derived-view",
+   "view_03": "datasets/pressure-methods-v3-derived-view",
+   "view_04": "datasets/pressure-methods-v3-derived-view",
+   "view_05": "datasets/pressure-methods-v3-derived-view",
+   "view_06": "datasets/pressure-methods-v3-derived-view",
+   "view_07": "datasets/pressure-methods-v3-derived-view",
+   "view_08": "datasets/pressure-methods-v3-derived-view"
+  },
+  "settings": {
+   "analytical_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grid_capacity": 16,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       16,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       24,
+       24
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       32,
+       32,
+       32
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       40,
+       40,
+       40
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       24,
+       16,
+       12
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       17,
+       13,
+       9
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       33,
+       17,
+       9
+      ]
+     },
+     {
+      "cells_per_metre": 8,
+      "counts_xyz": [
+       9,
+       25,
+       13
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101507,
+    "weight": 0.1
+   },
+   "band_feedback": {
+    "max_mode": 3,
+    "signal_floor_fraction": 0.1,
+    "stages": "first-and-final",
+    "weight": 0.03
+   },
+   "conditioning": "physical-residual",
+   "correction": {
+    "activation": "linear",
+    "steps": 2
+   },
+   "current_feedback": {
+    "manifest_sha256": "fbeb3908e670f84f2ca9d0ce5b65ff55c29630f86ece64a00f62a78e23206b7e",
+    "seed": 2026102801,
+    "stage": "late",
+    "weight": 0.1
+   },
+   "direction_feedback": {
+    "manifest_sha256": "ac036f90dcccf48cb11dbd6a737c142b5ea4ab1d3d34606ef62ab3cda0ca05fc",
+    "seed": 2026102701,
+    "stage": "late",
+    "weight": 0.1
+   },
+   "execution": {
+    "batch_mode": "serial",
+    "finite_checks": "combined",
+    "prepared_fields": false,
+    "profile_updates": 0,
+    "resident_inputs": true
+   },
+   "first_pressure_weight": 0.0,
+   "id": "v6-replay",
+   "normalization": "none",
+   "objective": "canonical-intermediate-contraction",
+   "output_scale": "previous-pressure-rms",
+   "resources": {
+    "max_output_bytes": 67108864,
+    "wall_seconds": 1800
+   },
+   "schema": "rheon-water-residual-experiment-v11",
+   "supplemental_feedback": {
+    "amplitude_reference": "train-correction-cell-rms",
+    "cache_max_bytes": 805306368,
+    "grid_capacity": 16,
+    "grids": [
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       16,
+       23,
+       25
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       23,
+       25,
+       16
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       25,
+       16,
+       23
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       10,
+       7,
+       25
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       7,
+       25,
+       10
+      ]
+     },
+     {
+      "cells_per_metre": 16,
+      "counts_xyz": [
+       25,
+       10,
+       7
+      ]
+     }
+    ],
+    "patterns": 32,
+    "sampling": "uniform-balanced-grid",
+    "seed": 2026101607,
+    "source": "grids",
+    "weight": 0.1
+   },
+   "training": {
+    "batch_size": 1,
+    "checkpoints": [
+     0,
+     2400
+    ],
+    "learning_rate": 0.001,
+    "model": "cubic-groupnorm-v3",
+    "sampling_seed": 2026101804,
+    "schedule": [
+     {
+      "update": 1801,
+      "learning_rate": 0.0001
+     },
+     {
+      "update": 2251,
+      "learning_rate": 1e-05
+     }
+    ],
+    "seed": 2026101910,
+    "updates": 2400
+   }
+  },
+  "outputs": {
+   "weights_npz": {
+    "path": "weights.npz",
+    "role": "weights"
+   },
+   "predictions_npz": {
+    "path": "predictions.npz",
+    "role": "data"
+   },
+   "normalization_json": {
+    "path": "normalization.json",
+    "role": "file"
+   },
+   "splits_json": {
+    "path": "splits.json",
+    "role": "data"
+   },
+   "history_json": {
+    "path": "history.json",
+    "role": "log"
+   },
+   "training_profile_json": {
+    "path": "training-profile.json",
+    "role": "log"
+   },
+   "receipt_json": {
+    "path": "receipt.json",
+    "role": "report"
+   },
+   "summary_json": {
+    "path": "summary.json",
+    "role": "report"
+   },
+   "checkpoint_000_npz": {
+    "path": "checkpoint-000.npz",
+    "role": "weights"
+   },
+   "checkpoint_2400_npz": {
+    "path": "checkpoint-2400.npz",
+    "role": "weights"
+   },
+   "execution_context_json": {
+    "path": "execution-context.json",
+    "role": "file"
+   },
+   "model_evidence_json": {
+    "path": "model-evidence.json",
+    "role": "file"
+   },
+   "model_definition_json": {
+    "path": "model-definition.json",
+    "role": "file"
+   },
+   "profile_json": {
+    "path": "profile.json",
+    "role": "file"
+   },
+   "probe_json": {
+    "path": "probe.json",
+    "role": "file"
+   },
+   "metric_definitions_json": {
+    "path": "metric-definitions.json",
+    "role": "file"
+   },
+   "checkpoints_json": {
+    "path": "checkpoints.json",
+    "role": "file"
+   },
+   "observations_json": {
+    "path": "observations.json",
+    "role": "file"
+   },
+   "field_index_json": {
+    "path": "field-index.json",
+    "role": "file"
+   },
+   "fitted_transform_json": {
+    "path": "fitted-transform.json",
+    "role": "file"
+   },
+   "output_policy_json": {
+    "path": "output-policy.json",
+    "role": "file"
+   },
+   "checkpoint_2400_json": {
+    "path": "checkpoint-2400.json",
+    "role": "file"
+   },
+   "pressure_diagnostic_json": {
+    "path": "pressure-diagnostic.json",
+    "role": "file"
+   },
+   "probe_residual_npy": {
+    "path": "probe-residual.npy",
+    "role": "file"
+   },
+   "probe_base_npy": {
+    "path": "probe-base.npy",
+    "role": "file"
+   },
+   "pressure_prediction_npy": {
+    "path": "pressure-prediction.npy",
+    "role": "file"
+   },
+   "pressure_reference_npy": {
+    "path": "pressure-reference.npy",
+    "role": "file"
+   }
+  },
+  "resources": {
+   "gpu": true,
+   "cpu_threads": 2,
+   "memory_gb": 17.18,
+   "wall_hours": 0.5,
+   "disk_gb": 0.0671
+  },
+  "sources": [
+   "experiments/water-conditioning-v1/training/analytical.py",
+   "experiments/water-conditioning-v1/training/band_feedback.py",
+   "experiments/water-conditioning-v1/training/model.py",
+   "experiments/pressure-methods-v1/coarse.py",
+   "experiments/pressure-methods-v5/conditioned_data.py",
+   "experiments/water-conditioning-v1/training/direction_feedback.py",
+   "experiments/pressure-throughput-feedback-v1/evidence.py",
+   "earlier-run-code/pressure-methods-v6/v6-replay-project-01/fine-tuning.json",
+   "experiments/pressure-methods-v6/solver_objective.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/fixed-normalization.json",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/frozen_gn.py",
+   "experiments/water-conditioning-v1/training/gradient_clipping.py",
+   "earlier-run-code/pressure-methods-v5/v5-multilevel-project-02/head_optimizer.py",
+   "docs/plans/global-pressure-correction-v1/reservation.json",
+   "experiments/water-conditioning-v1/training/data.py",
+   "experiments/water-conditioning-v1/training/physical_residual.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/hybrid-method.json",
+   "experiments/pressure-methods-v1/learned_model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/methods_view.py",
+   "experiments/pressure-methods-v3/order.py",
+   "experiments/pressure-methods-v6/local_model.py",
+   "experiments/pressure-methods-v5/training_reconstruct.py",
+   "experiments/global-pressure-v1/training/data.py",
+   "experiments/global-pressure-v1/training/model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/original_train.py",
+   "experiments/pressure-methods-v2/shape_physical.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/policy.py",
+   "experiments/cuda-pressure-v1/model.py",
+   "earlier-run-code/full-ai-next-priorities-v1/a-combined-project-01/portable_policy.py",
+   "experiments/water-conditioning-v1/training/prepared.py",
+   "experiments/pressure-methods-v1/numerics.py",
+   "experiments/pressure-methods-v1/domain_model.py",
+   "experiments/sealed-water-v1/scenes.py",
+   "experiments/dependency-migration-v1/dependency_training_entry.py",
+   "experiments/cuda-pressure-v1/support.py",
+   "experiments/water-conditioning-v1/training/test_inference.py",
+   "earlier-run-code/pressure-methods-v3/v3-native-project-07/train.py",
+   "experiments/pressure-throughput-feedback-v1/training_diagnostic.py",
+   "experiments/pressure-methods-v4/multilevel.py"
+  ]
+ },
+ "group": "pressure-successors",
+ "change": "architecture"
+}

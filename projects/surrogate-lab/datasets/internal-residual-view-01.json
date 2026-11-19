@@ -1,0 +1,27 @@
+{
+ "format": "tuldok_definition_v1",
+ "kind": "dataset",
+ "title": "internal-residual-view-01",
+ "description": "783 samples from the 148 diversity training scenes with features and future labels; labels for the 29 eight-substep scenes come from two earlier models. Prepared by: experiments/full-ai-data-diversity-v1/prepare_internal_residual_view_v1.py. Built from: diversity-recordings (train split). Settings: docs/plans/full-ai-data-diversity-v1/internal-residual-view-protocol-01.json. Computed with the weights of: recurrent-sampler-head-01 (sampler-head-pair-01); expanded-shared-spectral-01 (shared-spectral-pair-01). The earlier account gives the command as reconstructed from the scripts (not recorded at the time): 'prepare_internal_residual_view_v1.py --protocol <settings file> --output runs/full-ai-data-diversity-v1/internal-residual-view-01 (needs CUDA)'. Its files sat in: runs/full-ai-data-diversity-v1/internal-residual-view-01. The account does not say which Python environment ran it; the converter chose environments/cuda-torch because the account says it needs CUDA. The run command is the converter's reading of that text as exact command lines.",
+ "earlier_work": {
+  "rebuild": "after-inputs"
+ },
+ "run": {
+  "command": [
+   "python",
+   "experiments/full-ai-data-diversity-v1/prepare_internal_residual_view_v1.py",
+   "--protocol",
+   "docs/plans/full-ai-data-diversity-v1/internal-residual-view-protocol-01.json",
+   "--output",
+   "{output}"
+  ],
+  "environment": "environments/cuda-torch",
+  "inputs": {
+   "diversity_v1": "datasets/diversity-v1"
+  },
+  "sources": [
+   "docs/plans/full-ai-data-diversity-v1/internal-residual-view-protocol-01.json",
+   "experiments/full-ai-data-diversity-v1/prepare_internal_residual_view_v1.py"
+  ]
+ }
+}

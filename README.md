@@ -1,47 +1,55 @@
 # Rheon Surrogate Lab
 
-Controlled experiments in learned pressure prediction for Rheon. The lab preserves data contracts, checkpoints, negative results and numerical comparisons so each claim can be traced to an actual experiment.
+Learned fluid models trained on simulations from [Rheon](https://github.com/MrScripty/Rheon). The goal is a general fluid solver that runs much faster than the simulation it learned from: fast enough for real-time use in games, and, in a separate branch of models, accurate enough for engineering.
 
-## Current work
+![Tuldok's benchmark view of this lab: pressure error against GPU call time for 127 earlier pressure models, the frontier of models no other beats on both, parallel coordinates of their settings, and the table of results](docs/images/tuldok-benchmarks.jpg)
 
-New models, dataset definitions, training and the shared benchmark live in [`surrogate/`](surrogate/README.md). Everything under `experiments/` and `docs/plans/` is the record of the earlier studies.
+*The lab's results in [Tuldok](https://github.com/MrScripty/Tuldok): each point is a model; the line joins the models that no other model beats on both accuracy and speed.*
 
-## Start with the reference pipeline
+## Where things stand
 
-Requires Git and Rust 1.92.0. From a clean committed checkout:
+- **206 earlier models** (October 2026), all on sealed boxes of water with no free surface, air, obstacles or open boundaries:
+  - **pressure models** (most of them), which replace Rheon's iterative pressure solve inside its step: about **6–7 ms per GPU pressure call** at the best balance of accuracy and speed;
+  - **35 full-state generators**, which take the whole state and produce the next one on the GPU: from **0.8 ms per 1/60 s step** (velocity error about 9 %) to **5.3 ms** (velocity error about 2·10⁻⁶) on grids up to 32³.
+
+  The solver's own arithmetic written as a fixed GPU network (the "F64 composition") is still faster and more accurate on these simple boxes (0.25–0.6 ms per step), which is why the next models move to scenes where the solver is expensive. Each model's card and benchmark results are in [`projects/surrogate-lab/`](projects/surrogate-lab/); [the history](docs/history.md) summarises what was learned.
+- **New models** live in [`surrogate/`](surrogate/README.md): a whole-step 3D U-Net stepper whose velocity changes are divergence free by construction, its training on its own rollouts, and one benchmark that scores every model the same way. It is written and tested, not yet trained.
+- **Next**, in [the roadmap](surrogate/ROADMAP.md): a live playground in the browser to run a model in real time; new data from the current Rheon with many kinds of forces; several fluids in one domain; open and periodic boundaries; and two model branches, speed and accuracy.
+
+## Layout
+
+| Path | What it holds |
+| --- | --- |
+| [`surrogate/`](surrogate/README.md) | New models, dataset definitions, training and the shared benchmark (Python) |
+| [`projects/surrogate-lab/`](projects/surrogate-lab/) | The lab's Tuldok project: definitions of datasets, models, recipes, benchmarks and charts, benchmark summaries in `results/`, model cards in `notes/fits/` |
+| [`probes/reference/`](probes/reference/) | A small Rust driver around the pinned Rheon that produced the earlier data, used by `surrogate/` to generate scenes and as a benchmark baseline |
+| `experiments/`, `earlier-run-code/`, `docs/plans/` | Only the scripts and protocols that built the earlier datasets and models, which the project's definitions cite |
+| `scripts/` | How `projects/surrogate-lab/` was built from the earlier records, and the GPU runtime finder |
+| [`CONTEXT.md`](CONTEXT.md) | The shared vocabulary: grids, spacing, density, pressure, gates |
+
+## Two generations of data
+
+All the earlier data and models come from **`rheon-reference-v1`**, Rheon at branch `lab/reference-solver-v1` (`bbe01bd3`), pinned by `probes/reference/`. New datasets come only from the current Rheon. The two are never mixed in one model or one benchmark, so the earlier models keep their own data and comparisons stay fair.
+
+## Working with it
+
+Tests run on the CPU in the lab's environment:
 
 ```sh
-cargo test --locked
-cargo run --release --locked -- generate data/smoke 4
-cargo run --release --locked -- verify data/smoke
+python3.12 -m venv .venv
+.venv/bin/pip install -r requirements-cpu.lock --extra-index-url https://download.pytorch.org/whl/cpu
+.venv/bin/python -m unittest discover -s surrogate -t .
 ```
 
-This generates 18 small pressure-only cases using a pinned Rheon dependency. Use a new output directory. No GPU, Python environment or paid service is needed for this path.
+The project is opened with Tuldok, from Tuldok's own checkout. With `TULDOK_DATABASE_URL` set:
 
-## Experiments and results
+```sh
+.venv/bin/python -m tuldok_project check <lab>/projects/surrogate-lab
+.venv/bin/python -m tuldok_project open  <lab>/projects/surrogate-lab
+```
 
-The documented **GroupNorm development diagnostic** found no solver benefit: all 32 raw predictions and learned warm attempts failed the native gates. Accepted solves required fresh previous-pressure fallback. [Measured result and limits](docs/plans/global-pressure-groupnorm-native-dev-run-v1/reports/measured-results.md).
+Then start Tuldok's app with `--project-folder <lab>/projects/surrogate-lab` to see the Map, the benchmarks and the models.
 
-The **earlier fixed-box modal model** has a separate result. With eight CPU threads per stage, median complete 120-frame times were 15.21 s Jacobi, 9.39 s SGS and 1.86 s learned pressure + Rheon: **8.20× / 5.06×** relative to those PCG paths. All 4,320 timed frames met the declared gates. Imports/model setup, warmup, field capture and rendering were outside that resident-rollout timer. [CPU receipts](experiments/trajectory-cpu-v1/README.md).
-
-![Recorded CPU-only comparison of Rheon and the earlier modal pressure model](experiments/trajectory-cpu-v1/viewport.png)
-
-The historical viewer replays accepted 3D trajectories from the modal experiment.
-
-That model supports one 32³ sealed box with prescribed forcing and passive tracer, without free surface, viscosity or obstacles. Agreement is with Rheon's discretization; an advantage over the available analytic spectral alternative was not established.
-
-## Choose an experiment
-
-- [Historical experiment guide](docs/experiment-history.md): pressure-only baselines, data format, frozen evaluation and trajectory reproduction
-- [Global-pressure capture](experiments/global-pressure-v1/README.md): source and native-build contracts
-- [GroupNorm candidate](experiments/global-pressure-v1/groupnorm-v1/README.md) and [native diagnostic](experiments/global-pressure-v1/groupnorm-native-dev-v1/README.md): preserved development protocol
-
-The lab's Tuldok project is [`projects/surrogate-lab/`](projects/surrogate-lab): the definitions of its datasets, models, recipes and benchmarks, the benchmark summaries in `results/`, and the model cards in [`notes/fits/`](projects/surrogate-lab/notes/fits). Edit it directly or through Tuldok and commit it like any source. From the Tuldok repository, `.venv/bin/python -m tuldok_project check <lab>/projects/surrogate-lab` checks it; with `TULDOK_DATABASE_URL` set, `open <folder>` opens it, `report <folder> --output report.html` writes its report page, and `plan <folder> --all` lists what can be built and in what order.
-
-Weights, datasets and run logs are not in this repository; they live in Tuldok's project directory on the machine (`.venv/bin/python -m tuldok_project home` shows where). The earlier models' weights were adopted there and exist only on the machine that trained them, so a fresh clone shows those models with their cards and results but cannot rebuild them as they stand. The earlier project folder is no longer in the repository; `scripts/build_tuldok_project.py` is the record of how `projects/surrogate-lab/` was made from it.
-
-The chart and dashboard scripts in `docs/plans/` are retired and stay only as a record. They replay run data this repository does not host, and they reject any study document whose hash changed. Tuldok's benchmark view replaces them.
-
-Bulk datasets, native builds and run artifacts are generally ignored. Follow the selected experiment's exact prerequisites; public receipts do not replace missing inputs.
+Weights, datasets and run logs are not in this repository. They live in Tuldok's project directory on the machine that made them (`python -m tuldok_project home` shows where). A fresh clone shows every earlier model with its card and results, but cannot rebuild them as they stand. New work is fully reproducible from its definitions.
 
 Licensed under [Apache-2.0](LICENSE). See [dependency provenance](THIRD_PARTY.md).

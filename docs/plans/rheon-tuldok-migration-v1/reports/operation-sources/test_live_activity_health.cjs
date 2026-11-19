@@ -1,6 +1,0 @@
-'use strict';
-const assert=require('node:assert/strict'),{activityHealth}=require('./live_readback.cjs');
-const healthy={available:true,authority:'external_observation',stale:false,state:'running',phase:'Dependency migration observation',progress:{completed:74,total:74},message:'External observation: 74/74 current regression case receipts passed; 0 failed, 0 unreadable. typed-pressure-live-01: status=machine_qualified_browser_pending, scientific_acceptance=not_asserted; Migration acceptance is not asserted.'};
-const proof=activityHealth(healthy);assert.equal(proof.healthy,true);assert.equal(proof.machine_status,'machine_qualified_browser_pending');assert.equal(proof.progress.completed,74);
-for(const change of [a=>a.available=false,a=>a.stale=true,a=>a.state='failed',a=>a.phase='Observation unavailable',a=>a.progress.completed=0,a=>a.progress.total=null,a=>a.message='Observation unavailable: OSError',a=>a.message=a.message.replace('0 unreadable','1 unreadable'),a=>a.message=a.message.replace('machine_qualified_browser_pending','pending')]){const value=structuredClone(healthy);value.sequence=999;change(value);assert.throws(()=>activityHealth(value));}
-console.log('PASS actual activity health policy rejects advancing error/unknown/incomplete/machine-pending observations');

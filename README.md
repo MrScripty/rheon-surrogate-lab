@@ -33,7 +33,6 @@ That model supports one 32³ sealed box with prescribed forcing and passive trac
 ## Choose an experiment
 
 - [Historical experiment guide](docs/experiment-history.md): pressure-only baselines, data format, frozen evaluation and trajectory reproduction
-- [Tuldok project](tuldok/README.md): captured runtimes, recipes and training/restore custody
 - [Global-pressure capture](experiments/global-pressure-v1/README.md): source and native-build contracts
 - [GroupNorm candidate](experiments/global-pressure-v1/groupnorm-v1/README.md) and [native diagnostic](experiments/global-pressure-v1/groupnorm-native-dev-v1/README.md): preserved development protocol
 

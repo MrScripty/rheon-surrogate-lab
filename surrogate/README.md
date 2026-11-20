@@ -17,6 +17,7 @@ This package is new code. The studies under `experiments/` and `docs/plans/` are
 | `models/` | A 3D U-Net and the stepper built on it. Velocity changes are the curl of a predicted potential, so every output is divergence free and sealed whatever the weights are. |
 | `train.py` | Trains a stepper on its own multi-pass rollouts with noisy starts. |
 | `bench/` | The benchmark: cases, subjects, metrics, timing, result documents and Tuldok packets. |
+| `playground/` | [The live playground](playground/README.md): a sealed box stepped in real time in a web page, pushed with the mouse, with the time per step on screen. |
 | `configs/` | Training configurations. |
 | `tests/` | Unit tests; they use small synthetic data and run on a CPU. |
 

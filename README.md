@@ -14,7 +14,8 @@ Learned fluid models trained on simulations from [Rheon](https://github.com/MrSc
 
   The solver's own arithmetic written as a fixed GPU network (the "F64 composition") is still faster and more accurate on these simple boxes (0.25–0.6 ms per step), which is why the next models move to scenes where the solver is expensive. Each model's card and benchmark results are in [`projects/surrogate-lab/`](projects/surrogate-lab/); [the history](docs/history.md) summarises what was learned.
 - **New models** live in [`surrogate/`](surrogate/README.md): a whole-step 3D U-Net stepper whose velocity changes are divergence free by construction, its training on its own rollouts, and one benchmark that scores every model the same way. It is written and tested, not yet trained.
-- **Next**, in [the roadmap](surrogate/ROADMAP.md): a live playground in the browser to run a model in real time; new data from the current Rheon with many kinds of forces; several fluids in one domain; open and periodic boundaries; and two model branches, speed and accuracy.
+- **The live playground** ([`surrogate/playground/`](surrogate/playground/README.md)): a web page that steps a sealed box of water in real time and lets you push it with the mouse, with the time per step on screen. Measured on the RTX 5090 Laptop GPU with the GPU solver composition: 0.5 ms per step at 16³, 0.7 ms at 32³, 2.6 ms at 64³ (all in real time), 22 ms at 128³ (0.73 × real time); the learned generator b1-fixed-viscosity 5.7 ms at 16³.
+- **Next**, in [the roadmap](surrogate/ROADMAP.md): new data from the current Rheon with many kinds of forces; several fluids in one domain; open and periodic boundaries; and two model branches, speed and accuracy.
 
 ## Layout
 
